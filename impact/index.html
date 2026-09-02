@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Impact - Code Orange Dev School</title>
+<meta name="description" content="Code Orange Dev School outcomes, Bitcoin Dojo proof, open source goals, and public impact metrics.">
+<link rel="canonical" href="https://codeorange.dev/impact">
+<meta name="theme-color" content="#F7931A">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Code Orange Dev School">
+<meta property="og:url" content="https://codeorange.dev/impact">
+<meta property="og:title" content="Impact - Code Orange Dev School">
+<meta property="og:description" content="Code Orange Dev School outcomes, Bitcoin Dojo proof, open source goals, and public impact metrics.">
+<meta property="og:image" content="https://codeorange.dev/assets/og-codeorange-workshop.jpg">
+<meta property="og:image:secure_url" content="https://codeorange.dev/assets/og-codeorange-workshop.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Code Orange Dev School Bitcoin workshop in Bali">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Impact - Code Orange Dev School">
+<meta name="twitter:description" content="Code Orange Dev School outcomes, Bitcoin Dojo proof, open source goals, and public impact metrics.">
+<meta name="twitter:image" content="https://codeorange.dev/assets/og-codeorange-workshop.jpg">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon-bitcoin.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Impact - Code Orange Dev School","description":"Code Orange Dev School outcomes, Bitcoin Dojo proof, open source goals, and public impact metrics.","url":"https://codeorange.dev/impact","isPartOf":{"@type":"WebSite","name":"Code Orange Dev School","url":"https://codeorange.dev"},"publisher":{"@type":"EducationalOrganization","name":"Code Orange Dev School","url":"https://codeorange.dev","email":"hello@codeorange.dev","sameAs":["https://github.com/code-orange-dev","https://x.com/CodeOrangeDevs","https://www.instagram.com/codeorangedevs","https://njump.me/npub1gxqyeea3xspkd68mxlxsvvk3gdzdd555u504ynwpdj0ghg503mvq2gydt0"]}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="/assets/lazy-video.js?v=20260902a" defer></script>
+<style>
+:root { color-scheme: dark; --bg:#0B1220; --band:#0F1A2E; --card:#12213B; --text:#F5F1EA; --muted:#C8CDD9; --dim:#8C94A6; --orange:#F7931A; --orange2:#FFB347; --line:rgba(255,255,255,.08); }
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; overflow-x: hidden; background: var(--bg); color: var(--text); font-family: "Space Grotesk", system-ui, sans-serif; scroll-behavior: smooth; }
+body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+img, video, iframe { max-width: 100%; }
+a { color: inherit; }
+.announce { display: flex; justify-content: center; gap: 10px; padding: 9px 24px; background: var(--orange); color: var(--bg); text-decoration: none; font: 700 13px "JetBrains Mono", monospace; text-align: center; }
+.announce span { text-decoration: underline; text-underline-offset: 3px; }
+.site-header { position: sticky; top: 0; z-index: 50; background: rgba(11,18,32,.74); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.header-inner { max-width: 1240px; height: 78px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; gap: 22px; }
+.brand img { display: block; width: auto; height: 50px; }
+.desktop-nav, .header-actions, .cta-row { display: flex; align-items: center; gap: 12px; }
+.desktop-nav a, .mobile-nav a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 600; padding: 8px 10px; border-radius: 8px; }
+.desktop-nav a:hover, .mobile-nav a:hover { color: var(--orange); }
+.mobile-nav { display: none; gap: 8px; overflow-x: auto; padding: 0 16px 10px; scrollbar-width: none; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; }
+.mobile-nav::-webkit-scrollbar { display: none; }
+.mobile-nav a { flex: 0 0 auto; scroll-snap-align: start; }
+.button, .ghost { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 13px 24px; border-radius: 8px; text-decoration: none; font-weight: 700; transition: border-color .15s ease, color .15s ease, background .15s ease, transform .15s ease; }
+.button { background: var(--orange); color: var(--bg); }
+.button:hover { background: var(--orange2); }
+.ghost { border: 1px solid rgba(255,255,255,.16); color: var(--text); }
+.ghost:hover { border-color: var(--orange); color: var(--orange); }
+.small { min-height: 40px; padding: 9px 18px; font-size: 14px; }
+.hero { position: relative; overflow: hidden; background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px); background-size: 48px 48px; }
+.hero-grid, .section-inner { max-width: 1240px; margin: 0 auto; padding: 96px 32px; }
+.hero-grid { display: grid; grid-template-columns: minmax(0,1.08fr) minmax(320px,.92fr); gap: 64px; align-items: center; }
+.glow { position: absolute; top: -160px; right: -110px; width: 740px; height: 740px; border-radius: 50%; background: radial-gradient(circle, rgba(247,147,26,.14), transparent 66%); pointer-events: none; }
+.eyebrow { margin: 0 0 22px; color: var(--orange); font: 700 12px "JetBrains Mono", monospace; letter-spacing: .16em; text-transform: uppercase; }
+h1, h2, h3 { font-family: "Special Elite", "Courier New", monospace; font-weight: 400; color: var(--text); }
+h1 { margin: 0 0 26px; max-width: 780px; font-size: clamp(40px, 4.6vw, 68px); line-height: 1.05; }
+h2 { margin: 0 0 18px; font-size: clamp(32px, 3.3vw, 50px); line-height: 1.08; }
+h3 { margin: 0; font-size: 26px; line-height: 1.15; }
+.lead { max-width: 620px; margin: 0 0 34px; color: var(--muted); font-size: 18px; line-height: 1.65; }
+.terminal-card, .card, .program-card, .stat, .timeline-item { background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.32); }
+.terminal-bar { display: flex; align-items: center; gap: 8px; padding: 14px 18px; background: var(--band); border-bottom: 1px solid var(--line); }
+.terminal-bar span { width: 12px; height: 12px; border-radius: 50%; }
+.terminal-bar span:nth-child(1){ background:#FF5F56; } .terminal-bar span:nth-child(2){ background:#FFBD2E; } .terminal-bar span:nth-child(3){ background:#27C93F; }
+.terminal-bar strong { margin-left: 10px; color: var(--dim); font: 500 12px "JetBrains Mono", monospace; }
+.terminal-body { padding: 24px; font: 14px/1.9 "JetBrains Mono", monospace; }
+.terminal-body p { margin: 0; } .orange { color: var(--orange); } .muted { color: var(--dim); }
+.band { background: var(--band); border-block: 1px solid var(--line); }
+.grid { display: grid; gap: 22px; }
+.grid.two { grid-template-columns: repeat(2, minmax(0,1fr)); } .grid.three { grid-template-columns: repeat(3, minmax(0,1fr)); }
+.program-card { display: grid; grid-template-rows: 210px 1fr; text-decoration: none; transition: transform .18s ease, border-color .18s ease; }
+.program-card:hover { transform: translateY(-4px); border-color: rgba(247,147,26,.55); }
+.program-card img, .card > img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.012); }
+.card-body { padding: 24px; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; }
+.pill { display: inline-flex; padding: 7px 12px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; color: var(--muted); font: 600 12px "JetBrains Mono", monospace; }
+.pill.orange { color: var(--orange); border-color: rgba(247,147,26,.42); }
+.card p, .program-card p, .timeline-item p { color: var(--muted); line-height: 1.65; }
+.repo-card { display: block; text-decoration: none; transition: transform .18s ease, border-color .18s ease; }
+.repo-card:hover { transform: translateY(-4px); border-color: rgba(247,147,26,.55); }
+.repo-card h3 { margin-top: 14px; }
+.stat { padding: 26px; }
+.stat strong { display: block; color: var(--orange); font: 400 40px/1 "Special Elite", monospace; margin-bottom: 10px; }
+.timeline { display: grid; gap: 14px; counter-reset: step; }
+.timeline-item { display: grid; grid-template-columns: 70px 1fr; gap: 22px; padding: 24px; counter-increment: step; }
+.timeline-item:before { content: counter(step, decimal-leading-zero); color: var(--orange); font: 700 16px "JetBrains Mono", monospace; }
+.split { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 42px; align-items: start; }
+.feature-panel { background: linear-gradient(145deg, rgba(247,147,26,.12), rgba(18,33,59,.86) 42%, rgba(15,26,46,.96)); border: 1px solid rgba(247,147,26,.26); border-radius: 16px; box-shadow: 0 28px 80px rgba(0,0,0,.34); overflow: hidden; }
+.feature-panel-inner { padding: 28px; }
+.photo-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 30px; }
+.photo-card { position: relative; min-height: 300px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--card); box-shadow: 0 20px 60px rgba(0,0,0,.28); }
+.photo-card.tall { min-height: 420px; }
+.photo-card.wide { grid-column: span 2; }
+.photo-card img, .feature-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.012); }
+.photo-card:after, .feature-photo:after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(8,13,24,.78) 100%); pointer-events: none; }
+.photo-caption { position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 1; display: inline-flex; width: max-content; max-width: calc(100% - 28px); padding: 7px 11px; border-radius: 999px; background: rgba(8,13,24,.78); border: 1px solid rgba(255,255,255,.13); color: var(--text); font: 700 11px "JetBrains Mono", monospace; letter-spacing: .08em; text-transform: uppercase; }
+.feature-photo { position: relative; min-height: 430px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--card); box-shadow: 0 24px 70px rgba(0,0,0,.32); }
+.calendar-frame { margin-top: 28px; background: #fff; border: 1px solid rgba(255,255,255,.12); border-radius: 16px; overflow: hidden; box-shadow: 0 24px 70px rgba(0,0,0,.36); }
+.calendar-frame iframe { display: block; width: 100%; height: 680px; border: 0; background: #fff; }
+.booking-panel { display: grid; gap: 16px; padding: 24px; background: rgba(8,13,24,.48); border: 1px solid var(--line); border-radius: 16px; }
+.price-tag { display: inline-flex; width: max-content; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 999px; background: rgba(247,147,26,.14); border: 1px solid rgba(247,147,26,.34); color: var(--orange); font: 700 13px "JetBrains Mono", monospace; }
+.footer { border-top: 1px solid var(--line); background: #080D18; }
+.footer-media { position: relative; max-width: 1240px; min-height: 300px; margin: 56px auto 0; border: 1px solid rgba(255,255,255,.1); border-radius: 16px; overflow: hidden; background: var(--band); box-shadow: 0 24px 70px rgba(0,0,0,.34); }
+.footer-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.footer-media:after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8,13,24,.9), rgba(8,13,24,.34) 56%, rgba(8,13,24,.74)); pointer-events: none; }
+.footer-media-copy { position: relative; z-index: 1; max-width: 560px; padding: 42px; }
+.footer-grid { max-width: 1240px; margin: 0 auto; padding: 56px 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.footer a { color: var(--dim); text-decoration: none; } .footer a:hover { color: var(--orange); }
+.link-list { display: grid; gap: 10px; }
+.final-cta { text-align: center; border-top: 1px solid var(--line); }
+@media (max-width: 900px) {
+  .announce { padding: 8px 16px; line-height: 1.42; }
+  .desktop-nav { display: none; } .mobile-nav { display: flex; padding-bottom: 12px; gap: 6px; }
+  .header-inner { height: 62px; padding: 0 16px; gap: 12px; } .brand img { height: 40px; }
+  .hero-grid, .section-inner { padding: 64px 20px; }
+  .hero-grid { gap: 30px; }
+  .hero-grid, .split, .grid.two, .grid.three { grid-template-columns: minmax(0, 1fr); }
+  .glow { right: -260px; width: 520px; height: 520px; }
+  h1 { font-size: clamp(34px, 10.5vw, 48px); line-height: 1.05; }
+  h2 { font-size: clamp(30px, 8.5vw, 40px); line-height: 1.08; }
+  h3 { font-size: clamp(21px, 6vw, 27px); }
+  .lead { font-size: 16px; line-height: 1.62; }
+  .terminal-body { padding: 20px; font-size: 12px; line-height: 1.75; overflow-wrap: anywhere; }
+  .terminal-bar strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .program-card { grid-template-rows: 190px 1fr; border-radius: 14px; }
+  .card-body, .stat, .timeline-item { padding: 20px; }
+  .stat strong { font-size: 34px; overflow-wrap: anywhere; }
+  .pill { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+  .photo-grid { grid-template-columns: 1fr; }
+  .photo-card.wide { grid-column: auto; }
+  .photo-card, .photo-card.tall, .feature-photo { min-height: 320px; }
+  .photo-caption { width: auto; max-width: calc(100% - 28px); white-space: normal; border-radius: 8px; line-height: 1.35; }
+  .feature-panel-inner { padding: 24px; }
+  .booking-panel { padding: 20px; }
+  .header-actions .ghost { display: none; }
+  .cta-row { flex-direction: column; align-items: stretch; }
+  .cta-row .button, .cta-row .ghost { width: 100%; }
+  .footer-grid { grid-template-columns: 1fr; padding: 48px 20px; }
+  .calendar-frame iframe { height: 560px; }
+  .footer-media { min-height: 260px; margin: 42px 20px 0; }
+  .footer-media-copy { padding: 30px 24px; }
+}
+@media (max-width: 560px) {
+  .announce { flex-direction: column; gap: 2px; font-size: 12px; }
+  .header-inner { height: 58px; padding-inline: 14px; }
+  .brand img { height: 36px; }
+  .mobile-nav { padding-inline: 12px; }
+  .mobile-nav a { font-size: 12px; padding: 7px 12px; }
+  .header-actions .button.small { min-height: 36px; padding: 8px 12px; font-size: 13px; }
+  .hero-grid, .section-inner { padding: 54px 18px; }
+  .button, .ghost { width: 100%; min-height: 46px; padding: 12px 18px; }
+  .header-actions .button, .header-actions .ghost { width: auto; }
+  .terminal-card, .card, .program-card, .stat, .timeline-item, .feature-panel, .calendar-frame, .booking-panel { border-radius: 14px; }
+  .program-card { grid-template-rows: 174px 1fr; }
+  .photo-card, .photo-card.tall, .feature-photo { min-height: 260px; }
+  .timeline-item { grid-template-columns: 1fr; gap: 10px; }
+  .timeline-item:before { font-size: 14px; }
+  .calendar-frame iframe { height: 500px; }
+  .footer-media { min-height: 240px; margin-inline: 18px; border-radius: 14px; }
+  .footer-media-copy { padding: 26px 20px; }
+  .feature-panel-inner { padding: 20px; }
+  .footer-grid { padding: 42px 18px; }
+}
+@media (max-width: 380px) {
+  .hero-grid, .section-inner { padding-inline: 16px; }
+  .photo-card, .photo-card.tall, .feature-photo { min-height: 230px; }
+  .calendar-frame iframe { height: 455px; }
+  .mobile-nav a { font-size: 11px; padding-inline: 10px; }
+}
+</style>
+</head>
+<body>
+<a class="announce" href="/apply">rawBit cohort is live now &middot; Bitcoin Privacy Track open for enrollment <span>Apply &rarr;</span></a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="Code Orange Dev School home"><img src="/assets/logo-white.png" alt="Code Orange Dev School"></a>
+    <nav class="desktop-nav" aria-label="Primary">
+      <a href="/programs">Programs</a>
+      <a href="/consulting">Consulting</a>
+      <a href="/fellowships">Fellowships</a>
+      <a href="/calendar">Calendar</a>
+      <a href="/community">Community</a>
+      <a href="/impact">Impact</a>
+      <a href="/strategy">Strategy</a>
+      <a href="/about">About</a>
+    </nav>
+    <div class="header-actions">
+      <a class="ghost small" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a>
+      <a class="button small" href="/apply">Apply Now</a>
+    </div>
+  </div>
+  <nav class="mobile-nav" aria-label="Mobile">
+    <a href="/programs">Programs</a>
+    <a href="/consulting">Consulting</a>
+    <a href="/calendar">Calendar</a>
+    <a href="/community">Community</a>
+    <a href="/impact">Impact</a>
+    <a href="/strategy">Strategy</a>
+    <a href="/about">About</a>
+  </nav>
+</header>
+<main>
+  <section class="hero">
+    <div class="glow"></div>
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">/Impact_</p>
+        <h1>Specific goals. <span class="orange">Real deadlines.</span></h1>
+        <p class="lead">Code Orange measures success in nodes deployed, pull requests merged, and community leaders empowered, not vague completion numbers.</p>
+        <div class="cta-row">
+          <a class="button" href="/apply">Apply to a Program</a>
+          <a class="ghost" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Ask in Discord</a>
+        </div>
+      </div>
+      <div class="terminal-card" aria-label="Code Orange terminal card">
+        <div class="terminal-bar"><span></span><span></span><span></span><strong>student@codeorange</strong></div>
+        <div class="terminal-body">
+          <p>$ whoami</p><p class="muted">bitcoin_builder.apprentice</p><p>$ cat mission.txt</p><p class="orange">Train devs in Asia. Strengthen the network.</p><p>$ ls programs/</p><p class="muted">rawbit/ privacy-track/ openclaw/ sovereign-bitcoiner/</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section-inner">
+  <div class="grid three"><div class="stat"><strong>50+</strong><span class="pill">Graduates</span><p>People trained through cohorts and technical workshops.</p></div><div class="stat"><strong>21</strong><span class="pill">Dojo graduates</span><p>Finished the Chaincode Labs BOSS Challenge aligned Bitcoin Dojo cohort.</p></div><div class="stat"><strong>13</strong><span class="pill">Active devs</span><p>Community members with live or recently reviewed OSS work.</p></div><div class="stat"><strong>8+</strong><span class="pill">Countries</span><p>Learners and contributors across Asia and beyond.</p></div><div class="stat"><strong>26</strong><span class="pill">Public repos</span><p>GitHub repositories across curriculum, impact, workshops, tools, and protocol practice.</p></div><div class="stat"><strong>21</strong><span class="pill">Source repos</span><p>Original Code Orange public repositories, with 5 forks used for protocol practice.</p></div></div>
+  <div class="photo-grid"><div class="photo-card wide tall">
+  <img src="/assets/new-workshops/workshop-nodes-miners.jpg" alt="Bitcoin nodes, miners, and devices on a Code Orange workshop table" loading="lazy">
+  <span class="photo-caption">Nodes, miners, and signers</span>
+</div><div class="photo-card tall">
+  <img src="/assets/new-workshops/workshop-miner-close.jpg" alt="Close-up of Code Orange Bitcoin mining hardware" loading="lazy">
+  <span class="photo-caption">Mining hardware close-up</span>
+</div></div>
+</section>
+<section class="band"><div class="section-inner split">
+  <div><p class="eyebrow">Proof it works</p><h2>Bitcoin Dojo Cohort: 21 graduates.</h2><p class="lead">In partnership with Chaincode Labs BOSS Challenge, Code Orange ran an 8-week protocol deep-dive. 49 enrolled. 21 finished with a clear plan to contribute to Bitcoin open source.</p></div>
+  <div class="timeline"><div class="timeline-item"><div><h3>Weeks 1-2</h3><p>Finite fields, elliptic curves, and secp256k1.</p></div></div><div class="timeline-item"><div><h3>Week 3</h3><p>ECDSA signing, verification, and the discrete log problem.</p></div></div><div class="timeline-item"><div><h3>Week 5</h3><p>Transactions, UTXO set, sighash flags, and timelocks.</p></div></div><div class="timeline-item"><div><h3>Week 7</h3><p>P2P networking, mempool propagation, and compact blocks.</p></div></div><div class="timeline-item"><div><h3>Week 8</h3><p>Mining, difficulty adjustment, Stratum V2, and Taproot.</p></div></div></div>
+</div></section>
+<section class="section-inner">
+  <div class="split"><div><p class="eyebrow">Public Proof on GitHub</p><h2>Proof of work. All inspectable.</h2></div><p class="lead">The Code Orange GitHub account lists 26 public repositories: 21 source repos and 5 forks across contribution tracking, curriculum, impact reporting, community profiles, fellowship material, workshop assets, and Bitcoin project practice. This is the public layer behind the school.</p></div>
+  <div class="grid three"><a class="card repo-card" href="https://github.com/code-orange-dev/PR-tracking-dashboard" target="_blank" rel="noopener">
+  <div class="card-body">
+    <span class="pill orange">Contribution proof</span>
+    <h3>PR-tracking-dashboard</h3>
+    <p>Tracks Code Orange community pull requests so student output can be inspected in public.</p>
+    <span class="pill">Open on GitHub</span>
+  </div>
+</a><a class="card repo-card" href="https://github.com/code-orange-dev/curriculum" target="_blank" rel="noopener">
+  <div class="card-body">
+    <span class="pill orange">Open education</span>
+    <h3>curriculum</h3>
+    <p>Reusable workshop and cohort material for communities that want to run Bitcoin education locally.</p>
+    <span class="pill">Open on GitHub</span>
+  </div>
+</a><a class="card repo-card" href="https://github.com/code-orange-dev/dev-community" target="_blank" rel="noopener">
+  <div class="card-body">
+    <span class="pill orange">Builder profiles</span>
+    <h3>dev-community</h3>
+    <p>Public developer profiles and emerging contributor records from the Code Orange community.</p>
+    <span class="pill">Open on GitHub</span>
+  </div>
+</a><a class="card repo-card" href="https://github.com/code-orange-dev/impact-report" target="_blank" rel="noopener">
+  <div class="card-body">
+    <span class="pill orange">Funders and partners</span>
+    <h3>impact-report</h3>
+    <p>Impact reporting material that gives supporters a clearer view of the school output.</p>
+    <span class="pill">Open on GitHub</span>
+  </div>
+</a><a class="card repo-card" href="https://github.com/code-orange-dev/fellowships" target="_blank" rel="noopener">
+  <div class="card-body">
+    <span class="pill orange">Funding pipeline</span>
+    <h3>fellowships</h3>
+    <p>Public fellowship material for Bitcoin developers and technical educators.</p>
+    <span class="pill">Open on GitHub</span>
+  </div>
+</a><a class="card repo-card" href="https://github.com/code-orange-dev/grad-pipeline" target="_blank" rel="noopener">
+  <div class="card-body">
+    <span class="pill orange">Next steps</span>
+    <h3>grad-pipeline</h3>
+    <p>The graduate contribution pipeline that points builders from cohort work into public repositories.</p>
+    <span class="pill">Open on GitHub</span>
+  </div>
+</a></div>
+  <div class="cta-row" style="margin-top:28px"><a class="button" href="https://github.com/code-orange-dev" target="_blank" rel="noopener">View GitHub Org</a><a class="ghost" href="https://github.com/code-orange-dev/PR-tracking-dashboard" target="_blank" rel="noopener">Open PR Tracker</a></div>
+</section>
+<section class="band"><div class="section-inner">
+  <div class="split"><div><p class="eyebrow">Contribution Surfaces</p><h2>Where students learn to work in public.</h2></div><p class="lead">Code Orange keeps practical tools and learning materials public, while pointing advanced students toward Bitcoin and Lightning codebases where real review happens.</p></div>
+  <div class="grid two">
+    <div class="card"><div class="card-body"><span class="pill orange">Education toolkit</span><h3>Reusable community assets.</h3><p>Workshop slides, local community projects, backup worksheets, and small learning apps help community leaders teach from the same public base.</p><div class="meta"><a class="pill" href="https://github.com/code-orange-dev/workshops" target="_blank" rel="noopener">workshops</a><a class="pill" href="https://github.com/code-orange-dev/bitcoin-island" target="_blank" rel="noopener">bitcoin-island</a><a class="pill" href="https://github.com/code-orange-dev/seed-phrase-backup-sheet" target="_blank" rel="noopener">seed-phrase-backup-sheet</a><a class="pill" href="https://github.com/code-orange-dev/address-generator" target="_blank" rel="noopener">address-generator</a></div></div></div>
+    <div class="card"><div class="card-body"><span class="pill orange">Protocol practice</span><h3>Real Bitcoin repositories.</h3><p>Advanced contributors learn against forks of Bitcoin and Lightning projects before moving work upstream or into ecosystem repositories.</p><div class="meta"><a class="pill" href="https://github.com/code-orange-dev/rust-bitcoin" target="_blank" rel="noopener">rust-bitcoin</a><a class="pill" href="https://github.com/code-orange-dev/bdk" target="_blank" rel="noopener">bdk</a><a class="pill" href="https://github.com/code-orange-dev/lnd" target="_blank" rel="noopener">lnd</a><a class="pill" href="https://github.com/code-orange-dev/lightning" target="_blank" rel="noopener">lightning</a><a class="pill" href="https://github.com/code-orange-dev/btcd" target="_blank" rel="noopener">btcd</a></div></div></div>
+  </div>
+</div></section>
+  <section class="section-inner final-cta">
+  <p class="eyebrow">Bitcoin Only</p>
+  <h2>Ready to become a Bitcoin builder?</h2>
+  <p class="lead" style="margin-left:auto;margin-right:auto">Join the next cohort, drop into a workshop, or come say hello in Discord. The community is free and open.</p>
+  <div class="cta-row" style="justify-content:center"><a class="button" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord</a><a class="ghost" href="/apply">Apply Now</a></div>
+</section>
+</main>
+<footer class="footer">
+  <div class="footer-media">
+    <video data-lazy-video data-src="/assets/co-footer.mp4" poster="/assets/co-footer-poster.jpg" autoplay muted loop playsinline preload="none"></video>
+    <div class="footer-media-copy">
+      <p class="eyebrow">Scenes from the school</p>
+      <h2>Real workshops. Real devices. Real Bitcoin builders.</h2>
+    </div>
+  </div>
+  <div class="footer-grid">
+    <div>
+      <img src="/assets/logo-white.png" alt="Code Orange Dev School" style="height:58px;width:auto;margin-bottom:18px">
+      <p style="color:var(--dim);max-width:420px;line-height:1.7">Code Orange Dev School trains Bitcoin developers, node runners, and technical community leaders from Bali into the wider Asian Bitcoin ecosystem.</p>
+      <p><a href="mailto:hello@codeorange.dev">hello@codeorange.dev</a></p>
+      <div class="cta-row" style="gap:10px;justify-content:flex-start">
+        <a class="ghost small" href="https://x.com/CodeOrangeDevs" target="_blank" rel="noopener">X</a>
+        <a class="ghost small" href="https://www.instagram.com/codeorangedevs" target="_blank" rel="noopener">Instagram</a>
+        <a class="ghost small" href="https://njump.me/npub1gxqyeea3xspkd68mxlxsvvk3gdzdd555u504ynwpdj0ghg503mvq2gydt0" target="_blank" rel="noopener">Nostr</a>
+        <a class="ghost small" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a>
+      </div>
+    </div>
+    <div>
+      <div class="link-list">
+        <strong>School</strong>
+        <a href="/about">About</a>
+        <a href="/consulting">Consulting</a>
+        <a href="/impact">Impact</a>
+        <a href="/community">Community</a>
+        <a href="/fellowships">Fellowships</a>
+        <a href="/calendar">Calendar</a>
+        <a href="/strategy">Strategy</a>
+        <a href="https://geyser.fund/project/codeorangedevschool" target="_blank" rel="noopener">Support on Geyser</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

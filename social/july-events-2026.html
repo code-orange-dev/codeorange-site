@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Code Orange July 2026 Events</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 1080px; height: 1350px; overflow: hidden; background: #0B1220; }
+  body {
+    font-family: "Space Grotesk", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: #F5F1EA;
+  }
+  .poster {
+    position: relative;
+    width: 1080px;
+    height: 1350px;
+    padding: 48px 54px;
+    overflow: hidden;
+    background:
+      linear-gradient(180deg, rgba(11,18,32,0.92), rgba(11,18,32,0.96)),
+      radial-gradient(circle at 82% 14%, rgba(247,147,26,0.24), transparent 24%),
+      radial-gradient(circle at 4% 70%, rgba(255,179,71,0.14), transparent 24%),
+      #0B1220;
+  }
+  .poster::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 54px 54px;
+    opacity: 0.58;
+  }
+  .poster::after {
+    content: "";
+    position: absolute;
+    right: -220px;
+    top: 80px;
+    width: 540px;
+    height: 540px;
+    border-radius: 50%;
+    background: #F7931A;
+    opacity: 0.16;
+  }
+  .content { position: relative; z-index: 1; }
+  .top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 28px;
+  }
+  .logo { width: 205px; height: auto; display: block; }
+  .month-pill {
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    color: #0B1220;
+    background: #F7931A;
+    border-radius: 8px;
+    padding: 12px 18px;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    box-shadow: 0 18px 60px rgba(247,147,26,0.25);
+  }
+  .eyebrow {
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    color: #F7931A;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin: 0 0 12px;
+  }
+  h1 {
+    font-family: "Courier New", ui-monospace, monospace;
+    font-size: 67px;
+    line-height: 0.96;
+    font-weight: 900;
+    letter-spacing: 0;
+    margin: 0;
+    max-width: 780px;
+  }
+  h1 span { color: #F7931A; }
+  .sub {
+    margin: 18px 0 22px;
+    color: #C8CDD9;
+    font-size: 24px;
+    line-height: 1.34;
+    max-width: 890px;
+  }
+  .sub strong { color: #F7931A; }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .stat {
+    border: 1px solid rgba(255,255,255,0.13);
+    background: rgba(255,255,255,0.055);
+    border-radius: 8px;
+    padding: 13px 16px;
+  }
+  .stat strong {
+    display: block;
+    color: #F7931A;
+    font-size: 28px;
+    line-height: 1;
+  }
+  .stat span {
+    display: block;
+    margin-top: 8px;
+    color: #8C94A6;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  .events {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .event {
+    display: grid;
+    grid-template-columns: 118px 1fr auto;
+    align-items: center;
+    gap: 20px;
+    min-height: 64px;
+    padding: 8px 15px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(7,13,24,0.82);
+    border-radius: 8px;
+    box-shadow: inset 4px 0 0 rgba(247,147,26,0.85);
+  }
+  .date {
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    color: #0B1220;
+    background: #F7931A;
+    border-radius: 7px;
+    padding: 7px 8px;
+    text-align: center;
+    font-weight: 900;
+    line-height: 1;
+  }
+  .date small {
+    display: block;
+    margin-top: 6px;
+    font-size: 13px;
+    color: rgba(11,18,32,0.72);
+    letter-spacing: 0.08em;
+  }
+  .title {
+    font-size: 21px;
+    line-height: 1.15;
+    font-weight: 800;
+  }
+  .meta {
+    margin-top: 4px;
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    color: #8C94A6;
+    font-size: 14px;
+    line-height: 1.35;
+  }
+  .tag {
+    justify-self: end;
+    border: 1px solid rgba(247,147,26,0.42);
+    color: #F5F1EA;
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12px;
+    white-space: nowrap;
+    background: rgba(247,147,26,0.08);
+  }
+  .orange { color: #F7931A; }
+  html.transparent, html.transparent body { background: transparent; }
+  html.transparent .poster { background: transparent; }
+  html.transparent .poster::before, html.transparent .poster::after { display: none; }
+</style>
+</head>
+<body>
+  <main class="poster">
+    <div class="content">
+      <div class="top">
+        <img class="logo" src="../assets/logo-white.png" alt="Code Orange Dev School">
+        <div class="month-pill">July 2026</div>
+      </div>
+
+      <p class="eyebrow">Code Orange Dev School</p>
+      <h1>Bitcoin events for <span>builders.</span></h1>
+      <p class="sub">Save the dates for Code Orange workshops, study cohorts, meetups, reading clubs, and Bali sessions. All times are WITA (UTC+8). <strong>Book your calendar at codeorange.dev/calendar.</strong></p>
+
+      <section class="stats" aria-label="July event summary">
+        <div class="stat"><strong>12</strong><span>Total sessions</span></div>
+        <div class="stat"><strong>9</strong><span>Event types</span></div>
+        <div class="stat"><strong>3</strong><span>Bali meetups</span></div>
+      </section>
+
+      <section class="events" aria-label="July 2026 events">
+        <div class="event">
+          <div class="date">JUL 02<small>THU</small></div>
+          <div><div class="title">Bitcoin Basics</div><div class="meta">19:00-20:30 - Discord</div></div>
+          <div class="tag">Beginner</div>
+        </div>
+        <div class="event">
+          <div class="date">06/13/20/27<small>MON</small></div>
+          <div><div class="title">rawBit Study Cohort</div><div class="meta">19:00 - Learn Bitcoin transactions from scratch</div></div>
+          <div class="tag">Cohort</div>
+        </div>
+        <div class="event">
+          <div class="date">JUL 08<small>WED</small></div>
+          <div><div class="title">Sovereign Bitcoiner Workshop</div><div class="meta">19:00-20:00 - Self-custody, nodes, privacy</div></div>
+          <div class="tag">Sovereignty</div>
+        </div>
+        <div class="event">
+          <div class="date">JUL 15<small>WED</small></div>
+          <div><div class="title">OpenClaw Workshop for Bitcoiners</div><div class="meta">20:00 - Discord Bitcoiner Lounge</div></div>
+          <div class="tag">AI Tools</div>
+        </div>
+        <div class="event">
+          <div class="date">JUL 15<small>WED</small></div>
+          <div><div class="title">Vibe Coding on Nostr</div><div class="meta">20:00-21:30 - Build censorship-resistant apps</div></div>
+          <div class="tag">Nostr</div>
+        </div>
+        <div class="event">
+          <div class="date">JUL 22<small>WED</small></div>
+          <div><div class="title">Bitcoin Reading Club</div><div class="meta">20:00-21:30 - Read, discuss, ship better notes</div></div>
+          <div class="tag">Reading</div>
+        </div>
+        <div class="event">
+          <div class="date">JUL 26<small>SUN</small></div>
+          <div><div class="title">Bitcoin Workshop</div><div class="meta">17:00-18:00 - Bitcoin House Bali</div></div>
+          <div class="tag">In person</div>
+        </div>
+        <div class="event">
+          <div class="date">JUL 27<small>MON</small></div>
+          <div><div class="title">Bitcoin Meetup Ubud</div><div class="meta">18:00-19:00 - Pizza Napoli Style, Ubud</div></div>
+          <div class="tag">In person</div>
+        </div>
+        <div class="event">
+          <div class="date">JUL 28<small>TUE</small></div>
+          <div><div class="title">OpenClaw + Vibe Coding Workshop</div><div class="meta">17:00-18:00 - Bitcoin House Bali</div></div>
+          <div class="tag">In person</div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <script>
+    if (new URLSearchParams(window.location.search).has("transparent")) {
+      document.documentElement.classList.add("transparent");
+    }
+  </script>
+</body>
+</html>
