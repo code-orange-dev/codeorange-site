@@ -40,8 +40,10 @@ const staticHomepage = `
     #static-homepage .co-button { display: inline-block; padding: 13px 20px; border: 1px solid rgba(255,255,255,.16); border-radius: 8px; font-weight: 700; text-decoration: none; }
     #static-homepage .co-button.primary { border-color: #F7931A; background: #F7931A; color: #0B1220; }
     #static-homepage .co-hero { position: relative; overflow: hidden; padding: 88px 0 68px; background: #0B1220; }
+    #static-homepage .co-hero-video { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; opacity: .92; }
+    #static-homepage .co-hero:after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(11,18,32,.68), rgba(11,18,32,.88)); pointer-events: none; }
     #static-homepage .co-hero:before { content: ""; position: absolute; inset: 0; background: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(180deg, rgba(11,18,32,.74), rgba(11,18,32,.88)), url("/assets/new-workshops/workshop-nodes-miners.jpg"); background-size: 48px 48px, 48px 48px, auto, cover; background-position: 0 0, 0 0, center, center; opacity: .92; }
-    #static-homepage .co-hero .co-wrap { position: relative; }
+    #static-homepage .co-hero .co-wrap { position: relative; z-index: 2; }
     #static-homepage .co-lead { max-width: 710px; margin: 24px 0 30px; font-size: 18px; }
     #static-homepage .co-paths { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; max-width: 900px; margin-top: 42px; }
     #static-homepage .co-path { display: block; min-height: 192px; padding: 22px; border: 1px solid rgba(255,255,255,.13); border-radius: 16px; background: rgba(18,33,59,.84); text-decoration: none; }
@@ -49,7 +51,7 @@ const staticHomepage = `
     #static-homepage .co-path span { color: #8C94A6; font-size: 14px; line-height: 1.5; }
     #static-homepage .co-section { padding: 88px 0; }
     #static-homepage .co-photo-section { position: relative; overflow: hidden; isolation: isolate; }
-    #static-homepage .co-photo-section:before { content: ""; position: absolute; inset: 0; z-index: -1; background-image: linear-gradient(180deg, rgba(11,18,32,.9), rgba(11,18,32,.96)), var(--co-bg); background-size: cover; background-position: var(--co-bg-pos, center); }
+    #static-homepage .co-photo-section:before { content: ""; position: absolute; inset: 0; z-index: -1; background-image: linear-gradient(180deg, rgba(11,18,32,.76), rgba(11,18,32,.92)), var(--co-bg); background-size: cover; background-position: var(--co-bg-pos, center); }
     #static-homepage .co-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 34px; }
     #static-homepage .co-card { padding: 24px; border: 1px solid rgba(255,255,255,.1); border-radius: 16px; background: #12213B; }
     #static-homepage .co-card p { margin: 12px 0 0; font-size: 14px; }
@@ -110,7 +112,7 @@ const staticHomepage = `
     <nav class="co-links" aria-label="Primary"><a href="/programs">Programs</a><a href="/calendar">Calendar</a><a href="/community">Community</a><a href="/impact">Impact</a><a href="/about">About</a></nav>
     <div class="co-actions"><a class="co-button" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a><a class="co-button primary" href="/apply">Apply now</a></div>
   </div></header>
-  <section id="top" class="co-hero"><div class="co-wrap">
+  <section id="top" class="co-hero"><video class="co-hero-video" src="/assets/co-workshop-bg.mp4" poster="/assets/new-workshops/workshop-nodes-miners.jpg" autoplay muted loop playsinline preload="metadata"></video><div class="co-wrap">
     <p class="co-eyebrow">Asia's Bitcoin Developer School · Singapore 🇸🇬</p>
     <h1>A Bitcoin OSS contributor pipeline <span style="color:#F7931A">with a fellowship layer.</span></h1>
     <p class="co-lead">Learn practical Bitcoin skills, become a capable builder, or bring hands-on Bitcoin education to your local community. Code Orange runs cohorts, workshops, and public open-source contribution paths across Asia.</p>

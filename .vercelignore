@@ -1,7 +1,5 @@
 # Keep deployments lean. These files are kept locally but are not referenced by
 # the current live website.
-assets/co-workshop-bg.mp4
-assets/mission-video.mp4
 assets/co-film.mp4
 assets/co-canggu.mp4
 assets/photo-miner-table.png

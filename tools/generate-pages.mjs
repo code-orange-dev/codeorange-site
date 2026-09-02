@@ -365,7 +365,7 @@ a { color: inherit; }
 .ghost { border: 1px solid rgba(255,255,255,.16); color: var(--text); }
 .ghost:hover { border-color: var(--orange); color: var(--orange); }
 .small { min-height: 40px; padding: 9px 18px; font-size: 14px; }
-.hero { position: relative; overflow: hidden; background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px); background-size: 48px 48px; }
+.hero { position: relative; overflow: hidden; background-image: linear-gradient(rgba(11,18,32,.78), rgba(11,18,32,.92)), linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px), url("/assets/latest-workshops/workshop-latest-builders.jpg"); background-size: auto, 48px 48px, 48px 48px, cover; background-position: center, 0 0, 0 0, center 42%; }
 .hero-grid, .section-inner { max-width: 1240px; margin: 0 auto; padding: 96px 32px; }
 .hero-grid { display: grid; grid-template-columns: minmax(0,1.08fr) minmax(320px,.92fr); gap: 64px; align-items: center; }
 .glow { position: absolute; top: -160px; right: -110px; width: 740px; height: 740px; border-radius: 50%; background: radial-gradient(circle, rgba(247,147,26,.14), transparent 66%); pointer-events: none; }
