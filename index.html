@@ -42,6 +42,7 @@
 
 
 
+
 <main id="static-homepage">
   <style>
     #static-homepage { background: #0B1220; color: #F5F1EA; font-family: "Space Grotesk", system-ui, sans-serif; min-height: 100vh; overflow-x: hidden; }
@@ -68,7 +69,17 @@
     #static-homepage .co-hero:after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(11,18,32,.68), rgba(11,18,32,.88)); pointer-events: none; }
     #static-homepage .co-hero:before { content: ""; position: absolute; inset: 0; background: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(180deg, rgba(11,18,32,.74), rgba(11,18,32,.88)), url("/assets/new-workshops/workshop-nodes-miners.jpg"); background-size: 48px 48px, 48px 48px, auto, cover; background-position: 0 0, 0 0, center, center; opacity: .92; }
     #static-homepage .co-hero .co-wrap { position: relative; z-index: 2; }
+    #static-homepage .co-hero-grid { display: grid; grid-template-columns: minmax(0, 1.04fr) minmax(320px, .86fr); gap: 54px; align-items: center; }
     #static-homepage .co-lead { max-width: 710px; margin: 24px 0 30px; font-size: 18px; }
+    #static-homepage .co-terminal { overflow: hidden; border: 1px solid rgba(255,255,255,.1); border-radius: 20px; background: #0F1A2E; box-shadow: 0 20px 60px rgba(0,0,0,.45); }
+    #static-homepage .co-terminal-top { display: flex; align-items: center; gap: 8px; padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,.08); background: #12213B; }
+    #static-homepage .co-dot { width: 12px; height: 12px; border-radius: 50%; }
+    #static-homepage .co-prompt { margin-left: 10px; color: #8C94A6; font: 500 12px/1 "JetBrains Mono", monospace; }
+    #static-homepage .co-terminal-body { min-height: 264px; padding: 24px 24px 28px; font: 400 14px/1.9 "JetBrains Mono", monospace; }
+    #static-homepage .co-terminal-body p { margin: 0; }
+    #static-homepage .co-terminal-body ol { margin: 0; padding-left: 22px; color: #C8CDD9; }
+    #static-homepage .co-terminal-body li { padding: 2px 0; }
+    #static-homepage .co-cursor { display: inline-block; width: 8px; height: 16px; margin-left: 4px; background: #F7931A; vertical-align: -3px; }
     #static-homepage .co-paths { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; max-width: 900px; margin-top: 42px; }
     #static-homepage .co-path { display: block; min-height: 192px; padding: 22px; border: 1px solid rgba(255,255,255,.13); border-radius: 16px; background: rgba(18,33,59,.84); text-decoration: none; }
     #static-homepage .co-path strong { display: block; margin: 8px 0; font-size: 18px; }
@@ -107,11 +118,13 @@
       #static-homepage .co-nav { padding: 16px 0; align-items: flex-start; flex-direction: column; }
       #static-homepage .co-nav img { width: 132px; }
       #static-homepage .co-links { display: none; }
+      #static-homepage .co-hero-grid { grid-template-columns: 1fr; gap: 34px; }
       #static-homepage h1 { font-size: clamp(34px, 10.5vw, 48px); line-height: 1.05; }
       #static-homepage h2 { font-size: clamp(30px, 8.5vw, 40px); line-height: 1.08; }
       #static-homepage .co-lead { font-size: 16px; line-height: 1.62; }
       #static-homepage .co-paths, #static-homepage .co-grid, #static-homepage .co-people { grid-template-columns: 1fr; }
       #static-homepage .co-path { min-height: 0; padding: 20px; border-radius: 14px; }
+      #static-homepage .co-terminal-body { min-height: 0; padding: 20px; font-size: 12px; line-height: 1.75; }
       #static-homepage .co-card, #static-homepage .co-person, #static-homepage .co-list article { border-radius: 14px; }
       #static-homepage .co-list article { grid-template-columns: 1fr; }
       #static-homepage .co-meta { text-align: left; }
@@ -137,14 +150,34 @@
     <div class="co-actions"><a class="co-button" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a><a class="co-button primary" href="/apply">Apply now</a></div>
   </div></header>
   <section id="top" class="co-hero"><video class="co-hero-video" src="/assets/co-workshop-bg.mp4" poster="/assets/new-workshops/workshop-nodes-miners.jpg" autoplay muted loop playsinline preload="metadata"></video><div class="co-wrap">
-    <p class="co-eyebrow">Asia's Bitcoin Developer School · Singapore 🇸🇬</p>
-    <h1>A Bitcoin OSS contributor pipeline <span style="color:#F7931A">with a fellowship layer.</span></h1>
-    <p class="co-lead">Learn practical Bitcoin skills, become a capable builder, or bring hands-on Bitcoin education to your local community. Code Orange runs cohorts, workshops, and public open-source contribution paths across Asia.</p>
-    <div class="co-actions"><a class="co-button primary" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord, it’s free</a><a class="co-button" href="/programs">Browse programs</a></div>
-    <div class="co-paths" aria-label="Choose your path">
-      <a class="co-path" href="/programs/bitcoin-basics"><span aria-hidden="true" style="font-size:25px">₿</span><strong>Learn Bitcoin</strong><span>Start with self-custody, nodes, privacy, and Bitcoin fundamentals. No developer background required.</span></a>
-      <a class="co-path" href="/rawbit"><span aria-hidden="true" style="font-size:25px">⌘</span><strong>Become a contributor</strong><span>Move from technical curiosity to an open-source contribution with structured peer support.</span></a>
-      <a class="co-path" href="https://github.com/code-orange-dev/curriculum" target="_blank" rel="noopener"><span aria-hidden="true" style="font-size:25px">◎</span><strong>Host a workshop</strong><span>Use open, editable workshop material to bring Bitcoin education to your city.</span></a>
+    <div class="co-hero-grid">
+      <div>
+        <p class="co-eyebrow">Asia's Bitcoin Developer School · Singapore 🇸🇬</p>
+        <h1>A Bitcoin OSS contributor pipeline <span style="color:#F7931A">with a fellowship layer.</span></h1>
+        <p class="co-lead">Learn practical Bitcoin skills, become a capable builder, or bring hands-on Bitcoin education to your local community. Code Orange runs cohorts, workshops, and public open-source contribution paths across Asia.</p>
+        <div class="co-actions"><a class="co-button primary" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord, it’s free</a><a class="co-button" href="/programs">Browse programs</a></div>
+        <div class="co-paths" aria-label="Choose your path">
+          <a class="co-path" href="/programs/bitcoin-basics"><span aria-hidden="true" style="font-size:25px">₿</span><strong>Learn Bitcoin</strong><span>Start with self-custody, nodes, privacy, and Bitcoin fundamentals. No developer background required.</span></a>
+          <a class="co-path" href="/rawbit"><span aria-hidden="true" style="font-size:25px">⌘</span><strong>Become a contributor</strong><span>Move from technical curiosity to an open-source contribution with structured peer support.</span></a>
+          <a class="co-path" href="https://github.com/code-orange-dev/curriculum" target="_blank" rel="noopener"><span aria-hidden="true" style="font-size:25px">◎</span><strong>Host a workshop</strong><span>Use open, editable workshop material to bring Bitcoin education to your city.</span></a>
+        </div>
+      </div>
+      <div class="co-terminal" aria-label="Code Orange developer pipeline">
+        <div class="co-terminal-top"><span class="co-dot" style="background:#FF5F56"></span><span class="co-dot" style="background:#FFBD2E"></span><span class="co-dot" style="background:#27C93F"></span><span class="co-prompt">student@codeorange: ~</span></div>
+        <div class="co-terminal-body">
+          <p style="color:#F7931A; margin-bottom:12px;">$ cat developer-pipeline.txt</p>
+          <p style="color:#F5F1EA; margin-bottom:16px;">Our developer pipeline:</p>
+          <ol>
+            <li>Workshops and meetups</li>
+            <li>Study cohorts</li>
+            <li>Privacy Track</li>
+            <li>Code Review Club</li>
+            <li>Fellowships</li>
+            <li style="color:#F5F1EA;">Full-time Bitcoin OSS development</li>
+          </ol>
+          <p style="margin-top:16px; color:#8C94A6;">$ status: builders moving from first meetup to public contribution<span class="co-cursor"></span></p>
+        </div>
+      </div>
     </div>
   </div></section>
   <section class="co-section co-photo-section" style="--co-bg:url('/assets/latest-workshops/workshop-latest-table.jpg'); --co-bg-pos:center 52%;"><div class="co-wrap"><p class="co-eyebrow">Programs</p><h2>Pick a practical next step.</h2><div class="co-grid">
