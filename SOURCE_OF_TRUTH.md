@@ -43,4 +43,8 @@ Do not use these older folders as the website source:
 
 GitHub status:
 
-This folder should be pushed to a dedicated website repository, ideally `code-orange-dev/codeorange-site` or `code-orange-dev/codeorange.dev`. GitHub CLI authentication on this machine was stale during setup, so publishing requires a fresh GitHub login or a confirmed existing repo URL.
+This folder is pushed to the dedicated website repository:
+
+`https://github.com/code-orange-dev/codeorange-site`
+
+Use this repository as the website source of truth going forward.
