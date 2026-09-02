@@ -212,7 +212,22 @@
   </section>
 
   <!-- ══════════ MARQUEE ══════════ -->
-  <div data-screen-label="Marquee" style="border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); background: #0F1A2E; overflow: hidden; padding: 16px 0;">{{ marqueeEl }}</div>
+  <div data-screen-label="Marquee" style="border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); background: #0F1A2E; overflow: hidden; padding: 16px 0;">
+    <div style="display: flex; width: max-content; animation: co-marquee 26s linear infinite;">
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #8C94A6; padding-right: 42px;">Workshops and meetups</span>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #F7931A; padding-right: 42px;">Study cohorts</span>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #8C94A6; padding-right: 42px;">Privacy Track</span>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #F7931A; padding-right: 42px;">Code Review Club</span>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #8C94A6; padding-right: 42px;">Fellowships</span>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #F7931A; padding-right: 42px;">Full-time Bitcoin OSS development</span>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #8C94A6; padding-right: 42px;">Workshops and meetups</span>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #F7931A; padding-right: 42px;">Study cohorts</span>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #8C94A6; padding-right: 42px;">Privacy Track</span>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #F7931A; padding-right: 42px;">Code Review Club</span>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #8C94A6; padding-right: 42px;">Fellowships</span>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #F7931A; padding-right: 42px;">Full-time Bitcoin OSS development</span>
+    </div>
+  </div>
 
   <!-- ══════════ MISSION ══════════ -->
   <section id="mission" data-screen-label="Mission" data-pad="lg" style="max-width: 1240px; margin: 0 auto; padding: 140px 32px; scroll-margin-top: 96px; background-image: linear-gradient(90deg, rgba(11,18,32,0.88), rgba(11,18,32,0.66)), url('assets/latest-workshops/workshop-latest-builders.jpg'); background-size: cover; background-position: center; border-inline: 1px solid rgba(255,255,255,0.04);">
@@ -308,26 +323,60 @@
         <p style="font-size: 17px; line-height: 1.6; color: #8C94A6; margin: 0; max-width: 520px;">Whether you're a developer or a curious bitcoiner, there's a program that meets you where you are.</p>
       </div>
       <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-        <sc-for list="{{ filters }}" as="f" hint-placeholder-count="3">
-          <button onClick="{{ f.onClick }}" style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 999px; cursor: pointer; transition: all 120ms; background: {{ f.bg }}; color: {{ f.color }}; border: 1px solid {{ f.border }};">{{ f.label }}</button>
-        </sc-for>
+        <a href="/programs" style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 999px; background: #F7931A; color: #0B1220; border: 1px solid #F7931A; text-decoration: none;">All programs</a>
+        <a href="/rawbit" style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 999px; background: transparent; color: #C8CDD9; border: 1px solid rgba(255,255,255,0.16); text-decoration: none;">Developers</a>
+        <a href="/programs/sovereign-bitcoiner" style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 999px; background: transparent; color: #C8CDD9; border: 1px solid rgba(255,255,255,0.16); text-decoration: none;">Bitcoiners</a>
       </div>
     </div>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px;">
-      <sc-for list="{{ visiblePrograms }}" as="p" hint-placeholder-count="4">
-        <a href="{{ p.href }}" target="{{ p.target }}" rel="noopener" style="display: flex; flex-direction: column; background: #12213B; border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 16px 16px 24px; text-decoration: none; transition: all 240ms cubic-bezier(0.2, 0.8, 0.2, 1);" style-hover="transform: translateY(-4px); border-color: rgba(247,147,26,0.55); box-shadow: 0 20px 60px rgba(0,0,0,0.4);">
-          <div style="position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 16 / 10; margin-bottom: 18px;">
-            <img src="{{ p.photo }}" alt="{{ p.name }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
-            <div style="position: absolute; inset: 0; background: rgba(11,18,32,0.45);"></div>
-            <span style="position: absolute; top: 12px; left: 12px; font-size: 22px;">{{ p.emoji }}</span>
-            <span style="position: absolute; bottom: 12px; left: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #F5F1EA; background: rgba(11,18,32,0.8); padding: 5px 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.16);">{{ p.duration }}</span>
-          </div>
-          <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #F7931A; margin-bottom: 10px;">{{ p.label }}</span>
-          <span style="font-family: 'Special Elite', 'Courier New', monospace; font-size: 24px; line-height: 1.15; color: #F5F1EA; margin-bottom: 12px;">{{ p.name }}</span>
-          <span style="font-size: 14px; line-height: 1.6; color: #8C94A6; margin-bottom: 18px; flex: 1;">{{ p.desc }}</span>
-          <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: #F7931A;">Learn more →</span>
-        </a>
-      </sc-for>
+      <a href="/privacy-track" style="display: flex; flex-direction: column; background: #12213B; border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 16px 16px 24px; text-decoration: none; transition: all 240ms cubic-bezier(0.2, 0.8, 0.2, 1);" style-hover="transform: translateY(-4px); border-color: rgba(247,147,26,0.55); box-shadow: 0 20px 60px rgba(0,0,0,0.4);">
+        <div style="position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 16 / 10; margin-bottom: 18px;">
+          <img src="assets/new-workshops/workshop-hardware-builders.jpg" alt="Code Orange workshop with builders around a Bitcoin hardware table" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+          <div style="position: absolute; inset: 0; background: rgba(11,18,32,0.45);"></div>
+          <span style="position: absolute; top: 12px; left: 12px; font-size: 22px;">🔐</span>
+          <span style="position: absolute; bottom: 12px; left: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #F5F1EA; background: rgba(11,18,32,0.8); padding: 5px 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.16);">12 months</span>
+        </div>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #F7931A; margin-bottom: 10px;">Developer Track</span>
+        <span style="font-family: 'Special Elite', 'Courier New', monospace; font-size: 24px; line-height: 1.15; color: #F5F1EA; margin-bottom: 12px;">Bitcoin Privacy Track</span>
+        <span style="font-size: 14px; line-height: 1.6; color: #8C94A6; margin-bottom: 18px; flex: 1;">Contribution-first developer training around Silent Payments, Payjoin, Floresta, Fedimint, and Lightning privacy.</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: #F7931A;">Learn more →</span>
+      </a>
+      <a href="/rawbit" style="display: flex; flex-direction: column; background: #12213B; border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 16px 16px 24px; text-decoration: none; transition: all 240ms cubic-bezier(0.2, 0.8, 0.2, 1);" style-hover="transform: translateY(-4px); border-color: rgba(247,147,26,0.55); box-shadow: 0 20px 60px rgba(0,0,0,0.4);">
+        <div style="position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 16 / 10; margin-bottom: 18px;">
+          <img src="assets/new-workshops/workshop-table-builders.jpg" alt="Code Orange study cohort around a Bitcoin workshop table" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+          <div style="position: absolute; inset: 0; background: rgba(11,18,32,0.45);"></div>
+          <span style="position: absolute; top: 12px; left: 12px; font-size: 22px;">₿</span>
+          <span style="position: absolute; bottom: 12px; left: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #F5F1EA; background: rgba(11,18,32,0.8); padding: 5px 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.16);">10 weeks</span>
+        </div>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #F7931A; margin-bottom: 10px;">Study Cohort</span>
+        <span style="font-family: 'Special Elite', 'Courier New', monospace; font-size: 24px; line-height: 1.15; color: #F5F1EA; margin-bottom: 12px;">rawBit</span>
+        <span style="font-size: 14px; line-height: 1.6; color: #8C94A6; margin-bottom: 18px; flex: 1;">A protocol deep-dive through transactions, Scripts, Taproot, PSBTs, and P2P networking - with homework and sats.</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: #F7931A;">Learn more →</span>
+      </a>
+      <a href="/programs/sovereign-bitcoiner" style="display: flex; flex-direction: column; background: #12213B; border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 16px 16px 24px; text-decoration: none; transition: all 240ms cubic-bezier(0.2, 0.8, 0.2, 1);" style-hover="transform: translateY(-4px); border-color: rgba(247,147,26,0.55); box-shadow: 0 20px 60px rgba(0,0,0,0.4);">
+        <div style="position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 16 / 10; margin-bottom: 18px;">
+          <img src="assets/new-workshops/workshop-coldcard-table.jpg" alt="Bitcoin hardware wallet and node workshop table" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+          <div style="position: absolute; inset: 0; background: rgba(11,18,32,0.45);"></div>
+          <span style="position: absolute; top: 12px; left: 12px; font-size: 22px;">🛡️</span>
+          <span style="position: absolute; bottom: 12px; left: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #F5F1EA; background: rgba(11,18,32,0.8); padding: 5px 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.16);">Monthly</span>
+        </div>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #F7931A; margin-bottom: 10px;">Workshop</span>
+        <span style="font-family: 'Special Elite', 'Courier New', monospace; font-size: 24px; line-height: 1.15; color: #F5F1EA; margin-bottom: 12px;">Sovereign Bitcoiner</span>
+        <span style="font-size: 14px; line-height: 1.6; color: #8C94A6; margin-bottom: 18px; flex: 1;">Self-custody, full nodes, multisig, inheritance, Ecash, and Fedimint for people who want real independence.</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: #F7931A;">Learn more →</span>
+      </a>
+      <a href="/programs/openclaw" style="display: flex; flex-direction: column; background: #12213B; border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 16px 16px 24px; text-decoration: none; transition: all 240ms cubic-bezier(0.2, 0.8, 0.2, 1);" style-hover="transform: translateY(-4px); border-color: rgba(247,147,26,0.55); box-shadow: 0 20px 60px rgba(0,0,0,0.4);">
+        <div style="position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 16 / 10; margin-bottom: 18px;">
+          <img src="assets/new-workshops/workshop-miner-close.jpg" alt="Code Orange Bitcoin workshop devices and miner close up" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+          <div style="position: absolute; inset: 0; background: rgba(11,18,32,0.45);"></div>
+          <span style="position: absolute; top: 12px; left: 12px; font-size: 22px;">⌘</span>
+          <span style="position: absolute; bottom: 12px; left: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #F5F1EA; background: rgba(11,18,32,0.8); padding: 5px 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.16);">Workshop</span>
+        </div>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #F7931A; margin-bottom: 10px;">Engineering</span>
+        <span style="font-family: 'Special Elite', 'Courier New', monospace; font-size: 24px; line-height: 1.15; color: #F5F1EA; margin-bottom: 12px;">Agentic Engineering</span>
+        <span style="font-size: 14px; line-height: 1.6; color: #8C94A6; margin-bottom: 18px; flex: 1;">A practical workshop for building software with AI agents, open-source workflows, and Bitcoin-adjacent tools.</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: #F7931A;">Learn more →</span>
+      </a>
     </div>
     <div style="display: flex; justify-content: center; margin-top: 40px;">
       <a href="/programs" style="color: #F5F1EA; text-decoration: none; font-size: 15px; font-weight: 600; padding: 14px 32px; border: 1px solid rgba(255,255,255,0.16); border-radius: 8px; transition: all 120ms;" style-hover="border-color: #F7931A; color: #F7931A;">View all 9 programs →</a>
@@ -672,7 +721,7 @@
       <div style="display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; border-top: 1px solid rgba(255,255,255,0.06); padding: 28px 0 36px;">
         <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #5A6377;">₿ Bitcoin Only · 🔑 Self Custody · 🛡️ No KYC · ⚡ Lightning Native · 🦞 Nostr Native</span>
         <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #5A6377;">© 2026 Code Orange Dev School · Built with ⚡ in Bali, Indonesia</span>
-        <a href="https://mempool.space" target="_blank" rel="noopener" style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #F7931A; text-decoration: none;" style-hover="color: #FFB347;">⛏ block {{ blockHeight }}</a>
+        <a href="https://mempool.space" target="_blank" rel="noopener" style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #F7931A; text-decoration: none;" style-hover="color: #FFB347;">⛏ Bitcoin network live</a>
       </div>
     </div>
   </footer>

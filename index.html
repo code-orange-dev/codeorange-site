@@ -26,10 +26,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="/assets/new-workshops/workshop-nodes-miners.jpg">
 <script src="./support.js?v=20260902a" defer></script>
+<script src="/assets/lazy-video.js?v=20260902b" defer></script>
 <link rel="icon" type="image/svg+xml" href="/assets/favicon-bitcoin.svg">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"EducationalOrganization","name":"Code Orange Dev School","url":"https://codeorange.dev","email":"hello@codeorange.dev","description":"Bitcoin developer education, open-source cohorts, practical workshops, and fellowships for builders across Asia.","areaServed":"Asia","sameAs":["https://github.com/code-orange-dev","https://x.com/CodeOrangeDevs","https://www.instagram.com/codeorangedevs","https://njump.me/npub1gxqyeea3xspkd68mxlxsvvk3gdzdd555u504ynwpdj0ghg503mvq2gydt0"]}</script>
 </head>
 <body>
+
 
 
 
@@ -219,7 +221,7 @@
       requestAnimationFrame(() => requestAnimationFrame(markLiveWhenReady));
       return true;
     };
-    fetch('/home.dc.html', { cache: 'force-cache' })
+    fetch('/home.dc.html?v=20260902c', { cache: 'no-cache' })
       .then((response) => response.ok ? response.text() : Promise.reject(new Error('Unable to load homepage component')))
       .then((html) => {
         const staging = document.createElement('template');
