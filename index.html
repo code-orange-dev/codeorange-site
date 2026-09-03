@@ -25,7 +25,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="/assets/new-workshops/workshop-nodes-miners.jpg">
-<script src="./support.js?v=20260902a" defer></script>
 <script src="/assets/lazy-video.js?v=20260903a" defer></script>
 <link rel="icon" type="image/svg+xml" href="/assets/favicon-bitcoin.svg">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"EducationalOrganization","name":"Code Orange Dev School","url":"https://codeorange.dev","email":"hello@codeorange.dev","description":"Bitcoin developer education, open-source cohorts, practical workshops, and fellowships for builders across Asia.","areaServed":"Asia","sameAs":["https://github.com/code-orange-dev","https://x.com/CodeOrangeDevs","https://www.instagram.com/codeorangedevs","https://njump.me/npub1gxqyeea3xspkd68mxlxsvvk3gdzdd555u504ynwpdj0ghg503mvq2gydt0"]}</script>
@@ -114,7 +113,6 @@
     #static-homepage .co-media-footer div { position: relative; z-index: 1; max-width: 560px; padding: 34px; }
     #static-homepage footer { padding: 56px 0; border-top: 1px solid rgba(255,255,255,.08); }
     #static-homepage .co-foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; color: #8C94A6; font-size: 14px; }
-    html.dc-live #static-homepage { display: none; }
     @media (max-width: 760px) {
       #static-homepage .co-wrap { width: min(100% - 36px, 1240px); }
       #static-homepage .co-nav { padding: 16px 0; align-items: flex-start; flex-direction: column; }
@@ -187,7 +185,7 @@
     <article class="co-card"><span>₿ 10-week cohort</span><h3>rawBit</h3><p>A protocol deep-dive through transactions, Scripts, Taproot, PSBTs, and P2P networking - with homework and sats.</p></article>
     <article class="co-card"><span>🔐 12-month cohort</span><h3>Bitcoin Privacy Track</h3><p>Contribution-first developer training around Silent Payments, Payjoin, Floresta, Fedimint, and Lightning privacy.</p></article>
   </div><p style="margin-top:28px"><a class="co-button" href="/programs">View all programs →</a></p></div></section>
-  <section class="co-section co-dark co-photo-section" style="--co-bg:url('/assets/latest-workshops/workshop-latest-custody.jpg'); --co-bg-pos:center 52%;"><div class="co-wrap"><p class="co-eyebrow">Recurring events</p><h2>Always something happening.</h2><p class="co-lead">See the live Code Orange calendar here, then add it to your own calendar so workshops, cohorts, and study calls stay visible.</p><div class="co-calendar"><iframe title="Code Orange public student calendar" src="https://calendar.google.com/calendar/embed?src=466de2be7431d78be2049f96f5fd31f9b06b5a9cd94f909ba3182b18442ed499%40group.calendar.google.com&ctz=Asia%2FMakassar" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><p style="margin-top:28px"><a class="co-button" href="/calendar">Open calendar page →</a></p></div></section>
+  <section class="co-section co-dark"><div class="co-wrap"><p class="co-eyebrow">Recurring events</p><h2>Always something happening.</h2><p class="co-lead">See the live Code Orange calendar here, then add it to your own calendar so workshops, cohorts, and study calls stay visible.</p><div class="co-calendar"><iframe title="Code Orange public student calendar" src="https://calendar.google.com/calendar/embed?src=466de2be7431d78be2049f96f5fd31f9b06b5a9cd94f909ba3182b18442ed499%40group.calendar.google.com&ctz=Asia%2FMakassar" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><p style="margin-top:28px"><a class="co-button" href="/calendar">Open calendar page →</a></p></div></section>
   <section class="co-section co-photo-section" style="--co-bg:url('/assets/latest-workshops/workshop-latest-builders.jpg'); --co-bg-pos:center 42%;"><div class="co-wrap"><p class="co-eyebrow">Developer community</p><h2>We build the community. They build Bitcoin.</h2><p class="co-lead">Mentorship, structured cohorts, and a peer network help contributors make visible progress in the Bitcoin ecosystem.</p><div class="co-people">
     <article class="co-person"><b>🇮🇳 Chaitika</b><span>Silent Payments and Lightning cohorts at Bitshala Incubator.</span></article>
     <article class="co-person"><b>🇺🇦 Vaan</b><span>Contributor to rust-bitcoin and BDK wallet infrastructure.</span></article>
@@ -206,38 +204,5 @@
     <div class="co-foot"><span>Code Orange Dev School · Singapore 🇸🇬</span><span><a href="mailto:hello@codeorange.dev">hello@codeorange.dev</a> · <a href="https://github.com/code-orange-dev" target="_blank" rel="noopener">GitHub</a> · <a href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a></span></div>
   </div></footer>
 </main>
-<script>
-  (() => {
-    const markLiveWhenReady = () => {
-      if (document.querySelector('#dc-root .sc-host')) {
-        document.documentElement.classList.add('dc-live');
-        return true;
-      }
-      return false;
-    };
-    const boot = () => {
-      if (typeof window.__dcBoot !== 'function') return false;
-      window.__dcBoot();
-      requestAnimationFrame(() => requestAnimationFrame(markLiveWhenReady));
-      return true;
-    };
-    fetch('/home.dc.html?v=20260903a', { cache: 'no-cache' })
-      .then((response) => response.ok ? response.text() : Promise.reject(new Error('Unable to load homepage component')))
-      .then((html) => {
-        const staging = document.createElement('template');
-        staging.innerHTML = html.trim();
-        const component = staging.content.querySelector('x-dc');
-        if (!component) throw new Error('Homepage component is missing');
-        document.body.append(component);
-        if (boot()) return;
-        const timer = window.setInterval(() => {
-          if (boot()) window.clearInterval(timer);
-        }, 50);
-      })
-      .catch(() => {
-        // The static homepage remains available if JavaScript or this request fails.
-      });
-  })();
-</script>
 </body>
 </html>
