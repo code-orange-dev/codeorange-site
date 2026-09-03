@@ -67,9 +67,17 @@
     observer.observe(video);
   };
 
+  const loadNearby = () => {
+    document.querySelectorAll("video[data-lazy-video]").forEach((video) => {
+      const rect = video.getBoundingClientRect();
+      if (rect.top < window.innerHeight + 900 && rect.bottom > -900) load(video);
+    });
+  };
+
   const scan = (root = document) => {
     if (root.matches?.("video")) observe(root);
     root.querySelectorAll?.("video").forEach(observe);
+    loadNearby();
   };
 
   const start = () => {
@@ -87,6 +95,11 @@
         });
       }
     }).observe(document.documentElement, { childList: true, subtree: true });
+    window.addEventListener("scroll", loadNearby, { passive: true });
+    window.addEventListener("resize", loadNearby, { passive: true });
+    window.setTimeout(() => {
+      document.querySelectorAll("video[data-lazy-video]").forEach(load);
+    }, 3500);
   };
 
   if (document.readyState === "loading") {
