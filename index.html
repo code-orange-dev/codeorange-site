@@ -3,31 +3,31 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Code Orange Dev School - Asia's Bitcoin Developer School</title>
-<meta name="description" content="Bitcoin lacks developers and node runners in Asia. Code Orange fixes this - hands-on cohorts, workshops, and open source contribution, from Bali.">
+<title>Code Orange Dev School - Bitcoin Developer School</title>
+<meta name="description" content="Bitcoin needs more developers and node runners. Code Orange builds them through hands-on cohorts, workshops, and open source contribution.">
 <link rel="canonical" href="https://codeorange.dev/">
 <meta name="theme-color" content="#F7931A">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Code Orange Dev School">
 <meta property="og:url" content="https://codeorange.dev/">
-<meta property="og:title" content="Code Orange Dev School - Asia's Bitcoin Developer School">
-<meta property="og:description" content="Bitcoin lacks developers and node runners in Asia. Code Orange fixes this - hands-on cohorts, workshops, and open source contribution, from Bali.">
+<meta property="og:title" content="Code Orange Dev School - Bitcoin Developer School">
+<meta property="og:description" content="Bitcoin needs more developers and node runners. Code Orange builds them through hands-on cohorts, workshops, and open source contribution.">
 <meta property="og:image" content="https://codeorange.dev/assets/og-codeorange-workshop.jpg">
 <meta property="og:image:secure_url" content="https://codeorange.dev/assets/og-codeorange-workshop.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Code Orange Dev School Bitcoin workshop in Bali">
+<meta property="og:image:alt" content="Code Orange Dev School Bitcoin workshop">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Code Orange Dev School - Asia's Bitcoin Developer School">
-<meta name="twitter:description" content="Bitcoin lacks developers and node runners in Asia. Code Orange fixes this - hands-on cohorts, workshops, and open source contribution, from Bali.">
+<meta name="twitter:title" content="Code Orange Dev School - Bitcoin Developer School">
+<meta name="twitter:description" content="Bitcoin needs more developers and node runners. Code Orange builds them through hands-on cohorts, workshops, and open source contribution.">
 <meta name="twitter:image" content="https://codeorange.dev/assets/og-codeorange-workshop.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="/assets/new-workshops/workshop-nodes-miners.jpg">
 <script src="/assets/lazy-video.js?v=20260903a" defer></script>
 <link rel="icon" type="image/svg+xml" href="/assets/favicon-bitcoin.svg">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"EducationalOrganization","name":"Code Orange Dev School","url":"https://codeorange.dev","email":"hello@codeorange.dev","description":"Bitcoin developer education, open-source cohorts, practical workshops, and fellowships for builders across Asia.","areaServed":"Asia","sameAs":["https://github.com/code-orange-dev","https://x.com/CodeOrangeDevs","https://www.instagram.com/codeorangedevs","https://njump.me/npub1gxqyeea3xspkd68mxlxsvvk3gdzdd555u504ynwpdj0ghg503mvq2gydt0"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"EducationalOrganization","name":"Code Orange Dev School","url":"https://codeorange.dev","email":"hello@codeorange.dev","description":"Bitcoin developer education, open-source cohorts, practical workshops, and fellowships for builders.","sameAs":["https://github.com/code-orange-dev","https://x.com/CodeOrangeDevs","https://www.instagram.com/codeorangedevs","https://njump.me/npub1gxqyeea3xspkd68mxlxsvvk3gdzdd555u504ynwpdj0ghg503mvq2gydt0"]}</script>
 </head>
 <body>
 
@@ -46,6 +46,7 @@
 
 <main id="static-homepage">
   <style>
+    html, body { margin: 0; padding: 0; min-height: 100%; overflow-x: hidden; background: #0B1220; }
     #static-homepage { background: #0B1220; color: #F5F1EA; font-family: "Space Grotesk", system-ui, sans-serif; min-height: 100vh; overflow-x: hidden; }
     #static-homepage * { box-sizing: border-box; }
     #static-homepage img, #static-homepage video { max-width: 100%; }
@@ -104,6 +105,12 @@
     #static-homepage .co-person b { display: block; font-size: 16px; }
     #static-homepage .co-person span { display: block; margin-top: 5px; color: #8C94A6; font-size: 14px; }
     #static-homepage .co-host { padding: 38px; border: 1px solid rgba(247,147,26,.35); border-radius: 20px; background: linear-gradient(135deg, rgba(247,147,26,.14), #12213B 58%); }
+    #static-homepage .co-photo-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 16px; margin-top: 34px; }
+    #static-homepage .co-photo-tile { position: relative; min-height: 280px; border: 1px solid rgba(255,255,255,.1); border-radius: 16px; overflow: hidden; background: #12213B; }
+    #static-homepage .co-photo-tile.large { grid-row: span 2; min-height: 580px; }
+    #static-homepage .co-photo-tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    #static-homepage .co-photo-tile:after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 52%, rgba(8,13,24,.82)); pointer-events: none; }
+    #static-homepage .co-photo-tile span { position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 1; width: max-content; max-width: calc(100% - 28px); padding: 7px 11px; border-radius: 999px; background: rgba(8,13,24,.78); border: 1px solid rgba(255,255,255,.13); color: #F5F1EA; font: 700 11px "JetBrains Mono", monospace; letter-spacing: .08em; text-transform: uppercase; }
     #static-homepage details { border-bottom: 1px solid rgba(255,255,255,.1); padding: 18px 0; }
     #static-homepage summary { cursor: pointer; color: #F5F1EA; font-weight: 700; }
     #static-homepage details p { max-width: 760px; margin: 14px 0 0; }
@@ -112,7 +119,10 @@
     #static-homepage .co-media-footer:after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8,13,24,.88), rgba(8,13,24,.38) 58%, rgba(8,13,24,.74)); }
     #static-homepage .co-media-footer div { position: relative; z-index: 1; max-width: 560px; padding: 34px; }
     #static-homepage footer { padding: 56px 0; border-top: 1px solid rgba(255,255,255,.08); }
-    #static-homepage .co-foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; color: #8C94A6; font-size: 14px; }
+    #static-homepage .co-foot { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 24px; color: #8C94A6; font-size: 14px; }
+    #static-homepage .co-socials { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; }
+    #static-homepage .co-socials a { display: inline-flex; align-items: center; justify-content: center; min-height: 42px; padding: 10px 15px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; color: #F5F1EA; background: rgba(18,33,59,.78); text-decoration: none; font: 700 13px "JetBrains Mono", monospace; transition: border-color .15s ease, color .15s ease, background .15s ease; }
+    #static-homepage .co-socials a:hover { border-color: #F7931A; color: #F7931A; background: rgba(247,147,26,.08); }
     @media (max-width: 760px) {
       #static-homepage .co-wrap { width: min(100% - 36px, 1240px); }
       #static-homepage .co-nav { padding: 16px 0; align-items: flex-start; flex-direction: column; }
@@ -122,7 +132,8 @@
       #static-homepage h1 { font-size: clamp(34px, 10.5vw, 48px); line-height: 1.05; }
       #static-homepage h2 { font-size: clamp(30px, 8.5vw, 40px); line-height: 1.08; }
       #static-homepage .co-lead { font-size: 16px; line-height: 1.62; }
-      #static-homepage .co-paths, #static-homepage .co-grid, #static-homepage .co-people { grid-template-columns: 1fr; }
+      #static-homepage .co-paths, #static-homepage .co-grid, #static-homepage .co-people, #static-homepage .co-photo-grid { grid-template-columns: 1fr; }
+      #static-homepage .co-photo-tile, #static-homepage .co-photo-tile.large { min-height: 260px; grid-row: auto; }
       #static-homepage .co-path { min-height: 0; padding: 20px; border-radius: 14px; }
       #static-homepage .co-terminal-body { min-height: 0; padding: 20px; font-size: 12px; line-height: 1.75; }
       #static-homepage .co-card, #static-homepage .co-person, #static-homepage .co-list article { border-radius: 14px; }
@@ -134,6 +145,8 @@
       #static-homepage .co-actions { width: 100%; align-items: stretch; }
       #static-homepage .co-button { width: 100%; text-align: center; }
       #static-homepage .co-nav .co-button { width: auto; }
+      #static-homepage .co-foot { grid-template-columns: 1fr; }
+      #static-homepage .co-socials { justify-content: flex-start; }
     }
     @media (max-width: 380px) {
       #static-homepage .co-wrap { width: min(100% - 32px, 1240px); }
@@ -146,20 +159,20 @@
   <a class="co-announce" href="/rawbit">⚡ rawBit cohort is live now · Bitcoin Privacy Track open for enrollment · Apply →</a>
   <header class="co-band"><div class="co-wrap co-nav">
     <a href="#top"><img src="/assets/logo-white.png" alt="Code Orange Dev School"></a>
-    <nav class="co-links" aria-label="Primary"><a href="/programs">Programs</a><a href="/calendar">Calendar</a><a href="/community">Community</a><a href="/impact">Impact</a><a href="/about">About</a></nav>
+    <nav class="co-links" aria-label="Primary"><a href="/programs">Programs</a><a href="/consulting">Consulting</a><a href="/fellowships">Fellowships</a><a href="/calendar">Calendar</a><a href="/community">Community</a><a href="/impact">Impact</a><a href="/strategy">Strategy</a><a href="/about">About</a></nav>
     <div class="co-actions"><a class="co-button" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a><a class="co-button primary" href="/apply">Apply now</a></div>
   </div></header>
   <section id="top" class="co-hero"><video class="co-hero-video" src="/assets/co-workshop-bg.mp4" poster="/assets/new-workshops/workshop-nodes-miners.jpg" autoplay muted loop playsinline preload="metadata"></video><div class="co-wrap">
     <div class="co-hero-grid">
       <div>
-        <p class="co-eyebrow">Asia's Bitcoin Developer School · Singapore 🇸🇬</p>
+        <p class="co-eyebrow">Bitcoin Developer School</p>
         <h1>A Bitcoin OSS contributor pipeline <span style="color:#F7931A">with a fellowship layer.</span></h1>
-        <p class="co-lead">Learn practical Bitcoin skills, become a capable builder, or bring hands-on Bitcoin education to your local community. Code Orange runs cohorts, workshops, and public open-source contribution paths across Asia.</p>
+        <p class="co-lead">Learn practical Bitcoin skills, become a capable builder, or bring hands-on Bitcoin education to your local community. Code Orange runs cohorts, workshops, and public open-source contribution paths.</p>
         <div class="co-actions"><a class="co-button primary" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord, it’s free</a><a class="co-button" href="/programs">Browse programs</a></div>
         <div class="co-paths" aria-label="Choose your path">
           <a class="co-path" href="/programs/bitcoin-basics"><span aria-hidden="true" style="font-size:25px">₿</span><strong>Learn Bitcoin</strong><span>Start with self-custody, nodes, privacy, and Bitcoin fundamentals. No developer background required.</span></a>
           <a class="co-path" href="/rawbit"><span aria-hidden="true" style="font-size:25px">⌘</span><strong>Become a contributor</strong><span>Move from technical curiosity to an open-source contribution with structured peer support.</span></a>
-          <a class="co-path" href="https://github.com/code-orange-dev/curriculum" target="_blank" rel="noopener"><span aria-hidden="true" style="font-size:25px">◎</span><strong>Host a workshop</strong><span>Use open, editable workshop material to bring Bitcoin education to your city.</span></a>
+          <a class="co-path" href="https://github.com/code-orange-dev/curriculum" target="_blank" rel="noopener"><span aria-hidden="true" style="font-size:25px">◎</span><strong>Host a workshop</strong><span>Use open, editable workshop material to bring Bitcoin education to your community.</span></a>
         </div>
       </div>
       <div class="co-terminal" aria-label="Code Orange developer pipeline">
@@ -185,23 +198,29 @@
     <article class="co-card"><span>₿ 10-week cohort</span><h3>rawBit</h3><p>A protocol deep-dive through transactions, Scripts, Taproot, PSBTs, and P2P networking - with homework and sats.</p></article>
     <article class="co-card"><span>🔐 12-month cohort</span><h3>Bitcoin Privacy Track</h3><p>Contribution-first developer training around Silent Payments, Payjoin, Floresta, Fedimint, and Lightning privacy.</p></article>
   </div><p style="margin-top:28px"><a class="co-button" href="/programs">View all programs →</a></p></div></section>
+  <section class="co-section co-dark"><div class="co-wrap"><p class="co-eyebrow">Workshop scenes</p><h2>Photos from real sessions.</h2><p class="co-lead">Code Orange is practical, social, and hardware-first. Students learn around tables with nodes, signing devices, laptops, and mentors close by.</p><div class="co-photo-grid">
+    <div class="co-photo-tile large"><img src="/assets/uploaded-workshops/community-session-screen.jpg" alt="Code Orange workshop session with students around a table" loading="lazy"><span>Workshop briefing</span></div>
+    <div class="co-photo-tile"><img src="/assets/uploaded-workshops/meetup-projector.jpg" alt="Code Orange meetup with projector and Bitcoin tools" loading="lazy"><span>Live demo</span></div>
+    <div class="co-photo-tile"><img src="/assets/uploaded-workshops/node-laptop-session.jpg" alt="Laptop showing a Bitcoin node during a Code Orange session" loading="lazy"><span>Node practice</span></div>
+    <div class="co-photo-tile"><img src="/assets/uploaded-workshops/roundtable-workshop.jpg" alt="Code Orange roundtable workshop with laptops and Bitcoin devices" loading="lazy"><span>Builder roundtable</span></div>
+  </div></div></section>
   <section class="co-section co-dark"><div class="co-wrap"><p class="co-eyebrow">Recurring events</p><h2>Always something happening.</h2><p class="co-lead">See the live Code Orange calendar here, then add it to your own calendar so workshops, cohorts, and study calls stay visible.</p><div class="co-calendar"><iframe title="Code Orange public student calendar" src="https://calendar.google.com/calendar/embed?src=466de2be7431d78be2049f96f5fd31f9b06b5a9cd94f909ba3182b18442ed499%40group.calendar.google.com&ctz=Asia%2FMakassar" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><p style="margin-top:28px"><a class="co-button" href="/calendar">Open calendar page →</a></p></div></section>
   <section class="co-section co-photo-section" style="--co-bg:url('/assets/latest-workshops/workshop-latest-builders.jpg'); --co-bg-pos:center 42%;"><div class="co-wrap"><p class="co-eyebrow">Developer community</p><h2>We build the community. They build Bitcoin.</h2><p class="co-lead">Mentorship, structured cohorts, and a peer network help contributors make visible progress in the Bitcoin ecosystem.</p><div class="co-people">
-    <article class="co-person"><b>🇮🇳 Chaitika</b><span>Silent Payments and Lightning cohorts at Bitshala Incubator.</span></article>
-    <article class="co-person"><b>🇺🇦 Vaan</b><span>Contributor to rust-bitcoin and BDK wallet infrastructure.</span></article>
-    <article class="co-person"><b>🇷🇴 Razor</b><span>Bitcoin P2P security monitoring contributor and BOSS participant.</span></article>
-    <article class="co-person"><b>🇳🇬 Arowolo</b><span>Async Payjoin (BIP77) contributor.</span></article>
+    <article class="co-person"><b>Chaitika</b><span>Silent Payments and Lightning cohorts at Bitshala Incubator.</span></article>
+    <article class="co-person"><b>Vaan</b><span>Contributor to rust-bitcoin and BDK wallet infrastructure.</span></article>
+    <article class="co-person"><b>Razor</b><span>Bitcoin P2P security monitoring contributor and BOSS participant.</span></article>
+    <article class="co-person"><b>Arowolo</b><span>Async Payjoin (BIP77) contributor.</span></article>
   </div><p style="margin-top:28px"><a class="co-button" href="/community">Meet the community →</a></p></div></section>
-  <section class="co-section co-dark"><div class="co-wrap"><div class="co-host"><p class="co-eyebrow">For community leaders</p><h2>Run a Code Orange workshop in your city.</h2><p class="co-lead">Free, editable, localizable workshops for beginners through advanced Bitcoin learners. Get the materials, adapt them for your city, and join a network of hosts across Asia.</p><div class="co-actions"><a class="co-button primary" href="https://github.com/code-orange-dev/curriculum" target="_blank" rel="noopener">Get the workshop kit</a><a class="co-button" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Ask in Discord</a></div></div></div></section>
+  <section class="co-section co-dark"><div class="co-wrap"><div class="co-host"><p class="co-eyebrow">For community leaders</p><h2>Run a Code Orange workshop.</h2><p class="co-lead">Free, editable, localizable workshops for beginners through advanced Bitcoin learners. Get the materials, adapt them for your community, and join a network of hosts.</p><div class="co-actions"><a class="co-button primary" href="https://github.com/code-orange-dev/curriculum" target="_blank" rel="noopener">Get the workshop kit</a><a class="co-button" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Ask in Discord</a></div></div></div></section>
   <section class="co-section co-photo-section" style="--co-bg:url('/assets/latest-workshops/workshop-latest-table.jpg'); --co-bg-pos:center;"><div class="co-wrap"><p class="co-eyebrow">FAQ</p><h2>Common questions.</h2>
     <details open><summary>How much does it cost?</summary><p>All Code Orange programs are free for accepted students. The school is funded through Bitcoin grants, donations, and partnerships.</p></details>
     <details><summary>Do I need prior coding experience?</summary><p>rawBit and the Bitcoin Privacy Track expect comfort with a programming language. Bitcoin Basics, Sovereign Bitcoiner, OpenClaw, and Vibe Coding welcome curious beginners.</p></details>
-    <details><summary>Can I join from outside Singapore or Bali?</summary><p>Yes. Most sessions run online through Discord, with in-person hardware sessions layered in where they help.</p></details>
-    <details><summary>Can I run a workshop in my city?</summary><p>Yes. The curriculum is open source and the community can help with local adaptation, links, and promotion.</p></details>
+    <details><summary>Can I join remotely?</summary><p>Yes. Most sessions run online through Discord, with hands-on hardware sessions layered in where they help.</p></details>
+    <details><summary>Can I run a workshop?</summary><p>Yes. The curriculum is open source and the community can help with local adaptation, links, and promotion.</p></details>
   </div></section>
   <footer><div class="co-wrap">
-    <div class="co-media-footer"><video data-lazy-video data-src="/assets/co-footer.mp4" poster="/assets/co-footer-poster.jpg" autoplay muted loop playsinline preload="none"></video><div><p class="co-eyebrow">Scenes from the school</p><h2>Real workshops. Real devices. Real Bitcoin builders.</h2></div></div>
-    <div class="co-foot"><span>Code Orange Dev School · Singapore 🇸🇬</span><span><a href="mailto:hello@codeorange.dev">hello@codeorange.dev</a> · <a href="https://github.com/code-orange-dev" target="_blank" rel="noopener">GitHub</a> · <a href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a></span></div>
+    <div class="co-media-footer"><video data-lazy-video data-src="/assets/co-footer-new.mp4" poster="/assets/co-footer-poster.jpg" autoplay muted loop playsinline preload="none"></video><div><p class="co-eyebrow">Scenes from the school</p><h2>Real workshops. Real devices. Real Bitcoin builders.</h2></div></div>
+    <div class="co-foot"><span><strong style="color:#F5F1EA">Code Orange Dev School</strong><br><a href="mailto:hello@codeorange.dev">hello@codeorange.dev</a></span><div class="co-socials"><a href="https://x.com/CodeOrangeDevs" target="_blank" rel="noopener">X</a><a href="https://www.instagram.com/codeorangedevs" target="_blank" rel="noopener">Instagram</a><a href="https://njump.me/npub1gxqyeea3xspkd68mxlxsvvk3gdzdd555u504ynwpdj0ghg503mvq2gydt0" target="_blank" rel="noopener">Nostr</a><a href="https://github.com/code-orange-dev" target="_blank" rel="noopener">GitHub</a><a href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a></div></div>
   </div></footer>
 </main>
 </body>
