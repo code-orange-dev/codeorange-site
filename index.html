@@ -126,15 +126,15 @@
     #static-homepage .co-socials a:hover { border-color: #F7931A; color: #F7931A; background: rgba(247,147,26,.08); }
     @media (max-width: 760px) {
       #static-homepage .co-wrap { width: min(100% - 36px, 1240px); }
-      #static-homepage .co-nav { padding: 16px 0; align-items: flex-start; flex-direction: column; }
-      #static-homepage .co-nav img { width: 132px; }
+      #static-homepage .co-nav { display: grid; grid-template-columns: auto auto minmax(0, 1fr); align-items: center; gap: 10px; min-height: 68px; padding: 10px 0; }
+      #static-homepage .co-nav img { width: 118px; }
       #static-homepage .co-links { display: none; }
-      #static-homepage .co-mobile-menu { display: block; width: 100%; padding: 0; border-bottom: 0; }
-      #static-homepage .co-mobile-menu summary { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 44px; border: 1px solid rgba(255,255,255,.16); border-radius: 10px; list-style: none; cursor: pointer; color: #F5F1EA; background: rgba(18,33,59,.84); }
+      #static-homepage .co-mobile-menu { display: block; position: relative; width: auto; padding: 0; border-bottom: 0; }
+      #static-homepage .co-mobile-menu summary { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 42px; border: 1px solid rgba(255,255,255,.16); border-radius: 10px; list-style: none; cursor: pointer; color: #F5F1EA; background: rgba(18,33,59,.84); }
       #static-homepage .co-mobile-menu summary::-webkit-details-marker { display: none; }
       #static-homepage .co-mobile-menu summary span, #static-homepage .co-mobile-menu summary:before, #static-homepage .co-mobile-menu summary:after { content: ""; display: block; width: 20px; height: 2px; border-radius: 999px; background: currentColor; }
       #static-homepage .co-mobile-menu summary { flex-direction: column; gap: 5px; }
-      #static-homepage .co-mobile-panel { display: grid; gap: 10px; margin-top: 12px; padding: 14px; border: 1px solid rgba(255,255,255,.1); border-radius: 14px; background: #12213B; }
+      #static-homepage .co-mobile-panel { position: absolute; top: calc(100% + 10px); left: 0; z-index: 20; display: grid; width: min(280px, calc(100vw - 36px)); gap: 10px; padding: 14px; border: 1px solid rgba(255,255,255,.1); border-radius: 14px; background: #12213B; box-shadow: 0 18px 48px rgba(0,0,0,.35); }
       #static-homepage .co-mobile-panel a { padding: 10px 8px; color: #F5F1EA; text-decoration: none; font-weight: 700; }
       #static-homepage .co-hero-grid { grid-template-columns: 1fr; gap: 34px; }
       #static-homepage h1 { font-size: clamp(34px, 10.5vw, 48px); line-height: 1.05; }
@@ -150,9 +150,9 @@
       #static-homepage .co-calendar iframe { height: 520px; }
       #static-homepage .co-hero, #static-homepage .co-section { padding: 56px 0; }
       #static-homepage .co-host { padding: 28px 22px; }
-      #static-homepage .co-actions { width: 100%; align-items: stretch; }
+      #static-homepage .co-actions { width: auto; justify-self: end; flex-wrap: nowrap; align-items: center; gap: 8px; }
       #static-homepage .co-button { width: 100%; text-align: center; }
-      #static-homepage .co-nav .co-button { width: auto; }
+      #static-homepage .co-nav .co-button { width: auto; padding: 10px 11px; font-size: 13px; white-space: nowrap; }
       #static-homepage .co-foot { grid-template-columns: 1fr; }
       #static-homepage .co-socials { justify-content: flex-start; }
     }
@@ -161,7 +161,9 @@
       #static-homepage h1 { font-size: clamp(31px, 11vw, 40px); }
       #static-homepage h2 { font-size: clamp(27px, 9.5vw, 34px); }
       #static-homepage .co-nav .co-actions { gap: 8px; }
-      #static-homepage .co-nav .co-button { padding: 11px 14px; font-size: 14px; }
+      #static-homepage .co-nav img { width: 104px; }
+      #static-homepage .co-mobile-menu summary { width: 40px; height: 40px; }
+      #static-homepage .co-nav .co-button { padding: 9px 9px; font-size: 12px; }
     }
   </style>
   <a class="co-announce" href="/rawbit">⚡ rawBit cohort is live now · Bitcoin Privacy Track open for enrollment · Apply →</a>
