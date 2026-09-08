@@ -83,10 +83,6 @@
     #static-homepage .co-terminal-body ol { margin: 0; padding-left: 22px; color: #C8CDD9; }
     #static-homepage .co-terminal-body li { padding: 2px 0; }
     #static-homepage .co-cursor { display: inline-block; width: 8px; height: 16px; margin-left: 4px; background: #F7931A; vertical-align: -3px; }
-    #static-homepage .co-paths { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; max-width: 900px; margin-top: 42px; }
-    #static-homepage .co-path { display: block; min-height: 112px; padding: 22px; border: 1px solid rgba(255,255,255,.13); border-radius: 16px; background: rgba(18,33,59,.84); text-decoration: none; }
-    #static-homepage .co-path strong { display: block; margin: 8px 0; font-size: 18px; }
-    #static-homepage .co-path span { color: #8C94A6; font-size: 14px; line-height: 1.5; }
     #static-homepage .co-section { padding: 88px 0; }
     #static-homepage .co-photo-section { position: relative; overflow: hidden; isolation: isolate; }
     #static-homepage .co-photo-section:before { content: ""; position: absolute; inset: 0; z-index: -1; background-image: linear-gradient(180deg, rgba(11,18,32,.76), rgba(11,18,32,.92)), var(--co-bg); background-size: cover; background-position: var(--co-bg-pos, center); }
@@ -140,9 +136,8 @@
       #static-homepage h1 { font-size: clamp(34px, 10.5vw, 48px); line-height: 1.05; }
       #static-homepage h2 { font-size: clamp(30px, 8.5vw, 40px); line-height: 1.08; }
       #static-homepage .co-lead { font-size: 16px; line-height: 1.62; }
-      #static-homepage .co-paths, #static-homepage .co-grid, #static-homepage .co-people, #static-homepage .co-photo-grid { grid-template-columns: 1fr; }
+      #static-homepage .co-grid, #static-homepage .co-people, #static-homepage .co-photo-grid { grid-template-columns: 1fr; }
       #static-homepage .co-photo-tile, #static-homepage .co-photo-tile.large { min-height: 260px; grid-row: auto; }
-      #static-homepage .co-path { min-height: 0; padding: 20px; border-radius: 14px; }
       #static-homepage .co-terminal-body { min-height: 0; padding: 20px; font-size: 12px; line-height: 1.75; }
       #static-homepage .co-card, #static-homepage .co-person, #static-homepage .co-list article { border-radius: 14px; }
       #static-homepage .co-list article { grid-template-columns: 1fr; }
@@ -180,11 +175,6 @@
         <h1>A Bitcoin OSS contributor pipeline <span style="color:#F7931A">with a fellowship layer.</span></h1>
         <p class="co-lead">Learn practical Bitcoin skills, become a capable builder, or bring hands-on Bitcoin education to your community.</p>
         <div class="co-actions"><a class="co-button primary" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord, it’s free</a><a class="co-button" href="/programs">Browse programs</a></div>
-        <div class="co-paths" aria-label="Choose your path">
-          <a class="co-path" href="/programs/bitcoin-basics"><span aria-hidden="true" style="font-size:25px">₿</span><strong>Learn Bitcoin</strong></a>
-          <a class="co-path" href="/rawbit"><span aria-hidden="true" style="font-size:25px">⌘</span><strong>Contribute to Bitcoin</strong></a>
-          <a class="co-path" href="https://github.com/code-orange-dev/curriculum" target="_blank" rel="noopener"><span aria-hidden="true" style="font-size:25px">◎</span><strong>Host a workshop</strong></a>
-        </div>
       </div>
       <div class="co-terminal" aria-label="Code Orange developer pipeline">
         <div class="co-terminal-top"><span class="co-dot" style="background:#FF5F56"></span><span class="co-dot" style="background:#FFBD2E"></span><span class="co-dot" style="background:#27C93F"></span><span class="co-prompt">student@codeorange: ~</span></div>
