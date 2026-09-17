@@ -130,6 +130,11 @@
     #static-homepage .co-socials { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; }
     #static-homepage .co-socials a { display: inline-flex; align-items: center; justify-content: center; min-height: 38px; padding: 9px 13px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; color: #F5F1EA; background: rgba(18,33,59,.78); text-decoration: none; font: 700 12px "JetBrains Mono", monospace; transition: border-color .15s ease, color .15s ease, background .15s ease; }
     #static-homepage .co-socials a:hover { border-color: #F7931A; color: #F7931A; background: rgba(247,147,26,.08); }
+    #static-homepage a:focus-visible, #static-homepage summary:focus-visible, #static-homepage .co-gallery:focus-visible { outline: 3px solid #F7931A; outline-offset: 4px; }
+    @media (prefers-reduced-motion: reduce) {
+      #static-homepage *, #static-homepage *:before, #static-homepage *:after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+      #static-homepage .co-hero-video, #static-homepage .co-media-footer video { display: none; }
+    }
     @media (max-width: 1080px) {
       #static-homepage .co-people { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
@@ -225,24 +230,24 @@
     <a class="co-card" href="https://discord.gg/6XPJ96sCY4?event=1401076359220035655" target="_blank" rel="noopener"><span>✦ Discord event</span><h3>Agentic engineering &amp; vibe coding</h3><p>Build useful tools with AI, Nostr, and open protocols in a working session.</p></a>
   </div><div class="co-host" style="margin-top:24px; padding:28px;"><p class="co-eyebrow">For committed contributors</p><h3>Ready for a deeper contribution?</h3><p style="margin:10px 0 18px;">Code Orange fellowships provide focused time, mentor support, and a real open-source project for builders who have shown they are ready.</p><a class="co-button primary" href="/fellowships">Explore fellowships →</a></div><p style="margin-top:28px"><a class="co-button" href="/programs">View all programs →</a></p></div></section>
   <section class="co-section co-dark"><div class="co-wrap"><div class="co-gallery" role="region" aria-label="Code Orange workshop gallery" tabindex="0"><div class="co-gallery-track">
-    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/workshop-legacy-circle.jpg" alt="Bitcoin workshop in the Code Orange space" loading="lazy"></figure>
-    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/workshop-qr-signer.jpg" alt="Hands-on Bitcoin signing-device and QR-code practice" loading="lazy"></figure>
-    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/workshop-hardware-table.jpg" alt="Bitcoin hardware tools and laptops on a workshop table" loading="lazy"></figure>
-    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/workshop-community-circle.jpg" alt="Code Orange community workshop in progress" loading="lazy"></figure>
-    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/workshop-mining-table.jpg" alt="Bitcoin mining workshop with Code Orange equipment" loading="lazy"></figure>
-    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/workshop-projector.jpg" alt="Bitcoin tools shown on a workshop projector" loading="lazy"></figure>
-    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/workshop-site-screen.jpg" alt="Code Orange website displayed during a workshop" loading="lazy"></figure>
-    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/workshop-mining-class.jpg" alt="Bitcoin mining class with workshop equipment" loading="lazy"></figure>
-    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/workshop-miner-build.jpg" alt="Bitcoin miner components during a hands-on session" loading="lazy"></figure>
-    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/workshop-mining-lab.jpg" alt="Laptop-led Bitcoin mining demonstration" loading="lazy"></figure>
-    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/workshop-whiteboard.jpg" alt="Instructor leading a live Code Orange workshop" loading="lazy"></figure>
-    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/workshop-new-0428.jpg" alt="Bitcoin devices and Code Orange workshop tools" loading="lazy"></figure>
-    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/workshop-new-0362.jpg" alt="Hands-on Bitcoin workshop moment" loading="lazy"></figure>
-    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/workshop-new-0403.jpg" alt="Bitcoin learning session with practical equipment" loading="lazy"></figure>
-    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/workshop-new-0444.jpg" alt="Code Orange workshop participant working with Bitcoin tools" loading="lazy"></figure>
-    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/workshop-new-0546.jpg" alt="Practical Bitcoin workshop scene" loading="lazy"></figure>
-    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/workshop-new-0740.jpg" alt="Code Orange hands-on workshop tools" loading="lazy"></figure>
-    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/workshop-new-0558.jpg" alt="Bitcoin workshop equipment in use" loading="lazy"></figure>
+    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/optimized/workshop-legacy-circle.jpg" alt="Bitcoin workshop in the Code Orange space" loading="lazy" decoding="async"></figure>
+    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/optimized/workshop-qr-signer.jpg" alt="Hands-on Bitcoin signing-device and QR-code practice" loading="lazy" decoding="async"></figure>
+    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/optimized/workshop-hardware-table.jpg" alt="Bitcoin hardware tools and laptops on a workshop table" loading="lazy" decoding="async"></figure>
+    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/optimized/workshop-community-circle.jpg" alt="Code Orange community workshop in progress" loading="lazy" decoding="async"></figure>
+    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/optimized/workshop-mining-table.jpg" alt="Bitcoin mining workshop with Code Orange equipment" loading="lazy" decoding="async"></figure>
+    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/optimized/workshop-projector.jpg" alt="Bitcoin tools shown on a workshop projector" loading="lazy" decoding="async"></figure>
+    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/optimized/workshop-site-screen.jpg" alt="Code Orange website displayed during a workshop" loading="lazy" decoding="async"></figure>
+    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/optimized/workshop-mining-class.jpg" alt="Bitcoin mining class with workshop equipment" loading="lazy" decoding="async"></figure>
+    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/optimized/workshop-miner-build.jpg" alt="Bitcoin miner components during a hands-on session" loading="lazy" decoding="async"></figure>
+    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/optimized/workshop-mining-lab.jpg" alt="Laptop-led Bitcoin mining demonstration" loading="lazy" decoding="async"></figure>
+    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/optimized/workshop-whiteboard.jpg" alt="Instructor leading a live Code Orange workshop" loading="lazy" decoding="async"></figure>
+    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/optimized/workshop-new-0428.jpg" alt="Bitcoin devices and Code Orange workshop tools" loading="lazy" decoding="async"></figure>
+    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/optimized/workshop-new-0362.jpg" alt="Hands-on Bitcoin workshop moment" loading="lazy" decoding="async"></figure>
+    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/optimized/workshop-new-0403.jpg" alt="Bitcoin learning session with practical equipment" loading="lazy" decoding="async"></figure>
+    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/optimized/workshop-new-0444.jpg" alt="Code Orange workshop participant working with Bitcoin tools" loading="lazy" decoding="async"></figure>
+    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/optimized/workshop-new-0546.jpg" alt="Practical Bitcoin workshop scene" loading="lazy" decoding="async"></figure>
+    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/optimized/workshop-new-0740.jpg" alt="Code Orange hands-on workshop tools" loading="lazy" decoding="async"></figure>
+    <figure class="co-gallery-item"><img src="/assets/workshop-gallery/optimized/workshop-new-0558.jpg" alt="Bitcoin workshop equipment in use" loading="lazy" decoding="async"></figure>
   </div></div><p class="co-gallery-hint">Swipe or scroll to explore the workshop floor →</p></div></section>
   <section class="co-section co-dark"><div class="co-wrap"><p class="co-eyebrow">Recurring events</p><h2>Always something happening.</h2><p class="co-lead">See the live Code Orange calendar here, then add it to your own calendar so workshops, cohorts, and study calls stay visible.</p><div class="co-calendar"><iframe title="Code Orange public student calendar" src="https://calendar.google.com/calendar/embed?src=466de2be7431d78be2049f96f5fd31f9b06b5a9cd94f909ba3182b18442ed499%40group.calendar.google.com&ctz=Asia%2FMakassar" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><p style="margin-top:28px"><a class="co-button" href="/calendar">Open calendar page →</a></p></div></section>
   <section class="co-section co-photo-section" style="--co-bg:url('/assets/latest-workshops/workshop-latest-builders.jpg'); --co-bg-pos:center 42%;"><div class="co-wrap"><p class="co-eyebrow">Developer community</p><h2>We build the community. They build Bitcoin.</h2><p class="co-lead">Public contributor profiles from the Code Orange GitHub community repo.</p><div class="co-people">
