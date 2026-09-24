@@ -76,6 +76,17 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 .program-card:hover { transform: translateY(-4px); border-color: rgba(247,147,26,.55); }
 .program-card img, .card > img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.012); }
 .card-body { padding: 24px; }
+.fellowship-card { display: flex; }
+.fellowship-card .card-body { display: flex; flex: 1; flex-direction: column; align-items: flex-start; }
+.fellowship-track { margin: 0; color: var(--orange); font: 700 13px "JetBrains Mono", monospace; letter-spacing: .12em; text-transform: uppercase; }
+.fellowship-price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 7px; width: 100%; margin: 20px 0; padding: 18px 0; border-block: 1px solid rgba(247,147,26,.28); }
+.fellowship-price span { flex-basis: 100%; margin-bottom: 3px; color: var(--dim); font: 700 11px "JetBrains Mono", monospace; letter-spacing: .11em; text-transform: uppercase; }
+.fellowship-price strong { color: var(--text); font: 400 clamp(44px, 5vw, 58px)/.92 "Special Elite", monospace; }
+.fellowship-price small { color: var(--muted); font: 600 14px "Space Grotesk", sans-serif; }
+.fellowship-commitment { display: grid; gap: 7px; margin: 0 0 26px; }
+.fellowship-commitment strong { color: var(--text); font-size: 16px; }
+.fellowship-commitment span { color: var(--muted); line-height: 1.65; }
+.fellowship-card .button { margin-top: auto; }
 .meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; }
 .pill { display: inline-flex; padding: 7px 12px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; color: var(--muted); font: 600 12px "JetBrains Mono", monospace; }
 .pill.orange { color: var(--orange); border-color: rgba(247,147,26,.42); }
@@ -226,8 +237,8 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
   </section>
   <section class="section-inner">
   <div class="grid two">
-    <div class="card"><div class="card-body"><span class="pill orange">Developer Track</span><h2>$512/month</h2><p>6 months, extendable. 15-20 hours per week contributing to Bitcoin open source with mentor review on every PR.</p><a class="button" href="/apply?program=fellowship-developer">Apply by Email</a></div></div>
-    <div class="card"><div class="card-body"><span class="pill orange">Educator Track</span><h2>$256/month</h2><p>6 months, extendable. 10-15 hours per week creating educational material, running workshops, and growing local builder communities.</p><a class="button" href="/apply?program=fellowship-educator">Apply by Email</a></div></div>
+    <article class="card fellowship-card"><div class="card-body"><p class="fellowship-track">Developer Track</p><div class="fellowship-price"><span>Monthly support</span><strong>$512</strong><small>/ month</small></div><p class="fellowship-commitment"><strong>6 months, extendable</strong><span>15–20 hours per week contributing to Bitcoin open source with mentor review on every PR.</span></p><a class="button" href="/apply?program=fellowship-developer">Apply by Email</a></div></article>
+    <article class="card fellowship-card"><div class="card-body"><p class="fellowship-track">Educator Track</p><div class="fellowship-price"><span>Monthly support</span><strong>$256</strong><small>/ month</small></div><p class="fellowship-commitment"><strong>6 months, extendable</strong><span>10–15 hours per week creating educational material, running workshops, and growing local builder communities.</span></p><a class="button" href="/apply?program=fellowship-educator">Apply by Email</a></div></article>
   </div>
   <div class="photo-grid"><div class="photo-card wide tall">
   <img src="/assets/uploaded-workshops/fellowship-presentation.jpg" alt="Code Orange fellowship presentation with students around a table" loading="lazy">
