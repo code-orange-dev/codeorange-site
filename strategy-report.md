@@ -13,9 +13,9 @@ The website should make that strategy obvious within one minute.
 Code Orange is not a generic coding bootcamp and not a crypto community. It is a Bitcoin-only training system with four connected layers:
 
 1. Community entry - free Discord sessions, meetups, reading groups, and beginner workshops.
-2. Technical training - rawBit, Bitcoin Privacy Track, OpenClaw, Sovereign Bitcoiner, and hands-on hardware workshops.
+2. Technical training - rawBit, Bitcoin Privacy Track, Agentic Engineering, Sovereign Bitcoiner, and hands-on hardware workshops.
 3. Public contribution - GitHub-first curriculum, PR tracking, developer profiles, impact reporting, and protocol practice repositories.
-4. Sustainability - fellowships, grants, donations, consulting, and train-the-trainer programs.
+4. Sustainability - fellowships, consulting, and train-the-trainer programs.
 
 ## Audience Strategy
 
@@ -24,7 +24,7 @@ Students need clarity:
 - What level do I need?
 - What will I be able to do afterward?
 
-Funders need proof:
+Public work needs proof:
 - How many people are trained?
 - What do graduates contribute?
 - Where can public proof be inspected?
@@ -52,8 +52,8 @@ Priority GitHub surfaces:
 - PR-tracking-dashboard - public contribution proof.
 - curriculum - reusable education materials.
 - dev-community - public builder profiles.
-- impact-report - funder and partner proof.
-- fellowships - funding pipeline for contributors and educators.
+- impact-report - public impact material.
+- fellowships - contribution pathways for developers and educators.
 - grad-pipeline - next-step system for graduates.
 - workshops - reusable workshop assets.
 - bitcoin-island - local Bali/Indonesia community surface.
@@ -81,7 +81,7 @@ The site should answer four questions fast:
    Apply, join Discord, view calendar, book consulting, or open GitHub.
 
 4. How does the system compound?
-   Programs create contributors, contributors create proof, proof attracts funders, funding creates fellowships, fellowships create more contributors and local workshop hosts.
+   Programs create contributors, contributors create proof, and fellowships create more contributors and local workshop hosts.
 
 ## 90-Day Plan
 
@@ -96,7 +96,7 @@ Days 31-60:
 - Add a dedicated GitHub contribution dashboard page or embed.
 - Add program fit guidance for first-time visitors.
 - Add "host a workshop" intake flow.
-- Add a lightweight sponsor/funder page with giving tiers.
+- Add a clearer workshop-host page with practical resources.
 - Improve repo READMEs and profile pins.
 
 Days 61-90:
@@ -124,11 +124,11 @@ Track these every week:
 - New contributors onboarded.
 - Workshop hosts recruited.
 - Consulting bookings.
-- Donations or grant leads.
+- Workshop-host interest and collaboration leads.
 - Newsletter/social post output.
 
 ## Strategic Thesis
 
 The strongest version of Code Orange is a public Bitcoin builder flywheel:
 
-Free community sessions lead to structured cohorts. Cohorts lead to public GitHub work. Public work leads to credibility with funders and maintainers. Funding creates fellowships. Fellows mentor the next group and help local hosts run better workshops. The website should keep every visitor moving into that flywheel.
+Free community sessions lead to structured cohorts. Cohorts lead to public GitHub work. Public work leads to credibility with maintainers. Fellowships create more opportunities to contribute. Fellows mentor the next group and help local hosts run better workshops. The website should keep every visitor moving into that flywheel.

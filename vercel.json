@@ -3,6 +3,9 @@
   "trailingSlash": false,
   "buildCommand": null,
   "outputDirectory": ".",
+  "redirects": [
+    { "source": "/programs/openclaw", "destination": "/programs/agentic-engineering", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/assets/(.*)",
