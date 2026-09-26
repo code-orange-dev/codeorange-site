@@ -47,15 +47,15 @@ const programs = [
     title: "Bitcoin Privacy Track",
     type: "Developer Cohort",
     audience: "For Developers",
-    duration: "12 months",
+    duration: "6 months",
     schedule: "Bi-weekly sessions",
     format: "Online, Discord",
     level: "Advanced",
     href: "/privacy-track",
     image: "/assets/new-workshops/workshop-hands-on-devices.jpg",
     blurb:
-      "A contribution-first curriculum covering Silent Payments, Payjoin, Floresta, Fedimint, and Lightning privacy.",
-    lessons: ["Chain analysis defense", "Silent Payments", "Payjoin", "Floresta", "Fedimint privacy"],
+      "Drop-in, review-first sessions opening with Silent Payments, then Payjoin, light clients, network privacy, Lightning and ecash.",
+    lessons: ["Silent Payments", "Chain analysis defense", "Payjoin", "Network privacy", "Ecash privacy"],
   },
   {
     slug: "rawbit",
