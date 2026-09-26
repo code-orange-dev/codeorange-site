@@ -101,6 +101,8 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 .feature-photo { position: relative; min-height: 430px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--card); box-shadow: 0 24px 70px rgba(0,0,0,.32); }
 .calendar-frame { margin-top: 28px; background: #fff; border: 1px solid rgba(255,255,255,.12); border-radius: 16px; overflow: hidden; box-shadow: 0 24px 70px rgba(0,0,0,.36); }
 .calendar-frame iframe { display: block; width: 100%; height: 680px; border: 0; background: #fff; }
+.calendar-subscribe { display: flex; align-items: center; justify-content: space-between; gap: 22px; margin-top: 28px; padding: 22px 24px; border: 1px solid rgba(247,147,26,.3); border-radius: 16px; background: linear-gradient(120deg, rgba(247,147,26,.15), rgba(18,33,59,.92)); }
+.calendar-subscribe p { margin: 6px 0 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
 .booking-panel { display: grid; gap: 16px; padding: 24px; background: rgba(8,13,24,.48); border: 1px solid var(--line); border-radius: 16px; }
 .price-tag { display: inline-flex; width: max-content; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 999px; background: rgba(247,147,26,.14); border: 1px solid rgba(247,147,26,.34); color: var(--orange); font: 700 13px "JetBrains Mono", monospace; }
 .footer { border-top: 1px solid var(--line); background: #080D18; }
@@ -141,6 +143,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
   .cta-row .button, .cta-row .ghost { width: 100%; }
   .footer-grid { grid-template-columns: 1fr; padding: 48px 20px; }
   .calendar-frame iframe { height: 560px; }
+  .calendar-subscribe { align-items: stretch; flex-direction: column; }
   .footer-media { min-height: 260px; margin: 42px 20px 0; }
   .footer-media-copy { padding: 30px 24px; }
 }
@@ -212,7 +215,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
         <h1>Always something <span class="orange">happening.</span></h1>
         <p class="lead">The school runs on a monthly rhythm of cohorts, workshops, reading groups, accountability calls, and open community sessions.</p>
         <div class="cta-row">
-          <a class="button" href="https://calendar.google.com/calendar/embed?src=466de2be7431d78be2049f96f5fd31f9b06b5a9cd94f909ba3182b18442ed499%40group.calendar.google.com&ctz=Asia%2FMakassar">Open Calendar</a>
+          <a class="button" href="https://calendar.google.com/calendar/r?cid=466de2be7431d78be2049f96f5fd31f9b06b5a9cd94f909ba3182b18442ed499%40group.calendar.google.com" target="_blank" rel="noopener">Add to Google Calendar</a>
           <a class="ghost" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord</a>
         </div>
       </div>
@@ -226,6 +229,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
   </section>
   <section class="section-inner">
   <div class="split"><div><p class="eyebrow">Student Calendar</p><h2>The live monthly rhythm.</h2></div><p class="lead">Use this calendar as the source of truth for cohorts, workshops, reading clubs, and community sessions. Save the page, check the month ahead, and plan your Bitcoin study time with intention.</p></div>
+  <div class="calendar-subscribe"><div><p class="eyebrow">One click setup</p><h3 style="margin:0">Keep every Code Orange event in your calendar.</h3><p>Add the full calendar once. New and updated sessions appear automatically in Google Calendar.</p></div><a class="button" href="https://calendar.google.com/calendar/r?cid=466de2be7431d78be2049f96f5fd31f9b06b5a9cd94f909ba3182b18442ed499%40group.calendar.google.com" target="_blank" rel="noopener">Add all events ↗</a></div>
   <div class="calendar-frame" aria-label="Code Orange public student calendar">
     <div class="terminal-bar"><span></span><span></span><span></span><strong>codeorange.dev/calendar</strong></div>
     <iframe title="Code Orange public student calendar" src="https://calendar.google.com/calendar/embed?src=466de2be7431d78be2049f96f5fd31f9b06b5a9cd94f909ba3182b18442ed499%40group.calendar.google.com&ctz=Asia%2FMakassar" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
