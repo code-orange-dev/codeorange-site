@@ -3,6 +3,15 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+
+// The static homepage in index.html has been edited directly since September 2026,
+// and this script's built-in static template is older than it. Running it would
+// overwrite those edits, so it only writes when explicitly asked to.
+if (!process.argv.includes("--overwrite-static-homepage")) {
+  console.log("prerender-homepage: skipped. index.html is edited directly now; this script's static template is out of date.");
+  console.log("Pass --overwrite-static-homepage only after bringing the template in line with the live homepage.");
+  process.exit(0);
+}
 const outputFlag = process.argv.indexOf("--out");
 const outputRoot = outputFlag === -1 ? projectRoot : resolve(process.argv[outputFlag + 1] || projectRoot);
 const sourcePath = resolve(projectRoot, "index.html");
