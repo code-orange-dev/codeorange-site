@@ -1,50 +1,54 @@
-# Code Orange Website Source of Truth
+# Code Orange Website — Handoff Guide
 
-Canonical local source folder:
+## Source of truth
 
-`/Users/pet/Documents/New project 4/codeorange-site`
+- GitHub repository: `https://github.com/code-orange-dev/codeorange-site`
+- Branch: `main`
+- Production website: `https://codeorange.dev`
+- Hosting: Vercel
 
-Canonical production site:
+`main` is the authoritative source. Pushing a reviewed change to `main` automatically deploys it to production through the linked Vercel project.
 
-`https://codeorange.dev`
+## Current status
 
-Known good Vercel deployment provided by the owner:
+The site was last updated on 2026-09-26. The repository working tree was clean after the latest deployment.
 
-`https://codeorange-biuzd7s2i-codeorangedevs-7554s-projects.vercel.app`
+Recent completed work includes:
 
-Current live baseline for future work:
+- Homepage workshop gallery, event links, and direct Google Calendar subscription CTA.
+- Homepage calendar directly below the hero.
+- Agentic Engineering workshop rename, including a redirect from `/programs/openclaw`.
+- Fellowship card layout and current $512 / $256 monthly pricing.
+- Funding/grant/sponsor language removed from public website copy; program copy says sessions are free of charge.
+- Homepage hero video is `/assets/co-hero-agentic.mp4`; the old hero video was removed.
+- Homepage SEO metadata, schema, image loading, and mobile layout refinements.
 
-- Verified on `2026-09-02 11:45:25 WITA`
-- Production URL: `https://codeorange.dev`
-- Vercel deployment URL: `https://codeorange-lla5bbnru-codeorangedevs-7554s-projects.vercel.app`
-- Live homepage SHA-256: `50895571f7a3cce93403397d7f2d06a255704fd4ee68cc2010fd13845356f609`
-- Local deploy homepage SHA-256: `e049e3b45f22f1e66c8328ad99cc3bf3a50743c1b19cdf9a663497af9f12687f`
+## Where to edit
 
-The live and local homepage hashes can differ by Vercel delivery formatting, but the deployed markers must match: Google Calendar embed, latest workshop background images, footer video, and no footer program list.
+- Homepage: `index.html`
+- Calendar page: `calendar.html` and `calendar/index.html` (keep these two files identical)
+- Application page: `apply.html` and `apply/index.html` (keep these two files identical)
+- Fellowship page: `fellowships.html` and `fellowships/index.html` (keep these two files identical)
+- Other clean-URL pages commonly have both `page.html` and `page/index.html`; update both when they are paired.
+- Public assets: `assets/`
+- Deployment configuration and legacy redirects: `vercel.json`
 
-Latest optimized deployment:
+The production homepage is maintained directly in `index.html`. `home.dc.html` and `tools/prerender-homepage.mjs` are older source templates: do not regenerate the homepage blindly, because a regeneration can overwrite newer production edits. Compare generated output with `index.html` first and preserve all current live functionality.
 
-- Verified on `2026-09-02`
-- Vercel deployment URL: `https://codeorange-1lg0dc6kq-codeorangedevs-7554s-projects.vercel.app`
-- Production URL: `https://codeorange.dev`
-- SEO/speed changes included: canonical URLs, sitemap.xml, robots.txt, structured data, deferred scripts, lazy-loaded footer videos, compressed site images, long-lived asset cache headers, and a Vercel deploy ignore list for unused heavy media.
+## Safe workflow
 
-Current workflow:
+1. Pull or clone this repository and work from its root.
+2. Check `git status` before editing; preserve unrelated changes.
+3. Edit the listed source files and keep paired files in sync.
+4. Check `git diff --check` and test relevant pages locally.
+5. Commit a focused change and push it to `main`.
+6. Verify the production page with `curl -L https://codeorange.dev` after Vercel completes deployment.
 
-1. Make website edits in this folder only.
-2. Regenerate pages with `node tools/generate-pages.mjs` and `node tools/prerender-homepage.mjs --out .`.
-3. Deploy from this folder with `npx -y vercel@50.28.0 deploy --prod`.
+## Important product rules
 
-Do not use these older folders as the website source:
-
-- `/Users/pet/Documents/New project 4/codeorange-live-site`
-- `/Users/pet/Downloads/deploy`
-- `/Users/pet/Downloads/github-push-4-copy/code-orange-dev`
-
-GitHub status:
-
-This folder is pushed to the dedicated website repository:
-
-`https://github.com/code-orange-dev/codeorange-site`
-
-Use this repository as the website source of truth going forward.
+- Do not reintroduce funding, grant, donation, sponsor, or funder messaging in public copy.
+- Describe programs as “free of charge for everyone joining.”
+- Use “Agentic Engineering,” not “OpenClaw.” Keep the old URL redirect in `vercel.json`.
+- Keep the homepage hero video lazy/non-preloaded and retain the lightweight mobile image fallback.
+- Do not invent event dates, testimonials, outcomes, partners, or claims. Use the public calendar and GitHub sources.
+- The Google Calendar subscription URL is intentionally used in the homepage and calendar CTAs; preserve it when editing calendar UI.
