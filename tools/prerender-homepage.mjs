@@ -124,7 +124,7 @@ const staticHomepage = `
     <nav class="co-links" aria-label="Primary"><a href="/programs">Programs</a><a href="/calendar">Calendar</a><a href="/community">Community</a><a href="/impact">Impact</a><a href="/about">About</a></nav>
     <div class="co-actions"><a class="co-button" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a><a class="co-button primary" href="/apply">Apply now</a></div>
   </div></header>
-  <section id="top" class="co-hero"><video class="co-hero-video" src="/assets/co-workshop-bg.mp4" poster="/assets/new-workshops/workshop-nodes-miners.jpg" autoplay muted loop playsinline preload="metadata"></video><div class="co-wrap">
+  <section id="top" class="co-hero"><video class="co-hero-video" src="/assets/co-hero-agentic.mp4" poster="/assets/new-workshops/workshop-nodes-miners.jpg" autoplay muted loop playsinline preload="none" aria-hidden="true"></video><div class="co-wrap">
     <div class="co-hero-grid">
       <div>
         <p class="co-eyebrow">Asia's Bitcoin Developer School · Singapore 🇸🇬</p>
