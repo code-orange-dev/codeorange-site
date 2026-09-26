@@ -29,17 +29,17 @@ Recent completed work includes:
 - Calendar page: `calendar.html` and `calendar/index.html` (keep these two files identical)
 - Application page: `apply.html` and `apply/index.html` (keep these two files identical)
 - Fellowship page: `fellowships.html` and `fellowships/index.html` (keep these two files identical)
-- Other clean-URL pages commonly have both `page.html` and `page/index.html`; update both when they are paired.
+- Other clean-URL pages commonly have both `page.html` and `page/index.html`. **Edit `page.html`** (with `cleanUrls`, that's the file Vercel serves) and run `node tools/generate-pages.mjs` to copy it to `page/index.html`.
 - Public assets: `assets/`
 - Deployment configuration and legacy redirects: `vercel.json`
 
-The production homepage is maintained directly in `index.html`. `home.dc.html` and `tools/prerender-homepage.mjs` are older source templates: do not regenerate the homepage blindly, because a regeneration can overwrite newer production edits. Compare generated output with `index.html` first and preserve all current live functionality.
+The production homepage is maintained directly in `index.html`. `home.dc.html` and `tools/prerender-homepage.mjs` are older source templates: do not regenerate the homepage blindly, because a regeneration can overwrite newer production edits. The prerender script now refuses to write unless given `--overwrite-static-homepage`. Compare generated output with `index.html` first and preserve all current live functionality.
 
 ## Safe workflow
 
 1. Pull or clone this repository and work from its root.
 2. Check `git status` before editing; preserve unrelated changes.
-3. Edit the listed source files and keep paired files in sync.
+3. Edit the listed source files. Then run `node tools/generate-pages.mjs`: it copies every `page.html` to `page/index.html` and rebuilds `sitemap.xml` from the pages on disk, leaving out alias pages whose canonical URL points elsewhere (like `/programs/openclaw`). It does not regenerate page content; its old templates only run with `--legacy-templates`, which would overwrite hand edits and reintroduce retired copy.
 4. Check `git diff --check` and test relevant pages locally.
 5. Commit a focused change and push it to `main`.
 6. Verify the production page with `curl -L https://codeorange.dev` after Vercel completes deployment.

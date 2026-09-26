@@ -1,7 +1,21 @@
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 
 const root = new URL("../", import.meta.url);
 const writtenPages = new Set();
+
+// Since September 2026 the HTML pages (e.g. about.html, programs/talk-a-bit.html)
+// are edited directly and are the source of truth. A normal run only syncs the
+// derived files: it mirrors each x.html to x/index.html and rebuilds sitemap.xml
+// and robots.txt from the pages on disk.
+//
+// The page templates further down are OUT OF DATE. `--legacy-templates` still
+// regenerates every page from them, which overwrites hand edits - only use it if
+// you have first brought the templates back in line with the live pages.
+const LEGACY_TEMPLATES = process.argv.includes("--legacy-templates");
+
+function renderTemplate(path, html) {
+  if (LEGACY_TEMPLATES) write(path, html);
+}
 
 const links = {
   discord: "https://discord.gg/ZtvA79paWa",
@@ -657,7 +671,7 @@ function mirrorCleanUrl(path) {
   write(`${path}/index.html`, html);
 }
 
-write(
+renderTemplate(
   "programs.html",
   pageShell({
     title: "Programs",
@@ -675,7 +689,7 @@ write(
   })
 );
 
-write(
+renderTemplate(
   "about.html",
   pageShell({
     title: "About",
@@ -700,7 +714,7 @@ write(
   })
 );
 
-write(
+renderTemplate(
   "community.html",
   pageShell({
     title: "Community",
@@ -724,7 +738,7 @@ write(
   })
 );
 
-write(
+renderTemplate(
   "impact.html",
   pageShell({
     title: "Impact",
@@ -756,7 +770,7 @@ write(
   })
 );
 
-write(
+renderTemplate(
   "strategy.html",
   pageShell({
     title: "Strategy",
@@ -821,7 +835,7 @@ write(
   })
 );
 
-write(
+renderTemplate(
   "fellowships.html",
   pageShell({
     title: "Fellowships",
@@ -845,7 +859,7 @@ write(
   })
 );
 
-write(
+renderTemplate(
   "consulting.html",
   pageShell({
     title: "Code Orange Consulting",
@@ -917,7 +931,7 @@ write(
   })
 );
 
-write(
+renderTemplate(
   "calendar.html",
   pageShell({
     title: "Calendar",
@@ -952,7 +966,7 @@ write(
 );
 
 for (const p of programs.filter((item) => item.href.startsWith("/programs/"))) {
-  write(
+  renderTemplate(
     `programs/${p.slug}.html`,
     pageShell({
       title: p.title,
@@ -976,14 +990,28 @@ for (const p of programs.filter((item) => item.href.startsWith("/programs/"))) {
   } catch {}
 });
 
-for (const p of programs.filter((item) => item.href.startsWith("/programs/"))) {
-  mirrorCleanUrl(`programs/${p.slug}`);
+const programPages = readdirSync(new URL("programs/", root))
+  .filter((name) => name.endsWith(".html") && name !== "index.html")
+  .map((name) => `programs/${name.replace(/\.html$/, "")}`);
+for (const path of programPages) {
+  mirrorCleanUrl(path);
 }
 
-const sitemapUrls = [
-  "/",
-  ...Array.from(writtenPages).filter((path) => path !== "/").sort(),
+// Sitemap: every page on disk whose canonical URL is itself. Alias pages (e.g. the
+// old /programs/openclaw, which points at /programs/agentic-engineering) are left out.
+const sitemapPages = [
+  ...readdirSync(root).filter((name) => name.endsWith(".html") && name !== "home.dc.html").map((name) => name.replace(/\.html$/, "")),
+  ...programPages,
 ];
+const sitemapUrls = sitemapPages
+  .map((path) => {
+    const own = path === "index" ? "/" : `/${path}`;
+    const html = readFileSync(new URL(`${path}.html`, root), "utf8");
+    const canonical = html.match(/<link rel="canonical" href="https:\/\/codeorange\.dev([^"]*)">/)?.[1];
+    return canonical === undefined || canonical === own || (own === "/" && canonical === "") ? own : null;
+  })
+  .filter(Boolean)
+  .sort((a, b) => (a === "/" ? -1 : b === "/" ? 1 : a.localeCompare(b)));
 
 writeFileSync(
   new URL("robots.txt", root),
