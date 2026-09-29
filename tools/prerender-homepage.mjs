@@ -136,7 +136,7 @@ const staticHomepage = `
   <section id="top" class="co-hero"><video class="co-hero-video" src="/assets/co-hero-agentic.mp4" poster="/assets/new-workshops/workshop-nodes-miners.jpg" autoplay muted loop playsinline preload="none" aria-hidden="true"></video><div class="co-wrap">
     <div class="co-hero-grid">
       <div>
-        <p class="co-eyebrow">Asia's Bitcoin Developer School · Singapore 🇸🇬</p>
+        <p class="co-eyebrow">Bitcoin developer school · Canggu, Bali</p>
         <h1>A Bitcoin OSS contributor pipeline <span style="color:#F7931A">with a fellowship layer.</span></h1>
         <p class="co-lead">Learn practical Bitcoin skills, become a capable builder, or bring hands-on Bitcoin education to your local community. Code Orange runs cohorts, workshops, and public open-source contribution paths across Asia.</p>
         <div class="co-actions"><a class="co-button primary" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord, it’s free</a><a class="co-button" href="/programs">Browse programs</a></div>
