@@ -33,7 +33,7 @@ Recent completed work includes:
 - Public assets: `assets/`
 - Deployment configuration and legacy redirects: `vercel.json`
 
-The production homepage is maintained directly in `index.html`. `home.dc.html` and `tools/prerender-homepage.mjs` are older source templates: do not regenerate the homepage blindly, because a regeneration can overwrite newer production edits. The prerender script now refuses to write unless given `--overwrite-static-homepage`. Compare generated output with `index.html` first and preserve all current live functionality.
+The production homepage is maintained directly in `index.html`. `tools/prerender-homepage.mjs` is an older source template (its `home.dc.html` component was removed in September 2026 because it held outdated figures): do not regenerate the homepage blindly, because a regeneration can overwrite newer production edits. The prerender script now refuses to write unless given `--overwrite-static-homepage`. Compare generated output with `index.html` first and preserve all current live functionality.
 
 ## Safe workflow
 
