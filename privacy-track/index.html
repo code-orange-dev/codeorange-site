@@ -136,8 +136,8 @@
             <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8C94A6;">BIP352 test vectors</span>
           </div>
           <div style="background: #12213B; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px; display: flex; flex-direction: column; gap: 4px;">
-            <span style="font-family: 'Special Elite', monospace; font-size: 42px; line-height: 1; color: #F7931A;">10+</span>
-            <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8C94A6;">Target repos</span>
+            <span style="font-family: 'Special Elite', monospace; font-size: 42px; line-height: 1; color: #F7931A;">17</span>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8C94A6;">Projects with live issue links</span>
           </div>
         </div>
       </div>
@@ -335,7 +335,7 @@
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
   modules = [
-    { quarter: 'Month 01', sessions: 'Sessions 01-02', emoji: '01', title: 'Silent Payments: build it', desc: 'Build a BIP352 sender and scanner from scratch, graded against the official test vectors, then compare full-node, indexer and remote-scanner privacy trade-offs.', repos: ['BIP352', 'Shroud', 'BlindBit'] },
+    { quarter: 'Month 01', sessions: 'Sessions 01-02', emoji: '01', title: 'Silent Payments: build it', desc: 'Build a BIP352 sender and scanner from scratch, graded against the official test vectors, then compare full-node, indexer and remote-scanner privacy trade-offs.', repos: ['BIP352', 'BlindBit', 'bitcoin-core'] },
     { quarter: 'Month 02', sessions: 'Sessions 03-04', emoji: '02', title: 'Silent Payments in Core, then think like the adversary', desc: 'Review the live Bitcoin Core Silent Payments PRs as a Review Club, then learn the chain-analysis heuristics and wallet fingerprints used to follow funds.', repos: ['bitcoin-core', 'libsecp256k1', 'BDK'] },
     { quarter: 'Month 03', sessions: 'Sessions 05-06', emoji: '03', title: 'Coin selection and Payjoin', desc: 'Work through UTXO management and change, then break the common-input heuristic with collaborative transactions.', repos: ['BDK', 'rust-payjoin', 'issue pool'] },
     { quarter: 'Month 04', sessions: 'Sessions 07-08', emoji: '04', title: 'Light clients and network privacy', desc: 'Run your own node with Floresta and Kyoto, then use Bitcoin Core 31 private broadcast, BIP324 and ASmap against network surveillance.', repos: ['Floresta', 'Kyoto', 'peer-observer'] },
