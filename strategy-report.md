@@ -112,7 +112,7 @@ This sprint implements:
 - A public Strategy page.
 - Strategy links in generated navigation and footer.
 - A strategy report committed into the site repository.
-- Stronger Impact page framing for the live GitHub account: 26 repos, 21 source repos, 5 forks, and public proof surfaces.
+- Stronger Impact page framing for the public GitHub account and its proof surfaces.
 
 ## Weekly Metrics
 

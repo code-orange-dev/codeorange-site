@@ -194,7 +194,6 @@ const programs = [
 ];
 
 const activeDevs = [
-  ["Chaitika", "Silent Payments", "silent-pay-wallet and silent-pay-indexer work, plus Lightning cohort leadership in India."],
   ["Vaan", "rust-bitcoin and bdk-cli", "Wallet infrastructure contributions used across production Bitcoin applications."],
   ["Razor", "peer-observer", "Merged PRs into 0xB10C's Bitcoin P2P monitoring tool and mentors technical workshops."],
   ["Arowolo", "Async Payjoin", "First rust-payjoin PR approved for one of Bitcoin's most important privacy upgrades."],
