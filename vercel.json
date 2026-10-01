@@ -4,7 +4,21 @@
   "buildCommand": null,
   "outputDirectory": ".",
   "redirects": [
-    { "source": "/programs/openclaw", "destination": "/programs/agentic-engineering", "permanent": true }
+    {
+      "source": "/programs/openclaw",
+      "destination": "/programs/agentic-engineering",
+      "permanent": true
+    },
+    {
+      "source": "/strategy",
+      "destination": "/impact",
+      "permanent": true
+    },
+    {
+      "source": "/consulting",
+      "destination": "/about",
+      "permanent": true
+    }
   ],
   "headers": [
     {
