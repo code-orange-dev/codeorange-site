@@ -983,7 +983,7 @@ for (const p of programs.filter((item) => item.href.startsWith("/programs/"))) {
   );
 }
 
-["programs", "about", "community", "impact", "strategy", "fellowships", "calendar", "consulting", "rawbit", "privacy-track", "apply"].forEach((path) => {
+["programs", "about", "community", "impact", "strategy", "fellowships", "calendar", "consulting", "rawbit", "privacy-track", "apply", "articles"].forEach((path) => {
   try {
     mirrorCleanUrl(path);
   } catch {}
@@ -996,11 +996,19 @@ for (const path of programPages) {
   mirrorCleanUrl(path);
 }
 
+const articlePages = readdirSync(new URL("articles/", root))
+  .filter((name) => name.endsWith(".html") && name !== "index.html")
+  .map((name) => `articles/${name.replace(/\.html$/, "")}`);
+for (const path of articlePages) {
+  mirrorCleanUrl(path);
+}
+
 // Sitemap: every page on disk whose canonical URL is itself. Alias pages (e.g. the
 // old /programs/openclaw, which points at /programs/agentic-engineering) are left out.
 const sitemapPages = [
   ...readdirSync(root).filter((name) => name.endsWith(".html") && name !== "home.dc.html").map((name) => name.replace(/\.html$/, "")),
   ...programPages,
+  ...articlePages,
 ];
 const sitemapUrls = sitemapPages
   .map((path) => {
@@ -1030,10 +1038,58 @@ ${sitemapUrls
     (path) => `  <url>
     <loc>https://codeorange.dev${path}</loc>
     <changefreq>${path === "/" ? "weekly" : "monthly"}</changefreq>
-    <priority>${path === "/" ? "1.0" : path.includes("/programs/") ? "0.7" : "0.8"}</priority>
+    <priority>${path === "/" ? "1.0" : path.includes("/programs/") || path.includes("/articles/") ? "0.7" : "0.8"}</priority>
   </url>`
   )
   .join("\n")}
 </urlset>
+`
+);
+
+// RSS feed for /articles, built from each article page's own metadata. Newsletter
+// tools (Buttondown RSS-to-email) and feed readers pick new articles up from here.
+const xmlEscape = (value) =>
+  value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+const htmlUnescape = (value) =>
+  value.replace(/&quot;/g, '"').replace(/&#x27;/g, "'").replace(/&#39;/g, "'").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
+const feedItems = articlePages
+  .map((path) => {
+    const html = readFileSync(new URL(`${path}.html`, root), "utf8");
+    const meta = (pattern) => htmlUnescape(html.match(pattern)?.[1] || "");
+    return {
+      url: `https://codeorange.dev/${path}`,
+      title: meta(/<meta property="og:title" content="([^"]*)">/),
+      description: meta(/<meta name="description" content="([^"]*)">/),
+      author: meta(/<meta name="author" content="([^"]*)">/),
+      published: meta(/<meta property="article:published_time" content="([^"]*)">/),
+    };
+  })
+  .filter((item) => item.published)
+  .sort((a, b) => b.published.localeCompare(a.published));
+
+writeFileSync(
+  new URL("feed.xml", root),
+  `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Code Orange Dev School Articles</title>
+    <link>https://codeorange.dev/articles</link>
+    <description>Articles on Bitcoin self-custody, privacy, and open-source development from Code Orange Dev School.</description>
+    <language>en</language>
+    <atom:link href="https://codeorange.dev/feed.xml" rel="self" type="application/rss+xml"/>
+${feedItems
+  .map(
+    (item) => `    <item>
+      <title>${xmlEscape(item.title)}</title>
+      <link>${item.url}</link>
+      <guid isPermaLink="true">${item.url}</guid>
+      <description>${xmlEscape(item.description)}</description>
+      <dc:creator>${xmlEscape(item.author)}</dc:creator>
+      <pubDate>${new Date(`${item.published}T00:00:00Z`).toUTCString()}</pubDate>
+    </item>`
+  )
+  .join("\n")}
+  </channel>
+</rss>
 `
 );
