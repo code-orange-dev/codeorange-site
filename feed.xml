@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Code Orange Dev School Articles</title>
+    <link>https://codeorange.dev/articles</link>
+    <description>Articles on Bitcoin self-custody, privacy, and open-source development from Code Orange Dev School.</description>
+    <language>en</language>
+    <atom:link href="https://codeorange.dev/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Why Self-Custody Matters: Get Your Bitcoin Off the Exchange</title>
+      <link>https://codeorange.dev/articles/why-self-custody-matters</link>
+      <guid isPermaLink="true">https://codeorange.dev/articles/why-self-custody-matters</guid>
+      <description>Why leaving bitcoin on an exchange means holding an IOU, and three simple steps to start self-custody with a hardware wallet and a tested seed phrase backup.</description>
+      <dc:creator>Andy</dc:creator>
+      <pubDate>Thu, 01 Oct 2026 00:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>
