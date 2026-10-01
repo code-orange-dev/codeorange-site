@@ -217,6 +217,25 @@
       #static-homepage .co-mobile-menu summary { width: 40px; height: 40px; }
       #static-homepage .co-nav .co-button { padding: 9px 9px; font-size: 12px; }
     }
+    /* ── Pathway section ── */
+    #static-homepage .co-path { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; margin-top: 34px; }
+    #static-homepage .co-path a { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 20px 18px; border: 1px solid rgba(255,255,255,.1); border-radius: 12px; background: #0B1220; text-decoration: none; color: inherit; transition: transform 140ms, border-color 140ms; }
+    #static-homepage .co-path a:hover { transform: translateY(-3px); border-color: rgba(247,147,26,.7); }
+    #static-homepage .co-path .co-step-num { color: #F7931A; font: 700 12px/1 "JetBrains Mono", monospace; letter-spacing: .08em; }
+    #static-homepage .co-path h3 { margin: 0; font-size: 15px; font-weight: 700; line-height: 1.3; color: #F5F1EA; }
+    #static-homepage .co-path p { margin: 0; font-size: 12.5px; color: #8C94A6; line-height: 1.45; }
+    #static-homepage .co-path .co-step-arrow { position: absolute; right: -13px; top: 50%; transform: translateY(-50%); color: #F7931A; font-weight: 700; z-index: 1; pointer-events: none; }
+    #static-homepage .co-path-cta { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 30px; }
+    #static-homepage .co-path-cta .co-note { font-size: 13px; color: #8C94A6; }
+    @media (max-width: 980px) {
+      #static-homepage .co-path { grid-template-columns: 1fr 1fr; }
+      #static-homepage .co-path .co-step-arrow { display: none; }
+    }
+    @media (max-width: 560px) {
+      #static-homepage .co-path { grid-template-columns: 1fr; }
+    }
+    /* ── FAQ CTA ── */
+    #static-homepage .co-faq-cta { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 26px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.1); }
   </style>
   <div class="co-announce" role="navigation" aria-label="Current enrollment opportunities"><a href="/privacy-track">Bitcoin Privacy Track · open for enrollment</a><a href="https://github.com/code-orange-dev/code-orange-dev/blob/main/privacy-contributor-program/REVIEW_CLUB.md" target="_blank" rel="noopener">Code Review Club · real upstream PRs</a><a href="/apply">Apply →</a></div>
   <header class="co-band"><div class="co-wrap co-nav">
@@ -250,6 +269,17 @@
         </div>
       </div>
     </div>
+  </div></section>
+  <section id="pathway" class="co-section co-dark"><div class="co-wrap"><p class="co-eyebrow">How it works</p><h2>The pathway: first meetup to full-time Bitcoin OSS.</h2><p class="co-lead">Six steps. Start wherever you are — every step is free, and every step points at real public work.</p>
+    <div class="co-path" aria-label="Code Orange developer pathway">
+      <a href="/calendar"><span class="co-step-num">STEP 01</span><h3>Workshops &amp; meetups</h3><p>The front door. Drop in, no experience needed.</p><span class="co-step-arrow" aria-hidden="true">→</span></a>
+      <a href="/programs"><span class="co-step-num">STEP 02</span><h3>Study cohorts</h3><p>Dojo, rawBit, Decoding Bitcoin — structured weeks, real skills.</p><span class="co-step-arrow" aria-hidden="true">→</span></a>
+      <a href="/privacy-track"><span class="co-step-num">STEP 03</span><h3>Privacy Track</h3><p>12 sessions: Silent Payments, Payjoin, CoinJoin, and more.</p><span class="co-step-arrow" aria-hidden="true">→</span></a>
+      <a href="/programs"><span class="co-step-num">STEP 04</span><h3>Code Review Club</h3><p>Review real upstream Bitcoin PRs, together.</p><span class="co-step-arrow" aria-hidden="true">→</span></a>
+      <a href="/fellowships"><span class="co-step-num">STEP 05</span><h3>Fellowships</h3><p>Focused time, mentors, a real open-source project.</p><span class="co-step-arrow" aria-hidden="true">→</span></a>
+      <a href="/impact"><span class="co-step-num">STEP 06</span><h3>Full-time Bitcoin OSS</h3><p>Graduates contribute to Bitcoin for a living.</p></a>
+    </div>
+    <div class="co-path-cta"><a class="co-button primary" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Start here — join the Discord</a><a class="co-button" href="/calendar">Or pick a workshop first</a><span class="co-note">Free forever · online + in person · beginners welcome</span></div>
   </div></section>
   <section class="co-calendar-section co-dark co-band"><div class="co-wrap"><p class="co-eyebrow">Recurring events</p><h2>Always something happening.</h2><p class="co-lead">Jump straight into a working session, or use the live calendar to find the right moment to join.</p><div class="co-event-preview" aria-label="Featured Code Orange community sessions"><a href="https://discord.gg/6XPJ96sCY4?event=1545332635348246528" target="_blank" rel="noopener"><span>Build &amp; review</span><h3>Code Review Club</h3><p>Discuss real upstream Bitcoin work, test ideas, and practise useful review notes.</p><b>Open Discord event →</b></a><a href="https://discord.gg/6XPJ96sCY4?event=1520663887471710248" target="_blank" rel="noopener"><span>Hands-on workshop</span><h3>Self-custody</h3><p>Bring practical questions and learn the tools and habits of Bitcoin self-custody.</p><b>Open Discord event →</b></a><a href="https://discord.gg/6XPJ96sCY4?event=1387624917339472053" target="_blank" rel="noopener"><span>Study together</span><h3>Bitcoin Reading Club</h3><p>Work through essential Bitcoin writing alongside people who care about the details.</p><b>Open Discord event →</b></a></div><div class="co-calendar-subscribe"><p><b>Never miss a session.</b> Add every Code Orange event once, then your Google Calendar stays updated automatically.</p><a class="co-button primary" href="https://calendar.google.com/calendar/r?cid=466de2be7431d78be2049f96f5fd31f9b06b5a9cd94f909ba3182b18442ed499%40group.calendar.google.com" target="_blank" rel="noopener">Add to Google Calendar ↗</a></div><div class="co-calendar"><div class="co-calendar-label"><span><b>● Live schedule</b> · updates automatically</span><span>Central Indonesia time</span></div><iframe title="Code Orange public student calendar" src="https://calendar.google.com/calendar/embed?src=466de2be7431d78be2049f96f5fd31f9b06b5a9cd94f909ba3182b18442ed499%40group.calendar.google.com&ctz=Asia%2FMakassar" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><p style="margin-top:28px"><a class="co-button" href="/calendar">Open calendar page →</a></p></div></section>
   <section class="co-section co-photo-section" style="--co-bg:url('/assets/latest-workshops/workshop-latest-table.jpg'); --co-bg-pos:center 52%;"><div class="co-wrap"><p class="co-eyebrow">Programs</p><h2>Pick a practical next step.</h2><div class="co-grid">
@@ -314,10 +344,12 @@
   </div><p style="margin-top:28px"><a class="co-button" href="https://github.com/code-orange-dev/dev-community" target="_blank" rel="noopener">Community directory →</a></p></div></section>
   <section class="co-section co-dark"><div class="co-wrap"><div class="co-host"><p class="co-eyebrow">For community leaders</p><h2>Run a Code Orange workshop.</h2><p class="co-lead">Free, editable, localizable workshops for beginners through advanced Bitcoin learners. Get the materials, adapt them for your community, and join a network of hosts.</p><div class="co-actions"><a class="co-button primary" href="https://github.com/code-orange-dev/curriculum" target="_blank" rel="noopener">Get the workshop kit</a><a class="co-button" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Ask in Discord</a></div></div></div></section>
   <section class="co-section co-photo-section" style="--co-bg:url('/assets/latest-workshops/workshop-latest-table.jpg'); --co-bg-pos:center;"><div class="co-wrap"><p class="co-eyebrow">FAQ</p><h2>Common questions.</h2>
-    <details open><summary>How much does it cost?</summary><p>All Code Orange programs are free of charge for everyone joining.</p></details>
+    <details open><summary>How do I get started?</summary><p>One step: <a href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">join the Discord →</a> — that's the front door. Say hi, then come to a <a href="/calendar">free workshop</a> or enroll in a <a href="/programs">study cohort</a>. No application, no cost.</p></details>
+    <details><summary>How much does it cost?</summary><p>All Code Orange programs are free of charge for everyone joining.</p></details>
     <details><summary>Do I need prior coding experience?</summary><p>rawBit and the Bitcoin Privacy Track expect comfort with a programming language. Bitcoin Basics, Sovereign Bitcoiner, Agentic Engineering, and Vibe Coding welcome curious beginners.</p></details>
-    <details><summary>Can I join remotely?</summary><p>Yes. Most sessions run online through Discord, with hands-on hardware sessions layered in where they help.</p></details>
+    <details><summary>Can I join remotely?</summary><p>Yes. Most sessions run online through <a href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a>, with hands-on hardware sessions layered in where they help.</p></details>
     <details><summary>Can I run a workshop?</summary><p>Yes. The curriculum is open source and adaptable for local communities. <a href="mailto:hello@codeorange.dev?subject=Workshop%20proposal">Email us your workshop idea →</a> and we’ll help get it started.</p></details>
+    <div class="co-faq-cta"><a class="co-button primary" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join the Discord — it's the front door</a><a class="co-button" href="/calendar">See this week's sessions</a></div>
   </div></section>
   <footer><div class="co-wrap">
     <div class="co-media-footer"><video data-lazy-video data-src="/assets/co-footer.mp4" poster="/assets/co-footer-poster.jpg" autoplay muted loop playsinline preload="none"></video><div><p class="co-eyebrow">Scenes from the school</p><h2>Hands-on Bitcoin education.</h2></div></div>
