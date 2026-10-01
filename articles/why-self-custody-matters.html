@@ -13,12 +13,12 @@
 <meta property="og:url" content="https://codeorange.dev/articles/why-self-custody-matters">
 <meta property="og:title" content="Why Self-Custody Matters: Get Your Bitcoin Off the Exchange">
 <meta property="og:description" content="Why leaving bitcoin on an exchange means holding an IOU, and three simple steps to start self-custody with a hardware wallet and a tested seed phrase backup.">
-<meta property="og:image" content="https://codeorange.dev/assets/og-codeorange-workshop.jpg">
-<meta property="og:image:secure_url" content="https://codeorange.dev/assets/og-codeorange-workshop.jpg">
+<meta property="og:image" content="https://codeorange.dev/assets/articles/self-custody-og.jpg">
+<meta property="og:image:secure_url" content="https://codeorange.dev/assets/articles/self-custody-og.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Bitcoin self-custody workshop at Code Orange Dev School">
+<meta property="og:image:alt" content="Signing a Bitcoin transaction with a hardware wallet at a Code Orange workshop">
 <meta property="article:published_time" content="2026-10-01">
 <meta property="article:modified_time" content="2026-10-01">
 <meta property="article:author" content="Andy">
@@ -27,9 +27,9 @@
 <meta name="twitter:site" content="@CodeOrangeDevs">
 <meta name="twitter:title" content="Why Self-Custody Matters: Get Your Bitcoin Off the Exchange">
 <meta name="twitter:description" content="Why leaving bitcoin on an exchange means holding an IOU, and three simple steps to start self-custody with a hardware wallet and a tested seed phrase backup.">
-<meta name="twitter:image" content="https://codeorange.dev/assets/og-codeorange-workshop.jpg">
+<meta name="twitter:image" content="https://codeorange.dev/assets/articles/self-custody-og.jpg">
 <link rel="icon" type="image/svg+xml" href="/assets/favicon-bitcoin.svg">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "headline": "Why Self-Custody Matters", "description": "Why leaving bitcoin on an exchange means holding an IOU, and three simple steps to start self-custody with a hardware wallet and a tested seed phrase backup.", "image": ["https://codeorange.dev/assets/og-codeorange-workshop.jpg", "https://codeorange.dev/assets/latest-workshops/workshop-latest-custody.jpg"], "datePublished": "2026-10-01", "dateModified": "2026-10-01", "author": {"@type": "Person", "name": "Andy"}, "publisher": {"@type": "EducationalOrganization", "name": "Code Orange Dev School", "url": "https://codeorange.dev", "logo": {"@type": "ImageObject", "url": "https://codeorange.dev/assets/logo-white.png"}, "email": "hello@codeorange.dev", "sameAs": ["https://github.com/code-orange-dev", "https://x.com/CodeOrangeDevs", "https://www.instagram.com/codeorangedevs", "https://njump.me/npub1gxqyeea3xspkd68mxlxsvvk3gdzdd555u504ynwpdj0ghg503mvq2gydt0"]}, "mainEntityOfPage": "https://codeorange.dev/articles/why-self-custody-matters", "keywords": "bitcoin self-custody, not your keys not your coins, hardware wallet, seed phrase backup"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://codeorange.dev/"}, {"@type": "ListItem", "position": 2, "name": "Articles", "item": "https://codeorange.dev/articles"}, {"@type": "ListItem", "position": 3, "name": "Why Self-Custody Matters", "item": "https://codeorange.dev/articles/why-self-custody-matters"}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "headline": "Why Self-Custody Matters", "description": "Why leaving bitcoin on an exchange means holding an IOU, and three simple steps to start self-custody with a hardware wallet and a tested seed phrase backup.", "image": ["https://codeorange.dev/assets/articles/self-custody-og.jpg", "https://codeorange.dev/assets/articles/self-custody-hero.jpg"], "datePublished": "2026-10-01", "dateModified": "2026-10-01", "author": {"@type": "Person", "name": "Andy", "image": "https://codeorange.dev/assets/articles/andy.jpg"}, "publisher": {"@type": "EducationalOrganization", "name": "Code Orange Dev School", "url": "https://codeorange.dev", "logo": {"@type": "ImageObject", "url": "https://codeorange.dev/assets/logo-white.png"}, "email": "hello@codeorange.dev", "sameAs": ["https://github.com/code-orange-dev", "https://x.com/CodeOrangeDevs", "https://www.instagram.com/codeorangedevs", "https://njump.me/npub1gxqyeea3xspkd68mxlxsvvk3gdzdd555u504ynwpdj0ghg503mvq2gydt0"]}, "mainEntityOfPage": "https://codeorange.dev/articles/why-self-custody-matters", "keywords": "bitcoin self-custody, not your keys not your coins, hardware wallet, seed phrase backup"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://codeorange.dev/"}, {"@type": "ListItem", "position": 2, "name": "Articles", "item": "https://codeorange.dev/articles"}, {"@type": "ListItem", "position": 3, "name": "Why Self-Custody Matters", "item": "https://codeorange.dev/articles/why-self-custody-matters"}]}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -184,6 +184,15 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 .article-wrap { max-width: 760px; margin: 0 auto; padding: 56px 32px 24px; }
 .article-figure { margin: 0 0 40px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--card); box-shadow: 0 24px 70px rgba(0,0,0,.32); }
 .article-figure img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+.article-figure.inline { margin: 8px 0 32px; }
+.article-figure.inline img { aspect-ratio: auto; }
+.article-figure figcaption { padding: 12px 16px; color: var(--dim); font: 500 13px/1.5 "JetBrains Mono", monospace; }
+.byline { align-items: center; }
+.byline-avatar { width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(247,147,26,.5); }
+.author-box { display: flex; align-items: center; gap: 16px; margin: 40px 0 0; padding: 20px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; }
+.author-box img { width: 72px; height: 72px; border-radius: 50%; border: 2px solid var(--orange); flex: 0 0 auto; }
+.author-box strong { font-size: 18px; }
+.author-box p { margin: 2px 0 0; color: var(--dim); }
 .prose { color: var(--muted); font-size: 19px; line-height: 1.78; }
 .prose p, .prose ul, .prose ol { margin: 0 0 24px; }
 .prose h2 { margin: 52px 0 18px; font-size: clamp(28px, 2.8vw, 40px); }
@@ -262,13 +271,12 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
         <p class="eyebrow"><a href="/articles" style="text-decoration:none">/Articles</a>/why-self-custody-matters_</p>
         <h1>Why Self-Custody <span class="orange">Matters.</span></h1>
         <p class="lead">Why leaving bitcoin on an exchange means holding an IOU, and three simple steps to start self-custody with a hardware wallet and a tested seed phrase backup.</p>
-        <p class="byline"><span class="pill orange">By Andy</span><span class="pill"><time datetime="2026-10-01">October 1, 2026</time></span><span class="pill">3 min read</span></p>
+        <p class="byline"><img class="byline-avatar" src="/assets/articles/andy.jpg" alt="" width="34" height="34"><span class="pill orange">By Andy</span><span class="pill"><time datetime="2026-10-01">October 1, 2026</time></span><span class="pill">3 min read</span></p>
       </div>
     </div>
   </section>
   <article class="article-wrap">
-    <!-- IMAGE 1: replace with Andy's hero image (also used as the social preview). -->
-    <figure class="article-figure"><img src="/assets/latest-workshops/workshop-latest-custody.jpg" alt="Bitcoin self-custody workshop at Code Orange Dev School" width="1400" height="1050"></figure>
+    <figure class="article-figure"><img src="/assets/articles/self-custody-hero.jpg" alt="Signing a Bitcoin transaction with a hardware wallet at a Code Orange workshop" width="1536" height="1152"></figure>
     <div class="prose">
       <p>The most common question beginners ask when getting into Bitcoin is simple:</p>
       <p class="pull">&ldquo;Why can&rsquo;t I just leave my coins on the exchange?&rdquo;</p>
@@ -286,6 +294,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
         <li><strong>Complete independence:</strong> Nobody can censor your transactions or touch your balance.</li>
       </ul>
       <p>That is what financial sovereignty actually means: having absolute control over the value you worked for.</p>
+      <figure class="article-figure inline"><img src="/assets/articles/self-custody-devices.jpg" alt="Hardware signing devices, including a Coldcard, on a workshop table" width="1200" height="1158" loading="lazy"><figcaption>Hardware signing devices from a Code Orange self-custody workshop.</figcaption></figure>
 
       <h2>How to get started</h2>
       <p>Starting out does not require a complicated setup:</p>
@@ -294,20 +303,24 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
         <li><strong>Back up your seed phrase on paper or metal</strong>, never digitally.</li>
         <li><strong>Send a $10 test</strong>, wipe the device clean, and restore it from your words.</li>
       </ol>
-      <!-- IMAGE 2 (optional): hardware wallet or seed phrase backup photo goes here. -->
+      <figure class="article-figure inline"><img src="/assets/articles/self-custody-metal-backup.jpg" alt="Stamped steel seed phrase backup plates with a letter punch set and hammer" width="1050" height="1400" loading="lazy"><figcaption>Seed phrases stamped into steel. The words are blurred here; never share yours.</figcaption></figure>
       <p>Once you watch those test funds reappear, the fear disappears. You realize your Bitcoin doesn&rsquo;t live inside that small piece of plastic. It lives on the network, accessible only by your keys.</p>
 
       <h2>Exchanges are for buying. Self-custody is for saving.</h2>
       <p class="closing">If you don&rsquo;t hold the keys, you don&rsquo;t own the coin. Take the first step and get your coins off the exchange.</p>
       <p>Want to do this hands-on with others? Join a <a href="/programs/sovereign-bitcoiner">Sovereign Bitcoiner</a> session at Code Orange Dev School.</p>
     </div>
+    <aside class="author-box" aria-label="About the author">
+      <img src="/assets/articles/andy.jpg" alt="Andy" width="72" height="72" loading="lazy">
+      <div><p class="eyebrow" style="margin:0 0 4px">Written by</p><strong>Andy</strong><p>Code Orange Dev School</p></div>
+    </aside>
   </article>
 <section class="newsletter" aria-labelledby="newsletter-title">
   <div class="newsletter-card">
     <p class="eyebrow">Newsletter</p>
     <h2 id="newsletter-title">Get new articles by email.</h2>
     <p>Practical Bitcoin self-custody and developer writing from Code Orange Dev School. No spam, unsubscribe anytime.</p>
-    <form class="newsletter-form" action="https://buttondown.com/api/emails/embed-subscribe/BUTTONDOWN_USERNAME" method="post" target="_blank">
+    <form class="newsletter-form" action="https://buttondown.com/api/emails/embed-subscribe/code_orange" method="post" target="_blank">
       <label class="sr-only" for="newsletter-email">Email address</label>
       <input type="email" name="email" id="newsletter-email" placeholder="you@example.com" autocomplete="email" required>
       <input type="hidden" name="embed" value="1">
