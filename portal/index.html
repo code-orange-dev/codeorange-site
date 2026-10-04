@@ -6,7 +6,7 @@
 <title>Student Portal - Code Orange Dev School</title>
 <meta name="description" content="Your path to Bitcoin open source: all Code Orange programs in one place. No sign-up, no password — pick a track, show up, ship. Progress saves on your device.">
 <link rel="canonical" href="https://codeorange.dev/portal">
-<meta name="theme-color" content="#5ED29C">
+<meta name="theme-color" content="#F7931A">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Code Orange Dev School">
 <meta property="og:url" content="https://codeorange.dev/portal">
@@ -19,21 +19,21 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
 <style>
-  html, body { margin: 0; padding: 0; background: #070B0A; }
-  body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; font-family: 'Inter', system-ui, sans-serif; color: #F4F7F5; }
-  ::selection { background: rgba(94,210,156,0.35); color: #F4F7F5; }
+  html, body { margin: 0; padding: 0; background: #0A0A0A; }
+  body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; font-family: 'Inter', system-ui, sans-serif; color: #F5F5F5; }
+  ::selection { background: rgba(247,147,26,0.35); color: #F5F5F5; }
   a { transition: color 120ms, border-color 120ms, background 120ms; }
-  .nav-link:hover { color: #5ED29C !important; }
-  .btn-ghost:hover { border-color: #5ED29C !important; color: #5ED29C !important; }
-  .btn-solid:hover { background: #86E3B7 !important; }
+  .nav-link:hover { color: #F7931A !important; }
+  .btn-ghost:hover { border-color: #F7931A !important; color: #F7931A !important; }
+  .btn-solid:hover { background: #FFB347 !important; }
   .track-card { cursor: pointer; transition: border-color 150ms, transform 150ms; }
-  .track-card:hover { border-color: rgba(94,210,156,0.5) !important; transform: translateY(-2px); }
+  .track-card:hover { border-color: rgba(247,147,26,0.5) !important; transform: translateY(-2px); }
   .track-card img { transition: transform 300ms; }
   .track-card:hover img { transform: scale(1.04); }
   .session-row { cursor: pointer; transition: background 120ms, border-color 120ms; }
   .session-row:hover { border-color: rgba(255,255,255,0.22) !important; }
-  .session-row.done { border-color: rgba(94,210,156,0.4) !important; background: rgba(94,210,156,0.08) !important; }
-  .session-row.done .session-title { color: #5ED29C; text-decoration: line-through; text-decoration-color: rgba(94,210,156,0.6); }
+  .session-row.done { border-color: rgba(247,147,26,0.4) !important; background: rgba(247,147,26,0.08) !important; }
+  .session-row.done .session-title { color: #F7931A; text-decoration: line-through; text-decoration-color: rgba(247,147,26,0.6); }
   .bar-fill { transition: width 250ms ease; }
   .track-detail { display: none; }
   .track-detail.open { display: block; }
@@ -53,54 +53,54 @@
 <script src="/assets/site-menu.js?v=20261004" defer></script>
 </head>
 <body>
-<div style="background: #070B0A; min-height: 100vh;">
+<div style="background: #0A0A0A; min-height: 100vh;">
 
   <!-- HEADER -->
-  <header style="position: sticky; top: 0; z-index: 50; background: rgba(7,11,10,0.72); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.08);">
+  <header style="position: sticky; top: 0; z-index: 50; background: rgba(10,10,10,0.72); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.08);">
     <div class="wrap" style="max-width: 1240px; margin: 0 auto; padding: 0 32px; height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 24px;">
       <a href="/" style="display: flex; align-items: center; text-decoration: none; flex-shrink: 0;">
         <img src="/assets/logo-white.png" alt="Code Orange Dev School" style="height: 45px; width: auto; display: block;">
       </a>
       <nav class="nav-links" style="display: flex; align-items: center; gap: 4px; font-size: 14px; font-weight: 500;">
-        <a href="/" class="nav-link" style="color: #B3BAB7; text-decoration: none; padding: 8px 14px; border-radius: 8px;">← codeorange.dev</a>
-        <a href="#programs" class="nav-link" style="color: #B3BAB7; text-decoration: none; padding: 8px 14px; border-radius: 8px;">Programs</a>
-        <a href="/calendar" class="nav-link" style="color: #B3BAB7; text-decoration: none; padding: 8px 14px; border-radius: 8px;">Calendar</a>
-        <a href="https://github.com/code-orange-dev/curriculum" target="_blank" rel="noopener" class="nav-link" style="color: #B3BAB7; text-decoration: none; padding: 8px 14px; border-radius: 8px;">Curriculum ↗</a>
+        <a href="/" class="nav-link" style="color: #B8B8B8; text-decoration: none; padding: 8px 14px; border-radius: 8px;">← codeorange.dev</a>
+        <a href="#programs" class="nav-link" style="color: #B8B8B8; text-decoration: none; padding: 8px 14px; border-radius: 8px;">Programs</a>
+        <a href="/calendar" class="nav-link" style="color: #B8B8B8; text-decoration: none; padding: 8px 14px; border-radius: 8px;">Calendar</a>
+        <a href="https://github.com/code-orange-dev/curriculum" target="_blank" rel="noopener" class="nav-link" style="color: #B8B8B8; text-decoration: none; padding: 8px 14px; border-radius: 8px;">Curriculum ↗</a>
       </nav>
-      <a href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener" class="btn-solid" style="background: #5ED29C; color: #070B0A; text-decoration: none; font-size: 14px; font-weight: 700; padding: 10px 20px; border-radius: 8px; flex-shrink: 0;">Join Discord</a>
+      <a href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener" class="btn-solid" style="background: #F7931A; color: #0A0A0A; text-decoration: none; font-size: 14px; font-weight: 700; padding: 10px 20px; border-radius: 8px; flex-shrink: 0;">Join Discord</a>
     </div>
   </header>
 
   <!-- HERO -->
   <section style="position: relative; overflow: hidden; background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px); background-size: 48px 48px;">
-    <div style="position: absolute; top: -120px; right: -80px; width: 720px; height: 720px; border-radius: 50%; background: radial-gradient(circle, rgba(94,210,156,0.13) 0%, transparent 65%); pointer-events: none;"></div>
+    <div style="position: absolute; top: -120px; right: -80px; width: 720px; height: 720px; border-radius: 50%; background: radial-gradient(circle, rgba(247,147,26,0.13) 0%, transparent 65%); pointer-events: none;"></div>
     <div class="wrap" style="max-width: 1240px; margin: 0 auto; padding: 88px 32px 72px; position: relative;">
       <div class="hero-grid" style="display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 64px; align-items: center;">
         <div>
-          <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #5ED29C; margin-bottom: 24px;"><span>/</span>Student_Portal<span>_</span></div>
-          <h1 style="font-family: 'Inter', system-ui, sans-serif; font-weight: 400; font-size: clamp(38px, 4.4vw, 62px); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 26px; color: #F4F7F5;">Your path to Bitcoin OSS. <span style="color: #5ED29C;">No sign-up. No password.</span></h1>
-          <p style="font-size: 18px; line-height: 1.65; color: #B3BAB7; margin: 0 0 32px; max-width: 560px;">Every program, session and next step in one place. Pick a track, show up, ship — your progress saves right here on your device. Everything is free, forever.</p>
+          <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #F7931A; margin-bottom: 24px;"><span>/</span>Student_Portal<span>_</span></div>
+          <h1 style="font-family: 'Inter', system-ui, sans-serif; font-weight: 400; font-size: clamp(38px, 4.4vw, 62px); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 26px; color: #F5F5F5;">Your path to Bitcoin OSS. <span style="color: #F7931A;">No sign-up. No password.</span></h1>
+          <p style="font-size: 18px; line-height: 1.65; color: #B8B8B8; margin: 0 0 32px; max-width: 560px;">Every program, session and next step in one place. Pick a track, show up, ship — your progress saves right here on your device. Everything is free, forever.</p>
           <div style="display: flex; gap: 14px; flex-wrap: wrap;">
-            <a href="#programs" class="btn-solid" style="background: #5ED29C; color: #070B0A; text-decoration: none; font-size: 16px; font-weight: 700; padding: 15px 30px; border-radius: 8px;">Pick your track</a>
-            <a href="/calendar" class="btn-ghost" style="color: #F4F7F5; text-decoration: none; font-size: 16px; font-weight: 600; padding: 15px 30px; border: 1px solid rgba(255,255,255,0.16); border-radius: 8px;">Live calendar</a>
+            <a href="#programs" class="btn-solid" style="background: #F7931A; color: #0A0A0A; text-decoration: none; font-size: 16px; font-weight: 700; padding: 15px 30px; border-radius: 8px;">Pick your track</a>
+            <a href="/calendar" class="btn-ghost" style="color: #F5F5F5; text-decoration: none; font-size: 16px; font-weight: 600; padding: 15px 30px; border: 1px solid rgba(255,255,255,0.16); border-radius: 8px;">Live calendar</a>
           </div>
         </div>
         <div class="stats-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-          <div style="background: #0E1513; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px; display: flex; flex-direction: column; gap: 4px;">
-            <span style="font-family: 'Inter', monospace; font-size: 42px; line-height: 1; color: #5ED29C;">94</span>
-            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #7E8783;">PRs merged by our community</span>
+          <div style="background: #141414; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px; display: flex; flex-direction: column; gap: 4px;">
+            <span style="font-family: 'Inter', monospace; font-size: 42px; line-height: 1; color: #F7931A;">94</span>
+            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #858585;">PRs merged by our community</span>
           </div>
-          <div style="background: #0E1513; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px; display: flex; flex-direction: column; gap: 4px;">
-            <span style="font-family: 'Inter', monospace; font-size: 42px; line-height: 1; color: #5ED29C;">29</span>
-            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #7E8783;">Bitcoin projects contributed to</span>
+          <div style="background: #141414; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px; display: flex; flex-direction: column; gap: 4px;">
+            <span style="font-family: 'Inter', monospace; font-size: 42px; line-height: 1; color: #F7931A;">29</span>
+            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #858585;">Bitcoin projects contributed to</span>
           </div>
-          <div style="background: #0E1513; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px; display: flex; flex-direction: column; gap: 4px;">
-            <span style="font-family: 'Inter', monospace; font-size: 42px; line-height: 1; color: #5ED29C;">6</span>
-            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #7E8783;">Programs to join</span>
+          <div style="background: #141414; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px; display: flex; flex-direction: column; gap: 4px;">
+            <span style="font-family: 'Inter', monospace; font-size: 42px; line-height: 1; color: #F7931A;">6</span>
+            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #858585;">Programs to join</span>
           </div>
-          <div style="background: #0E1513; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px; display: flex; flex-direction: column; gap: 4px;">
-            <span style="font-family: 'Inter', monospace; font-size: 42px; line-height: 1; color: #5ED29C;">0</span>
-            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #7E8783;">Cost · free forever</span>
+          <div style="background: #141414; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px; display: flex; flex-direction: column; gap: 4px;">
+            <span style="font-family: 'Inter', monospace; font-size: 42px; line-height: 1; color: #F7931A;">0</span>
+            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #858585;">Cost · free forever</span>
           </div>
         </div>
       </div>
@@ -110,41 +110,41 @@
   <!-- 3 STEPS -->
   <section class="wrap" style="max-width: 1240px; margin: 0 auto; padding: 0 32px 64px;">
     <div class="steps-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
-      <a href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener" style="display: block; background: #0A100E; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 24px; text-decoration: none;">
-        <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; color: #5ED29C;">Step 1 · 2 min</span>
-        <div style="font-size: 18px; font-weight: 600; color: #F4F7F5; margin: 8px 0 6px;">Join the Discord</div>
-        <div style="font-size: 14px; color: #7E8783; line-height: 1.55;">Every session, cohort and code review happens there. Say hi — that's it, you're in.</div>
+      <a href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener" style="display: block; background: #0F0F0F; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 24px; text-decoration: none;">
+        <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; color: #F7931A;">Step 1 · 2 min</span>
+        <div style="font-size: 18px; font-weight: 600; color: #F5F5F5; margin: 8px 0 6px;">Join the Discord</div>
+        <div style="font-size: 14px; color: #858585; line-height: 1.55;">Every session, cohort and code review happens there. Say hi — that's it, you're in.</div>
       </a>
-      <a href="#programs" style="display: block; background: #0A100E; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 24px; text-decoration: none;">
-        <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; color: #5ED29C;">Step 2 · 1 min</span>
-        <div style="font-size: 18px; font-weight: 600; color: #F4F7F5; margin: 8px 0 6px;">Pick your track</div>
-        <div style="font-size: 14px; color: #7E8783; line-height: 1.55;">Curious beginner → Bitcoin Basics. Developer → Bitcoin Dojo. Already building → Privacy Track.</div>
+      <a href="#programs" style="display: block; background: #0F0F0F; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 24px; text-decoration: none;">
+        <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; color: #F7931A;">Step 2 · 1 min</span>
+        <div style="font-size: 18px; font-weight: 600; color: #F5F5F5; margin: 8px 0 6px;">Pick your track</div>
+        <div style="font-size: 14px; color: #858585; line-height: 1.55;">Curious beginner → Bitcoin Basics. Developer → Bitcoin Dojo. Already building → Privacy Track.</div>
       </a>
-      <a href="/calendar" style="display: block; background: #0A100E; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 24px; text-decoration: none;">
-        <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; color: #5ED29C;">Step 3 · this week</span>
-        <div style="font-size: 18px; font-weight: 600; color: #F4F7F5; margin: 8px 0 6px;">Show up live</div>
-        <div style="font-size: 14px; color: #7E8783; line-height: 1.55;">Add the calendar once — every session ends pointing at a real good-first-issue.</div>
+      <a href="/calendar" style="display: block; background: #0F0F0F; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 24px; text-decoration: none;">
+        <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; color: #F7931A;">Step 3 · this week</span>
+        <div style="font-size: 18px; font-weight: 600; color: #F5F5F5; margin: 8px 0 6px;">Show up live</div>
+        <div style="font-size: 14px; color: #858585; line-height: 1.55;">Add the calendar once — every session ends pointing at a real good-first-issue.</div>
       </a>
     </div>
   </section>
 
   <!-- PROGRAMS -->
   <section id="programs" class="wrap" style="max-width: 1240px; margin: 0 auto; padding: 0 32px 88px;">
-    <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #5ED29C; margin-bottom: 12px;"><span>/</span>Programs<span>_</span></div>
-    <h2 style="font-family: 'Inter', system-ui, sans-serif; font-weight: 400; font-size: clamp(28px, 3vw, 40px); margin: 0 0 8px; color: #F4F7F5;">Pick a track. Tick off sessions. Ship.</h2>
-    <p style="font-size: 15px; color: #7E8783; margin: 0 0 32px;">Click a program to open its sessions. Your ticks save on this device — no account needed.</p>
+    <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #F7931A; margin-bottom: 12px;"><span>/</span>Programs<span>_</span></div>
+    <h2 style="font-family: 'Inter', system-ui, sans-serif; font-weight: 400; font-size: clamp(28px, 3vw, 40px); margin: 0 0 8px; color: #F5F5F5;">Pick a track. Tick off sessions. Ship.</h2>
+    <p style="font-size: 15px; color: #858585; margin: 0 0 32px;">Click a program to open its sessions. Your ticks save on this device — no account needed.</p>
     <div id="programs-root" class="programs-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;"></div>
   </section>
 
   <!-- FOOTER -->
   <footer style="border-top: 1px solid rgba(255,255,255,0.08); padding: 32px; text-align: center;">
-    <div style="font-size: 13px; color: #7E8783;">
+    <div style="font-size: 13px; color: #858585;">
       Code Orange Dev School · all programs free ·
-      <a href="https://github.com/code-orange-dev/curriculum" target="_blank" rel="noopener" class="nav-link" style="color: #5ED29C; text-decoration: none;">open-source curriculum ↗</a> ·
-      <a href="/dashboard" class="nav-link" style="color: #5ED29C; text-decoration: none;">PR dashboard</a> ·
-      <a href="mailto:hello@codeorange.dev" class="nav-link" style="color: #5ED29C; text-decoration: none;">hello@codeorange.dev</a>
+      <a href="https://github.com/code-orange-dev/curriculum" target="_blank" rel="noopener" class="nav-link" style="color: #F7931A; text-decoration: none;">open-source curriculum ↗</a> ·
+      <a href="/dashboard" class="nav-link" style="color: #F7931A; text-decoration: none;">PR dashboard</a> ·
+      <a href="mailto:hello@codeorange.dev" class="nav-link" style="color: #F7931A; text-decoration: none;">hello@codeorange.dev</a>
     </div>
-    <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; color: #59615E; margin-top: 8px;">progress saves on this device only — nothing is tracked, nothing is sent anywhere</div>
+    <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; color: #5E5E5E; margin-top: 8px;">progress saves on this device only — nothing is tracked, nothing is sent anywhere</div>
   </footer>
 </div>
 
@@ -266,42 +266,42 @@ function render() {
     const pct = Math.round(done.filter(Boolean).length / t.sessions.length * 100);
     const sessions = t.sessions.map((s, i) => `
       <div class="session-row ${done[i] ? 'done' : ''}" data-track="${t.id}" data-idx="${i}"
-           style="display: flex; align-items: center; gap: 14px; background: #070B0A; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 14px 16px;">
-        <span style="flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; font-weight: 700; ${done[i] ? 'background: #5ED29C; color: #070B0A;' : 'background: #0E1513; color: #B3BAB7;'}">${done[i] ? '✓' : s[0]}</span>
+           style="display: flex; align-items: center; gap: 14px; background: #0A0A0A; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 14px 16px;">
+        <span style="flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; font-weight: 700; ${done[i] ? 'background: #F7931A; color: #0A0A0A;' : 'background: #141414; color: #B8B8B8;'}">${done[i] ? '✓' : s[0]}</span>
         <span style="flex: 1;">
-          <span class="session-title" style="display: block; font-size: 14px; font-weight: 600; color: #F4F7F5;">${esc(s[1])}</span>
-          ${s[2] ? `<span style="display: block; font-size: 12px; color: #7E8783; margin-top: 2px;">${esc(s[2])}</span>` : ''}
+          <span class="session-title" style="display: block; font-size: 14px; font-weight: 600; color: #F5F5F5;">${esc(s[1])}</span>
+          ${s[2] ? `<span style="display: block; font-size: 12px; color: #858585; margin-top: 2px;">${esc(s[2])}</span>` : ''}
         </span>
       </div>`).join('');
     return `
     <div>
-      <div class="track-card" data-open="${t.id}" style="background: #0A100E; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; overflow: hidden;">
+      <div class="track-card" data-open="${t.id}" style="background: #0F0F0F; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; overflow: hidden;">
         <div style="position: relative; height: 150px; overflow: hidden;">
           <img src="${t.image}" alt="" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-          <div style="position: absolute; inset: 0; background: linear-gradient(to top, #0A100E 4%, transparent 60%);"></div>
-          <span style="position: absolute; top: 12px; left: 12px; background: rgba(7,11,10,0.85); color: #5ED29C; font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; padding: 5px 12px; border-radius: 999px;">${t.kind}</span>
+          <div style="position: absolute; inset: 0; background: linear-gradient(to top, #0F0F0F 4%, transparent 60%);"></div>
+          <span style="position: absolute; top: 12px; left: 12px; background: rgba(10,10,10,0.85); color: #F7931A; font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; padding: 5px 12px; border-radius: 999px;">${t.kind}</span>
         </div>
         <div style="padding: 22px 24px 24px;">
           <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
-            <span style="font-size: 19px; font-weight: 600; color: #F4F7F5;">${t.name}</span>
-            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; color: #7E8783; white-space: nowrap;">${t.level}</span>
+            <span style="font-size: 19px; font-weight: 600; color: #F5F5F5;">${t.name}</span>
+            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; color: #858585; white-space: nowrap;">${t.level}</span>
           </div>
-          <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; color: #5ED29C; margin-top: 4px;">${t.duration}</div>
-          <p style="font-size: 14px; color: #7E8783; line-height: 1.55; margin: 10px 0 14px;">${t.blurb}</p>
-          <div style="height: 6px; border-radius: 3px; background: #0E1513; overflow: hidden;">
-            <div class="bar-fill" style="height: 100%; width: ${pct}%; background: #5ED29C;"></div>
+          <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; color: #F7931A; margin-top: 4px;">${t.duration}</div>
+          <p style="font-size: 14px; color: #858585; line-height: 1.55; margin: 10px 0 14px;">${t.blurb}</p>
+          <div style="height: 6px; border-radius: 3px; background: #141414; overflow: hidden;">
+            <div class="bar-fill" style="height: 100%; width: ${pct}%; background: #F7931A;"></div>
           </div>
-          <div style="display: flex; justify-content: space-between; margin-top: 8px; font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; color: #7E8783;">
+          <div style="display: flex; justify-content: space-between; margin-top: 8px; font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; color: #858585;">
             <span>${pct}% complete</span>
-            <span style="color: #5ED29C;">${done.filter(Boolean).length}/${t.sessions.length} sessions · tap to open ▾</span>
+            <span style="color: #F7931A;">${done.filter(Boolean).length}/${t.sessions.length} sessions · tap to open ▾</span>
           </div>
         </div>
       </div>
       <div class="track-detail" id="detail-${t.id}" style="margin-top: 10px; display: none; flex-direction: column; gap: 8px; padding: 6px 0 10px;">
         ${sessions}
-        ${t.apply ? `<a href="${t.apply}" class="btn-solid" style="display: block; text-align: center; background: #5ED29C; color: #070B0A; text-decoration: none; font-size: 14px; font-weight: 700; padding: 12px; border-radius: 10px; margin-top: 4px;">Apply to ${t.name} →</a>` : ''}
-        <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; color: #59615E; padding: 4px 2px;">
-          Materials: <a href="https://github.com/code-orange-dev/curriculum" target="_blank" rel="noopener" style="color: #5ED29C; text-decoration: none;">open-source curriculum ↗</a> (free, CC0)
+        ${t.apply ? `<a href="${t.apply}" class="btn-solid" style="display: block; text-align: center; background: #F7931A; color: #0A0A0A; text-decoration: none; font-size: 14px; font-weight: 700; padding: 12px; border-radius: 10px; margin-top: 4px;">Apply to ${t.name} →</a>` : ''}
+        <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; color: #5E5E5E; padding: 4px 2px;">
+          Materials: <a href="https://github.com/code-orange-dev/curriculum" target="_blank" rel="noopener" style="color: #F7931A; text-decoration: none;">open-source curriculum ↗</a> (free, CC0)
         </div>
       </div>
     </div>`;

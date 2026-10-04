@@ -1,11 +1,11 @@
-/* Code Orange site theme: dark green "liquid glass" look shared by every page.
+/* Code Orange site theme: black and Bitcoin orange "liquid glass" look shared by every page.
    Loaded after each page's own styles; the page styles keep layout, this file
    sets type, buttons, cards, hero effects and the mobile menu. */
 :root {
-  --co-bg: #070b0a;
-  --co-accent: #5ed29c;
-  --co-accent-2: #86e3b7;
-  --co-text: #f4f7f5;
+  --co-bg: #0A0A0A;
+  --co-accent: #F7931A;
+  --co-accent-2: #FFB347;
+  --co-text: #F5F5F5;
   --co-text-70: rgba(255, 255, 255, .7);
   --co-line: rgba(255, 255, 255, .1);
   --co-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -16,7 +16,7 @@
 
 html, body { background: var(--co-bg); }
 body { font-family: var(--co-sans); -webkit-font-smoothing: antialiased; }
-::selection { background: rgba(94, 210, 156, .35); color: #fff; }
+::selection { background: rgba(247,147,26, .35); color: #fff; }
 
 /* ── Type ── */
 h1, h2, h3 { font-family: var(--co-sans) !important; color: var(--co-text); }
@@ -24,7 +24,7 @@ h1 { font-weight: 800 !important; text-transform: uppercase; letter-spacing: -.0
 h2 { font-weight: 800 !important; letter-spacing: -.025em !important; line-height: 1.08 !important; text-wrap: balance; }
 h3 { font-weight: 700 !important; letter-spacing: -.01em; }
 #static-homepage h1, .hero h1 { font-size: clamp(40px, 6vw, 72px) !important; }
-h1 .orange, h2 .orange, h1 span[style*="5ED29C"], h1 span[style*="5ed29c"] {
+h1 .orange, h2 .orange, h1 span[style*="F7931A"], h1 span[style*="f7931a"] {
   font-family: var(--co-serif) !important; font-style: italic; font-weight: 400 !important;
   text-transform: none; letter-spacing: -.01em; color: var(--co-accent) !important;
 }
@@ -48,12 +48,12 @@ h1 .orange { font-size: 1.12em; line-height: .9; }
 }
 #static-homepage .co-button.co-xl { font-size: 15px !important; padding: 18px 34px !important; }
 .button, #static-homepage .co-button.primary { background: var(--co-accent) !important; border-color: var(--co-accent) !important; color: var(--co-bg) !important; }
-.button:hover, #static-homepage .co-button.primary:hover { background: var(--co-accent-2) !important; box-shadow: 0 10px 30px rgba(94, 210, 156, .3); }
+.button:hover, #static-homepage .co-button.primary:hover { background: var(--co-accent-2) !important; box-shadow: 0 10px 30px rgba(247,147,26, .3); }
 .ghost, #static-homepage .co-button:not(.primary) { background: rgba(255, 255, 255, .03); border: 1px solid rgba(255, 255, 255, .18) !important; color: var(--co-text) !important; backdrop-filter: blur(4px); }
 .ghost:hover, #static-homepage .co-button:not(.primary):hover { border-color: var(--co-accent) !important; color: var(--co-accent) !important; }
 
 /* ── Header + nav ── */
-.site-header, #static-homepage header.co-band { background: rgba(7, 11, 10, .72) !important; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--co-line) !important; }
+.site-header, #static-homepage header.co-band { background: rgba(10,10,10, .72) !important; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--co-line) !important; }
 #static-homepage header.co-band { position: sticky; top: 0; z-index: 40; }
 .desktop-nav a, #static-homepage .co-links a {
   font-family: var(--co-sans) !important; font-size: clamp(13px, 1.05vw, 16px) !important; font-weight: 500 !important;
@@ -86,7 +86,7 @@ h1 .orange { font-size: 1.12em; line-height: .9; }
   -webkit-mask-composite: xor; mask-composite: exclude;
 }
 #static-homepage .co-card:hover, #static-homepage .co-proof-card:hover, #static-homepage .co-event-preview a:hover, #static-homepage .co-path a:hover,
-.program-card:hover, .repo-card:hover { box-shadow: inset 0 1px 1px rgba(255, 255, 255, .14), 0 0 0 1px rgba(94, 210, 156, .45), 0 24px 60px rgba(0, 0, 0, .4) !important; }
+.program-card:hover, .repo-card:hover { box-shadow: inset 0 1px 1px rgba(255, 255, 255, .14), 0 0 0 1px rgba(247,147,26, .45), 0 24px 60px rgba(0, 0, 0, .4) !important; }
 #static-homepage .co-person { border-left: 0 !important; }
 #static-homepage .co-terminal-top, .terminal-bar { background: rgba(255, 255, 255, .02) !important; border-bottom-color: var(--co-line) !important; }
 .band, #static-homepage .co-dark { background: var(--co-bg) !important; }
@@ -98,8 +98,8 @@ h1 .orange { font-size: 1.12em; line-height: .9; }
 #static-homepage .co-hero:before { background: var(--co-bg) url("/assets/new-workshops/workshop-nodes-miners.jpg") center / cover no-repeat !important; opacity: .45 !important; }
 #static-homepage .co-hero:after, .hero:after {
   content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  background: linear-gradient(90deg, #070b0a 0%, rgba(7, 11, 10, .85) 30%, rgba(7, 11, 10, 0) 75%),
-              linear-gradient(0deg, #070b0a 0%, rgba(7, 11, 10, .6) 22%, rgba(7, 11, 10, 0) 55%) !important;
+  background: linear-gradient(90deg, #0A0A0A 0%, rgba(10,10,10, .85) 30%, rgba(10,10,10, 0) 75%),
+              linear-gradient(0deg, #0A0A0A 0%, rgba(10,10,10, .6) 22%, rgba(10,10,10, 0) 55%) !important;
 }
 .hero .glow { display: none; }
 .co-fx { position: absolute; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
@@ -110,7 +110,7 @@ h1 .orange { font-size: 1.12em; line-height: .9; }
 @media (max-width: 900px) { .co-fx i { display: none; } .co-fx-glow { height: 300px; top: -10%; } }
 
 /* ── Footer ── */
-.footer, #static-homepage footer { background: #050807 !important; }
+.footer, #static-homepage footer { background: #060606 !important; }
 
 /* ── Mobile menu (built by /assets/site-menu.js) ── */
 html.co-has-menu .mobile-nav, html.co-has-menu #static-homepage .co-mobile-menu { display: none !important; }
@@ -125,7 +125,7 @@ html.co-has-menu .mobile-nav, html.co-has-menu #static-homepage .co-mobile-menu 
 #static-homepage .co-nav .co-actions { justify-self: end; }
 .co-menu {
   position: fixed; inset: 0; z-index: 1000; display: flex; flex-direction: column; padding: 18px 20px 32px;
-  background: rgba(7, 11, 10, .97); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  background: rgba(10,10,10, .97); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
   opacity: 0; visibility: hidden; transition: opacity .2s ease, visibility .2s ease; overflow-y: auto;
 }
 .co-menu.open { opacity: 1; visibility: visible; }
@@ -150,3 +150,6 @@ html.co-menu-open, html.co-menu-open body { overflow: hidden; }
   html.co-has-menu #static-homepage .co-nav .co-actions .co-button:not(.primary) { display: none; }
   #static-homepage .co-hero .co-actions { flex-wrap: wrap !important; }
 }
+.brand { flex: 0 0 auto; }
+.desktop-nav { gap: clamp(12px, 1.6vw, 28px) !important; }
+.desktop-nav a { padding-inline: 2px !important; }
