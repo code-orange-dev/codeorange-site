@@ -1,0 +1,155 @@
+/* Code Orange site theme: black and Bitcoin orange "liquid glass" look shared by every page.
+   Loaded after each page's own styles; the page styles keep layout, this file
+   sets type, buttons, cards, hero effects and the mobile menu. */
+:root {
+  --co-bg: #0A0A0A;
+  --co-accent: #F7931A;
+  --co-accent-2: #FFB347;
+  --co-text: #F5F5F5;
+  --co-text-70: rgba(255, 255, 255, .7);
+  --co-line: rgba(255, 255, 255, .1);
+  --co-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --co-label: "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+  --co-serif: "Instrument Serif", Georgia, serif;
+  --co-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+html, body { background: var(--co-bg); }
+body { font-family: var(--co-sans); -webkit-font-smoothing: antialiased; }
+::selection { background: rgba(247,147,26, .35); color: #fff; }
+
+/* ── Type ── */
+h1, h2, h3 { font-family: var(--co-sans) !important; color: var(--co-text); }
+h1 { font-weight: 800 !important; text-transform: uppercase; letter-spacing: -.025em !important; line-height: 1.02 !important; text-wrap: balance; }
+h2 { font-weight: 800 !important; letter-spacing: -.025em !important; line-height: 1.08 !important; text-wrap: balance; }
+h3 { font-weight: 700 !important; letter-spacing: -.01em; }
+#static-homepage h1, .hero h1 { font-size: clamp(40px, 6vw, 72px) !important; }
+h1 .orange, h2 .orange, h1 span[style*="F7931A"], h1 span[style*="f7931a"] {
+  font-family: var(--co-serif) !important; font-style: italic; font-weight: 400 !important;
+  text-transform: none; letter-spacing: -.01em; color: var(--co-accent) !important;
+}
+h1 .orange { font-size: 1.12em; line-height: .9; }
+.co-dot-accent { color: var(--co-accent); }
+
+.eyebrow, #static-homepage .co-eyebrow {
+  font-family: var(--co-label) !important; font-weight: 700 !important; font-size: 11px !important;
+  letter-spacing: .16em !important; text-transform: uppercase; color: var(--co-accent) !important;
+}
+.lead, #static-homepage .co-lead { color: var(--co-text-70) !important; max-width: 512px; }
+#static-homepage .co-hero .co-lead, .hero .lead { font-size: 16px !important; }
+
+/* Code snippets keep a monospace face */
+.terminal-body, #static-homepage .co-terminal-body, .terminal-bar strong, #static-homepage .co-prompt { font-family: var(--co-mono) !important; }
+
+/* ── Buttons: pill, uppercase, bold ── */
+.button, .ghost, #static-homepage .co-button {
+  border-radius: 999px !important; text-transform: uppercase; letter-spacing: .04em; white-space: nowrap;
+  font-family: var(--co-sans) !important; font-weight: 700 !important; font-size: 13px !important;
+}
+#static-homepage .co-button.co-xl { font-size: 15px !important; padding: 18px 34px !important; }
+.button, #static-homepage .co-button.primary { background: var(--co-accent) !important; border-color: var(--co-accent) !important; color: var(--co-bg) !important; }
+.button:hover, #static-homepage .co-button.primary:hover { background: var(--co-accent-2) !important; box-shadow: 0 10px 30px rgba(247,147,26, .3); }
+.ghost, #static-homepage .co-button:not(.primary) { background: rgba(255, 255, 255, .03); border: 1px solid rgba(255, 255, 255, .18) !important; color: var(--co-text) !important; backdrop-filter: blur(4px); }
+.ghost:hover, #static-homepage .co-button:not(.primary):hover { border-color: var(--co-accent) !important; color: var(--co-accent) !important; }
+
+/* ── Header + nav ── */
+.site-header, #static-homepage header.co-band { background: rgba(10,10,10, .72) !important; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--co-line) !important; }
+#static-homepage header.co-band { position: sticky; top: 0; z-index: 40; }
+.desktop-nav a, #static-homepage .co-links a {
+  font-family: var(--co-sans) !important; font-size: clamp(13px, 1.05vw, 16px) !important; font-weight: 500 !important;
+  text-transform: uppercase; letter-spacing: .02em; color: rgba(255, 255, 255, .82) !important; transition: color .15s ease;
+}
+.desktop-nav a:hover, #static-homepage .co-links a:hover { color: var(--co-accent) !important; }
+#static-homepage .co-links { gap: clamp(16px, 2vw, 28px) !important; }
+.announce, #static-homepage .co-announce { font-family: var(--co-label) !important; letter-spacing: .02em; }
+
+/* ── Liquid glass cards ── */
+#static-homepage .co-terminal, #static-homepage .co-card, #static-homepage .co-proof-card, #static-homepage .co-event-preview a,
+#static-homepage .co-host, #static-homepage .co-person, #static-homepage .co-list article, #static-homepage .co-path a,
+#static-homepage .co-calendar-subscribe,
+.terminal-card, .card, .program-card, .stat, .repo-card, .feature-panel, .booking-panel, .article-card, .newsletter-card, .author-box, .timeline-item {
+  position: relative;
+  background: rgba(255, 255, 255, .01) !important;
+  background-blend-mode: luminosity;
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  border-color: transparent !important;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, .1), 0 24px 60px rgba(0, 0, 0, .35) !important;
+}
+#static-homepage .co-terminal::before, #static-homepage .co-card::before, #static-homepage .co-proof-card::before, #static-homepage .co-event-preview a::before,
+#static-homepage .co-host::before, #static-homepage .co-person::before, #static-homepage .co-list article::before, #static-homepage .co-path a::before,
+#static-homepage .co-calendar-subscribe::before,
+.terminal-card::before, .card::before, .program-card::before, .stat::before, .repo-card::before, .feature-panel::before, .booking-panel::before,
+.article-card::before, .newsletter-card::before, .author-box::before {
+  content: ""; position: absolute; inset: 0; z-index: 2; border-radius: inherit; padding: 1.4px; pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .45) 0%, rgba(255, 255, 255, .12) 30%, rgba(255, 255, 255, 0) 55%, rgba(255, 255, 255, .1) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+}
+#static-homepage .co-card:hover, #static-homepage .co-proof-card:hover, #static-homepage .co-event-preview a:hover, #static-homepage .co-path a:hover,
+.program-card:hover, .repo-card:hover { box-shadow: inset 0 1px 1px rgba(255, 255, 255, .14), 0 0 0 1px rgba(247,147,26, .45), 0 24px 60px rgba(0, 0, 0, .4) !important; }
+#static-homepage .co-person { border-left: 0 !important; }
+#static-homepage .co-terminal-top, .terminal-bar { background: rgba(255, 255, 255, .02) !important; border-bottom-color: var(--co-line) !important; }
+.band, #static-homepage .co-dark { background: var(--co-bg) !important; }
+.pill, .price-tag, .photo-caption { font-family: var(--co-label) !important; }
+
+/* ── Hero: video, gradients, grid lines, glow ── */
+#static-homepage .co-hero, .hero { isolation: isolate; background-color: var(--co-bg) !important; }
+#static-homepage .co-hero-video { opacity: .6 !important; }
+#static-homepage .co-hero:before { background: var(--co-bg) url("/assets/new-workshops/workshop-nodes-miners.jpg") center / cover no-repeat !important; opacity: .45 !important; }
+#static-homepage .co-hero:after, .hero:after {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(90deg, #0A0A0A 0%, rgba(10,10,10, .85) 30%, rgba(10,10,10, 0) 75%),
+              linear-gradient(0deg, #0A0A0A 0%, rgba(10,10,10, .6) 22%, rgba(10,10,10, 0) 55%) !important;
+}
+.hero .glow { display: none; }
+.co-fx { position: absolute; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
+.co-fx i { position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(255, 255, 255, .1); }
+.co-fx i:nth-child(1) { left: 25%; } .co-fx i:nth-child(2) { left: 50%; } .co-fx i:nth-child(3) { left: 75%; }
+.co-fx-glow { position: absolute; left: 50%; top: -6%; width: min(1400px, 120%); height: 420px; transform: translateX(-50%); opacity: .9; mix-blend-mode: screen; }
+#static-homepage .co-hero .co-wrap, .hero .hero-grid, .hero > .section-inner, .hero > div:not(.co-fx) { position: relative; z-index: 3; }
+@media (max-width: 900px) { .co-fx i { display: none; } .co-fx-glow { height: 300px; top: -10%; } }
+
+/* ── Footer ── */
+.footer, #static-homepage footer { background: #060606 !important; }
+
+/* ── Mobile menu (built by /assets/site-menu.js) ── */
+html.co-has-menu .mobile-nav, html.co-has-menu #static-homepage .co-mobile-menu { display: none !important; }
+.co-burger {
+  display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; width: 44px; height: 44px; padding: 0;
+  border: 1px solid rgba(255, 255, 255, .18); border-radius: 999px; background: rgba(255, 255, 255, .04); color: #fff; cursor: pointer;
+}
+.co-burger[hidden] { display: none; }
+.co-burger:hover { border-color: var(--co-accent); color: var(--co-accent); }
+.co-burger svg, .co-menu-close svg { width: 22px; height: 22px; }
+#static-homepage .co-nav:has(.co-burger:not([hidden])) { grid-template-columns: auto minmax(0, 1fr) auto !important; }
+#static-homepage .co-nav .co-actions { justify-self: end; }
+.co-menu {
+  position: fixed; inset: 0; z-index: 1000; display: flex; flex-direction: column; padding: 18px 20px 32px;
+  background: rgba(10,10,10, .97); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  opacity: 0; visibility: hidden; transition: opacity .2s ease, visibility .2s ease; overflow-y: auto;
+}
+.co-menu.open { opacity: 1; visibility: visible; }
+.co-menu-top { display: flex; align-items: center; justify-content: space-between; min-height: 48px; }
+.co-menu-top img { height: 38px; width: auto; }
+.co-menu-close { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; border: 1px solid rgba(255, 255, 255, .18); border-radius: 999px; background: transparent; color: #fff; cursor: pointer; }
+.co-menu-links { display: grid; gap: 4px; margin: 36px 0 28px; }
+.co-menu-links a { padding: 12px 0; border-bottom: 1px solid var(--co-line); color: #fff; font: 800 clamp(26px, 8vw, 34px)/1.1 var(--co-sans); letter-spacing: -.02em; text-transform: uppercase; text-decoration: none; }
+.co-menu-links a:hover, .co-menu-links a:focus-visible { color: var(--co-accent); }
+.co-menu-actions { display: grid; gap: 12px; margin-top: auto; }
+.co-menu-actions a { display: flex !important; width: 100% !important; justify-content: center; text-align: center; min-height: 50px; align-items: center; padding: 14px 20px !important; border-radius: 999px !important; text-decoration: none; text-transform: uppercase; font: 700 14px var(--co-sans) !important; letter-spacing: .04em; }
+.co-menu-actions a:not(.primary):not(.button) { border: 1px solid rgba(255, 255, 255, .18); color: #fff; }
+.co-menu-actions a.primary, .co-menu-actions a.button { background: var(--co-accent); color: var(--co-bg) !important; }
+html.co-menu-open, html.co-menu-open body { overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) { .co-menu { transition: none; } }
+
+.co-menu, .co-menu * { box-sizing: border-box; }
+@media (max-width: 760px) {
+  .button, .ghost, #static-homepage .co-button { white-space: normal; }
+  .header-actions .button, .header-actions .ghost, #static-homepage .co-nav .co-button { white-space: nowrap; }
+  html.co-has-menu #static-homepage .co-nav .co-actions .co-button:not(.primary) { display: none; }
+  #static-homepage .co-hero .co-actions { flex-wrap: wrap !important; }
+}
+.brand { flex: 0 0 auto; }
+.desktop-nav { gap: clamp(12px, 1.6vw, 28px) !important; }
+.desktop-nav a { padding-inline: 2px !important; }

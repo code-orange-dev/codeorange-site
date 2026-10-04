@@ -17,10 +17,10 @@
 <link rel="icon" type="image/svg+xml" href="/assets/favicon-bitcoin.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
-<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
 <style>
-  html, body { margin: 0; padding: 0; background: #0B1220; }
-  body { -webkit-font-smoothing: antialiased; font-family: 'Space Grotesk', system-ui, sans-serif; color: #F5F1EA; }
+  html, body { margin: 0; padding: 0; background: #0A0A0A; }
+  body { -webkit-font-smoothing: antialiased; font-family: 'Inter', system-ui, sans-serif; color: #F5F5F5; }
   ::selection { background: rgba(247,147,26,0.35); }
   a { transition: color 120ms; }
   .nav-link:hover { color: #F7931A !important; }
@@ -38,23 +38,25 @@
     .pr-table td:nth-child(4), .pr-table th:nth-child(4) { display: none; }
   }
 </style>
+<link rel="stylesheet" href="/assets/theme.css?v=20261004">
+<script src="/assets/site-menu.js?v=20261004" defer></script>
 </head>
 <body>
-<div style="background: #0B1220; min-height: 100vh;">
+<div style="background: #0A0A0A; min-height: 100vh;">
 
   <!-- HEADER -->
-  <header style="position: sticky; top: 0; z-index: 50; background: rgba(11,18,32,0.72); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.08);">
+  <header style="position: sticky; top: 0; z-index: 50; background: rgba(10,10,10,0.72); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.08);">
     <div class="wrap" style="max-width: 1240px; margin: 0 auto; padding: 0 32px; height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 24px;">
       <a href="/" style="display: flex; align-items: center; text-decoration: none; flex-shrink: 0;">
         <img src="/assets/logo-white.png" alt="Code Orange Dev School" style="height: 45px; width: auto; display: block;">
       </a>
       <nav class="nav-links" style="display: flex; align-items: center; gap: 28px; font-size: 14px; font-weight: 500;">
-        <a href="/" class="nav-link" style="color: #C8CDD9; text-decoration: none;">← codeorange.dev</a>
-        <a href="/portal" class="nav-link" style="color: #C8CDD9; text-decoration: none;">Portal</a>
-        <a href="#contributors" class="nav-link" style="color: #C8CDD9; text-decoration: none;">Contributors</a>
-        <a href="#merged" class="nav-link" style="color: #C8CDD9; text-decoration: none;">Merged PRs</a>
+        <a href="/" class="nav-link" style="color: #B8B8B8; text-decoration: none;">← codeorange.dev</a>
+        <a href="/portal" class="nav-link" style="color: #B8B8B8; text-decoration: none;">Portal</a>
+        <a href="#contributors" class="nav-link" style="color: #B8B8B8; text-decoration: none;">Contributors</a>
+        <a href="#merged" class="nav-link" style="color: #B8B8B8; text-decoration: none;">Merged PRs</a>
       </nav>
-      <a href="https://github.com/code-orange-dev/PR-tracking-dashboard" target="_blank" rel="noopener" class="btn-ghost" style="color: #F5F1EA; text-decoration: none; font-size: 14px; font-weight: 600; padding: 10px 18px; border: 1px solid rgba(255,255,255,0.16); border-radius: 8px; flex-shrink: 0;">Data source ↗</a>
+      <a href="https://github.com/code-orange-dev/PR-tracking-dashboard" target="_blank" rel="noopener" class="btn-ghost" style="color: #F5F5F5; text-decoration: none; font-size: 14px; font-weight: 600; padding: 10px 18px; border: 1px solid rgba(255,255,255,0.16); border-radius: 8px; flex-shrink: 0;">Data source ↗</a>
     </div>
   </header>
 
@@ -62,26 +64,26 @@
   <section style="position: relative; overflow: hidden; background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px); background-size: 48px 48px;">
     <div style="position: absolute; top: -120px; right: -80px; width: 720px; height: 720px; border-radius: 50%; background: radial-gradient(circle, rgba(247,147,26,0.13) 0%, transparent 65%); pointer-events: none;"></div>
     <div class="wrap" style="max-width: 1240px; margin: 0 auto; padding: 88px 32px 64px; position: relative;">
-      <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #F7931A; margin-bottom: 24px;"><span>/</span>PR_Dashboard<span>_</span></div>
-      <h1 style="font-family: 'Special Elite', 'Courier New', monospace; font-weight: 400; font-size: clamp(38px, 4.4vw, 62px); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 26px; color: #F5F1EA; max-width: 800px;">Proof of work. <span style="color: #F7931A;">In public.</span></h1>
-      <p style="font-size: 18px; line-height: 1.65; color: #C8CDD9; margin: 0 0 12px; max-width: 640px;">Every pull request by Code Orange community members to Bitcoin open-source projects. Every PR links straight to GitHub — inspect anything.</p>
-      <p style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8C94A6; margin: 0 0 36px;">● verified 29 September 2026 · the work belongs to its authors — we build the community, they build Bitcoin</p>
+      <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #F7931A; margin-bottom: 24px;"><span>/</span>PR_Dashboard<span>_</span></div>
+      <h1 style="font-family: 'Inter', system-ui, sans-serif; font-weight: 400; font-size: clamp(38px, 4.4vw, 62px); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 26px; color: #F5F5F5; max-width: 800px;">Proof of work. <span style="color: #F7931A;">In public.</span></h1>
+      <p style="font-size: 18px; line-height: 1.65; color: #B8B8B8; margin: 0 0 12px; max-width: 640px;">Every pull request by Code Orange community members to Bitcoin open-source projects. Every PR links straight to GitHub — inspect anything.</p>
+      <p style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; color: #858585; margin: 0 0 36px;">● verified 29 September 2026 · the work belongs to its authors — we build the community, they build Bitcoin</p>
       <div class="hero-grid" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px;">
-        <div style="background: #12213B; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px;">
-          <div style="font-family: 'Special Elite', monospace; font-size: 46px; line-height: 1; color: #F7931A;">94</div>
-          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8C94A6; margin-top: 6px;">Merged PRs</div>
+        <div style="background: #141414; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px;">
+          <div style="font-family: 'Inter', monospace; font-size: 46px; line-height: 1; color: #F7931A;">94</div>
+          <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #858585; margin-top: 6px;">Merged PRs</div>
         </div>
-        <div style="background: #12213B; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px;">
-          <div style="font-family: 'Special Elite', monospace; font-size: 46px; line-height: 1; color: #F7931A;">17</div>
-          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8C94A6; margin-top: 6px;">Open / in review</div>
+        <div style="background: #141414; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px;">
+          <div style="font-family: 'Inter', monospace; font-size: 46px; line-height: 1; color: #F7931A;">17</div>
+          <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #858585; margin-top: 6px;">Open / in review</div>
         </div>
-        <div style="background: #12213B; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px;">
-          <div style="font-family: 'Special Elite', monospace; font-size: 46px; line-height: 1; color: #F7931A;">29</div>
-          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8C94A6; margin-top: 6px;">Projects contributed to</div>
+        <div style="background: #141414; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px;">
+          <div style="font-family: 'Inter', monospace; font-size: 46px; line-height: 1; color: #F7931A;">29</div>
+          <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #858585; margin-top: 6px;">Projects contributed to</div>
         </div>
-        <div style="background: #12213B; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px;">
-          <div style="font-family: 'Special Elite', monospace; font-size: 46px; line-height: 1; color: #F7931A;">11</div>
-          <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8C94A6; margin-top: 6px;">Contributors with merges</div>
+        <div style="background: #141414; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px;">
+          <div style="font-family: 'Inter', monospace; font-size: 46px; line-height: 1; color: #F7931A;">11</div>
+          <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #858585; margin-top: 6px;">Contributors with merges</div>
         </div>
       </div>
     </div>
@@ -90,13 +92,13 @@
   <!-- TIMELINE + CONTRIBUTORS -->
   <section id="contributors" class="wrap" style="max-width: 1240px; margin: 0 auto; padding: 24px 32px 8px;">
     <div class="two-col" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-      <div style="background: #0F1A2E; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px;">
-        <h2 style="font-size: 20px; margin: 0 0 4px; color: #F5F1EA;">Merged PRs by month</h2>
-        <p style="font-size: 13px; color: #8C94A6; margin: 0 0 18px;">Grouped rows counted once at latest month</p>
+      <div style="background: #0F0F0F; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px;">
+        <h2 style="font-size: 20px; margin: 0 0 4px; color: #F5F5F5;">Merged PRs by month</h2>
+        <p style="font-size: 13px; color: #858585; margin: 0 0 18px;">Grouped rows counted once at latest month</p>
         <div id="timeline"></div>
       </div>
-      <div style="background: #0F1A2E; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px;">
-        <h2 style="font-size: 20px; margin: 0 0 18px; color: #F5F1EA;">Merged PRs by contributor</h2>
+      <div style="background: #0F0F0F; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px;">
+        <h2 style="font-size: 20px; margin: 0 0 18px; color: #F5F5F5;">Merged PRs by contributor</h2>
         <div id="leaderboard"></div>
       </div>
     </div>
@@ -104,17 +106,17 @@
 
   <!-- MERGED TABLE -->
   <section id="merged" class="wrap" style="max-width: 1240px; margin: 0 auto; padding: 24px 32px;">
-    <div style="background: #0F1A2E; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px;">
+    <div style="background: #0F0F0F; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px;">
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
-        <h2 style="font-size: 20px; margin: 0; color: #F5F1EA;">Merged pull requests</h2>
-        <select id="filter" style="background: #0B1220; color: #F5F1EA; border: 1px solid rgba(255,255,255,0.16); border-radius: 8px; padding: 8px 12px; font-size: 13px; font-family: inherit;">
+        <h2 style="font-size: 20px; margin: 0; color: #F5F5F5;">Merged pull requests</h2>
+        <select id="filter" style="background: #0A0A0A; color: #F5F5F5; border: 1px solid rgba(255,255,255,0.16); border-radius: 8px; padding: 8px 12px; font-size: 13px; font-family: inherit;">
           <option value="all">All contributors</option>
         </select>
       </div>
       <div style="overflow-x: auto;">
         <table class="pr-table" style="width: 100%; border-collapse: collapse; font-size: 14px;">
           <thead>
-            <tr style="text-align: left; color: #8C94A6; font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;">
+            <tr style="text-align: left; color: #858585; font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;">
               <th style="padding: 8px 12px 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">PR</th>
               <th style="padding: 8px 12px 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">Project</th>
               <th style="padding: 8px 12px 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">Contributor</th>
@@ -129,19 +131,19 @@
 
   <!-- OPEN PRs -->
   <section class="wrap" style="max-width: 1240px; margin: 0 auto; padding: 0 32px 72px;">
-    <div style="background: #0F1A2E; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px;">
-      <h2 style="font-size: 20px; margin: 0 0 16px; color: #F5F1EA;">Open / under review</h2>
+    <div style="background: #0F0F0F; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px;">
+      <h2 style="font-size: 20px; margin: 0 0 16px; color: #F5F5F5;">Open / under review</h2>
       <div id="open-grid" class="two-col" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"></div>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer style="border-top: 1px solid rgba(255,255,255,0.08); padding: 32px; text-align: center;">
-    <div style="font-size: 13px; color: #8C94A6;">
+    <div style="font-size: 13px; color: #858585;">
       * merged before the author joined Code Orange — listed as history, excluded from program-outcome claims ·
       data: <a href="https://github.com/code-orange-dev/PR-tracking-dashboard" target="_blank" rel="noopener" class="nav-link" style="color: #F7931A; text-decoration: none;">PR tracking repo ↗</a>
     </div>
-    <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #5A6478; margin-top: 8px;">Code Orange Dev School · codeorange.dev</div>
+    <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; color: #5E5E5E; margin-top: 8px;">Code Orange Dev School · codeorange.dev</div>
   </footer>
 </div>
 
@@ -170,21 +172,21 @@ const tl = Object.entries(counts).sort();
 const maxTl = Math.max(...tl.map(x => x[1]));
 document.getElementById('timeline').innerHTML = tl.map(([k, v]) => `
   <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-    <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8C94A6; width: 64px; flex-shrink: 0;">${k}</span>
-    <div style="flex: 1; height: 18px; background: #12213B; border-radius: 4px; overflow: hidden;">
+    <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; color: #858585; width: 64px; flex-shrink: 0;">${k}</span>
+    <div style="flex: 1; height: 18px; background: #141414; border-radius: 4px; overflow: hidden;">
       <div class="bar-fill" style="height: 100%; width: ${(v / maxTl * 100).toFixed(1)}%; background: #F7931A;"></div>
     </div>
-    <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #F7931A; width: 28px; text-align: right;">${v}</span>
+    <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; color: #F7931A; width: 28px; text-align: right;">${v}</span>
   </div>`).join('');
 
 // Leaderboard
 document.getElementById('leaderboard').innerHTML = DATA.contributors.filter(c => c.merged > 0).map(c => `
   <div style="margin-bottom: 12px;">
     <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px;">
-      <a href="https://github.com/${c.github}" target="_blank" rel="noopener" class="nav-link" style="color: #F5F1EA; text-decoration: none;">${esc(c.name)} <span style="color: #5A6478;">@${c.github}</span></a>
-      <span style="font-family: 'JetBrains Mono', monospace; color: #F7931A;">${c.merged}</span>
+      <a href="https://github.com/${c.github}" target="_blank" rel="noopener" class="nav-link" style="color: #F5F5F5; text-decoration: none;">${esc(c.name)} <span style="color: #5E5E5E;">@${c.github}</span></a>
+      <span style="font-family: 'Plus Jakarta Sans', monospace; color: #F7931A;">${c.merged}</span>
     </div>
-    <div style="height: 7px; background: #12213B; border-radius: 4px; overflow: hidden;">
+    <div style="height: 7px; background: #141414; border-radius: 4px; overflow: hidden;">
       <div class="bar-fill" style="height: 100%; width: ${(c.merged / maxContrib * 100).toFixed(1)}%; background: #F7931A;"></div>
     </div>
   </div>`).join('');
@@ -199,10 +201,10 @@ function renderRows() {
   const rows = merged.filter(p => f === 'all' || p.contributor === f);
   document.getElementById('pr-rows').innerHTML = rows.map(p => `
     <tr class="pr-row" style="border-bottom: 1px solid rgba(255,255,255,0.06);">
-      <td style="padding: 9px 12px 9px 0;"><a href="${p.url}" target="_blank" rel="noopener" style="color: #F7931A; text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 13px;">${p.repo.split('/').pop()}#${p.number}</a>${p.note ? ` <span style="color: #8C94A6; font-size: 12px;">${esc(p.note)}</span>` : ''}${p.pre ? ' <span style="color: #5A6478;" title="Predates joining Code Orange">*</span>' : ''}</td>
-      <td style="padding: 9px 12px 9px 0; color: #C8CDD9;">${esc(p.project)}</td>
-      <td style="padding: 9px 12px 9px 0; color: #C8CDD9;">${esc(p.contributor)}</td>
-      <td style="padding: 9px 0; color: #8C94A6; font-size: 13px;">${esc(p.date)}</td>
+      <td style="padding: 9px 12px 9px 0;"><a href="${p.url}" target="_blank" rel="noopener" style="color: #F7931A; text-decoration: none; font-family: 'Plus Jakarta Sans', monospace; font-size: 13px;">${p.repo.split('/').pop()}#${p.number}</a>${p.note ? ` <span style="color: #858585; font-size: 12px;">${esc(p.note)}</span>` : ''}${p.pre ? ' <span style="color: #5E5E5E;" title="Predates joining Code Orange">*</span>' : ''}</td>
+      <td style="padding: 9px 12px 9px 0; color: #B8B8B8;">${esc(p.project)}</td>
+      <td style="padding: 9px 12px 9px 0; color: #B8B8B8;">${esc(p.contributor)}</td>
+      <td style="padding: 9px 0; color: #858585; font-size: 13px;">${esc(p.date)}</td>
     </tr>`).join('');
 }
 sel.addEventListener('change', renderRows);
@@ -210,9 +212,9 @@ renderRows();
 
 // Open PRs
 document.getElementById('open-grid').innerHTML = open.map(p => `
-  <a href="${p.url}" target="_blank" rel="noopener" class="open-card" style="display: block; background: #0B1220; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 14px 16px; text-decoration: none;">
-    <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #F7931A;">${p.repo.split('/').pop()}#${p.number}</span>
-    <span style="display: block; font-size: 12px; color: #8C94A6; margin-top: 4px;">${esc(p.contributor)} · ${esc(p.project)}</span>
+  <a href="${p.url}" target="_blank" rel="noopener" class="open-card" style="display: block; background: #0A0A0A; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 14px 16px; text-decoration: none;">
+    <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 13px; color: #F7931A;">${p.repo.split('/').pop()}#${p.number}</span>
+    <span style="display: block; font-size: 12px; color: #858585; margin-top: 4px;">${esc(p.contributor)} · ${esc(p.project)}</span>
   </a>`).join('');
 </script>
 </body>

@@ -25,18 +25,20 @@
 <script src="/support.js?v=20260902a" defer></script>
 <link rel="icon" type="image/svg+xml" href="/assets/favicon-bitcoin.svg">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"Bitcoin Privacy Developer Track","description":"12 biweekly 90-minute sessions over 6 months, opening with Silent Payments (BIP352), then chain analysis, Payjoin, light clients, network privacy, CoinJoin, Lightning, ecash, and real OSS contributions.","url":"https://codeorange.dev/privacy-track","provider":{"@type":"EducationalOrganization","name":"Code Orange Dev School","url":"https://codeorange.dev","email":"hello@codeorange.dev"}}</script>
+<link rel="stylesheet" href="/assets/theme.css?v=20261004">
+<script src="/assets/site-menu.js?v=20261004" defer></script>
 </head>
 <body>
 <x-dc>
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
-<link href="https://fonts.googleapis.com/css2?family=Special+Elite&amp;family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
 <style>
-  html, body { margin: 0; padding: 0; background: #0B1220; }
+  html, body { margin: 0; padding: 0; background: #0A0A0A; }
   body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
   html { scroll-behavior: smooth; }
-  ::selection { background: rgba(247,147,26,0.35); color: #F5F1EA; }
+  ::selection { background: rgba(247,147,26,0.35); color: #F5F5F5; }
   @media (prefers-reduced-motion: reduce) {
     * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   }
@@ -64,38 +66,38 @@
 </style>
 </helmet>
 
-<div style="background: #0B1220; color: #F5F1EA; font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 16px; line-height: 1.5; min-height: 100vh;">
+<div style="background: #0A0A0A; color: #F5F5F5; font-family: 'Inter', system-ui, sans-serif; font-size: 16px; line-height: 1.5; min-height: 100vh;">
 
   <!-- ══════════ ANNOUNCE ══════════ -->
-  <a href="/apply?program=privacy" data-screen-label="Announce bar" data-mq="announce" style="display: flex; align-items: center; justify-content: center; gap: 10px; background: #F7931A; color: #0B1220; text-decoration: none; padding: 9px 24px; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600;" style-hover="background: #FFB347;">
+  <a href="/apply?program=privacy" data-screen-label="Announce bar" data-mq="announce" style="display: flex; align-items: center; justify-content: center; gap: 10px; background: #F7931A; color: #0A0A0A; text-decoration: none; padding: 9px 24px; font-family: 'Plus Jakarta Sans', monospace; font-size: 13px; font-weight: 600;" style-hover="background: #FFB347;">
     <span>🔐 Bitcoin Privacy Track - open for enrollment · 2026 focus</span>
     <span style="text-decoration: underline; text-underline-offset: 3px;">Apply →</span>
   </a>
 
   <!-- ══════════ HEADER ══════════ -->
-  <header data-screen-label="Header" style="position: sticky; top: 0; z-index: 50; background: rgba(11,18,32,0.72); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.08);">
+  <header data-screen-label="Header" style="position: sticky; top: 0; z-index: 50; background: rgba(10,10,10,0.72); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.08);">
     <div data-mq="header-inner" style="max-width: 1240px; margin: 0 auto; padding: 0 32px; height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 24px;">
       <a href="/" style="display: flex; align-items: center; text-decoration: none; flex-shrink: 0;">
         <img src="/assets/logo-white.png" alt="Code Orange Dev School" data-mq="logo-img" style="height: 45px; width: auto; display: block;">
       </a>
       <nav data-mq="nav-links" style="display: flex; align-items: center; gap: 4px; font-size: 14px; font-weight: 500;">
-        <a href="/" style="color: #C8CDD9; text-decoration: none; padding: 8px 14px; border-radius: 8px; transition: color 120ms;" style-hover="color: #F7931A;">← All programs</a>
-        <a href="#modules" style="color: #C8CDD9; text-decoration: none; padding: 8px 14px; border-radius: 8px; transition: color 120ms;" style-hover="color: #F7931A;">Modules</a>
-        <a href="#github-details" style="color: #C8CDD9; text-decoration: none; padding: 8px 14px; border-radius: 8px; transition: color 120ms;" style-hover="color: #F7931A;">Details</a>
-        <a href="#rule" style="color: #C8CDD9; text-decoration: none; padding: 8px 14px; border-radius: 8px; transition: color 120ms;" style-hover="color: #F7931A;">The Rule</a>
-        <a href="#repos" style="color: #C8CDD9; text-decoration: none; padding: 8px 14px; border-radius: 8px; transition: color 120ms;" style-hover="color: #F7931A;">Repos</a>
+        <a href="/" style="color: #B8B8B8; text-decoration: none; padding: 8px 14px; border-radius: 8px; transition: color 120ms;" style-hover="color: #F7931A;">← All programs</a>
+        <a href="#modules" style="color: #B8B8B8; text-decoration: none; padding: 8px 14px; border-radius: 8px; transition: color 120ms;" style-hover="color: #F7931A;">Modules</a>
+        <a href="#github-details" style="color: #B8B8B8; text-decoration: none; padding: 8px 14px; border-radius: 8px; transition: color 120ms;" style-hover="color: #F7931A;">Details</a>
+        <a href="#rule" style="color: #B8B8B8; text-decoration: none; padding: 8px 14px; border-radius: 8px; transition: color 120ms;" style-hover="color: #F7931A;">The Rule</a>
+        <a href="#repos" style="color: #B8B8B8; text-decoration: none; padding: 8px 14px; border-radius: 8px; transition: color 120ms;" style-hover="color: #F7931A;">Repos</a>
       </nav>
       <div style="display: flex; align-items: center; gap: 12px; flex-shrink: 0;">
-        <a href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener" data-mq="btn-discord" style="color: #F5F1EA; text-decoration: none; font-size: 14px; font-weight: 600; padding: 10px 18px; border: 1px solid rgba(255,255,255,0.16); border-radius: 8px; transition: all 120ms;" style-hover="border-color: #F7931A; color: #F7931A;">Discord</a>
-        <a href="/apply?program=privacy" style="background: #F7931A; color: #0B1220; text-decoration: none; font-size: 14px; font-weight: 700; padding: 10px 20px; border-radius: 8px; transition: background 120ms;" style-hover="background: #FFB347;">Apply Now</a>
+        <a href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener" data-mq="btn-discord" style="color: #F5F5F5; text-decoration: none; font-size: 14px; font-weight: 600; padding: 10px 18px; border: 1px solid rgba(255,255,255,0.16); border-radius: 8px; transition: all 120ms;" style-hover="border-color: #F7931A; color: #F7931A;">Discord</a>
+        <a href="/apply?program=privacy" style="background: #F7931A; color: #0A0A0A; text-decoration: none; font-size: 14px; font-weight: 700; padding: 10px 20px; border-radius: 8px; transition: background 120ms;" style-hover="background: #FFB347;">Apply Now</a>
       </div>
     </div>
     <div data-mq="nav-mobile" style="display: none; align-items: center; gap: 8px; overflow-x: auto; padding: 0 16px 10px; scrollbar-width: none;">
-      <a href="/" style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; color: #C8CDD9; text-decoration: none; padding: 7px 14px; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; white-space: nowrap; flex-shrink: 0;">← Home</a>
-      <a href="#modules" style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; color: #C8CDD9; text-decoration: none; padding: 7px 14px; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; white-space: nowrap; flex-shrink: 0;">Modules</a>
-      <a href="#github-details" style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; color: #C8CDD9; text-decoration: none; padding: 7px 14px; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; white-space: nowrap; flex-shrink: 0;">Details</a>
-      <a href="#rule" style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; color: #C8CDD9; text-decoration: none; padding: 7px 14px; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; white-space: nowrap; flex-shrink: 0;">The Rule</a>
-      <a href="#repos" style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; color: #C8CDD9; text-decoration: none; padding: 7px 14px; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; white-space: nowrap; flex-shrink: 0;">Repos</a>
+      <a href="/" style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 600; color: #B8B8B8; text-decoration: none; padding: 7px 14px; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; white-space: nowrap; flex-shrink: 0;">← Home</a>
+      <a href="#modules" style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 600; color: #B8B8B8; text-decoration: none; padding: 7px 14px; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; white-space: nowrap; flex-shrink: 0;">Modules</a>
+      <a href="#github-details" style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 600; color: #B8B8B8; text-decoration: none; padding: 7px 14px; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; white-space: nowrap; flex-shrink: 0;">Details</a>
+      <a href="#rule" style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 600; color: #B8B8B8; text-decoration: none; padding: 7px 14px; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; white-space: nowrap; flex-shrink: 0;">The Rule</a>
+      <a href="#repos" style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 600; color: #B8B8B8; text-decoration: none; padding: 7px 14px; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; white-space: nowrap; flex-shrink: 0;">Repos</a>
     </div>
   </header>
 
@@ -106,38 +108,38 @@
       <div data-mq="hero-grid" style="display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 64px; align-items: center;">
         <div>
           <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 24px;">
-            <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #0B1220; background: #F7931A; padding: 5px 12px; border-radius: 999px;">New · 2026 Focus</span>
-            <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #F7931A;"><span>/</span>Programs<span>/</span>Privacy_Track<span>_</span></span>
+            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #0A0A0A; background: #F7931A; padding: 5px 12px; border-radius: 999px;">New · 2026 Focus</span>
+            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #F7931A;"><span>/</span>Programs<span>/</span>Privacy_Track<span>_</span></span>
           </div>
-          <h1 style="font-family: 'Special Elite', 'Courier New', monospace; font-weight: 400; font-size: clamp(38px, 4.4vw, 62px); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 26px; color: #F5F1EA; text-wrap: pretty;">Bitcoin Privacy Developer Track. <span style="color: #F7931A;">Contribution-first, by design.</span></h1>
-          <p style="font-size: 18px; line-height: 1.65; color: #C8CDD9; margin: 0 0 32px; max-width: 560px; text-wrap: pretty;">12 biweekly 90-minute sessions over 6 months, opening with Silent Payments, then chain analysis, coin selection, Payjoin, light clients, network privacy, CoinJoin and swaps, Lightning, ecash, and a contribution sprint. Every session ends with real proof of work in an open-source privacy project.</p>
+          <h1 style="font-family: 'Inter', system-ui, sans-serif; font-weight: 400; font-size: clamp(38px, 4.4vw, 62px); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 26px; color: #F5F5F5; text-wrap: pretty;">Bitcoin Privacy Developer Track. <span style="color: #F7931A;">Contribution-first, by design.</span></h1>
+          <p style="font-size: 18px; line-height: 1.65; color: #B8B8B8; margin: 0 0 32px; max-width: 560px; text-wrap: pretty;">12 biweekly 90-minute sessions over 6 months, opening with Silent Payments, then chain analysis, coin selection, Payjoin, light clients, network privacy, CoinJoin and swaps, Lightning, ecash, and a contribution sprint. Every session ends with real proof of work in an open-source privacy project.</p>
           <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 36px;">
-            <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #F7931A; padding: 8px 16px; border: 1px solid rgba(247,147,26,0.4); border-radius: 999px;">For Developers</span>
-            <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #C8CDD9; padding: 8px 16px; border: 1px solid rgba(255,255,255,0.16); border-radius: 999px;">6 months · biweekly</span>
-            <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #C8CDD9; padding: 8px 16px; border: 1px solid rgba(255,255,255,0.16); border-radius: 999px;">~3 hrs/week</span>
-            <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #C8CDD9; padding: 8px 16px; border: 1px solid rgba(255,255,255,0.16); border-radius: 999px;">Free if accepted</span>
+            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 13px; color: #F7931A; padding: 8px 16px; border: 1px solid rgba(247,147,26,0.4); border-radius: 999px;">For Developers</span>
+            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 13px; color: #B8B8B8; padding: 8px 16px; border: 1px solid rgba(255,255,255,0.16); border-radius: 999px;">6 months · biweekly</span>
+            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 13px; color: #B8B8B8; padding: 8px 16px; border: 1px solid rgba(255,255,255,0.16); border-radius: 999px;">~3 hrs/week</span>
+            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 13px; color: #B8B8B8; padding: 8px 16px; border: 1px solid rgba(255,255,255,0.16); border-radius: 999px;">Free if accepted</span>
           </div>
           <div data-mq="btn-row" style="display: flex; gap: 14px; flex-wrap: wrap;">
-            <a href="/apply?program=privacy" style="background: #F7931A; color: #0B1220; text-decoration: none; font-size: 16px; font-weight: 700; padding: 15px 30px; border-radius: 8px; transition: background 120ms;" style-hover="background: #FFB347;" style-active="transform: scale(0.98);">Apply to the Track</a>
-            <a href="#modules" style="color: #F5F1EA; text-decoration: none; font-size: 16px; font-weight: 600; padding: 15px 30px; border: 1px solid rgba(255,255,255,0.16); border-radius: 8px; transition: all 120ms;" style-hover="border-color: #F7931A; color: #F7931A;">See the modules</a>
+            <a href="/apply?program=privacy" style="background: #F7931A; color: #0A0A0A; text-decoration: none; font-size: 16px; font-weight: 700; padding: 15px 30px; border-radius: 8px; transition: background 120ms;" style-hover="background: #FFB347;" style-active="transform: scale(0.98);">Apply to the Track</a>
+            <a href="#modules" style="color: #F5F5F5; text-decoration: none; font-size: 16px; font-weight: 600; padding: 15px 30px; border: 1px solid rgba(255,255,255,0.16); border-radius: 8px; transition: all 120ms;" style-hover="border-color: #F7931A; color: #F7931A;">See the modules</a>
           </div>
         </div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-          <div style="background: #12213B; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px; display: flex; flex-direction: column; gap: 4px;">
-            <span style="font-family: 'Special Elite', monospace; font-size: 42px; line-height: 1; color: #F7931A;">12</span>
-            <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8C94A6;">Sessions</span>
+          <div style="background: #141414; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px; display: flex; flex-direction: column; gap: 4px;">
+            <span style="font-family: 'Inter', monospace; font-size: 42px; line-height: 1; color: #F7931A;">12</span>
+            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #858585;">Sessions</span>
           </div>
-          <div style="background: #12213B; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px; display: flex; flex-direction: column; gap: 4px;">
-            <span style="font-family: 'Special Elite', monospace; font-size: 42px; line-height: 1; color: #F7931A;">6mo</span>
-            <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8C94A6;">Duration</span>
+          <div style="background: #141414; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px; display: flex; flex-direction: column; gap: 4px;">
+            <span style="font-family: 'Inter', monospace; font-size: 42px; line-height: 1; color: #F7931A;">6mo</span>
+            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #858585;">Duration</span>
           </div>
-          <div style="background: #12213B; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px; display: flex; flex-direction: column; gap: 4px;">
-            <span style="font-family: 'Special Elite', monospace; font-size: 42px; line-height: 1; color: #F7931A;">28</span>
-            <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8C94A6;">BIP352 test vectors</span>
+          <div style="background: #141414; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px; display: flex; flex-direction: column; gap: 4px;">
+            <span style="font-family: 'Inter', monospace; font-size: 42px; line-height: 1; color: #F7931A;">28</span>
+            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #858585;">BIP352 test vectors</span>
           </div>
-          <div style="background: #12213B; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px; display: flex; flex-direction: column; gap: 4px;">
-            <span style="font-family: 'Special Elite', monospace; font-size: 42px; line-height: 1; color: #F7931A;">17</span>
-            <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8C94A6;">Projects with live issue links</span>
+          <div style="background: #141414; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px; display: flex; flex-direction: column; gap: 4px;">
+            <span style="font-family: 'Inter', monospace; font-size: 42px; line-height: 1; color: #F7931A;">17</span>
+            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #858585;">Projects with live issue links</span>
           </div>
         </div>
       </div>
@@ -150,68 +152,68 @@
     <div data-mq="cols2" style="display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 28px; align-items: start;">
       <div style="display: flex; flex-direction: column; gap: 20px;">
         <div>
-          <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #F7931A; margin-bottom: 18px;"><span>/</span>GitHub_Curriculum<span>_</span></div>
-          <h2 style="font-family: 'Special Elite', 'Courier New', monospace; font-weight: 400; font-size: clamp(32px, 3.2vw, 50px); line-height: 1.08; margin: 0 0 18px; color: #F5F1EA;">Season One: 12 sessions, one contribution path.</h2>
-          <p style="font-size: 16px; line-height: 1.7; color: #C8CDD9; margin: 0; text-wrap: pretty;">The public curriculum is now mapped on GitHub: each session teaches one Bitcoin privacy problem, then ends with proof of work: a lab, a tested PR, or an issue from a curated pool that can become a real upstream contribution.</p>
+          <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #F7931A; margin-bottom: 18px;"><span>/</span>GitHub_Curriculum<span>_</span></div>
+          <h2 style="font-family: 'Inter', system-ui, sans-serif; font-weight: 400; font-size: clamp(32px, 3.2vw, 50px); line-height: 1.08; margin: 0 0 18px; color: #F5F5F5;">Season One: 12 sessions, one contribution path.</h2>
+          <p style="font-size: 16px; line-height: 1.7; color: #B8B8B8; margin: 0; text-wrap: pretty;">The public curriculum is now mapped on GitHub: each session teaches one Bitcoin privacy problem, then ends with proof of work: a lab, a tested PR, or an issue from a curated pool that can become a real upstream contribution.</p>
         </div>
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
-          <div style="background: #12213B; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 18px;">
-            <span style="display: block; font-family: 'Special Elite', monospace; font-size: 32px; color: #F7931A; line-height: 1;">90</span>
-            <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #8C94A6;">min/session</span>
+          <div style="background: #141414; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 18px;">
+            <span style="display: block; font-family: 'Inter', monospace; font-size: 32px; color: #F7931A; line-height: 1;">90</span>
+            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #858585;">min/session</span>
           </div>
-          <div style="background: #12213B; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 18px;">
-            <span style="display: block; font-family: 'Special Elite', monospace; font-size: 32px; color: #F7931A; line-height: 1;">6</span>
-            <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #8C94A6;">months</span>
+          <div style="background: #141414; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 18px;">
+            <span style="display: block; font-family: 'Inter', monospace; font-size: 32px; color: #F7931A; line-height: 1;">6</span>
+            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #858585;">months</span>
           </div>
-          <div style="background: #12213B; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 18px;">
-            <span style="display: block; font-family: 'Special Elite', monospace; font-size: 32px; color: #F7931A; line-height: 1;">1</span>
-            <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #8C94A6;">live PR review / session</span>
+          <div style="background: #141414; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 18px;">
+            <span style="display: block; font-family: 'Inter', monospace; font-size: 32px; color: #F7931A; line-height: 1;">1</span>
+            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #858585;">live PR review / session</span>
           </div>
         </div>
         <img src="/assets/uploaded-workshops/hardware-privacy-kit.jpg" alt="Bitcoin privacy hardware used in Code Orange workshops" loading="lazy" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 18px; border: 1px solid rgba(255,255,255,0.1); display: block;">
         <div data-mq="btn-row" style="display: flex; gap: 12px; flex-wrap: wrap;">
-          <a href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track" target="_blank" rel="noopener" style="background: #F7931A; color: #0B1220; text-decoration: none; font-size: 14px; font-weight: 700; padding: 13px 20px; border-radius: 8px;">Open GitHub track</a>
-          <a href="https://github.com/code-orange-dev/curriculum/blob/main/privacy-track/PR_CHECKLIST.md" target="_blank" rel="noopener" style="color: #F5F1EA; text-decoration: none; font-size: 14px; font-weight: 600; padding: 13px 20px; border: 1px solid rgba(255,255,255,0.16); border-radius: 8px;">PR checklist</a>
+          <a href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track" target="_blank" rel="noopener" style="background: #F7931A; color: #0A0A0A; text-decoration: none; font-size: 14px; font-weight: 700; padding: 13px 20px; border-radius: 8px;">Open GitHub track</a>
+          <a href="https://github.com/code-orange-dev/curriculum/blob/main/privacy-track/PR_CHECKLIST.md" target="_blank" rel="noopener" style="color: #F5F5F5; text-decoration: none; font-size: 14px; font-weight: 600; padding: 13px 20px; border: 1px solid rgba(255,255,255,0.16); border-radius: 8px;">PR checklist</a>
         </div>
       </div>
-      <div style="background: #0F1A2E; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; overflow: hidden;">
-        <div style="padding: 18px 22px; background: #12213B; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: space-between; gap: 16px;">
-          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #F7931A;">Month by month</span>
-          <a href="https://github.com/code-orange-dev/curriculum/blob/main/privacy-track/SESSIONS.md" target="_blank" rel="noopener" style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #C8CDD9; text-decoration: none;">Full guide →</a>
+      <div style="background: #0F0F0F; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; overflow: hidden;">
+        <div style="padding: 18px 22px; background: #141414; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+          <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #F7931A;">Month by month</span>
+          <a href="https://github.com/code-orange-dev/curriculum/blob/main/privacy-track/SESSIONS.md" target="_blank" rel="noopener" style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; color: #B8B8B8; text-decoration: none;">Full guide →</a>
         </div>
         <div style="display: flex; flex-direction: column;">
-          <div style="padding: 20px 22px; border-bottom: 1px solid rgba(255,255,255,0.07);"><b style="color:#F5F1EA;">Month 1</b><p style="margin: 6px 0 0; color:#C8CDD9;">Silent Payments I: build a sender; Silent Payments II: build a scanner</p></div>
-          <div style="padding: 20px 22px; border-bottom: 1px solid rgba(255,255,255,0.07);"><b style="color:#F5F1EA;">Month 2</b><p style="margin: 6px 0 0; color:#C8CDD9;">Silent Payments III: Review Club on Bitcoin Core; Think Like the Adversary (chain analysis &amp; fingerprinting)</p></div>
-          <div style="padding: 20px 22px; border-bottom: 1px solid rgba(255,255,255,0.07);"><b style="color:#F5F1EA;">Month 3</b><p style="margin: 6px 0 0; color:#C8CDD9;">Coin Selection &amp; Change; Payjoin</p></div>
-          <div style="padding: 20px 22px; border-bottom: 1px solid rgba(255,255,255,0.07);"><b style="color:#F5F1EA;">Month 4</b><p style="margin: 6px 0 0; color:#C8CDD9;">Light Clients with Floresta and Kyoto; Network Privacy: Tor, BIP324, private broadcast, ASmap</p></div>
-          <div style="padding: 20px 22px; border-bottom: 1px solid rgba(255,255,255,0.07);"><b style="color:#F5F1EA;">Month 5</b><p style="margin: 6px 0 0; color:#C8CDD9;">CoinJoin &amp; OpenSwap; Lightning Privacy</p></div>
-          <div style="padding: 20px 22px;"><b style="color:#F5F1EA;">Month 6</b><p style="margin: 6px 0 0; color:#C8CDD9;">Ecash: Cashu &amp; Fedimint; Contribution Sprint</p></div>
+          <div style="padding: 20px 22px; border-bottom: 1px solid rgba(255,255,255,0.07);"><b style="color:#F5F5F5;">Month 1</b><p style="margin: 6px 0 0; color:#B8B8B8;">Silent Payments I: build a sender; Silent Payments II: build a scanner</p></div>
+          <div style="padding: 20px 22px; border-bottom: 1px solid rgba(255,255,255,0.07);"><b style="color:#F5F5F5;">Month 2</b><p style="margin: 6px 0 0; color:#B8B8B8;">Silent Payments III: Review Club on Bitcoin Core; Think Like the Adversary (chain analysis &amp; fingerprinting)</p></div>
+          <div style="padding: 20px 22px; border-bottom: 1px solid rgba(255,255,255,0.07);"><b style="color:#F5F5F5;">Month 3</b><p style="margin: 6px 0 0; color:#B8B8B8;">Coin Selection &amp; Change; Payjoin</p></div>
+          <div style="padding: 20px 22px; border-bottom: 1px solid rgba(255,255,255,0.07);"><b style="color:#F5F5F5;">Month 4</b><p style="margin: 6px 0 0; color:#B8B8B8;">Light Clients with Floresta and Kyoto; Network Privacy: Tor, BIP324, private broadcast, ASmap</p></div>
+          <div style="padding: 20px 22px; border-bottom: 1px solid rgba(255,255,255,0.07);"><b style="color:#F5F5F5;">Month 5</b><p style="margin: 6px 0 0; color:#B8B8B8;">CoinJoin &amp; OpenSwap; Lightning Privacy</p></div>
+          <div style="padding: 20px 22px;"><b style="color:#F5F5F5;">Month 6</b><p style="margin: 6px 0 0; color:#B8B8B8;">Ecash: Cashu &amp; Fedimint; Contribution Sprint</p></div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ══════════ THE RULE ══════════ -->
-  <section id="rule" data-screen-label="The rule" style="background: #0F1A2E; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); scroll-margin-top: 96px;">
+  <section id="rule" data-screen-label="The rule" style="background: #0F0F0F; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); scroll-margin-top: 96px;">
     <div data-pad="mid" style="max-width: 1240px; margin: 0 auto; padding: 96px 32px;">
-      <div style="border-radius: 20px; background: #0B1220; border: 1px solid rgba(255,255,255,0.08); overflow: hidden;">
-        <div style="display: flex; align-items: center; gap: 8px; padding: 14px 20px; border-bottom: 1px solid rgba(255,255,255,0.08); background: #12213B;">
+      <div style="border-radius: 20px; background: #0A0A0A; border: 1px solid rgba(255,255,255,0.08); overflow: hidden;">
+        <div style="display: flex; align-items: center; gap: 8px; padding: 14px 20px; border-bottom: 1px solid rgba(255,255,255,0.08); background: #141414;">
           <span style="width: 12px; height: 12px; border-radius: 50%; background: #FF5F56;"></span>
           <span style="width: 12px; height: 12px; border-radius: 50%; background: #FFBD2E;"></span>
           <span style="width: 12px; height: 12px; border-radius: 50%; background: #27C93F;"></span>
-          <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8C94A6; margin-left: 10px;">~/privacy-track/RULE.md</span>
+          <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; color: #858585; margin-left: 10px;">~/privacy-track/RULE.md</span>
         </div>
         <div data-mq="cols2" data-pad="card" style="padding: 48px 56px; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 56px; align-items: center;">
           <div>
-            <h2 style="font-family: 'Special Elite', 'Courier New', monospace; font-weight: 400; font-size: clamp(30px, 3vw, 44px); line-height: 1.12; margin: 0 0 20px; color: #F5F1EA;">Every session ends with proof of work. <span style="color: #F7931A;">Useful, not noisy.</span></h2>
-            <p style="font-size: 16px; line-height: 1.7; color: #C8CDD9; margin: 0; max-width: 560px; text-wrap: pretty;">Not "homework." Proof of work: a lab passing the official test vectors, a PR you built and tested, a reproduced bug, a docs fix, a pull request on an issue you checked is still open. Nothing goes upstream unless a maintainer would be glad to receive it. Over 12 sessions that compounds into a public contribution record no CV can fake.</p>
+            <h2 style="font-family: 'Inter', system-ui, sans-serif; font-weight: 400; font-size: clamp(30px, 3vw, 44px); line-height: 1.12; margin: 0 0 20px; color: #F5F5F5;">Every session ends with proof of work. <span style="color: #F7931A;">Useful, not noisy.</span></h2>
+            <p style="font-size: 16px; line-height: 1.7; color: #B8B8B8; margin: 0; max-width: 560px; text-wrap: pretty;">Not "homework." Proof of work: a lab passing the official test vectors, a PR you built and tested, a reproduced bug, a docs fix, a pull request on an issue you checked is still open. Nothing goes upstream unless a maintainer would be glad to receive it. Over 12 sessions that compounds into a public contribution record no CV can fake.</p>
           </div>
-          <div style="font-family: 'JetBrains Mono', monospace; font-size: 14px; line-height: 2.1; display: flex; flex-direction: column;">
-            <span style="color: #8C94A6;"># session checklist</span>
-            <span style="color: #C8CDD9;">[x] deep-dive - 90 min</span>
-            <span style="color: #C8CDD9;">[x] review a live PR together</span>
+          <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 14px; line-height: 2.1; display: flex; flex-direction: column;">
+            <span style="color: #858585;"># session checklist</span>
+            <span style="color: #B8B8B8;">[x] deep-dive - 90 min</span>
+            <span style="color: #B8B8B8;">[x] review a live PR together</span>
             <span style="color: #F7931A;">[x] ship proof of work ✓</span>
-            <span style="color: #8C94A6;">── tested or it didn't happen</span>
+            <span style="color: #858585;">── tested or it didn't happen</span>
           </div>
         </div>
       </div>
@@ -221,22 +223,22 @@
   <!-- ══════════ MODULES ══════════ -->
   <section id="modules" data-screen-label="Modules" data-pad="lg" style="max-width: 1240px; margin: 0 auto; padding: 130px 32px; scroll-margin-top: 96px;">
     <div style="margin-bottom: 56px; max-width: 680px;">
-      <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #F7931A; margin-bottom: 20px;"><span>/</span>Curriculum<span>_</span></div>
-      <h2 style="font-family: 'Special Elite', 'Courier New', monospace; font-weight: 400; font-size: clamp(34px, 3.4vw, 52px); line-height: 1.08; margin: 0 0 16px; color: #F5F1EA;">Six months. Six privacy layers.</h2>
-      <p style="font-size: 17px; line-height: 1.6; color: #8C94A6; margin: 0; text-wrap: pretty;">Two sessions per month, each module anchored to the live repos you'll contribute to.</p>
+      <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #F7931A; margin-bottom: 20px;"><span>/</span>Curriculum<span>_</span></div>
+      <h2 style="font-family: 'Inter', system-ui, sans-serif; font-weight: 400; font-size: clamp(34px, 3.4vw, 52px); line-height: 1.08; margin: 0 0 16px; color: #F5F5F5;">Six months. Six privacy layers.</h2>
+      <p style="font-size: 17px; line-height: 1.6; color: #858585; margin: 0; text-wrap: pretty;">Two sessions per month, each module anchored to the live repos you'll contribute to.</p>
     </div>
     <div data-mq="cols2" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;">
       <sc-for list="{{ modules }}" as="m" hint-placeholder-count="4">
-        <div data-mq="card-pad" style="display: flex; flex-direction: column; gap: 14px; background: #12213B; border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 36px 40px; transition: border-color 240ms;" style-hover="border-color: rgba(247,147,26,0.45);">
+        <div data-mq="card-pad" style="display: flex; flex-direction: column; gap: 14px; background: #141414; border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 36px 40px; transition: border-color 240ms;" style-hover="border-color: rgba(247,147,26,0.45);">
           <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
-            <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #F7931A;">{{ m.quarter }}</span>
-            <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #5A6377;">{{ m.sessions }}</span>
+            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #F7931A;">{{ m.quarter }}</span>
+            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; color: #5E5E5E;">{{ m.sessions }}</span>
           </div>
-          <span style="font-family: 'Special Elite', monospace; font-size: 26px; line-height: 1.2; color: #F5F1EA;">{{ m.emoji }} {{ m.title }}</span>
-          <span style="font-size: 15px; line-height: 1.65; color: #C8CDD9;">{{ m.desc }}</span>
+          <span style="font-family: 'Inter', monospace; font-size: 26px; line-height: 1.2; color: #F5F5F5;">{{ m.emoji }} {{ m.title }}</span>
+          <span style="font-size: 15px; line-height: 1.65; color: #B8B8B8;">{{ m.desc }}</span>
           <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px;">
             <sc-for list="{{ m.repos }}" as="repo" hint-placeholder-count="3">
-              <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8C94A6; padding: 5px 11px; background: #0B1220; border: 1px solid rgba(255,255,255,0.08); border-radius: 6px;">{{ repo }}</span>
+              <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; color: #858585; padding: 5px 11px; background: #0A0A0A; border: 1px solid rgba(255,255,255,0.08); border-radius: 6px;">{{ repo }}</span>
             </sc-for>
           </div>
         </div>
@@ -245,20 +247,20 @@
   </section>
 
   <!-- ══════════ REPOS ══════════ -->
-  <section id="repos" data-screen-label="Target repos" style="background: #0F1A2E; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); scroll-margin-top: 96px;">
+  <section id="repos" data-screen-label="Target repos" style="background: #0F0F0F; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); scroll-margin-top: 96px;">
     <div data-pad="mid" style="max-width: 1240px; margin: 0 auto; padding: 110px 32px;">
       <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-bottom: 48px; flex-wrap: wrap;">
         <div>
-          <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #F7931A; margin-bottom: 20px;"><span>/</span>Where_You_Contribute<span>_</span></div>
-          <h2 style="font-family: 'Special Elite', 'Courier New', monospace; font-weight: 400; font-size: clamp(32px, 3vw, 46px); line-height: 1.1; margin: 0; color: #F5F1EA;">Real repos. Real maintainers.</h2>
+          <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #F7931A; margin-bottom: 20px;"><span>/</span>Where_You_Contribute<span>_</span></div>
+          <h2 style="font-family: 'Inter', system-ui, sans-serif; font-weight: 400; font-size: clamp(32px, 3vw, 46px); line-height: 1.1; margin: 0; color: #F5F5F5;">Real repos. Real maintainers.</h2>
         </div>
-        <a href="https://github.com/code-orange-dev/PR-tracking-dashboard" target="_blank" rel="noopener" style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: #F7931A; text-decoration: none;" style-hover="color: #FFB347;">Every PR tracked publicly →</a>
+        <a href="https://github.com/code-orange-dev/PR-tracking-dashboard" target="_blank" rel="noopener" style="font-family: 'Plus Jakarta Sans', monospace; font-size: 13px; font-weight: 600; color: #F7931A; text-decoration: none;" style-hover="color: #FFB347;">Every PR tracked publicly →</a>
       </div>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
         <sc-for list="{{ repos }}" as="r" hint-placeholder-count="6">
-          <div style="background: #0B1220; border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 6px; transition: border-color 240ms;" style-hover="border-color: rgba(247,147,26,0.45);">
-            <span style="font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 700; color: #F5F1EA;">{{ r.name }}</span>
-            <span style="font-size: 13.5px; line-height: 1.55; color: #8C94A6;">{{ r.what }}</span>
+          <div style="background: #0A0A0A; border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 6px; transition: border-color 240ms;" style-hover="border-color: rgba(247,147,26,0.45);">
+            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 15px; font-weight: 700; color: #F5F5F5;">{{ r.name }}</span>
+            <span style="font-size: 13.5px; line-height: 1.55; color: #858585;">{{ r.what }}</span>
           </div>
         </sc-for>
       </div>
@@ -268,18 +270,18 @@
   <!-- ══════════ EXPECTATIONS ══════════ -->
   <section data-screen-label="Expectations" data-pad="lg" style="max-width: 1240px; margin: 0 auto; padding: 130px 32px;">
     <div data-mq="cols2" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;">
-      <div data-mq="card-pad" style="background: #0F1A2E; border: 1px solid rgba(39,201,63,0.35); border-radius: 20px; padding: 36px 40px;">
-        <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #27C93F; margin-bottom: 20px;">✓ The track is for you if</div>
-        <div style="display: flex; flex-direction: column; gap: 14px; font-size: 15.5px; line-height: 1.6; color: #C8CDD9;">
+      <div data-mq="card-pad" style="background: #0F0F0F; border: 1px solid rgba(39,201,63,0.35); border-radius: 20px; padding: 36px 40px;">
+        <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #27C93F; margin-bottom: 20px;">✓ The track is for you if</div>
+        <div style="display: flex; flex-direction: column; gap: 14px; font-size: 15.5px; line-height: 1.6; color: #B8B8B8;">
           <span>→ You're comfortable in at least one programming language (Rust helps, not required)</span>
           <span>→ You care about Bitcoin privacy enough to work on it for a year</span>
           <span>→ You want a public contribution record, not a certificate</span>
           <span>→ You can sustain ~3 hrs/week, biweekly sessions, for 6 months</span>
         </div>
       </div>
-      <div data-mq="card-pad" style="background: #0F1A2E; border: 1px solid rgba(255,95,86,0.3); border-radius: 20px; padding: 36px 40px;">
-        <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #FF5F56; margin-bottom: 20px;">✕ It's not for you if</div>
-        <div style="display: flex; flex-direction: column; gap: 14px; font-size: 15.5px; line-height: 1.6; color: #C8CDD9;">
+      <div data-mq="card-pad" style="background: #0F0F0F; border: 1px solid rgba(255,95,86,0.3); border-radius: 20px; padding: 36px 40px;">
+        <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #FF5F56; margin-bottom: 20px;">✕ It's not for you if</div>
+        <div style="display: flex; flex-direction: column; gap: 14px; font-size: 15.5px; line-height: 1.6; color: #B8B8B8;">
           <span>→ You're brand new to programming - do <a href="/rawbit" style="color: #F7931A; text-decoration: none;" style-hover="color: #FFB347;">rawBit</a> first</span>
           <span>→ You want theory without shipping - every session ends in proof of work</span>
           <span>→ You can't commit to a 6-month arc - this is contribution-first by design</span>
@@ -292,28 +294,28 @@
   <section data-screen-label="CTA" style="position: relative; overflow: hidden; border-top: 1px solid rgba(255,255,255,0.08);">
     <div style="position: absolute; inset: 0; pointer-events: none;">
       <img src="/assets/new-workshops/workshop-hands-on-devices.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%;">
-      <div style="position: absolute; inset: 0; background-color: rgba(11,18,32,0.84); background-image: linear-gradient(180deg, #0B1220 0%, rgba(11,18,32,0) 30%, rgba(11,18,32,0) 75%, #0B1220 100%), linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px); background-size: auto, 48px 48px, 48px 48px;"></div>
+      <div style="position: absolute; inset: 0; background-color: rgba(10,10,10,0.84); background-image: linear-gradient(180deg, #0A0A0A 0%, rgba(10,10,10,0) 30%, rgba(10,10,10,0) 75%, #0A0A0A 100%), linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px); background-size: auto, 48px 48px, 48px 48px;"></div>
     </div>
     <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 900px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(247,147,26,0.14) 0%, transparent 65%); pointer-events: none;"></div>
     <div data-pad="cta" style="max-width: 880px; margin: 0 auto; padding: 120px 32px; text-align: center; position: relative;">
-      <h2 style="font-family: 'Special Elite', 'Courier New', monospace; font-weight: 400; font-size: clamp(36px, 4.4vw, 60px); line-height: 1.05; margin: 0 0 20px; color: #F5F1EA;">Bitcoin privacy needs hands.</h2>
-      <p style="font-size: 17px; line-height: 1.65; color: #C8CDD9; margin: 0 auto 36px; max-width: 500px;">Enrollment for the 2026 track is open now. Free for accepted students - your contributions are the tuition.</p>
+      <h2 style="font-family: 'Inter', system-ui, sans-serif; font-weight: 400; font-size: clamp(36px, 4.4vw, 60px); line-height: 1.05; margin: 0 0 20px; color: #F5F5F5;">Bitcoin privacy needs hands.</h2>
+      <p style="font-size: 17px; line-height: 1.65; color: #B8B8B8; margin: 0 auto 36px; max-width: 500px;">Enrollment for the 2026 track is open now. Free for accepted students - your contributions are the tuition.</p>
       <div data-mq="btn-row" style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
-        <a href="/apply?program=privacy" style="background: #F7931A; color: #0B1220; text-decoration: none; font-size: 17px; font-weight: 700; padding: 16px 34px; border-radius: 8px; transition: background 120ms;" style-hover="background: #FFB347;" style-active="transform: scale(0.98);">Apply to the Track</a>
-        <a href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener" style="color: #F5F1EA; text-decoration: none; font-size: 17px; font-weight: 600; padding: 16px 34px; border: 1px solid rgba(255,255,255,0.16); border-radius: 8px; transition: all 120ms;" style-hover="border-color: #F7931A; color: #F7931A;">Ask in Discord first</a>
+        <a href="/apply?program=privacy" style="background: #F7931A; color: #0A0A0A; text-decoration: none; font-size: 17px; font-weight: 700; padding: 16px 34px; border-radius: 8px; transition: background 120ms;" style-hover="background: #FFB347;" style-active="transform: scale(0.98);">Apply to the Track</a>
+        <a href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener" style="color: #F5F5F5; text-decoration: none; font-size: 17px; font-weight: 600; padding: 16px 34px; border: 1px solid rgba(255,255,255,0.16); border-radius: 8px; transition: all 120ms;" style-hover="border-color: #F7931A; color: #F7931A;">Ask in Discord first</a>
       </div>
     </div>
   </section>
 
   <!-- ══════════ FOOTER ══════════ -->
-  <footer data-screen-label="Footer" style="border-top: 1px solid rgba(255,255,255,0.08); background: #070D18;">
+  <footer data-screen-label="Footer" style="border-top: 1px solid rgba(255,255,255,0.08); background: #060606;">
     <div style="max-width: 1240px; margin: 0 auto; padding: 42px 32px 0;">
-      <div style="position: relative; min-height: 260px; overflow: hidden; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); background: #0F1A2E; box-shadow: 0 20px 60px rgba(0,0,0,0.35);">
+      <div style="position: relative; min-height: 260px; overflow: hidden; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); background: #0F0F0F; box-shadow: 0 20px 60px rgba(0,0,0,0.35);">
         <video src="/assets/co-footer.mp4" poster="/assets/co-footer-poster.jpg" autoplay muted loop playsinline style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></video>
-        <div style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8,13,24,0.86), rgba(8,13,24,0.36) 56%, rgba(8,13,24,0.72));"></div>
+        <div style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6,6,6,0.86), rgba(6,6,6,0.36) 56%, rgba(6,6,6,0.72));"></div>
         <div style="position: relative; z-index: 1; max-width: 560px; padding: 34px;">
-          <p style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #F7931A; margin: 0 0 14px;">Scenes from the school</p>
-          <h3 style="font-family: 'Special Elite', 'Courier New', monospace; font-weight: 400; font-size: clamp(28px, 3vw, 44px); line-height: 1.08; margin: 0; color: #F5F1EA;">Hands-on Bitcoin education.</h3>
+          <p style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #F7931A; margin: 0 0 14px;">Scenes from the school</p>
+          <h3 style="font-family: 'Inter', system-ui, sans-serif; font-weight: 400; font-size: clamp(28px, 3vw, 44px); line-height: 1.08; margin: 0; color: #F5F5F5;">Hands-on Bitcoin education.</h3>
         </div>
       </div>
     </div>
@@ -321,10 +323,10 @@
       <a href="/" style="display: flex; align-items: center; text-decoration: none;">
         <img src="/assets/logo-white.png" alt="Code Orange Dev School" style="height: 39px; width: auto; display: block;">
       </a>
-      <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #5A6377;">© 2026 Code Orange Dev School</span>
+      <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; color: #5E5E5E;">© 2026 Code Orange Dev School</span>
       <div style="display: flex; gap: 16px;">
-        <a href="/rawbit" style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8C94A6; text-decoration: none;" style-hover="color: #F7931A;">rawBit →</a>
-        <a href="/apply" style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #F7931A; text-decoration: none;" style-hover="color: #FFB347;">Apply →</a>
+        <a href="/rawbit" style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; color: #858585; text-decoration: none;" style-hover="color: #F7931A;">rawBit →</a>
+        <a href="/apply" style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; color: #F7931A; text-decoration: none;" style-hover="color: #FFB347;">Apply →</a>
       </div>
     </div>
   </footer>
