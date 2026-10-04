@@ -6,7 +6,7 @@
 <title>Bitcoin Developer Workshops, Cohorts &amp; Fellowships | Code Orange</title>
 <meta name="description" content="Code Orange is a Bitcoin developer school for hands-on workshops, technical cohorts, open-source contributor training, and fellowships.">
 <link rel="canonical" href="https://codeorange.dev/">
-<meta name="theme-color" content="#F7931A">
+<meta name="theme-color" content="#5ED29C">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Code Orange Dev School">
 <meta property="og:url" content="https://codeorange.dev/">
@@ -24,10 +24,13 @@
 <meta name="twitter:image" content="https://codeorange.dev/assets/og-codeorange-workshop.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="/assets/new-workshops/workshop-nodes-miners.jpg">
 <script src="/assets/lazy-video.js?v=20260903a" defer></script>
 <link rel="icon" type="image/svg+xml" href="/assets/favicon-bitcoin.svg">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"EducationalOrganization","name":"Code Orange Dev School","url":"https://codeorange.dev","email":"hello@codeorange.dev","description":"Bitcoin developer workshops, technical cohorts, open-source contributor training, and fellowships for builders.","sameAs":["https://github.com/code-orange-dev","https://x.com/CodeOrangeDevs","https://www.instagram.com/codeorangedevs","https://njump.me/npub1gxqyeea3xspkd68mxlxsvvk3gdzdd555u504ynwpdj0ghg503mvq2gydt0"]}</script>
+<link rel="stylesheet" href="/assets/theme.css?v=20261004">
+<script src="/assets/site-menu.js?v=20261004" defer></script>
 </head>
 <body>
 
@@ -46,126 +49,126 @@
 
 <main id="static-homepage">
   <style>
-    html, body { margin: 0; padding: 0; min-height: 100%; overflow-x: hidden; background: #0B1220; }
-    #static-homepage { background: #0B1220; color: #F5F1EA; font-family: "Space Grotesk", system-ui, sans-serif; min-height: 100vh; overflow-x: hidden; }
+    html, body { margin: 0; padding: 0; min-height: 100%; overflow-x: hidden; background: #070B0A; }
+    #static-homepage { background: #070B0A; color: #F4F7F5; font-family: "Inter", system-ui, sans-serif; min-height: 100vh; overflow-x: hidden; }
     #static-homepage * { box-sizing: border-box; }
     #static-homepage img, #static-homepage video { max-width: 100%; }
     #static-homepage a { color: inherit; }
     #static-homepage .co-wrap { width: min(1240px, calc(100% - 40px)); margin: 0 auto; }
     #static-homepage .co-band { border-bottom: 1px solid rgba(255,255,255,.08); }
-    #static-homepage .co-eyebrow { margin: 0 0 16px; color: #F7931A; font: 700 12px/1.4 "JetBrains Mono", monospace; letter-spacing: .14em; text-transform: uppercase; }
-    #static-homepage h1, #static-homepage h2, #static-homepage h3 { font-family: "Special Elite", "Courier New", monospace; font-weight: 400; line-height: 1.08; }
+    #static-homepage .co-eyebrow { margin: 0 0 16px; color: #5ED29C; font: 700 12px/1.4 "Plus Jakarta Sans", monospace; letter-spacing: .14em; text-transform: uppercase; }
+    #static-homepage h1, #static-homepage h2, #static-homepage h3 { font-family: "Inter", system-ui, sans-serif; font-weight: 400; line-height: 1.08; }
     #static-homepage h1 { max-width: 850px; margin: 0; font-size: clamp(42px, 6vw, 72px); }
     #static-homepage h2 { max-width: 760px; margin: 0; font-size: clamp(31px, 4vw, 52px); }
     #static-homepage h3 { margin: 0; font-size: 22px; }
-    #static-homepage p { color: #C8CDD9; line-height: 1.65; }
-    #static-homepage .co-announce { display: flex; align-items: stretch; justify-content: center; background: #F7931A; color: #0B1220; font: 700 12px/1.4 "JetBrains Mono", monospace; text-align: center; }
+    #static-homepage p { color: #B3BAB7; line-height: 1.65; }
+    #static-homepage .co-announce { display: flex; align-items: stretch; justify-content: center; background: #5ED29C; color: #070B0A; font: 700 12px/1.4 "Plus Jakarta Sans", monospace; text-align: center; }
     #static-homepage .co-announce a { display: flex; align-items: center; justify-content: center; padding: 10px 18px; color: inherit; text-decoration: none; }
-    #static-homepage .co-announce a + a { border-left: 1px solid rgba(11,18,32,.24); }
+    #static-homepage .co-announce a + a { border-left: 1px solid rgba(7,11,10,.24); }
     #static-homepage .co-announce a:hover { background: rgba(255,255,255,.2); }
     #static-homepage .co-nav { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 82px; }
     #static-homepage .co-nav img { width: 150px; height: auto; }
     #static-homepage .co-links, #static-homepage .co-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
-    #static-homepage .co-links a { color: #C8CDD9; font-size: 14px; text-decoration: none; }
+    #static-homepage .co-links a { color: #B3BAB7; font-size: 14px; text-decoration: none; }
     #static-homepage .co-mobile-menu { display: none; }
     #static-homepage .co-button { display: inline-block; padding: 13px 20px; border: 1px solid rgba(255,255,255,.16); border-radius: 8px; font-weight: 700; text-decoration: none; }
-    #static-homepage .co-button.primary { border-color: #F7931A; background: #F7931A; color: #0B1220; }
+    #static-homepage .co-button.primary { border-color: #5ED29C; background: #5ED29C; color: #070B0A; }
     /* ── CTA + polish ── */
     #static-homepage .co-button { transition: transform 140ms, box-shadow 140ms, background 140ms, border-color 140ms; }
     #static-homepage .co-button:hover { transform: translateY(-2px); }
-    #static-homepage .co-button.primary:hover { background: #FFB347; box-shadow: 0 12px 32px rgba(247,147,26,.35); }
+    #static-homepage .co-button.primary:hover { background: #86E3B7; box-shadow: 0 12px 32px rgba(94,210,156,.35); }
     #static-homepage .co-button.co-xl { padding: 19px 38px; font-size: 18px; border-radius: 10px; }
-    #static-homepage a:focus-visible, #static-homepage summary:focus-visible { outline: 2px solid #F7931A; outline-offset: 3px; border-radius: 4px; }
+    #static-homepage a:focus-visible, #static-homepage summary:focus-visible { outline: 2px solid #5ED29C; outline-offset: 3px; border-radius: 4px; }
     #static-homepage details summary { cursor: pointer; transition: color 120ms; }
-    #static-homepage details summary:hover { color: #F7931A; }
-    #static-homepage .co-hero { position: relative; display: flex; align-items: center; min-height: calc(100svh - 126px); overflow: hidden; padding: 88px 0 68px; background: #0B1220; }
+    #static-homepage details summary:hover { color: #5ED29C; }
+    #static-homepage .co-hero { position: relative; display: flex; align-items: center; min-height: calc(100svh - 126px); overflow: hidden; padding: 88px 0 68px; background: #070B0A; }
     #static-homepage .co-hero-video { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: .92; }
-    #static-homepage .co-hero:after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(11,18,32,.68), rgba(11,18,32,.88)); pointer-events: none; }
-    #static-homepage .co-hero:before { content: ""; position: absolute; inset: 0; background: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(180deg, rgba(11,18,32,.74), rgba(11,18,32,.88)), url("/assets/new-workshops/workshop-nodes-miners.jpg"); background-size: 48px 48px, 48px 48px, auto, cover; background-position: 0 0, 0 0, center, center; opacity: .92; }
+    #static-homepage .co-hero:after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(7,11,10,.68), rgba(7,11,10,.88)); pointer-events: none; }
+    #static-homepage .co-hero:before { content: ""; position: absolute; inset: 0; background: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(180deg, rgba(7,11,10,.74), rgba(7,11,10,.88)), url("/assets/new-workshops/workshop-nodes-miners.jpg"); background-size: 48px 48px, 48px 48px, auto, cover; background-position: 0 0, 0 0, center, center; opacity: .92; }
     #static-homepage .co-hero .co-wrap { position: relative; z-index: 2; }
     #static-homepage .co-hero-grid { display: grid; grid-template-columns: minmax(0, 1.04fr) minmax(320px, .86fr); gap: 54px; align-items: center; }
     #static-homepage .co-lead { max-width: 710px; margin: 24px 0 30px; font-size: 18px; }
-    #static-homepage .co-terminal { overflow: hidden; border: 1px solid rgba(255,255,255,.1); border-radius: 20px; background: #0F1A2E; box-shadow: 0 20px 60px rgba(0,0,0,.45); }
-    #static-homepage .co-terminal-top { display: flex; align-items: center; gap: 8px; padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,.08); background: #12213B; }
+    #static-homepage .co-terminal { overflow: hidden; border: 1px solid rgba(255,255,255,.1); border-radius: 20px; background: #0A100E; box-shadow: 0 20px 60px rgba(0,0,0,.45); }
+    #static-homepage .co-terminal-top { display: flex; align-items: center; gap: 8px; padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,.08); background: #0E1513; }
     #static-homepage .co-dot { width: 12px; height: 12px; border-radius: 50%; }
-    #static-homepage .co-prompt { margin-left: 10px; color: #8C94A6; font: 500 12px/1 "JetBrains Mono", monospace; }
-    #static-homepage .co-terminal-body { min-height: 264px; padding: 24px 24px 28px; font: 400 14px/1.9 "JetBrains Mono", monospace; }
+    #static-homepage .co-prompt { margin-left: 10px; color: #7E8783; font: 500 12px/1 "Plus Jakarta Sans", monospace; }
+    #static-homepage .co-terminal-body { min-height: 264px; padding: 24px 24px 28px; font: 400 14px/1.9 "Plus Jakarta Sans", monospace; }
     #static-homepage .co-terminal-body p { margin: 0; }
-    #static-homepage .co-terminal-body ol { margin: 0; padding-left: 22px; color: #C8CDD9; }
+    #static-homepage .co-terminal-body ol { margin: 0; padding-left: 22px; color: #B3BAB7; }
     #static-homepage .co-terminal-body li { padding: 2px 0; }
-    #static-homepage .co-cursor { display: inline-block; width: 8px; height: 16px; margin-left: 4px; background: #F7931A; vertical-align: -3px; }
+    #static-homepage .co-cursor { display: inline-block; width: 8px; height: 16px; margin-left: 4px; background: #5ED29C; vertical-align: -3px; }
     #static-homepage .co-section { padding: 88px 0; }
     #static-homepage .co-photo-section { position: relative; overflow: hidden; isolation: isolate; }
-    #static-homepage .co-photo-section:before { content: ""; position: absolute; inset: 0; z-index: -1; background-image: linear-gradient(180deg, rgba(11,18,32,.76), rgba(11,18,32,.92)), var(--co-bg); background-size: cover; background-position: var(--co-bg-pos, center); }
+    #static-homepage .co-photo-section:before { content: ""; position: absolute; inset: 0; z-index: -1; background-image: linear-gradient(180deg, rgba(7,11,10,.76), rgba(7,11,10,.92)), var(--co-bg); background-size: cover; background-position: var(--co-bg-pos, center); }
     #static-homepage .co-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 34px; }
-    #static-homepage .co-card { position: relative; display: flex; min-height: 210px; flex-direction: column; padding: 24px 54px 24px 24px; border: 1px solid rgba(255,255,255,.1); border-radius: 16px; background: linear-gradient(145deg, #172744, #12213B); color: #F5F1EA; text-decoration: none; box-shadow: 0 10px 24px rgba(0,0,0,.14); transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease; }
-    #static-homepage .co-card:after { content: "→"; position: absolute; right: 22px; bottom: 21px; display: grid; width: 30px; height: 30px; place-items: center; border: 1px solid rgba(247,147,26,.48); border-radius: 50%; color: #F7931A; font-size: 18px; transition: transform 160ms ease, background 160ms ease, color 160ms ease; }
-    #static-homepage .co-card:hover { transform: translateY(-4px); border-color: rgba(247,147,26,.72); box-shadow: 0 20px 38px rgba(0,0,0,.3); }
-    #static-homepage .co-card:hover:after { transform: translateX(3px); background: #F7931A; color: #0B1220; }
-    #static-homepage .co-card span { color: #F7931A; font: 700 11px/1.35 "JetBrains Mono", monospace; letter-spacing: .07em; text-transform: uppercase; }
+    #static-homepage .co-card { position: relative; display: flex; min-height: 210px; flex-direction: column; padding: 24px 54px 24px 24px; border: 1px solid rgba(255,255,255,.1); border-radius: 16px; background: linear-gradient(145deg, #121B18, #0E1513); color: #F4F7F5; text-decoration: none; box-shadow: 0 10px 24px rgba(0,0,0,.14); transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease; }
+    #static-homepage .co-card:after { content: "→"; position: absolute; right: 22px; bottom: 21px; display: grid; width: 30px; height: 30px; place-items: center; border: 1px solid rgba(94,210,156,.48); border-radius: 50%; color: #5ED29C; font-size: 18px; transition: transform 160ms ease, background 160ms ease, color 160ms ease; }
+    #static-homepage .co-card:hover { transform: translateY(-4px); border-color: rgba(94,210,156,.72); box-shadow: 0 20px 38px rgba(0,0,0,.3); }
+    #static-homepage .co-card:hover:after { transform: translateX(3px); background: #5ED29C; color: #070B0A; }
+    #static-homepage .co-card span { color: #5ED29C; font: 700 11px/1.35 "Plus Jakarta Sans", monospace; letter-spacing: .07em; text-transform: uppercase; }
     #static-homepage .co-card h3 { margin: 14px 0 0; font-size: 21px; }
-    #static-homepage .co-card p { margin: 12px 0 0; color: #C8CDD9; font-size: 14px; line-height: 1.55; }
+    #static-homepage .co-card p { margin: 12px 0 0; color: #B3BAB7; font-size: 14px; line-height: 1.55; }
     #static-homepage .co-event-preview { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 30px; }
-    #static-homepage .co-event-preview a { display: flex; min-height: 188px; flex-direction: column; padding: 22px; border: 1px solid rgba(247,147,26,.3); border-radius: 16px; background: linear-gradient(135deg, rgba(247,147,26,.15), rgba(18,33,59,.96) 58%); color: #F5F1EA; text-decoration: none; box-shadow: 0 12px 30px rgba(0,0,0,.18); transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease; }
-    #static-homepage .co-event-preview a:hover { transform: translateY(-3px); border-color: #F7931A; box-shadow: 0 18px 38px rgba(0,0,0,.3); }
-    #static-homepage .co-event-preview span { color: #F7931A; font: 700 11px/1.35 "JetBrains Mono", monospace; letter-spacing: .08em; text-transform: uppercase; }
+    #static-homepage .co-event-preview a { display: flex; min-height: 188px; flex-direction: column; padding: 22px; border: 1px solid rgba(94,210,156,.3); border-radius: 16px; background: linear-gradient(135deg, rgba(94,210,156,.15), rgba(14,21,19,.96) 58%); color: #F4F7F5; text-decoration: none; box-shadow: 0 12px 30px rgba(0,0,0,.18); transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease; }
+    #static-homepage .co-event-preview a:hover { transform: translateY(-3px); border-color: #5ED29C; box-shadow: 0 18px 38px rgba(0,0,0,.3); }
+    #static-homepage .co-event-preview span { color: #5ED29C; font: 700 11px/1.35 "Plus Jakarta Sans", monospace; letter-spacing: .08em; text-transform: uppercase; }
     #static-homepage .co-event-preview h3 { margin: 13px 0 0; font-size: 21px; }
-    #static-homepage .co-event-preview p { margin: 9px 0 18px; color: #C8CDD9; font-size: 14px; line-height: 1.5; }
+    #static-homepage .co-event-preview p { margin: 9px 0 18px; color: #B3BAB7; font-size: 14px; line-height: 1.5; }
     #static-homepage .co-event-preview a img { width: calc(100% + 44px); height: 150px; object-fit: cover; border-radius: 15px 15px 0 0; margin: -22px -22px 16px; }
-    #static-homepage .co-event-preview b { margin-top: auto; color: #F5F1EA; font-size: 14px; }
+    #static-homepage .co-event-preview b { margin-top: auto; color: #F4F7F5; font-size: 14px; }
     #static-homepage .co-proof-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 34px; }
-    #static-homepage .co-proof-card { display: flex; min-height: 205px; flex-direction: column; padding: 24px; border: 1px solid rgba(255,255,255,.1); border-radius: 16px; background: #12213B; color: #F5F1EA; text-decoration: none; transition: transform 160ms ease, border-color 160ms ease; }
-    #static-homepage .co-proof-card:hover { transform: translateY(-3px); border-color: rgba(247,147,26,.7); }
-    #static-homepage .co-proof-card span { color: #F7931A; font: 700 11px/1.35 "JetBrains Mono", monospace; letter-spacing: .08em; text-transform: uppercase; }
+    #static-homepage .co-proof-card { display: flex; min-height: 205px; flex-direction: column; padding: 24px; border: 1px solid rgba(255,255,255,.1); border-radius: 16px; background: #0E1513; color: #F4F7F5; text-decoration: none; transition: transform 160ms ease, border-color 160ms ease; }
+    #static-homepage .co-proof-card:hover { transform: translateY(-3px); border-color: rgba(94,210,156,.7); }
+    #static-homepage .co-proof-card span { color: #5ED29C; font: 700 11px/1.35 "Plus Jakarta Sans", monospace; letter-spacing: .08em; text-transform: uppercase; }
     #static-homepage .co-proof-card h3 { margin: 14px 0 0; font-size: 21px; }
-    #static-homepage .co-proof-card p { margin: 10px 0 20px; color: #C8CDD9; font-size: 14px; line-height: 1.55; }
+    #static-homepage .co-proof-card p { margin: 10px 0 20px; color: #B3BAB7; font-size: 14px; line-height: 1.55; }
     #static-homepage .co-proof-card b { margin-top: auto; font-size: 14px; }
     #static-homepage .co-list { display: grid; gap: 12px; margin-top: 30px; }
-    #static-homepage .co-list article { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; padding: 22px; border: 1px solid rgba(255,255,255,.08); border-radius: 12px; background: #12213B; }
-    #static-homepage .co-list h3 { font-family: "Space Grotesk", system-ui, sans-serif; font-size: 18px; font-weight: 700; }
+    #static-homepage .co-list article { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; padding: 22px; border: 1px solid rgba(255,255,255,.08); border-radius: 12px; background: #0E1513; }
+    #static-homepage .co-list h3 { font-family: "Inter", system-ui, sans-serif; font-size: 18px; font-weight: 700; }
     #static-homepage .co-list p { margin: 7px 0 0; font-size: 14px; }
-    #static-homepage .co-meta { align-self: center; color: #F7931A; font: 700 12px/1.5 "JetBrains Mono", monospace; text-align: right; }
-    #static-homepage .co-dark { background: #0F1A2E; }
+    #static-homepage .co-meta { align-self: center; color: #5ED29C; font: 700 12px/1.5 "Plus Jakarta Sans", monospace; text-align: right; }
+    #static-homepage .co-dark { background: #0A100E; }
     #static-homepage .co-calendar-section { padding: 64px 0 80px; }
     #static-homepage .co-calendar { margin-top: 30px; border: 1px solid rgba(255,255,255,.13); border-radius: 20px; overflow: hidden; background: #fff; box-shadow: 0 24px 70px rgba(0,0,0,.36); }
-    #static-homepage .co-calendar-label { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 13px 18px; background: #12213B; color: #C8CDD9; font: 600 11px/1.4 "JetBrains Mono", monospace; letter-spacing: .07em; text-transform: uppercase; }
-    #static-homepage .co-calendar-label b { color: #F7931A; font-weight: 700; }
-    #static-homepage .co-calendar-subscribe { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-top: 22px; padding: 16px 18px; border: 1px solid rgba(247,147,26,.34); border-radius: 14px; background: linear-gradient(100deg, rgba(247,147,26,.15), rgba(18,33,59,.88)); }
-    #static-homepage .co-calendar-subscribe p { margin: 0; color: #C8CDD9; font-size: 14px; line-height: 1.45; }
-    #static-homepage .co-calendar-subscribe b { display: block; margin-bottom: 3px; color: #F5F1EA; font-size: 15px; }
+    #static-homepage .co-calendar-label { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 13px 18px; background: #0E1513; color: #B3BAB7; font: 600 11px/1.4 "Plus Jakarta Sans", monospace; letter-spacing: .07em; text-transform: uppercase; }
+    #static-homepage .co-calendar-label b { color: #5ED29C; font-weight: 700; }
+    #static-homepage .co-calendar-subscribe { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-top: 22px; padding: 16px 18px; border: 1px solid rgba(94,210,156,.34); border-radius: 14px; background: linear-gradient(100deg, rgba(94,210,156,.15), rgba(14,21,19,.88)); }
+    #static-homepage .co-calendar-subscribe p { margin: 0; color: #B3BAB7; font-size: 14px; line-height: 1.45; }
+    #static-homepage .co-calendar-subscribe b { display: block; margin-bottom: 3px; color: #F4F7F5; font-size: 15px; }
     #static-homepage .co-calendar-subscribe .co-button { flex: 0 0 auto; }
     #static-homepage .co-calendar iframe { display: block; width: 100%; height: 620px; border: 0; background: #fff; }
     #static-homepage .co-people { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 30px; }
-    #static-homepage .co-person { padding: 15px 16px; border: 1px solid rgba(255,255,255,.1); border-left: 3px solid #F7931A; border-radius: 10px; background: rgba(18,33,59,.9); min-height: 96px; }
+    #static-homepage .co-person { padding: 15px 16px; border: 1px solid rgba(255,255,255,.1); border-left: 3px solid #5ED29C; border-radius: 10px; background: rgba(14,21,19,.9); min-height: 96px; }
     #static-homepage .co-person b { display: block; font-size: 15px; line-height: 1.2; }
-    #static-homepage .co-person b a { color: #F5F1EA; text-decoration: none; }
-    #static-homepage .co-person b a:hover { color: #F7931A; }
-    #static-homepage .co-person span { display: block; margin-top: 5px; color: #C8CDD9; font-size: 12.5px; line-height: 1.45; }
-    #static-homepage .co-host { padding: 38px; border: 1px solid rgba(247,147,26,.35); border-radius: 20px; background: linear-gradient(135deg, rgba(247,147,26,.14), #12213B 58%); }
+    #static-homepage .co-person b a { color: #F4F7F5; text-decoration: none; }
+    #static-homepage .co-person b a:hover { color: #5ED29C; }
+    #static-homepage .co-person span { display: block; margin-top: 5px; color: #B3BAB7; font-size: 12.5px; line-height: 1.45; }
+    #static-homepage .co-host { padding: 38px; border: 1px solid rgba(94,210,156,.35); border-radius: 20px; background: linear-gradient(135deg, rgba(94,210,156,.14), #0E1513 58%); }
     #static-homepage .co-gallery { position: relative; margin-top: 30px; }
-    #static-homepage .co-gallery-track { display: grid; grid-template-rows: repeat(2, minmax(0, 1fr)); grid-auto-flow: column; grid-auto-columns: calc((100% - 32px) / 3); gap: 16px; height: min(84vw, 940px); overflow-x: auto; overscroll-behavior-x: contain; padding: 4px 0 18px; scroll-snap-type: x mandatory; scrollbar-color: #F7931A #12213B; scrollbar-width: thin; }
+    #static-homepage .co-gallery-track { display: grid; grid-template-rows: repeat(2, minmax(0, 1fr)); grid-auto-flow: column; grid-auto-columns: calc((100% - 32px) / 3); gap: 16px; height: min(84vw, 940px); overflow-x: auto; overscroll-behavior-x: contain; padding: 4px 0 18px; scroll-snap-type: x mandatory; scrollbar-color: #5ED29C #0E1513; scrollbar-width: thin; }
     #static-homepage .co-gallery-track::-webkit-scrollbar { height: 10px; }
-    #static-homepage .co-gallery-track::-webkit-scrollbar-track { background: #12213B; border-radius: 999px; }
-    #static-homepage .co-gallery-track::-webkit-scrollbar-thumb { background: #F7931A; border-radius: 999px; }
-    #static-homepage .co-gallery-item { margin: 0; overflow: hidden; border: 1px solid rgba(255,255,255,.12); border-radius: 18px; background: #12213B; scroll-snap-align: start; box-shadow: 0 14px 32px rgba(0,0,0,.22); }
+    #static-homepage .co-gallery-track::-webkit-scrollbar-track { background: #0E1513; border-radius: 999px; }
+    #static-homepage .co-gallery-track::-webkit-scrollbar-thumb { background: #5ED29C; border-radius: 999px; }
+    #static-homepage .co-gallery-item { margin: 0; overflow: hidden; border: 1px solid rgba(255,255,255,.12); border-radius: 18px; background: #0E1513; scroll-snap-align: start; box-shadow: 0 14px 32px rgba(0,0,0,.22); }
     #static-homepage .co-gallery-item img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
     #static-homepage .co-gallery-item:hover img { transform: scale(1.035); }
-    #static-homepage .co-gallery-hint { margin: 14px 0 0; color: #8C94A6; font: 700 11px/1.4 "JetBrains Mono", monospace; letter-spacing: .08em; text-transform: uppercase; }
+    #static-homepage .co-gallery-hint { margin: 14px 0 0; color: #7E8783; font: 700 11px/1.4 "Plus Jakarta Sans", monospace; letter-spacing: .08em; text-transform: uppercase; }
     #static-homepage details { border-bottom: 1px solid rgba(255,255,255,.1); padding: 18px 0; }
-    #static-homepage summary { cursor: pointer; color: #F5F1EA; font-weight: 700; }
+    #static-homepage summary { cursor: pointer; color: #F4F7F5; font-weight: 700; }
     #static-homepage details p { max-width: 760px; margin: 14px 0 0; }
-    #static-homepage .co-media-footer { position: relative; min-height: 300px; margin-bottom: 28px; border: 1px solid rgba(255,255,255,.1); border-radius: 18px; overflow: hidden; background: #0F1A2E; box-shadow: 0 24px 70px rgba(0,0,0,.34); }
+    #static-homepage .co-media-footer { position: relative; min-height: 300px; margin-bottom: 28px; border: 1px solid rgba(255,255,255,.1); border-radius: 18px; overflow: hidden; background: #0A100E; box-shadow: 0 24px 70px rgba(0,0,0,.34); }
     #static-homepage .co-media-footer video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-    #static-homepage .co-media-footer:after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8,13,24,.88), rgba(8,13,24,.38) 58%, rgba(8,13,24,.74)); }
+    #static-homepage .co-media-footer:after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(5,8,7,.88), rgba(5,8,7,.38) 58%, rgba(5,8,7,.74)); }
     #static-homepage .co-media-footer div { position: relative; z-index: 1; max-width: 560px; padding: 34px; }
-    #static-homepage footer { padding: 56px 0; border-top: 1px solid rgba(255,255,255,.08); background: linear-gradient(180deg, #080D18, #070B14); }
-    #static-homepage .co-foot { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 24px; color: #8C94A6; font-size: 14px; padding: 24px 0 0; }
-    #static-homepage .co-foot-brand strong { display: block; color:#F5F1EA; font: 400 26px/1.1 "Special Elite", monospace; margin-bottom: 8px; }
-    #static-homepage .co-foot-brand a { color: #F7931A; text-decoration: none; font-weight: 700; }
+    #static-homepage footer { padding: 56px 0; border-top: 1px solid rgba(255,255,255,.08); background: linear-gradient(180deg, #050807, #050807); }
+    #static-homepage .co-foot { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 24px; color: #7E8783; font-size: 14px; padding: 24px 0 0; }
+    #static-homepage .co-foot-brand strong { display: block; color:#F4F7F5; font: 400 26px/1.1 "Inter", monospace; margin-bottom: 8px; }
+    #static-homepage .co-foot-brand a { color: #5ED29C; text-decoration: none; font-weight: 700; }
     #static-homepage .co-socials { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; }
-    #static-homepage .co-socials a { display: inline-flex; align-items: center; justify-content: center; min-height: 38px; padding: 9px 13px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; color: #F5F1EA; background: rgba(18,33,59,.78); text-decoration: none; font: 700 12px "JetBrains Mono", monospace; transition: border-color .15s ease, color .15s ease, background .15s ease; }
-    #static-homepage .co-socials a:hover { border-color: #F7931A; color: #F7931A; background: rgba(247,147,26,.08); }
-    #static-homepage a:focus-visible, #static-homepage summary:focus-visible, #static-homepage .co-gallery:focus-visible { outline: 3px solid #F7931A; outline-offset: 4px; }
+    #static-homepage .co-socials a { display: inline-flex; align-items: center; justify-content: center; min-height: 38px; padding: 9px 13px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; color: #F4F7F5; background: rgba(14,21,19,.78); text-decoration: none; font: 700 12px "Plus Jakarta Sans", monospace; transition: border-color .15s ease, color .15s ease, background .15s ease; }
+    #static-homepage .co-socials a:hover { border-color: #5ED29C; color: #5ED29C; background: rgba(94,210,156,.08); }
+    #static-homepage a:focus-visible, #static-homepage summary:focus-visible, #static-homepage .co-gallery:focus-visible { outline: 3px solid #5ED29C; outline-offset: 4px; }
     @media (prefers-reduced-motion: reduce) {
       #static-homepage *, #static-homepage *:before, #static-homepage *:after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
       #static-homepage .co-hero-video, #static-homepage .co-media-footer video { display: none; }
@@ -179,18 +182,18 @@
       #static-homepage .co-announce { flex-wrap: wrap; }
       #static-homepage .co-announce a { flex: 1 1 50%; padding: 9px 10px; font-size: 11px; }
       #static-homepage .co-announce a + a { border-left: 0; }
-      #static-homepage .co-announce a:nth-child(2) { border-left: 1px solid rgba(11,18,32,.24); }
-      #static-homepage .co-announce a:last-child { flex-basis: 100%; border-top: 1px solid rgba(11,18,32,.24); }
+      #static-homepage .co-announce a:nth-child(2) { border-left: 1px solid rgba(7,11,10,.24); }
+      #static-homepage .co-announce a:last-child { flex-basis: 100%; border-top: 1px solid rgba(7,11,10,.24); }
       #static-homepage .co-nav { display: grid; grid-template-columns: auto auto minmax(0, 1fr); align-items: center; gap: 10px; min-height: 68px; padding: 10px 0; }
       #static-homepage .co-nav img { width: 118px; }
       #static-homepage .co-links { display: none; }
       #static-homepage .co-mobile-menu { display: block; position: relative; width: auto; padding: 0; border-bottom: 0; }
-      #static-homepage .co-mobile-menu summary { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 42px; border: 1px solid rgba(255,255,255,.16); border-radius: 10px; list-style: none; cursor: pointer; color: #F5F1EA; background: rgba(18,33,59,.84); }
+      #static-homepage .co-mobile-menu summary { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 42px; border: 1px solid rgba(255,255,255,.16); border-radius: 10px; list-style: none; cursor: pointer; color: #F4F7F5; background: rgba(14,21,19,.84); }
       #static-homepage .co-mobile-menu summary::-webkit-details-marker { display: none; }
       #static-homepage .co-mobile-menu summary span, #static-homepage .co-mobile-menu summary:before, #static-homepage .co-mobile-menu summary:after { content: ""; display: block; width: 20px; height: 2px; border-radius: 999px; background: currentColor; }
       #static-homepage .co-mobile-menu summary { flex-direction: column; gap: 5px; }
-      #static-homepage .co-mobile-panel { position: absolute; top: calc(100% + 10px); left: 0; z-index: 20; display: grid; width: min(280px, calc(100vw - 36px)); gap: 10px; padding: 14px; border: 1px solid rgba(255,255,255,.1); border-radius: 14px; background: #12213B; box-shadow: 0 18px 48px rgba(0,0,0,.35); }
-      #static-homepage .co-mobile-panel a { padding: 10px 8px; color: #F5F1EA; text-decoration: none; font-weight: 700; }
+      #static-homepage .co-mobile-panel { position: absolute; top: calc(100% + 10px); left: 0; z-index: 20; display: grid; width: min(280px, calc(100vw - 36px)); gap: 10px; padding: 14px; border: 1px solid rgba(255,255,255,.1); border-radius: 14px; background: #0E1513; box-shadow: 0 18px 48px rgba(0,0,0,.35); }
+      #static-homepage .co-mobile-panel a { padding: 10px 8px; color: #F4F7F5; text-decoration: none; font-weight: 700; }
       #static-homepage .co-hero-grid { grid-template-columns: 1fr; gap: 34px; }
       #static-homepage h1 { font-size: clamp(34px, 10.5vw, 48px); line-height: 1.05; }
       #static-homepage h2 { font-size: clamp(30px, 8.5vw, 40px); line-height: 1.08; }
@@ -228,14 +231,14 @@
     }
     /* ── Pathway section ── */
     #static-homepage .co-path { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; margin-top: 34px; }
-    #static-homepage .co-path a { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 20px 18px; border: 1px solid rgba(255,255,255,.1); border-radius: 12px; background: #0B1220; text-decoration: none; color: inherit; transition: transform 140ms, border-color 140ms; }
-    #static-homepage .co-path a:hover { transform: translateY(-3px); border-color: rgba(247,147,26,.7); }
-    #static-homepage .co-path .co-step-num { color: #F7931A; font: 700 12px/1 "JetBrains Mono", monospace; letter-spacing: .08em; }
-    #static-homepage .co-path h3 { margin: 0; font-size: 15px; font-weight: 700; line-height: 1.3; color: #F5F1EA; }
-    #static-homepage .co-path p { margin: 0; font-size: 12.5px; color: #8C94A6; line-height: 1.45; }
-    #static-homepage .co-path .co-step-arrow { position: absolute; right: -13px; top: 50%; transform: translateY(-50%); color: #F7931A; font-weight: 700; z-index: 1; pointer-events: none; }
+    #static-homepage .co-path a { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 20px 18px; border: 1px solid rgba(255,255,255,.1); border-radius: 12px; background: #070B0A; text-decoration: none; color: inherit; transition: transform 140ms, border-color 140ms; }
+    #static-homepage .co-path a:hover { transform: translateY(-3px); border-color: rgba(94,210,156,.7); }
+    #static-homepage .co-path .co-step-num { color: #5ED29C; font: 700 12px/1 "Plus Jakarta Sans", monospace; letter-spacing: .08em; }
+    #static-homepage .co-path h3 { margin: 0; font-size: 15px; font-weight: 700; line-height: 1.3; color: #F4F7F5; }
+    #static-homepage .co-path p { margin: 0; font-size: 12.5px; color: #7E8783; line-height: 1.45; }
+    #static-homepage .co-path .co-step-arrow { position: absolute; right: -13px; top: 50%; transform: translateY(-50%); color: #5ED29C; font-weight: 700; z-index: 1; pointer-events: none; }
     #static-homepage .co-path-cta { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 30px; }
-    #static-homepage .co-path-cta .co-note { font-size: 13px; color: #8C94A6; }
+    #static-homepage .co-path-cta .co-note { font-size: 13px; color: #7E8783; }
     @media (max-width: 980px) {
       #static-homepage .co-path { grid-template-columns: 1fr 1fr; }
       #static-homepage .co-path .co-step-arrow { display: none; }
@@ -262,28 +265,28 @@
     <details class="co-mobile-menu"><summary aria-label="Open menu"><span></span></summary><div class="co-mobile-panel"><a href="/programs">Programs</a><a href="/portal">Portal</a><a href="/fellowships">Fellowships</a><a href="/calendar">Calendar</a><a href="/community">Community</a><a href="/impact">Impact</a><a href="/about">About</a></div></details>
     <div class="co-actions"><a class="co-button" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a><a class="co-button primary" href="/apply">Apply now</a></div>
   </div></header>
-  <section id="top" class="co-hero"><video class="co-hero-video" src="/assets/co-hero-agentic.mp4" poster="/assets/new-workshops/workshop-nodes-miners.jpg" autoplay muted loop playsinline preload="none" aria-hidden="true"></video><div class="co-wrap">
+  <section id="top" class="co-hero"><div class="co-fx" aria-hidden="true"><i></i><i></i><i></i><svg class="co-fx-glow" viewBox="0 0 1200 400" preserveAspectRatio="none"><defs><filter id="co-glow-blur" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="25"/></filter><radialGradient id="co-glow-fill"><stop offset="0" stop-color="#5ED29C" stop-opacity=".55"/><stop offset=".55" stop-color="#1F7A5C" stop-opacity=".28"/><stop offset="1" stop-color="#0B3B2E" stop-opacity="0"/></radialGradient></defs><ellipse cx="600" cy="200" rx="520" ry="110" fill="url(#co-glow-fill)" filter="url(#co-glow-blur)"/></svg></div><video class="co-hero-video" src="/assets/co-hero-agentic.mp4" poster="/assets/new-workshops/workshop-nodes-miners.jpg" autoplay muted loop playsinline preload="none" aria-hidden="true"></video><div class="co-wrap">
     <div class="co-hero-grid">
       <div>
         <p class="co-eyebrow">Bitcoin Developer School</p>
-        <h1>A Bitcoin OSS contributor pipeline.</h1>
+        <h1>A Bitcoin OSS contributor pipeline<span class="co-dot-accent">.</span></h1>
         <p class="co-lead">Learn practical Bitcoin skills, become a capable builder, or bring hands-on Bitcoin education to your community.</p>
         <div class="co-actions"><a class="co-button primary" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord, it’s free</a><a class="co-button" href="/programs">Browse programs</a></div>
       </div>
       <div class="co-terminal" aria-label="Code Orange developer pipeline">
         <div class="co-terminal-top"><span class="co-dot" style="background:#FF5F56"></span><span class="co-dot" style="background:#FFBD2E"></span><span class="co-dot" style="background:#27C93F"></span><span class="co-prompt">student@codeorange: ~</span></div>
         <div class="co-terminal-body">
-          <p style="color:#F7931A; margin-bottom:12px;">$ cat developer-pipeline.txt</p>
-          <p style="color:#F5F1EA; margin-bottom:16px;">Our developer pipeline:</p>
+          <p style="color:#5ED29C; margin-bottom:12px;">$ cat developer-pipeline.txt</p>
+          <p style="color:#F4F7F5; margin-bottom:16px;">Our developer pipeline:</p>
           <ol>
             <li>Workshops and meetups</li>
             <li>Study cohorts</li>
             <li>Privacy Track</li>
             <li>Code Review Club</li>
             <li>Fellowships</li>
-            <li style="color:#F5F1EA;">Full-time Bitcoin OSS development</li>
+            <li style="color:#F4F7F5;">Full-time Bitcoin OSS development</li>
           </ol>
-          <p style="margin-top:16px; color:#8C94A6;">$ status: builders moving from first meetup to public contribution<span class="co-cursor"></span></p>
+          <p style="margin-top:16px; color:#7E8783;">$ status: builders moving from first meetup to public contribution<span class="co-cursor"></span></p>
         </div>
       </div>
     </div>
