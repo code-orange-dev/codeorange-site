@@ -26,16 +26,16 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"Mastering Bitcoin Study Cohort","description":"A free 10-week study cohort reading Mastering Bitcoin (3rd edition) together, one chapter a week, with discussion questions, hands-on exercises and weekly Discord sessions.","url":"https://codeorange.dev/mastering-bitcoin","provider":{"@type":"EducationalOrganization","name":"Code Orange Dev School","url":"https://codeorange.dev","email":"hello@codeorange.dev"}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 <script src="/assets/lazy-video.js?v=20260902b" defer></script>
 <style>
 :root { color-scheme: dark; --bg:#0A0A0A; --band:#0F0F0F; --card:#141414; --text:#F5F5F5; --muted:#B8B8B8; --dim:#858585; --orange:#F7931A; --orange2:#FFB347; --line:rgba(255,255,255,.08); }
 * { box-sizing: border-box; }
-html, body { margin: 0; min-height: 100%; overflow-x: hidden; background: var(--bg); color: var(--text); font-family: "Inter", system-ui, sans-serif; scroll-behavior: smooth; }
+html, body { margin: 0; min-height: 100%; overflow-x: hidden; background: var(--bg); color: var(--text); font-family: "Schibsted Grotesk", system-ui, sans-serif; scroll-behavior: smooth; }
 body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
 img, video, iframe { max-width: 100%; }
 a { color: inherit; }
-.announce { display: flex; justify-content: center; gap: 10px; padding: 9px 24px; background: var(--orange); color: var(--bg); text-decoration: none; font: 700 13px "Plus Jakarta Sans", monospace; text-align: center; }
+.announce { display: flex; justify-content: center; gap: 10px; padding: 9px 24px; background: var(--orange); color: var(--bg); text-decoration: none; font: 700 13px "Schibsted Grotesk", monospace; text-align: center; }
 .announce span { text-decoration: underline; text-underline-offset: 3px; }
 .site-header { position: sticky; top: 0; z-index: 50; background: rgba(10,10,10,.74); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
 .header-inner { max-width: 1240px; height: 78px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; gap: 22px; }
@@ -58,8 +58,8 @@ a { color: inherit; }
 .hero-grid, .section-inner { max-width: 1240px; margin: 0 auto; padding: 96px 32px; }
 .hero-grid { display: grid; grid-template-columns: minmax(0,1.08fr) minmax(320px,.92fr); gap: 64px; align-items: center; }
 .glow { position: absolute; top: -160px; right: -110px; width: 740px; height: 740px; border-radius: 50%; background: radial-gradient(circle, rgba(247,147,26,.14), transparent 66%); pointer-events: none; }
-.eyebrow { margin: 0 0 22px; color: var(--orange); font: 700 12px "Plus Jakarta Sans", monospace; letter-spacing: .16em; text-transform: uppercase; }
-h1, h2, h3 { font-family: "Inter", system-ui, sans-serif; font-weight: 400; color: var(--text); }
+.eyebrow { margin: 0 0 22px; color: var(--orange); font: 700 12px "Schibsted Grotesk", monospace; letter-spacing: .16em; text-transform: uppercase; }
+h1, h2, h3 { font-family: "Schibsted Grotesk", system-ui, sans-serif; font-weight: 400; color: var(--text); }
 h1 { margin: 0 0 26px; max-width: 780px; font-size: clamp(40px, 4.6vw, 68px); line-height: 1.05; }
 h2 { margin: 0 0 18px; font-size: clamp(32px, 3.3vw, 50px); line-height: 1.08; }
 h3 { margin: 0; font-size: 26px; line-height: 1.15; }
@@ -68,8 +68,8 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 .terminal-bar { display: flex; align-items: center; gap: 8px; padding: 14px 18px; background: var(--band); border-bottom: 1px solid var(--line); }
 .terminal-bar span { width: 12px; height: 12px; border-radius: 50%; }
 .terminal-bar span:nth-child(1){ background:#FF5F56; } .terminal-bar span:nth-child(2){ background:#FFBD2E; } .terminal-bar span:nth-child(3){ background:#27C93F; }
-.terminal-bar strong { margin-left: 10px; color: var(--dim); font: 500 12px "Plus Jakarta Sans", monospace; }
-.terminal-body { padding: 24px; font: 14px/1.9 "Plus Jakarta Sans", monospace; }
+.terminal-bar strong { margin-left: 10px; color: var(--dim); font: 500 12px "Schibsted Grotesk", monospace; }
+.terminal-body { padding: 24px; font: 14px/1.9 "Schibsted Grotesk", monospace; }
 .terminal-body p { margin: 0; } .orange { color: var(--orange); } .muted { color: var(--dim); }
 .band { background: var(--band); border-block: 1px solid var(--line); }
 .grid { display: grid; gap: 22px; }
@@ -79,17 +79,17 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 .program-card img, .card > img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.012); }
 .card-body { padding: 24px; }
 .meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; }
-.pill { display: inline-flex; padding: 7px 12px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; color: var(--muted); font: 600 12px "Plus Jakarta Sans", monospace; }
+.pill { display: inline-flex; padding: 7px 12px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; color: var(--muted); font: 600 12px "Schibsted Grotesk", monospace; }
 .pill.orange { color: var(--orange); border-color: rgba(247,147,26,.42); }
 .card p, .program-card p, .timeline-item p { color: var(--muted); line-height: 1.65; }
 .repo-card { display: block; text-decoration: none; transition: transform .18s ease, border-color .18s ease; }
 .repo-card:hover { transform: translateY(-4px); border-color: rgba(247,147,26,.55); }
 .repo-card h3 { margin-top: 14px; }
 .stat { padding: 26px; }
-.stat strong { display: block; color: var(--orange); font: 400 40px/1 "Inter", monospace; margin-bottom: 10px; }
+.stat strong { display: block; color: var(--orange); font: 400 40px/1 "Schibsted Grotesk", monospace; margin-bottom: 10px; }
 .timeline { display: grid; gap: 14px; counter-reset: step; }
 .timeline-item { display: grid; grid-template-columns: 70px 1fr; gap: 22px; padding: 24px; counter-increment: step; }
-.timeline-item:before { content: counter(step, decimal-leading-zero); color: var(--orange); font: 700 16px "Plus Jakarta Sans", monospace; }
+.timeline-item:before { content: counter(step, decimal-leading-zero); color: var(--orange); font: 700 16px "Schibsted Grotesk", monospace; }
 .split { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 42px; align-items: start; }
 .feature-panel { background: linear-gradient(145deg, rgba(247,147,26,.12), rgba(20,20,20,.86) 42%, rgba(15,15,15,.96)); border: 1px solid rgba(247,147,26,.26); border-radius: 16px; box-shadow: 0 28px 80px rgba(0,0,0,.34); overflow: hidden; }
 .feature-panel-inner { padding: 28px; }
@@ -99,12 +99,12 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 .photo-card.wide { grid-column: span 2; }
 .photo-card img, .feature-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.012); }
 .photo-card:after, .feature-photo:after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(6,6,6,.78) 100%); pointer-events: none; }
-.photo-caption { position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 1; display: inline-flex; width: max-content; max-width: calc(100% - 28px); padding: 7px 11px; border-radius: 999px; background: rgba(6,6,6,.78); border: 1px solid rgba(255,255,255,.13); color: var(--text); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .08em; text-transform: uppercase; }
+.photo-caption { position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 1; display: inline-flex; width: max-content; max-width: calc(100% - 28px); padding: 7px 11px; border-radius: 999px; background: rgba(6,6,6,.78); border: 1px solid rgba(255,255,255,.13); color: var(--text); font: 700 11px "Schibsted Grotesk", monospace; letter-spacing: .08em; text-transform: uppercase; }
 .feature-photo { position: relative; min-height: 430px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--card); box-shadow: 0 24px 70px rgba(0,0,0,.32); }
 .calendar-frame { margin-top: 28px; background: #fff; border: 1px solid rgba(255,255,255,.12); border-radius: 16px; overflow: hidden; box-shadow: 0 24px 70px rgba(0,0,0,.36); }
 .calendar-frame iframe { display: block; width: 100%; height: 680px; border: 0; background: #fff; }
 .booking-panel { display: grid; gap: 16px; padding: 24px; background: rgba(6,6,6,.48); border: 1px solid var(--line); border-radius: 16px; }
-.price-tag { display: inline-flex; width: max-content; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 999px; background: rgba(247,147,26,.14); border: 1px solid rgba(247,147,26,.34); color: var(--orange); font: 700 13px "Plus Jakarta Sans", monospace; }
+.price-tag { display: inline-flex; width: max-content; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 999px; background: rgba(247,147,26,.14); border: 1px solid rgba(247,147,26,.34); color: var(--orange); font: 700 13px "Schibsted Grotesk", monospace; }
 .footer { border-top: 1px solid var(--line); background: #060606; }
 .footer-media { position: relative; max-width: 1240px; min-height: 300px; margin: 56px auto 0; border: 1px solid rgba(255,255,255,.1); border-radius: 16px; overflow: hidden; background: var(--band); box-shadow: 0 24px 70px rgba(0,0,0,.34); }
 .footer-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
@@ -183,7 +183,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 .mb-me-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; }
 .mb-me-head h2 { margin: 0; }
 .mb-me-stats { display: flex; gap: 10px; flex-wrap: wrap; }
-.mb-me-stats span { padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; background: rgba(6,6,6,.5); color: var(--muted); font: 600 13px "Plus Jakarta Sans", monospace; }
+.mb-me-stats span { padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; background: rgba(6,6,6,.5); color: var(--muted); font: 600 13px "Schibsted Grotesk", monospace; }
 .mb-me-stats strong { color: var(--orange); font-size: 18px; margin-right: 4px; }
 .mb-me-week { color: var(--text); font-size: 16px; line-height: 1.6; margin: 18px 0; }
 .mb-link { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; color: var(--dim); font-size: 13px; }
@@ -198,22 +198,22 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 .mb-week summary { list-style: none; display: grid; grid-template-columns: 96px minmax(0,1fr) auto; gap: 18px; align-items: center; padding: 20px 24px; cursor: pointer; }
 .mb-week summary::-webkit-details-marker { display: none; }
 .mb-week summary:hover { background: rgba(255,255,255,.02); }
-.mb-week summary::after { content: "+"; grid-column: 4; color: var(--orange); font: 400 22px "Plus Jakarta Sans", monospace; }
+.mb-week summary::after { content: "+"; grid-column: 4; color: var(--orange); font: 400 22px "Schibsted Grotesk", monospace; }
 .mb-week[open] summary::after { content: "−"; }
 .mb-week[open] summary { border-bottom: 1px solid var(--line); }
-.mb-wk { color: var(--orange); font: 700 12px "Plus Jakarta Sans", monospace; letter-spacing: .1em; text-transform: uppercase; }
+.mb-wk { color: var(--orange); font: 700 12px "Schibsted Grotesk", monospace; letter-spacing: .1em; text-transform: uppercase; }
 .mb-title { font-size: 19px; color: var(--text); }
-.mb-date { color: var(--dim); font: 600 13px "Plus Jakarta Sans", monospace; white-space: nowrap; }
-.mb-now, .mb-mine { display: inline-block; margin-left: 8px; padding: 3px 9px; border-radius: 999px; font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .06em; text-transform: uppercase; vertical-align: middle; }
+.mb-date { color: var(--dim); font: 600 13px "Schibsted Grotesk", monospace; white-space: nowrap; }
+.mb-now, .mb-mine { display: inline-block; margin-left: 8px; padding: 3px 9px; border-radius: 999px; font: 700 11px "Schibsted Grotesk", monospace; letter-spacing: .06em; text-transform: uppercase; vertical-align: middle; }
 .mb-now { background: var(--orange); color: var(--bg); }
 .mb-mine { border: 1px solid rgba(247,147,26,.45); color: var(--orange); }
 .mb-week-body { padding: 22px 24px 28px; }
 .mb-summary { margin: 0 0 16px; color: var(--muted); line-height: 1.65; max-width: 760px; }
 .mb-chapters { display: flex; flex-wrap: wrap; gap: 8px; }
-.mb-chapters a { padding: 8px 13px; border-radius: 999px; border: 1px solid rgba(247,147,26,.42); color: var(--orange); text-decoration: none; font: 600 13px "Plus Jakarta Sans", monospace; }
+.mb-chapters a { padding: 8px 13px; border-radius: 999px; border: 1px solid rgba(247,147,26,.42); color: var(--orange); text-decoration: none; font: 600 13px "Schibsted Grotesk", monospace; }
 .mb-chapters a:hover { background: rgba(247,147,26,.1); }
 .mb-chapters a.is-extra { border-color: rgba(255,255,255,.14); color: var(--muted); }
-.mb-when { margin: 14px 0 0; color: var(--dim); font: 500 13px "Plus Jakarta Sans", monospace; }
+.mb-when { margin: 14px 0 0; color: var(--dim); font: 500 13px "Schibsted Grotesk", monospace; }
 .mb-cols { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 28px; margin-top: 26px; }
 .mb-cols h3 { font-size: 20px; margin: 0 0 6px; }
 .mb-hint { margin: 0 0 14px; color: var(--dim); font-size: 13.5px; line-height: 1.55; }
@@ -221,33 +221,33 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 .mb-list li { display: grid; grid-template-columns: 34px minmax(0,1fr); gap: 10px; padding: 14px; border-radius: 12px; background: rgba(6,6,6,.45); border: 1px solid rgba(255,255,255,.05); }
 .mb-list li.is-mine { border-color: rgba(247,147,26,.5); background: rgba(247,147,26,.06); }
 .mb-list p { margin: 0 0 10px; color: var(--text); font-size: 14.5px; line-height: 1.55; }
-.mb-num { color: var(--orange); font: 700 12px "Plus Jakarta Sans", monospace; padding-top: 3px; }
+.mb-num { color: var(--orange); font: 700 12px "Schibsted Grotesk", monospace; padding-top: 3px; }
 .mb-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
-.mb-who, .mb-count { display: inline-flex; padding: 5px 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,.14); color: var(--muted); font: 600 12px "Plus Jakarta Sans", monospace; }
+.mb-who, .mb-count { display: inline-flex; padding: 5px 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,.14); color: var(--muted); font: 600 12px "Schibsted Grotesk", monospace; }
 .mb-who.is-me { color: var(--orange); border-color: rgba(247,147,26,.5); }
 .mb-who.is-done { color: #27C93F; border-color: rgba(39,201,63,.45); }
 .mb-who.is-empty { color: var(--dim); border-style: dashed; }
-.mb-tick { display: inline-flex; align-items: center; gap: 8px; min-height: 34px; padding: 5px 12px 5px 6px; border-radius: 999px; border: 1px solid rgba(255,255,255,.18); background: transparent; color: var(--text); font: 700 12px "Plus Jakarta Sans", monospace; cursor: pointer; transition: border-color .15s, background .15s; }
+.mb-tick { display: inline-flex; align-items: center; gap: 8px; min-height: 34px; padding: 5px 12px 5px 6px; border-radius: 999px; border: 1px solid rgba(255,255,255,.18); background: transparent; color: var(--text); font: 700 12px "Schibsted Grotesk", monospace; cursor: pointer; transition: border-color .15s, background .15s; }
 .mb-tick:hover { border-color: var(--orange); }
 .mb-box { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.35); font-size: 13px; }
 .mb-tick.is-done { border-color: rgba(39,201,63,.55); background: rgba(39,201,63,.1); color: #27C93F; }
 .mb-tick.is-done .mb-box { background: #27C93F; border-color: #27C93F; color: var(--bg); }
 
 .mb-roster { margin-top: 30px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--card); }
-.mb-roster-row { display: grid; grid-template-columns: 44px minmax(0,1.4fr) 90px 90px minmax(80px,1fr); gap: 14px; align-items: center; padding: 14px 22px; border-bottom: 1px solid rgba(255,255,255,.05); color: var(--muted); font: 600 13px "Plus Jakarta Sans", monospace; }
+.mb-roster-row { display: grid; grid-template-columns: 44px minmax(0,1.4fr) 90px 90px minmax(80px,1fr); gap: 14px; align-items: center; padding: 14px 22px; border-bottom: 1px solid rgba(255,255,255,.05); color: var(--muted); font: 600 13px "Schibsted Grotesk", monospace; }
 .mb-roster-row:last-child { border-bottom: 0; }
 .mb-roster-row.is-me { background: rgba(247,147,26,.07); }
 .mb-roster-head { color: var(--dim); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; background: var(--band); }
 .mb-roster-head b { font-weight: inherit; }
 .mb-short { display: none; }
-.mb-name { color: var(--text); font: 500 15px "Inter", sans-serif; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mb-name { color: var(--text); font: 500 15px "Schibsted Grotesk", sans-serif; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .mb-bar { height: 8px; border-radius: 99px; background: rgba(255,255,255,.08); overflow: hidden; }
 .mb-bar i { display: block; height: 100%; background: linear-gradient(90deg, #C2620A, var(--orange)); border-radius: inherit; }
 .mb-empty { margin: 0; padding: 28px; color: var(--dim); text-align: center; }
 
 .mb-form { display: grid; gap: 16px; }
-.mb-form label { display: grid; gap: 7px; color: var(--muted); font: 600 13px "Plus Jakarta Sans", monospace; }
-.mb-form input { min-height: 48px; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,.16); background: rgba(0,0,0,.45); color: var(--text); font: 16px "Inter", sans-serif; }
+.mb-form label { display: grid; gap: 7px; color: var(--muted); font: 600 13px "Schibsted Grotesk", monospace; }
+.mb-form input { min-height: 48px; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,.16); background: rgba(0,0,0,.45); color: var(--text); font: 16px "Schibsted Grotesk", sans-serif; }
 .mb-form input:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 0 3px rgba(247,147,26,.2); }
 .mb-form input:disabled, .mb-form button:disabled { opacity: .5; cursor: not-allowed; }
 .mb-form button { border: 0; cursor: pointer; font-size: 15px; }
@@ -280,7 +280,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
   .mb-link .ghost { width: auto; }
 }
 </style>
-<link rel="stylesheet" href="/assets/theme.css?v=20261004b">
+<link rel="stylesheet" href="/assets/theme.css?v=20261008k">
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
 <script src="/assets/mastering-bitcoin/cohort.js?v=20261008a" defer></script>
 <script src="/assets/mastering-bitcoin/app.js?v=20261008a" defer></script>
