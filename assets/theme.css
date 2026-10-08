@@ -1,15 +1,21 @@
-/* Code Orange site theme: black and Bitcoin orange "liquid glass" look shared by every page.
+/* Code Orange site theme: black and Bitcoin orange look shared by every page.
+   Since 2026-10-08: Kanit type, huge gradient headings, rounded-top panels and
+   scroll motion (see the "Kanit" block at the end and /assets/motion.js).
    Loaded after each page's own styles; the page styles keep layout, this file
    sets type, buttons, cards, hero effects and the mobile menu. */
 :root {
-  --co-bg: #0A0A0A;
+  --co-bg: #0C0C0C;
   --co-accent: #F7931A;
   --co-accent-2: #FFB347;
   --co-text: #F5F5F5;
   --co-text-70: rgba(255, 255, 255, .7);
   --co-line: rgba(255, 255, 255, .1);
-  --co-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --co-label: "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+  --co-sans: "Kanit", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --co-label: "Kanit", system-ui, sans-serif;
+  --co-ink: #D7E2EA;
+  --co-grad: linear-gradient(180deg, #646973 0%, #BBCCD7 100%);
+  --co-grad-orange: linear-gradient(180deg, #FFB347 0%, #F7931A 55%, #C2620A 100%);
+  --co-ease: cubic-bezier(.25, .1, .25, 1);
   --co-serif: "Instrument Serif", Georgia, serif;
   --co-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
@@ -239,3 +245,100 @@ html.co-menu-open, html.co-menu-open body { overflow: hidden; }
 #static-homepage .co-foot-bottom a:hover { color: var(--co-accent); }
 @media (max-width: 980px) { #static-homepage .co-foot-grid { grid-template-columns: 1fr 1fr; } #static-homepage .co-foot-brand, #static-homepage .co-foot-join { grid-column: 1 / -1; } }
 @media (max-width: 560px) { #static-homepage .co-foot-grid { gap: 30px; } #static-homepage .co-foot-bottom { flex-direction: column; align-items: flex-start; } }
+
+/* ════════════════════════════════════════════════════════════════════
+   Kanit template (2026-10-08): Kanit type, huge gradient headings,
+   orange gradient pill buttons, outline ghost pills, rounded-top panels,
+   numbered lists, stacking cards and scroll motion (/assets/motion.js).
+   ════════════════════════════════════════════════════════════════════ */
+html, body, #static-homepage { background: var(--co-bg) !important; }
+body, #static-homepage { overflow-x: clip !important; }
+body, #static-homepage, #static-homepage p, .lead, p { font-family: var(--co-sans) !important; }
+#static-homepage p { color: #A9B4BC; }
+
+/* Headings: black weight, uppercase, tight, silver gradient text */
+h1, h2, #static-homepage h1, #static-homepage h2 {
+  font-weight: 900 !important; text-transform: uppercase; letter-spacing: -.02em !important; line-height: .92 !important;
+  background: var(--co-grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: #BBCCD7;
+}
+h3, #static-homepage h3 { font-weight: 500 !important; text-transform: uppercase; letter-spacing: .01em; color: var(--co-ink); }
+h1 .orange, h2 .orange, h1 span[style*="F7931A"], h1 span[style*="f7931a"], .co-dot-accent {
+  font-family: var(--co-sans) !important; font-style: normal; font-weight: 900 !important; text-transform: uppercase; letter-spacing: -.02em;
+  background: var(--co-grad-orange); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: var(--co-accent) !important;
+}
+h1 .orange { font-size: 1em; line-height: inherit; }
+.hero h1 { font-size: clamp(46px, 7.4vw, 120px) !important; }
+h2:not([style*="font-size"]) { font-size: clamp(38px, 6vw, 96px) !important; max-width: none !important; }
+.card h2, .card-body h2, .program-card h2, .feature-panel h2, .booking-panel h2, .newsletter-card h2, .author-box h2 { font-size: clamp(22px, 2.4vw, 34px) !important; line-height: 1 !important; }
+.terminal-body, .terminal-body *, #static-homepage .co-terminal-body * { font-family: var(--co-mono) !important; }
+#static-homepage h2 { font-size: clamp(38px, 6.4vw, 104px) !important; max-width: 1180px !important; }
+.lead, #static-homepage .co-lead { color: var(--co-ink) !important; font-weight: 300; letter-spacing: .01em; }
+.eyebrow, #static-homepage .co-eyebrow { font-family: var(--co-sans) !important; font-weight: 600 !important; font-size: 13px !important; letter-spacing: .2em !important; }
+
+/* Nav: light uppercase links that dim on hover */
+.desktop-nav a, #static-homepage .co-links a { font-weight: 500 !important; letter-spacing: .05em !important; color: var(--co-ink) !important; transition: opacity .2s ease !important; }
+.desktop-nav a:hover, #static-homepage .co-links a:hover { color: var(--co-ink) !important; opacity: .7; }
+.site-header, #static-homepage header.co-band { background: rgba(12, 12, 12, .78) !important; border-bottom-color: rgba(215, 226, 234, .08) !important; }
+
+/* Buttons: orange gradient pill with a white inner ring; outline ghost pill */
+.button, .ghost, #static-homepage .co-button {
+  font-family: var(--co-sans) !important; font-weight: 500 !important; letter-spacing: .1em !important; text-transform: uppercase;
+  border-radius: 999px !important; transition: transform .2s var(--co-ease), filter .2s ease, background-color .2s ease, box-shadow .2s ease !important;
+}
+.button, #static-homepage .co-button.primary, .co-menu-actions a.primary, .co-menu-actions a.button {
+  background: linear-gradient(123deg, #1C0A00 7%, #B35400 37%, #F7931A 72%, #BE4C00 100%) !important;
+  border: 0 !important; color: #fff !important; text-shadow: 0 1px 2px rgba(0, 0, 0, .35);
+  outline: 2px solid #fff; outline-offset: -3px;
+  box-shadow: 0 4px 4px rgba(247, 147, 26, .25), inset 4px 4px 12px #8A3C00 !important;
+}
+.button:hover, #static-homepage .co-button.primary:hover { background: linear-gradient(123deg, #1C0A00 7%, #B35400 37%, #F7931A 72%, #BE4C00 100%) !important; filter: brightness(1.12); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(247, 147, 26, .35), inset 4px 4px 12px #8A3C00 !important; }
+.ghost, #static-homepage .co-button:not(.primary) { background: transparent !important; border: 2px solid var(--co-ink) !important; color: var(--co-ink) !important; backdrop-filter: none; }
+.ghost:hover, #static-homepage .co-button:not(.primary):hover { background: rgba(215, 226, 234, .1) !important; border-color: var(--co-ink) !important; color: var(--co-ink) !important; }
+#static-homepage .co-button { padding: 14px 30px !important; font-size: 14px !important; }
+#static-homepage .co-button.co-xl { padding: 18px 44px !important; font-size: 16px !important; }
+#static-homepage .co-nav .co-button { padding: 12px 22px !important; font-size: 13px !important; }
+
+/* Cards: big radius, quiet outline, orange on hover (no glass sheen) */
+#static-homepage .co-terminal::before, #static-homepage .co-card::before, #static-homepage .co-proof-card::before, #static-homepage .co-event-preview a::before,
+#static-homepage .co-host::before, #static-homepage .co-list article::before, #static-homepage .co-path a::before, #static-homepage .co-calendar-subscribe::before,
+.terminal-card::before, .card::before, .program-card::before, .stat::before, .repo-card::before, .feature-panel::before, .booking-panel::before,
+.article-card::before, .newsletter-card::before, .author-box::before { display: none !important; }
+#static-homepage .co-card, #static-homepage .co-event-preview a, #static-homepage .co-calendar-subscribe, #static-homepage .co-list article,
+.card, .program-card, .stat, .repo-card, .feature-panel, .booking-panel, .article-card, .newsletter-card, .author-box, .timeline-item, .photo-card {
+  border-radius: 32px !important; border: 1.5px solid rgba(215, 226, 234, .16) !important; background: #111214 !important; box-shadow: none !important; backdrop-filter: none !important;
+}
+#static-homepage .co-card:hover, #static-homepage .co-event-preview a:hover, .card:hover, .program-card:hover, .repo-card:hover, .article-card:hover {
+  border-color: var(--co-accent) !important; box-shadow: 0 24px 60px rgba(0, 0, 0, .45) !important;
+}
+.terminal-card, #static-homepage .co-terminal { border-radius: 28px !important; border: 1.5px solid rgba(215, 226, 234, .2) !important; background: rgba(12, 12, 12, .82) !important; backdrop-filter: blur(10px) !important; box-shadow: 0 30px 80px rgba(0, 0, 0, .55) !important; }
+
+/* Rounded-top panels between sections */
+.band, main > .section-inner:not(.hero) { position: relative; }
+.band { border-radius: 60px 60px 0 0; background: #121315 !important; border-top: 1px solid rgba(215, 226, 234, .1); }
+.footer, #static-homepage footer { border-radius: 60px 60px 0 0; }
+@media (max-width: 760px) { .band, .footer, #static-homepage footer { border-radius: 40px 40px 0 0; } }
+
+/* Hero entrance (pure CSS, so it never depends on scripts) */
+@keyframes co-rise { from { opacity: 0; transform: translate3d(0, var(--co-rise, 30px), 0); } to { opacity: 1; transform: none; } }
+.site-header, #static-homepage header.co-band { animation: co-rise .7s var(--co-ease) both; --co-rise: -20px; }
+.hero h1, #static-homepage .co-hero h1 { animation: co-rise .7s var(--co-ease) .15s both; --co-rise: 40px; }
+.hero .eyebrow, #static-homepage .co-hero .co-eyebrow { animation: co-rise .7s var(--co-ease) .05s both; --co-rise: 20px; }
+.hero .lead, #static-homepage .co-hero .co-lead { animation: co-rise .7s var(--co-ease) .35s both; --co-rise: 20px; }
+.hero .cta-row, #static-homepage .co-hero .co-actions { animation: co-rise .7s var(--co-ease) .5s both; --co-rise: 20px; }
+.hero .terminal-card, #static-homepage .co-hero-magnet { animation: co-rise .7s var(--co-ease) .6s both; --co-rise: 30px; }
+
+/* Scroll fade-ins (classes added by motion.js) */
+html.co-motion .co-fade { opacity: 0; transform: translate3d(var(--co-fx, 0), var(--co-fy, 30px), 0); transition: opacity var(--co-fd, .7s) var(--co-ease), transform var(--co-fd, .7s) var(--co-ease); transition-delay: var(--co-delay, 0s); }
+html.co-motion .co-fade.is-in { opacity: 1; transform: none; }
+.co-magnet { will-change: transform; }
+
+/* Scroll-reveal text (letters brighten as you scroll) */
+.co-reveal .co-w { white-space: nowrap; }
+.co-reveal .co-c { opacity: .2; transition: opacity .1s linear; }
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header, #static-homepage header.co-band, .hero h1, .hero .eyebrow, .hero .lead, .hero .cta-row, .hero .terminal-card,
+  #static-homepage .co-hero h1, #static-homepage .co-hero .co-eyebrow, #static-homepage .co-hero .co-lead, #static-homepage .co-hero .co-actions, #static-homepage .co-hero-magnet { animation: none !important; }
+  html.co-motion .co-fade { opacity: 1; transform: none; transition: none; }
+  .co-reveal .co-c { opacity: 1 !important; }
+}
