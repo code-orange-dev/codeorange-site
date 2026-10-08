@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mastering Bitcoin Study Cohort - Code Orange Dev School</title>
+<meta name="description" content="A free 10-week study cohort reading Mastering Bitcoin (3rd edition) together, one chapter a week, with discussion questions, hands-on exercises and weekly Discord sessions.">
+<link rel="canonical" href="https://codeorange.dev/mastering-bitcoin">
+<meta name="theme-color" content="#F7931A">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Code Orange Dev School">
+<meta property="og:url" content="https://codeorange.dev/mastering-bitcoin">
+<meta property="og:title" content="Mastering Bitcoin Study Cohort - Code Orange Dev School">
+<meta property="og:description" content="A free 10-week study cohort reading Mastering Bitcoin (3rd edition) together, one chapter a week, with discussion questions, hands-on exercises and weekly Discord sessions.">
+<meta property="og:image" content="https://codeorange.dev/assets/og-codeorange-workshop.jpg">
+<meta property="og:image:secure_url" content="https://codeorange.dev/assets/og-codeorange-workshop.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Code Orange Dev School Bitcoin workshop">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mastering Bitcoin Study Cohort - Code Orange Dev School">
+<meta name="twitter:description" content="A free 10-week study cohort reading Mastering Bitcoin (3rd edition) together, one chapter a week, with discussion questions, hands-on exercises and weekly Discord sessions.">
+<meta name="twitter:image" content="https://codeorange.dev/assets/og-codeorange-workshop.jpg">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon-bitcoin.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"Mastering Bitcoin Study Cohort","description":"A free 10-week study cohort reading Mastering Bitcoin (3rd edition) together, one chapter a week, with discussion questions, hands-on exercises and weekly Discord sessions.","url":"https://codeorange.dev/mastering-bitcoin","provider":{"@type":"EducationalOrganization","name":"Code Orange Dev School","url":"https://codeorange.dev","email":"hello@codeorange.dev"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<script src="/assets/lazy-video.js?v=20260902b" defer></script>
+<style>
+:root { color-scheme: dark; --bg:#0A0A0A; --band:#0F0F0F; --card:#141414; --text:#F5F5F5; --muted:#B8B8B8; --dim:#858585; --orange:#F7931A; --orange2:#FFB347; --line:rgba(255,255,255,.08); }
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; overflow-x: hidden; background: var(--bg); color: var(--text); font-family: "Inter", system-ui, sans-serif; scroll-behavior: smooth; }
+body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+img, video, iframe { max-width: 100%; }
+a { color: inherit; }
+.announce { display: flex; justify-content: center; gap: 10px; padding: 9px 24px; background: var(--orange); color: var(--bg); text-decoration: none; font: 700 13px "Plus Jakarta Sans", monospace; text-align: center; }
+.announce span { text-decoration: underline; text-underline-offset: 3px; }
+.site-header { position: sticky; top: 0; z-index: 50; background: rgba(10,10,10,.74); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.header-inner { max-width: 1240px; height: 78px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; gap: 22px; }
+.brand img { display: block; width: auto; height: 50px; }
+.desktop-nav, .header-actions, .cta-row { display: flex; align-items: center; gap: 12px; }
+  .desktop-nav { gap: 28px; }
+  .desktop-nav a { padding: 8px 4px; }
+.desktop-nav a, .mobile-nav a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 600; padding: 8px 10px; border-radius: 8px; }
+.desktop-nav a:hover, .mobile-nav a:hover { color: var(--orange); }
+.mobile-nav { display: none; gap: 8px; overflow-x: auto; padding: 0 16px 10px; scrollbar-width: none; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; }
+.mobile-nav::-webkit-scrollbar { display: none; }
+.mobile-nav a { flex: 0 0 auto; scroll-snap-align: start; }
+.button, .ghost { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 13px 24px; border-radius: 8px; text-decoration: none; font-weight: 700; transition: border-color .15s ease, color .15s ease, background .15s ease, transform .15s ease; }
+.button { background: var(--orange); color: var(--bg); }
+.button:hover { background: var(--orange2); }
+.ghost { border: 1px solid rgba(255,255,255,.16); color: var(--text); }
+.ghost:hover { border-color: var(--orange); color: var(--orange); }
+.small { min-height: 40px; padding: 9px 18px; font-size: 14px; }
+.hero { position: relative; overflow: hidden; background-image: linear-gradient(rgba(10,10,10,.78), rgba(10,10,10,.92)), linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px), url("/assets/latest-workshops/workshop-latest-builders.jpg"); background-size: auto, 48px 48px, 48px 48px, cover; background-position: center, 0 0, 0 0, center 42%; }
+.hero-grid, .section-inner { max-width: 1240px; margin: 0 auto; padding: 96px 32px; }
+.hero-grid { display: grid; grid-template-columns: minmax(0,1.08fr) minmax(320px,.92fr); gap: 64px; align-items: center; }
+.glow { position: absolute; top: -160px; right: -110px; width: 740px; height: 740px; border-radius: 50%; background: radial-gradient(circle, rgba(247,147,26,.14), transparent 66%); pointer-events: none; }
+.eyebrow { margin: 0 0 22px; color: var(--orange); font: 700 12px "Plus Jakarta Sans", monospace; letter-spacing: .16em; text-transform: uppercase; }
+h1, h2, h3 { font-family: "Inter", system-ui, sans-serif; font-weight: 400; color: var(--text); }
+h1 { margin: 0 0 26px; max-width: 780px; font-size: clamp(40px, 4.6vw, 68px); line-height: 1.05; }
+h2 { margin: 0 0 18px; font-size: clamp(32px, 3.3vw, 50px); line-height: 1.08; }
+h3 { margin: 0; font-size: 26px; line-height: 1.15; }
+.lead { max-width: 620px; margin: 0 0 34px; color: var(--muted); font-size: 18px; line-height: 1.65; }
+.terminal-card, .card, .program-card, .stat, .timeline-item { background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.32); }
+.terminal-bar { display: flex; align-items: center; gap: 8px; padding: 14px 18px; background: var(--band); border-bottom: 1px solid var(--line); }
+.terminal-bar span { width: 12px; height: 12px; border-radius: 50%; }
+.terminal-bar span:nth-child(1){ background:#FF5F56; } .terminal-bar span:nth-child(2){ background:#FFBD2E; } .terminal-bar span:nth-child(3){ background:#27C93F; }
+.terminal-bar strong { margin-left: 10px; color: var(--dim); font: 500 12px "Plus Jakarta Sans", monospace; }
+.terminal-body { padding: 24px; font: 14px/1.9 "Plus Jakarta Sans", monospace; }
+.terminal-body p { margin: 0; } .orange { color: var(--orange); } .muted { color: var(--dim); }
+.band { background: var(--band); border-block: 1px solid var(--line); }
+.grid { display: grid; gap: 22px; }
+.grid.two { grid-template-columns: repeat(2, minmax(0,1fr)); } .grid.three { grid-template-columns: repeat(3, minmax(0,1fr)); }
+.program-card { display: grid; grid-template-rows: 210px 1fr; text-decoration: none; transition: transform .18s ease, border-color .18s ease; }
+.program-card:hover { transform: translateY(-4px); border-color: rgba(247,147,26,.55); }
+.program-card img, .card > img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.012); }
+.card-body { padding: 24px; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; }
+.pill { display: inline-flex; padding: 7px 12px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; color: var(--muted); font: 600 12px "Plus Jakarta Sans", monospace; }
+.pill.orange { color: var(--orange); border-color: rgba(247,147,26,.42); }
+.card p, .program-card p, .timeline-item p { color: var(--muted); line-height: 1.65; }
+.repo-card { display: block; text-decoration: none; transition: transform .18s ease, border-color .18s ease; }
+.repo-card:hover { transform: translateY(-4px); border-color: rgba(247,147,26,.55); }
+.repo-card h3 { margin-top: 14px; }
+.stat { padding: 26px; }
+.stat strong { display: block; color: var(--orange); font: 400 40px/1 "Inter", monospace; margin-bottom: 10px; }
+.timeline { display: grid; gap: 14px; counter-reset: step; }
+.timeline-item { display: grid; grid-template-columns: 70px 1fr; gap: 22px; padding: 24px; counter-increment: step; }
+.timeline-item:before { content: counter(step, decimal-leading-zero); color: var(--orange); font: 700 16px "Plus Jakarta Sans", monospace; }
+.split { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 42px; align-items: start; }
+.feature-panel { background: linear-gradient(145deg, rgba(247,147,26,.12), rgba(20,20,20,.86) 42%, rgba(15,15,15,.96)); border: 1px solid rgba(247,147,26,.26); border-radius: 16px; box-shadow: 0 28px 80px rgba(0,0,0,.34); overflow: hidden; }
+.feature-panel-inner { padding: 28px; }
+.photo-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 30px; }
+.photo-card { position: relative; min-height: 300px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--card); box-shadow: 0 20px 60px rgba(0,0,0,.28); }
+.photo-card.tall { min-height: 420px; }
+.photo-card.wide { grid-column: span 2; }
+.photo-card img, .feature-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.012); }
+.photo-card:after, .feature-photo:after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(6,6,6,.78) 100%); pointer-events: none; }
+.photo-caption { position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 1; display: inline-flex; width: max-content; max-width: calc(100% - 28px); padding: 7px 11px; border-radius: 999px; background: rgba(6,6,6,.78); border: 1px solid rgba(255,255,255,.13); color: var(--text); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .08em; text-transform: uppercase; }
+.feature-photo { position: relative; min-height: 430px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--card); box-shadow: 0 24px 70px rgba(0,0,0,.32); }
+.calendar-frame { margin-top: 28px; background: #fff; border: 1px solid rgba(255,255,255,.12); border-radius: 16px; overflow: hidden; box-shadow: 0 24px 70px rgba(0,0,0,.36); }
+.calendar-frame iframe { display: block; width: 100%; height: 680px; border: 0; background: #fff; }
+.booking-panel { display: grid; gap: 16px; padding: 24px; background: rgba(6,6,6,.48); border: 1px solid var(--line); border-radius: 16px; }
+.price-tag { display: inline-flex; width: max-content; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 999px; background: rgba(247,147,26,.14); border: 1px solid rgba(247,147,26,.34); color: var(--orange); font: 700 13px "Plus Jakarta Sans", monospace; }
+.footer { border-top: 1px solid var(--line); background: #060606; }
+.footer-media { position: relative; max-width: 1240px; min-height: 300px; margin: 56px auto 0; border: 1px solid rgba(255,255,255,.1); border-radius: 16px; overflow: hidden; background: var(--band); box-shadow: 0 24px 70px rgba(0,0,0,.34); }
+.footer-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.footer-media:after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6,6,6,.9), rgba(6,6,6,.34) 56%, rgba(6,6,6,.74)); pointer-events: none; }
+.footer-media-copy { position: relative; z-index: 1; max-width: 560px; padding: 42px; }
+.footer-grid { max-width: 1240px; margin: 0 auto; padding: 56px 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.footer a { color: var(--dim); text-decoration: none; } .footer a:hover { color: var(--orange); }
+.link-list { display: grid; gap: 10px; }
+.final-cta { text-align: center; border-top: 1px solid var(--line); }
+@media (max-width: 900px) {
+  .announce { padding: 8px 16px; line-height: 1.42; }
+  .desktop-nav { display: none; } .mobile-nav { display: flex; padding-bottom: 12px; gap: 6px; }
+  .header-inner { height: 62px; padding: 0 16px; gap: 12px; } .brand img { height: 40px; }
+  .hero-grid, .section-inner { padding: 64px 20px; }
+  .hero-grid { gap: 30px; }
+  .hero-grid, .split, .grid.two, .grid.three { grid-template-columns: minmax(0, 1fr); }
+  .glow { right: -260px; width: 520px; height: 520px; }
+  h1 { font-size: clamp(34px, 10.5vw, 48px); line-height: 1.05; }
+  h2 { font-size: clamp(30px, 8.5vw, 40px); line-height: 1.08; }
+  h3 { font-size: clamp(21px, 6vw, 27px); }
+  .lead { font-size: 16px; line-height: 1.62; }
+  .terminal-body { padding: 20px; font-size: 12px; line-height: 1.75; overflow-wrap: anywhere; }
+  .terminal-bar strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .program-card { grid-template-rows: 190px 1fr; border-radius: 14px; }
+  .card-body, .stat, .timeline-item { padding: 20px; }
+  .stat strong { font-size: 34px; overflow-wrap: anywhere; }
+  .pill { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+  .photo-grid { grid-template-columns: 1fr; }
+  .photo-card.wide { grid-column: auto; }
+  .photo-card, .photo-card.tall, .feature-photo { min-height: 320px; }
+  .photo-caption { width: auto; max-width: calc(100% - 28px); white-space: normal; border-radius: 8px; line-height: 1.35; }
+  .feature-panel-inner { padding: 24px; }
+  .booking-panel { padding: 20px; }
+  .header-actions .ghost { display: none; }
+  .cta-row { flex-direction: column; align-items: stretch; }
+  .cta-row .button, .cta-row .ghost { width: 100%; }
+  .footer-grid { grid-template-columns: 1fr; padding: 48px 20px; }
+  .calendar-frame iframe { height: 560px; }
+  .footer-media { min-height: 260px; margin: 42px 20px 0; }
+  .footer-media-copy { padding: 30px 24px; }
+}
+@media (max-width: 560px) {
+  .announce { flex-direction: column; gap: 2px; font-size: 12px; }
+  .header-inner { height: 58px; padding-inline: 14px; }
+  .brand img { height: 36px; }
+  .mobile-nav { padding-inline: 12px; }
+  .mobile-nav a { font-size: 12px; padding: 7px 12px; }
+  .header-actions .button.small { min-height: 36px; padding: 8px 12px; font-size: 13px; }
+  .hero-grid, .section-inner { padding: 54px 18px; }
+  .button, .ghost { width: 100%; min-height: 46px; padding: 12px 18px; }
+  .header-actions .button, .header-actions .ghost { width: auto; }
+  .terminal-card, .card, .program-card, .stat, .timeline-item, .feature-panel, .calendar-frame, .booking-panel { border-radius: 14px; }
+  .program-card { grid-template-rows: 174px 1fr; }
+  .photo-card, .photo-card.tall, .feature-photo { min-height: 260px; }
+  .timeline-item { grid-template-columns: 1fr; gap: 10px; }
+  .timeline-item:before { font-size: 14px; }
+  .calendar-frame iframe { height: 500px; }
+  .footer-media { min-height: 240px; margin-inline: 18px; border-radius: 14px; }
+  .footer-media-copy { padding: 26px 20px; }
+  .feature-panel-inner { padding: 20px; }
+  .footer-grid { padding: 42px 18px; }
+}
+@media (max-width: 380px) {
+  .hero-grid, .section-inner { padding-inline: 16px; }
+  .photo-card, .photo-card.tall, .feature-photo { min-height: 230px; }
+  .calendar-frame iframe { height: 455px; }
+  .mobile-nav a { font-size: 11px; padding-inline: 10px; }
+}
+/* ── Mastering Bitcoin dashboard ── */
+.grid.four { grid-template-columns: repeat(4, minmax(0,1fr)); }
+.mb-stats-wrap { padding-top: 0 !important; }
+.mb-stats-wrap .stat strong { white-space: nowrap; }
+.mb-me-wrap { padding-top: 0 !important; padding-bottom: 0 !important; }
+.mb-me { padding: 28px; margin-bottom: 8px; }
+.mb-me[hidden] { display: none; }
+.mb-me-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; }
+.mb-me-head h2 { margin: 0; }
+.mb-me-stats { display: flex; gap: 10px; flex-wrap: wrap; }
+.mb-me-stats span { padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; background: rgba(6,6,6,.5); color: var(--muted); font: 600 13px "Plus Jakarta Sans", monospace; }
+.mb-me-stats strong { color: var(--orange); font-size: 18px; margin-right: 4px; }
+.mb-me-week { color: var(--text); font-size: 16px; line-height: 1.6; margin: 18px 0; }
+.mb-link { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; color: var(--dim); font-size: 13px; }
+.mb-link span { flex-basis: 100%; }
+.mb-link code { flex: 1 1 260px; min-width: 0; padding: 10px 12px; border-radius: 10px; background: rgba(0,0,0,.5); border: 1px solid var(--line); color: var(--muted); font: 12px ui-monospace, Menlo, monospace; overflow-wrap: anywhere; }
+.mb-signout { background: none; border: 0; color: var(--dim); font: inherit; text-decoration: underline; cursor: pointer; padding: 6px; }
+.mb-signout:hover { color: var(--orange); }
+
+.mb-weeks { display: grid; gap: 12px; margin-top: 34px; }
+.mb-week { background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.mb-week.is-current { border-color: rgba(247,147,26,.55); box-shadow: 0 0 0 1px rgba(247,147,26,.2), 0 20px 60px rgba(0,0,0,.32); }
+.mb-week summary { list-style: none; display: grid; grid-template-columns: 96px minmax(0,1fr) auto; gap: 18px; align-items: center; padding: 20px 24px; cursor: pointer; }
+.mb-week summary::-webkit-details-marker { display: none; }
+.mb-week summary:hover { background: rgba(255,255,255,.02); }
+.mb-week summary::after { content: "+"; grid-column: 4; color: var(--orange); font: 400 22px "Plus Jakarta Sans", monospace; }
+.mb-week[open] summary::after { content: "−"; }
+.mb-week[open] summary { border-bottom: 1px solid var(--line); }
+.mb-wk { color: var(--orange); font: 700 12px "Plus Jakarta Sans", monospace; letter-spacing: .1em; text-transform: uppercase; }
+.mb-title { font-size: 19px; color: var(--text); }
+.mb-date { color: var(--dim); font: 600 13px "Plus Jakarta Sans", monospace; white-space: nowrap; }
+.mb-now, .mb-mine { display: inline-block; margin-left: 8px; padding: 3px 9px; border-radius: 999px; font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .06em; text-transform: uppercase; vertical-align: middle; }
+.mb-now { background: var(--orange); color: var(--bg); }
+.mb-mine { border: 1px solid rgba(247,147,26,.45); color: var(--orange); }
+.mb-week-body { padding: 22px 24px 28px; }
+.mb-summary { margin: 0 0 16px; color: var(--muted); line-height: 1.65; max-width: 760px; }
+.mb-chapters { display: flex; flex-wrap: wrap; gap: 8px; }
+.mb-chapters a { padding: 8px 13px; border-radius: 999px; border: 1px solid rgba(247,147,26,.42); color: var(--orange); text-decoration: none; font: 600 13px "Plus Jakarta Sans", monospace; }
+.mb-chapters a:hover { background: rgba(247,147,26,.1); }
+.mb-chapters a.is-extra { border-color: rgba(255,255,255,.14); color: var(--muted); }
+.mb-when { margin: 14px 0 0; color: var(--dim); font: 500 13px "Plus Jakarta Sans", monospace; }
+.mb-cols { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 28px; margin-top: 26px; }
+.mb-cols h3 { font-size: 20px; margin: 0 0 6px; }
+.mb-hint { margin: 0 0 14px; color: var(--dim); font-size: 13.5px; line-height: 1.55; }
+.mb-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.mb-list li { display: grid; grid-template-columns: 34px minmax(0,1fr); gap: 10px; padding: 14px; border-radius: 12px; background: rgba(6,6,6,.45); border: 1px solid rgba(255,255,255,.05); }
+.mb-list li.is-mine { border-color: rgba(247,147,26,.5); background: rgba(247,147,26,.06); }
+.mb-list p { margin: 0 0 10px; color: var(--text); font-size: 14.5px; line-height: 1.55; }
+.mb-num { color: var(--orange); font: 700 12px "Plus Jakarta Sans", monospace; padding-top: 3px; }
+.mb-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.mb-who, .mb-count { display: inline-flex; padding: 5px 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,.14); color: var(--muted); font: 600 12px "Plus Jakarta Sans", monospace; }
+.mb-who.is-me { color: var(--orange); border-color: rgba(247,147,26,.5); }
+.mb-who.is-done { color: #27C93F; border-color: rgba(39,201,63,.45); }
+.mb-who.is-empty { color: var(--dim); border-style: dashed; }
+.mb-tick { display: inline-flex; align-items: center; gap: 8px; min-height: 34px; padding: 5px 12px 5px 6px; border-radius: 999px; border: 1px solid rgba(255,255,255,.18); background: transparent; color: var(--text); font: 700 12px "Plus Jakarta Sans", monospace; cursor: pointer; transition: border-color .15s, background .15s; }
+.mb-tick:hover { border-color: var(--orange); }
+.mb-box { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.35); font-size: 13px; }
+.mb-tick.is-done { border-color: rgba(39,201,63,.55); background: rgba(39,201,63,.1); color: #27C93F; }
+.mb-tick.is-done .mb-box { background: #27C93F; border-color: #27C93F; color: var(--bg); }
+
+.mb-roster { margin-top: 30px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--card); }
+.mb-roster-row { display: grid; grid-template-columns: 44px minmax(0,1.4fr) 90px 90px minmax(80px,1fr); gap: 14px; align-items: center; padding: 14px 22px; border-bottom: 1px solid rgba(255,255,255,.05); color: var(--muted); font: 600 13px "Plus Jakarta Sans", monospace; }
+.mb-roster-row:last-child { border-bottom: 0; }
+.mb-roster-row.is-me { background: rgba(247,147,26,.07); }
+.mb-roster-head { color: var(--dim); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; background: var(--band); }
+.mb-roster-head b { font-weight: inherit; }
+.mb-short { display: none; }
+.mb-name { color: var(--text); font: 500 15px "Inter", sans-serif; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mb-bar { height: 8px; border-radius: 99px; background: rgba(255,255,255,.08); overflow: hidden; }
+.mb-bar i { display: block; height: 100%; background: linear-gradient(90deg, #C2620A, var(--orange)); border-radius: inherit; }
+.mb-empty { margin: 0; padding: 28px; color: var(--dim); text-align: center; }
+
+.mb-form { display: grid; gap: 16px; }
+.mb-form label { display: grid; gap: 7px; color: var(--muted); font: 600 13px "Plus Jakarta Sans", monospace; }
+.mb-form input { min-height: 48px; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,.16); background: rgba(0,0,0,.45); color: var(--text); font: 16px "Inter", sans-serif; }
+.mb-form input:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 0 3px rgba(247,147,26,.2); }
+.mb-form input:disabled, .mb-form button:disabled { opacity: .5; cursor: not-allowed; }
+.mb-form button { border: 0; cursor: pointer; font-size: 15px; }
+.mb-form[hidden] { display: none; }
+.mb-hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.mb-fine { margin: 0; color: var(--dim); font-size: 12.5px; line-height: 1.55; }
+.mb-note { margin: 14px 0 0; color: var(--orange); font-size: 14.5px; line-height: 1.55; }
+.mb-note:empty { display: none; }
+.mb-toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 80; max-width: min(92vw, 460px); padding: 14px 18px; border-radius: 12px; background: #141414; border: 1px solid rgba(247,147,26,.5); color: var(--text); font-size: 14px; line-height: 1.5; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+.mb-toast[hidden] { display: none; }
+@media (max-width: 900px) {
+  .grid.four { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .mb-cols { grid-template-columns: minmax(0,1fr); }
+  .mb-week summary { grid-template-columns: minmax(0,1fr) auto; gap: 4px 12px; padding: 16px 18px; }
+  .mb-week summary .mb-wk { grid-column: 1; }
+  .mb-week summary .mb-title { grid-column: 1 / span 2; grid-row: 2; font-size: 17px; }
+  .mb-week summary .mb-date { grid-column: 2; grid-row: 1; justify-self: end; }
+  .mb-week summary::after { display: none; }
+  .mb-week-body { padding: 18px; }
+  .mb-roster-row { grid-template-columns: 30px minmax(0,1fr) 54px 60px; padding: 12px 14px; gap: 8px; font-size: 12px; }
+  .mb-roster-row > :last-child { grid-column: 2 / -1; }
+  .mb-roster-head > :last-child { display: none; }
+  .mb-long { display: none; } .mb-short { display: inline; }
+  .mb-me { padding: 22px 18px; }
+}
+@media (max-width: 560px) {
+  .mb-stats-wrap .stat strong { font-size: 28px; }
+  .mb-list li { grid-template-columns: minmax(0,1fr); gap: 4px; padding: 12px; }
+  .mb-tick { width: auto !important; }
+  .mb-link .ghost { width: auto; }
+}
+</style>
+<link rel="stylesheet" href="/assets/theme.css?v=20261004b">
+<script src="/assets/site-menu.js?v=20261004b" defer></script>
+<script src="/assets/mastering-bitcoin/cohort.js?v=20261008a" defer></script>
+<script src="/assets/mastering-bitcoin/app.js?v=20261008a" defer></script>
+</head>
+<body>
+<a class="announce" href="#signup">Mastering Bitcoin study cohort &middot; sign-ups are open <span>Sign up &rarr;</span></a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="Code Orange Dev School home"><img src="/assets/logo-white.png" alt="Code Orange Dev School"></a>
+    <nav class="desktop-nav" aria-label="Primary">
+      <a href="/programs">Programs</a>
+      <a href="/portal">Portal</a>
+      <a href="/fellowships">Fellowships</a>
+      <a href="/calendar">Calendar</a>
+      <a href="/community">Community</a>
+      <a href="/impact">Impact</a>
+      <a href="/about">About</a>
+    </nav>
+    <div class="header-actions">
+      <a class="ghost small" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a>
+      <a class="button small" href="#signup">Sign up</a>
+    </div>
+  </div>
+  <nav class="mobile-nav" aria-label="Mobile">
+    <a href="/programs">Programs</a>
+    <a href="/portal">Portal</a>
+    <a href="/calendar">Calendar</a>
+    <a href="/community">Community</a>
+    <a href="/impact">Impact</a>
+    <a href="/about">About</a>
+  </nav>
+</header>
+<main>
+  <section class="hero"><div class="co-fx" aria-hidden="true"><i></i><i></i><i></i><svg class="co-fx-glow" viewBox="0 0 1200 400" preserveAspectRatio="none"><defs><filter id="co-glow-blur" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="25"/></filter><radialGradient id="co-glow-fill"><stop offset="0" stop-color="#F7931A" stop-opacity=".55"/><stop offset=".55" stop-color="#C2620A" stop-opacity=".28"/><stop offset="1" stop-color="#4A2600" stop-opacity="0"/></radialGradient></defs><ellipse cx="600" cy="200" rx="520" ry="110" fill="url(#co-glow-fill)" filter="url(#co-glow-blur)"/></svg></div>
+    <div class="glow"></div>
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">/Programs/Mastering_Bitcoin_</p>
+        <h1>Mastering Bitcoin. <span class="orange">Study cohort.</span></h1>
+        <p class="lead">Ten weeks reading <em>Mastering Bitcoin</em> (3rd edition) together, one chapter a week. Every Monday we meet on Discord to talk it through. Each of you owns a few discussion questions, everyone does the hands-on exercises, and this page keeps track.</p>
+        <div class="meta" style="margin:0 0 30px">
+          <span class="pill orange" data-mb-start>Start date TBA</span>
+          <span class="pill">10 weeks</span>
+          <span class="pill">Mondays 7pm UTC+8</span>
+          <span class="pill">Discord</span>
+          <span class="pill">Free of charge</span>
+        </div>
+        <div class="cta-row">
+          <a class="button" href="#signup">Sign up</a>
+          <a class="ghost" href="#curriculum">See the 10 weeks</a>
+        </div>
+      </div>
+      <div class="terminal-card" aria-label="Mastering Bitcoin terminal card">
+        <div class="terminal-bar"><span></span><span></span><span></span><strong>student@codeorange: ~/mastering-bitcoin</strong></div>
+        <div class="terminal-body">
+          <p>$ bitcoin-cli getblockhash 0</p><p class="muted">000000000019d6689c085ae165831e93…</p><p>$ cat cohort.txt</p><p class="orange">read → discuss → build, every Monday</p><p>$ ls weeks/</p><p class="muted">01-orientation/ 03-keys/ 05-transactions/ 08-blockchain/ 10-graduation/</p><p>$ <span style="display:inline-block;width:9px;height:17px;background:#F7931A;vertical-align:text-bottom"></span></p>
+        </div>
+      </div>
+    </div>
+    <div class="section-inner mb-stats-wrap">
+      <div class="grid four">
+        <div class="stat"><strong>10</strong><span class="pill">Weeks</span></div>
+        <div class="stat"><strong id="mb-start">TBA</strong><span class="pill" id="mb-start-label">Start date</span></div>
+        <div class="stat"><strong>60</strong><span class="pill">Questions to share out</span></div>
+        <div class="stat"><strong id="mb-count">–</strong><span class="pill">Students signed up</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-inner mb-me-wrap" aria-live="polite">
+    <div id="mb-me" class="feature-panel mb-me" hidden></div>
+  </section>
+
+  <section id="curriculum" class="section-inner" style="scroll-margin-top:96px">
+    <div class="split"><div><p class="eyebrow">Curriculum</p><h2>One chapter a week.</h2></div><p class="lead">Read the chapter before Monday. Questions are shared out evenly, so each week some of them are yours. Answer them in the cohort channel on Discord and tick them off here. Chapters link to the free online edition of the book.</p></div>
+    <div id="mb-weeks" class="mb-weeks"></div>
+  </section>
+
+  <section class="band"><div class="section-inner">
+    <div class="split"><div><p class="eyebrow">How it works</p><h2>No accounts. Just show up.</h2></div><p class="lead">Sign up once with your name and Discord username. You get a personal link that lets you tick things off from any device.</p></div>
+    <div class="timeline">
+      <div class="timeline-item"><div><h3>Read the chapter</h3><p>Each week has one chapter of the free online book, sometimes with an optional extra chapter for keen readers.</p></div></div>
+      <div class="timeline-item"><div><h3>Answer your questions</h3><p>Every question has one owner. Look for your name, post your answer in the cohort channel on Discord before Monday, and tick it done.</p></div></div>
+      <div class="timeline-item"><div><h3>Do the exercises</h3><p>Everyone does the same hands-on exercises with Bitcoin Core on signet or regtest. Share what you got and tick each one off.</p></div></div>
+      <div class="timeline-item"><div><h3>Meet on Monday</h3><p>We talk it all through on Discord, Mondays at 7pm UTC+8. Week 10 is graduation and your next step into open source.</p></div></div>
+    </div>
+  </div></section>
+
+  <section id="progress" class="section-inner" style="scroll-margin-top:96px">
+    <div class="split"><div><p class="eyebrow">The cohort</p><h2>Who's in, and how it's going.</h2></div><p class="lead">Students are listed in sign-up order. Questions count the ones assigned to each person; exercises count across all ten weeks.</p></div>
+    <div id="mb-roster" class="mb-roster"></div>
+  </section>
+
+  <section id="signup" class="band" style="scroll-margin-top:96px"><div class="section-inner">
+    <div class="split">
+      <div><p class="eyebrow">Sign up</p><h2>Join the cohort.</h2><p class="lead">Free of charge for everyone joining. All you need is a Discord account and a few hours a week.</p></div>
+      <div class="feature-panel"><div class="feature-panel-inner">
+        <form id="mb-signup" class="mb-form" autocomplete="on">
+          <label>Your name<input name="name" required maxlength="60" autocomplete="name" placeholder="Satoshi N."></label>
+          <label>Discord username<input name="discord" required maxlength="40" autocomplete="off" placeholder="satoshi"></label>
+          <label>Email <span class="muted">(optional, only for cohort reminders)</span><input name="email" type="email" maxlength="120" autocomplete="email" placeholder="you@example.com"></label>
+          <label class="mb-hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
+          <button class="button" type="submit">Sign me up</button>
+          <p class="mb-fine">Your name and progress show on this page. Your Discord username and email are only seen by the organisers.</p>
+        </form>
+        <p id="mb-signup-note" class="mb-note" role="status"></p>
+      </div></div>
+    </div>
+  </div></section>
+
+  <section class="section-inner final-cta">
+    <p class="eyebrow">The book</p>
+    <h2>Read it free, online.</h2>
+    <p class="lead" style="margin-left:auto;margin-right:auto"><em>Mastering Bitcoin: Programming the Open Blockchain</em> (3rd edition) by Andreas M. Antonopoulos and David A. Harding is published under a CC BY-SA 4.0 license. The questions and exercises on this page are written by Code Orange.</p>
+    <div class="cta-row" style="justify-content:center"><a class="button" href="https://github.com/bitcoinbook/bitcoinbook/blob/develop/BOOK.md" target="_blank" rel="noopener">Open the book</a><a class="ghost" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord</a></div>
+  </section>
+  <div id="mb-toast" class="mb-toast" role="status" hidden></div>
+</main>
+<footer class="footer">
+  <div class="footer-media">
+    <video data-lazy-video data-src="/assets/co-footer.mp4" poster="/assets/co-footer-poster.jpg" autoplay muted loop playsinline preload="none"></video>
+    <div class="footer-media-copy">
+      <p class="eyebrow">Scenes from the school</p>
+      <h2>Hands-on Bitcoin education.</h2>
+    </div>
+  </div>
+  <div class="footer-grid">
+    <div>
+      <img src="/assets/logo-white.png" alt="Code Orange Dev School" style="height:58px;width:auto;margin-bottom:18px">
+      <p style="color:var(--dim);max-width:420px;line-height:1.7">Code Orange Dev School trains Bitcoin developers, node runners, and technical community leaders through practical education and open-source contribution.</p>
+      <p><a href="mailto:hello@codeorange.dev">hello@codeorange.dev</a></p>
+      <div class="cta-row" style="gap:10px;justify-content:flex-start">
+        <a class="ghost small" href="https://x.com/CodeOrangeDevs" target="_blank" rel="noopener">X</a>
+        <a class="ghost small" href="https://www.instagram.com/codeorangedevs" target="_blank" rel="noopener">Instagram</a>
+        <a class="ghost small" href="https://njump.me/npub1gxqyeea3xspkd68mxlxsvvk3gdzdd555u504ynwpdj0ghg503mvq2gydt0" target="_blank" rel="noopener">Nostr</a>
+        <a class="ghost small" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a>
+      </div>
+    </div>
+    <div>
+      <div class="link-list">
+        <strong>School</strong>
+        <a href="/about">About</a>
+        <a href="/impact">Impact</a>
+        <a href="/community">Community</a>
+        <a href="/fellowships">Fellowships</a>
+        <a href="/calendar">Calendar</a>
+        <a href="https://geyser.fund/project/codeorangedevschool" target="_blank" rel="noopener">Support on Geyser</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
