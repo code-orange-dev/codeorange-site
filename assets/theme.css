@@ -1,4 +1,4 @@
-/* Code Orange site theme: black and Bitcoin orange "liquid glass" look shared by every page.
+/* Code Orange site theme: black and Bitcoin orange, Schibsted Grotesk type, shared by every page.
    Loaded after each page's own styles; the page styles keep layout, this file
    sets type, buttons, cards, hero effects and the mobile menu. */
 :root {
@@ -8,9 +8,9 @@
   --co-text: #F5F5F5;
   --co-text-70: rgba(255, 255, 255, .7);
   --co-line: rgba(255, 255, 255, .1);
-  --co-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --co-label: "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
-  --co-serif: "Instrument Serif", Georgia, serif;
+  --co-sans: "Schibsted Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --co-label: "Schibsted Grotesk", system-ui, sans-serif;
+  --co-serif: "Schibsted Grotesk", system-ui, sans-serif;
   --co-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
@@ -20,15 +20,15 @@ body { font-family: var(--co-sans); -webkit-font-smoothing: antialiased; }
 
 /* ── Type ── */
 h1, h2, h3 { font-family: var(--co-sans) !important; color: var(--co-text); }
-h1 { font-weight: 800 !important; text-transform: uppercase; letter-spacing: -.025em !important; line-height: 1.02 !important; text-wrap: balance; }
-h2 { font-weight: 800 !important; letter-spacing: -.025em !important; line-height: 1.08 !important; text-wrap: balance; }
-h3 { font-weight: 700 !important; letter-spacing: -.01em; }
+h1 { font-weight: 400 !important; letter-spacing: -.045em !important; line-height: 1.01 !important; text-wrap: balance; }
+h2 { font-weight: 400 !important; letter-spacing: -.04em !important; line-height: 1.05 !important; text-wrap: balance; }
+h3 { font-weight: 600 !important; letter-spacing: -.03em; }
 #static-homepage h1, .hero h1 { font-size: clamp(40px, 6vw, 72px) !important; }
 h1 .orange, h2 .orange, h1 span[style*="F7931A"], h1 span[style*="f7931a"] {
-  font-family: var(--co-serif) !important; font-style: italic; font-weight: 400 !important;
-  text-transform: none; letter-spacing: -.01em; color: var(--co-accent) !important;
+  font-family: var(--co-sans) !important; font-style: normal; font-weight: 400 !important;
+  text-transform: none; letter-spacing: inherit; color: var(--co-accent) !important;
 }
-h1 .orange { font-size: 1.12em; line-height: .9; }
+h1 .orange { font-size: 1em; }
 .co-dot-accent { color: var(--co-accent); }
 
 .eyebrow, #static-homepage .co-eyebrow {
@@ -41,12 +41,12 @@ h1 .orange { font-size: 1.12em; line-height: .9; }
 /* Code snippets keep a monospace face */
 .terminal-body, #static-homepage .co-terminal-body, .terminal-bar strong, #static-homepage .co-prompt { font-family: var(--co-mono) !important; }
 
-/* ── Buttons: pill, uppercase, bold ── */
+/* ── Buttons: pill, sentence case ── */
 .button, .ghost, #static-homepage .co-button {
-  border-radius: 999px !important; text-transform: uppercase; letter-spacing: .04em; white-space: nowrap;
-  font-family: var(--co-sans) !important; font-weight: 700 !important; font-size: 13px !important;
+  border-radius: 999px !important; text-transform: none; letter-spacing: -.02em; white-space: nowrap;
+  font-family: var(--co-sans) !important; font-weight: 500 !important; font-size: 15px !important;
 }
-#static-homepage .co-button.co-xl { font-size: 15px !important; padding: 18px 34px !important; }
+#static-homepage .co-button.co-xl { font-size: 17px !important; padding: 18px 34px !important; }
 .button, #static-homepage .co-button.primary { background: var(--co-accent) !important; border-color: var(--co-accent) !important; color: var(--co-bg) !important; }
 .button:hover, #static-homepage .co-button.primary:hover { background: var(--co-accent-2) !important; box-shadow: 0 10px 30px rgba(247,147,26, .3); }
 .ghost, #static-homepage .co-button:not(.primary) { background: rgba(255, 255, 255, .03); border: 1px solid rgba(255, 255, 255, .18) !important; color: var(--co-text) !important; backdrop-filter: blur(4px); }
@@ -57,7 +57,7 @@ h1 .orange { font-size: 1.12em; line-height: .9; }
 #static-homepage header.co-band { position: sticky; top: 0; z-index: 40; }
 .desktop-nav a, #static-homepage .co-links a {
   font-family: var(--co-sans) !important; font-size: clamp(13px, 1.05vw, 16px) !important; font-weight: 500 !important;
-  text-transform: uppercase; letter-spacing: .02em; color: rgba(255, 255, 255, .82) !important; transition: color .15s ease;
+  text-transform: none; letter-spacing: -.02em; color: rgba(255, 255, 255, .82) !important; transition: color .15s ease;
 }
 .desktop-nav a:hover, #static-homepage .co-links a:hover { color: var(--co-accent) !important; }
 #static-homepage .co-links { gap: clamp(16px, 2vw, 28px) !important; }
