@@ -282,7 +282,7 @@ function pageShell({
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Code Orange Dev School Bitcoin workshop in Bali">
+<meta property="og:image:alt" content="Code Orange Dev School: learn to build on Bitcoin">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${title} - Code Orange Dev School">
 <meta name="twitter:description" content="${description}">
