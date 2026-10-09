@@ -437,17 +437,6 @@
     if (d) { d.open = true; state.open.add(Number(d.dataset.week)); }
   });
 
-  // Cursor-following glow on cards.
-  const GLOW = ".mb-week, .stat, .mb-agenda ol li, .mb-role-list div, .feature-panel, .mb-roster";
-  document.addEventListener("pointermove", (ev) => {
-    const el = ev.target.closest && ev.target.closest(GLOW);
-    if (!el) return;
-    el.classList.add("mb-glow");
-    const r = el.getBoundingClientRect();
-    el.style.setProperty("--mx", `${ev.clientX - r.left}px`);
-    el.style.setProperty("--my", `${ev.clientY - r.top}px`);
-  }, { passive: true });
-
   // The book tilts towards the cursor.
   const book = $(".mb-book");
   if (book && !reduceMotion && window.matchMedia("(hover: hover)").matches) {

@@ -327,13 +327,15 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
 
 /* Photo backgrounds: faint, faded at the edges, behind the content */
 .mb-bg { position: relative; isolation: isolate; }
-.mb-bg::after { content: ""; position: absolute; top: 0; bottom: 0; z-index: -1; width: min(58vw, 900px); pointer-events: none; background: var(--mb-bg) center / cover no-repeat; opacity: .4; filter: saturate(.9) contrast(1.05); }
-.mb-bg-right::after { right: calc(50% - 50vw); -webkit-mask-image: radial-gradient(ellipse 70% 60% at 75% 50%, #000 35%, transparent 82%); mask-image: radial-gradient(ellipse 70% 60% at 75% 50%, #000 35%, transparent 82%); }
-.mb-bg-left::after { left: calc(50% - 50vw); -webkit-mask-image: radial-gradient(ellipse 70% 60% at 25% 50%, #000 35%, transparent 82%); mask-image: radial-gradient(ellipse 70% 60% at 25% 50%, #000 35%, transparent 82%); }
-.mb-bg.band::after { opacity: .36; }
+.mb-bg::after { content: ""; position: absolute; top: 0; bottom: 0; z-index: -1; width: min(78vw, 1300px); pointer-events: none; background: var(--mb-bg) center / cover no-repeat; opacity: .62; filter: contrast(1.05); }
+.mb-bg-right::after { right: calc(50% - 50vw); -webkit-mask-image: radial-gradient(ellipse 85% 80% at 70% 50%, #000 45%, transparent 92%); mask-image: radial-gradient(ellipse 85% 80% at 70% 50%, #000 45%, transparent 92%); }
+.mb-bg-left::after { left: calc(50% - 50vw); -webkit-mask-image: radial-gradient(ellipse 85% 80% at 30% 50%, #000 45%, transparent 92%); mask-image: radial-gradient(ellipse 85% 80% at 30% 50%, #000 45%, transparent 92%); }
+.mb-bg.band::after { opacity: .58; }
+.mb-bg :is(h2, h3, .lead, .eyebrow, .mb-norms, .mb-rail, .mb-fine) { text-shadow: 0 1px 2px rgba(0,0,0,.9), 0 2px 18px rgba(0,0,0,.85); }
 @media (max-width: 900px) {
-  .mb-bg::after { width: 100vw; opacity: .22; }
-  .mb-bg-right::after, .mb-bg-left::after { -webkit-mask-image: radial-gradient(ellipse 80% 45% at 50% 40%, #000 20%, transparent 80%); mask-image: radial-gradient(ellipse 80% 45% at 50% 40%, #000 20%, transparent 80%); }
+  .mb-bg::after { width: 100vw; opacity: .38; }
+  .mb-bg.band::after { opacity: .38; }
+  .mb-bg-right::after, .mb-bg-left::after { -webkit-mask-image: radial-gradient(ellipse 95% 70% at 50% 45%, #000 35%, transparent 90%); mask-image: radial-gradient(ellipse 95% 70% at 50% 45%, #000 35%, transparent 90%); }
 }
 
 /* ── Polish: buttons, motion, glow ── */
@@ -358,11 +360,6 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
 .mb-countdown div:first-child strong { color: var(--orange); }
 .mb-countdown span { display: block; margin-top: 6px; color: var(--dim); font: 700 10px "Plus Jakarta Sans", monospace; letter-spacing: .14em; text-transform: uppercase; }
 
-/* Cursor-following glow on cards */
-.mb-glow { position: relative; }
-.mb-glow::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .3s ease; background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(247,147,26,.10), transparent 45%); z-index: 0; }
-.mb-glow:hover::before { opacity: 1; }
-.mb-glow > * { position: relative; z-index: 1; }
 .mb-week, .stat, .mb-agenda ol li, .mb-role-list div, .mb-list li, .mb-roles li { transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease, background .2s ease; }
 .mb-agenda ol li:hover, .mb-role-list div:hover, .stat:hover { border-color: rgba(247,147,26,.35); transform: translateY(-2px); }
 .mb-week:not([open]):hover { border-color: rgba(247,147,26,.35); }
@@ -423,8 +420,8 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
 </style>
 <link rel="stylesheet" href="/assets/theme.css?v=20261004b">
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
-<script src="/assets/mastering-bitcoin/cohort.js?v=20261009d" defer></script>
-<script src="/assets/mastering-bitcoin/app.js?v=20261009d" defer></script>
+<script src="/assets/mastering-bitcoin/cohort.js?v=20261009e" defer></script>
+<script src="/assets/mastering-bitcoin/app.js?v=20261009e" defer></script>
 </head>
 <body>
 <a class="announce" href="#signup">Mastering Bitcoin study cohort starts Monday 16 November &middot; sign-ups are open <span>Sign up &rarr;</span></a>
@@ -500,7 +497,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
     <div id="mb-me" class="feature-panel mb-me" hidden></div>
   </section>
 
-  <section id="curriculum" class="section-inner" style="scroll-margin-top:96px">
+  <section id="curriculum" class="section-inner mb-bg mb-bg-right" style="--mb-bg:url(/assets/mastering-bitcoin/bg-workshop-table.jpg?v=2);scroll-margin-top:96px">
     <div class="split"><div><p class="eyebrow">Curriculum</p><h2>One chapter a week.</h2></div><p class="lead">Read the chapter before Monday. Questions are shared out evenly, so each week some of them are yours. Answer them in the cohort channel on Discord and tick them off here. Chapters link to the free online edition of the book.</p></div>
     <nav id="mb-rail" class="mb-rail" aria-label="Jump to a week"></nav>
     <div id="mb-weeks" class="mb-weeks"></div>
