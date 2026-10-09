@@ -2,6 +2,8 @@
 // sign-up form and "done" ticks. Settings and curriculum live in cohort.js.
 (() => {
   const C = window.MB_COHORT;
+  document.documentElement.classList.add("mb-js");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const API = "/api/mastering-bitcoin";
   const TOKEN_KEY = "mb-token";
   const $ = (sel) => document.querySelector(sel);
@@ -24,7 +26,7 @@
     history.replaceState(null, "", location.pathname + (params.toString() ? `?${params}` : "") + location.hash);
   }
 
-  const state = { token: store.get(), students: [], me: null, online: false, loaded: false, open: new Set() };
+  const state = { token: store.get(), students: [], me: null, online: false, loaded: false, open: new Set(), popped: "" };
 
   // ── Dates ──
   const sessionDates = C.weeks.map((_, i) => {
@@ -150,6 +152,49 @@
       .join("");
   }
 
+  // The 10-week rail above the accordion: your progress per week (or the cohort's
+  // reading progress for visitors), with the current week highlighted.
+  function renderRail() {
+    const me = meStudent();
+    const assigned = assignments();
+    $("#mb-rail").innerHTML = C.weeks
+      .map((w, wi) => {
+        const wk = wi + 1;
+        let pct;
+        if (me) {
+          const items = [`w${wk}-r1`, ...w.exercises.map((_, ei) => `w${wk}-e${ei + 1}`), ...w.questions.map((_, qi) => `w${wk}-q${qi + 1}`).filter((k) => assigned[k]?.id === me.id)];
+          pct = (items.filter((k) => me.done.includes(k)).length / items.length) * 100;
+        } else {
+          pct = state.students.length ? (readCount(wk) / state.students.length) * 100 : 0;
+        }
+        const cls = wi === currentWeek ? "is-current" : currentWeek > wi ? "is-past" : "";
+        return `<a href="#week-${wk}" class="${cls}" title="Week ${wk}: ${esc(w.title)} · ${Math.round(pct)}% ${me ? "done by you" : "of the cohort have read it"}"><i><b style="--p:${pct.toFixed(1)}%"></b></i><span>W${pad(wk)}${sessionDates[wi] ? `<em> · ${sessionDates[wi].toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "Asia/Singapore" })}</em>` : ""}</span></a>`;
+      })
+      .join("");
+  }
+
+  // A small burst of orange confetti from an element, for finishing a week.
+  function confetti(from) {
+    if (reduceMotion || !from) return;
+    const r = from.getBoundingClientRect();
+    const colors = ["#F7931A", "#FFB347", "#27C93F", "#FFFFFF"];
+    for (let i = 0; i < 28; i++) {
+      const el = document.createElement("i");
+      el.className = "mb-confetti";
+      el.style.background = colors[i % colors.length];
+      document.body.appendChild(el);
+      const angle = (Math.PI * 2 * i) / 28 + Math.random() * 0.4;
+      const dist = 70 + Math.random() * 110;
+      el.animate(
+        [
+          { transform: `translate(${r.left + r.width / 2}px, ${r.top + r.height / 2}px) rotate(0)`, opacity: 1 },
+          { transform: `translate(${r.left + r.width / 2 + Math.cos(angle) * dist}px, ${r.top + r.height / 2 + Math.sin(angle) * dist + 60}px) rotate(${Math.random() * 720}deg)`, opacity: 0 },
+        ],
+        { duration: 900 + Math.random() * 500, easing: "cubic-bezier(.2,.8,.2,1)" }
+      ).onfinish = () => el.remove();
+    }
+  }
+
   function renderMe() {
     const me = meStudent();
     const box = $("#mb-me");
@@ -233,9 +278,14 @@
 
   function render() {
     renderWeeks();
+    renderRail();
     renderMe();
     renderRoster();
     renderSignup();
+    if (state.popped) {
+      document.querySelectorAll(`.mb-tick[data-item="${state.popped}"].is-done`).forEach((el) => el.classList.add("is-pop"));
+      state.popped = "";
+    }
   }
 
   // ── Data ──
@@ -279,7 +329,18 @@
       const item = tick.dataset.item;
       const done = !me.done.includes(item);
       me.done = done ? [...me.done, item] : me.done.filter((k) => k !== item);
+      if (done) state.popped = item;
       render();
+      if (done) {
+        const wk = Number(item.slice(1).split("-")[0]);
+        const w = C.weeks[wk - 1];
+        const assigned = assignments();
+        const items = [`w${wk}-r1`, ...w.exercises.map((_, ei) => `w${wk}-e${ei + 1}`), ...w.questions.map((_, qi) => `w${wk}-q${qi + 1}`).filter((k) => assigned[k]?.id === me.id)];
+        if (items.every((k) => me.done.includes(k))) {
+          confetti(document.querySelector(`.mb-tick[data-item="${item}"]`));
+          toast(`Week ${wk} complete. Nice work!`);
+        }
+      }
       try {
         await post({ action: "done", token: state.token, item, done });
       } catch (err) {
@@ -349,6 +410,69 @@
     }
   });
 
+  // Smooth open/close for the weeks.
+  document.addEventListener("click", (ev) => {
+    const summary = ev.target.closest("details.mb-week > summary");
+    if (!summary || reduceMotion) return;
+    const d = summary.parentElement;
+    const body = d.querySelector(".mb-week-body");
+    if (!body || d.dataset.animating) return;
+    ev.preventDefault();
+    d.dataset.animating = "1";
+    const done = () => { delete d.dataset.animating; body.style.height = ""; };
+    if (!d.open) {
+      d.open = true;
+      const h = body.scrollHeight;
+      body.animate([{ height: "0px", opacity: 0 }, { height: `${h}px`, opacity: 1 }], { duration: 320, easing: "cubic-bezier(.2,.8,.2,1)" }).onfinish = done;
+    } else {
+      const h = body.scrollHeight;
+      body.animate([{ height: `${h}px`, opacity: 1 }, { height: "0px", opacity: 0 }], { duration: 240, easing: "ease-in" }).onfinish = () => { d.open = false; done(); };
+    }
+  });
+  // Rail links open the week they point to.
+  document.addEventListener("click", (ev) => {
+    const a = ev.target.closest(".mb-rail a");
+    if (!a) return;
+    const d = document.querySelector(a.getAttribute("href"));
+    if (d) { d.open = true; state.open.add(Number(d.dataset.week)); }
+  });
+
+  // Cursor-following glow on cards.
+  const GLOW = ".mb-week, .stat, .mb-agenda ol li, .mb-role-list div, .feature-panel, .mb-roster";
+  document.addEventListener("pointermove", (ev) => {
+    const el = ev.target.closest && ev.target.closest(GLOW);
+    if (!el) return;
+    el.classList.add("mb-glow");
+    const r = el.getBoundingClientRect();
+    el.style.setProperty("--mx", `${ev.clientX - r.left}px`);
+    el.style.setProperty("--my", `${ev.clientY - r.top}px`);
+  }, { passive: true });
+
+  // The book tilts towards the cursor.
+  const book = $(".mb-book");
+  if (book && !reduceMotion && window.matchMedia("(hover: hover)").matches) {
+    book.addEventListener("pointermove", (ev) => {
+      const r = book.getBoundingClientRect();
+      const x = (ev.clientX - r.left) / r.width - 0.5;
+      const y = (ev.clientY - r.top) / r.height - 0.5;
+      book.style.transform = `perspective(900px) rotateY(${x * 14}deg) rotateX(${-y * 10}deg) rotate(-2deg) translateY(-4px)`;
+    });
+    book.addEventListener("pointerleave", () => (book.style.transform = ""));
+  }
+
+  // Sections fade in as they scroll into view.
+  if ("IntersectionObserver" in window && !reduceMotion) {
+    const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+    }), { rootMargin: "0px 0px -8% 0px" });
+    document.querySelectorAll("main > section:not(.hero):not(.mb-me-wrap), .timeline-item, .mb-agenda > div").forEach((el) => {
+      el.classList.add("mb-reveal");
+      io.observe(el);
+    });
+  } else {
+    document.documentElement.classList.remove("mb-js");
+  }
+
   // ── Static bits ──
   const first = sessionDates[0];
   const daysToGo = first ? Math.ceil((first - Date.now()) / 864e5) : null;
@@ -357,6 +481,18 @@
   document.querySelectorAll("[data-mb-start]").forEach((el) => {
     el.textContent = !first ? "Start date TBA" : daysToGo > 1 ? `Starts ${fmtDay(first)} · in ${daysToGo} days` : daysToGo === 1 ? `Starts tomorrow, ${fmtDay(first)}` : daysToGo === 0 ? "Starts today" : `Started ${fmtDay(first)}`;
   });
+  const cd = document.querySelector("[data-mb-countdown]");
+  if (cd && first && first > Date.now()) {
+    cd.hidden = false;
+    const tick = () => {
+      const left = Math.max(0, first - Date.now());
+      const parts = { d: Math.floor(left / 864e5), h: Math.floor(left / 36e5) % 24, m: Math.floor(left / 6e4) % 60, s: Math.floor(left / 1e3) % 60 };
+      for (const k in parts) cd.querySelector(`[data-cd="${k}"]`).textContent = pad(parts[k]);
+      if (!left) { clearInterval(timer); cd.hidden = true; }
+    };
+    const timer = setInterval(tick, 1000);
+    tick();
+  }
   function gcalHref() {
     if (!first) return "";
     const stamp = (d) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
