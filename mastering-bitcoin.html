@@ -325,17 +325,19 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
 }
 
 
-/* Photo backgrounds: faint, faded at the edges, behind the content */
+/* Photo backgrounds: the whole photo (3:4, not cropped), large and soft-edged, behind the content */
 .mb-bg { position: relative; isolation: isolate; }
-.mb-bg::after { content: ""; position: absolute; top: 0; bottom: 0; z-index: -1; width: min(78vw, 1300px); pointer-events: none; background: var(--mb-bg) center / cover no-repeat; opacity: .62; filter: contrast(1.05); }
-.mb-bg-right::after { right: calc(50% - 50vw); -webkit-mask-image: radial-gradient(ellipse 85% 80% at 70% 50%, #000 45%, transparent 92%); mask-image: radial-gradient(ellipse 85% 80% at 70% 50%, #000 45%, transparent 92%); }
-.mb-bg-left::after { left: calc(50% - 50vw); -webkit-mask-image: radial-gradient(ellipse 85% 80% at 30% 50%, #000 45%, transparent 92%); mask-image: radial-gradient(ellipse 85% 80% at 30% 50%, #000 45%, transparent 92%); }
-.mb-bg.band::after { opacity: .58; }
+.mb-bg::after { content: ""; position: absolute; top: 0; z-index: -1; width: min(62vw, 960px); aspect-ratio: 3 / 4; pointer-events: none; background: var(--mb-bg) center / contain no-repeat; opacity: .47; filter: contrast(1.05);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 24%, #000 80%, transparent), linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent); -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent, #000 24%, #000 80%, transparent), linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent); mask-composite: intersect; }
+.mb-bg-right::after { right: calc(50% - 50vw); }
+.mb-bg-left::after { left: calc(50% - 50vw); }
+.mb-bg.band { overflow: hidden; }
+.mb-bg.band::after { top: 50%; transform: translateY(-50%); opacity: .44; }
 .mb-bg :is(h2, h3, .lead, .eyebrow, .mb-norms, .mb-rail, .mb-fine) { text-shadow: 0 1px 2px rgba(0,0,0,.9), 0 2px 18px rgba(0,0,0,.85); }
 @media (max-width: 900px) {
-  .mb-bg::after { width: 100vw; opacity: .38; }
-  .mb-bg.band::after { opacity: .38; }
-  .mb-bg-right::after, .mb-bg-left::after { -webkit-mask-image: radial-gradient(ellipse 95% 70% at 50% 45%, #000 35%, transparent 90%); mask-image: radial-gradient(ellipse 95% 70% at 50% 45%, #000 35%, transparent 90%); }
+  .mb-bg::after { width: 100vw; opacity: .29; }
+  .mb-bg.band::after { opacity: .29; }
 }
 
 /* ── Polish: buttons, motion, glow ── */
@@ -497,7 +499,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
     <div id="mb-me" class="feature-panel mb-me" hidden></div>
   </section>
 
-  <section id="curriculum" class="section-inner mb-bg mb-bg-right" style="--mb-bg:url(/assets/mastering-bitcoin/bg-workshop-table.jpg?v=2);scroll-margin-top:96px">
+  <section id="curriculum" class="section-inner mb-bg mb-bg-right" style="--mb-bg:url(/assets/mastering-bitcoin/bg-workshop-table.jpg?v=3);scroll-margin-top:96px">
     <div class="split"><div><p class="eyebrow">Curriculum</p><h2>One chapter a week.</h2></div><p class="lead">Read the chapter before Monday. Questions are shared out evenly, so each week some of them are yours. Answer them in the cohort channel on Discord and tick them off here. Chapters link to the free online edition of the book.</p></div>
     <nav id="mb-rail" class="mb-rail" aria-label="Jump to a week"></nav>
     <div id="mb-weeks" class="mb-weeks"></div>
@@ -546,7 +548,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
     <div id="mb-roster" class="mb-roster"></div>
   </section>
 
-  <section id="signup" class="band mb-bg mb-bg-right" style="--mb-bg:url(/assets/mastering-bitcoin/bg-workshop-table.jpg?v=2);scroll-margin-top:96px"><div class="section-inner">
+  <section id="signup" class="band mb-bg mb-bg-right" style="--mb-bg:url(/assets/mastering-bitcoin/bg-workshop-table.jpg?v=3);scroll-margin-top:96px"><div class="section-inner">
     <div class="split">
       <div><p class="eyebrow">Sign up</p><h2>Join the cohort.</h2><p class="lead">Free of charge for everyone joining. All you need is a Discord account and a few hours a week. Joining late is fine: you pick up questions from the weeks still to come.</p><button type="button" class="ghost small" data-mb-share>Invite a friend</button></div>
       <div class="feature-panel"><div class="feature-panel-inner">
