@@ -277,8 +277,8 @@ function pageShell({
 <meta property="og:site_name" content="Code Orange Dev School">
 <meta property="og:title" content="${title} - Code Orange Dev School">
 <meta property="og:description" content="${description}">
-<meta property="og:image" content="https://codeorange.dev/assets/og-codeorange-workshop.jpg">
-<meta property="og:image:secure_url" content="https://codeorange.dev/assets/og-codeorange-workshop.jpg">
+<meta property="og:image" content="https://codeorange.dev/assets/og-codeorange-2026.jpg">
+<meta property="og:image:secure_url" content="https://codeorange.dev/assets/og-codeorange-2026.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -286,7 +286,7 @@ function pageShell({
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${title} - Code Orange Dev School">
 <meta name="twitter:description" content="${description}">
-<meta name="twitter:image" content="https://codeorange.dev/assets/og-codeorange-workshop.jpg">
+<meta name="twitter:image" content="https://codeorange.dev/assets/og-codeorange-2026.jpg">
 <link rel="icon" type="image/svg+xml" href="/assets/favicon-co.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
