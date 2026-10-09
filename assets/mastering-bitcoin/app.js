@@ -50,10 +50,13 @@
   // are fixed once that week opens (the previous Monday's session): people who join
   // later only pick up questions from weeks that haven't opened yet. ──
   const weekOpens = (wi) => (sessionDates[wi] ? sessionDates[wi].getTime() - 7 * 864e5 : Infinity);
+  // Seminar roles rotate the same way, on their own counter, one person per role.
+  const roles = C.roles || [];
   function assignments() {
     const map = {};
     const now = Date.now();
     let k = 0;
+    let r = 0;
     C.weeks.forEach((w, wi) => {
       const opens = weekOpens(wi);
       const locked = now >= opens ? state.students.filter((s) => !s.joined || s.joined < opens) : [];
@@ -62,9 +65,15 @@
         map[`w${wi + 1}-q${qi + 1}`] = pool.length ? pool[k % pool.length] : null;
         k++;
       });
+      roles.slice(0, pool.length).forEach((_, ri) => {
+        map[`w${wi + 1}-role${ri}`] = pool[r % pool.length];
+        r++;
+      });
     });
     return map;
   }
+  const myRoles = (assigned, me, wk) => roles.filter((_, ri) => me && assigned[`w${wk}-role${ri}`]?.id === me.id);
+  const readCount = (wk) => state.students.filter((s) => s.done.includes(`w${wk}-r1`)).length;
 
   const isDone = (student, item) => !!student && student.done.includes(item);
   const meStudent = () => state.me && state.students.find((s) => s.id === state.me.id);
@@ -82,6 +91,8 @@
       .map((w, wi) => {
         const wk = wi + 1;
         const date = sessionDates[wi];
+        const read = readCount(wk);
+        const total = state.students.length;
         const chapters = w.chapters
           .map((c) => `<a href="${chapterUrl(c.file)}" target="_blank" rel="noopener">Ch ${c.n} · ${esc(c.title)}</a>`)
           .join("");
@@ -104,11 +115,19 @@
           .map((e, ei) => {
             const item = `w${wk}-e${ei + 1}`;
             const count = state.students.filter((s) => s.done.includes(item)).length;
-            return `<li><span class="mb-num">E${ei + 1}</span><div><p>${esc(e)}</p><div class="mb-row"><span class="mb-count">${count} done</span>${me ? tickButton(item, isDone(me, item), `Mark exercise ${ei + 1} of week ${wk} done`) : ""}</div></div></li>`;
+            return `<li><span class="mb-num">E${ei + 1}</span><div><p>${esc(e)}</p><div class="mb-row"><span class="mb-count">${total ? `${count} of ${total} done` : "0 done"}</span>${me ? tickButton(item, isDone(me, item), `Mark exercise ${ei + 1} of week ${wk} done`) : ""}</div></div></li>`;
           })
           .join("");
         const myQs = me ? w.questions.filter((_, qi) => assigned[`w${wk}-q${qi + 1}`]?.id === me.id).length : 0;
-        return `<details class="mb-week${wi === currentWeek ? " is-current" : ""}" data-week="${wi}"${state.open.has(wi) ? " open" : ""}>
+        const roleChips = roles
+          .map((role, ri) => {
+            const who = assigned[`w${wk}-role${ri}`];
+            const mine = me && who && who.id === me.id;
+            return `<li class="${mine ? "is-mine" : ""}" title="${esc(role.job)}"><b>${esc(role.name)}</b><span>${who ? (mine ? "You" : esc(who.name)) : "Assigned at sign-up"}</span></li>`;
+          })
+          .join("");
+
+        return `<details id="week-${wk}" class="mb-week${wi === currentWeek ? " is-current" : ""}" data-week="${wi}"${state.open.has(wi) ? " open" : ""}>
           <summary>
             <span class="mb-wk">Week ${pad(wk)}</span>
             <span class="mb-title">${esc(w.title)}${wi === currentWeek ? ' <span class="mb-now">This week</span>' : ""}${myQs ? ` <span class="mb-mine">${myQs} for you</span>` : ""}</span>
@@ -118,6 +137,9 @@
             <p class="mb-summary">${esc(w.summary)}</p>
             <div class="mb-chapters">${chapters}${extra}</div>
             ${date ? `<p class="mb-when">Session: ${fmtDay(date)}, 7–8:30pm UTC+8 · your time: ${fmtLocal(date)} · on Discord</p>` : ""}
+            <div class="mb-read"><span class="mb-count">${total ? `${read} of ${total} have read it` : "Read it before Monday"}</span>${me ? tickButton(`w${wk}-r1`, isDone(me, `w${wk}-r1`), `I've read week ${wk}`).replace(/>Mark done</, ">I've read it<").replace(/>Done</, ">Read<") : ""}</div>
+            <div class="mb-opening"><p class="mb-label">Opening question · everyone</p><p>${esc(w.opening)}</p></div>
+            <div class="mb-roles-wrap"><p class="mb-label">Seminar roles this week</p><ul class="mb-roles">${roleChips}</ul></div>
             <div class="mb-cols">
               <div><h3>Discussion questions</h3><p class="mb-hint">Each question has one owner. Post your answer in the cohort channel on Discord before the session, then tick it done.</p><ol class="mb-list">${questions}</ol></div>
               <div><h3>Exercises</h3><p class="mb-hint">Everyone does these. Share what you got on Discord and tick each one off.</p><ol class="mb-list">${exercises}</ol></div>
@@ -136,7 +158,7 @@
       return;
     }
     const assigned = assignments();
-    const mine = Object.keys(assigned).filter((k) => assigned[k]?.id === me.id);
+    const mine = Object.keys(assigned).filter((k) => k.includes("-q") && assigned[k]?.id === me.id);
     const qDone = mine.filter((k) => me.done.includes(k)).length;
     const exTotal = C.weeks.reduce((n, w) => n + w.exercises.length, 0);
     const exDone = me.done.filter((k) => k.includes("-e")).length;
@@ -145,10 +167,30 @@
     const thisWeek = mine.filter((k) => k.startsWith(`w${focus + 1}-`));
     box.hidden = false;
     box.innerHTML = `<div class="mb-me-head"><div><p class="eyebrow">Your dashboard</p><h2>Hi ${esc(me.name)}.</h2></div>
-      <div class="mb-me-stats"><span><strong>${qDone}/${mine.length}</strong> questions</span><span><strong>${exDone}/${exTotal}</strong> exercises</span></div></div>
-      <p class="mb-me-week">${thisWeek.length ? `Week ${focus + 1}: you own ${listJoin(thisWeek.map((k) => `Q${k.split("-q")[1]}`))}. ${thisWeek.every((k) => me.done.includes(k)) ? "All done, nice." : `Open week ${focus + 1} below to find ${thisWeek.length > 1 ? "them" : "it"}.`}` : `No questions for you in week ${focus + 1}. Do the exercises and join the discussion.`}</p>
+      <div class="mb-me-stats"><span><strong>${me.done.filter((k) => k.endsWith("-r1")).length}/${C.weeks.length}</strong> chapters read</span><span><strong>${qDone}/${mine.length}</strong> questions</span><span><strong>${exDone}/${exTotal}</strong> exercises</span></div></div>
+      ${weekChecklist(me, assigned, focus, thisWeek)}
       <div class="mb-link"><span>Your personal link (open it on any device to tick things off):</span><code>${esc(link)}</code><button type="button" class="ghost small" data-copy="${esc(link)}">Copy link</button><button type="button" class="mb-signout" data-signout>Not you? Sign out</button></div>
       <div class="cta-row mb-me-cta"><a class="button small" href="${C.discord}" target="_blank" rel="noopener">Join the Discord</a>${first ? `<a class="ghost small" href="${esc(gcalHref())}" target="_blank" rel="noopener">Add to Google Calendar</a>` : ""}</div>`;
+  }
+
+  // "Before Monday" list for the student's current week: read, own questions, role, exercises.
+  function weekChecklist(me, assigned, focus, thisWeek) {
+    const wk = focus + 1;
+    const w = C.weeks[focus];
+    const exItems = w.exercises.map((_, ei) => `w${wk}-e${ei + 1}`);
+    const exDone = exItems.filter((k) => me.done.includes(k)).length;
+    const rolesNow = myRoles(assigned, me, wk);
+    const line = (done, text) => `<li class="${done ? "is-done" : ""}"><span class="mb-box" aria-hidden="true">${done ? "✓" : ""}</span><span>${text}</span></li>`;
+    const items = [
+      line(me.done.includes(`w${wk}-r1`), `Read ${w.chapters.map((c) => `chapter ${c.n}`).join(" and ")}`),
+      thisWeek.length
+        ? line(thisWeek.every((k) => me.done.includes(k)), `Answer your question${thisWeek.length > 1 ? "s" : ""} (${listJoin(thisWeek.map((k) => `Q${k.split("-q")[1]}`))}) on Discord`)
+        : "",
+      line(exDone === exItems.length, `Do the exercises (${exDone} of ${exItems.length})`),
+      rolesNow.length ? line(false, `On Monday you're the <strong>${rolesNow.map((r) => esc(r.name)).join("</strong> and <strong>")}</strong>: ${esc(rolesNow[0].job.charAt(0).toLowerCase() + rolesNow[0].job.slice(1))}`) : "",
+      line(false, `Think about the opening question: <em>${esc(w.opening)}</em>`),
+    ].join("");
+    return `<div class="mb-me-week"><p class="mb-label">Week ${wk} · before ${sessionDates[focus] ? fmtDay(sessionDates[focus]) : "the session"}</p><ul class="mb-check">${items}</ul><a class="mb-jump" href="#week-${wk}">Open week ${wk} →</a></div>`;
   }
 
   function renderRoster() {
@@ -161,14 +203,15 @@
     }
     const rows = state.students
       .map((s, i) => {
-        const mine = Object.keys(assigned).filter((k) => assigned[k]?.id === s.id);
+        const mine = Object.keys(assigned).filter((k) => k.includes("-q") && assigned[k]?.id === s.id);
         const q = mine.filter((k) => s.done.includes(k)).length;
         const e = s.done.filter((k) => k.includes("-e")).length;
-        const pct = Math.round(((q + e) / Math.max(1, mine.length + exTotal)) * 100);
-        return `<div class="mb-roster-row${state.me && s.id === state.me.id ? " is-me" : ""}"><span class="mb-num">${pad(i + 1)}</span><span class="mb-name">${esc(s.name)}</span><span>${q}/${mine.length} Q</span><span>${e}/${exTotal} E</span><span class="mb-bar" aria-label="${pct}% done"><i style="width:${pct}%"></i></span></div>`;
+        const r = s.done.filter((k) => k.endsWith("-r1")).length;
+        const pct = Math.round(((q + e + r) / Math.max(1, mine.length + exTotal + C.weeks.length)) * 100);
+        return `<div class="mb-roster-row${state.me && s.id === state.me.id ? " is-me" : ""}"><span class="mb-num">${pad(i + 1)}</span><span class="mb-name">${esc(s.name)}</span><span>${r}/${C.weeks.length} R</span><span>${q}/${mine.length} Q</span><span>${e}/${exTotal} E</span><span class="mb-bar" aria-label="${pct}% done"><i style="width:${pct}%"></i></span></div>`;
       })
       .join("");
-    $("#mb-roster").innerHTML = `<div class="mb-roster-row mb-roster-head"><span>#</span><span>Student</span><span><b class="mb-long">Questions</b><b class="mb-short">Q</b></span><span><b class="mb-long">Exercises</b><b class="mb-short">E</b></span><span>Progress</span></div>${rows}`;
+    $("#mb-roster").innerHTML = `<div class="mb-roster-row mb-roster-head"><span>#</span><span>Student</span><span><b class="mb-long">Read</b><b class="mb-short">R</b></span><span><b class="mb-long">Questions</b><b class="mb-short">Q</b></span><span><b class="mb-long">Exercises</b><b class="mb-short">E</b></span><span>Progress</span></div>${rows}`;
   }
 
   function renderSignup() {
@@ -256,6 +299,12 @@
       }
       return;
     }
+    const jump = ev.target.closest(".mb-jump");
+    if (jump) {
+      const d = document.querySelector(jump.getAttribute("href"));
+      if (d) { d.open = true; state.open.add(Number(d.dataset.week)); }
+      return;
+    }
     if (ev.target.closest("[data-signout]")) {
       store.set("");
       state.token = "";
@@ -333,6 +382,9 @@
       toast("Link copied. Send it to a friend!");
     } catch {}
   });
+
+  const roleList = $("#mb-role-list");
+  if (roleList) roleList.innerHTML = roles.map((r) => `<div><strong>${esc(r.name)}</strong>${esc(r.job)}</div>`).join("");
 
   render();
   load();

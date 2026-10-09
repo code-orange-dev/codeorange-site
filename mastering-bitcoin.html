@@ -246,7 +246,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
 .mb-tick.is-done .mb-box { background: #27C93F; border-color: #27C93F; color: var(--bg); }
 
 .mb-roster { margin-top: 30px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--card); }
-.mb-roster-row { display: grid; grid-template-columns: 44px minmax(0,1.4fr) 90px 90px minmax(80px,1fr); gap: 14px; align-items: center; padding: 14px 22px; border-bottom: 1px solid rgba(255,255,255,.05); color: var(--muted); font: 600 13px "Plus Jakarta Sans", monospace; }
+.mb-roster-row { display: grid; grid-template-columns: 44px minmax(0,1.4fr) 80px 90px 90px minmax(80px,1fr); gap: 14px; align-items: center; padding: 14px 22px; border-bottom: 1px solid rgba(255,255,255,.05); color: var(--muted); font: 600 13px "Plus Jakarta Sans", monospace; }
 .mb-roster-row:last-child { border-bottom: 0; }
 .mb-roster-row.is-me { background: rgba(247,147,26,.07); }
 .mb-roster-head { color: var(--dim); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; background: var(--band); }
@@ -270,6 +270,35 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
 .mb-note:empty { display: none; }
 .mb-toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 80; max-width: min(92vw, 460px); padding: 14px 18px; border-radius: 12px; background: #141414; border: 1px solid rgba(247,147,26,.5); color: var(--text); font-size: 14px; line-height: 1.5; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
 .mb-toast[hidden] { display: none; }
+.mb-label { margin: 0 0 8px; color: var(--orange); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .1em; text-transform: uppercase; }
+.mb-read { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 16px; }
+.mb-opening { margin-top: 20px; padding: 16px 18px; border-left: 3px solid var(--orange); border-radius: 0 12px 12px 0; background: rgba(247,147,26,.06); }
+.mb-opening p:last-child { margin: 0; color: var(--text); font-size: 17px; line-height: 1.55; }
+.mb-roles-wrap { margin-top: 20px; }
+.mb-roles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 8px; }
+.mb-roles li { display: grid; gap: 3px; padding: 10px 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,.08); background: rgba(6,6,6,.45); cursor: help; }
+.mb-roles li.is-mine { border-color: rgba(247,147,26,.5); background: rgba(247,147,26,.06); }
+.mb-roles b { color: var(--dim); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .06em; text-transform: uppercase; }
+.mb-roles span { color: var(--text); font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mb-roles li.is-mine span { color: var(--orange); }
+.mb-me-week { margin: 20px 0; }
+.mb-check { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.mb-check li { display: flex; gap: 10px; align-items: flex-start; color: var(--text); font-size: 15px; line-height: 1.5; }
+.mb-check li .mb-box { flex: 0 0 auto; margin-top: 1px; }
+.mb-check li.is-done { color: var(--dim); }
+.mb-check li.is-done .mb-box { background: #27C93F; border-color: #27C93F; color: var(--bg); }
+.mb-jump { display: inline-block; margin-top: 12px; color: var(--orange); font: 700 13px "Plus Jakarta Sans", monospace; text-decoration: none; }
+.mb-agenda { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 28px; margin-top: 34px; }
+.mb-agenda ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.mb-agenda ol li { display: grid; grid-template-columns: 86px minmax(0,1fr); gap: 14px; padding: 14px 16px; border-radius: 12px; background: var(--card); border: 1px solid var(--line); color: var(--muted); line-height: 1.55; }
+.mb-agenda ol li b { color: var(--orange); font: 700 13px "Plus Jakarta Sans", monospace; padding-top: 2px; }
+.mb-agenda ol li strong { color: var(--text); }
+.mb-agenda h3 { font-size: 20px; margin: 0 0 14px; }
+.mb-norms { margin: 0 0 26px; padding-left: 20px; color: var(--muted); line-height: 1.7; }
+.mb-norms strong { color: var(--text); }
+.mb-role-list { display: grid; gap: 10px; }
+.mb-role-list div { padding: 14px 16px; border-radius: 12px; background: var(--card); border: 1px solid var(--line); color: var(--muted); line-height: 1.55; }
+.mb-role-list strong { display: block; color: var(--orange); }
 @media (max-width: 900px) {
   .grid.four { grid-template-columns: repeat(2, minmax(0,1fr)); }
   .mb-cols { grid-template-columns: minmax(0,1fr); }
@@ -279,23 +308,26 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
   .mb-week summary .mb-date { grid-column: 2; grid-row: 1; justify-self: end; }
   .mb-week summary::after { display: none; }
   .mb-week-body { padding: 18px; }
-  .mb-roster-row { grid-template-columns: 30px minmax(0,1fr) 54px 60px; padding: 12px 14px; gap: 8px; font-size: 12px; }
+  .mb-roster-row { grid-template-columns: 30px minmax(0,1fr) 44px 50px 56px; padding: 12px 14px; gap: 8px; font-size: 12px; }
   .mb-roster-row > :last-child { grid-column: 2 / -1; }
   .mb-roster-head > :last-child { display: none; }
   .mb-long { display: none; } .mb-short { display: inline; }
   .mb-me { padding: 22px 18px; }
+  .mb-roles { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .mb-agenda { grid-template-columns: minmax(0,1fr); }
 }
 @media (max-width: 560px) {
   .mb-stats-wrap .stat strong { font-size: 28px; }
   .mb-list li { grid-template-columns: minmax(0,1fr); gap: 4px; padding: 12px; }
   .mb-tick { width: auto !important; }
   .mb-link .ghost { width: auto; }
+  .mb-agenda ol li { grid-template-columns: minmax(0,1fr); gap: 4px; }
 }
 </style>
 <link rel="stylesheet" href="/assets/theme.css?v=20261004b">
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
-<script src="/assets/mastering-bitcoin/cohort.js?v=20261009b" defer></script>
-<script src="/assets/mastering-bitcoin/app.js?v=20261009b" defer></script>
+<script src="/assets/mastering-bitcoin/cohort.js?v=20261009c" defer></script>
+<script src="/assets/mastering-bitcoin/app.js?v=20261009c" defer></script>
 </head>
 <body>
 <a class="announce" href="#signup">Mastering Bitcoin study cohort starts Monday 16 November &middot; sign-ups are open <span>Sign up &rarr;</span></a>
@@ -373,12 +405,40 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
   <section class="band"><div class="section-inner">
     <div class="split"><div><p class="eyebrow">How it works</p><h2>No accounts. Just show up.</h2></div><p class="lead">Sign up once with your name and Discord username. You get a personal link that lets you tick things off from any device.</p></div>
     <div class="timeline">
-      <div class="timeline-item"><div><h3>Read the chapter</h3><p>Each week has one chapter of the free online book, sometimes with an optional extra chapter for keen readers.</p></div></div>
+      <div class="timeline-item"><div><h3>Read the chapter</h3><p>Each week has one chapter of the free online book, sometimes with an optional extra chapter for keen readers. Tick "I've read it" so the group knows where everyone is.</p></div></div>
       <div class="timeline-item"><div><h3>Answer your questions</h3><p>Every question has one owner. Look for your name, post your answer in the cohort channel on Discord before Monday, and tick it done.</p></div></div>
       <div class="timeline-item"><div><h3>Do the exercises</h3><p>Everyone does the same hands-on exercises with Bitcoin Core on signet or regtest. Share what you got and tick each one off.</p></div></div>
-      <div class="timeline-item"><div><h3>Meet on Monday</h3><p>We talk it all through on Discord, Mondays at 7pm UTC+8. Week 10 is graduation and your next step into open source.</p></div></div>
+      <div class="timeline-item"><div><h3>Meet on Monday</h3><p>A 90-minute Socratic seminar on Discord, Mondays at 7pm UTC+8, with rotating roles so everyone gets a turn to lead. Week 10 is graduation and your next step into open source.</p></div></div>
     </div>
   </div></section>
+
+  <section id="seminar" class="section-inner" style="scroll-margin-top:96px">
+    <div class="split"><div><p class="eyebrow">The Monday session</p><h2>A Socratic seminar, not a lecture.</h2></div><p class="lead">No slides and no teacher with all the answers. We learn by asking good questions, explaining our thinking out loud, and checking it against the book and a running node. Everyone talks; nobody has to be an expert.</p></div>
+    <div class="mb-agenda">
+      <div>
+        <h3>How the 90 minutes run</h3>
+        <ol>
+          <li><b>0–10 min</b><span><strong>Check-in.</strong> One line each: the thing in this chapter that surprised you most. The facilitator asks the opening question.</span></li>
+          <li><b>10–50 min</b><span><strong>Small groups.</strong> Breakout rooms of 3–5. Each question owner explains their answer in a few minutes, then the group probes it: why, what if, where does the book say that?</span></li>
+          <li><b>50–75 min</b><span><strong>Hands-on.</strong> The exercise driver shares their screen and we work through an exercise together on a real node.</span></li>
+          <li><b>75–85 min</b><span><strong>Bring it together.</strong> The summariser reads back the key takeaways and the questions we couldn't answer yet.</span></li>
+          <li><b>85–90 min</b><span><strong>Wrap up.</strong> How did the discussion go? Next week's chapter, roles and questions.</span></li>
+        </ol>
+      </div>
+      <div>
+        <h3>Ground rules</h3>
+        <ul class="mb-norms">
+          <li><strong>Talk to each other</strong>, not to the facilitator.</li>
+          <li><strong>Point to the text.</strong> Say which section or page backs your claim, or check it on your node.</li>
+          <li><strong>Steelman before you disagree.</strong> Repeat the other view in your own words first.</li>
+          <li><strong>Mind your airtime.</strong> Spoken a lot? Invite someone quieter in.</li>
+          <li><strong>"I don't know" is a great answer.</strong> It goes on the list of open questions.</li>
+        </ul>
+        <h3>Roles rotate every week</h3>
+        <div class="mb-role-list" id="mb-role-list"></div>
+      </div>
+    </div>
+  </section>
 
   <section id="progress" class="section-inner" style="scroll-margin-top:96px">
     <div class="split"><div><p class="eyebrow">The cohort</p><h2>Who's in, and how it's going.</h2></div><p class="lead">Students are listed in sign-up order. Questions count the ones assigned to each person; exercises count across all ten weeks.</p></div>
@@ -391,7 +451,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
       <div class="feature-panel"><div class="feature-panel-inner">
         <form id="mb-signup" class="mb-form" autocomplete="on">
           <label>Your name<input name="name" required maxlength="60" autocomplete="name" placeholder="Satoshi N."></label>
-          <label>Discord username<input name="discord" required maxlength="40" autocomplete="off" placeholder="satoshi"></label>
+          <label>Discord username<input name="discord" required maxlength="40" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="satoshi_n"></label>
           <label>Email <span class="muted">(optional, only for cohort reminders)</span><input name="email" type="email" maxlength="120" autocomplete="email" placeholder="you@example.com"></label>
           <label class="mb-hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
           <button class="button" type="submit">Sign me up</button>

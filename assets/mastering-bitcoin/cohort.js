@@ -13,6 +13,15 @@ window.MB_COHORT = {
   discord: "https://discord.gg/ZtvA79paWa",
   bookUrl: "https://github.com/bitcoinbook/bitcoinbook/blob/develop/BOOK.md",
 
+  // Socratic seminar roles, rotated through the roster each week (shown in this order).
+  roles: [
+    { name: "Facilitator", job: "Keeps time, asks the opening question and brings in quiet voices. Guides, doesn't lecture." },
+    { name: "Summariser", job: "Notes the key takeaways and open questions, and posts them on Discord within a day." },
+    { name: "Devil's advocate", job: "Steelmans the other side and asks \"why not do it differently?\"" },
+    { name: "Exercise driver", job: "Shares their screen and walks the group through one of the hands-on exercises." },
+  ],
+
+  // Each week: an opening question for everyone, then questions with one owner each.
   // Question and exercise ids (w3-q2, w3-e1) are stored with students' "done" ticks:
   // reword freely, but don't renumber them once the cohort has started.
   weeks: [
@@ -22,6 +31,7 @@ window.MB_COHORT = {
         { n: 1, title: "Introduction", file: "ch01_intro.adoc" },
         { n: 2, title: "How Bitcoin Works", file: "ch02_overview.adoc" },
       ],
+      opening: "If you had to explain Bitcoin to a friend in two sentences, what would you say, and what would you leave out?",
       summary: "Meet the cohort, learn how the dashboard works, and read the two short opening chapters. Get Bitcoin Core installed so you're ready for week 2.",
       questions: [
         "What problem did Bitcoin solve that earlier digital cash attempts could not?",
@@ -40,6 +50,7 @@ window.MB_COHORT = {
     {
       title: "Bitcoin Core",
       chapters: [{ n: 3, title: "Bitcoin Core: The Reference Implementation", file: "ch03_bitcoin-core.adoc" }],
+      opening: "Why run your own node at all when a block explorer shows the same data?",
       summary: "Run your own node and talk to it through the command line and JSON-RPC API.",
       questions: [
         "What is the difference between Bitcoin and Bitcoin Core, and why is Core called the reference implementation?",
@@ -58,6 +69,7 @@ window.MB_COHORT = {
     {
       title: "Keys and Addresses",
       chapters: [{ n: 4, title: "Keys and Addresses", file: "ch04_keys.adoc" }],
+      opening: "An address is not an account. What goes wrong when people treat it like one?",
       summary: "Public key cryptography, output scripts and every address format from P2PK to bech32m.",
       questions: [
         "Explain how a private key, public key and address relate. Which steps are one-way, and why?",
@@ -76,6 +88,7 @@ window.MB_COHORT = {
     {
       title: "Wallet Recovery",
       chapters: [{ n: 5, title: "Wallet Recovery", file: "ch05_wallets.adoc" }],
+      opening: "Your house burns down tonight. What exactly do you need to get your bitcoin back?",
       summary: "Deterministic wallets, BIP32 key derivation, BIP39 recovery codes and output script descriptors.",
       questions: [
         "Why did deterministic wallets replace wallets full of independent random keys?",
@@ -95,6 +108,7 @@ window.MB_COHORT = {
       title: "Transactions",
       chapters: [{ n: 6, title: "Transactions", file: "ch06_transactions.adoc" }],
       extra: [{ n: 9, title: "Transaction Fees", file: "ch09_fees.adoc" }],
+      opening: "Where does the balance shown in your wallet actually live?",
       summary: "The byte-by-byte anatomy of a transaction: inputs, outputs, witnesses, lock time and weight.",
       questions: [
         "Walk through the fields of a serialized transaction in order.",
@@ -113,6 +127,7 @@ window.MB_COHORT = {
     {
       title: "Authorization and Authentication",
       chapters: [{ n: 7, title: "Authorization and Authentication", file: "ch07_authorization-authentication.adoc" }],
+      opening: "If all that exists on chain is a script someone can satisfy, what does it mean to own bitcoin?",
       summary: "Bitcoin Script, multisig, P2SH, timelocks, flow control, MAST, taproot and tapscript.",
       questions: [
         "Walk through a P2PKH spend one opcode at a time. What is on the stack after each step?",
@@ -131,6 +146,7 @@ window.MB_COHORT = {
     {
       title: "Digital Signatures",
       chapters: [{ n: 8, title: "Digital Signatures", file: "ch08_signatures.adoc" }],
+      opening: "Why is a signature on a transaction more powerful than a password?",
       summary: "How signatures work, Schnorr and ECDSA, sighash flags, and why randomness matters.",
       questions: [
         "What three things does a digital signature prove in Bitcoin?",
@@ -150,6 +166,7 @@ window.MB_COHORT = {
       title: "The Blockchain",
       chapters: [{ n: 11, title: "The Blockchain", file: "ch11_blockchain.adoc" }],
       extra: [{ n: 10, title: "The Bitcoin Network", file: "ch10_network.adoc" }],
+      opening: "Why should anyone trust the chain with the most work?",
       summary: "Block structure, headers, the genesis block, Merkle trees and Bitcoin's test networks.",
       questions: [
         "What are the fields of a block header, and what does each one commit to?",
@@ -168,6 +185,7 @@ window.MB_COHORT = {
     {
       title: "Mining and Consensus",
       chapters: [{ n: 12, title: "Mining and Consensus", file: "ch12_mining.adoc" }],
+      opening: "Who really decides Bitcoin's rules: miners, nodes, developers or users?",
       summary: "Issuance, independent verification, proof of work, difficulty, chain selection and consensus changes.",
       questions: [
         "How is new bitcoin issued, and what enforces the 21 million limit?",
@@ -189,6 +207,7 @@ window.MB_COHORT = {
         { n: 13, title: "Bitcoin Security", file: "ch13_security.adoc" },
         { n: 14, title: "Second-Layer Applications", file: "ch14_applications.adoc" },
       ],
+      opening: "What is the biggest risk to your own bitcoin, and what will you change after this cohort?",
       summary: "Wrap up with security and second layers, show what you learned, and pick your next step into open source.",
       questions: [
         "What does root of trust mean for Bitcoin security?",
