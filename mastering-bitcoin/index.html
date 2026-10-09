@@ -191,6 +191,12 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 .mb-link code { flex: 1 1 260px; min-width: 0; padding: 10px 12px; border-radius: 10px; background: rgba(0,0,0,.5); border: 1px solid var(--line); color: var(--muted); font: 12px ui-monospace, Menlo, monospace; overflow-wrap: anywhere; }
 .mb-signout { background: none; border: 0; color: var(--dim); font: inherit; text-decoration: underline; cursor: pointer; padding: 6px; }
 .mb-signout:hover { color: var(--orange); }
+.mb-book { position: relative; justify-self: center; display: block; width: min(100%, 380px); text-decoration: none; transform: rotate(-3deg); transition: transform .25s ease; }
+.mb-book:hover { transform: rotate(-1deg) translateY(-6px); }
+.mb-book img { display: block; width: 100%; height: auto; border-radius: 6px 12px 12px 6px; box-shadow: 0 0 0 1px rgba(255,255,255,.08), 0 30px 80px rgba(0,0,0,.6), 0 0 90px rgba(247,147,26,.22); }
+.mb-book::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 14px; border-radius: 6px 0 0 6px; background: linear-gradient(90deg, rgba(0,0,0,.28), transparent); pointer-events: none; }
+.mb-book-tag { position: absolute; left: 50%; bottom: -18px; transform: translateX(-50%) rotate(3deg); white-space: nowrap; padding: 9px 16px; border-radius: 999px; background: var(--orange); color: var(--bg); font: 700 13px "Plus Jakarta Sans", monospace; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
+@media (max-width: 900px) { .mb-book { width: min(78%, 300px); margin: 10px auto 24px; } }
 .mb-me-cta { margin-top: 18px; justify-content: flex-start; flex-wrap: wrap; }
 .mb-cal { margin: 22px 0 0; color: var(--dim); font: 600 13px "Plus Jakarta Sans", monospace; }
 .mb-cal[hidden] { display: none; }
@@ -288,8 +294,8 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
 </style>
 <link rel="stylesheet" href="/assets/theme.css?v=20261004b">
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
-<script src="/assets/mastering-bitcoin/cohort.js?v=20261009a" defer></script>
-<script src="/assets/mastering-bitcoin/app.js?v=20261009a" defer></script>
+<script src="/assets/mastering-bitcoin/cohort.js?v=20261009b" defer></script>
+<script src="/assets/mastering-bitcoin/app.js?v=20261009b" defer></script>
 </head>
 <body>
 <a class="announce" href="#signup">Mastering Bitcoin study cohort starts Monday 16 November &middot; sign-ups are open <span>Sign up &rarr;</span></a>
@@ -330,7 +336,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
         <div class="meta" style="margin:0 0 30px">
           <span class="pill orange" data-mb-start>Start date TBA</span>
           <span class="pill">10 weeks</span>
-          <span class="pill">Mondays 7pm UTC+8</span>
+          <span class="pill">Mondays 7–8:30pm UTC+8</span>
           <span class="pill">Discord</span>
           <span class="pill">Free of charge</span>
         </div>
@@ -338,14 +344,12 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
           <a class="button" href="#signup">Sign up</a>
           <a class="ghost" href="#curriculum">See the 10 weeks</a>
         </div>
-        <p class="mb-cal" data-mb-cal>Add all 10 sessions to your calendar: <a data-mb-gcal href="#" target="_blank" rel="noopener">Google</a> · <a href="/assets/mastering-bitcoin/sessions.ics?v=20261009a" download="mastering-bitcoin-sessions.ics">Apple / Outlook</a></p>
+        <p class="mb-cal" data-mb-cal>Add all 10 sessions to your calendar: <a data-mb-gcal href="#" target="_blank" rel="noopener">Google</a> · <a href="/assets/mastering-bitcoin/sessions.ics?v=20261009b" download="mastering-bitcoin-sessions.ics">Apple / Outlook</a></p>
       </div>
-      <div class="terminal-card" aria-label="Mastering Bitcoin terminal card">
-        <div class="terminal-bar"><span></span><span></span><span></span><strong>student@codeorange: ~/mastering-bitcoin</strong></div>
-        <div class="terminal-body">
-          <p>$ bitcoin-cli getblockhash 0</p><p class="muted">000000000019d6689c085ae165831e93…</p><p>$ cat cohort.txt</p><p class="orange">read → discuss → build, every Monday</p><p>$ ls weeks/</p><p class="muted">01-orientation/ 03-keys/ 05-transactions/ 08-blockchain/ 10-graduation/</p><p>$ <span style="display:inline-block;width:9px;height:17px;background:#F7931A;vertical-align:text-bottom"></span></p>
-        </div>
-      </div>
+      <a class="mb-book" href="https://github.com/bitcoinbook/bitcoinbook/blob/develop/BOOK.md" target="_blank" rel="noopener" aria-label="Read Mastering Bitcoin, 3rd edition, free online">
+        <img src="/assets/mastering-bitcoin/book-cover.jpg?v=20261009a" width="640" height="840" alt="Cover of Mastering Bitcoin: Programming the Open Blockchain, third edition, by Andreas M. Antonopoulos and David A. Harding">
+        <span class="mb-book-tag">The book we read · free online →</span>
+      </a>
     </div>
     <div class="section-inner mb-stats-wrap">
       <div class="grid four">
@@ -401,7 +405,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
   <section class="section-inner final-cta">
     <p class="eyebrow">The book</p>
     <h2>Read it free, online.</h2>
-    <p class="lead" style="margin-left:auto;margin-right:auto"><em>Mastering Bitcoin: Programming the Open Blockchain</em> (3rd edition) by Andreas M. Antonopoulos and David A. Harding is published under a CC BY-SA 4.0 license. The questions and exercises on this page are written by Code Orange.</p>
+    <p class="lead" style="margin-left:auto;margin-right:auto"><em>Mastering Bitcoin: Programming the Open Blockchain</em> (3rd edition) by Andreas M. Antonopoulos and David A. Harding is published under a CC BY-SA 4.0 license. Cover image from the book's repository, published by O'Reilly Media. The questions and exercises on this page are written by Code Orange.</p>
     <div class="cta-row" style="justify-content:center"><a class="button" href="https://github.com/bitcoinbook/bitcoinbook/blob/develop/BOOK.md" target="_blank" rel="noopener">Open the book</a><a class="ghost" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord</a></div>
   </section>
   <div id="mb-toast" class="mb-toast" role="status" hidden></div>

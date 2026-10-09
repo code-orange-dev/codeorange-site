@@ -117,7 +117,7 @@
           <div class="mb-week-body">
             <p class="mb-summary">${esc(w.summary)}</p>
             <div class="mb-chapters">${chapters}${extra}</div>
-            ${date ? `<p class="mb-when">Session: ${fmtDay(date)}, 7pm UTC+8 · your time: ${fmtLocal(date)} · on Discord</p>` : ""}
+            ${date ? `<p class="mb-when">Session: ${fmtDay(date)}, 7–8:30pm UTC+8 · your time: ${fmtLocal(date)} · on Discord</p>` : ""}
             <div class="mb-cols">
               <div><h3>Discussion questions</h3><p class="mb-hint">Each question has one owner. Post your answer in the cohort channel on Discord before the session, then tick it done.</p><ol class="mb-list">${questions}</ol></div>
               <div><h3>Exercises</h3><p class="mb-hint">Everyone does these. Share what you got on Discord and tick each one off.</p><ol class="mb-list">${exercises}</ol></div>
@@ -311,7 +311,7 @@
   function gcalHref() {
     if (!first) return "";
     const stamp = (d) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
-    const end = new Date(first.getTime() + 60 * 6e4);
+    const end = new Date(first.getTime() + (C.sessionMinutes || 60) * 6e4);
     return "https://calendar.google.com/calendar/render?" + new URLSearchParams({
       action: "TEMPLATE",
       text: "Mastering Bitcoin study cohort",

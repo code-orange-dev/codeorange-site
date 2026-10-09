@@ -5,8 +5,9 @@ window.MB_COHORT = {
   // First Monday of the cohort as "YYYY-MM-DD", or null while the date is still TBA.
   // If you change it, also update assets/mastering-bitcoin/sessions.ics.
   startDate: "2026-11-16",
-  // Sessions: Mondays 7pm UTC+8 (11:00 UTC), on Discord.
+  // Sessions: Mondays 7–8:30pm UTC+8 (11:00–12:30 UTC), on Discord.
   sessionUtcHour: 11,
+  sessionMinutes: 90,
   sessionLabel: "Mondays, 7pm UTC+8",
   signupsOpen: true,
   discord: "https://discord.gg/ZtvA79paWa",
