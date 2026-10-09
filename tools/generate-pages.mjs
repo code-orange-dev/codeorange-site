@@ -287,7 +287,7 @@ function pageShell({
 <meta name="twitter:title" content="${title} - Code Orange Dev School">
 <meta name="twitter:description" content="${description}">
 <meta name="twitter:image" content="https://codeorange.dev/assets/og-codeorange-workshop.jpg">
-<link rel="icon" type="image/svg+xml" href="/assets/favicon-bitcoin.svg">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon-co.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -298,7 +298,7 @@ ${styles()}
 <a class="announce" href="/apply">rawBit cohort is live now &middot; Bitcoin Privacy Track open for enrollment <span>Apply &rarr;</span></a>
 <header class="site-header">
   <div class="header-inner">
-    <a class="brand" href="/" aria-label="Code Orange Dev School home"><img src="/assets/logo-white.png" alt="Code Orange Dev School"></a>
+    <a class="brand" href="/" aria-label="Code Orange Dev School home"><img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School"></a>
     <nav class="desktop-nav" aria-label="Primary">
       <a href="/programs">Programs</a>
       <a href="/consulting">Consulting</a>
@@ -589,7 +589,7 @@ function footer() {
   </div>
   <div class="footer-grid">
     <div>
-      <img src="/assets/logo-white.png" alt="Code Orange Dev School" style="height:58px;width:auto;margin-bottom:18px">
+      <img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School" style="height:58px;width:auto;margin-bottom:18px">
       <p style="color:var(--dim);max-width:420px;line-height:1.7">Code Orange Dev School trains Bitcoin developers, node runners, and technical community leaders from Bali into the wider Asian Bitcoin ecosystem.</p>
       <p><a href="${links.email}">${links.emailAddress}</a></p>
       <div class="cta-row" style="gap:10px;justify-content:flex-start">
@@ -655,7 +655,7 @@ function write(path, html) {
       },
     };
     output = output.replace(
-      /(<link rel="icon" type="image\/svg\+xml" href="\/assets\/favicon-bitcoin\.svg">\n)/,
+      /(<link rel="icon" type="image\/svg\+xml" href="\/assets\/favicon-co\.svg">\n)/,
       (match) => `${match}<script type="application/ld+json">${JSON.stringify(structuredData)}</script>\n`
     );
   }

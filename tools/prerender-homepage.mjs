@@ -43,7 +43,7 @@ const staticHomepage = `
     #static-homepage p { color: #C8CDD9; line-height: 1.65; }
     #static-homepage .co-announce { display: block; padding: 10px 20px; background: #F7931A; color: #0B1220; font: 700 13px/1.4 "JetBrains Mono", monospace; text-align: center; text-decoration: none; }
     #static-homepage .co-nav { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 82px; }
-    #static-homepage .co-nav img { width: 150px; height: auto; }
+    #static-homepage .co-nav img { width: 200px; height: auto; }
     #static-homepage .co-links, #static-homepage .co-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
     #static-homepage .co-links a { color: #C8CDD9; font-size: 14px; text-decoration: none; }
     #static-homepage .co-button { display: inline-block; padding: 13px 20px; border: 1px solid rgba(255,255,255,.16); border-radius: 8px; font-weight: 700; text-decoration: none; }
@@ -100,7 +100,7 @@ const staticHomepage = `
     @media (max-width: 760px) {
       #static-homepage .co-wrap { width: min(100% - 36px, 1240px); }
       #static-homepage .co-nav { padding: 16px 0; align-items: flex-start; flex-direction: column; }
-      #static-homepage .co-nav img { width: 132px; }
+      #static-homepage .co-nav img { width: 168px; }
       #static-homepage .co-links { display: none; }
       #static-homepage .co-hero-grid { grid-template-columns: 1fr; gap: 34px; }
       #static-homepage h1 { font-size: clamp(34px, 10.5vw, 48px); line-height: 1.05; }
@@ -129,7 +129,7 @@ const staticHomepage = `
   </style>
   <a class="co-announce" href="/rawbit">⚡ rawBit cohort is live now · Bitcoin Privacy Track open for enrollment · Apply →</a>
   <header class="co-band"><div class="co-wrap co-nav">
-    <a href="#top"><img src="/assets/logo-white.png" alt="Code Orange Dev School"></a>
+    <a href="#top"><img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School"></a>
     <nav class="co-links" aria-label="Primary"><a href="/programs">Programs</a><a href="/calendar">Calendar</a><a href="/community">Community</a><a href="/impact">Impact</a><a href="/about">About</a></nav>
     <div class="co-actions"><a class="co-button" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a><a class="co-button primary" href="/apply">Apply now</a></div>
   </div></header>
