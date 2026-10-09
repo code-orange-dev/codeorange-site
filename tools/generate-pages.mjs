@@ -295,7 +295,7 @@ function pageShell({
 ${styles()}
 </head>
 <body>
-<a class="announce" href="/apply">rawBit cohort is live now &middot; Bitcoin Privacy Track open for enrollment <span>Apply &rarr;</span></a>
+<a class="announce" href="/mastering-bitcoin">Mastering Bitcoin study cohort starts Monday 16 November &middot; free, on Discord <span>Sign up &rarr;</span></a>
 <header class="site-header">
   <div class="header-inner">
     <a class="brand" href="/" aria-label="Code Orange Dev School home"><img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School"></a>
