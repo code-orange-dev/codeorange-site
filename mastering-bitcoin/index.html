@@ -323,11 +323,96 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
   .mb-link .ghost { width: auto; }
   .mb-agenda ol li { grid-template-columns: minmax(0,1fr); gap: 4px; }
 }
+
+/* ── Polish: buttons, motion, glow ── */
+.mb-cta { position: relative; overflow: hidden; gap: 10px; isolation: isolate; transition: transform .18s cubic-bezier(.2,.8,.2,1), box-shadow .2s ease, background .2s ease, border-color .2s ease, color .2s ease !important; }
+.mb-cta:hover { transform: translateY(-2px); }
+.mb-cta:active { transform: translateY(0) scale(.98); }
+.button.mb-cta { box-shadow: 0 8px 24px rgba(247,147,26,.22), inset 0 1px 0 rgba(255,255,255,.35); }
+.button.mb-cta:hover { box-shadow: 0 14px 38px rgba(247,147,26,.42), inset 0 1px 0 rgba(255,255,255,.4); }
+.button.mb-cta::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.45) 50%, transparent 70%); transform: translateX(-120%); }
+.button.mb-cta:hover::after { animation: mb-shine .8s ease; }
+@keyframes mb-shine { to { transform: translateX(120%); } }
+.mb-arrow { width: 16px; height: 16px; flex: 0 0 auto; transition: transform .2s ease; }
+.mb-cta:hover .mb-arrow { transform: translateX(4px); }
+.ghost.mb-cta:hover { box-shadow: 0 10px 30px rgba(0,0,0,.35), 0 0 0 1px rgba(247,147,26,.25); }
+.button, .ghost, .mb-tick, .mb-chapters a, .mb-rail a, summary { -webkit-tap-highlight-color: transparent; }
+:where(.button, .ghost, .mb-tick, .mb-chapters a, .mb-rail a, .mb-jump, .mb-signout, summary):focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+
+.mb-countdown { display: flex; gap: 10px; margin: 0 0 26px; }
+.mb-countdown[hidden] { display: none; }
+.mb-countdown div { min-width: 74px; padding: 12px 10px 10px; border-radius: 14px; text-align: center; background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.015)); border: 1px solid rgba(255,255,255,.1); box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 12px 30px rgba(0,0,0,.3); backdrop-filter: blur(8px); }
+.mb-countdown strong { display: block; color: var(--text); font: 700 30px/1 "Plus Jakarta Sans", monospace; font-variant-numeric: tabular-nums; }
+.mb-countdown div:first-child strong { color: var(--orange); }
+.mb-countdown span { display: block; margin-top: 6px; color: var(--dim); font: 700 10px "Plus Jakarta Sans", monospace; letter-spacing: .14em; text-transform: uppercase; }
+
+/* Cursor-following glow on cards */
+.mb-glow { position: relative; }
+.mb-glow::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .3s ease; background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(247,147,26,.10), transparent 45%); z-index: 0; }
+.mb-glow:hover::before { opacity: 1; }
+.mb-glow > * { position: relative; z-index: 1; }
+.mb-week, .stat, .mb-agenda ol li, .mb-role-list div, .mb-list li, .mb-roles li { transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease, background .2s ease; }
+.mb-agenda ol li:hover, .mb-role-list div:hover, .stat:hover { border-color: rgba(247,147,26,.35); transform: translateY(-2px); }
+.mb-week:not([open]):hover { border-color: rgba(247,147,26,.35); }
+.mb-list li:hover { border-color: rgba(255,255,255,.14); }
+
+/* Week rail */
+.mb-rail { display: grid; grid-template-columns: repeat(10, minmax(0,1fr)); gap: 6px; margin-top: 34px; }
+.mb-rail a { position: relative; display: grid; gap: 6px; padding: 10px 0 0; text-decoration: none; color: var(--dim); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .06em; }
+.mb-rail a i { display: block; height: 6px; border-radius: 99px; background: rgba(255,255,255,.08); overflow: hidden; transition: background .2s ease; }
+.mb-rail a i b { display: block; height: 100%; width: var(--p, 0%); background: linear-gradient(90deg, #C2620A, var(--orange)); border-radius: inherit; transition: width .6s cubic-bezier(.2,.8,.2,1); }
+.mb-rail a.is-past i { background: rgba(247,147,26,.25); }
+.mb-rail a.is-current { color: var(--orange); }
+.mb-rail a.is-current i { box-shadow: 0 0 0 1px rgba(247,147,26,.6), 0 0 18px rgba(247,147,26,.45); }
+.mb-rail a:hover { color: var(--text); }
+.mb-rail a em { font-style: normal; }
+.mb-rail a span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mb-weeks { margin-top: 18px !important; }
+
+/* Smooth accordion */
+.mb-week summary { transition: background .2s ease; }
+.mb-week summary::after { transition: transform .25s ease; }
+.mb-week-body { overflow: hidden; }
+
+/* Tick feedback */
+.mb-tick { transition: border-color .15s, background .15s, transform .15s, box-shadow .2s; }
+.mb-tick:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(0,0,0,.3); }
+.mb-tick:active { transform: scale(.96); }
+.mb-tick.is-pop .mb-box { animation: mb-pop .45s cubic-bezier(.2,1.6,.4,1); }
+.mb-tick.is-pop { box-shadow: 0 0 0 6px rgba(39,201,63,.12), 0 0 24px rgba(39,201,63,.35); }
+@keyframes mb-pop { 0% { transform: scale(.4); } 60% { transform: scale(1.25); } 100% { transform: scale(1); } }
+.mb-confetti { position: fixed; left: 0; top: 0; width: 8px; height: 8px; border-radius: 2px; pointer-events: none; z-index: 90; }
+
+/* Book: floats, tilts with the cursor */
+.mb-book { transform-style: preserve-3d; transition: transform .35s cubic-bezier(.2,.8,.2,1); }
+.mb-book img { animation: mb-float 6s ease-in-out infinite; }
+@keyframes mb-float { 50% { transform: translateY(-10px); } }
+
+/* Scroll reveal */
+.mb-js .mb-reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1); }
+.mb-js .mb-reveal.is-in { opacity: 1; transform: none; }
+.mb-roster .mb-bar i { transition: width .9s cubic-bezier(.2,.8,.2,1); }
+.mb-roster-row:not(.mb-roster-head) { transition: background .2s ease; }
+.mb-roster-row:not(.mb-roster-head):hover { background: rgba(255,255,255,.025); }
+
+@media (max-width: 900px) {
+  .mb-rail { grid-template-columns: repeat(5, minmax(0,1fr)); row-gap: 12px; }
+  .mb-rail a em { display: none; }
+  .mb-countdown div { min-width: 0; flex: 1; }
+}
+@media (max-width: 560px) {
+  .mb-countdown strong { font-size: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mb-book img, .button.mb-cta:hover::after, .mb-tick.is-pop .mb-box { animation: none !important; }
+  .mb-js .mb-reveal { opacity: 1; transform: none; transition: none; }
+  .mb-cta, .mb-tick, .mb-agenda ol li, .mb-role-list div, .stat { transition: none !important; }
+}
 </style>
 <link rel="stylesheet" href="/assets/theme.css?v=20261004b">
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
-<script src="/assets/mastering-bitcoin/cohort.js?v=20261009c" defer></script>
-<script src="/assets/mastering-bitcoin/app.js?v=20261009c" defer></script>
+<script src="/assets/mastering-bitcoin/cohort.js?v=20261009d" defer></script>
+<script src="/assets/mastering-bitcoin/app.js?v=20261009d" defer></script>
 </head>
 <body>
 <a class="announce" href="#signup">Mastering Bitcoin study cohort starts Monday 16 November &middot; sign-ups are open <span>Sign up &rarr;</span></a>
@@ -372,9 +457,15 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
           <span class="pill">Discord</span>
           <span class="pill">Free of charge</span>
         </div>
+        <div class="mb-countdown" data-mb-countdown hidden aria-label="Time until the first session">
+          <div><strong data-cd="d">00</strong><span>days</span></div>
+          <div><strong data-cd="h">00</strong><span>hours</span></div>
+          <div><strong data-cd="m">00</strong><span>mins</span></div>
+          <div><strong data-cd="s">00</strong><span>secs</span></div>
+        </div>
         <div class="cta-row">
-          <a class="button" href="#signup">Sign up</a>
-          <a class="ghost" href="#curriculum">See the 10 weeks</a>
+          <a class="button mb-cta" href="#signup"><span>Sign up free</span><svg class="mb-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="ghost mb-cta" href="#curriculum"><span>See the 10 weeks</span></a>
         </div>
         <p class="mb-cal" data-mb-cal>Add all 10 sessions to your calendar: <a data-mb-gcal href="#" target="_blank" rel="noopener">Google</a> · <a href="/assets/mastering-bitcoin/sessions.ics?v=20261009b" download="mastering-bitcoin-sessions.ics">Apple / Outlook</a></p>
       </div>
@@ -399,6 +490,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
 
   <section id="curriculum" class="section-inner" style="scroll-margin-top:96px">
     <div class="split"><div><p class="eyebrow">Curriculum</p><h2>One chapter a week.</h2></div><p class="lead">Read the chapter before Monday. Questions are shared out evenly, so each week some of them are yours. Answer them in the cohort channel on Discord and tick them off here. Chapters link to the free online edition of the book.</p></div>
+    <nav id="mb-rail" class="mb-rail" aria-label="Jump to a week"></nav>
     <div id="mb-weeks" class="mb-weeks"></div>
   </section>
 
@@ -454,7 +546,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
           <label>Discord username<input name="discord" required maxlength="40" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="satoshi_n"></label>
           <label>Email <span class="muted">(optional, only for cohort reminders)</span><input name="email" type="email" maxlength="120" autocomplete="email" placeholder="you@example.com"></label>
           <label class="mb-hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
-          <button class="button" type="submit">Sign me up</button>
+          <button class="button mb-cta" type="submit">Sign me up</button>
           <p class="mb-fine">Your name and progress show on this page. Your Discord username and email are only seen by the organisers.</p>
         </form>
         <p id="mb-signup-note" class="mb-note" role="status"></p>
@@ -466,7 +558,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
     <p class="eyebrow">The book</p>
     <h2>Read it free, online.</h2>
     <p class="lead" style="margin-left:auto;margin-right:auto"><em>Mastering Bitcoin: Programming the Open Blockchain</em> (3rd edition) by Andreas M. Antonopoulos and David A. Harding is published under a CC BY-SA 4.0 license. Cover image from the book's repository, published by O'Reilly Media. The questions and exercises on this page are written by Code Orange.</p>
-    <div class="cta-row" style="justify-content:center"><a class="button" href="https://github.com/bitcoinbook/bitcoinbook/blob/develop/BOOK.md" target="_blank" rel="noopener">Open the book</a><a class="ghost" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord</a></div>
+    <div class="cta-row" style="justify-content:center"><a class="button mb-cta" href="https://github.com/bitcoinbook/bitcoinbook/blob/develop/BOOK.md" target="_blank" rel="noopener"><span>Open the book</span><svg class="mb-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="ghost" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord</a></div>
   </section>
   <div id="mb-toast" class="mb-toast" role="status" hidden></div>
 </main>
