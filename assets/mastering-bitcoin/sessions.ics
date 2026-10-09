@@ -1,0 +1,18 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Code Orange Dev School//Mastering Bitcoin cohort//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Mastering Bitcoin study cohort
+BEGIN:VEVENT
+UID:mastering-bitcoin-2026@codeorange.dev
+DTSTAMP:20261009T000000Z
+DTSTART:20261116T110000Z
+DTEND:20261116T120000Z
+RRULE:FREQ=WEEKLY;COUNT=10
+SUMMARY:Mastering Bitcoin study cohort
+LOCATION:Discord
+DESCRIPTION:Weekly session on Discord: https://discord.gg/ZtvA79paWa\nThis week's chapter\, questions and exercises: https://codeorange.dev/mastering-bitcoin
+URL:https://codeorange.dev/mastering-bitcoin
+END:VEVENT
+END:VCALENDAR

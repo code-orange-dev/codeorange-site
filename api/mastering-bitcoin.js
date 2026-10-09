@@ -99,7 +99,7 @@ function readBody(req) {
 
 async function roster(token) {
   const students = await sql(
-    "SELECT id, name, created_at FROM mb_students WHERE cohort = $1 AND NOT hidden ORDER BY created_at, id",
+    "SELECT id, name, floor(extract(epoch FROM created_at) * 1000) AS joined FROM mb_students WHERE cohort = $1 AND NOT hidden ORDER BY created_at, id",
     [COHORT]
   );
   const done = await sql(
@@ -114,7 +114,7 @@ async function roster(token) {
     if (row) me = { id: Number(row.id), name: row.name, discord: row.discord };
   }
   return {
-    students: students.map((s) => ({ id: Number(s.id), name: s.name, done: byStudent.get(s.id) })),
+    students: students.map((s) => ({ id: Number(s.id), name: s.name, joined: Number(s.joined), done: byStudent.get(s.id) })),
     me,
   };
 }

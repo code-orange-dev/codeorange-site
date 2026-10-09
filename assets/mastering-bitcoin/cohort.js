@@ -3,7 +3,8 @@
 // Bump the ?v= on its <script> tag in mastering-bitcoin.html after editing.
 window.MB_COHORT = {
   // First Monday of the cohort as "YYYY-MM-DD", or null while the date is still TBA.
-  startDate: null,
+  // If you change it, also update assets/mastering-bitcoin/sessions.ics.
+  startDate: "2026-11-16",
   // Sessions: Mondays 7pm UTC+8 (11:00 UTC), on Discord.
   sessionUtcHour: 11,
   sessionLabel: "Mondays, 7pm UTC+8",

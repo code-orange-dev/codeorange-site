@@ -7,6 +7,7 @@
   const $ = (sel) => document.querySelector(sel);
   const esc = (s) =>
     String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+  const listJoin = (a) => (a.length > 1 ? `${a.slice(0, -1).join(", ")} and ${a[a.length - 1]}` : a.join(""));
   const pad = (n) => String(n).padStart(2, "0");
   const chapterUrl = (file) => `https://github.com/bitcoinbook/bitcoinbook/blob/develop/${file}`;
 
@@ -45,17 +46,23 @@
   if (currentWeek >= 0) state.open.add(currentWeek); else state.open.add(0);
 
   // ── Assignments: questions go round-robin through the roster (in sign-up order),
-  // carrying on from week to week so everyone gets an even share. ──
+  // carrying on from week to week so everyone gets an even share. A week's owners
+  // are fixed once that week opens (the previous Monday's session): people who join
+  // later only pick up questions from weeks that haven't opened yet. ──
+  const weekOpens = (wi) => (sessionDates[wi] ? sessionDates[wi].getTime() - 7 * 864e5 : Infinity);
   function assignments() {
     const map = {};
-    const n = state.students.length;
+    const now = Date.now();
     let k = 0;
-    C.weeks.forEach((w, wi) =>
+    C.weeks.forEach((w, wi) => {
+      const opens = weekOpens(wi);
+      const locked = now >= opens ? state.students.filter((s) => !s.joined || s.joined < opens) : [];
+      const pool = locked.length ? locked : state.students;
       w.questions.forEach((_, qi) => {
-        map[`w${wi + 1}-q${qi + 1}`] = n ? state.students[k % n] : null;
+        map[`w${wi + 1}-q${qi + 1}`] = pool.length ? pool[k % pool.length] : null;
         k++;
-      })
-    );
+      });
+    });
     return map;
   }
 
@@ -139,8 +146,9 @@
     box.hidden = false;
     box.innerHTML = `<div class="mb-me-head"><div><p class="eyebrow">Your dashboard</p><h2>Hi ${esc(me.name)}.</h2></div>
       <div class="mb-me-stats"><span><strong>${qDone}/${mine.length}</strong> questions</span><span><strong>${exDone}/${exTotal}</strong> exercises</span></div></div>
-      <p class="mb-me-week">${thisWeek.length ? `Week ${focus + 1}: you own ${thisWeek.map((k) => `Q${k.split("-q")[1]}`).join(" and ")}. ${thisWeek.every((k) => me.done.includes(k)) ? "All done, nice." : `Open week ${focus + 1} below to find ${thisWeek.length > 1 ? "them" : "it"}.`}` : `No questions for you in week ${focus + 1}. Do the exercises and join the discussion.`}</p>
-      <div class="mb-link"><span>Your personal link (open it on any device to tick things off):</span><code>${esc(link)}</code><button type="button" class="ghost small" data-copy="${esc(link)}">Copy link</button><button type="button" class="mb-signout" data-signout>Not you? Sign out</button></div>`;
+      <p class="mb-me-week">${thisWeek.length ? `Week ${focus + 1}: you own ${listJoin(thisWeek.map((k) => `Q${k.split("-q")[1]}`))}. ${thisWeek.every((k) => me.done.includes(k)) ? "All done, nice." : `Open week ${focus + 1} below to find ${thisWeek.length > 1 ? "them" : "it"}.`}` : `No questions for you in week ${focus + 1}. Do the exercises and join the discussion.`}</p>
+      <div class="mb-link"><span>Your personal link (open it on any device to tick things off):</span><code>${esc(link)}</code><button type="button" class="ghost small" data-copy="${esc(link)}">Copy link</button><button type="button" class="mb-signout" data-signout>Not you? Sign out</button></div>
+      <div class="cta-row mb-me-cta"><a class="button small" href="${C.discord}" target="_blank" rel="noopener">Join the Discord</a>${first ? `<a class="ghost small" href="${esc(gcalHref())}" target="_blank" rel="noopener">Add to Google Calendar</a>` : ""}</div>`;
   }
 
   function renderRoster() {
@@ -294,10 +302,36 @@
 
   // ── Static bits ──
   const first = sessionDates[0];
+  const daysToGo = first ? Math.ceil((first - Date.now()) / 864e5) : null;
   $("#mb-start").textContent = first ? fmtDay(first) : "TBA";
   $("#mb-start-label").textContent = first ? "Week 1 · 7pm UTC+8" : "Start date";
   document.querySelectorAll("[data-mb-start]").forEach((el) => {
-    el.textContent = first ? `Starts ${fmtDay(first)}` : "Start date TBA";
+    el.textContent = !first ? "Start date TBA" : daysToGo > 1 ? `Starts ${fmtDay(first)} · in ${daysToGo} days` : daysToGo === 1 ? `Starts tomorrow, ${fmtDay(first)}` : daysToGo === 0 ? "Starts today" : `Started ${fmtDay(first)}`;
+  });
+  function gcalHref() {
+    if (!first) return "";
+    const stamp = (d) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+    const end = new Date(first.getTime() + 60 * 6e4);
+    return "https://calendar.google.com/calendar/render?" + new URLSearchParams({
+      action: "TEMPLATE",
+      text: "Mastering Bitcoin study cohort",
+      dates: `${stamp(first)}/${stamp(end)}`,
+      recur: `RRULE:FREQ=WEEKLY;COUNT=${C.weeks.length}`,
+      details: `Weekly session on Discord: ${C.discord}\nThis week's chapter, questions and exercises: ${location.origin}/mastering-bitcoin`,
+      location: "Discord",
+    });
+  }
+  document.querySelectorAll("[data-mb-gcal]").forEach((a) => (a.href = gcalHref()));
+  if (!first) document.querySelectorAll("[data-mb-cal]").forEach((el) => (el.hidden = true));
+  document.addEventListener("click", async (ev) => {
+    if (!ev.target.closest("[data-mb-share]")) return;
+    const url = `${location.origin}/mastering-bitcoin`;
+    const text = "Join the Mastering Bitcoin study cohort: 10 weeks, one chapter a week, Mondays on Discord. Free.";
+    try {
+      if (navigator.share) return await navigator.share({ title: "Mastering Bitcoin study cohort", text, url });
+      await navigator.clipboard.writeText(url);
+      toast("Link copied. Send it to a friend!");
+    } catch {}
   });
 
   render();
