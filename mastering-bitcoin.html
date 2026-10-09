@@ -324,6 +324,18 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
   .mb-agenda ol li { grid-template-columns: minmax(0,1fr); gap: 4px; }
 }
 
+
+/* Photo backgrounds: faint, faded at the edges, behind the content */
+.mb-bg { position: relative; isolation: isolate; }
+.mb-bg::after { content: ""; position: absolute; top: 0; bottom: 0; z-index: -1; width: min(58vw, 900px); pointer-events: none; background: var(--mb-bg) center / cover no-repeat; opacity: .24; filter: saturate(.8) contrast(1.05) brightness(.9); }
+.mb-bg-right::after { right: calc(50% - 50vw); -webkit-mask-image: radial-gradient(ellipse 70% 60% at 75% 50%, #000 25%, transparent 78%); mask-image: radial-gradient(ellipse 70% 60% at 75% 50%, #000 25%, transparent 78%); }
+.mb-bg-left::after { left: calc(50% - 50vw); -webkit-mask-image: radial-gradient(ellipse 70% 60% at 25% 50%, #000 25%, transparent 78%); mask-image: radial-gradient(ellipse 70% 60% at 25% 50%, #000 25%, transparent 78%); }
+.mb-bg.band::after { opacity: .16; }
+@media (max-width: 900px) {
+  .mb-bg::after { width: 100vw; opacity: .12; }
+  .mb-bg-right::after, .mb-bg-left::after { -webkit-mask-image: radial-gradient(ellipse 80% 45% at 50% 40%, #000 20%, transparent 80%); mask-image: radial-gradient(ellipse 80% 45% at 50% 40%, #000 20%, transparent 80%); }
+}
+
 /* ── Polish: buttons, motion, glow ── */
 .mb-cta { position: relative; overflow: hidden; gap: 10px; isolation: isolate; transition: transform .18s cubic-bezier(.2,.8,.2,1), box-shadow .2s ease, background .2s ease, border-color .2s ease, color .2s ease !important; }
 .mb-cta:hover { transform: translateY(-2px); }
@@ -488,7 +500,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
     <div id="mb-me" class="feature-panel mb-me" hidden></div>
   </section>
 
-  <section id="curriculum" class="section-inner" style="scroll-margin-top:96px">
+  <section id="curriculum" class="section-inner mb-bg mb-bg-right" style="--mb-bg:url(/assets/mastering-bitcoin/bg-hardware-wallets.jpg?v=1);scroll-margin-top:96px">
     <div class="split"><div><p class="eyebrow">Curriculum</p><h2>One chapter a week.</h2></div><p class="lead">Read the chapter before Monday. Questions are shared out evenly, so each week some of them are yours. Answer them in the cohort channel on Discord and tick them off here. Chapters link to the free online edition of the book.</p></div>
     <nav id="mb-rail" class="mb-rail" aria-label="Jump to a week"></nav>
     <div id="mb-weeks" class="mb-weeks"></div>
@@ -504,7 +516,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
     </div>
   </div></section>
 
-  <section id="seminar" class="section-inner" style="scroll-margin-top:96px">
+  <section id="seminar" class="section-inner mb-bg mb-bg-left" style="--mb-bg:url(/assets/mastering-bitcoin/bg-seed-plates.jpg?v=1);scroll-margin-top:96px">
     <div class="split"><div><p class="eyebrow">The Monday session</p><h2>A Socratic seminar, not a lecture.</h2></div><p class="lead">No slides and no teacher with all the answers. We learn by asking good questions, explaining our thinking out loud, and checking it against the book and a running node. Everyone talks; nobody has to be an expert.</p></div>
     <div class="mb-agenda">
       <div>
@@ -537,7 +549,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
     <div id="mb-roster" class="mb-roster"></div>
   </section>
 
-  <section id="signup" class="band" style="scroll-margin-top:96px"><div class="section-inner">
+  <section id="signup" class="band mb-bg mb-bg-right" style="--mb-bg:url(/assets/mastering-bitcoin/bg-workshop-table.jpg?v=1);scroll-margin-top:96px"><div class="section-inner">
     <div class="split">
       <div><p class="eyebrow">Sign up</p><h2>Join the cohort.</h2><p class="lead">Free of charge for everyone joining. All you need is a Discord account and a few hours a week. Joining late is fine: you pick up questions from the weeks still to come.</p><button type="button" class="ghost small" data-mb-share>Invite a friend</button></div>
       <div class="feature-panel"><div class="feature-panel-inner">
