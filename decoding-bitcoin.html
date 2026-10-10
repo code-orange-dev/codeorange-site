@@ -415,6 +415,23 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
 .mb-module .pill { align-self: flex-start; }
 .mb-tools { margin: 24px 0 0; color: var(--muted); line-height: 1.9; }
 .mb-tools a, .lead a { color: var(--orange); }
+.mb-shot { display: block; position: relative; max-width: 860px; margin: 0 auto 28px; border: 1px solid rgba(247,147,26,.35); border-radius: 22px; overflow: hidden; background: #111; text-decoration: none; transition: transform .18s ease, border-color .18s ease; }
+.mb-shot:hover { transform: translateY(-4px); border-color: rgba(247,147,26,.7); }
+.mb-shot-bar { display: flex; align-items: center; gap: 8px; padding: 11px 16px; background: #161616; border-bottom: 1px solid rgba(255,255,255,.08); color: var(--muted); font: 600 13px "Plus Jakarta Sans", monospace; }
+.mb-shot-bar i { width: 10px; height: 10px; border-radius: 50%; background: #3a3a3a; }
+.mb-shot-bar i:first-child { background: #F7931A; }
+.mb-shot-bar span { margin-left: 8px; }
+.mb-shot img { display: block; width: 100%; height: auto; aspect-ratio: 1200 / 630; object-fit: cover; }
+.mb-shot figcaption { padding: 14px 18px; color: var(--muted); font-size: 14px; }
+.mb-shot figcaption b { color: var(--orange); }
+.mb-shot.is-broken img { display: none; }
+.mb-credit-shot { max-width: 640px; margin: 28px auto; }
+.mb-toolgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; margin-top: 18px; }
+.mb-tool { display: flex; flex-direction: column; gap: 8px; padding: 18px; text-decoration: none; transition: transform .18s ease, border-color .18s ease; }
+.mb-tool:hover { transform: translateY(-3px); border-color: rgba(247,147,26,.55); }
+.mb-tool h3 { font-size: 17px; margin: 0; }
+.mb-tool p { margin: 0; font-size: 14px; flex: 1; }
+.mb-tool b { color: var(--orange); font: 700 12px "Plus Jakarta Sans", monospace; }
 /* Book: floats, tilts with the cursor */
 .mb-book { transform-style: preserve-3d; transition: transform .35s cubic-bezier(.2,.8,.2,1); }
 .mb-book img { animation: mb-float 6s ease-in-out infinite; }
@@ -531,12 +548,14 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
 
   <section id="course" class="band" style="scroll-margin-top:96px"><div class="section-inner">
     <div class="split"><div><p class="eyebrow">The course</p><h2>Built on Decoding Bitcoin.</h2></div><p class="lead"><a href="https://bitcoindevs.xyz/decoding" target="_blank" rel="noopener">Decoding Bitcoin</a> is a free, interactive course by <a href="https://bitcoindevs.xyz" target="_blank" rel="noopener">The Bitcoin Dev Project</a>. Instead of reading a PDF, you learn by decoding real transactions, running scripts step by step and writing code. We follow it module by module and add what a course can't: a group, weekly discussion and someone to ask.</p></div>
+    <a class="mb-shot " href="https://bitcoindevs.xyz/decoding" target="_blank" rel="noopener"><figure style="margin:0"><div class="mb-shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>bitcoindevs.xyz/decoding</span></div><img src="https://bitcoindevs.xyz/images/pages-thumbnails/decoding-bitcoin.webp" alt="Decoding Bitcoin, a free interactive course by The Bitcoin Dev Project" width="1200" height="630" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.mb-shot').classList.add('is-broken')"><figcaption><b>Decoding Bitcoin</b> by The Bitcoin Dev Project. Click to open the course ↗</figcaption></figure></a>
     <div class="grid three mb-modules">
       <a class="card mb-module" href="https://bitcoindevs.xyz/decoding/transaction-lifecycle" target="_blank" rel="noopener"><span class="pill orange">Weeks 2–5</span><h3>Transactions</h3><p>Lifecycle, structure, UTXOs, fees and signing, then the GitHub Classroom exercises.</p><b>Start the module ↗</b></a>
       <a class="card mb-module" href="https://bitcoindevs.xyz/decoding/overview" target="_blank" rel="noopener"><span class="pill orange">Weeks 6–8</span><h3>Scripts</h3><p>The Script stack machine, P2PK, P2PKH, P2SH and multisig, ending with a build-your-own stack project.</p><b>Start the module ↗</b></a>
       <a class="card mb-module" href="https://bitcoindevs.xyz/decoding/introduction-taproot" target="_blank" rel="noopener"><span class="pill orange">Weeks 9–10</span><h3>Taproot</h3><p>Schnorr signatures, key-path and script-path spends, and a capstone: build and spend a P2TR output.</p><b>Start the module ↗</b></a>
     </div>
-    <p class="mb-tools">Handy tools on the site: <a href="https://bitcoindevs.xyz/decoding/transaction-decoder" target="_blank" rel="noopener">Transaction Decoder</a> · <a href="https://bitcoindevs.xyz/decoding/hash-functions" target="_blank" rel="noopener">Hash Functions</a> · <a href="https://bitcoindevs.xyz/decoding/reorg-calculator" target="_blank" rel="noopener">Reorg Calculator</a> · <a href="https://bitcoindevs.xyz/decoding/interactive-roadmap" target="_blank" rel="noopener">Developer Roadmap</a></p>
+    <p class="mb-tools">Tools you can use any time, all on the Decoding Bitcoin site:</p>
+    <div class="mb-toolgrid"><a class="card mb-tool" href="https://bitcoindevs.xyz/decoding/transaction-decoder" target="_blank" rel="noopener"><h3>Transaction Decoder</h3><p>Paste a raw transaction and see every field explained.</p><b>Open ↗</b></a><a class="card mb-tool" href="https://bitcoindevs.xyz/decoding/hash-functions" target="_blank" rel="noopener"><h3>Hash Functions</h3><p>Play with SHA-256 and see why one changed letter changes everything.</p><b>Open ↗</b></a><a class="card mb-tool" href="https://bitcoindevs.xyz/decoding/reorg-calculator" target="_blank" rel="noopener"><h3>Reorg Calculator</h3><p>Work out how likely a chain reorg is, and why we wait for confirmations.</p><b>Open ↗</b></a><a class="card mb-tool" href="https://bitcoindevs.xyz/decoding/interactive-roadmap" target="_blank" rel="noopener"><h3>Developer Roadmap</h3><p>A map of what to learn next on the way to contributing.</p><b>Open ↗</b></a><a class="card mb-tool" href="https://bitcoindevs.xyz/decoding/transaction_exercises" target="_blank" rel="noopener"><h3>Coding Exercises</h3><p>Hands-on exercises on GitHub Classroom that check your code.</p><b>Open ↗</b></a></div>
   </div></section>
 
   <section id="curriculum" class="section-inner mb-bg mb-bg-right" style="--mb-bg:url(/assets/mastering-bitcoin/bg-workshop-table.jpg?v=3);scroll-margin-top:96px">
@@ -609,6 +628,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
     <p class="eyebrow">Credits</p>
     <h2>Learn it free, online.</h2>
     <p class="lead" style="margin-left:auto;margin-right:auto">The lessons, tools and exercises are <a href="https://bitcoindevs.xyz/decoding" target="_blank" rel="noopener"><em>Decoding Bitcoin</em></a> by <a href="https://bitcoindevs.xyz" target="_blank" rel="noopener">The Bitcoin Dev Project</a>. Its source is on <a href="https://github.com/bitcoin-dev-project/decoding-bitcoin" target="_blank" rel="noopener">GitHub</a>, where you can also suggest edits. The weekly plan, discussion questions and extra exercises on this page are written by Code Orange.</p>
+    <a class="mb-shot mb-credit-shot" href="https://bitcoindevs.xyz/decoding" target="_blank" rel="noopener"><figure style="margin:0"><div class="mb-shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>bitcoindevs.xyz/decoding</span></div><img src="https://bitcoindevs.xyz/images/pages-thumbnails/decoding-bitcoin.webp" alt="Decoding Bitcoin, a free interactive course by The Bitcoin Dev Project" width="1200" height="630" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.mb-shot').classList.add('is-broken')"><figcaption>The course we follow: <b>bitcoindevs.xyz/decoding</b>. Click to open ↗</figcaption></figure></a>
     <div class="cta-row" style="justify-content:center"><a class="button mb-cta" href="https://bitcoindevs.xyz/decoding/welcome" target="_blank" rel="noopener"><span>Open Decoding Bitcoin</span><svg class="mb-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="ghost" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord</a></div>
   </section>
   <div id="mb-toast" class="mb-toast" role="status" hidden></div>
