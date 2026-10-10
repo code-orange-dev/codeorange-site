@@ -1,4 +1,4 @@
-// Mastering Bitcoin study cohort dashboard: curriculum, question assignments,
+// Decoding Bitcoin study cohort dashboard: curriculum, question assignments,
 // sign-up form and "done" ticks. Settings and curriculum live in cohort.js.
 (() => {
   const C = window.MB_COHORT;
@@ -11,7 +11,7 @@
     String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
   const listJoin = (a) => (a.length > 1 ? `${a.slice(0, -1).join(", ")} and ${a[a.length - 1]}` : a.join(""));
   const pad = (n) => String(n).padStart(2, "0");
-  const chapterUrl = (file) => `https://github.com/bitcoinbook/bitcoinbook/blob/develop/${file}`;
+  const lessonUrl = (slug) => `${C.courseUrl}/${slug}`;
 
   const store = {
     get() { try { return localStorage.getItem(TOKEN_KEY) || ""; } catch { return ""; } },
@@ -95,11 +95,11 @@
         const date = sessionDates[wi];
         const read = readCount(wk);
         const total = state.students.length;
-        const chapters = w.chapters
-          .map((c) => `<a href="${chapterUrl(c.file)}" target="_blank" rel="noopener">Ch ${c.n} · ${esc(c.title)}</a>`)
+        const chapters = w.lessons
+          .map((c) => `<a href="${lessonUrl(c.slug)}" target="_blank" rel="noopener">${esc(c.title)} ↗</a>`)
           .join("");
         const extra = (w.extra || [])
-          .map((c) => `<a class="is-extra" href="${chapterUrl(c.file)}" target="_blank" rel="noopener">Optional: Ch ${c.n} · ${esc(c.title)}</a>`)
+          .map((c) => `<a class="is-extra" href="${lessonUrl(c.slug)}" target="_blank" rel="noopener">${esc(c.title)} ↗</a>`)
           .join("");
         const questions = w.questions
           .map((q, qi) => {
@@ -139,7 +139,7 @@
             <p class="mb-summary">${esc(w.summary)}</p>
             <div class="mb-chapters">${chapters}${extra}</div>
             ${date ? `<p class="mb-when">Session: ${fmtDay(date)}, 7–8:30pm UTC+8 · your time: ${fmtLocal(date)} · on Discord</p>` : ""}
-            <div class="mb-read"><span class="mb-count">${total ? `${read} of ${total} have read it` : "Read it before Monday"}</span>${me ? tickButton(`w${wk}-r1`, isDone(me, `w${wk}-r1`), `I've read week ${wk}`).replace(/>Mark done</, ">I've read it<").replace(/>Done</, ">Read<") : ""}</div>
+            <div class="mb-read"><span class="mb-count">${total ? `${read} of ${total} have done the lessons` : "Do the lessons before Monday"}</span>${me ? tickButton(`w${wk}-r1`, isDone(me, `w${wk}-r1`), `I've done the week ${wk} lessons`).replace(/>Mark done</, ">I've done the lessons<").replace(/>Done</, ">Lessons done<") : ""}</div>
             <div class="mb-opening"><p class="mb-label">Opening question · everyone</p><p>${esc(w.opening)}</p></div>
             <div class="mb-roles-wrap"><p class="mb-label">Seminar roles this week</p><ul class="mb-roles">${roleChips}</ul></div>
             <div class="mb-cols">
@@ -168,7 +168,7 @@
           pct = state.students.length ? (readCount(wk) / state.students.length) * 100 : 0;
         }
         const cls = wi === currentWeek ? "is-current" : currentWeek > wi ? "is-past" : "";
-        return `<a href="#week-${wk}" class="${cls}" title="Week ${wk}: ${esc(w.title)} · ${Math.round(pct)}% ${me ? "done by you" : "of the cohort have read it"}"><i><b style="--p:${pct.toFixed(1)}%"></b></i><span>W${pad(wk)}${sessionDates[wi] ? `<em> · ${sessionDates[wi].toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "Asia/Singapore" })}</em>` : ""}</span></a>`;
+        return `<a href="#week-${wk}" class="${cls}" title="Week ${wk}: ${esc(w.title)} · ${Math.round(pct)}% ${me ? "done by you" : "of the cohort have done the lessons"}"><i><b style="--p:${pct.toFixed(1)}%"></b></i><span>W${pad(wk)}${sessionDates[wi] ? `<em> · ${sessionDates[wi].toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "Asia/Singapore" })}</em>` : ""}</span></a>`;
       })
       .join("");
   }
@@ -212,7 +212,7 @@
     const thisWeek = mine.filter((k) => k.startsWith(`w${focus + 1}-`));
     box.hidden = false;
     box.innerHTML = `<div class="mb-me-head"><div><p class="eyebrow">Your dashboard</p><h2>Hi ${esc(me.name)}.</h2></div>
-      <div class="mb-me-stats"><span><strong>${me.done.filter((k) => k.endsWith("-r1")).length}/${C.weeks.length}</strong> chapters read</span><span><strong>${qDone}/${mine.length}</strong> questions</span><span><strong>${exDone}/${exTotal}</strong> exercises</span></div></div>
+      <div class="mb-me-stats"><span><strong>${me.done.filter((k) => k.endsWith("-r1")).length}/${C.weeks.length}</strong> weeks of lessons</span><span><strong>${qDone}/${mine.length}</strong> questions</span><span><strong>${exDone}/${exTotal}</strong> exercises</span></div></div>
       ${weekChecklist(me, assigned, focus, thisWeek)}
       <div class="mb-link"><span>Your personal link (open it on any device to tick things off):</span><code>${esc(link)}</code><button type="button" class="ghost small" data-copy="${esc(link)}">Copy link</button><button type="button" class="mb-signout" data-signout>Not you? Sign out</button></div>
       <div class="cta-row mb-me-cta"><a class="button small" href="${C.discord}" target="_blank" rel="noopener">Join the Discord</a>${first ? `<a class="ghost small" href="${esc(gcalHref())}" target="_blank" rel="noopener">Add to Google Calendar</a>` : ""}</div>`;
@@ -227,7 +227,7 @@
     const rolesNow = myRoles(assigned, me, wk);
     const line = (done, text) => `<li class="${done ? "is-done" : ""}"><span class="mb-box" aria-hidden="true">${done ? "✓" : ""}</span><span>${text}</span></li>`;
     const items = [
-      line(me.done.includes(`w${wk}-r1`), `Read ${w.chapters.map((c) => `chapter ${c.n}`).join(" and ")}`),
+      line(me.done.includes(`w${wk}-r1`), `Do the lesson${w.lessons.length > 1 ? "s" : ""} on Decoding Bitcoin: ${esc(w.lessons.map((c) => c.title).join(", "))}`),
       thisWeek.length
         ? line(thisWeek.every((k) => me.done.includes(k)), `Answer your question${thisWeek.length > 1 ? "s" : ""} (${listJoin(thisWeek.map((k) => `Q${k.split("-q")[1]}`))}) on Discord`)
         : "",
@@ -437,7 +437,7 @@
     if (d) { d.open = true; state.open.add(Number(d.dataset.week)); }
   });
 
-  // The book tilts towards the cursor.
+  // The course card tilts towards the cursor.
   const book = $(".mb-book");
   if (book && !reduceMotion && window.matchMedia("(hover: hover)").matches) {
     book.addEventListener("pointermove", (ev) => {
@@ -488,10 +488,10 @@
     const end = new Date(first.getTime() + (C.sessionMinutes || 60) * 6e4);
     return "https://calendar.google.com/calendar/render?" + new URLSearchParams({
       action: "TEMPLATE",
-      text: "Mastering Bitcoin study cohort",
+      text: "Decoding Bitcoin study cohort",
       dates: `${stamp(first)}/${stamp(end)}`,
       recur: `RRULE:FREQ=WEEKLY;COUNT=${C.weeks.length}`,
-      details: `Weekly session on Discord: ${C.discord}\nThis week's chapter, questions and exercises: ${location.origin}/mastering-bitcoin`,
+      details: `Weekly session on Discord: ${C.discord}\nThis week's lessons, questions and exercises: ${location.origin}/decoding-bitcoin`,
       location: "Discord",
     });
   }
@@ -499,10 +499,10 @@
   if (!first) document.querySelectorAll("[data-mb-cal]").forEach((el) => (el.hidden = true));
   document.addEventListener("click", async (ev) => {
     if (!ev.target.closest("[data-mb-share]")) return;
-    const url = `${location.origin}/mastering-bitcoin`;
-    const text = "Join the Mastering Bitcoin study cohort: 10 weeks, one chapter a week, Mondays on Discord. Free.";
+    const url = `${location.origin}/decoding-bitcoin`;
+    const text = "Join the Decoding Bitcoin study cohort: 10 weeks of interactive lessons on transactions, Script and Taproot, Mondays on Discord. Free.";
     try {
-      if (navigator.share) return await navigator.share({ title: "Mastering Bitcoin study cohort", text, url });
+      if (navigator.share) return await navigator.share({ title: "Decoding Bitcoin study cohort", text, url });
       await navigator.clipboard.writeText(url);
       toast("Link copied. Send it to a friend!");
     } catch {}

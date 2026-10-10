@@ -1,4 +1,4 @@
-// Mastering Bitcoin study cohort: sign-ups and "done" ticks, stored in Neon Postgres.
+// Decoding Bitcoin study cohort (formerly Mastering Bitcoin): sign-ups and "done" ticks, stored in Neon Postgres.
 //
 // No accounts. Signing up returns a private token that the browser keeps (and that the
 // student can bookmark as a personal link); ticking "done" needs that token.

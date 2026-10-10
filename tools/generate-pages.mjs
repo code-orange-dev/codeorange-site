@@ -295,7 +295,7 @@ function pageShell({
 ${styles()}
 </head>
 <body>
-<a class="announce" href="/mastering-bitcoin">Mastering Bitcoin study cohort starts Monday 16 November &middot; free, on Discord <span>Sign up &rarr;</span></a>
+<a class="announce" href="/decoding-bitcoin">Decoding Bitcoin study cohort starts Monday 16 November &middot; free, on Discord <span>Sign up &rarr;</span></a>
 <header class="site-header">
   <div class="header-inner">
     <a class="brand" href="/" aria-label="Code Orange Dev School home"><img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School"></a>
@@ -983,7 +983,7 @@ for (const p of programs.filter((item) => item.href.startsWith("/programs/"))) {
   );
 }
 
-["programs", "about", "community", "impact", "strategy", "fellowships", "calendar", "consulting", "rawbit", "privacy-track", "mastering-bitcoin", "apply", "articles"].forEach((path) => {
+["programs", "about", "community", "impact", "strategy", "fellowships", "calendar", "consulting", "rawbit", "privacy-track", "decoding-bitcoin", "apply", "articles"].forEach((path) => {
   try {
     mirrorCleanUrl(path);
   } catch {}
