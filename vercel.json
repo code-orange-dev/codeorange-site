@@ -18,6 +18,16 @@
       "source": "/consulting",
       "destination": "/about",
       "permanent": true
+    },
+    {
+      "source": "/mastering-bitcoin",
+      "destination": "/decoding-bitcoin",
+      "permanent": true
+    },
+    {
+      "source": "/mastering-bitcoin/",
+      "destination": "/decoding-bitcoin",
+      "permanent": true
     }
   ],
   "headers": [
