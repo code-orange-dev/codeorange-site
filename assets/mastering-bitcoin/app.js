@@ -241,7 +241,9 @@
   function renderRoster() {
     const assigned = assignments();
     const exTotal = C.weeks.reduce((n, w) => n + w.exercises.length, 0);
-    $("#mb-count").textContent = state.loaded ? String(state.students.length) : "–";
+    if ($("#mb-count")) $("#mb-count").textContent = state.loaded ? String(state.students.length) : "–";
+    const joined = $(".mb-joined");
+    if (joined) joined.hidden = !(state.loaded && state.students.length > 0);
     if (!state.students.length) {
       $("#mb-roster").innerHTML = `<p class="mb-empty">${state.online || !state.loaded ? "No one has signed up yet. Be the first." : "The roster appears here once sign-ups open."}</p>`;
       return;
@@ -265,7 +267,7 @@
     const me = meStudent();
     if (me) {
       form.hidden = true;
-      note.innerHTML = `You're signed up as <strong>${esc(me.name)}</strong>. See you on Discord, ${esc(C.sessionLabel)}.`;
+      note.innerHTML = `You're signed up as <strong>${esc(me.name)}</strong>. Next step: <a href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">join our Discord</a>. See you there, ${esc(C.sessionLabel)}.`;
       return;
     }
     const closed = state.loaded && (!state.online || !C.signupsOpen);
@@ -465,8 +467,8 @@
   // ── Static bits ──
   const first = sessionDates[0];
   const daysToGo = first ? Math.ceil((first - Date.now()) / 864e5) : null;
-  $("#mb-start").textContent = first ? fmtDay(first) : "TBA";
-  $("#mb-start-label").textContent = first ? "Week 1 · 7pm UTC+8" : "Start date";
+  if ($("#mb-start")) $("#mb-start").textContent = first ? fmtDay(first) : "TBA";
+  if ($("#mb-start-label")) $("#mb-start-label").textContent = first ? "Week 1 · 7pm UTC+8" : "Start date";
   document.querySelectorAll("[data-mb-start]").forEach((el) => {
     el.textContent = !first ? "Start date TBA" : daysToGo > 1 ? `Starts ${fmtDay(first)} · in ${daysToGo} days` : daysToGo === 1 ? `Starts tomorrow, ${fmtDay(first)}` : daysToGo === 0 ? "Starts today" : `Started ${fmtDay(first)}`;
   });
