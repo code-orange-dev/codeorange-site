@@ -112,7 +112,7 @@ h1 .orange { font-size: 1.12em; line-height: .9; }
 .co-fx { position: absolute; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
 .co-fx i { position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(255, 255, 255, .1); }
 .co-fx i:nth-child(1) { left: 25%; } .co-fx i:nth-child(2) { left: 50%; } .co-fx i:nth-child(3) { left: 75%; }
-.co-fx-glow { position: absolute; left: 50%; top: -6%; width: min(1400px, 120%); height: 420px; transform: translateX(-50%); opacity: .9; mix-blend-mode: screen; }
+.co-fx-glow { display: none !important; position: absolute; left: 50%; top: -6%; width: min(1400px, 120%); height: 420px; transform: translateX(-50%); opacity: .9; mix-blend-mode: screen; }
 #static-homepage .co-hero .co-wrap, .hero .hero-grid, .hero > .section-inner, .hero > div:not(.co-fx) { position: relative; z-index: 3; }
 @media (max-width: 900px) { .co-fx i { display: none; } .co-fx-glow { height: 300px; top: -10%; } }
 
