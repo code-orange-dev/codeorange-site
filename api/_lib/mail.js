@@ -38,7 +38,7 @@ async function send(to, subject, lines) {
   const html = `<div style="font:16px/1.55 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:#111;max-width:560px">${lines
     .map((l) => (l.startsWith("<") ? l : `<p>${l}</p>`))
     .join("")}<p style="color:#777;font-size:13px">Code Orange Dev School · <a href="${SITE}" style="color:#d97706">codeorange.dev</a></p></div>`;
-  const text = html.replace(/<a [^>]*href="([^"]+)"[^>]*>([^<]*)<\/a>/g, "$2 ($1)").replace(/<\/(p|li)>/g, "\n").replace(/<[^>]+>/g, "").replace(/&amp;/g, "&");
+  const text = html.replace(/<a [^>]*href="([^"]+)"[^>]*>([^<]*)<\/a>/g, "$2 ($1)").replace(/<li>/g, "- ").replace(/<br>|<\/(p|li|ul)>/g, "\n").replace(/<[^>]+>/g, "").replace(/&amp;/g, "&");
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
     signal: AbortSignal.timeout(8000),
@@ -58,18 +58,25 @@ async function send(to, subject, lines) {
 const button = (href, label) =>
   `<p><a href="${href}" style="display:inline-block;padding:12px 20px;border-radius:999px;background:#F7931A;color:#000;font-weight:700;text-decoration:none">${label}</a></p>`;
 
+const POSTER = `${SITE}/assets/mastering-bitcoin/og.jpg`;
+const link = (href, label) => `<a href="${href}" style="color:#d97706">${label}</a>`;
+
 function sendWelcome({ email, name, token }) {
-  const link = personalLink(token);
-  return send(email, "You're in: Decoding Bitcoin study cohort", [
-    `Hi ${esc(name)},`,
-    "You're signed up for the Decoding Bitcoin study cohort. We start on <strong>Monday 16 November, 7 to 8:30pm (UTC+8)</strong> on Discord, every Monday for 10 weeks.",
-    "<p><strong>1. Join our Discord</strong>. That's where the sessions happen.</p>",
-    button(DISCORD, "Join the Discord"),
-    "<p><strong>2. Keep your personal link</strong>. It opens your dashboard with this week's lessons, your questions and the exercises, on any device.</p>",
-    button(link, "Open my dashboard"),
-    `<p><strong>3. Add the sessions to your calendar</strong>: <a href="${calendarLink()}" style="color:#d97706">Google Calendar</a> or <a href="${SITE}/assets/mastering-bitcoin/sessions.ics" style="color:#d97706">Apple / Outlook (.ics)</a>.</p>`,
-    `Before the first session, do the welcome lessons on <a href="https://bitcoindevs.xyz/decoding" style="color:#d97706">Decoding Bitcoin</a>.`,
-    "See you on Monday!",
+  const mine = personalLink(token);
+  return send(email, "You're in! Decoding Bitcoin starts Mon 16 Nov", [
+    `<p><a href="${SITE}/decoding-bitcoin"><img src="${POSTER}" width="560" alt="Decoding Bitcoin: learn it together. Starts Mon 16 Nov, 10 weeks, Mondays 7pm UTC+8 on Discord, free." style="display:block;width:100%;max-width:560px;height:auto;border:0;border-radius:12px"></a></p>`,
+    `Hey ${esc(name)}, you're in! 🧡`,
+    "Here's how it works:",
+    `<ul style="padding-left:20px">
+<li>We meet on Discord <strong>every Monday, 7 to 8:30pm (UTC+8)</strong>, for 10 weeks from 16 November.</li>
+<li>Everything lives on the website: each week's lessons, your questions and the exercises. Do the week's lessons before Monday, then we chat them through together.</li>
+<li>It's free and relaxed. Come curious, ask anything.</li>
+</ul>`,
+    "Two quick things now:",
+    `<p><strong>1.</strong> Join the Discord, that's where we meet.</p>${button(DISCORD, "Join the Discord")}`,
+    `<p><strong>2.</strong> Keep this email. Your personal link signs you in on any device.</p>${button(mine, "Open my dashboard")}`,
+    `<p style="font-size:14px;color:#555">Want a reminder? Add the Mondays to ${link(calendarLink(), "Google Calendar")} or ${link(`${SITE}/assets/mastering-bitcoin/sessions.ics`, "Apple / Outlook")}.</p>`,
+    "See you Monday!<br>The Code Orange crew",
   ]);
 }
 
