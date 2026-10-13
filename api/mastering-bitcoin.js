@@ -324,6 +324,28 @@ async function adminHide(body) {
   return rows.length ? { status: 200, data: { ok: true } } : { status: 404, error: "Unknown student." };
 }
 
+async function selfTest(q) {
+  const out = { email: mail.emailOn(), mailerlite: mail.mailerliteOn() };
+  const to = clean(q.to, 120).toLowerCase();
+  if (out.email && EMAIL_RE.test(to)) {
+    try {
+      await mail.sendWelcome({ email: to, name: "test", token: "selftest-not-a-real-link" });
+      out.emailResult = "sent";
+    } catch (err) {
+      out.emailResult = err.message;
+    }
+  }
+  if (out.mailerlite) {
+    try {
+      out.mailerliteResult = q.sync ? (await adminMailerLite()).data : "connected (group ready)";
+      if (!q.sync) await mail.syncMailerLite([]);
+    } catch (err) {
+      out.mailerliteResult = err.message;
+    }
+  }
+  return out;
+}
+
 async function adminMailerLite() {
   if (!mail.mailerliteOn()) return { status: 503, error: "Add MAILERLITE_API_KEY in Vercel first." };
   const rows = await sql("SELECT name, email FROM mb_students WHERE cohort = $1 AND NOT hidden AND email IS NOT NULL ORDER BY id", [COHORT]);
@@ -348,6 +370,13 @@ module.exports = async function handler(req, res) {
   }
   try {
     await ensureTables();
+    // Organiser self-test: GET ?selftest=<admin key>&to=<email>[&sync=1] sends a test welcome
+    // email and checks MailerLite (sync=1 also adds everyone to the group).
+    if (req.method === "GET" && req.query?.selftest !== undefined) {
+      req.headers["x-mb-admin"] = String(req.query.selftest);
+      if (!isAdmin(req)) return res.status(401).json({ error: "Wrong admin key." });
+      return res.status(200).json(await selfTest(req.query));
+    }
     if (req.method === "GET" && req.query?.admin !== undefined) {
       if (!isAdmin(req)) return res.status(401).json({ error: "Wrong admin key." });
       return res.status(200).json(await adminList());

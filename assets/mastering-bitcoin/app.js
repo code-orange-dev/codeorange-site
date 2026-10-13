@@ -244,6 +244,15 @@
     return `<div class="mb-me-week"><p class="mb-label">Week ${wk} · before ${sessionDates[focus] ? fmtDay(sessionDates[focus]) : "the session"}</p><ul class="mb-check">${items}</ul><a class="mb-jump" href="#week-${wk}">Open week ${wk} →</a></div>`;
   }
 
+  // Other students' names are blurred for privacy; the real name never reaches the page,
+  // only its first letter and a stand-in of similar length.
+  function nameCell(s) {
+    if (state.me && s.id === state.me.id) return `<span class="mb-name">${esc(s.name)} <em>(you)</em></span>`;
+    const len = Math.min(Math.max(String(s.name).length, 5), 14);
+    const fake = (String(s.name)[0] || "x") + "abcdefghijklmn".slice(0, len - 1);
+    return `<span class="mb-name is-blur" aria-label="Student ${esc(String(s.id))}">${esc(fake)}</span>`;
+  }
+
   function renderRoster() {
     const assigned = assignments();
     const exTotal = C.weeks.reduce((n, w) => n + w.exercises.length, 0);
@@ -265,7 +274,7 @@
         const e = s.done.filter((k) => k.includes("-e")).length;
         const r = s.done.filter((k) => k.endsWith("-r1")).length;
         const pct = Math.round(((q + e + r) / Math.max(1, mine.length + exTotal + C.weeks.length)) * 100);
-        return `<div class="mb-roster-row${state.me && s.id === state.me.id ? " is-me" : ""}"><span class="mb-num">${pad(i + 1)}</span><span class="mb-name">${esc(s.name)}</span><span>${r}/${C.weeks.length} R</span><span>${q}/${mine.length} Q</span><span>${e}/${exTotal} E</span><span class="mb-bar" aria-label="${pct}% done"><i style="width:${pct}%"></i></span></div>`;
+        return `<div class="mb-roster-row${state.me && s.id === state.me.id ? " is-me" : ""}"><span class="mb-num">${pad(i + 1)}</span>${nameCell(s)}<span>${r}/${C.weeks.length} R</span><span>${q}/${mine.length} Q</span><span>${e}/${exTotal} E</span><span class="mb-bar" aria-label="${pct}% done"><i style="width:${pct}%"></i></span></div>`;
       })
       .join("");
     $("#mb-roster").innerHTML = `<div class="mb-roster-row mb-roster-head"><span>#</span><span>Student</span><span><b class="mb-long">Read</b><b class="mb-short">R</b></span><span><b class="mb-long">Questions</b><b class="mb-short">Q</b></span><span><b class="mb-long">Exercises</b><b class="mb-short">E</b></span><span>Progress</span></div>${rows}`;
