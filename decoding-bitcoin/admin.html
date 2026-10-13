@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Cohort sign-ups (organisers)</title>
+<link rel="icon" type="image/svg+xml" href="/assets/favicon-co.svg">
+<style>
+:root { --bg: #0a0a0a; --card: #141414; --line: rgba(255,255,255,.1); --text: #f4f4f4; --muted: #a3a3a3; --dim: #737373; --orange: #F7931A; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 1180px; margin: 0 auto; padding: 32px 16px 64px; }
+h1 { margin: 0 0 4px; font-size: 26px; }
+h1 b { color: var(--orange); }
+p { color: var(--muted); margin: 0 0 16px; }
+a { color: var(--orange); }
+form.key { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 24px 0; padding: 20px; border: 1px solid var(--line); border-radius: 14px; background: var(--card); }
+input[type=password], input[type=search] { flex: 1; min-width: 220px; min-height: 44px; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,.16); background: #000; color: var(--text); font: inherit; }
+input:focus { outline: none; border-color: var(--orange); }
+button { min-height: 40px; padding: 8px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,.2); background: transparent; color: var(--text); font: 600 14px system-ui, sans-serif; cursor: pointer; }
+button.main { background: var(--orange); border-color: var(--orange); color: #000; }
+button:hover { border-color: var(--orange); }
+label.remember { color: var(--muted); font-size: 14px; display: flex; gap: 6px; align-items: center; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 24px 0; }
+.stats div { padding: 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--card); }
+.stats strong { display: block; font-size: 28px; color: var(--orange); line-height: 1.1; }
+.stats span { color: var(--muted); font-size: 13px; }
+.tools { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+.wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--card); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); white-space: nowrap; }
+th { color: var(--dim); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+tr.is-hidden td { opacity: .45; }
+td.num { color: var(--dim); }
+td button { min-height: 30px; padding: 4px 12px; font-size: 12px; }
+.note { min-height: 1.5em; color: var(--orange); }
+[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Decoding Bitcoin <b>sign-ups</b></h1>
+  <p>For organisers only. This page isn't linked anywhere and search engines are told to skip it. <a href="/decoding-bitcoin">Back to the cohort page</a></p>
+
+  <form class="key" id="key-form">
+    <input type="password" name="key" placeholder="Admin key" autocomplete="current-password" required>
+    <label class="remember"><input type="checkbox" name="remember"> Remember on this device</label>
+    <button class="main" type="submit">Open</button>
+  </form>
+  <p class="note" id="note" role="status"></p>
+
+  <section id="dash" hidden>
+    <p id="public-state"></p>
+    <div class="stats" id="stats"></div>
+    <div class="tools">
+      <input type="search" id="filter" placeholder="Search name, email, Discord">
+      <button type="button" id="copy-emails">Copy all emails</button>
+      <button type="button" id="csv">Download CSV</button>
+      <button type="button" id="refresh">Refresh</button>
+      <button type="button" id="lock">Lock</button>
+    </div>
+    <div class="wrap"><table>
+      <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Discord</th><th>Nostr</th><th>Signed up</th><th>Ticks</th><th></th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+  </section>
+</main>
+<script>
+(() => {
+  const API = "/api/mastering-bitcoin";
+  const KEY = "mb-admin-key";
+  const $ = (s) => document.querySelector(s);
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+  const saved = { get() { try { return sessionStorage.getItem(KEY) || localStorage.getItem(KEY) || ""; } catch { return ""; } },
+    set(v, remember) { try { sessionStorage.setItem(KEY, v); if (remember) localStorage.setItem(KEY, v); } catch {} },
+    clear() { try { sessionStorage.removeItem(KEY); localStorage.removeItem(KEY); } catch {} } };
+  let key = saved.get();
+  let data = null;
+
+  // Hex public key to npub (bech32).
+  function npub(hex) {
+    const CH = "qpzry9x8gf2tvdw0s3jn54khce6mua7l";
+    const out = [];
+    let acc = 0, bits = 0;
+    for (const h of hex.match(/../g)) { acc = ((acc << 8) | parseInt(h, 16)) & 0xffff; bits += 8; while (bits >= 5) { bits -= 5; out.push((acc >> bits) & 31); } }
+    if (bits) out.push((acc << (5 - bits)) & 31);
+    const polymod = (vals) => { let c = 1; for (const v of vals) { const t = c >> 25; c = ((c & 0x1ffffff) << 5) ^ v; [0x3b6a57b2, 0x26508e6d, 0x1ea119fa, 0x3d4233dd, 0x2a1462b3].forEach((g, i) => { if ((t >> i) & 1) c ^= g; }); } return c; };
+    const hrp = [..."npub"].map((c) => c.charCodeAt(0));
+    const pm = polymod([...hrp.map((c) => c >> 5), 0, ...hrp.map((c) => c & 31), ...out, 0, 0, 0, 0, 0, 0]) ^ 1;
+    return "npub1" + [...out, ...[0, 1, 2, 3, 4, 5].map((i) => (pm >> (5 * (5 - i))) & 31)].map((d) => CH[d]).join("");
+  }
+
+  async function load() {
+    $("#note").textContent = "Loading…";
+    try {
+      const res = await fetch(`${API}?admin=1`, { headers: { "X-MB-Admin": key } });
+      const body = await res.json().catch(() => ({}));
+      if (res.status === 401) { saved.clear(); key = ""; throw new Error("That key didn't work."); }
+      if (!res.ok) throw new Error(body.error || "Couldn't load the sign-ups.");
+      data = body;
+      $("#note").textContent = "";
+      $("#key-form").hidden = true;
+      $("#dash").hidden = false;
+      render();
+    } catch (err) {
+      $("#note").textContent = err.message;
+      $("#key-form").hidden = false;
+      $("#dash").hidden = true;
+    }
+  }
+
+  function render() {
+    const all = data.students;
+    const active = all.filter((s) => !s.hidden);
+    const week = Date.now() - 7 * 864e5;
+    $("#public-state").textContent = data.rosterPublic
+      ? "The class list is public: names and progress show on the cohort page."
+      : "The class list is private: the cohort page shows no names and no count. Only you see this list.";
+    $("#stats").innerHTML = [
+      [active.length, `signed up (of ${data.max} places)`],
+      [active.filter((s) => new Date(s.joined) > week).length, "in the last 7 days"],
+      [active.filter((s) => s.discord).length, "gave a Discord name"],
+      [active.filter((s) => s.nostr).length, "use Nostr"],
+      [all.length - active.length, "hidden"],
+    ].map(([n, label]) => `<div><strong>${n}</strong><span>${label}</span></div>`).join("");
+    const q = $("#filter").value.trim().toLowerCase();
+    const rows = all.filter((s) => !q || [s.name, s.email, s.discord].some((v) => (v || "").toLowerCase().includes(q)));
+    $("#rows").innerHTML = rows.map((s, i) => `<tr class="${s.hidden ? "is-hidden" : ""}">
+      <td class="num">${all.indexOf(s) + 1}</td><td>${esc(s.name)}</td>
+      <td>${s.email ? `<a href="mailto:${esc(s.email)}">${esc(s.email)}</a>` : "–"}</td>
+      <td>${esc(s.discord || "–")}</td>
+      <td>${s.nostr ? `<a href="https://njump.me/${npub(s.nostr)}" target="_blank" rel="noopener noreferrer" title="${npub(s.nostr)}">${npub(s.nostr).slice(0, 14)}…</a>` : "–"}</td>
+      <td>${new Date(s.joined).toLocaleString(undefined, { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}</td>
+      <td>${s.ticks}</td>
+      <td><button type="button" data-hide="${s.id}" data-to="${!s.hidden}">${s.hidden ? "Show" : "Hide"}</button></td></tr>`).join("")
+      || `<tr><td colspan="8">${all.length ? "No matches." : "No sign-ups yet."}</td></tr>`;
+  }
+
+  $("#key-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const f = new FormData(ev.target);
+    key = String(f.get("key")).trim();
+    saved.set(key, f.get("remember"));
+    ev.target.reset();
+    load();
+  });
+  $("#filter").addEventListener("input", () => data && render());
+  $("#refresh").addEventListener("click", load);
+  $("#lock").addEventListener("click", () => { saved.clear(); key = ""; data = null; $("#dash").hidden = true; $("#key-form").hidden = false; $("#rows").innerHTML = ""; });
+  $("#copy-emails").addEventListener("click", async () => {
+    const list = data.students.filter((s) => !s.hidden && s.email).map((s) => s.email).join(", ");
+    try { await navigator.clipboard.writeText(list); $("#note").textContent = "Emails copied."; } catch { $("#note").textContent = list; }
+  });
+  $("#csv").addEventListener("click", () => {
+    const cell = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+    const lines = [["name", "email", "discord", "nostr", "signed_up", "ticks", "hidden"].join(",")]
+      .concat(data.students.map((s) => [s.name, s.email, s.discord, s.nostr ? npub(s.nostr) : "", s.joined, s.ticks, s.hidden].map(cell).join(",")));
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([lines.join("\n")], { type: "text/csv" }));
+    a.download = `decoding-bitcoin-signups-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+  document.addEventListener("click", async (ev) => {
+    const b = ev.target.closest("[data-hide]");
+    if (!b) return;
+    b.disabled = true;
+    try {
+      const res = await fetch(API, { method: "POST", headers: { "Content-Type": "application/json", "X-MB-Admin": key }, body: JSON.stringify({ action: "admin-hide", id: Number(b.dataset.hide), hidden: b.dataset.to === "true" }) });
+      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || "Couldn't change that.");
+      await load();
+    } catch (err) {
+      $("#note").textContent = err.message;
+      b.disabled = false;
+    }
+  });
+
+  if (key) load();
+})();
+</script>
+</body>
+</html>
