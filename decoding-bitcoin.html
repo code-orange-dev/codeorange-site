@@ -415,6 +415,12 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
 .mb-module b { color: var(--orange); font: 700 13px "Plus Jakarta Sans", monospace; }
 .mb-module .pill { align-self: flex-start; }
 .mb-joined { margin: 18px 0 6px; color: var(--muted); }
+.mb-or { display: flex; align-items: center; gap: 12px; color: var(--dim); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .14em; text-transform: uppercase; }
+.mb-or::before, .mb-or::after { content: ""; flex: 1; height: 1px; background: rgba(255,255,255,.12); }
+.mb-form .mb-nostr { min-height: 48px; justify-content: center; }
+.mb-form .mb-nostr[hidden], .mb-nostr-on[hidden], #progress[hidden] { display: none; }
+.mb-nostr-on { margin: 0; padding: 10px 14px; border-radius: 10px; border: 1px solid rgba(247,147,26,.35); background: rgba(247,147,26,.08); color: var(--text); font: 600 13px "Plus Jakarta Sans", monospace; }
+.mb-nostr-on code { color: var(--orange); }
 .mb-joined strong { color: var(--orange); font-size: 22px; }
 .mb-small { color: var(--muted); font-size: 14px; margin: 0 0 18px; }
 .mb-small a { color: var(--orange); }
@@ -483,7 +489,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
 <link rel="stylesheet" href="/assets/theme.css?v=20261011a">
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
 <script src="/assets/mastering-bitcoin/cohort.js?v=20261010a" defer></script>
-<script src="/assets/mastering-bitcoin/app.js?v=20261011a" defer></script>
+<script src="/assets/mastering-bitcoin/app.js?v=20261013a" defer></script>
 </head>
 <body>
 <a class="announce" href="#signup">Decoding Bitcoin study cohort starts Monday 16 November &middot; sign-ups are open <span>Sign up &rarr;</span></a>
@@ -561,15 +567,18 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
 
   <section id="signup" class="band mb-bg mb-bg-right" style="--mb-bg:url(/assets/mastering-bitcoin/bg-workshop-table.jpg?v=3);scroll-margin-top:96px"><div class="section-inner">
     <div class="split">
-      <div><p class="eyebrow">Sign up</p><h2>Join in 30 seconds.</h2><p class="lead">Free. All you need is your name and Discord.</p><p class="mb-joined" hidden><strong id="mb-count">–</strong> people have joined so far.</p><p class="mb-small">No Discord yet? <a href="https://discord.com/register" target="_blank" rel="noopener">Make a free account</a>, then come back.</p><button type="button" class="ghost small" data-mb-share>Invite a friend</button></div>
+      <div><p class="eyebrow">Sign up</p><h2>Join in 30 seconds.</h2><p class="lead">Free. All you need is your name and email.</p><p class="mb-joined" hidden><strong id="mb-count">–</strong> people have joined so far.</p><p class="mb-small">No Discord yet? <a href="https://discord.com/register" target="_blank" rel="noopener">Make a free account</a>, then come back.</p><button type="button" class="ghost small" data-mb-share>Invite a friend</button></div>
       <div class="feature-panel"><div class="feature-panel-inner">
         <form id="mb-signup" class="mb-form" autocomplete="on">
           <label>Your name<input name="name" required maxlength="60" autocomplete="name" placeholder="Satoshi N."></label>
-          <label>Discord username<input name="discord" required maxlength="40" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="satoshi_n"></label>
-          <label>Email <span class="muted">(optional, for reminders)</span><input name="email" type="email" maxlength="120" autocomplete="email" placeholder="you@example.com"></label>
+          <label><span>Email <span class="muted" data-mb-email-hint></span></span><input name="email" type="email" required maxlength="120" autocomplete="email" placeholder="you@example.com"></label>
+          <label><span>Discord username <span class="muted">(optional)</span></span><input name="discord" maxlength="40" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="satoshi_n"></label>
+          <p class="mb-nostr-on" hidden><span aria-hidden="true">⚡</span> Nostr connected: <code></code></p>
           <label class="mb-hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
           <button class="button mb-cta" type="submit">Sign me up</button>
-          <p class="mb-fine">Only your name shows on this page.</p>
+          <div class="mb-or"><span>or</span></div>
+          <button type="button" class="ghost mb-nostr" data-mb-nostr><span aria-hidden="true">⚡</span> Continue with Nostr</button>
+          <p class="mb-fine">Your email stays private. Nostr works with a browser extension or a signer app like nsec.app, and signs you back in on any device. Never paste your private key (nsec) into a website.</p>
         </form>
         <p id="mb-signup-note" class="mb-note" role="status"></p>
       </div></div>
@@ -635,7 +644,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
     </div>
   </section>
 
-  <section id="progress" class="section-inner" style="scroll-margin-top:96px">
+  <section id="progress" class="section-inner" style="scroll-margin-top:96px" hidden>
     <div class="split"><div><p class="eyebrow">The cohort</p><h2>Who's in, and how it's going.</h2></div><p class="lead">Everyone in the cohort and how far they've got.</p></div>
     <div id="mb-roster" class="mb-roster"></div>
   </section>

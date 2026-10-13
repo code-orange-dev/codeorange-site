@@ -26,7 +26,9 @@
     history.replaceState(null, "", location.pathname + (params.toString() ? `?${params}` : "") + location.hash);
   }
 
-  const state = { token: store.get(), students: [], me: null, online: false, loaded: false, open: new Set(), popped: "" };
+    // rosterPublic: whether the class list is shown (the API decides); nostr: a Nostr key that
+  // signed in but hasn't signed up yet.
+  const state = { token: store.get(), students: [], me: null, rosterPublic: false, nostr: "", online: false, loaded: false, open: new Set(), popped: "" };
 
   // ── Dates ──
   const sessionDates = C.weeks.map((_, i) => {
@@ -54,8 +56,10 @@
   const weekOpens = (wi) => (sessionDates[wi] ? sessionDates[wi].getTime() - 7 * 864e5 : Infinity);
   // Seminar roles rotate the same way, on their own counter, one person per role.
   const roles = C.roles || [];
+  // While the class list is private nobody has questions or roles yet.
   function assignments() {
     const map = {};
+    if (!state.rosterPublic) return map;
     const now = Date.now();
     let k = 0;
     let r = 0;
@@ -94,7 +98,8 @@
         const wk = wi + 1;
         const date = sessionDates[wi];
         const read = readCount(wk);
-        const total = state.students.length;
+        const total = state.rosterPublic ? state.students.length : 0;
+        const pending = state.rosterPublic ? "Assigned at sign-up" : "Assigned when the cohort starts";
         const chapters = w.lessons
           .map((c) => `<a href="${lessonUrl(c.slug)}" target="_blank" rel="noopener">${esc(c.title)} ↗</a>`)
           .join("");
@@ -109,7 +114,7 @@
             const done = isDone(who, item);
             const whoLabel = who
               ? `<span class="mb-who${mine ? " is-me" : ""}${done ? " is-done" : ""}">${done ? "✓ " : ""}${mine ? "You" : esc(who.name)}</span>`
-              : `<span class="mb-who is-empty">Assigned at sign-up</span>`;
+              : `<span class="mb-who is-empty">${pending}</span>`;
             return `<li class="${mine ? "is-mine" : ""}"><span class="mb-num">Q${qi + 1}</span><div><p>${esc(q)}</p><div class="mb-row">${whoLabel}${mine ? tickButton(item, done, `Mark question ${qi + 1} of week ${wk} done`) : ""}</div></div></li>`;
           })
           .join("");
@@ -117,7 +122,7 @@
           .map((e, ei) => {
             const item = `w${wk}-e${ei + 1}`;
             const count = state.students.filter((s) => s.done.includes(item)).length;
-            return `<li><span class="mb-num">E${ei + 1}</span><div><p>${esc(e)}</p><div class="mb-row"><span class="mb-count">${total ? `${count} of ${total} done` : "0 done"}</span>${me ? tickButton(item, isDone(me, item), `Mark exercise ${ei + 1} of week ${wk} done`) : ""}</div></div></li>`;
+            return `<li><span class="mb-num">E${ei + 1}</span><div><p>${esc(e)}</p><div class="mb-row">${total ? `<span class="mb-count">${count} of ${total} done</span>` : ""}${me ? tickButton(item, isDone(me, item), `Mark exercise ${ei + 1} of week ${wk} done`) : ""}</div></div></li>`;
           })
           .join("");
         const myQs = me ? w.questions.filter((_, qi) => assigned[`w${wk}-q${qi + 1}`]?.id === me.id).length : 0;
@@ -125,7 +130,7 @@
           .map((role, ri) => {
             const who = assigned[`w${wk}-role${ri}`];
             const mine = me && who && who.id === me.id;
-            return `<li class="${mine ? "is-mine" : ""}" title="${esc(role.job)}"><b>${esc(role.name)}</b><span>${who ? (mine ? "You" : esc(who.name)) : "Assigned at sign-up"}</span></li>`;
+            return `<li class="${mine ? "is-mine" : ""}" title="${esc(role.job)}"><b>${esc(role.name)}</b><span>${who ? (mine ? "You" : esc(who.name)) : pending}</span></li>`;
           })
           .join("");
 
@@ -165,7 +170,7 @@
           const items = [`w${wk}-r1`, ...w.exercises.map((_, ei) => `w${wk}-e${ei + 1}`), ...w.questions.map((_, qi) => `w${wk}-q${qi + 1}`).filter((k) => assigned[k]?.id === me.id)];
           pct = (items.filter((k) => me.done.includes(k)).length / items.length) * 100;
         } else {
-          pct = state.students.length ? (readCount(wk) / state.students.length) * 100 : 0;
+          pct = state.rosterPublic && state.students.length ? (readCount(wk) / state.students.length) * 100 : 0;
         }
         const cls = wi === currentWeek ? "is-current" : currentWeek > wi ? "is-past" : "";
         return `<a href="#week-${wk}" class="${cls}" title="Week ${wk}: ${esc(w.title)} · ${Math.round(pct)}% ${me ? "done by you" : "of the cohort have done the lessons"}"><i><b style="--p:${pct.toFixed(1)}%"></b></i><span>W${pad(wk)}${sessionDates[wi] ? `<em> · ${sessionDates[wi].toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "Asia/Singapore" })}</em>` : ""}</span></a>`;
@@ -212,7 +217,7 @@
     const thisWeek = mine.filter((k) => k.startsWith(`w${focus + 1}-`));
     box.hidden = false;
     box.innerHTML = `<div class="mb-me-head"><div><p class="eyebrow">Your dashboard</p><h2>Hi ${esc(me.name)}.</h2></div>
-      <div class="mb-me-stats"><span><strong>${me.done.filter((k) => k.endsWith("-r1")).length}/${C.weeks.length}</strong> weeks of lessons</span><span><strong>${qDone}/${mine.length}</strong> questions</span><span><strong>${exDone}/${exTotal}</strong> exercises</span></div></div>
+      <div class="mb-me-stats"><span><strong>${me.done.filter((k) => k.endsWith("-r1")).length}/${C.weeks.length}</strong> weeks of lessons</span>${state.rosterPublic ? `<span><strong>${qDone}/${mine.length}</strong> questions</span>` : ""}<span><strong>${exDone}/${exTotal}</strong> exercises</span></div></div>
       ${weekChecklist(me, assigned, focus, thisWeek)}
       <div class="mb-link"><span>Your personal link (open it on any device to tick things off):</span><code>${esc(link)}</code><button type="button" class="ghost small" data-copy="${esc(link)}">Copy link</button><button type="button" class="mb-signout" data-signout>Not you? Sign out</button></div>
       <div class="cta-row mb-me-cta"><a class="button small" href="${C.discord}" target="_blank" rel="noopener">Join the Discord</a>${first ? `<a class="ghost small" href="${esc(gcalHref())}" target="_blank" rel="noopener">Add to Google Calendar</a>` : ""}</div>`;
@@ -243,7 +248,11 @@
     const exTotal = C.weeks.reduce((n, w) => n + w.exercises.length, 0);
     if ($("#mb-count")) $("#mb-count").textContent = state.loaded ? String(state.students.length) : "–";
     const joined = $(".mb-joined");
-    if (joined) joined.hidden = !(state.loaded && state.students.length > 0);
+    if (joined) joined.hidden = !(state.rosterPublic && state.students.length > 0);
+    // The class list stays off the page until the organisers make it public.
+    const section = $("#progress");
+    if (section) section.hidden = !state.rosterPublic;
+    if (!state.rosterPublic) return;
     if (!state.students.length) {
       $("#mb-roster").innerHTML = `<p class="mb-empty">${state.online || !state.loaded ? "No one has signed up yet. Be the first." : "The roster appears here once sign-ups open."}</p>`;
       return;
@@ -272,6 +281,13 @@
     }
     const closed = state.loaded && (!state.online || !C.signupsOpen);
     form.hidden = false;
+    // Signed in with a new Nostr key: email becomes optional.
+    const on = form.querySelector(".mb-nostr-on");
+    on.hidden = !state.nostr;
+    if (state.nostr) on.querySelector("code").textContent = npubShort(state.nostr);
+    form.querySelector("[name=email]").required = !state.nostr;
+    form.querySelector("[data-mb-email-hint]").textContent = state.nostr ? "(optional with Nostr)" : "";
+    form.querySelector("[data-mb-nostr]").hidden = !!state.nostr;
     form.querySelectorAll("input, button").forEach((el) => (el.disabled = closed));
     note.textContent = closed
       ? state.online ? "Sign-ups are closed for this cohort. Ask in Discord about the next one." : "Sign-ups open soon. Check back in a few days or ask in Discord."
@@ -290,6 +306,59 @@
     }
   }
 
+  // ── Nostr: a browser extension (NIP-07) if there is one, otherwise nostr-login
+  // (loaded only when needed) for remote signers like nsec.app. The private key stays
+  // in the signer; the server only checks a signature on a short-lived event (NIP-98). ──
+  const NOSTR_LIB = "/assets/vendor/nostr-login-1.7.12.js";
+  function nostrProvider() {
+    if (window.nostr) return Promise.resolve(window.nostr);
+    return new Promise((resolve, reject) => {
+      const s = document.createElement("script");
+      s.src = NOSTR_LIB;
+      Object.assign(s.dataset, {
+        methods: "connect,extension",
+        perms: "sign_event:27235",
+        noBanner: "true",
+        darkMode: "true",
+        title: "Decoding Bitcoin cohort",
+        description: "Sign in with your Nostr key. Code Orange never sees your private key.",
+      });
+      s.onload = () => (window.nostr ? resolve(window.nostr) : reject(new Error("Nostr sign-in couldn't start. Try again.")));
+      s.onerror = () => reject(new Error("Nostr sign-in couldn't load. Try again."));
+      document.head.appendChild(s);
+    });
+  }
+  async function nostrEvent() {
+    const nostr = await nostrProvider();
+    const pubkey = await nostr.getPublicKey();
+    return nostr.signEvent({ kind: 27235, created_at: Math.floor(Date.now() / 1000), tags: [["u", `${location.origin}${API}`], ["method", "POST"]], content: "", pubkey });
+  }
+  // Hex public key to npub (bech32), shortened for display.
+  function npubShort(hex) {
+    const CH = "qpzry9x8gf2tvdw0s3jn54khce6mua7l";
+    const data = [];
+    let acc = 0, bits = 0;
+    for (const h of hex.match(/../g)) {
+      acc = ((acc << 8) | parseInt(h, 16)) & 0xffff;
+      bits += 8;
+      while (bits >= 5) { bits -= 5; data.push((acc >> bits) & 31); }
+    }
+    if (bits) data.push((acc << (5 - bits)) & 31);
+    const polymod = (values) => {
+      let chk = 1;
+      for (const v of values) {
+        const top = chk >> 25;
+        chk = ((chk & 0x1ffffff) << 5) ^ v;
+        [0x3b6a57b2, 0x26508e6d, 0x1ea119fa, 0x3d4233dd, 0x2a1462b3].forEach((g, i) => { if ((top >> i) & 1) chk ^= g; });
+      }
+      return chk;
+    };
+    const hrp = [..."npub"].map((c) => c.charCodeAt(0));
+    const pm = polymod([...hrp.map((c) => c >> 5), 0, ...hrp.map((c) => c & 31), ...data, 0, 0, 0, 0, 0, 0]) ^ 1;
+    const full = "npub1" + [...data, ...[0, 1, 2, 3, 4, 5].map((i) => (pm >> (5 * (5 - i))) & 31)].map((d) => CH[d]).join("");
+    return `${full.slice(0, 12)}…${full.slice(-6)}`;
+  }
+
   // ── Data ──
   async function load() {
     try {
@@ -297,6 +366,7 @@
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Couldn't load");
       state.students = data.students;
+      state.rosterPublic = !!data.rosterPublic;
       state.me = data.me;
       state.online = true;
       if (state.token && !data.me) { store.set(""); state.token = ""; }
@@ -372,7 +442,36 @@
       store.set("");
       state.token = "";
       state.me = null;
+      if (window.nostr && document.querySelector(`script[src="${NOSTR_LIB}"]`)) document.dispatchEvent(new Event("nlLogout"));
       render();
+      return;
+    }
+    const nostrBtn = ev.target.closest("[data-mb-nostr]");
+    if (nostrBtn) {
+      const note = $("#mb-signup-note");
+      nostrBtn.disabled = true;
+      note.textContent = "Waiting for your Nostr signer…";
+      try {
+        const data = await post({ action: "nostr", event: await nostrEvent() });
+        if (data.known) {
+          store.set(data.token);
+          state.token = data.token;
+          state.nostr = "";
+          note.textContent = "";
+          await load();
+          $("#mb-me").scrollIntoView({ behavior: "smooth", block: "start" });
+          toast(`Welcome back, ${data.me.name}.`);
+        } else {
+          state.nostr = data.pubkey;
+          renderSignup();
+          note.textContent = "Nostr connected. Add your name to finish signing up.";
+          $("#mb-signup [name=name]").focus();
+        }
+      } catch (err) {
+        note.textContent = err && err.message ? err.message : "Nostr sign-in was cancelled.";
+      } finally {
+        nostrBtn.disabled = false;
+      }
     }
   });
 
@@ -397,9 +496,12 @@
         discord: f.get("discord"),
         email: f.get("email"),
         website: f.get("website"),
+        // A fresh signature ties the Nostr key to this sign-up.
+        nostr: state.nostr ? await nostrEvent() : undefined,
       });
       store.set(data.token);
       state.token = data.token;
+      state.nostr = "";
       form.reset();
       await load();
       $("#mb-me").scrollIntoView({ behavior: "smooth", block: "start" });

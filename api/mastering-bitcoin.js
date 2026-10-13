@@ -1,27 +1,39 @@
 // Decoding Bitcoin study cohort (formerly Mastering Bitcoin): sign-ups and "done" ticks, stored in Neon Postgres.
 //
-// No accounts. Signing up returns a private token that the browser keeps (and that the
-// student can bookmark as a personal link); ticking "done" needs that token.
-// Organisers manage the roster in the Neon console (tables mb_students / mb_done):
-// set hidden = true on a row to take someone off the page.
+// No passwords. Signing up returns a private token that the browser keeps (and that the
+// student can bookmark as a personal link); ticking "done" needs that token. Students can
+// also sign up and sign back in with Nostr (see _lib/nostr.js).
+// The class list is private until ROSTER_PUBLIC is set to true: the public page then shows
+// names and progress. Organisers see everyone (with emails) at /decoding-bitcoin/admin,
+// using the admin key, and can hide people there.
 //
 // Setup: connect a Neon database to the Vercel project (Storage tab). Vercel then sets
 // DATABASE_URL and the tables are created on first use.
 //
 //   GET  /api/mastering-bitcoin                      roster + done ticks (+ "me" with X-MB-Token)
-//   POST /api/mastering-bitcoin {action:"signup", name, discord, email?}
+//   GET  /api/mastering-bitcoin?admin=1              everyone, with emails (X-MB-Admin: key)
+//   POST /api/mastering-bitcoin {action:"signup", name, email, discord?, nostr?}
+//   POST /api/mastering-bitcoin {action:"nostr", event}  sign in with a signed Nostr event
 //   POST /api/mastering-bitcoin {action:"done", token, item, done}
+//   POST /api/mastering-bitcoin {action:"admin-hide", id, hidden}  (X-MB-Admin: key)
 //
 // Items: w<week>-q<n> (discussion question), w<week>-e<n> (exercise), w<week>-r1 (read the chapter).
 
 const crypto = require("node:crypto");
 
+const { verifyAuthEvent } = require("./_lib/nostr.js");
+
 const COHORT = "mb-2026";
+// Show the class list (names and progress) on the public page. Off while sign-ups run.
+const ROSTER_PUBLIC = false;
+// SHA-256 of the organisers' admin key (MB_ADMIN_KEY in Vercel's environment overrides it).
+const ADMIN_KEY_SHA256 = "72309790bc2a39b6f7cf37ca3d2dd89bfa87ed8fd6061a4fad74e331969bc48d";
 const MAX_STUDENTS = 400;
 const ITEM_RE = /^w(10|[1-9])-(q|e|r)([1-9]|1[0-9])$/;
 const TOKEN_RE = /^[A-Za-z0-9_-]{24}$/;
 // Discord usernames: 2-32 lowercase letters, digits, "_" or "." (old-style name#1234 also accepted).
 const DISCORD_RE = /^(?:[a-z0-9_.]{2,32}|[^@#:`]{2,32}#\d{4})$/;
+const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 // Anti-spam: sign-ups allowed per network (IP) per hour, and for the whole cohort per 10 minutes.
 const SIGNUPS_PER_IP_HOUR = 8;
 const SIGNUPS_PER_10_MIN = 40;
@@ -48,6 +60,7 @@ async function neon(body) {
   if (!res.ok) {
     const err = new Error(data.message || `Database error (${res.status})`);
     err.code = data.code;
+    err.constraint = data.constraint || "";
     throw err;
   }
   return data;
@@ -74,6 +87,10 @@ function ensureTables() {
       },
       { query: "CREATE UNIQUE INDEX IF NOT EXISTS mb_students_discord ON mb_students (cohort, lower(discord))", params: [] },
       { query: "ALTER TABLE mb_students ADD COLUMN IF NOT EXISTS ip_hash text", params: [] },
+      // Discord became optional and Nostr sign-in was added (October 2026).
+      { query: "ALTER TABLE mb_students ALTER COLUMN discord DROP NOT NULL", params: [] },
+      { query: "ALTER TABLE mb_students ADD COLUMN IF NOT EXISTS nostr text", params: [] },
+      { query: "CREATE UNIQUE INDEX IF NOT EXISTS mb_students_nostr ON mb_students (cohort, nostr) WHERE nostr IS NOT NULL", params: [] },
       {
         query: `CREATE TABLE IF NOT EXISTS mb_done (
           student_id integer NOT NULL REFERENCES mb_students(id) ON DELETE CASCADE,
@@ -84,10 +101,18 @@ function ensureTables() {
         params: [],
       },
     ],
-  }).catch((err) => {
-    ready = undefined;
-    throw err;
-  });
+  })
+    // One sign-up per email from now on. Kept separate so that older duplicate emails
+    // (from when email was optional) can't stop the page from working.
+    .then(() =>
+      sql("CREATE UNIQUE INDEX IF NOT EXISTS mb_students_email ON mb_students (cohort, lower(email)) WHERE email IS NOT NULL").catch((err) =>
+        console.error("mastering-bitcoin api: email index not created:", err.message)
+      )
+    )
+    .catch((err) => {
+      ready = undefined;
+      throw err;
+    });
   return ready;
 }
 
@@ -108,16 +133,19 @@ function readBody(req) {
 }
 
 async function roster(token) {
-  // One round trip to the database for the whole page.
+  // One round trip to the database for the whole page. While the class list is private,
+  // only the signed-in student's own row and ticks are read.
+  const visible = ROSTER_PUBLIC ? "NOT s.hidden" : "s.token = $2";
+  const params = ROSTER_PUBLIC ? [COHORT] : [COHORT, token || ""];
   const { results } = await neon({
     queries: [
       {
-        query: "SELECT id, name, floor(extract(epoch FROM created_at) * 1000) AS joined FROM mb_students WHERE cohort = $1 AND NOT hidden ORDER BY created_at, id",
-        params: [COHORT],
+        query: `SELECT s.id, s.name, floor(extract(epoch FROM s.created_at) * 1000) AS joined FROM mb_students s WHERE s.cohort = $1 AND ${visible} ORDER BY s.created_at, s.id`,
+        params,
       },
       {
-        query: "SELECT d.student_id, d.item FROM mb_done d JOIN mb_students s ON s.id = d.student_id WHERE s.cohort = $1 AND NOT s.hidden",
-        params: [COHORT],
+        query: `SELECT d.student_id, d.item FROM mb_done d JOIN mb_students s ON s.id = d.student_id WHERE s.cohort = $1 AND ${visible}`,
+        params,
       },
       { query: "SELECT id, name, discord FROM mb_students WHERE cohort = $1 AND token = $2", params: [COHORT, token || ""] },
     ],
@@ -127,9 +155,22 @@ async function roster(token) {
   for (const row of done) byStudent.get(row.student_id)?.push(row.item);
   const me = token && row ? { id: Number(row.id), name: row.name, discord: row.discord } : null;
   return {
+    rosterPublic: ROSTER_PUBLIC,
     students: students.map((s) => ({ id: Number(s.id), name: s.name, joined: Number(s.joined), done: byStudent.get(s.id) })),
     me,
   };
+}
+
+// The URL a Nostr sign-in event must be signed for.
+const apiUrl = (req) => `${req.headers["x-forwarded-proto"] === "http" ? "http" : "https"}://${req.headers.host}/api/mastering-bitcoin`;
+
+// Sign in with Nostr: returns the student's token if this key has signed up before.
+async function nostrSignIn(body, req) {
+  const pubkey = verifyAuthEvent(body.event, apiUrl(req));
+  if (!pubkey) return { status: 401, error: "Nostr sign-in didn't work. Check your device's clock and try again." };
+  const [row] = await sql("SELECT id, name, discord, token FROM mb_students WHERE cohort = $1 AND nostr = $2 AND NOT hidden", [COHORT, pubkey]);
+  if (!row) return { status: 200, data: { ok: true, known: false, pubkey } };
+  return { status: 200, data: { ok: true, known: true, token: row.token, me: { id: Number(row.id), name: row.name, discord: row.discord } } };
 }
 
 // Only a hash of the visitor's IP is kept, to rate-limit sign-ups.
@@ -142,12 +183,19 @@ async function signup(body, req) {
   if (body.website) return { status: 400, error: "Sign-up failed." }; // honeypot field
   const name = clean(body.name, 60);
   const discord = clean(body.discord, 40).replace(/^@/, "").toLowerCase();
-  const email = clean(body.email, 120);
-  if (name.length < 2) return { status: 400, error: "Please enter your name." };
-  if (!DISCORD_RE.test(discord)) {
-    return { status: 400, error: "Please enter your Discord username (letters, numbers, _ and . only, like satoshi_n)." };
+  const email = clean(body.email, 120).toLowerCase();
+  let nostr = "";
+  if (body.nostr) {
+    nostr = verifyAuthEvent(body.nostr, apiUrl(req));
+    if (!nostr) return { status: 401, error: "Nostr sign-in didn't work. Check your device's clock and try again." };
   }
-  if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return { status: 400, error: "That email doesn't look right." };
+  if (name.length < 2) return { status: 400, error: "Please enter your name." };
+  // Email is how we reach people; Nostr users may skip it.
+  if (!email && !nostr) return { status: 400, error: "Please enter your email." };
+  if (email && !EMAIL_RE.test(email)) return { status: 400, error: "That email doesn't look right." };
+  if (discord && !DISCORD_RE.test(discord)) {
+    return { status: 400, error: "That Discord username doesn't look right (letters, numbers, _ and . only, like satoshi_n). You can also leave it empty." };
+  }
   const ip = ipHash(req);
   const token = crypto.randomBytes(18).toString("base64url");
   const limits = `SELECT count(*) AS total,
@@ -163,17 +211,18 @@ async function signup(body, req) {
         { query: "SELECT pg_advisory_xact_lock(hashtext('mb_students_signup'))::text AS locked", params: [] },
         { query: limits, params: [COHORT, ip] },
         {
-          query: `INSERT INTO mb_students (cohort, name, discord, email, token, ip_hash)
-                  SELECT $1, $2, $3, $4, $5, $6 FROM (${limits.replace("$2", "$6")}) c
+          query: `INSERT INTO mb_students (cohort, name, discord, email, token, ip_hash, nostr)
+                  SELECT $1, $2, $3, $4, $5, $6, $7 FROM (${limits.replace("$2", "$6")}) c
                    WHERE c.total < ${MAX_STUDENTS} AND c.mine < ${SIGNUPS_PER_IP_HOUR} AND c.recent < ${SIGNUPS_PER_10_MIN}
                   RETURNING id`,
-          params: [COHORT, name, discord, email || null, token, ip],
+          params: [COHORT, name, discord || null, email || null, token, ip, nostr || null],
         },
       ],
     }));
   } catch (err) {
     if (err.code === "23505") {
-      return { status: 409, error: "That Discord username is already signed up. Lost your personal link? Ask the organiser in Discord." };
+      const what = /email/.test(err.constraint + err.message) ? "email" : /nostr/.test(err.constraint + err.message) ? "Nostr key" : "Discord username";
+      return { status: 409, error: `That ${what} is already signed up. Lost your personal link? Ask the organiser in Discord.` };
     }
     throw err;
   }
@@ -204,6 +253,49 @@ async function tick(body) {
   return { status: 200, data: { ok: true } };
 }
 
+function isAdmin(req) {
+  const key = String(req.headers["x-mb-admin"] || "");
+  if (!key) return false;
+  const hash = (v) => crypto.createHash("sha256").update(v).digest();
+  const expected = process.env.MB_ADMIN_KEY ? hash(process.env.MB_ADMIN_KEY) : Buffer.from(ADMIN_KEY_SHA256, "hex");
+  return crypto.timingSafeEqual(hash(key), expected);
+}
+
+async function adminList() {
+  const { results } = await neon({
+    queries: [
+      {
+        query: `SELECT id, name, email, discord, nostr, hidden, created_at FROM mb_students WHERE cohort = $1 ORDER BY created_at, id`,
+        params: [COHORT],
+      },
+      { query: "SELECT d.student_id, count(*) AS n FROM mb_done d JOIN mb_students s ON s.id = d.student_id WHERE s.cohort = $1 GROUP BY 1", params: [COHORT] },
+    ],
+  });
+  const [students, done] = results.map((r) => r.rows);
+  const ticks = new Map(done.map((d) => [d.student_id, Number(d.n)]));
+  return {
+    rosterPublic: ROSTER_PUBLIC,
+    max: MAX_STUDENTS,
+    students: students.map((s) => ({
+      id: Number(s.id),
+      name: s.name,
+      email: s.email,
+      discord: s.discord,
+      nostr: s.nostr,
+      hidden: s.hidden === "t" || s.hidden === true || s.hidden === "true",
+      joined: s.created_at,
+      ticks: ticks.get(s.id) || 0,
+    })),
+  };
+}
+
+async function adminHide(body) {
+  const id = Number(body.id);
+  if (!Number.isInteger(id) || typeof body.hidden !== "boolean") return { status: 400, error: "Unknown student." };
+  const rows = await sql("UPDATE mb_students SET hidden = $3 WHERE cohort = $1 AND id = $2 RETURNING id", [COHORT, id, body.hidden]);
+  return rows.length ? { status: 200, data: { ok: true } } : { status: 404, error: "Unknown student." };
+}
+
 // Browsers send Origin on POST; refuse requests made from other websites.
 function sameOrigin(req) {
   const origin = req.headers.origin;
@@ -222,6 +314,10 @@ module.exports = async function handler(req, res) {
   }
   try {
     await ensureTables();
+    if (req.method === "GET" && req.query?.admin !== undefined) {
+      if (!isAdmin(req)) return res.status(401).json({ error: "Wrong admin key." });
+      return res.status(200).json(await adminList());
+    }
     if (req.method === "GET") {
       const token = clean(req.headers["x-mb-token"], 64);
       return res.status(200).json(await roster(TOKEN_RE.test(token) ? token : ""));
@@ -229,8 +325,13 @@ module.exports = async function handler(req, res) {
     if (req.method === "POST") {
       if (!sameOrigin(req)) return res.status(403).json({ error: "Please sign up from codeorange.dev." });
       const body = readBody(req);
-      const result =
-        body.action === "signup" ? await signup(body, req) : body.action === "done" ? await tick(body) : { status: 400, error: "Unknown action." };
+      const actions = {
+        signup: () => signup(body, req),
+        nostr: () => nostrSignIn(body, req),
+        done: () => tick(body),
+        "admin-hide": () => (isAdmin(req) ? adminHide(body) : { status: 401, error: "Wrong admin key." }),
+      };
+      const result = Object.hasOwn(actions, body.action) ? await actions[body.action]() : { status: 400, error: "Unknown action." };
       return res.status(result.status).json(result.error ? { error: result.error } : result.data);
     }
     res.setHeader("Allow", "GET, POST");
