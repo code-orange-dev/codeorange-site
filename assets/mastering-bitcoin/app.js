@@ -26,9 +26,10 @@
     history.replaceState(null, "", location.pathname + (params.toString() ? `?${params}` : "") + location.hash);
   }
 
-    // rosterPublic: whether the class list is shown (the API decides); nostr: a Nostr key that
+    // rosterVisible: whether the class list is shown (signed-in students, or everyone once
+  // it's public; the API decides); emailLinks: "email me my link" is on; nostr: a Nostr key that
   // signed in but hasn't signed up yet.
-  const state = { token: store.get(), students: [], me: null, rosterPublic: false, nostr: "", online: false, loaded: false, open: new Set(), popped: "" };
+  const state = { token: store.get(), students: [], me: null, rosterVisible: false, emailLinks: false, nostr: "", online: false, loaded: false, open: new Set(), popped: "" };
 
   // ── Dates ──
   const sessionDates = C.weeks.map((_, i) => {
@@ -56,10 +57,10 @@
   const weekOpens = (wi) => (sessionDates[wi] ? sessionDates[wi].getTime() - 7 * 864e5 : Infinity);
   // Seminar roles rotate the same way, on their own counter, one person per role.
   const roles = C.roles || [];
-  // While the class list is private nobody has questions or roles yet.
+  // Visitors who aren't signed in don't see who has which question.
   function assignments() {
     const map = {};
-    if (!state.rosterPublic) return map;
+    if (!state.rosterVisible) return map;
     const now = Date.now();
     let k = 0;
     let r = 0;
@@ -98,8 +99,8 @@
         const wk = wi + 1;
         const date = sessionDates[wi];
         const read = readCount(wk);
-        const total = state.rosterPublic ? state.students.length : 0;
-        const pending = state.rosterPublic ? "Assigned at sign-up" : "Assigned when the cohort starts";
+        const total = state.rosterVisible ? state.students.length : 0;
+        const pending = state.rosterVisible ? "Assigned at sign-up" : "Sign up to get yours";
         const chapters = w.lessons
           .map((c) => `<a href="${lessonUrl(c.slug)}" target="_blank" rel="noopener">${esc(c.title)} ↗</a>`)
           .join("");
@@ -170,7 +171,7 @@
           const items = [`w${wk}-r1`, ...w.exercises.map((_, ei) => `w${wk}-e${ei + 1}`), ...w.questions.map((_, qi) => `w${wk}-q${qi + 1}`).filter((k) => assigned[k]?.id === me.id)];
           pct = (items.filter((k) => me.done.includes(k)).length / items.length) * 100;
         } else {
-          pct = state.rosterPublic && state.students.length ? (readCount(wk) / state.students.length) * 100 : 0;
+          pct = state.rosterVisible && state.students.length ? (readCount(wk) / state.students.length) * 100 : 0;
         }
         const cls = wi === currentWeek ? "is-current" : currentWeek > wi ? "is-past" : "";
         return `<a href="#week-${wk}" class="${cls}" title="Week ${wk}: ${esc(w.title)} · ${Math.round(pct)}% ${me ? "done by you" : "of the cohort have done the lessons"}"><i><b style="--p:${pct.toFixed(1)}%"></b></i><span>W${pad(wk)}${sessionDates[wi] ? `<em> · ${sessionDates[wi].toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "Asia/Singapore" })}</em>` : ""}</span></a>`;
@@ -217,7 +218,7 @@
     const thisWeek = mine.filter((k) => k.startsWith(`w${focus + 1}-`));
     box.hidden = false;
     box.innerHTML = `<div class="mb-me-head"><div><p class="eyebrow">Your dashboard</p><h2>Hi ${esc(me.name)}.</h2></div>
-      <div class="mb-me-stats"><span><strong>${me.done.filter((k) => k.endsWith("-r1")).length}/${C.weeks.length}</strong> weeks of lessons</span>${state.rosterPublic ? `<span><strong>${qDone}/${mine.length}</strong> questions</span>` : ""}<span><strong>${exDone}/${exTotal}</strong> exercises</span></div></div>
+      <div class="mb-me-stats"><span><strong>${me.done.filter((k) => k.endsWith("-r1")).length}/${C.weeks.length}</strong> weeks of lessons</span>${state.rosterVisible ? `<span><strong>${qDone}/${mine.length}</strong> questions</span>` : ""}<span><strong>${exDone}/${exTotal}</strong> exercises</span></div></div>
       ${weekChecklist(me, assigned, focus, thisWeek)}
       <div class="mb-link"><span>Your personal link (open it on any device to tick things off):</span><code>${esc(link)}</code><button type="button" class="ghost small" data-copy="${esc(link)}">Copy link</button><button type="button" class="mb-signout" data-signout>Not you? Sign out</button></div>
       <div class="cta-row mb-me-cta"><a class="button small" href="${C.discord}" target="_blank" rel="noopener">Join the Discord</a>${first ? `<a class="ghost small" href="${esc(gcalHref())}" target="_blank" rel="noopener">Add to Google Calendar</a>` : ""}</div>`;
@@ -248,11 +249,11 @@
     const exTotal = C.weeks.reduce((n, w) => n + w.exercises.length, 0);
     if ($("#mb-count")) $("#mb-count").textContent = state.loaded ? String(state.students.length) : "–";
     const joined = $(".mb-joined");
-    if (joined) joined.hidden = !(state.rosterPublic && state.students.length > 0);
+    if (joined) joined.hidden = !(state.rosterVisible && state.students.length > 0);
     // The class list stays off the page until the organisers make it public.
     const section = $("#progress");
-    if (section) section.hidden = !state.rosterPublic;
-    if (!state.rosterPublic) return;
+    if (section) section.hidden = !state.rosterVisible;
+    if (!state.rosterVisible) return;
     if (!state.students.length) {
       $("#mb-roster").innerHTML = `<p class="mb-empty">${state.online || !state.loaded ? "No one has signed up yet. Be the first." : "The roster appears here once sign-ups open."}</p>`;
       return;
@@ -276,18 +277,19 @@
     const me = meStudent();
     if (me) {
       form.hidden = true;
+      if ($("#mb-lost")) $("#mb-lost").hidden = true;
       note.innerHTML = `You're signed up as <strong>${esc(me.name)}</strong>. Next step: <a href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">join our Discord</a>. See you there, ${esc(C.sessionLabel)}.`;
       return;
     }
     const closed = state.loaded && (!state.online || !C.signupsOpen);
     form.hidden = false;
-    // Signed in with a new Nostr key: email becomes optional.
+    // Signed in with a Nostr key that hasn't signed up yet: it gets linked to this sign-up.
     const on = form.querySelector(".mb-nostr-on");
     on.hidden = !state.nostr;
     if (state.nostr) on.querySelector("code").textContent = npubShort(state.nostr);
-    form.querySelector("[name=email]").required = !state.nostr;
-    form.querySelector("[data-mb-email-hint]").textContent = state.nostr ? "(optional with Nostr)" : "";
     form.querySelector("[data-mb-nostr]").hidden = !!state.nostr;
+    const lost = $("#mb-lost");
+    if (lost) lost.hidden = !state.emailLinks || closed;
     form.querySelectorAll("input, button").forEach((el) => (el.disabled = closed));
     note.textContent = closed
       ? state.online ? "Sign-ups are closed for this cohort. Ask in Discord about the next one." : "Sign-ups open soon. Check back in a few days or ask in Discord."
@@ -366,7 +368,8 @@
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Couldn't load");
       state.students = data.students;
-      state.rosterPublic = !!data.rosterPublic;
+      state.rosterVisible = !!data.rosterVisible;
+      state.emailLinks = !!data.emailLinks;
       state.me = data.me;
       state.online = true;
       if (state.token && !data.me) { store.set(""); state.token = ""; }
@@ -464,8 +467,8 @@
         } else {
           state.nostr = data.pubkey;
           renderSignup();
-          note.textContent = "Nostr connected. Add your name to finish signing up.";
-          $("#mb-signup [name=name]").focus();
+          note.textContent = "Nostr connected. Add your email and Discord to finish signing up.";
+          $("#mb-signup [name=email]").focus();
         }
       } catch (err) {
         note.textContent = err && err.message ? err.message : "Nostr sign-in was cancelled.";
@@ -505,12 +508,30 @@
       form.reset();
       await load();
       $("#mb-me").scrollIntoView({ behavior: "smooth", block: "start" });
-      toast("You're in! Save your personal link so you can tick things off on any device.");
+      toast(data.emailed ? "You're in! We've emailed you your personal link." : "You're in! Save your personal link so you can tick things off on any device.");
     } catch (err) {
       $("#mb-signup-note").textContent = err.message;
     } finally {
       button.disabled = false;
       button.textContent = "Sign me up";
+    }
+  });
+
+  // "Email me my link" for students on a new device.
+  const lostForm = $("#mb-lost form");
+  if (lostForm) lostForm.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const btn = lostForm.querySelector("button");
+    const out = $("#mb-lost-note");
+    btn.disabled = true;
+    try {
+      await post({ action: "email-link", email: new FormData(lostForm).get("email") });
+      out.textContent = "If that email is signed up, your link is on its way. Check your inbox (and spam).";
+      lostForm.reset();
+    } catch (err) {
+      out.textContent = err.message;
+    } finally {
+      btn.disabled = false;
     }
   });
 
