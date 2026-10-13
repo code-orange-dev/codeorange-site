@@ -1,0 +1,106 @@
+/* Code Orange calendar widget (assets/co-calendar.js). Black + Bitcoin orange. */
+.has-cocal { background: #0D0D0D !important; }
+.cocal { --o: #F7931A; --o2: #FFB347; --tx: #F5F5F5; --mu: #B8B8B8; --di: #7A7A7A; --ln: rgba(255,255,255,.07);
+  position: relative; color: var(--tx); font-family: "Inter", system-ui, sans-serif; text-align: left;
+  background: radial-gradient(1200px 400px at 85% -10%, rgba(247,147,26,.07), transparent 60%), #0D0D0D; }
+.cocal *, .cocal-modal * { box-sizing: border-box; }
+.cocal button { font: inherit; color: inherit; }
+.cocal-loading { padding: 120px 24px; text-align: center; color: var(--di); font: 600 13px "Plus Jakarta Sans", monospace; letter-spacing: .08em; }
+
+/* header */
+.cocal-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 22px 24px 18px; }
+.cocal-title { margin: 0 !important; font: 600 28px/1.1 "Inter", system-ui, sans-serif !important; letter-spacing: -.01em; color: var(--tx); }
+.cocal-title span { color: var(--o); }
+.cocal-nav { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.cocal-btn { min-height: 38px; padding: 0 16px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; background: rgba(255,255,255,.03); cursor: pointer; font-size: 14px !important; font-weight: 600 !important; transition: border-color .15s, color .15s, background .15s; }
+.cocal-btn:hover { border-color: var(--o); color: var(--o); }
+.cocal-arrow { width: 38px; padding: 0; font-size: 22px !important; line-height: 1; }
+.cocal-seg { display: inline-flex; margin-left: 6px; padding: 3px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; background: rgba(255,255,255,.03); }
+.cocal-seg-btn { min-height: 32px; padding: 0 14px; border: 0; border-radius: 999px; background: transparent; cursor: pointer; font-size: 13px !important; font-weight: 600 !important; color: var(--mu) !important; }
+.cocal-seg-btn[aria-pressed="true"] { background: var(--o); color: #0A0A0A !important; }
+.cocal button:focus-visible, .cocal a:focus-visible, .cocal-modal button:focus-visible, .cocal-modal a:focus-visible { outline: 2px solid var(--o); outline-offset: 2px; }
+
+/* month grid */
+.cocal-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); border-top: 1px solid var(--ln); }
+.cocal-wd { padding: 12px 12px 10px; color: var(--di); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .14em; text-transform: uppercase; border-bottom: 1px solid var(--ln); }
+.cocal-day { position: relative; min-height: 122px; padding: 10px 8px 8px; border-right: 1px solid var(--ln); border-bottom: 1px solid var(--ln); display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.cocal-day:nth-child(7n) { border-right: 0; }
+.cocal-day.is-out { background: rgba(255,255,255,.012); }
+.cocal-day.is-out .cocal-num { color: #444; }
+.cocal-num { align-self: flex-start; display: inline-grid; place-items: center; min-width: 28px; height: 28px; padding: 0 6px; margin: 0 0 2px 2px; border-radius: 999px; color: var(--mu); font-size: 13px; font-weight: 600; }
+.cocal-day.is-today .cocal-num { background: var(--o); color: #0A0A0A; font-weight: 800; }
+.cocal-day.is-today { background: linear-gradient(180deg, rgba(247,147,26,.08), transparent 70%); }
+.cocal-chip { display: flex; align-items: baseline; gap: 6px; width: 100%; min-width: 0; padding: 6px 8px 6px 9px; border: 0; border-left: 3px solid var(--o); border-radius: 6px; background: rgba(247,147,26,.11); cursor: pointer; text-align: left; font-size: 12.5px !important; line-height: 1.25; transition: background .15s, transform .15s; }
+.cocal-chip:hover { background: rgba(247,147,26,.22); transform: translateY(-1px); }
+.cocal-chip b { flex: 0 0 auto; color: var(--o); font-weight: 700; }
+.cocal-chip span { overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; color: var(--tx); font-weight: 500; }
+.cocal-chip.is-past { opacity: .45; }
+.cocal-more { align-self: flex-start; padding: 2px 6px; border: 0; background: none; color: var(--o) !important; font-size: 12px !important; font-weight: 700 !important; cursor: pointer; }
+.cocal-dots { display: none; }
+
+/* list */
+.cocal-list { display: flex; flex-direction: column; gap: 10px; padding: 6px 24px 24px; border-top: 1px solid var(--ln); padding-top: 20px; }
+.cocal-list-tight { padding: 14px 0 0; border: 0; }
+.cocal-row { display: flex; align-items: center; gap: 16px; width: 100%; padding: 14px 18px 14px 14px; border: 1px solid rgba(255,255,255,.09); border-radius: 14px; background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.012)); cursor: pointer; text-align: left; transition: border-color .15s, transform .15s; }
+.cocal-row:hover { border-color: rgba(247,147,26,.7); transform: translateY(-1px); }
+.cocal-row.is-past { opacity: .5; }
+.cocal-date { flex: 0 0 58px; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 58px; border-radius: 12px; background: rgba(247,147,26,.12); }
+.cocal-date b { color: var(--o); font-size: 24px; font-weight: 800; line-height: 1; }
+.cocal-date span { margin-top: 4px; color: var(--mu); font: 700 10px "Plus Jakarta Sans", monospace; letter-spacing: .12em; text-transform: uppercase; }
+.cocal-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.cocal-info strong { color: var(--tx); font-size: 16px; font-weight: 700; line-height: 1.3; }
+.cocal-meta { color: var(--mu); font-size: 13.5px; }
+.cocal-meta i { margin: 0 7px; font-style: normal; color: var(--di); }
+.cocal-go { flex: 0 0 auto; color: var(--o); font-size: 20px; font-weight: 700; }
+.cocal-empty { margin: 8px 0; padding: 26px; border: 1px dashed rgba(255,255,255,.12); border-radius: 14px; color: var(--mu); text-align: center; }
+
+/* footer */
+.cocal-foot { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 14px 24px 18px; border-top: 1px solid var(--ln); color: var(--di); font: 600 12px "Plus Jakarta Sans", monospace; letter-spacing: .04em; }
+.cocal-foot a { color: var(--o) !important; text-decoration: none; }
+.cocal-foot a:hover { color: var(--o2) !important; }
+.cocal[data-view="list"] .cocal-list { border-top: 0; padding-top: 4px; }
+
+/* details dialog */
+html.cocal-lock { overflow: hidden; }
+.cocal-modal { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: 20px; background: rgba(0,0,0,.72); backdrop-filter: blur(6px); }
+.cocal-modal[hidden] { display: none; }
+.cocal-card { position: relative; width: min(560px, 100%); max-height: calc(100vh - 40px); overflow: auto; padding: 30px 30px 26px; border: 1px solid rgba(247,147,26,.35); border-radius: 22px; background: radial-gradient(600px 240px at 100% 0, rgba(247,147,26,.12), transparent 60%), #111; color: #F5F5F5; font-family: "Inter", system-ui, sans-serif; box-shadow: 0 40px 120px rgba(0,0,0,.6); text-align: left; }
+.cocal-close { position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; background: rgba(255,255,255,.04); color: #F5F5F5; font-size: 20px; line-height: 1; cursor: pointer; }
+.cocal-close:hover { border-color: #F7931A; color: #F7931A; }
+.cocal-eyebrow { margin: 0 44px 10px 0; color: #F7931A; font: 700 12px "Plus Jakarta Sans", monospace; letter-spacing: .14em; text-transform: uppercase; }
+.cocal-card-title { margin: 0 44px 12px 0 !important; color: #F5F5F5; font: 700 28px/1.15 "Inter", system-ui, sans-serif !important; letter-spacing: -.01em; }
+.cocal-when { margin: 0; color: #B8B8B8; font-size: 15px; }
+.cocal-when b { color: #F5F5F5; }
+.cocal-local { margin: 4px 0 0; color: #7A7A7A; font-size: 13.5px; }
+.cocal-where { margin: 12px 0 0; color: #B8B8B8; font-size: 14.5px; }
+.cocal-desc { margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.08); color: #B8B8B8; font-size: 14.5px; line-height: 1.6; white-space: pre-line; overflow-wrap: anywhere; }
+.cocal-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.cocal-primary, .cocal-secondary { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 0 20px; border-radius: 999px; font-weight: 700; font-size: 15px; text-decoration: none; }
+.cocal-primary { background: #F7931A; color: #0A0A0A !important; }
+.cocal-primary:hover { background: #FFB347; }
+.cocal-secondary { border: 1px solid rgba(255,255,255,.18); color: #F5F5F5 !important; }
+.cocal-secondary:hover { border-color: #F7931A; color: #F7931A !important; }
+
+/* tablets: tighter chips */
+@media (max-width: 980px) {
+  .cocal-day { min-height: 104px; padding: 8px 5px; }
+  .cocal-chip b { display: none; }
+}
+/* phones: the month grid becomes dots; tap a day for its sessions */
+@media (max-width: 720px) {
+  .cocal-head { padding: 18px 16px 14px; }
+  .cocal-title { font-size: 24px !important; }
+  .cocal-wd { padding: 10px 0; text-align: center; font-size: 10px; letter-spacing: .08em; }
+  .cocal-day { min-height: 58px; padding: 6px 2px; align-items: center; gap: 4px; }
+  .cocal-day.has-ev { cursor: pointer; }
+  .cocal-num { align-self: center; margin: 0; min-width: 26px; height: 26px; font-size: 12.5px; }
+  .cocal-chip, .cocal-more { display: none; }
+  .cocal-dots { display: flex; gap: 3px; }
+  .cocal-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--o); }
+  .cocal-list { padding: 4px 12px 16px; }
+  .cocal-row { gap: 12px; padding: 12px; }
+  .cocal-date { flex-basis: 50px; height: 52px; }
+  .cocal-foot { padding: 12px 16px 16px; }
+  .cocal-card { padding: 24px 20px 20px; }
+  .cocal-card-title { font-size: 24px !important; }
+}
