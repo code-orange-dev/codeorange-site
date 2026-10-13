@@ -3,28 +3,32 @@
 // No passwords. Signing up returns a private token that the browser keeps (and that the
 // student can bookmark as a personal link); ticking "done" needs that token. Students can
 // also sign up and sign back in with Nostr (see _lib/nostr.js).
-// The class list is private until ROSTER_PUBLIC is set to true: the public page then shows
-// names and progress. Organisers see everyone (with emails) at /decoding-bitcoin/admin,
-// using the admin key, and can hide people there.
+// The class list (names, progress, who owns which question) is shown to signed-in students
+// only, until ROSTER_PUBLIC is set to true. Organisers see everyone (with emails) at
+// /decoding-bitcoin/admin, using the admin key, and can hide people there.
+// Welcome emails, "email me my link" and the MailerLite sync are in _lib/mail.js.
 //
 // Setup: connect a Neon database to the Vercel project (Storage tab). Vercel then sets
 // DATABASE_URL and the tables are created on first use.
 //
 //   GET  /api/mastering-bitcoin                      roster + done ticks (+ "me" with X-MB-Token)
 //   GET  /api/mastering-bitcoin?admin=1              everyone, with emails (X-MB-Admin: key)
-//   POST /api/mastering-bitcoin {action:"signup", name, email, discord?, nostr?}
+//   POST /api/mastering-bitcoin {action:"signup", email, discord, name?, nostr?}
+//   POST /api/mastering-bitcoin {action:"email-link", email}  email the personal link
 //   POST /api/mastering-bitcoin {action:"nostr", event}  sign in with a signed Nostr event
 //   POST /api/mastering-bitcoin {action:"done", token, item, done}
 //   POST /api/mastering-bitcoin {action:"admin-hide", id, hidden}  (X-MB-Admin: key)
+//   POST /api/mastering-bitcoin {action:"admin-mailerlite"}  add everyone to MailerLite (X-MB-Admin: key)
 //
 // Items: w<week>-q<n> (discussion question), w<week>-e<n> (exercise), w<week>-r1 (read the chapter).
 
 const crypto = require("node:crypto");
 
 const { verifyAuthEvent } = require("./_lib/nostr.js");
+const mail = require("./_lib/mail.js");
 
 const COHORT = "mb-2026";
-// Show the class list (names and progress) on the public page. Off while sign-ups run.
+// Show the class list (names and progress) to everyone, not just signed-in students.
 const ROSTER_PUBLIC = false;
 // SHA-256 of the organisers' admin key (MB_ADMIN_KEY in Vercel's environment overrides it).
 const ADMIN_KEY_SHA256 = "72309790bc2a39b6f7cf37ca3d2dd89bfa87ed8fd6061a4fad74e331969bc48d";
@@ -91,6 +95,7 @@ function ensureTables() {
       { query: "ALTER TABLE mb_students ALTER COLUMN discord DROP NOT NULL", params: [] },
       { query: "ALTER TABLE mb_students ADD COLUMN IF NOT EXISTS nostr text", params: [] },
       { query: "CREATE UNIQUE INDEX IF NOT EXISTS mb_students_nostr ON mb_students (cohort, nostr) WHERE nostr IS NOT NULL", params: [] },
+      { query: "ALTER TABLE mb_students ADD COLUMN IF NOT EXISTS link_sent_at timestamptz", params: [] },
       {
         query: `CREATE TABLE IF NOT EXISTS mb_done (
           student_id integer NOT NULL REFERENCES mb_students(id) ON DELETE CASCADE,
@@ -133,10 +138,10 @@ function readBody(req) {
 }
 
 async function roster(token) {
-  // One round trip to the database for the whole page. While the class list is private,
-  // only the signed-in student's own row and ticks are read.
-  const visible = ROSTER_PUBLIC ? "NOT s.hidden" : "s.token = $2";
-  const params = ROSTER_PUBLIC ? [COHORT] : [COHORT, token || ""];
+  // One round trip to the database for the whole page. Visitors who aren't signed in get
+  // no class list unless it's public.
+  const visible = `NOT s.hidden AND (${ROSTER_PUBLIC} OR EXISTS (SELECT 1 FROM mb_students m WHERE m.cohort = $1 AND m.token = $2 AND NOT m.hidden))`;
+  const params = [COHORT, token || ""];
   const { results } = await neon({
     queries: [
       {
@@ -155,7 +160,8 @@ async function roster(token) {
   for (const row of done) byStudent.get(row.student_id)?.push(row.item);
   const me = token && row ? { id: Number(row.id), name: row.name, discord: row.discord } : null;
   return {
-    rosterPublic: ROSTER_PUBLIC,
+    rosterVisible: ROSTER_PUBLIC || students.length > 0,
+    emailLinks: mail.emailOn(),
     students: students.map((s) => ({ id: Number(s.id), name: s.name, joined: Number(s.joined), done: byStudent.get(s.id) })),
     me,
   };
@@ -189,13 +195,12 @@ async function signup(body, req) {
     nostr = verifyAuthEvent(body.nostr, apiUrl(req));
     if (!nostr) return { status: 401, error: "Nostr sign-in didn't work. Check your device's clock and try again." };
   }
-  if (name.length < 2) return { status: 400, error: "Please enter your name." };
-  // Email is how we reach people; Nostr users may skip it.
-  if (!email && !nostr) return { status: 400, error: "Please enter your email." };
-  if (email && !EMAIL_RE.test(email)) return { status: 400, error: "That email doesn't look right." };
-  if (discord && !DISCORD_RE.test(discord)) {
-    return { status: 400, error: "That Discord username doesn't look right (letters, numbers, _ and . only, like satoshi_n). You can also leave it empty." };
+  if (!EMAIL_RE.test(email)) return { status: 400, error: email ? "That email doesn't look right." : "Please enter your email." };
+  if (!DISCORD_RE.test(discord)) {
+    return { status: 400, error: discord ? "That Discord username doesn't look right (letters, numbers, _ and . only, like satoshi_n)." : "Please enter your Discord username." };
   }
+  // The name is optional: the Discord username stands in for it.
+  const shown = name.length >= 2 ? name : discord;
   const ip = ipHash(req);
   const token = crypto.randomBytes(18).toString("base64url");
   const limits = `SELECT count(*) AS total,
@@ -215,14 +220,15 @@ async function signup(body, req) {
                   SELECT $1, $2, $3, $4, $5, $6, $7 FROM (${limits.replace("$2", "$6")}) c
                    WHERE c.total < ${MAX_STUDENTS} AND c.mine < ${SIGNUPS_PER_IP_HOUR} AND c.recent < ${SIGNUPS_PER_10_MIN}
                   RETURNING id`,
-          params: [COHORT, name, discord || null, email || null, token, ip, nostr || null],
+          params: [COHORT, shown, discord, email, token, ip, nostr || null],
         },
       ],
     }));
   } catch (err) {
     if (err.code === "23505") {
       const what = /email/.test(err.constraint + err.message) ? "email" : /nostr/.test(err.constraint + err.message) ? "Nostr key" : "Discord username";
-      return { status: 409, error: `That ${what} is already signed up. Lost your personal link? Ask the organiser in Discord.` };
+      const lost = mail.emailOn() ? 'Use "Email me my link" below.' : "Ask the organiser in Discord.";
+      return { status: 409, error: `That ${what} is already signed up. Lost your personal link? ${lost}` };
     }
     throw err;
   }
@@ -233,7 +239,27 @@ async function signup(body, req) {
       ? { status: 409, error: "The cohort is full. Ask in Discord about the next one." }
       : { status: 429, error: "Lots of sign-ups right now. Please try again in a little while." };
   }
-  return { status: 200, data: { ok: true, token, me: { id: Number(row.id), name, discord } } };
+  // Welcome email and MailerLite, when their keys are set. A failure here never undoes the sign-up.
+  const student = { email, name: shown, token };
+  const jobs = [mail.emailOn() && mail.sendWelcome(student), mail.mailerliteOn() && mail.addToMailerLite(student)].filter(Boolean);
+  for (const r of await Promise.allSettled(jobs)) if (r.status === "rejected") console.error("mastering-bitcoin api: after sign-up:", r.reason?.message);
+  return { status: 200, data: { ok: true, token, me: { id: Number(row.id), name: shown, discord }, emailed: mail.emailOn() } };
+}
+
+// "Email me my link": the same answer whether or not the email is signed up, and at most
+// one email per person every 5 minutes.
+async function emailLink(body) {
+  if (!mail.emailOn()) return { status: 503, error: "Emailing links isn't switched on yet. Ask the organiser in Discord." };
+  const email = clean(body.email, 120).toLowerCase();
+  if (!EMAIL_RE.test(email)) return { status: 400, error: "That email doesn't look right." };
+  const [row] = await sql(
+    `UPDATE mb_students SET link_sent_at = now()
+      WHERE cohort = $1 AND lower(email) = $2 AND NOT hidden AND (link_sent_at IS NULL OR link_sent_at < now() - interval '5 minutes')
+      RETURNING name, token`,
+    [COHORT, email]
+  );
+  if (row) await mail.sendLink({ email, name: row.name, token: row.token });
+  return { status: 200, data: { ok: true } };
 }
 
 async function tick(body) {
@@ -275,6 +301,8 @@ async function adminList() {
   const ticks = new Map(done.map((d) => [d.student_id, Number(d.n)]));
   return {
     rosterPublic: ROSTER_PUBLIC,
+    email: mail.emailOn(),
+    mailerlite: mail.mailerliteOn(),
     max: MAX_STUDENTS,
     students: students.map((s) => ({
       id: Number(s.id),
@@ -294,6 +322,12 @@ async function adminHide(body) {
   if (!Number.isInteger(id) || typeof body.hidden !== "boolean") return { status: 400, error: "Unknown student." };
   const rows = await sql("UPDATE mb_students SET hidden = $3 WHERE cohort = $1 AND id = $2 RETURNING id", [COHORT, id, body.hidden]);
   return rows.length ? { status: 200, data: { ok: true } } : { status: 404, error: "Unknown student." };
+}
+
+async function adminMailerLite() {
+  if (!mail.mailerliteOn()) return { status: 503, error: "Add MAILERLITE_API_KEY in Vercel first." };
+  const rows = await sql("SELECT name, email FROM mb_students WHERE cohort = $1 AND NOT hidden AND email IS NOT NULL ORDER BY id", [COHORT]);
+  return { status: 200, data: { ok: true, added: await mail.syncMailerLite(rows), total: rows.length } };
 }
 
 // Browsers send Origin on POST; refuse requests made from other websites.
@@ -329,7 +363,9 @@ module.exports = async function handler(req, res) {
         signup: () => signup(body, req),
         nostr: () => nostrSignIn(body, req),
         done: () => tick(body),
+        "email-link": () => emailLink(body),
         "admin-hide": () => (isAdmin(req) ? adminHide(body) : { status: 401, error: "Wrong admin key." }),
+        "admin-mailerlite": () => (isAdmin(req) ? adminMailerLite() : { status: 401, error: "Wrong admin key." }),
       };
       const result = Object.hasOwn(actions, body.action) ? await actions[body.action]() : { status: 400, error: "Unknown action." };
       return res.status(result.status).json(result.error ? { error: result.error } : result.data);

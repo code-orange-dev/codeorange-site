@@ -59,6 +59,7 @@ td button { min-height: 30px; padding: 4px 12px; font-size: 12px; }
       <button type="button" id="copy-emails">Copy all emails</button>
       <button type="button" id="csv">Download CSV</button>
       <button type="button" id="refresh">Refresh</button>
+      <button type="button" id="ml-sync">Add everyone to MailerLite</button>
       <button type="button" id="lock">Lock</button>
     </div>
     <div class="wrap"><table>
@@ -117,7 +118,9 @@ td button { min-height: 30px; padding: 4px 12px; font-size: 12px; }
     const week = Date.now() - 7 * 864e5;
     $("#public-state").textContent = data.rosterPublic
       ? "The class list is public: names and progress show on the cohort page."
-      : "The class list is private: the cohort page shows no names and no count. Only you see this list.";
+      : "The class list is private: only signed-in students see names and progress, visitors see no names and no count.";
+    $("#public-state").textContent += ` Welcome and link emails: ${data.email ? "on" : "off (add RESEND_API_KEY in Vercel)"}. MailerLite: ${data.mailerlite ? "on" : "off (add MAILERLITE_API_KEY in Vercel)"}.`;
+    $("#ml-sync").hidden = !data.mailerlite;
     $("#stats").innerHTML = [
       [active.length, `signed up (of ${data.max} places)`],
       [active.filter((s) => new Date(s.joined) > week).length, "in the last 7 days"],
@@ -148,6 +151,20 @@ td button { min-height: 30px; padding: 4px 12px; font-size: 12px; }
   });
   $("#filter").addEventListener("input", () => data && render());
   $("#refresh").addEventListener("click", load);
+  $("#ml-sync").addEventListener("click", async (ev) => {
+    ev.target.disabled = true;
+    $("#note").textContent = "Adding everyone to MailerLite…";
+    try {
+      const res = await fetch(API, { method: "POST", headers: { "Content-Type": "application/json", "X-MB-Admin": key }, body: JSON.stringify({ action: "admin-mailerlite" }) });
+      const out = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(out.error || "MailerLite didn't answer.");
+      $("#note").textContent = `Done: ${out.added} of ${out.total} are in the MailerLite group.`;
+    } catch (err) {
+      $("#note").textContent = err.message;
+    } finally {
+      ev.target.disabled = false;
+    }
+  });
   $("#lock").addEventListener("click", () => { saved.clear(); key = ""; data = null; $("#dash").hidden = true; $("#key-form").hidden = false; $("#rows").innerHTML = ""; });
   $("#copy-emails").addEventListener("click", async () => {
     const list = data.students.filter((s) => !s.hidden && s.email).map((s) => s.email).join(", ");
