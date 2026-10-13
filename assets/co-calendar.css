@@ -5,7 +5,7 @@
   background: radial-gradient(1200px 400px at 85% -10%, rgba(247,147,26,.07), transparent 60%), #0D0D0D; }
 .cocal *, .cocal-modal * { box-sizing: border-box; }
 .cocal button { font: inherit; color: inherit; }
-.cocal-loading { padding: 120px 24px; text-align: center; color: var(--di); font: 600 13px "Plus Jakarta Sans", monospace; letter-spacing: .08em; }
+.cocal-loading { min-height: 560px; display: grid; place-items: center; padding: 120px 24px; text-align: center; color: var(--di); font: 600 13px "Plus Jakarta Sans", monospace; letter-spacing: .08em; }
 
 /* header */
 .cocal-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 22px 24px 18px; }
@@ -54,6 +54,18 @@
 .cocal-go { flex: 0 0 auto; color: var(--o); font-size: 20px; font-weight: 700; }
 .cocal-empty { margin: 8px 0; padding: 26px; border: 1px dashed rgba(255,255,255,.12); border-radius: 14px; color: var(--mu); text-align: center; }
 
+/* next session */
+.cocal-badge { display: inline-block; margin-left: 4px; padding: 3px 8px; border-radius: 999px; background: var(--o, #F7931A); color: #0A0A0A; font: 800 10px/1.2 "Plus Jakarta Sans", monospace; letter-spacing: .08em; text-transform: uppercase; vertical-align: 3px; white-space: nowrap; }
+.cocal-badge.is-live { background: #2ECC71; }
+.cocal-badge.is-live::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 5px; border-radius: 50%; background: #0A0A0A; vertical-align: 1px; animation: cocal-pulse 1.4s ease-in-out infinite; }
+@keyframes cocal-pulse { 50% { opacity: .25; } }
+.cocal-card .cocal-badge { margin: 0 0 12px; vertical-align: 0; }
+.cocal-chip.is-next { background: rgba(247,147,26,.26); box-shadow: 0 0 0 1px rgba(247,147,26,.55); }
+.cocal-row.is-next { border-color: rgba(247,147,26,.55); background: linear-gradient(180deg, rgba(247,147,26,.10), rgba(255,255,255,.012)); }
+.cocal-link { padding: 0; border: 0; background: none; color: var(--o) !important; font-weight: 700 !important; cursor: pointer; }
+.cocal-link:hover { color: var(--o2) !important; }
+@media (prefers-reduced-motion: reduce) { .cocal-badge.is-live::before { animation: none; } .cocal-chip, .cocal-row { transition: none; } }
+
 /* footer */
 .cocal-foot { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 14px 24px 18px; border-top: 1px solid var(--ln); color: var(--di); font: 600 12px "Plus Jakarta Sans", monospace; letter-spacing: .04em; }
 .cocal-foot a { color: var(--o) !important; text-decoration: none; }
@@ -74,6 +86,8 @@ html.cocal-lock { overflow: hidden; }
 .cocal-local { margin: 4px 0 0; color: #7A7A7A; font-size: 13.5px; }
 .cocal-where { margin: 12px 0 0; color: #B8B8B8; font-size: 14.5px; }
 .cocal-desc { margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.08); color: #B8B8B8; font-size: 14.5px; line-height: 1.6; white-space: pre-line; overflow-wrap: anywhere; }
+.cocal-desc a { color: #F7931A !important; text-decoration: underline; text-underline-offset: 3px; }
+.cocal-desc a:hover { color: #FFB347 !important; }
 .cocal-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
 .cocal-primary, .cocal-secondary { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 0 20px; border-radius: 999px; font-weight: 700; font-size: 15px; text-decoration: none; }
 .cocal-primary { background: #F7931A; color: #0A0A0A !important; }
