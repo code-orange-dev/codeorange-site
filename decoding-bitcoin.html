@@ -249,6 +249,8 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
 .mb-roster-row { display: grid; grid-template-columns: 44px minmax(0,1.4fr) 80px 90px 90px minmax(80px,1fr); gap: 14px; align-items: center; padding: 14px 22px; border-bottom: 1px solid rgba(255,255,255,.05); color: var(--muted); font: 600 13px "Plus Jakarta Sans", monospace; }
 .mb-roster-row:last-child { border-bottom: 0; }
 .mb-roster-row.is-me { background: rgba(247,147,26,.07); }
+.mb-roster .mb-name.is-blur { filter: blur(5px); user-select: none; opacity: .8; }
+.mb-roster .mb-name em { color: var(--orange); font-style: normal; }
 .mb-roster-head { color: var(--dim); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; background: var(--band); }
 .mb-roster-head b { font-weight: inherit; }
 .mb-short { display: none; }
@@ -495,7 +497,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
 <link rel="stylesheet" href="/assets/theme.css?v=20261011a">
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
 <script src="/assets/mastering-bitcoin/cohort.js?v=20261010a" defer></script>
-<script src="/assets/mastering-bitcoin/app.js?v=20261013b" defer></script>
+<script src="/assets/mastering-bitcoin/app.js?v=20261013c" defer></script>
 </head>
 <body>
 <a class="announce" href="#signup">Decoding Bitcoin study cohort starts Monday 16 November &middot; sign-ups are open <span>Sign up &rarr;</span></a>
@@ -655,7 +657,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
   </section>
 
   <section id="progress" class="section-inner" style="scroll-margin-top:96px" hidden>
-    <div class="split"><div><p class="eyebrow">The cohort</p><h2>Who's in, and how it's going.</h2></div><p class="lead">Everyone in the cohort and how far they've got.</p></div>
+    <div class="split"><div><p class="eyebrow">The cohort</p><h2>Who's in, and how it's going.</h2></div><p class="lead">How far the cohort has got. Names stay private: only yours is shown.</p></div>
     <div id="mb-roster" class="mb-roster"></div>
   </section>
 
