@@ -3,6 +3,11 @@
   "trailingSlash": false,
   "buildCommand": null,
   "outputDirectory": ".",
+  "git": {
+    "deploymentEnabled": {
+      "claude/**": false
+    }
+  },
   "redirects": [
     {
       "source": "/programs/openclaw",
