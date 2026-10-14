@@ -11,8 +11,15 @@
   var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   var MAX_CHIPS = 3;
 
-  var frames = [].slice.call(document.querySelectorAll('iframe[src*="calendar.google.com/calendar/embed"]'));
-  if (!frames.length || !window.fetch) return;
+  // Pages mark the embed with data-cocal-src instead of src, so Google's heavy embed is
+  // only downloaded if our own calendar can't load.
+  var frames = [].slice.call(document.querySelectorAll('iframe[data-cocal-src], iframe[src*="calendar.google.com/calendar/embed"]'));
+  if (!frames.length) return;
+  function fallback(f) {
+    if (f.getAttribute("data-cocal-src") && !f.getAttribute("src")) f.src = f.getAttribute("data-cocal-src");
+    f.style.display = "";
+  }
+  if (!window.fetch) { frames.forEach(fallback); return; }
 
   // ---------- date helpers (everything is shown in the calendar's own zone) ----------
   var partsFmt = new Intl.DateTimeFormat("en-US", { timeZone: TZ, year: "numeric", month: "numeric", day: "numeric", hour: "numeric", minute: "numeric", hourCycle: "h23", weekday: "short" });
@@ -54,6 +61,21 @@
       (ev.location ? "&location=" + encodeURIComponent(ev.location) : "");
     return "https://calendar.google.com/calendar/render?" + q;
   }
+  function icsFile(ev) {
+    var f = function (iso) { return iso.length === 10 ? ";VALUE=DATE:" + iso.replace(/-/g, "") : ":" + iso.replace(/[-:]/g, "").replace(/\.\d{3}/, ""); };
+    var esc = function (t) { return String(t || "").replace(/([\\;,])/g, "\\$1").replace(/\r?\n/g, "\\n"); };
+    var stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+    var lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Code Orange//Calendar//EN", "BEGIN:VEVENT",
+      "UID:" + esc(ev.id) + "@codeorange.dev", "DTSTAMP:" + stamp, "DTSTART" + f(ev.start), "DTEND" + f(ev.end),
+      "SUMMARY:" + esc(ev.title), "DESCRIPTION:" + esc((ev.url ? ev.url + "\n\n" : "") + "https://codeorange.dev/calendar")];
+    if (ev.location) lines.push("LOCATION:" + esc(ev.location));
+    if (ev.url) lines.push("URL:" + ev.url);
+    lines.push("END:VEVENT", "END:VCALENDAR");
+    return "data:text/calendar;charset=utf-8," + encodeURIComponent(lines.join("\r\n"));
+  }
+  function store(key, val) {
+    try { if (val === undefined) return localStorage.getItem(key); localStorage.setItem(key, val); } catch (e) { return null; }
+  }
   function place(ev) {
     var loc = ev.location || "";
     if (/discord\./i.test(loc) || /discord\./i.test(ev.url || "")) return "Discord";
@@ -83,7 +105,12 @@
     this.today = dkey(t);
     this.year = t.y;
     this.month = t.m;
-    this.view = window.matchMedia && window.matchMedia("(max-width: 720px)").matches ? "list" : "month";
+    var saved = store("cocal-view");
+    this.view = saved === "month" || saved === "list" ? saved : (window.matchMedia && window.matchMedia("(max-width: 720px)").matches ? "list" : "month");
+    // The next session that hasn't finished yet gets a "Next up" / "Live now" badge.
+    var now = Date.now();
+    this.next = this.events.filter(function (ev) { return !ev.allDay && new Date(ev.end).getTime() > now; })
+      .sort(function (a, b) { return new Date(a.start) - new Date(b.start); })[0] || null;
     this.root = el("div", "cocal");
     this.root.setAttribute("data-view", this.view);
     this.build();
@@ -108,7 +135,7 @@
       var b = el("button", "cocal-seg-btn", v === "month" ? "Month" : "List");
       b.type = "button";
       b.setAttribute("data-v", v);
-      b.onclick = function () { self.view = v; self.root.setAttribute("data-view", v); self.render(); };
+      b.onclick = function () { self.view = v; store("cocal-view", v); self.root.setAttribute("data-view", v); self.render(); };
       seg.appendChild(b);
     });
     this.seg = seg;
@@ -116,6 +143,15 @@
     head.appendChild(this.title); head.appendChild(nav);
 
     this.body = el("div", "cocal-body");
+    // Swipe left/right on touch screens to change month.
+    var sx = null, sy = 0;
+    this.body.addEventListener("touchstart", function (e) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+    this.body.addEventListener("touchend", function (e) {
+      if (sx == null) return;
+      var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+      sx = null;
+      if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) self.shift(dx < 0 ? 1 : -1);
+    }, { passive: true });
 
     var foot = el("div", "cocal-foot");
     foot.appendChild(el("span", "", "Times in " + TZ_LABEL));
@@ -145,6 +181,12 @@
     this.body.appendChild(this.view === "month" ? this.renderMonth() : this.renderList());
   };
 
+  Widget.prototype.badge = function (ev) {
+    if (!this.next || ev !== this.next) return null;
+    var live = new Date(ev.start).getTime() <= Date.now();
+    return el("em", "cocal-badge" + (live ? " is-live" : ""), live ? "Live now" : "Next up");
+  };
+
   Widget.prototype.chip = function (ev) {
     var self = this;
     var b = el("button", "cocal-chip");
@@ -153,6 +195,7 @@
     b.appendChild(el("span", "", ev.title));
     b.title = ev.title + " · " + timeRange(ev);
     if (new Date(ev.end) < new Date()) b.classList.add("is-past");
+    if (ev === this.next) b.classList.add("is-next");
     b.onclick = function () { self.open(ev); };
     return b;
   };
@@ -212,7 +255,10 @@
     date.appendChild(el("b", "", String(p.d)));
     date.appendChild(el("span", "", WEEKDAYS[(p.wd + 6) % 7]));
     var info = el("span", "cocal-info");
-    info.appendChild(el("strong", "", ev.title));
+    var name = el("strong", "", ev.title);
+    var bd = this.badge(ev);
+    if (bd) { name.appendChild(document.createTextNode(" ")); name.appendChild(bd); r.classList.add("is-next"); }
+    info.appendChild(name);
     var meta = el("span", "cocal-meta", timeRange(ev));
     var where = place(ev);
     if (where) { meta.appendChild(el("i", "", "·")); meta.appendChild(document.createTextNode(where)); }
@@ -231,7 +277,12 @@
     var isNow = prefix === this.today.slice(0, 7);
     if (isNow) keys = keys.filter(function (k) { return k >= self.today; });
     if (!keys.length) {
-      wrap.appendChild(el("p", "cocal-empty", isNow ? "No more sessions this month. Check next month →" : "No sessions this month yet."));
+      var empty = el("p", "cocal-empty", isNow ? "No more sessions this month. " : "No sessions this month yet. ");
+      var nx = el("button", "cocal-link", "See next month →");
+      nx.type = "button";
+      nx.onclick = function () { self.shift(1); };
+      empty.appendChild(nx);
+      wrap.appendChild(empty);
       return wrap;
     }
     keys.forEach(function (k) { self.byDay[k].forEach(function (ev) { wrap.appendChild(self.row(ev)); }); });
@@ -277,10 +328,13 @@
   };
 
   Widget.prototype.open = function (ev) {
+    var self = this;
     var p = zparts(ev.start);
     this.show(function (box) {
       box.appendChild(el("p", "cocal-eyebrow", longDate(p)));
       box.appendChild(el("h3", "cocal-card-title", ev.title));
+      var bd = self.badge(ev);
+      if (bd) box.appendChild(bd);
       var when = el("p", "cocal-when");
       when.appendChild(el("b", "", timeRange(ev)));
       if (!ev.allDay) when.appendChild(document.createTextNode(" " + TZ_LABEL));
@@ -289,16 +343,33 @@
       if (vt) box.appendChild(el("p", "cocal-local", vt));
       var where = place(ev);
       if (where) box.appendChild(el("p", "cocal-where", "📍 " + (where === "Discord" ? "Online on Discord" : ev.location)));
-      if (ev.description) box.appendChild(el("div", "cocal-desc", ev.description));
+      if (ev.description) {
+        // Make links in the description clickable (built as text nodes, never as HTML).
+        var desc = el("div", "cocal-desc");
+        ev.description.split(/(https?:\/\/[^\s<>"]+)/).forEach(function (part, i) {
+          if (i % 2) {
+            var url = part.replace(/[.,)]+$/, ""), rest = part.slice(url.length);
+            var a = el("a", "", url.replace(/^https?:\/\//, ""));
+            a.href = url; a.target = "_blank"; a.rel = "noopener";
+            desc.appendChild(a);
+            if (rest) desc.appendChild(document.createTextNode(rest));
+          } else if (part) desc.appendChild(document.createTextNode(part));
+        });
+        box.appendChild(desc);
+      }
       var acts = el("div", "cocal-actions");
       if (ev.url) {
         var join = el("a", "cocal-primary", place(ev) === "Discord" ? "Join on Discord →" : "Open link →");
         join.href = ev.url; join.target = "_blank"; join.rel = "noopener";
         acts.appendChild(join);
       }
-      var add = el("a", "cocal-secondary", "Add to my calendar");
+      var add = el("a", "cocal-secondary", "Add to Google Calendar");
       add.href = gcalLink(ev); add.target = "_blank"; add.rel = "noopener";
       acts.appendChild(add);
+      var ics = el("a", "cocal-secondary", "Apple / Outlook");
+      ics.href = icsFile(ev);
+      ics.download = (ev.title.replace(/[^\w\- ]+/g, "").trim().replace(/\s+/g, "-").toLowerCase().slice(0, 60) || "code-orange-session") + ".ics";
+      acts.appendChild(ics);
       box.appendChild(acts);
     });
   };
@@ -319,6 +390,33 @@
     });
   };
 
+  // ---------- search engines: list upcoming sessions as schema.org Events ----------
+  function addEventSchema(events) {
+    var now = Date.now();
+    var list = events.filter(function (ev) { return !ev.allDay && new Date(ev.end).getTime() > now; })
+      .sort(function (a, b) { return new Date(a.start) - new Date(b.start); }).slice(0, 20)
+      .map(function (ev) {
+        var online = place(ev) === "Discord" || place(ev) === "Online";
+        var item = {
+          "@type": "Event", name: ev.title, startDate: ev.start, endDate: ev.end,
+          eventStatus: "https://schema.org/EventScheduled",
+          eventAttendanceMode: online ? "https://schema.org/OnlineEventAttendanceMode" : "https://schema.org/OfflineEventAttendanceMode",
+          location: online ? { "@type": "VirtualLocation", url: ev.url || "https://codeorange.dev/calendar" }
+            : { "@type": "Place", name: place(ev), address: ev.location },
+          organizer: { "@type": "Organization", name: "Code Orange Dev School", url: "https://codeorange.dev" },
+          isAccessibleForFree: true,
+          image: "https://codeorange.dev/assets/og-codeorange-workshop.jpg"
+        };
+        if (ev.description) item.description = ev.description.slice(0, 300);
+        return item;
+      });
+    if (!list.length) return;
+    var s = document.createElement("script");
+    s.type = "application/ld+json";
+    s.textContent = JSON.stringify({ "@context": "https://schema.org", "@graph": list });
+    document.head.appendChild(s);
+  }
+
   // ---------- boot ----------
   frames.forEach(function (f) {
     f.style.display = "none";
@@ -338,13 +436,14 @@
         f.parentNode.replaceChild(w.root, f._cocalLoading);
         f.parentNode.removeChild(f);
       });
+      if (location.pathname.replace(/\/$/, "") === "/calendar") addEventSchema(data.events);
     })
     .catch(function () {
       // Fall back to Google's own embed.
       frames.forEach(function (f) {
         f.parentNode.classList.remove("has-cocal");
         if (f._cocalLoading) f._cocalLoading.remove();
-        f.style.display = "";
+        fallback(f);
       });
     });
 })();

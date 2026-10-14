@@ -178,8 +178,9 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 }
 </style>
 <link rel="stylesheet" href="/assets/theme.css?v=20261011a">
-<link rel="stylesheet" href="/assets/co-calendar.css?v=20261012a">
-<script src="/assets/co-calendar.js?v=20261012a" defer></script>
+<link rel="preload" href="/api/calendar" as="fetch" crossorigin="anonymous">
+<link rel="stylesheet" href="/assets/co-calendar.css?v=20261013a">
+<script src="/assets/co-calendar.js?v=20261013a" defer></script>
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
 </head>
 <body>
@@ -236,7 +237,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
   <div class="calendar-subscribe"><div><p class="eyebrow">One click setup</p><h3 style="margin:0">Keep every Code Orange event in your calendar.</h3><p>Add the full calendar once. New and updated sessions appear automatically in Google Calendar.</p></div><a class="button" href="https://calendar.google.com/calendar/r?cid=466de2be7431d78be2049f96f5fd31f9b06b5a9cd94f909ba3182b18442ed499%40group.calendar.google.com" target="_blank" rel="noopener">Add all events ↗</a></div>
   <div class="calendar-frame" aria-label="Code Orange public student calendar">
     <div class="terminal-bar"><span></span><span></span><span></span><strong>codeorange.dev/calendar</strong></div>
-    <iframe title="Code Orange public student calendar" src="https://calendar.google.com/calendar/embed?src=466de2be7431d78be2049f96f5fd31f9b06b5a9cd94f909ba3182b18442ed499%40group.calendar.google.com&ctz=Asia%2FMakassar" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <iframe title="Code Orange public student calendar" data-cocal-src="https://calendar.google.com/calendar/embed?src=466de2be7431d78be2049f96f5fd31f9b06b5a9cd94f909ba3182b18442ed499%40group.calendar.google.com&ctz=Asia%2FMakassar" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><noscript><style>iframe[data-cocal-src]{display:none!important}</style><iframe title="Code Orange public student calendar" src="https://calendar.google.com/calendar/embed?src=466de2be7431d78be2049f96f5fd31f9b06b5a9cd94f909ba3182b18442ed499%40group.calendar.google.com&ctz=Asia%2FMakassar" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></noscript>
   </div>
 </section>
 <section class="band"><div class="section-inner">
