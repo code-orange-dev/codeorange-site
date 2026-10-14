@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bitcoin Privacy Developer Track - Code Orange Dev School</title>
-<meta name="description" content="12 biweekly 90-minute sessions over 6 months, opening with Silent Payments (BIP352), then chain analysis, Payjoin, light clients, network privacy, CoinJoin, Lightning, ecash, and real OSS contributions.">
+<title>Bitcoin Privacy Track - Code Orange Dev School</title>
+<meta name="description" content="Free, drop-in Bitcoin privacy sessions on Discord, every 1st and 3rd Tuesday. Learn Silent Payments, chain analysis, coin selection, Payjoin, light clients, network privacy, CoinJoin, Lightning and ecash by building them, then contribute to real open-source privacy projects.">
 <link rel="canonical" href="https://codeorange.dev/privacy-track">
 <meta name="theme-color" content="#F7931A">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Code Orange Dev School">
 <meta property="og:url" content="https://codeorange.dev/privacy-track">
-<meta property="og:title" content="Bitcoin Privacy Developer Track - Code Orange Dev School">
-<meta property="og:description" content="12 biweekly 90-minute sessions over 6 months, opening with Silent Payments (BIP352), then chain analysis, Payjoin, light clients, network privacy, CoinJoin, Lightning, ecash, and real OSS contributions.">
+<meta property="og:title" content="Bitcoin Privacy Track - Code Orange Dev School">
+<meta property="og:description" content="Free, drop-in Bitcoin privacy sessions on Discord, every 1st and 3rd Tuesday. Learn Silent Payments, chain analysis, coin selection, Payjoin, light clients, network privacy, CoinJoin, Lightning and ecash by building them, then contribute to real open-source privacy projects.">
 <meta property="og:image" content="https://codeorange.dev/assets/og-codeorange-workshop.jpg">
 <meta property="og:image:secure_url" content="https://codeorange.dev/assets/og-codeorange-workshop.jpg">
 <meta property="og:image:type" content="image/jpeg">
@@ -19,346 +19,987 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Code Orange Dev School Bitcoin workshop">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Bitcoin Privacy Developer Track - Code Orange Dev School">
-<meta name="twitter:description" content="12 biweekly 90-minute sessions over 6 months, opening with Silent Payments (BIP352), then chain analysis, Payjoin, light clients, network privacy, CoinJoin, Lightning, ecash, and real OSS contributions.">
+<meta name="twitter:title" content="Bitcoin Privacy Track - Code Orange Dev School">
+<meta name="twitter:description" content="Free, drop-in Bitcoin privacy sessions on Discord, every 1st and 3rd Tuesday. Learn Silent Payments, chain analysis, coin selection, Payjoin, light clients, network privacy, CoinJoin, Lightning and ecash by building them, then contribute to real open-source privacy projects.">
 <meta name="twitter:image" content="https://codeorange.dev/assets/og-codeorange-workshop.jpg">
-<script src="/support.js?v=20260902a" defer></script>
 <link rel="icon" type="image/svg+xml" href="/assets/favicon-co.svg">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"Bitcoin Privacy Developer Track","description":"12 biweekly 90-minute sessions over 6 months, opening with Silent Payments (BIP352), then chain analysis, Payjoin, light clients, network privacy, CoinJoin, Lightning, ecash, and real OSS contributions.","url":"https://codeorange.dev/privacy-track","provider":{"@type":"EducationalOrganization","name":"Code Orange Dev School","url":"https://codeorange.dev","email":"hello@codeorange.dev"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"Bitcoin Privacy Track","description":"Free, drop-in Bitcoin privacy sessions on Discord, every 1st and 3rd Tuesday. Learn Silent Payments, chain analysis, coin selection, Payjoin, light clients, network privacy, CoinJoin, Lightning and ecash by building them, then contribute to real open-source privacy projects.","url":"https://codeorange.dev/privacy-track","provider":{"@type":"EducationalOrganization","name":"Code Orange Dev School","url":"https://codeorange.dev","email":"hello@codeorange.dev"},"isAccessibleForFree":true,"hasCourseInstance":{"@type":"CourseInstance","courseMode":"online","location":"Discord"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<script src="/assets/lazy-video.js?v=20260902b" defer></script>
+<style>
+:root { color-scheme: dark; --bg:#0A0A0A; --band:#0F0F0F; --card:#141414; --text:#F5F5F5; --muted:#B8B8B8; --dim:#858585; --orange:#F7931A; --orange2:#FFB347; --line:rgba(255,255,255,.08); }
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; overflow-x: hidden; background: var(--bg); color: var(--text); font-family: "Inter", system-ui, sans-serif; scroll-behavior: smooth; }
+body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+img, video, iframe { max-width: 100%; }
+a { color: inherit; }
+.announce { display: flex; justify-content: center; gap: 10px; padding: 9px 24px; background: var(--orange); color: var(--bg); text-decoration: none; font: 700 13px "Plus Jakarta Sans", monospace; text-align: center; }
+.announce span { text-decoration: underline; text-underline-offset: 3px; }
+.site-header { position: sticky; top: 0; z-index: 50; background: rgba(10,10,10,.74); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.header-inner { max-width: 1240px; height: 78px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; gap: 22px; }
+.brand img { display: block; width: auto; height: 50px; }
+.desktop-nav, .header-actions, .cta-row { display: flex; align-items: center; gap: 12px; }
+  .desktop-nav { gap: 28px; }
+  .desktop-nav a { padding: 8px 4px; }
+.desktop-nav a, .mobile-nav a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 600; padding: 8px 10px; border-radius: 8px; }
+.desktop-nav a:hover, .mobile-nav a:hover { color: var(--orange); }
+.mobile-nav { display: none; gap: 8px; overflow-x: auto; padding: 0 16px 10px; scrollbar-width: none; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; }
+.mobile-nav::-webkit-scrollbar { display: none; }
+.mobile-nav a { flex: 0 0 auto; scroll-snap-align: start; }
+.button, .ghost { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 13px 24px; border-radius: 8px; text-decoration: none; font-weight: 700; transition: border-color .15s ease, color .15s ease, background .15s ease, transform .15s ease; }
+.button { background: var(--orange); color: var(--bg); }
+.button:hover { background: var(--orange2); }
+.ghost { border: 1px solid rgba(255,255,255,.16); color: var(--text); }
+.ghost:hover { border-color: var(--orange); color: var(--orange); }
+.small { min-height: 40px; padding: 9px 18px; font-size: 14px; }
+.hero { position: relative; overflow: hidden; background-image: linear-gradient(rgba(10,10,10,.78), rgba(10,10,10,.92)), linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px), url("/assets/latest-workshops/workshop-latest-builders.jpg"); background-size: auto, 48px 48px, 48px 48px, cover; background-position: center, 0 0, 0 0, center 42%; }
+.hero-grid, .section-inner { max-width: 1240px; margin: 0 auto; padding: 96px 32px; }
+.hero-grid { display: grid; grid-template-columns: minmax(0,1.08fr) minmax(320px,.92fr); gap: 64px; align-items: center; }
+.glow { position: absolute; top: -160px; right: -110px; width: 740px; height: 740px; border-radius: 50%; background: radial-gradient(circle, rgba(247,147,26,.14), transparent 66%); pointer-events: none; }
+.eyebrow { margin: 0 0 22px; color: var(--orange); font: 700 12px "Plus Jakarta Sans", monospace; letter-spacing: .16em; text-transform: uppercase; }
+h1, h2, h3 { font-family: "Inter", system-ui, sans-serif; font-weight: 400; color: var(--text); }
+h1 { margin: 0 0 26px; max-width: 780px; font-size: clamp(40px, 4.6vw, 68px); line-height: 1.05; }
+h2 { margin: 0 0 18px; font-size: clamp(32px, 3.3vw, 50px); line-height: 1.08; }
+h3 { margin: 0; font-size: 26px; line-height: 1.15; }
+.lead { max-width: 620px; margin: 0 0 34px; color: var(--muted); font-size: 18px; line-height: 1.65; }
+.terminal-card, .card, .program-card, .stat, .timeline-item { background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.32); }
+.terminal-bar { display: flex; align-items: center; gap: 8px; padding: 14px 18px; background: var(--band); border-bottom: 1px solid var(--line); }
+.terminal-bar span { width: 12px; height: 12px; border-radius: 50%; }
+.terminal-bar span:nth-child(1){ background:#FF5F56; } .terminal-bar span:nth-child(2){ background:#FFBD2E; } .terminal-bar span:nth-child(3){ background:#27C93F; }
+.terminal-bar strong { margin-left: 10px; color: var(--dim); font: 500 12px "Plus Jakarta Sans", monospace; }
+.terminal-body { padding: 24px; font: 14px/1.9 "Plus Jakarta Sans", monospace; }
+.terminal-body p { margin: 0; } .orange { color: var(--orange); } .muted { color: var(--dim); }
+.band { background: var(--band); border-block: 1px solid var(--line); }
+.grid { display: grid; gap: 22px; }
+.grid.two { grid-template-columns: repeat(2, minmax(0,1fr)); } .grid.three { grid-template-columns: repeat(3, minmax(0,1fr)); }
+.program-card { display: grid; grid-template-rows: 210px 1fr; text-decoration: none; transition: transform .18s ease, border-color .18s ease; }
+.program-card:hover { transform: translateY(-4px); border-color: rgba(247,147,26,.55); }
+.program-card img, .card > img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.012); }
+.card-body { padding: 24px; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; }
+.pill { display: inline-flex; padding: 7px 12px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; color: var(--muted); font: 600 12px "Plus Jakarta Sans", monospace; }
+.pill.orange { color: var(--orange); border-color: rgba(247,147,26,.42); }
+.card p, .program-card p, .timeline-item p { color: var(--muted); line-height: 1.65; }
+.repo-card { display: block; text-decoration: none; transition: transform .18s ease, border-color .18s ease; }
+.repo-card:hover { transform: translateY(-4px); border-color: rgba(247,147,26,.55); }
+.repo-card h3 { margin-top: 14px; }
+.stat { padding: 26px; }
+.stat strong { display: block; color: var(--orange); font: 400 40px/1 "Inter", monospace; margin-bottom: 10px; }
+.timeline { display: grid; gap: 14px; counter-reset: step; }
+.timeline-item { display: grid; grid-template-columns: 70px 1fr; gap: 22px; padding: 24px; counter-increment: step; }
+.timeline-item:before { content: counter(step, decimal-leading-zero); color: var(--orange); font: 700 16px "Plus Jakarta Sans", monospace; }
+.split { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 42px; align-items: start; }
+.feature-panel { background: linear-gradient(145deg, rgba(247,147,26,.12), rgba(20,20,20,.86) 42%, rgba(15,15,15,.96)); border: 1px solid rgba(247,147,26,.26); border-radius: 16px; box-shadow: 0 28px 80px rgba(0,0,0,.34); overflow: hidden; }
+.feature-panel-inner { padding: 28px; }
+.photo-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 30px; }
+.photo-card { position: relative; min-height: 300px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--card); box-shadow: 0 20px 60px rgba(0,0,0,.28); }
+.photo-card.tall { min-height: 420px; }
+.photo-card.wide { grid-column: span 2; }
+.photo-card img, .feature-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.012); }
+.photo-card:after, .feature-photo:after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(6,6,6,.78) 100%); pointer-events: none; }
+.photo-caption { position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 1; display: inline-flex; width: max-content; max-width: calc(100% - 28px); padding: 7px 11px; border-radius: 999px; background: rgba(6,6,6,.78); border: 1px solid rgba(255,255,255,.13); color: var(--text); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .08em; text-transform: uppercase; }
+.feature-photo { position: relative; min-height: 430px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--card); box-shadow: 0 24px 70px rgba(0,0,0,.32); }
+.calendar-frame { margin-top: 28px; background: #fff; border: 1px solid rgba(255,255,255,.12); border-radius: 16px; overflow: hidden; box-shadow: 0 24px 70px rgba(0,0,0,.36); }
+.calendar-frame iframe { display: block; width: 100%; height: 680px; border: 0; background: #fff; }
+.booking-panel { display: grid; gap: 16px; padding: 24px; background: rgba(6,6,6,.48); border: 1px solid var(--line); border-radius: 16px; }
+.price-tag { display: inline-flex; width: max-content; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 999px; background: rgba(247,147,26,.14); border: 1px solid rgba(247,147,26,.34); color: var(--orange); font: 700 13px "Plus Jakarta Sans", monospace; }
+.footer { border-top: 1px solid var(--line); background: #060606; }
+.footer-media { position: relative; max-width: 1240px; min-height: 300px; margin: 56px auto 0; border: 1px solid rgba(255,255,255,.1); border-radius: 16px; overflow: hidden; background: var(--band); box-shadow: 0 24px 70px rgba(0,0,0,.34); }
+.footer-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.footer-media:after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6,6,6,.9), rgba(6,6,6,.34) 56%, rgba(6,6,6,.74)); pointer-events: none; }
+.footer-media-copy { position: relative; z-index: 1; max-width: 560px; padding: 42px; }
+.footer-grid { max-width: 1240px; margin: 0 auto; padding: 56px 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.footer a { color: var(--dim); text-decoration: none; } .footer a:hover { color: var(--orange); }
+.link-list { display: grid; gap: 10px; }
+.final-cta { text-align: center; border-top: 1px solid var(--line); }
+@media (max-width: 900px) {
+  .announce { padding: 8px 16px; line-height: 1.42; }
+  .desktop-nav { display: none; } .mobile-nav { display: flex; padding-bottom: 12px; gap: 6px; }
+  .header-inner { height: 62px; padding: 0 16px; gap: 12px; } .brand img { height: 40px; }
+  .hero-grid, .section-inner { padding: 64px 20px; }
+  .hero-grid { gap: 30px; }
+  .hero-grid, .split, .grid.two, .grid.three { grid-template-columns: minmax(0, 1fr); }
+  .glow { right: -260px; width: 520px; height: 520px; }
+  h1 { font-size: clamp(34px, 10.5vw, 48px); line-height: 1.05; }
+  h2 { font-size: clamp(30px, 8.5vw, 40px); line-height: 1.08; }
+  h3 { font-size: clamp(21px, 6vw, 27px); }
+  .lead { font-size: 16px; line-height: 1.62; }
+  .terminal-body { padding: 20px; font-size: 12px; line-height: 1.75; overflow-wrap: anywhere; }
+  .terminal-bar strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .program-card { grid-template-rows: 190px 1fr; border-radius: 14px; }
+  .card-body, .stat, .timeline-item { padding: 20px; }
+  .stat strong { font-size: 34px; overflow-wrap: anywhere; }
+  .pill { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+  .photo-grid { grid-template-columns: 1fr; }
+  .photo-card.wide { grid-column: auto; }
+  .photo-card, .photo-card.tall, .feature-photo { min-height: 320px; }
+  .photo-caption { width: auto; max-width: calc(100% - 28px); white-space: normal; border-radius: 8px; line-height: 1.35; }
+  .feature-panel-inner { padding: 24px; }
+  .booking-panel { padding: 20px; }
+  .header-actions .ghost { display: none; }
+  .cta-row { flex-direction: column; align-items: stretch; }
+  .cta-row .button, .cta-row .ghost { width: 100%; }
+  .footer-grid { grid-template-columns: 1fr; padding: 48px 20px; }
+  .calendar-frame iframe { height: 560px; }
+  .footer-media { min-height: 260px; margin: 42px 20px 0; }
+  .footer-media-copy { padding: 30px 24px; }
+}
+@media (max-width: 560px) {
+  .announce { flex-direction: column; gap: 2px; font-size: 12px; }
+  .header-inner { height: 58px; padding-inline: 14px; }
+  .brand img { height: 36px; }
+  .mobile-nav { padding-inline: 12px; }
+  .mobile-nav a { font-size: 12px; padding: 7px 12px; }
+  .header-actions .button.small { min-height: 36px; padding: 8px 12px; font-size: 13px; }
+  .hero-grid, .section-inner { padding: 54px 18px; }
+  .button, .ghost { width: 100%; min-height: 46px; padding: 12px 18px; }
+  .header-actions .button, .header-actions .ghost { width: auto; }
+  .terminal-card, .card, .program-card, .stat, .timeline-item, .feature-panel, .calendar-frame, .booking-panel { border-radius: 14px; }
+  .program-card { grid-template-rows: 174px 1fr; }
+  .photo-card, .photo-card.tall, .feature-photo { min-height: 260px; }
+  .timeline-item { grid-template-columns: 1fr; gap: 10px; }
+  .timeline-item:before { font-size: 14px; }
+  .calendar-frame iframe { height: 500px; }
+  .footer-media { min-height: 240px; margin-inline: 18px; border-radius: 14px; }
+  .footer-media-copy { padding: 26px 20px; }
+  .feature-panel-inner { padding: 20px; }
+  .footer-grid { padding: 42px 18px; }
+}
+@media (max-width: 380px) {
+  .hero-grid, .section-inner { padding-inline: 16px; }
+  .photo-card, .photo-card.tall, .feature-photo { min-height: 230px; }
+  .calendar-frame iframe { height: 455px; }
+  .mobile-nav a { font-size: 11px; padding-inline: 10px; }
+}
+/* ── Decoding Bitcoin cohort dashboard ── */
+.grid.four { grid-template-columns: repeat(4, minmax(0,1fr)); }
+.mb-stats-wrap { padding-top: 0 !important; }
+.mb-stats-wrap .stat strong { white-space: nowrap; }
+.mb-me-wrap { padding-top: 0 !important; padding-bottom: 0 !important; }
+.mb-me { padding: 28px; margin-bottom: 8px; }
+.mb-me[hidden] { display: none; }
+.mb-me-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; }
+.mb-me-head h2 { margin: 0; }
+.mb-me-stats { display: flex; gap: 10px; flex-wrap: wrap; }
+.mb-me-stats span { padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; background: rgba(6,6,6,.5); color: var(--muted); font: 600 13px "Plus Jakarta Sans", monospace; }
+.mb-me-stats strong { color: var(--orange); font-size: 18px; margin-right: 4px; }
+.mb-me-week { color: var(--text); font-size: 16px; line-height: 1.6; margin: 18px 0; }
+.mb-link { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; color: var(--dim); font-size: 13px; }
+.mb-link span { flex-basis: 100%; }
+.mb-link code { flex: 1 1 260px; min-width: 0; padding: 10px 12px; border-radius: 10px; background: rgba(0,0,0,.5); border: 1px solid var(--line); color: var(--muted); font: 12px ui-monospace, Menlo, monospace; overflow-wrap: anywhere; }
+.mb-signout { background: none; border: 0; color: var(--dim); font: inherit; text-decoration: underline; cursor: pointer; padding: 6px; }
+.mb-signout:hover { color: var(--orange); }
+.mb-book { position: relative; justify-self: center; display: block; width: min(100%, 380px); text-decoration: none; transform: rotate(-3deg); transition: transform .25s ease; }
+.mb-book:hover { transform: rotate(-1deg) translateY(-6px); }
+.mb-book img { display: block; width: 100%; height: auto; border-radius: 6px 12px 12px 6px; box-shadow: 0 0 0 1px rgba(255,255,255,.08), 0 30px 80px rgba(0,0,0,.6), 0 0 90px rgba(247,147,26,.22); }
+.mb-book::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 14px; border-radius: 6px 0 0 6px; background: linear-gradient(90deg, rgba(0,0,0,.28), transparent); pointer-events: none; }
+.mb-book-tag { position: absolute; left: 50%; bottom: -18px; transform: translateX(-50%) rotate(3deg); white-space: nowrap; padding: 9px 16px; border-radius: 999px; background: var(--orange); color: var(--bg); font: 700 13px "Plus Jakarta Sans", monospace; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
+@media (max-width: 900px) { .mb-book { width: min(78%, 300px); margin: 10px auto 24px; } }
+.mb-me-cta { margin-top: 18px; justify-content: flex-start; flex-wrap: wrap; }
+.mb-cal { margin: 22px 0 0; color: var(--dim); font: 600 13px "Plus Jakarta Sans", monospace; }
+.mb-cal[hidden] { display: none; }
+.mb-cal a { color: var(--orange); text-decoration: underline; text-underline-offset: 3px; }
+.mb-cal a:hover { color: var(--orange2); }
+button.ghost { background: transparent; cursor: pointer; font: inherit; font-weight: 700; }
+
+.mb-weeks { display: grid; gap: 12px; margin-top: 34px; }
+.mb-week { background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.mb-week.is-current { border-color: rgba(247,147,26,.55); box-shadow: 0 0 0 1px rgba(247,147,26,.2), 0 20px 60px rgba(0,0,0,.32); }
+.mb-week summary { list-style: none; display: grid; grid-template-columns: 96px minmax(0,1fr) auto; gap: 18px; align-items: center; padding: 20px 24px; cursor: pointer; }
+.mb-week summary::-webkit-details-marker { display: none; }
+.mb-week summary:hover { background: rgba(255,255,255,.02); }
+.mb-week summary::after { content: "+"; grid-column: 4; color: var(--orange); font: 400 22px "Plus Jakarta Sans", monospace; }
+.mb-week[open] summary::after { content: "−"; }
+.mb-week[open] summary { border-bottom: 1px solid var(--line); }
+.mb-wk { color: var(--orange); font: 700 12px "Plus Jakarta Sans", monospace; letter-spacing: .1em; text-transform: uppercase; }
+.mb-title { font-size: 19px; color: var(--text); }
+.mb-date { color: var(--dim); font: 600 13px "Plus Jakarta Sans", monospace; white-space: nowrap; }
+.mb-now, .mb-mine { display: inline-block; margin-left: 8px; padding: 3px 9px; border-radius: 999px; font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .06em; text-transform: uppercase; vertical-align: middle; }
+.mb-now { background: var(--orange); color: var(--bg); }
+.mb-mine { border: 1px solid rgba(247,147,26,.45); color: var(--orange); }
+.mb-week-body { padding: 22px 24px 28px; }
+.mb-summary { margin: 0 0 16px; color: var(--muted); line-height: 1.65; max-width: 760px; }
+.mb-chapters { display: flex; flex-wrap: wrap; gap: 8px; }
+.mb-chapters a { padding: 8px 13px; border-radius: 999px; border: 1px solid rgba(247,147,26,.42); color: var(--orange); text-decoration: none; font: 600 13px "Plus Jakarta Sans", monospace; }
+.mb-chapters a:hover { background: rgba(247,147,26,.1); }
+.mb-chapters a.is-extra { border-color: rgba(255,255,255,.14); color: var(--muted); }
+.mb-when { margin: 14px 0 0; color: var(--dim); font: 500 13px "Plus Jakarta Sans", monospace; }
+.mb-cols { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 28px; margin-top: 26px; }
+.mb-cols h3 { font-size: 20px; margin: 0 0 6px; }
+.mb-hint { margin: 0 0 14px; color: var(--dim); font-size: 13.5px; line-height: 1.55; }
+.mb-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.mb-list li { display: grid; grid-template-columns: 34px minmax(0,1fr); gap: 10px; padding: 14px; border-radius: 12px; background: rgba(6,6,6,.45); border: 1px solid rgba(255,255,255,.05); }
+.mb-list li.is-mine { border-color: rgba(247,147,26,.5); background: rgba(247,147,26,.06); }
+.mb-list p { margin: 0 0 10px; color: var(--text); font-size: 14.5px; line-height: 1.55; }
+.mb-num { color: var(--orange); font: 700 12px "Plus Jakarta Sans", monospace; padding-top: 3px; }
+.mb-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.mb-who, .mb-count { display: inline-flex; padding: 5px 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,.14); color: var(--muted); font: 600 12px "Plus Jakarta Sans", monospace; }
+.mb-who.is-me { color: var(--orange); border-color: rgba(247,147,26,.5); }
+.mb-who.is-done { color: #27C93F; border-color: rgba(39,201,63,.45); }
+.mb-who.is-empty { color: var(--dim); border-style: dashed; }
+.mb-tick { display: inline-flex; align-items: center; gap: 8px; min-height: 34px; padding: 5px 12px 5px 6px; border-radius: 999px; border: 1px solid rgba(255,255,255,.18); background: transparent; color: var(--text); font: 700 12px "Plus Jakarta Sans", monospace; cursor: pointer; transition: border-color .15s, background .15s; }
+.mb-tick:hover { border-color: var(--orange); }
+.mb-box { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.35); font-size: 13px; }
+.mb-tick.is-done { border-color: rgba(39,201,63,.55); background: rgba(39,201,63,.1); color: #27C93F; }
+.mb-tick.is-done .mb-box { background: #27C93F; border-color: #27C93F; color: var(--bg); }
+
+.mb-roster { margin-top: 30px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--card); }
+.mb-roster-row { display: grid; grid-template-columns: 44px minmax(0,1.4fr) 80px 90px 90px minmax(80px,1fr); gap: 14px; align-items: center; padding: 14px 22px; border-bottom: 1px solid rgba(255,255,255,.05); color: var(--muted); font: 600 13px "Plus Jakarta Sans", monospace; }
+.mb-roster-row:last-child { border-bottom: 0; }
+.mb-roster-row.is-me { background: rgba(247,147,26,.07); }
+.mb-roster .mb-name.is-blur { filter: blur(5px); user-select: none; opacity: .8; }
+.mb-roster .mb-name em { color: var(--orange); font-style: normal; }
+.mb-roster-head { color: var(--dim); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; background: var(--band); }
+.mb-roster-head b { font-weight: inherit; }
+.mb-short { display: none; }
+.mb-name { color: var(--text); font: 500 15px "Inter", sans-serif; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mb-bar { height: 8px; border-radius: 99px; background: rgba(255,255,255,.08); overflow: hidden; }
+.mb-bar i { display: block; height: 100%; background: linear-gradient(90deg, #C2620A, var(--orange)); border-radius: inherit; }
+.mb-empty { margin: 0; padding: 28px; color: var(--dim); text-align: center; }
+
+.mb-form { display: grid; gap: 16px; }
+.mb-form label { display: grid; gap: 7px; color: var(--muted); font: 600 13px "Plus Jakarta Sans", monospace; }
+.mb-form input { min-height: 48px; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,.16); background: rgba(0,0,0,.45); color: var(--text); font: 16px "Inter", sans-serif; }
+.mb-form input:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 0 3px rgba(247,147,26,.2); }
+.mb-form input:disabled, .mb-form button:disabled { opacity: .5; cursor: not-allowed; }
+.mb-form button { border: 0; cursor: pointer; font-size: 15px; }
+.mb-form[hidden] { display: none; }
+.mb-hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.mb-fine { margin: 0; color: var(--dim); font-size: 12.5px; line-height: 1.55; }
+.mb-note { margin: 14px 0 0; color: var(--orange); font-size: 14.5px; line-height: 1.55; }
+.mb-note:empty { display: none; }
+.mb-note a { color: inherit; text-decoration: underline; font-weight: 700; }
+.mb-toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 80; max-width: min(92vw, 460px); padding: 14px 18px; border-radius: 12px; background: #141414; border: 1px solid rgba(247,147,26,.5); color: var(--text); font-size: 14px; line-height: 1.5; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+.mb-toast[hidden] { display: none; }
+.mb-label { margin: 0 0 8px; color: var(--orange); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .1em; text-transform: uppercase; }
+.mb-read { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 16px; }
+.mb-opening { margin-top: 20px; padding: 16px 18px; border-left: 3px solid var(--orange); border-radius: 0 12px 12px 0; background: rgba(247,147,26,.06); }
+.mb-opening p:last-child { margin: 0; color: var(--text); font-size: 17px; line-height: 1.55; }
+.mb-roles-wrap { margin-top: 20px; }
+.mb-roles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 8px; }
+.mb-roles li { display: grid; gap: 3px; padding: 10px 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,.08); background: rgba(6,6,6,.45); cursor: help; }
+.mb-roles li.is-mine { border-color: rgba(247,147,26,.5); background: rgba(247,147,26,.06); }
+.mb-roles b { color: var(--dim); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .06em; text-transform: uppercase; }
+.mb-roles span { color: var(--text); font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mb-roles li.is-mine span { color: var(--orange); }
+.mb-me-week { margin: 20px 0; }
+.mb-check { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.mb-check li { display: flex; gap: 10px; align-items: flex-start; color: var(--text); font-size: 15px; line-height: 1.5; }
+.mb-check li .mb-box { flex: 0 0 auto; margin-top: 1px; }
+.mb-check li.is-done { color: var(--dim); }
+.mb-check li.is-done .mb-box { background: #27C93F; border-color: #27C93F; color: var(--bg); }
+.mb-jump { display: inline-block; margin-top: 12px; color: var(--orange); font: 700 13px "Plus Jakarta Sans", monospace; text-decoration: none; }
+.mb-agenda { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 28px; margin-top: 34px; }
+.mb-agenda ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.mb-agenda ol li { display: grid; grid-template-columns: 86px minmax(0,1fr); gap: 14px; padding: 14px 16px; border-radius: 12px; background: var(--card); border: 1px solid var(--line); color: var(--muted); line-height: 1.55; }
+.mb-agenda ol li b { color: var(--orange); font: 700 13px "Plus Jakarta Sans", monospace; padding-top: 2px; }
+.mb-agenda ol li strong { color: var(--text); }
+.mb-agenda h3 { font-size: 20px; margin: 0 0 14px; }
+.mb-norms { margin: 0 0 26px; padding-left: 20px; color: var(--muted); line-height: 1.7; }
+.mb-norms strong { color: var(--text); }
+.mb-role-list { display: grid; gap: 10px; }
+.mb-role-list div { padding: 14px 16px; border-radius: 12px; background: var(--card); border: 1px solid var(--line); color: var(--muted); line-height: 1.55; }
+.mb-role-list strong { display: block; color: var(--orange); }
+@media (max-width: 900px) {
+  .grid.four { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .mb-cols { grid-template-columns: minmax(0,1fr); }
+  .mb-week summary { grid-template-columns: minmax(0,1fr) auto; gap: 4px 12px; padding: 16px 18px; }
+  .mb-week summary .mb-wk { grid-column: 1; }
+  .mb-week summary .mb-title { grid-column: 1 / span 2; grid-row: 2; font-size: 17px; }
+  .mb-week summary .mb-date { grid-column: 2; grid-row: 1; justify-self: end; }
+  .mb-week summary::after { display: none; }
+  .mb-week-body { padding: 18px; }
+  .mb-roster-row { grid-template-columns: 30px minmax(0,1fr) 44px 50px 56px; padding: 12px 14px; gap: 8px; font-size: 12px; }
+  .mb-roster-row > :last-child { grid-column: 2 / -1; }
+  .mb-roster-head > :last-child { display: none; }
+  .mb-long { display: none; } .mb-short { display: inline; }
+  .mb-me { padding: 22px 18px; }
+  .mb-roles { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .mb-agenda { grid-template-columns: minmax(0,1fr); }
+}
+@media (max-width: 560px) {
+  .mb-stats-wrap .stat strong { font-size: 28px; }
+  .mb-list li { grid-template-columns: minmax(0,1fr); gap: 4px; padding: 12px; }
+  .mb-tick { width: auto !important; }
+  .mb-link .ghost { width: auto; }
+  .mb-agenda ol li { grid-template-columns: minmax(0,1fr); gap: 4px; }
+}
+
+
+/* Photo backgrounds: the whole photo (3:4, not cropped), large and soft-edged, behind the content */
+.mb-bg { position: relative; isolation: isolate; }
+.mb-bg::after { content: ""; position: absolute; top: 0; z-index: -1; width: min(62vw, 960px); aspect-ratio: 3 / 4; pointer-events: none; background: var(--mb-bg) center / contain no-repeat; opacity: .47; filter: contrast(1.05);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 24%, #000 80%, transparent), linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent); -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent, #000 24%, #000 80%, transparent), linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent); mask-composite: intersect; }
+.mb-bg-right::after { right: calc(50% - 50vw); }
+.mb-bg-left::after { left: calc(50% - 50vw); }
+.mb-bg.band { overflow: hidden; }
+.mb-bg.band::after { top: 50%; transform: translateY(-50%); opacity: .44; }
+.mb-bg :is(h2, h3, .lead, .eyebrow, .mb-norms, .mb-rail, .mb-fine) { text-shadow: 0 1px 2px rgba(0,0,0,.9), 0 2px 18px rgba(0,0,0,.85); }
+@media (max-width: 900px) {
+  .mb-bg::after { width: 100vw; opacity: .29; }
+  .mb-bg.band::after { opacity: .29; }
+}
+
+/* ── Polish: buttons, motion, glow ── */
+.mb-cta { position: relative; overflow: hidden; gap: 10px; isolation: isolate; transition: transform .18s cubic-bezier(.2,.8,.2,1), box-shadow .2s ease, background .2s ease, border-color .2s ease, color .2s ease !important; }
+.mb-cta:hover { transform: translateY(-2px); }
+.mb-cta:active { transform: translateY(0) scale(.98); }
+.button.mb-cta { box-shadow: 0 8px 24px rgba(247,147,26,.22), inset 0 1px 0 rgba(255,255,255,.35); }
+.button.mb-cta:hover { box-shadow: 0 14px 38px rgba(247,147,26,.42), inset 0 1px 0 rgba(255,255,255,.4); }
+.button.mb-cta::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.45) 50%, transparent 70%); transform: translateX(-120%); }
+.button.mb-cta:hover::after { animation: mb-shine .8s ease; }
+@keyframes mb-shine { to { transform: translateX(120%); } }
+.mb-arrow { width: 16px; height: 16px; flex: 0 0 auto; transition: transform .2s ease; }
+.mb-cta:hover .mb-arrow { transform: translateX(4px); }
+.ghost.mb-cta:hover { box-shadow: 0 10px 30px rgba(0,0,0,.35), 0 0 0 1px rgba(247,147,26,.25); }
+.button, .ghost, .mb-tick, .mb-chapters a, .mb-rail a, summary { -webkit-tap-highlight-color: transparent; }
+:where(.button, .ghost, .mb-tick, .mb-chapters a, .mb-rail a, .mb-jump, .mb-signout, summary):focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+
+.mb-countdown { display: flex; gap: 10px; margin: 0 0 26px; }
+.mb-countdown[hidden] { display: none; }
+.mb-countdown div { min-width: 74px; padding: 12px 10px 10px; border-radius: 14px; text-align: center; background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.015)); border: 1px solid rgba(255,255,255,.1); box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 12px 30px rgba(0,0,0,.3); backdrop-filter: blur(8px); }
+.mb-countdown strong { display: block; color: var(--text); font: 700 30px/1 "Plus Jakarta Sans", monospace; font-variant-numeric: tabular-nums; }
+.mb-countdown div:first-child strong { color: var(--orange); }
+.mb-countdown span { display: block; margin-top: 6px; color: var(--dim); font: 700 10px "Plus Jakarta Sans", monospace; letter-spacing: .14em; text-transform: uppercase; }
+
+.mb-week, .stat, .mb-agenda ol li, .mb-role-list div, .mb-list li, .mb-roles li { transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease, background .2s ease; }
+.mb-agenda ol li:hover, .mb-role-list div:hover, .stat:hover { border-color: rgba(247,147,26,.35); transform: translateY(-2px); }
+.mb-week:not([open]):hover { border-color: rgba(247,147,26,.35); }
+.mb-list li:hover { border-color: rgba(255,255,255,.14); }
+
+/* Week rail */
+.mb-rail { display: grid; grid-template-columns: repeat(10, minmax(0,1fr)); gap: 6px; margin-top: 34px; }
+.mb-rail a { position: relative; display: grid; gap: 6px; padding: 10px 0 0; text-decoration: none; color: var(--dim); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .06em; }
+.mb-rail a i { display: block; height: 6px; border-radius: 99px; background: rgba(255,255,255,.08); overflow: hidden; transition: background .2s ease; }
+.mb-rail a i b { display: block; height: 100%; width: var(--p, 0%); background: linear-gradient(90deg, #C2620A, var(--orange)); border-radius: inherit; transition: width .6s cubic-bezier(.2,.8,.2,1); }
+.mb-rail a.is-past i { background: rgba(247,147,26,.25); }
+.mb-rail a.is-current { color: var(--orange); }
+.mb-rail a.is-current i { box-shadow: 0 0 0 1px rgba(247,147,26,.6), 0 0 18px rgba(247,147,26,.45); }
+.mb-rail a:hover { color: var(--text); }
+.mb-rail a em { font-style: normal; }
+.mb-rail a span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mb-weeks { margin-top: 18px !important; }
+
+/* Smooth accordion */
+.mb-week summary { transition: background .2s ease; }
+.mb-week summary::after { transition: transform .25s ease; }
+.mb-week-body { overflow: hidden; }
+
+/* Tick feedback */
+.mb-tick { transition: border-color .15s, background .15s, transform .15s, box-shadow .2s; }
+.mb-tick:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(0,0,0,.3); }
+.mb-tick:active { transform: scale(.96); }
+.mb-tick.is-pop .mb-box { animation: mb-pop .45s cubic-bezier(.2,1.6,.4,1); }
+.mb-tick.is-pop { box-shadow: 0 0 0 6px rgba(39,201,63,.12), 0 0 24px rgba(39,201,63,.35); }
+@keyframes mb-pop { 0% { transform: scale(.4); } 60% { transform: scale(1.25); } 100% { transform: scale(1); } }
+.mb-confetti { position: fixed; left: 0; top: 0; width: 8px; height: 8px; border-radius: 2px; pointer-events: none; z-index: 90; }
+
+/* Course card in the hero (replaces the old book cover) */
+.mb-course-card { position: relative; overflow: hidden; border-radius: 16px; background: linear-gradient(160deg, #1b1308, #0e0e0e 55%); border: 1px solid rgba(247,147,26,.35); box-shadow: 0 0 0 1px rgba(255,255,255,.05), 0 30px 80px rgba(0,0,0,.6), 0 0 90px rgba(247,147,26,.22); animation: mb-float 6s ease-in-out infinite; }
+.mb-course-bar { display: flex; align-items: center; gap: 7px; padding: 12px 16px; border-bottom: 1px solid var(--line); background: rgba(255,255,255,.03); }
+.mb-course-bar span { width: 10px; height: 10px; border-radius: 50%; background: #FF5F56; } .mb-course-bar span:nth-child(2) { background: #FFBD2E; } .mb-course-bar span:nth-child(3) { background: #27C93F; }
+.mb-course-bar em { margin-left: 8px; font: 500 12px "Plus Jakarta Sans", monospace; font-style: normal; color: var(--dim); }
+.mb-course-body { padding: 28px 26px 26px; }
+.mb-course-kicker { margin: 0 0 8px; color: var(--orange); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .14em; text-transform: uppercase; }
+.mb-course-name { margin: 0; color: var(--text); font-size: 34px; font-weight: 800; line-height: 1.05; letter-spacing: -.02em; }
+.mb-course-sub { margin: 8px 0 20px; color: var(--muted); font-size: 14px; }
+.mb-course-body ul { list-style: none; margin: 0 0 20px; padding: 0; display: grid; gap: 8px; }
+.mb-course-body li { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 10px; background: rgba(255,255,255,.04); border: 1px solid var(--line); color: var(--text); font-weight: 700; }
+.mb-course-body li b { color: var(--orange); font: 700 12px "Plus Jakarta Sans", monospace; }
+.mb-course-body code { display: block; padding: 12px 14px; border-radius: 10px; background: #070707; border: 1px solid var(--line); color: #FFB347; font: 12px/1.6 ui-monospace, Menlo, monospace; overflow-wrap: anywhere; }
+.mb-modules { margin-top: 30px; }
+.mb-module { display: flex; flex-direction: column; gap: 12px; padding: 26px; text-decoration: none; transition: transform .18s ease, border-color .18s ease; }
+.mb-module:hover { transform: translateY(-4px); border-color: rgba(247,147,26,.55); }
+.mb-module p { margin: 0; flex: 1; }
+.mb-module b { color: var(--orange); font: 700 13px "Plus Jakarta Sans", monospace; }
+.mb-module .pill { align-self: flex-start; }
+.mb-joined { margin: 18px 0 6px; color: var(--muted); }
+.mb-or { display: flex; align-items: center; gap: 12px; color: var(--dim); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .14em; text-transform: uppercase; }
+.mb-or::before, .mb-or::after { content: ""; flex: 1; height: 1px; background: rgba(255,255,255,.12); }
+.mb-form .mb-nostr { min-height: 48px; justify-content: center; }
+.mb-form .mb-nostr[hidden], .mb-nostr-on[hidden], #progress[hidden] { display: none; }
+.mb-nostr-on { margin: 0; padding: 10px 14px; border-radius: 10px; border: 1px solid rgba(247,147,26,.35); background: rgba(247,147,26,.08); color: var(--text); font: 600 13px "Plus Jakarta Sans", monospace; }
+.mb-nostr-on code { color: var(--orange); }
+.mb-lost { margin-top: 18px; color: var(--muted); }
+.mb-lost[hidden] { display: none; }
+.mb-lost summary { cursor: pointer; font: 600 13px "Plus Jakarta Sans", monospace; color: var(--muted); }
+.mb-lost summary:hover { color: var(--orange); }
+.mb-lost .mb-form { margin-top: 14px; }
+.mb-lost .mb-form button { min-height: 44px; justify-content: center; }
+.mb-joined strong { color: var(--orange); font-size: 22px; }
+.mb-small { color: var(--muted); font-size: 14px; margin: 0 0 18px; }
+.mb-small a { color: var(--orange); }
+.mb-steps { grid-template-columns: repeat(4, 1fr); }
+.mb-steps .timeline-item { grid-template-columns: 1fr; gap: 10px; }
+#seminar { overflow: hidden; }
+@media (max-width: 900px) { .mb-steps { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 520px) { .mb-steps { grid-template-columns: 1fr; } }
+.mb-more { margin-top: 26px; }
+.mb-more > summary { cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 10px; padding: 12px 20px; border: 1px solid var(--line); border-radius: 999px; color: var(--text, #fff); font-weight: 600; }
+.mb-more > summary::-webkit-details-marker { display: none; }
+.mb-more > summary::after { content: "+"; color: var(--orange); font-size: 20px; line-height: 1; }
+.mb-more[open] > summary::after { content: "–"; }
+.mb-more[open] > summary { margin-bottom: 22px; border-color: rgba(247,147,26,.55); }
+.mb-sticky { display: none; }
+@media (max-width: 760px) {
+  .mb-sticky:not([hidden]) { display: block; position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 60; padding: 15px; border-radius: 999px; background: #F7931A; color: #0A0A0A; text-align: center; font-weight: 700; text-decoration: none; box-shadow: 0 12px 34px rgba(0,0,0,.5); }
+}
+.mb-hero-video { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: .55; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .mb-hero-video { display: none; } }
+.mb-tools { margin: 24px 0 0; color: var(--muted); line-height: 1.9; }
+.mb-tools a, .lead a { color: var(--orange); }
+.mb-shot { display: block; position: relative; max-width: 680px; margin: 0 auto 28px; border: 1px solid rgba(247,147,26,.35); border-radius: 22px; overflow: hidden; background: #111; text-decoration: none; transition: transform .18s ease, border-color .18s ease; }
+.mb-shot:hover { transform: translateY(-4px); border-color: rgba(247,147,26,.7); }
+.mb-shot-bar { display: flex; align-items: center; gap: 8px; padding: 11px 16px; background: #161616; border-bottom: 1px solid rgba(255,255,255,.08); color: var(--muted); font: 600 13px "Plus Jakarta Sans", monospace; }
+.mb-shot-bar i { width: 10px; height: 10px; border-radius: 50%; background: #3a3a3a; }
+.mb-shot-bar i:first-child { background: #F7931A; }
+.mb-shot-bar span { margin-left: 8px; }
+.mb-shot img { display: block; width: 100%; height: auto; aspect-ratio: 1200 / 630; object-fit: cover; }
+.mb-shot figcaption { padding: 14px 18px; color: var(--muted); font-size: 14px; }
+.mb-shot figcaption b { color: var(--orange); }
+.mb-shot.is-broken img { display: none; }
+.mb-credit-shot { max-width: 640px; margin: 28px auto; }
+.mb-toolgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; margin-top: 18px; }
+.mb-tool { display: flex; flex-direction: column; gap: 8px; padding: 18px; text-decoration: none; transition: transform .18s ease, border-color .18s ease; }
+.mb-tool:hover { transform: translateY(-3px); border-color: rgba(247,147,26,.55); }
+.mb-tool h3 { font-size: 17px; margin: 0; }
+.mb-tool p { margin: 0; font-size: 14px; flex: 1; }
+.mb-tool b { color: var(--orange); font: 700 12px "Plus Jakarta Sans", monospace; }
+/* Book: floats, tilts with the cursor */
+.mb-book { transform-style: preserve-3d; transition: transform .35s cubic-bezier(.2,.8,.2,1); }
+.mb-book img { animation: mb-float 6s ease-in-out infinite; }
+@keyframes mb-float { 50% { transform: translateY(-10px); } }
+
+/* Scroll reveal */
+.mb-js .mb-reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1); }
+.mb-js .mb-reveal.is-in { opacity: 1; transform: none; }
+.mb-roster .mb-bar i { transition: width .9s cubic-bezier(.2,.8,.2,1); }
+.mb-roster-row:not(.mb-roster-head) { transition: background .2s ease; }
+.mb-roster-row:not(.mb-roster-head):hover { background: rgba(255,255,255,.025); }
+
+@media (max-width: 900px) {
+  .mb-rail { grid-template-columns: repeat(5, minmax(0,1fr)); row-gap: 12px; }
+  .mb-rail a em { display: none; }
+  .mb-countdown div { min-width: 0; flex: 1; }
+}
+@media (max-width: 560px) {
+  .mb-countdown strong { font-size: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mb-book img, .mb-course-card, .button.mb-cta:hover::after, .mb-tick.is-pop .mb-box { animation: none !important; }
+  .mb-js .mb-reveal { opacity: 1; transform: none; transition: none; }
+  .mb-cta, .mb-tick, .mb-agenda ol li, .mb-role-list div, .stat { transition: none !important; }
+}
+
+.pt-tag { display: block; margin-top: 3px; color: var(--dim); font: 500 13px "Plus Jakarta Sans", monospace; letter-spacing: 0; }
+.mb-week-body .mb-label + .mb-summary { margin-top: 0; }
+.mb-list code, .mb-summary code, .mb-opening code { font: 500 .9em "Plus Jakarta Sans", monospace; color: var(--orange); background: rgba(247,147,26,.08); padding: 1px 5px; border-radius: 5px; }
+.pt-leaks { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 30px; }
+.pt-leaks .card { padding: 26px; }
+.pt-leaks .card h3 { margin: 14px 0 8px; font-size: 21px; }
+.pt-leaks .card p { margin: 0; color: var(--muted); line-height: 1.6; }
+.pt-leaks .pt-n { color: var(--orange); font: 700 13px "Plus Jakarta Sans", monospace; letter-spacing: .1em; }
+.pt-beats { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; margin-top: 30px; }
+.pt-beats div { padding: 18px; border-radius: 14px; background: var(--card); border: 1px solid var(--line); }
+.pt-beats b { display: block; color: var(--text); font-size: 17px; margin-bottom: 4px; }
+.pt-beats em { font-style: normal; color: var(--orange); font: 700 12px "Plus Jakarta Sans", monospace; float: right; }
+.pt-beats p { margin: 0; color: var(--muted); line-height: 1.55; font-size: 14.5px; }
+.pt-term { margin: 22px 0 0; padding: 18px 20px; border-radius: 14px; background: #070707; border: 1px solid var(--line); overflow-x: auto; font: 500 13.5px/1.75 "SFMono-Regular", Menlo, Consolas, monospace; color: #d6d6d6; white-space: pre; }
+.pt-term .c { color: var(--dim); } .pt-term .ok { color: #27C93F; } .pt-term .no { color: #FF5F56; } .pt-term .o { color: var(--orange); }
+.pt-ladder { counter-reset: rung; list-style: none; margin: 30px 0 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0,1fr)); gap: 10px; }
+.pt-ladder li { counter-increment: rung; padding: 16px 14px; border-radius: 14px; background: var(--card); border: 1px solid var(--line); color: var(--muted); font-size: 14px; line-height: 1.5; }
+.pt-ladder li::before { content: counter(rung); display: block; color: var(--orange); font: 700 22px "Plus Jakarta Sans", monospace; margin-bottom: 6px; }
+.pt-ladder li b { display: block; color: var(--text); font-size: 16px; margin-bottom: 4px; }
+.pt-labs { width: 100%; border-collapse: collapse; margin-top: 26px; }
+.pt-labs td { padding: 14px 12px; border-top: 1px solid var(--line); color: var(--muted); vertical-align: top; line-height: 1.5; }
+.pt-labs td:first-child { white-space: nowrap; }
+.pt-labs td:first-child a { color: var(--orange); font-weight: 600; text-decoration: none; }
+.pt-labs td:nth-child(2) { color: var(--dim); font: 600 13px "Plus Jakarta Sans", monospace; white-space: nowrap; }
+@media (max-width: 880px) {
+  .pt-leaks, .pt-beats { grid-template-columns: minmax(0,1fr); }
+  .pt-ladder { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .pt-labs td:nth-child(2) { display: none; }
+  .pt-labs td:first-child { white-space: normal; }
+}
+</style>
 <link rel="stylesheet" href="/assets/theme.css?v=20261011a">
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
 </head>
 <body>
-<x-dc>
-<helmet>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
-<style>
-  html, body { margin: 0; padding: 0; background: #0A0A0A; }
-  body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
-  html { scroll-behavior: smooth; }
-  ::selection { background: rgba(247,147,26,0.35); color: #F5F5F5; }
-  @media (prefers-reduced-motion: reduce) {
-    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-  }
-  /* ── Mobile layout overrides (media queries can't be inline) ── */
-  @media (max-width: 880px) {
-    [data-mq="announce"] { flex-direction: column !important; gap: 2px !important; padding: 8px 16px !important; font-size: 12px !important; text-align: center !important; }
-    [data-mq="header-inner"] { height: 60px !important; padding: 0 16px !important; }
-    [data-mq="logo-img"] { height: 36px !important; }
-    [data-mq="nav-links"] { display: none !important; }
-    [data-mq="nav-mobile"] { display: flex !important; }
-    [data-mq="hero-wrap"] { padding: 44px 20px 0 !important; }
-    [data-mq="hero-grid"] { grid-template-columns: 1fr !important; gap: 36px !important; }
-    [data-mq="cols2"] { grid-template-columns: 1fr !important; gap: 32px !important; }
-    [data-mq="card-pad"] { padding: 26px 22px !important; }
-    [data-pad="card"] { padding: 28px 20px 32px !important; gap: 32px !important; }
-    [data-pad="lg"] { padding: 72px 20px !important; }
-    [data-pad="mid"] { padding: 56px 20px !important; }
-    [data-pad="cta"] { padding: 88px 20px !important; }
-  }
-  @media (max-width: 560px) {
-    [data-mq="btn-discord"] { display: none !important; }
-    [data-mq="btn-row"] { flex-direction: column !important; }
-    [data-mq="btn-row"] a { width: 100% !important; text-align: center !important; box-sizing: border-box !important; }
-  }
-</style>
-</helmet>
-
-<div style="background: #0A0A0A; color: #F5F5F5; font-family: 'Inter', system-ui, sans-serif; font-size: 16px; line-height: 1.5; min-height: 100vh;">
-
-  <!-- ══════════ ANNOUNCE ══════════ -->
-  <a href="/apply?program=privacy" data-screen-label="Announce bar" data-mq="announce" style="display: flex; align-items: center; justify-content: center; gap: 10px; background: #F7931A; color: #0A0A0A; text-decoration: none; padding: 9px 24px; font-family: 'Plus Jakarta Sans', monospace; font-size: 13px; font-weight: 600;" style-hover="background: #FFB347;">
-    <span>🔐 Bitcoin Privacy Track - open for enrollment · 2026 focus</span>
-    <span style="text-decoration: underline; text-underline-offset: 3px;">Apply →</span>
-  </a>
-
-  <!-- ══════════ HEADER ══════════ -->
-  <header data-screen-label="Header" style="position: sticky; top: 0; z-index: 50; background: rgba(10,10,10,0.72); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.08);">
-    <div data-mq="header-inner" style="max-width: 1240px; margin: 0 auto; padding: 0 32px; height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 24px;">
-      <a href="/" style="display: flex; align-items: center; text-decoration: none; flex-shrink: 0;">
-        <img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School" data-mq="logo-img" style="height: 45px; width: auto; display: block;">
+<a class="announce" href="#next">Bitcoin Privacy Track &middot; free, drop-in, every 1st &amp; 3rd Tuesday on Discord <span>Next session &rarr;</span></a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="Code Orange Dev School home"><img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School"></a>
+    <nav class="desktop-nav" aria-label="Primary">
+      <a href="/programs">Programs</a>
+      <a href="/portal">Portal</a>
+      <a href="/fellowships">Fellowships</a>
+      <a href="/calendar">Calendar</a>
+      <a href="/community">Community</a>
+      <a href="/impact">Impact</a>
+      <a href="/about">About</a>
+    </nav>
+    <div class="header-actions">
+      <a class="ghost small" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a>
+      <a class="button small" href="#sessions">The sessions</a>
+    </div>
+  </div>
+  <nav class="mobile-nav" aria-label="Mobile">
+    <a href="/programs">Programs</a>
+    <a href="/portal">Portal</a>
+    <a href="/calendar">Calendar</a>
+    <a href="/community">Community</a>
+    <a href="/impact">Impact</a>
+    <a href="/about">About</a>
+  </nav>
+</header>
+<main>
+  <section class="hero"><div class="co-fx" aria-hidden="true"><i></i><i></i><i></i><svg class="co-fx-glow" viewBox="0 0 1200 400" preserveAspectRatio="none"><defs><filter id="co-glow-blur" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="25"/></filter><radialGradient id="co-glow-fill"><stop offset="0" stop-color="#F7931A" stop-opacity=".55"/><stop offset=".55" stop-color="#C2620A" stop-opacity=".28"/><stop offset="1" stop-color="#4A2600" stop-opacity="0"/></radialGradient></defs><ellipse cx="600" cy="200" rx="520" ry="110" fill="url(#co-glow-fill)" filter="url(#co-glow-blur)"/></svg></div><video class="mb-hero-video" poster="/assets/co-hero-first.jpg" autoplay muted loop playsinline preload="auto" aria-hidden="true"><source src="/assets/co-hero-720.mp4" type="video/mp4"><source src="/assets/co-hero-720.webm" type="video/webm"></video>
+    <div class="glow"></div>
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">/Programs/Privacy_Track_</p>
+        <h1>Bitcoin privacy. <span class="orange">Build it to learn it.</span></h1>
+        <p class="lead">Bitcoin is public by default. In 12 hands-on sessions you learn how privacy breaks and how it's being fixed, by building Silent Payments, payjoins and your own node, then reading the real code with the people writing it.</p>
+        <div class="meta" style="margin:0 0 30px">
+          <span class="pill orange" id="next" data-pt-next>1st &amp; 3rd Tuesday</span>
+          <span class="pill">12 sessions · 90 min</span>
+          <span class="pill">Discord · drop-in</span>
+          <span class="pill">Free</span>
+        </div>
+        <div class="mb-countdown" data-pt-countdown hidden aria-label="Time until the next session">
+          <div><strong data-cd="d">00</strong><span>days</span></div>
+          <div><strong data-cd="h">00</strong><span>hours</span></div>
+          <div><strong data-cd="m">00</strong><span>mins</span></div>
+          <div><strong data-cd="s">00</strong><span>secs</span></div>
+        </div>
+        <div class="cta-row">
+          <a class="button mb-cta" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener"><span>Join on Discord</span><svg class="mb-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="ghost mb-cta" href="#sessions"><span>See the 12 sessions</span></a>
+        </div>
+        <p class="mb-cal">Every 1st &amp; 3rd Tuesday, 07:00 UTC<span data-pt-local></span>. <a data-pt-gcal href="#" target="_blank" rel="noopener">Add to Google Calendar</a></p>
+      </div>
+      <a class="mb-book mb-course" href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track/labs/silent-payments" target="_blank" rel="noopener" aria-label="Open the Silent Payments lab on GitHub">
+        <div class="mb-course-card">
+          <div class="mb-course-bar"><span></span><span></span><span></span><em>privacy-track/labs/silent-payments</em></div>
+          <div class="mb-course-body">
+            <p class="mb-course-kicker">Session 1 · the lab</p>
+            <p class="mb-course-name">Silent Payments</p>
+            <p class="mb-course-sub">Build a BIP352 sender in plain Python, graded against the official test vectors</p>
+            <ul><li><b>01</b>Send</li><li><b>02</b>Scan</li><li><b>03</b>Review Core</li></ul>
+            <code>$ python3 run_vectors.py send · 28/28 passing ✓</code>
+          </div>
+        </div>
+        <span class="mb-book-tag">Free and open source · try it now →</span>
       </a>
-      <nav data-mq="nav-links" style="display: flex; align-items: center; gap: 4px; font-size: 14px; font-weight: 500;">
-        <a href="/" style="color: #B8B8B8; text-decoration: none; padding: 8px 14px; border-radius: 8px; transition: color 120ms;" style-hover="color: #F7931A;">← All programs</a>
-        <a href="#modules" style="color: #B8B8B8; text-decoration: none; padding: 8px 14px; border-radius: 8px; transition: color 120ms;" style-hover="color: #F7931A;">Modules</a>
-        <a href="#github-details" style="color: #B8B8B8; text-decoration: none; padding: 8px 14px; border-radius: 8px; transition: color 120ms;" style-hover="color: #F7931A;">Details</a>
-        <a href="#rule" style="color: #B8B8B8; text-decoration: none; padding: 8px 14px; border-radius: 8px; transition: color 120ms;" style-hover="color: #F7931A;">The Rule</a>
-        <a href="#repos" style="color: #B8B8B8; text-decoration: none; padding: 8px 14px; border-radius: 8px; transition: color 120ms;" style-hover="color: #F7931A;">Repos</a>
-      </nav>
-      <div style="display: flex; align-items: center; gap: 12px; flex-shrink: 0;">
-        <a href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener" data-mq="btn-discord" style="color: #F5F5F5; text-decoration: none; font-size: 14px; font-weight: 600; padding: 10px 18px; border: 1px solid rgba(255,255,255,0.16); border-radius: 8px; transition: all 120ms;" style-hover="border-color: #F7931A; color: #F7931A;">Discord</a>
-        <a href="/apply?program=privacy" style="background: #F7931A; color: #0A0A0A; text-decoration: none; font-size: 14px; font-weight: 700; padding: 10px 20px; border-radius: 8px; transition: background 120ms;" style-hover="background: #FFB347;">Apply Now</a>
-      </div>
-    </div>
-    <div data-mq="nav-mobile" style="display: none; align-items: center; gap: 8px; overflow-x: auto; padding: 0 16px 10px; scrollbar-width: none;">
-      <a href="/" style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 600; color: #B8B8B8; text-decoration: none; padding: 7px 14px; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; white-space: nowrap; flex-shrink: 0;">← Home</a>
-      <a href="#modules" style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 600; color: #B8B8B8; text-decoration: none; padding: 7px 14px; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; white-space: nowrap; flex-shrink: 0;">Modules</a>
-      <a href="#github-details" style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 600; color: #B8B8B8; text-decoration: none; padding: 7px 14px; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; white-space: nowrap; flex-shrink: 0;">Details</a>
-      <a href="#rule" style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 600; color: #B8B8B8; text-decoration: none; padding: 7px 14px; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; white-space: nowrap; flex-shrink: 0;">The Rule</a>
-      <a href="#repos" style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 600; color: #B8B8B8; text-decoration: none; padding: 7px 14px; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; white-space: nowrap; flex-shrink: 0;">Repos</a>
-    </div>
-  </header>
-
-  <!-- ══════════ HERO ══════════ -->
-  <section data-screen-label="Privacy Track hero" style="position: relative; overflow: hidden; background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px); background-size: 48px 48px;">
-    <div style="position: absolute; top: -120px; right: -80px; width: 720px; height: 720px; border-radius: 50%; background: radial-gradient(circle, rgba(247,147,26,0.13) 0%, transparent 65%); pointer-events: none;"></div>
-    <div data-mq="hero-wrap" style="max-width: 1240px; margin: 0 auto; padding: 88px 32px 0; position: relative;">
-      <div data-mq="hero-grid" style="display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 64px; align-items: center;">
-        <div>
-          <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 24px;">
-            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #0A0A0A; background: #F7931A; padding: 5px 12px; border-radius: 999px;">New · 2026 Focus</span>
-            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #F7931A;"><span>/</span>Programs<span>/</span>Privacy_Track<span>_</span></span>
-          </div>
-          <h1 style="font-family: 'Inter', system-ui, sans-serif; font-weight: 400; font-size: clamp(38px, 4.4vw, 62px); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 26px; color: #F5F5F5; text-wrap: pretty;">Bitcoin Privacy Developer Track. <span style="color: #F7931A;">Contribution-first, by design.</span></h1>
-          <p style="font-size: 18px; line-height: 1.65; color: #B8B8B8; margin: 0 0 32px; max-width: 560px; text-wrap: pretty;">12 biweekly 90-minute sessions over 6 months, opening with Silent Payments, then chain analysis, coin selection, Payjoin, light clients, network privacy, CoinJoin and swaps, Lightning, ecash, and a contribution sprint. Every session ends with real proof of work in an open-source privacy project.</p>
-          <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 36px;">
-            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 13px; color: #F7931A; padding: 8px 16px; border: 1px solid rgba(247,147,26,0.4); border-radius: 999px;">For Developers</span>
-            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 13px; color: #B8B8B8; padding: 8px 16px; border: 1px solid rgba(255,255,255,0.16); border-radius: 999px;">6 months · biweekly</span>
-            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 13px; color: #B8B8B8; padding: 8px 16px; border: 1px solid rgba(255,255,255,0.16); border-radius: 999px;">~3 hrs/week</span>
-            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 13px; color: #B8B8B8; padding: 8px 16px; border: 1px solid rgba(255,255,255,0.16); border-radius: 999px;">Free if accepted</span>
-          </div>
-          <div data-mq="btn-row" style="display: flex; gap: 14px; flex-wrap: wrap;">
-            <a href="/apply?program=privacy" style="background: #F7931A; color: #0A0A0A; text-decoration: none; font-size: 16px; font-weight: 700; padding: 15px 30px; border-radius: 8px; transition: background 120ms;" style-hover="background: #FFB347;" style-active="transform: scale(0.98);">Apply to the Track</a>
-            <a href="#modules" style="color: #F5F5F5; text-decoration: none; font-size: 16px; font-weight: 600; padding: 15px 30px; border: 1px solid rgba(255,255,255,0.16); border-radius: 8px; transition: all 120ms;" style-hover="border-color: #F7931A; color: #F7931A;">See the modules</a>
-          </div>
-        </div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-          <div style="background: #141414; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px; display: flex; flex-direction: column; gap: 4px;">
-            <span style="font-family: 'Inter', monospace; font-size: 42px; line-height: 1; color: #F7931A;">12</span>
-            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #858585;">Sessions</span>
-          </div>
-          <div style="background: #141414; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px; display: flex; flex-direction: column; gap: 4px;">
-            <span style="font-family: 'Inter', monospace; font-size: 42px; line-height: 1; color: #F7931A;">6mo</span>
-            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #858585;">Duration</span>
-          </div>
-          <div style="background: #141414; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px; display: flex; flex-direction: column; gap: 4px;">
-            <span style="font-family: 'Inter', monospace; font-size: 42px; line-height: 1; color: #F7931A;">28</span>
-            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #858585;">BIP352 test vectors</span>
-          </div>
-          <div style="background: #141414; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 26px; display: flex; flex-direction: column; gap: 4px;">
-            <span style="font-family: 'Inter', monospace; font-size: 42px; line-height: 1; color: #F7931A;">17</span>
-            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #858585;">Projects with live issue links</span>
-          </div>
-        </div>
-      </div>
-      <div style="height: 64px;"></div>
     </div>
   </section>
 
-  <!-- ══════════ GITHUB DETAILS ══════════ -->
-  <section id="github-details" data-screen-label="GitHub details" data-pad="mid" style="max-width: 1240px; margin: 0 auto; padding: 104px 32px 72px; scroll-margin-top: 96px;">
-    <div data-mq="cols2" style="display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 28px; align-items: start;">
-      <div style="display: flex; flex-direction: column; gap: 20px;">
-        <div>
-          <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #F7931A; margin-bottom: 18px;"><span>/</span>GitHub_Curriculum<span>_</span></div>
-          <h2 style="font-family: 'Inter', system-ui, sans-serif; font-weight: 400; font-size: clamp(32px, 3.2vw, 50px); line-height: 1.08; margin: 0 0 18px; color: #F5F5F5;">Season One: 12 sessions, one contribution path.</h2>
-          <p style="font-size: 16px; line-height: 1.7; color: #B8B8B8; margin: 0; text-wrap: pretty;">The public curriculum is now mapped on GitHub: each session teaches one Bitcoin privacy problem, then ends with proof of work: a lab, a tested PR, or an issue from a curated pool that can become a real upstream contribution.</p>
-        </div>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
-          <div style="background: #141414; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 18px;">
-            <span style="display: block; font-family: 'Inter', monospace; font-size: 32px; color: #F7931A; line-height: 1;">90</span>
-            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #858585;">min/session</span>
-          </div>
-          <div style="background: #141414; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 18px;">
-            <span style="display: block; font-family: 'Inter', monospace; font-size: 32px; color: #F7931A; line-height: 1;">6</span>
-            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #858585;">months</span>
-          </div>
-          <div style="background: #141414; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 18px;">
-            <span style="display: block; font-family: 'Inter', monospace; font-size: 32px; color: #F7931A; line-height: 1;">1</span>
-            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #858585;">live PR review / session</span>
-          </div>
-        </div>
-        <img src="/assets/uploaded-workshops/hardware-privacy-kit.jpg" alt="Bitcoin privacy hardware used in Code Orange workshops" loading="lazy" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 18px; border: 1px solid rgba(255,255,255,0.1); display: block;">
-        <div data-mq="btn-row" style="display: flex; gap: 12px; flex-wrap: wrap;">
-          <a href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track" target="_blank" rel="noopener" style="background: #F7931A; color: #0A0A0A; text-decoration: none; font-size: 14px; font-weight: 700; padding: 13px 20px; border-radius: 8px;">Open GitHub track</a>
-          <a href="https://github.com/code-orange-dev/curriculum/blob/main/privacy-track/PR_CHECKLIST.md" target="_blank" rel="noopener" style="color: #F5F5F5; text-decoration: none; font-size: 14px; font-weight: 600; padding: 13px 20px; border: 1px solid rgba(255,255,255,0.16); border-radius: 8px;">PR checklist</a>
-        </div>
-      </div>
-      <div style="background: #0F0F0F; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; overflow: hidden;">
-        <div style="padding: 18px 22px; background: #141414; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: space-between; gap: 16px;">
-          <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #F7931A;">Month by month</span>
-          <a href="https://github.com/code-orange-dev/curriculum/blob/main/privacy-track/SESSIONS.md" target="_blank" rel="noopener" style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; color: #B8B8B8; text-decoration: none;">Full guide →</a>
-        </div>
-        <div style="display: flex; flex-direction: column;">
-          <div style="padding: 20px 22px; border-bottom: 1px solid rgba(255,255,255,0.07);"><b style="color:#F5F5F5;">Month 1</b><p style="margin: 6px 0 0; color:#B8B8B8;">Silent Payments I: build a sender; Silent Payments II: build a scanner</p></div>
-          <div style="padding: 20px 22px; border-bottom: 1px solid rgba(255,255,255,0.07);"><b style="color:#F5F5F5;">Month 2</b><p style="margin: 6px 0 0; color:#B8B8B8;">Silent Payments III: Review Club on Bitcoin Core; Think Like the Adversary (chain analysis &amp; fingerprinting)</p></div>
-          <div style="padding: 20px 22px; border-bottom: 1px solid rgba(255,255,255,0.07);"><b style="color:#F5F5F5;">Month 3</b><p style="margin: 6px 0 0; color:#B8B8B8;">Coin Selection &amp; Change; Payjoin</p></div>
-          <div style="padding: 20px 22px; border-bottom: 1px solid rgba(255,255,255,0.07);"><b style="color:#F5F5F5;">Month 4</b><p style="margin: 6px 0 0; color:#B8B8B8;">Light Clients with Floresta and Kyoto; Network Privacy: Tor, BIP324, private broadcast, ASmap</p></div>
-          <div style="padding: 20px 22px; border-bottom: 1px solid rgba(255,255,255,0.07);"><b style="color:#F5F5F5;">Month 5</b><p style="margin: 6px 0 0; color:#B8B8B8;">CoinJoin &amp; OpenSwap; Lightning Privacy</p></div>
-          <div style="padding: 20px 22px;"><b style="color:#F5F5F5;">Month 6</b><p style="margin: 6px 0 0; color:#B8B8B8;">Ecash: Cashu &amp; Fedimint; Contribution Sprint</p></div>
-        </div>
-      </div>
+  <section class="section-inner">
+    <div class="split"><div><p class="eyebrow">Start here</p><h2>Where Bitcoin privacy leaks.</h2></div><p class="lead">The protocol is rarely the problem. Most privacy failures happen in three places, and every one of them is software that open-source contributors can fix.</p></div>
+    <div class="pt-leaks">
+      <div class="card"><span class="pt-n">01 · YOUR WALLET</span><h3>How you receive and hold</h3><p>Reusing an address links every payment you get. Merging coins tells the world they're yours. <a href="#s1">Silent Payments</a> and <a href="#s5">coin control</a> fix this.</p></div>
+      <div class="card"><span class="pt-n">02 · THE TRANSACTION</span><h3>How it's built</h3><p>Analysts assume all inputs have one owner, spot your change, and recognise your wallet's fingerprint. <a href="#s4">Learn their rules</a>, then break them with <a href="#s6">Payjoin</a> and <a href="#s9">CoinJoin</a>.</p></div>
+      <div class="card"><span class="pt-n">03 · THE NETWORK</span><h3>How it's sent and synced</h3><p>Light wallets tell servers your addresses, and broadcasts can reveal your IP. <a href="#s7">Run your own node</a> and <a href="#s8">broadcast privately</a>.</p></div>
     </div>
   </section>
 
-  <!-- ══════════ THE RULE ══════════ -->
-  <section id="rule" data-screen-label="The rule" style="background: #0F0F0F; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); scroll-margin-top: 96px;">
-    <div data-pad="mid" style="max-width: 1240px; margin: 0 auto; padding: 96px 32px;">
-      <div style="border-radius: 20px; background: #0A0A0A; border: 1px solid rgba(255,255,255,0.08); overflow: hidden;">
-        <div style="display: flex; align-items: center; gap: 8px; padding: 14px 20px; border-bottom: 1px solid rgba(255,255,255,0.08); background: #141414;">
-          <span style="width: 12px; height: 12px; border-radius: 50%; background: #FF5F56;"></span>
-          <span style="width: 12px; height: 12px; border-radius: 50%; background: #FFBD2E;"></span>
-          <span style="width: 12px; height: 12px; border-radius: 50%; background: #27C93F;"></span>
-          <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; color: #858585; margin-left: 10px;">~/privacy-track/RULE.md</span>
-        </div>
-        <div data-mq="cols2" data-pad="card" style="padding: 48px 56px; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 56px; align-items: center;">
-          <div>
-            <h2 style="font-family: 'Inter', system-ui, sans-serif; font-weight: 400; font-size: clamp(30px, 3vw, 44px); line-height: 1.12; margin: 0 0 20px; color: #F5F5F5;">Every session ends with proof of work. <span style="color: #F7931A;">Useful, not noisy.</span></h2>
-            <p style="font-size: 16px; line-height: 1.7; color: #B8B8B8; margin: 0; max-width: 560px; text-wrap: pretty;">Not "homework." Proof of work: a lab passing the official test vectors, a PR you built and tested, a reproduced bug, a docs fix, a pull request on an issue you checked is still open. Nothing goes upstream unless a maintainer would be glad to receive it. Over 12 sessions that compounds into a public contribution record no CV can fake.</p>
+  <section id="sessions" class="section-inner mb-bg mb-bg-right" style="--mb-bg:url(/assets/programs/privacy-workshop-roundtable.jpg);scroll-margin-top:96px">
+    <div class="split"><div><p class="eyebrow">Season one</p><h2>12 sessions, one at a time.</h2></div><p class="lead">Each session stands alone, so you can drop in anywhere. Tap one to learn the idea, try it yourself, and see what we do live.</p></div>
+    <div class="mb-weeks">
+        <details id="s1" class="mb-week" data-week="0">
+          <summary>
+            <span class="mb-wk">S01</span>
+            <span class="mb-title">Silent Payments I <span class="pt-tag">One address, no trail</span></span>
+            <span class="mb-date">Month 1</span>
+          </summary>
+          <div class="mb-week-body">
+            <p class="mb-label">The idea in plain words</p>
+            <p class="mb-summary">Publishing one Bitcoin address for donations or invoices means anyone can look up every payment you ever got, and when you spent it. Silent Payments (BIP352) let you publish one reusable address, while every payment lands at a fresh, unlinkable address on-chain. No server and no notification transaction needed.</p>
+            <div class="mb-opening"><p class="mb-label">The analogy</p><p>Paint mixing. The sender mixes their secret colour (their input keys) with your public colour (your scan key). Only you can remake that exact mix from your side, so only you recognise the result.</p></div>
+            <div class="mb-chapters" style="margin-top:20px"><a href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track/labs/silent-payments" target="_blank" rel="noopener">Silent Payments lab ↗</a><a href="https://github.com/bitcoin/bips/blob/master/bip-0352.mediawiki" target="_blank" rel="noopener">BIP352 ↗</a><a href="https://bitcoinops.org/en/topics/silent-payments/" target="_blank" rel="noopener">Optech: Silent Payments ↗</a></div>
+            <div class="mb-cols">
+              <div><h3>Try it yourself</h3><p class="mb-hint">You leave with: Your own Silent Payments sender, passing the 28 official BIP352 test vectors.</p><ol class="mb-list"><li><span class="mb-num">1</span><div><p>Build the sender: 5 small functions in <a href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track/labs/silent-payments" target="_blank" rel="noopener">send.py</a>, graded against the official vectors. Race to 28/28.</p></div></li><li><span class="mb-num">2</span><div><p>Look up a public donation address on <a href="https://mempool.space" target="_blank" rel="noopener">mempool.space</a> and see every payment it ever received. That's what address reuse gives away.</p></div></li></ol></div>
+              <div><h3>In the session</h3><p class="mb-hint">Every session reads a real open PR and argues about a primary text.</p><ol class="mb-list">
+                <li><span class="mb-num">PR</span><div><p><a href="https://github.com/bitcoin/bitcoin/pull/36338" target="_blank" rel="noopener">bitcoin/bitcoin#36338</a>: a small fix to how a sender reads a P2PKH public key. What did the old code do, and what if sender and receiver disagree?</p></div></li>
+                <li><span class="mb-num">📜</span><div><p>BIP352 "Motivation": does Silent Payments make the reuse problem go away, or just move it somewhere else?</p></div></li>
+                <li><span class="mb-num">🎯</span><div><p><strong>Proof of work:</strong> Finish the lab to 28/28, or test a Silent Payments wallet on signet and file one well-documented bug.</p></div></li>
+              </ol></div>
+            </div>
           </div>
-          <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 14px; line-height: 2.1; display: flex; flex-direction: column;">
-            <span style="color: #858585;"># session checklist</span>
-            <span style="color: #B8B8B8;">[x] deep-dive - 90 min</span>
-            <span style="color: #B8B8B8;">[x] review a live PR together</span>
-            <span style="color: #F7931A;">[x] ship proof of work ✓</span>
-            <span style="color: #858585;">── tested or it didn't happen</span>
+        </details>
+        <details id="s2" class="mb-week" data-week="1">
+          <summary>
+            <span class="mb-wk">S02</span>
+            <span class="mb-title">Silent Payments II <span class="pt-tag">Finding your money</span></span>
+            <span class="mb-date">Month 1</span>
+          </summary>
+          <div class="mb-week-body">
+            <p class="mb-label">The idea in plain words</p>
+            <p class="mb-summary">The catch with Silent Payments: to find payments, the receiver has to check every eligible transaction on the chain. There are three ways to do that, each with its own privacy trade-off: run your own full node, download small hints ("tweaks") from a server and finish the maths yourself, or hand a server your scan key so it does the work and sees your incoming payments.</p>
+            <div class="mb-opening"><p class="mb-label">The analogy</p><p>The post office. (1) You sort all the mail yourself. (2) The post office gives you a stamp for each letter and you test them at home. (3) You give the postman a key that opens only your letters: quick, but he can read them.</p></div>
+            <div class="mb-chapters" style="margin-top:20px"><a href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track/labs/silent-payments" target="_blank" rel="noopener">Silent Payments lab ↗</a><a href="https://github.com/silent-payments/BIP0352-index-server-specification" target="_blank" rel="noopener">BIP352 index server spec ↗</a></div>
+            <div class="mb-cols">
+              <div><h3>Try it yourself</h3><p class="mb-hint">You leave with: A working scanner, and a number for how long it takes to scan a day of Bitcoin.</p><ol class="mb-list"><li><span class="mb-num">1</span><div><p>Build the scanner in <a href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track/labs/silent-payments" target="_blank" rel="noopener">receive.py</a>. The grader catches the two classic bugs.</p></div></li><li><span class="mb-num">2</span><div><p>Run <code>scan_benchmark.py</code> and compare laptops: how long would a year offline take to catch up?</p></div></li></ol></div>
+              <div><h3>In the session</h3><p class="mb-hint">Every session reads a real open PR and argues about a primary text.</p><ol class="mb-list">
+                <li><span class="mb-num">PR</span><div><p><a href="https://github.com/bitcoin-core/secp256k1/pull/1912" target="_blank" rel="noopener">bitcoin-core/secp256k1#1912</a>: a light-client API for Silent Payments. Which of the three scanning models is it for?</p></div></li>
+                <li><span class="mb-num">📜</span><div><p>Satoshi's whitepaper, section 10 "Privacy": "keeping public keys anonymous." How far did we drift?</p></div></li>
+                <li><span class="mb-num">🎯</span><div><p><strong>Proof of work:</strong> Run BlindBit Oracle on signet and write up the setup, or pick a still-open <code>good first issue</code> in <a href="https://github.com/cygnet3/rust-silentpayments/issues" target="_blank" rel="noopener">rust-silentpayments</a> or <a href="https://github.com/bitcoindevkit/bdk-sp/issues" target="_blank" rel="noopener">bdk-sp</a>.</p></div></li>
+              </ol></div>
+            </div>
           </div>
-        </div>
-      </div>
+        </details>
+        <details id="s3" class="mb-week" data-week="2">
+          <summary>
+            <span class="mb-wk">S03</span>
+            <span class="mb-title">Silent Payments III: Review Club <span class="pt-tag">Silent Payments land in Bitcoin Core</span></span>
+            <span class="mb-date">Month 2</span>
+          </summary>
+          <div class="mb-week-body">
+            <p class="mb-label">The idea in plain words</p>
+            <p class="mb-summary">Bitcoin Core merged the core Silent Payments logic in 2026, and sending and receiving are still in review. You built the protocol in S1 and S2, so now you can read the real implementation and recognise every piece. This session runs as a Review Club: we build the PR beforehand, then read it together.</p>
+            <div class="mb-opening"><p class="mb-label">The analogy</p><p>You've cooked the dish at home. Now you read the restaurant's recipe and spot where they did it differently, and why.</p></div>
+            <div class="mb-chapters" style="margin-top:20px"><a href="https://github.com/bitcoin/bitcoin/issues/28536" target="_blank" rel="noopener">Tracking issue #28536 ↗</a><a href="https://bitcoincore.reviews" target="_blank" rel="noopener">Bitcoin Core PR Review Club ↗</a></div>
+            <div class="mb-cols">
+              <div><h3>Try it yourself</h3><p class="mb-hint">You leave with: A Bitcoin Core branch built, the BIP352 unit tests run, and a written review of real code.</p><ol class="mb-list"><li><span class="mb-num">1</span><div><p>Before the session: build Bitcoin Core and run <code>test_bitcoin --run_test=bip352_tests</code>.</p></div></li><li><span class="mb-num">2</span><div><p>Map your <code>send.py</code> onto <code>src/common/bip352.cpp</code>. Where do <code>a_sum</code>, <code>input_hash</code> and <code>t_k</code> live?</p></div></li></ol></div>
+              <div><h3>In the session</h3><p class="mb-hint">Every session reads a real open PR and argues about a primary text.</p><ol class="mb-list">
+                <li><span class="mb-num">PR</span><div><p><a href="https://github.com/bitcoin/bitcoin/pull/35301" target="_blank" rel="noopener">#35301</a> (merged core logic), <a href="https://github.com/bitcoin/bitcoin/pull/35302" target="_blank" rel="noopener">#35302</a> (sending) and <a href="https://github.com/bitcoin/bitcoin/pull/32966" target="_blank" rel="noopener">#32966</a> (receiving).</p></div></li>
+                <li><span class="mb-num">📜</span><div><p>Why did Silent Payments in Core take three years? What does the order of the work tell you about how Core handles cryptography?</p></div></li>
+                <li><span class="mb-num">🎯</span><div><p><strong>Proof of work:</strong> Keep a running review on one open Silent Payments PR through the season.</p></div></li>
+              </ol></div>
+            </div>
+          </div>
+        </details>
+        <details id="s4" class="mb-week" data-week="3">
+          <summary>
+            <span class="mb-wk">S04</span>
+            <span class="mb-title">Think like the adversary <span class="pt-tag">You are being watched</span></span>
+            <span class="mb-date">Month 2</span>
+          </summary>
+          <div class="mb-week-body">
+            <p class="mb-label">The idea in plain words</p>
+            <p class="mb-summary">Chain analysis firms follow money with a handful of rules of thumb. All inputs in a transaction belong to one person. Reused addresses link payments. Round amounts are payments, not change. And every wallet leaves a fingerprint in small details like nLockTime, nSequence and output order. Learn the rules and you can see your own transactions the way they do.</p>
+            <div class="mb-opening"><p class="mb-label">The analogy</p><p>Handwriting analysis on envelopes. You never open the letter, but the handwriting, the stamp and the postmark tell you a lot.</p></div>
+            <div class="mb-chapters" style="margin-top:20px"><a href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track/labs/chain-analysis" target="_blank" rel="noopener">Chain analysis lab ↗</a><a href="https://en.bitcoin.it/wiki/Privacy#Blockchain_attacks_on_privacy" target="_blank" rel="noopener">Bitcoin Wiki: Privacy ↗</a><a href="https://ishaana.com/blog/wallet_fingerprinting/" target="_blank" rel="noopener">Wallet fingerprinting ↗</a></div>
+            <div class="mb-cols">
+              <div><h3>Try it yourself</h3><p class="mb-hint">You leave with: The five chain-analysis heuristics, a threat model you can reuse, and the ability to name a wallet from raw hex.</p><ol class="mb-list"><li><span class="mb-num">1</span><div><p>Run the <a href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track/labs/chain-analysis" target="_blank" rel="noopener">chain-analysis lab</a>: implement the heuristics on sample transactions.</p></div></li><li><span class="mb-num">2</span><div><p>Play analyst on each other's signet transactions: find the change, guess the wallet, trace the money.</p></div></li></ol></div>
+              <div><h3>In the session</h3><p class="mb-hint">Every session reads a real open PR and argues about a primary text.</p><ol class="mb-list">
+                <li><span class="mb-num">PR</span><div><p>A transaction-building PR in <a href="https://github.com/bitcoindevkit/bdk_wallet" target="_blank" rel="noopener">BDK</a> or <a href="https://github.com/rust-bitcoin/rust-bitcoin" target="_blank" rel="noopener">rust-bitcoin</a>: does it change what a transaction looks like on-chain?</p></div></li>
+                <li><span class="mb-num">📜</span><div><p>Eric Hughes, <a href="https://www.activism.net/cypherpunk/manifesto.html" target="_blank" rel="noopener">A Cypherpunk's Manifesto</a> (1993): "Privacy is the power to selectively reveal oneself to the world."</p></div></li>
+                <li><span class="mb-num">🎯</span><div><p><strong>Proof of work:</strong> Add a wallet to the shared fingerprint table, with evidence.</p></div></li>
+              </ol></div>
+            </div>
+          </div>
+        </details>
+        <details id="s5" class="mb-week" data-week="4">
+          <summary>
+            <span class="mb-wk">S05</span>
+            <span class="mb-title">Coin selection and change <span class="pt-tag">Coins have memories</span></span>
+            <span class="mb-date">Month 3</span>
+          </summary>
+          <div class="mb-week-body">
+            <p class="mb-label">The idea in plain words</p>
+            <p class="mb-summary">Every coin (UTXO) in your wallet has a history. When your wallet picks coins to pay with, it chooses which past lives to reveal, and merging two coins tells the world they belong to the same person. Different selection algorithms trade fees against privacy. Labels are your self-defence.</p>
+            <div class="mb-opening"><p class="mb-label">The analogy</p><p>Paying with banknotes that remember where they've been. Hand over two at once and the shop learns both stories.</p></div>
+            <div class="mb-chapters" style="margin-top:20px"><a href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track/labs/coin-selection" target="_blank" rel="noopener">Coin selection lab ↗</a><a href="https://bitcoinops.org/en/topics/coin-selection/" target="_blank" rel="noopener">Optech: Coin selection ↗</a><a href="https://github.com/bitcoin/bips/blob/master/bip-0329.mediawiki" target="_blank" rel="noopener">BIP329: label export ↗</a></div>
+            <div class="mb-cols">
+              <div><h3>Try it yourself</h3><p class="mb-hint">You leave with: Labelled coins, and a healthy fear of careless merging.</p><ol class="mb-list"><li><span class="mb-num">1</span><div><p>Label every coin in a signet wallet (Sparrow works well), freeze one, and force selections. Then merge two labelled identities and see the damage.</p></div></li><li><span class="mb-num">2</span><div><p>Run the <a href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track/labs/coin-selection" target="_blank" rel="noopener">coin-selection lab</a>: try to beat branch-and-bound on privacy without losing on fees.</p></div></li></ol></div>
+              <div><h3>In the session</h3><p class="mb-hint">Every session reads a real open PR and argues about a primary text.</p><ol class="mb-list">
+                <li><span class="mb-num">PR</span><div><p>BDK coin-selection PRs. A small merged fix like <a href="https://github.com/bitcoindevkit/bdk_wallet/pull/471" target="_blank" rel="noopener">bdk_wallet#471</a> shows contributions like this are within reach.</p></div></li>
+                <li><span class="mb-num">📜</span><div><p>Hal Finney on what privacy people should be able to expect.</p></div></li>
+                <li><span class="mb-num">🎯</span><div><p><strong>Proof of work:</strong> A BDK beginner issue, or a test report on an open coin-selection PR.</p></div></li>
+              </ol></div>
+            </div>
+          </div>
+        </details>
+        <details id="s6" class="mb-week" data-week="5">
+          <summary>
+            <span class="mb-wk">S06</span>
+            <span class="mb-title">Payjoin <span class="pt-tag">Paying together</span></span>
+            <span class="mb-date">Month 3</span>
+          </summary>
+          <div class="mb-week-body">
+            <p class="mb-label">The idea in plain words</p>
+            <p class="mb-summary">The analyst's favourite rule is that all inputs belong to one owner. In a payjoin, the receiver adds one of their own coins to the payment, so that rule quietly becomes false. And because a payjoin looks like any other transaction, it weakens the rule for everyone, even people who never use it. BIP78 needs the receiver online; BIP77 (async payjoin) doesn't.</p>
+            <div class="mb-opening"><p class="mb-label">The analogy</p><p>Two people putting cash on the restaurant table. Nobody watching can tell who paid what.</p></div>
+            <div class="mb-chapters" style="margin-top:20px"><a href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track/labs/payjoin" target="_blank" rel="noopener">Payjoin lab ↗</a><a href="https://payjoin.org" target="_blank" rel="noopener">payjoin.org ↗</a><a href="https://github.com/bitcoin/bips/blob/master/bip-0077.md" target="_blank" rel="noopener">BIP77: Async Payjoin ↗</a></div>
+            <div class="mb-cols">
+              <div><h3>Try it yourself</h3><p class="mb-hint">You leave with: A payjoin done in pairs, and a broken heuristic.</p><ol class="mb-list"><li><span class="mb-num">1</span><div><p>Do a payjoin in pairs on regtest with the <a href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track/labs/payjoin" target="_blank" rel="noopener">payjoin lab</a>: one sends, one receives, then swap.</p></div></li><li><span class="mb-num">2</span><div><p>Play analyst: trace each input back to its wallet and point at the lie the transaction tells.</p></div></li></ol></div>
+              <div><h3>In the session</h3><p class="mb-hint">Every session reads a real open PR and argues about a primary text.</p><ol class="mb-list">
+                <li><span class="mb-num">PR</span><div><p>Review one open <a href="https://github.com/payjoin/rust-payjoin" target="_blank" rel="noopener">rust-payjoin</a> PR together.</p></div></li>
+                <li><span class="mb-num">📜</span><div><p>Adam Back: privacy has to be default and boring to win.</p></div></li>
+                <li><span class="mb-num">🎯</span><div><p><strong>Proof of work:</strong> A still-open, unclaimed rust-payjoin <a href="https://github.com/payjoin/rust-payjoin/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22" target="_blank" rel="noopener"><code>good first issue</code></a>. Docs count.</p></div></li>
+              </ol></div>
+            </div>
+          </div>
+        </details>
+        <details id="s7" class="mb-week" data-week="6">
+          <summary>
+            <span class="mb-wk">S07</span>
+            <span class="mb-title">Light clients and your own node <span class="pt-tag">Don't trust, verify, privately</span></span>
+            <span class="mb-date">Month 4</span>
+          </summary>
+          <div class="mb-week-body">
+            <p class="mb-label">The idea in plain words</p>
+            <p class="mb-summary">A light wallet that uses someone else's server tells that server every address you own, your balance and your IP. Old bloom filters (BIP37) leaked; compact block filters (BIP157/158) flip the model so you download a small summary of each block and check it yourself. Utreexo makes a full node light enough for a laptop.</p>
+            <div class="mb-opening"><p class="mb-label">The analogy</p><p>Telling the librarian every book you want, versus taking the catalogue home and looking it up yourself.</p></div>
+            <div class="mb-chapters" style="margin-top:20px"><a href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track/labs/compact-block-filters" target="_blank" rel="noopener">Filters lab ↗</a><a href="https://bitcoinops.org/en/topics/compact-block-filters/" target="_blank" rel="noopener">Optech: Compact block filters ↗</a><a href="https://github.com/2140-dev/kyoto" target="_blank" rel="noopener">Kyoto ↗</a></div>
+            <div class="mb-cols">
+              <div><h3>Try it yourself</h3><p class="mb-hint">You leave with: Your own node syncing, with your wallet pointed at it.</p><ol class="mb-list"><li><span class="mb-num">1</span><div><p>Build and run <a href="https://github.com/getfloresta/Floresta" target="_blank" rel="noopener">Floresta</a> and connect a wallet to your own node. First to sync wins sats.</p></div></li><li><span class="mb-num">2</span><div><p>Run the <a href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track/labs/compact-block-filters" target="_blank" rel="noopener">compact block filters lab</a>: build a simplified BIP158 filter and measure false positives.</p></div></li></ol></div>
+              <div><h3>In the session</h3><p class="mb-hint">Every session reads a real open PR and argues about a primary text.</p><ol class="mb-list">
+                <li><span class="mb-num">PR</span><div><p>A Floresta or Kyoto PR. Floresta has welcoming maintainers and a real good-first-issue culture.</p></div></li>
+                <li><span class="mb-num">📜</span><div><p>"Don't trust, verify": what does it actually ask of us?</p></div></li>
+                <li><span class="mb-num">🎯</span><div><p><strong>Proof of work:</strong> A still-open Floresta <a href="https://github.com/getfloresta/Floresta/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22" target="_blank" rel="noopener"><code>good first issue</code></a>, or turn tonight's setup pain into a docs PR.</p></div></li>
+              </ol></div>
+            </div>
+          </div>
+        </details>
+        <details id="s8" class="mb-week" data-week="7">
+          <summary>
+            <span class="mb-wk">S08</span>
+            <span class="mb-title">The network sees you <span class="pt-tag">Tor, BIP324, private broadcast, ASmap</span></span>
+            <span class="mb-date">Month 4</span>
+          </summary>
+          <div class="mb-week-body">
+            <p class="mb-label">The idea in plain words</p>
+            <p class="mb-summary">Even a perfect transaction can be traced back to your IP address by whoever hears it first. Bitcoin Core now has three defences: BIP324 encrypts traffic between nodes so your ISP can't read it; <code>-privatebroadcast</code> (Core 31) sends your transactions out over short-lived Tor or I2P connections; and <code>-asmap</code> spreads your peers across networks so no single operator surrounds you.</p>
+            <div class="mb-opening"><p class="mb-label">The analogy</p><p>Never send all your messengers out through the same gate.</p></div>
+            <div class="mb-chapters" style="margin-top:20px"><a href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track/labs/network-privacy" target="_blank" rel="noopener">Network privacy lab ↗</a><a href="https://bitcoincore.org/en/releases/31.0/" target="_blank" rel="noopener">Bitcoin Core 31.0 notes ↗</a><a href="https://github.com/bitcoin/bips/blob/master/bip-0324.mediawiki" target="_blank" rel="noopener">BIP324 ↗</a></div>
+            <div class="mb-cols">
+              <div><h3>Try it yourself</h3><p class="mb-hint">You leave with: Your node's traffic inspected, your broadcasts made private, and a map of your network exposure.</p><ol class="mb-list"><li><span class="mb-num">1</span><div><p>Wiretap yourself with the <a href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track/labs/network-privacy" target="_blank" rel="noopener">network lab</a>: compare plaintext and BIP324 traffic in Wireshark.</p></div></li><li><span class="mb-num">2</span><div><p>Turn on <code>-privatebroadcast</code>, send a signet transaction and watch <code>getprivatebroadcastinfo</code>. Then compare peer diversity with <code>-asmap=1</code>.</p></div></li></ol></div>
+              <div><h3>In the session</h3><p class="mb-hint">Every session reads a real open PR and argues about a primary text.</p><ol class="mb-list">
+                <li><span class="mb-num">PR</span><div><p>A <a href="https://github.com/peer-observer/peer-observer" target="_blank" rel="noopener">peer-observer</a> PR, or a private-broadcast follow-up in Core such as <a href="https://github.com/bitcoin/bitcoin/pull/34533" target="_blank" rel="noopener">#34533</a>.</p></div></li>
+                <li><span class="mb-num">📜</span><div><p>Timothy May, <a href="https://www.activism.net/cypherpunk/crypto-anarchy.html" target="_blank" rel="noopener">The Crypto Anarchist Manifesto</a> (1988). Is the network layer Bitcoin's soft underbelly?</p></div></li>
+                <li><span class="mb-num">🎯</span><div><p><strong>Proof of work:</strong> A peer-observer beginner issue, or publish your AS-diversity check as a guide.</p></div></li>
+              </ol></div>
+            </div>
+          </div>
+        </details>
+        <details id="s9" class="mb-week" data-week="8">
+          <summary>
+            <span class="mb-wk">S09</span>
+            <span class="mb-title">CoinJoin and OpenSwap <span class="pt-tag">Breaking the trail</span></span>
+            <span class="mb-date">Month 5</span>
+          </summary>
+          <div class="mb-week-body">
+            <p class="mb-label">The idea in plain words</p>
+            <p class="mb-summary">Following the money works because money leaves one trail. A CoinJoin mixes many people's coins into equal outputs so nobody can tell which output is whose. A swap trades coin histories with a stranger, and on-chain it looks like two boring, unrelated payments. Fidelity bonds stop one person pretending to be many.</p>
+            <div class="mb-opening"><p class="mb-label">The analogy</p><p>CoinJoin: identical envelopes shaken in a box. Swaps: trading gift cards with a stranger.</p></div>
+            <div class="mb-chapters" style="margin-top:20px"><a href="https://bitcoinops.org/en/topics/coinjoin/" target="_blank" rel="noopener">Optech: CoinJoin ↗</a><a href="https://bitcoinops.org/en/topics/coinswap/" target="_blank" rel="noopener">Optech: CoinSwap ↗</a><a href="https://github.com/JoinMarket-Org/joinmarket-clientserver" target="_blank" rel="noopener">JoinMarket ↗</a></div>
+            <div class="mb-cols">
+              <div><h3>Try it yourself</h3><p class="mb-hint">You leave with: A real CoinJoin dissected, a post-mix checklist, and an atomic swap on regtest.</p><ol class="mb-list"><li><span class="mb-num">1</span><div><p>Autopsy a historical CoinJoin: count its anonymity set, then find the post-mix mistakes that un-mixed people's coins.</p></div></li><li><span class="mb-num">2</span><div><p>Run <a href="https://github.com/citadel-foss/openswap" target="_blank" rel="noopener">openswap</a> on regtest in pairs and complete a swap. Then try to prove a swap happened at all.</p></div></li></ol></div>
+              <div><h3>In the session</h3><p class="mb-hint">Every session reads a real open PR and argues about a primary text.</p><ol class="mb-list">
+                <li><span class="mb-num">PR</span><div><p><a href="https://github.com/JoinMarket-Org/joinmarket-clientserver" target="_blank" rel="noopener">JoinMarket</a> (a deep good-first-issue list) or openswap (a young repo where reviews really matter).</p></div></li>
+                <li><span class="mb-num">📜</span><div><p>Debate: is using a mixer a moral act, a neutral act, or a red flag? Steelman all three.</p></div></li>
+                <li><span class="mb-num">🎯</span><div><p><strong>Proof of work:</strong> A JoinMarket beginner issue, or write tonight's openswap walkthrough as docs.</p></div></li>
+              </ol></div>
+            </div>
+          </div>
+        </details>
+        <details id="s10" class="mb-week" data-week="9">
+          <summary>
+            <span class="mb-wk">S10</span>
+            <span class="mb-title">Lightning privacy <span class="pt-tag">Lightning doesn't fix this</span></span>
+            <span class="mb-date">Month 5</span>
+          </summary>
+          <div class="mb-week-body">
+            <p class="mb-label">The idea in plain words</p>
+            <p class="mb-summary">Lightning hides payment amounts from the chain, but it leaks elsewhere: channels are public coins, balances can be probed, invoices link identities, and your node's public key is a fingerprint. BOLT12 offers and blinded paths are the fixes in progress.</p>
+            <div class="mb-opening"><p class="mb-label">The analogy</p><p>A relay race where every runner sees who handed them the baton, unless the route is sealed.</p></div>
+            <div class="mb-chapters" style="margin-top:20px"><a href="https://bitcoinops.org/en/topics/offers/" target="_blank" rel="noopener">Optech: Offers (BOLT12) ↗</a><a href="https://github.com/lightning/bolts/blob/master/12-offer-encoding.md" target="_blank" rel="noopener">BOLT12 spec ↗</a></div>
+            <div class="mb-cols">
+              <div><h3>Try it yourself</h3><p class="mb-hint">You leave with: A probed channel, a traced hop, and a blinded path that beat both.</p><ol class="mb-list"><li><span class="mb-num">1</span><div><p>Spin up a 3-node regtest network with <a href="https://lightningpolar.com" target="_blank" rel="noopener">Polar</a>.</p></div></li><li><span class="mb-num">2</span><div><p>Pay a BOLT11 invoice and list what each hop learned. Then pay a BOLT12 offer with a blinded path and compare.</p></div></li></ol></div>
+              <div><h3>In the session</h3><p class="mb-hint">Every session reads a real open PR and argues about a primary text.</p><ol class="mb-list">
+                <li><span class="mb-num">PR</span><div><p>An <a href="https://github.com/lightningdevkit/rust-lightning" target="_blank" rel="noopener">LDK</a>, ldk-node or Core Lightning PR about offers or blinded paths.</p></div></li>
+                <li><span class="mb-num">📜</span><div><p>Debate: does layer 2 inherit layer 1's sins?</p></div></li>
+                <li><span class="mb-num">🎯</span><div><p><strong>Proof of work:</strong> An LDK or Core Lightning docs or test issue on offers or blinded paths.</p></div></li>
+              </ol></div>
+            </div>
+          </div>
+        </details>
+        <details id="s11" class="mb-week" data-week="10">
+          <summary>
+            <span class="mb-wk">S11</span>
+            <span class="mb-title">Ecash: Cashu and Fedimint <span class="pt-tag">Blind signatures, community custody</span></span>
+            <span class="mb-date">Month 6</span>
+          </summary>
+          <div class="mb-week-body">
+            <p class="mb-label">The idea in plain words</p>
+            <p class="mb-summary">A mint knows it issued 1,000 sats and later redeemed 1,000 sats, but it can't tell they were the same person. That's blind signatures, invented by David Chaum. Cashu uses a single mint; Fedimint spreads trust across a federation of guardians. The trade: excellent privacy from the mint, in exchange for giving up self-custody.</p>
+            <div class="mb-opening"><p class="mb-label">The analogy</p><p>Signing a sealed envelope through carbon paper. Your signature is on what's inside, but you never saw it.</p></div>
+            <div class="mb-chapters" style="margin-top:20px"><a href="https://bitcoinops.org/en/topics/ecash/" target="_blank" rel="noopener">Optech: Ecash ↗</a><a href="https://cashu.space" target="_blank" rel="noopener">cashu.space ↗</a><a href="https://fedimint.org" target="_blank" rel="noopener">fedimint.org ↗</a></div>
+            <div class="mb-cols">
+              <div><h3>Try it yourself</h3><p class="mb-hint">You leave with: Ecash minted, sent and redeemed on a test mint, and a clear picture of the trade-off.</p><ol class="mb-list"><li><span class="mb-num">1</span><div><p>Mint ecash on a test mint, send it in a chat message, and redeem it.</p></div></li><li><span class="mb-num">2</span><div><p>Play the mint operator: what do your logs actually show?</p></div></li></ol></div>
+              <div><h3>In the session</h3><p class="mb-hint">Every session reads a real open PR and argues about a primary text.</p><ol class="mb-list">
+                <li><span class="mb-num">PR</span><div><p>A <a href="https://github.com/cashubtc/cdk" target="_blank" rel="noopener">cdk</a> or <a href="https://github.com/fedimint/fedimint" target="_blank" rel="noopener">Fedimint</a> PR touching privacy or the wallet.</p></div></li>
+                <li><span class="mb-num">📜</span><div><p>David Chaum, "Security without Identification" (1985), the paper that started it.</p></div></li>
+                <li><span class="mb-num">🎯</span><div><p><strong>Proof of work:</strong> A cdk or Fedimint docs or test issue, or an ecash guide in your local language.</p></div></li>
+              </ol></div>
+            </div>
+          </div>
+        </details>
+        <details id="s12" class="mb-week" data-week="11">
+          <summary>
+            <span class="mb-wk">S12</span>
+            <span class="mb-title">Contribution sprint <span class="pt-tag">Ship it</span></span>
+            <span class="mb-date">Month 6</span>
+          </summary>
+          <div class="mb-week-body">
+            <p class="mb-label">The idea in plain words</p>
+            <p class="mb-summary">The season ends with a sprint. We pick from a board of issues checked that morning, pair up and ship. Before anything goes upstream, someone else reviews it against the PR checklist, because maintainers' time is precious and our reputation is what opens doors for the next cohort.</p>
+            <div class="mb-opening"><p class="mb-label">The analogy</p><p>A barn raising: everyone builds at once, and what goes up is real.</p></div>
+            <div class="mb-chapters" style="margin-top:20px"><a href="https://github.com/code-orange-dev/curriculum/blob/main/privacy-track/ISSUE_POOL.md" target="_blank" rel="noopener">How to find an issue ↗</a><a href="https://github.com/code-orange-dev/curriculum/blob/main/privacy-track/PR_CHECKLIST.md" target="_blank" rel="noopener">PR checklist ↗</a></div>
+            <div class="mb-cols">
+              <div><h3>Try it yourself</h3><p class="mb-hint">You leave with: Something real submitted upstream: code, a test report, or a review that passed the checklist.</p><ol class="mb-list"><li><span class="mb-num">1</span><div><p>Pick an issue from the board (rust-payjoin, Floresta, Kyoto, BDK, peer-observer, JoinMarket, openswap, cdk), pair up and ship it live.</p></div></li><li><span class="mb-num">2</span><div><p>Review someone else's draft against the <a href="https://github.com/code-orange-dev/curriculum/blob/main/privacy-track/PR_CHECKLIST.md" target="_blank" rel="noopener">PR checklist</a> before it goes upstream.</p></div></li></ol></div>
+              <div><h3>In the session</h3><p class="mb-hint">Every session reads a real open PR and argues about a primary text.</p><ol class="mb-list">
+                <li><span class="mb-num">PR</span><div><p>Each other's drafts, against the checklist.</p></div></li>
+                <li><span class="mb-num">📜</span><div><p>Hughes' closing lines, read after the sprint: "Cypherpunks write code."</p></div></li>
+                <li><span class="mb-num">🎯</span><div><p><strong>Proof of work:</strong> Vote on Season Two topics. Strong contributors: ask about the Review Club and fellowships.</p></div></li>
+              </ol></div>
+            </div>
+          </div>
+        </details>
     </div>
   </section>
 
-  <!-- ══════════ MODULES ══════════ -->
-  <section id="modules" data-screen-label="Modules" data-pad="lg" style="max-width: 1240px; margin: 0 auto; padding: 130px 32px; scroll-margin-top: 96px;">
-    <div style="margin-bottom: 56px; max-width: 680px;">
-      <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #F7931A; margin-bottom: 20px;"><span>/</span>Curriculum<span>_</span></div>
-      <h2 style="font-family: 'Inter', system-ui, sans-serif; font-weight: 400; font-size: clamp(34px, 3.4vw, 52px); line-height: 1.08; margin: 0 0 16px; color: #F5F5F5;">Six months. Six privacy layers.</h2>
-      <p style="font-size: 17px; line-height: 1.6; color: #858585; margin: 0; text-wrap: pretty;">Two sessions per month, each module anchored to the live repos you'll contribute to.</p>
+  <section id="format" class="band" style="scroll-margin-top:96px"><div class="section-inner">
+    <div class="split"><div><p class="eyebrow">The 90 minutes</p><h2>A hangout, not a lecture.</h2></div><p class="lead">For privacy-minded, cypherpunk Bitcoiners. Test networks only, pseudonyms welcome, cameras optional. Every session has the same six beats.</p></div>
+    <div class="pt-beats">
+      <div><em>10 min</em><b>🩸 Cold open</b><p>A true surveillance story that sets the stakes.</p></div>
+      <div><em>15 min</em><b>🕳 Rabbit hole</b><p>The concept in plain language, with one analogy.</p></div>
+      <div><em>30 min</em><b>🛠 Hands-on</b><p>Everyone builds or runs it on their own machine.</p></div>
+      <div><em>20 min</em><b>🔍 Review circle</b><p>Read a live PR together. What does it change? How would we test it?</p></div>
+      <div><em>10 min</em><b>📜 Cypherpunk corner</b><p>Read a short primary text aloud, then argue about it.</p></div>
+      <div><em>5 min</em><b>🎯 Proof of work</b><p>Claim one concrete next step: a lab, a test report, a doc fix.</p></div>
     </div>
-    <div data-mq="cols2" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;">
-      <sc-for list="{{ modules }}" as="m" hint-placeholder-count="4">
-        <div data-mq="card-pad" style="display: flex; flex-direction: column; gap: 14px; background: #141414; border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 36px 40px; transition: border-color 240ms;" style-hover="border-color: rgba(247,147,26,0.45);">
-          <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
-            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #F7931A;">{{ m.quarter }}</span>
-            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; color: #5E5E5E;">{{ m.sessions }}</span>
-          </div>
-          <span style="font-family: 'Inter', monospace; font-size: 26px; line-height: 1.2; color: #F5F5F5;">{{ m.emoji }} {{ m.title }}</span>
-          <span style="font-size: 15px; line-height: 1.65; color: #B8B8B8;">{{ m.desc }}</span>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px;">
-            <sc-for list="{{ m.repos }}" as="repo" hint-placeholder-count="3">
-              <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; color: #858585; padding: 5px 11px; background: #0A0A0A; border: 1px solid rgba(255,255,255,0.08); border-radius: 6px;">{{ repo }}</span>
-            </sc-for>
-          </div>
-        </div>
-      </sc-for>
-    </div>
+  </div></section>
+
+  <section id="labs" class="section-inner" style="scroll-margin-top:96px">
+    <div class="split"><div><p class="eyebrow">Try it now</p><h2>Labs you can run tonight.</h2></div><p class="lead">The Python labs need only Python 3.8+, no installs, and work offline. Each one tells you exactly which step is wrong.</p></div>
+    <pre class="pt-term"><span class="c"># get the labs</span>
+<span class="o">$</span> git clone https://github.com/code-orange-dev/curriculum
+<span class="o">$</span> cd curriculum/privacy-track/labs/silent-payments
+<span class="o">$</span> python3 run_vectors.py send
+
+  <span class="ok">✓</span>   1 Simple send: two inputs
+  <span class="ok">✓</span>   7 Single recipient: taproot only inputs with even y-values
+  <span class="no">✗</span>   8 Single recipient: taproot only with mixed even/odd y-values
+        Exercise 2: a_sum is wrong (did you negate odd-y taproot keys?)
+
+21/28 vectors passing</pre>
+    <table class="pt-labs">
+      <tr><td><a href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track/labs/silent-payments" target="_blank" rel="noopener">Silent Payments ↗</a></td><td>S1–S2</td><td>A BIP352 sender and scanner, graded against the 28 official test vectors, plus a scanning benchmark</td></tr>
+      <tr><td><a href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track/labs/chain-analysis" target="_blank" rel="noopener">Chain analysis ↗</a></td><td>S4</td><td>The core heuristics (common inputs, change detection, clustering) on sample transactions</td></tr>
+      <tr><td><a href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track/labs/coin-selection" target="_blank" rel="noopener">Coin selection ↗</a></td><td>S5</td><td>Four selection algorithms, scored on fees versus privacy</td></tr>
+      <tr><td><a href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track/labs/payjoin" target="_blank" rel="noopener">Payjoin ↗</a></td><td>S6</td><td>An async payjoin on regtest, then catch the common-input heuristic lying (needs Docker and Rust)</td></tr>
+      <tr><td><a href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track/labs/compact-block-filters" target="_blank" rel="noopener">Compact block filters ↗</a></td><td>S7</td><td>A simplified BIP158 filter: Golomb-Rice coding, matching, false positives</td></tr>
+      <tr><td><a href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track/labs/network-privacy" target="_blank" rel="noopener">Network privacy ↗</a></td><td>S8</td><td>BIP324 in Wireshark, private broadcast and ASmap peer diversity (needs Bitcoin Core 31 and Tor)</td></tr>
+    </table>
   </section>
 
-  <!-- ══════════ REPOS ══════════ -->
-  <section id="repos" data-screen-label="Target repos" style="background: #0F0F0F; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); scroll-margin-top: 96px;">
-    <div data-pad="mid" style="max-width: 1240px; margin: 0 auto; padding: 110px 32px;">
-      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-bottom: 48px; flex-wrap: wrap;">
-        <div>
-          <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #F7931A; margin-bottom: 20px;"><span>/</span>Where_You_Contribute<span>_</span></div>
-          <h2 style="font-family: 'Inter', system-ui, sans-serif; font-weight: 400; font-size: clamp(32px, 3vw, 46px); line-height: 1.1; margin: 0; color: #F5F5F5;">Real repos. Real maintainers.</h2>
-        </div>
-        <a href="https://github.com/code-orange-dev/PR-tracking-dashboard" target="_blank" rel="noopener" style="font-family: 'Plus Jakarta Sans', monospace; font-size: 13px; font-weight: 600; color: #F7931A; text-decoration: none;" style-hover="color: #FFB347;">Every PR tracked publicly →</a>
-      </div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
-        <sc-for list="{{ repos }}" as="r" hint-placeholder-count="6">
-          <div style="background: #0A0A0A; border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 6px; transition: border-color 240ms;" style-hover="border-color: rgba(247,147,26,0.45);">
-            <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 15px; font-weight: 700; color: #F5F5F5;">{{ r.name }}</span>
-            <span style="font-size: 13.5px; line-height: 1.55; color: #858585;">{{ r.what }}</span>
-          </div>
-        </sc-for>
-      </div>
-    </div>
+  <section id="contribute" class="section-inner" style="scroll-margin-top:96px">
+    <div class="split"><div><p class="eyebrow">Beyond the sessions</p><h2>From curious to contributor.</h2></div><p class="lead">Enter at any rung, with no pressure to climb. People who keep coming back and ship proof of work get invited into the Privacy Review Club and the <a href="/fellowships">fellowship</a> pathway.</p></div>
+    <ol class="pt-ladder">
+      <li><b>Engage</b>Build a repo, read the code, join its chat.</li>
+      <li><b>Test</b>Build someone's PR, run it, report exactly what you saw.</li>
+      <li><b>Fix</b>Docs, error messages, small clarity fixes.</li>
+      <li><b>Cover</b>Add tests. Maintainers love them.</li>
+      <li><b>Review</b>Explain a PR, find an edge case.</li>
+      <li><b>Build</b>Fix a real bug and see it through review.</li>
+      <li><b>Lead</b>Host a session, mentor newcomers.</li>
+    </ol>
+    <p class="mb-small" style="margin-top:18px">Before anything goes upstream it passes our <a href="https://github.com/code-orange-dev/curriculum/blob/main/privacy-track/PR_CHECKLIST.md" target="_blank" rel="noopener">PR checklist</a>. The privacy world is small, and maintainers' trust is what opens doors.</p>
   </section>
 
-  <!-- ══════════ EXPECTATIONS ══════════ -->
-  <section data-screen-label="Expectations" data-pad="lg" style="max-width: 1240px; margin: 0 auto; padding: 130px 32px;">
-    <div data-mq="cols2" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;">
-      <div data-mq="card-pad" style="background: #0F0F0F; border: 1px solid rgba(39,201,63,0.35); border-radius: 20px; padding: 36px 40px;">
-        <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #27C93F; margin-bottom: 20px;">✓ The track is for you if</div>
-        <div style="display: flex; flex-direction: column; gap: 14px; font-size: 15.5px; line-height: 1.6; color: #B8B8B8;">
-          <span>→ You're comfortable in at least one programming language (Rust helps, not required)</span>
-          <span>→ You care about Bitcoin privacy enough to work on it for a year</span>
-          <span>→ You want a public contribution record, not a certificate</span>
-          <span>→ You can sustain ~3 hrs/week, biweekly sessions, for 6 months</span>
-        </div>
-      </div>
-      <div data-mq="card-pad" style="background: #0F0F0F; border: 1px solid rgba(255,95,86,0.3); border-radius: 20px; padding: 36px 40px;">
-        <div style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #FF5F56; margin-bottom: 20px;">✕ It's not for you if</div>
-        <div style="display: flex; flex-direction: column; gap: 14px; font-size: 15.5px; line-height: 1.6; color: #B8B8B8;">
-          <span>→ You're brand new to programming - do <a href="/rawbit" style="color: #F7931A; text-decoration: none;" style-hover="color: #FFB347;">rawBit</a> first</span>
-          <span>→ You want theory without shipping - every session ends in proof of work</span>
-          <span>→ You can't commit to a 6-month arc - this is contribution-first by design</span>
-        </div>
-      </div>
-    </div>
+  <section class="section-inner final-cta">
+    <p class="eyebrow">Open source</p>
+    <h2>Privacy isn't something you wait for. <span class="orange">It's something you ship.</span></h2>
+    <p class="lead" style="margin-left:auto;margin-right:auto">The whole track is on GitHub under CC0: every session, lab, reading list and the <a href="https://github.com/code-orange-dev/curriculum/blob/main/privacy-track/resources/glossary.md" target="_blank" rel="noopener">glossary</a>. Fork it, translate it, run it in your city.</p>
+    <div class="cta-row" style="justify-content:center"><a class="button mb-cta" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener"><span>Join on Discord</span><svg class="mb-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="ghost" href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track" target="_blank" rel="noopener">Open the curriculum on GitHub</a><a class="ghost" href="https://github.com/code-orange-dev/curriculum/blob/main/privacy-track/resources/reading-list.md" target="_blank" rel="noopener">Reading list</a></div>
   </section>
-
-  <!-- ══════════ CTA ══════════ -->
-  <section data-screen-label="CTA" style="position: relative; overflow: hidden; border-top: 1px solid rgba(255,255,255,0.08);">
-    <div style="position: absolute; inset: 0; pointer-events: none;">
-      <img src="/assets/new-workshops/workshop-hands-on-devices.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%;">
-      <div style="position: absolute; inset: 0; background-color: rgba(10,10,10,0.84); background-image: linear-gradient(180deg, #0A0A0A 0%, rgba(10,10,10,0) 30%, rgba(10,10,10,0) 75%, #0A0A0A 100%), linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px); background-size: auto, 48px 48px, 48px 48px;"></div>
+</main>
+<footer class="footer">
+  <div class="footer-media">
+    <video data-lazy-video data-src="/assets/co-footer.mp4" poster="/assets/co-footer-poster.jpg" autoplay muted loop playsinline preload="none"></video>
+    <div class="footer-media-copy">
+      <p class="eyebrow">Scenes from the school</p>
+      <h2>Hands-on Bitcoin education.</h2>
     </div>
-    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 900px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(247,147,26,0.14) 0%, transparent 65%); pointer-events: none;"></div>
-    <div data-pad="cta" style="max-width: 880px; margin: 0 auto; padding: 120px 32px; text-align: center; position: relative;">
-      <h2 style="font-family: 'Inter', system-ui, sans-serif; font-weight: 400; font-size: clamp(36px, 4.4vw, 60px); line-height: 1.05; margin: 0 0 20px; color: #F5F5F5;">Bitcoin privacy needs hands.</h2>
-      <p style="font-size: 17px; line-height: 1.65; color: #B8B8B8; margin: 0 auto 36px; max-width: 500px;">Enrollment for the 2026 track is open now. Free for accepted students - your contributions are the tuition.</p>
-      <div data-mq="btn-row" style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
-        <a href="/apply?program=privacy" style="background: #F7931A; color: #0A0A0A; text-decoration: none; font-size: 17px; font-weight: 700; padding: 16px 34px; border-radius: 8px; transition: background 120ms;" style-hover="background: #FFB347;" style-active="transform: scale(0.98);">Apply to the Track</a>
-        <a href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener" style="color: #F5F5F5; text-decoration: none; font-size: 17px; font-weight: 600; padding: 16px 34px; border: 1px solid rgba(255,255,255,0.16); border-radius: 8px; transition: all 120ms;" style-hover="border-color: #F7931A; color: #F7931A;">Ask in Discord first</a>
+  </div>
+  <div class="footer-grid">
+    <div>
+      <img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School" style="height:58px;width:auto;margin-bottom:18px">
+      <p style="color:var(--dim);max-width:420px;line-height:1.7">Code Orange Dev School trains Bitcoin developers, node runners, and technical community leaders through practical education and open-source contribution.</p>
+      <p><a href="mailto:hello@codeorange.dev">hello@codeorange.dev</a></p>
+      <div class="cta-row" style="gap:10px;justify-content:flex-start">
+        <a class="ghost small" href="https://x.com/CodeOrangeDevs" target="_blank" rel="noopener">X</a>
+        <a class="ghost small" href="https://www.instagram.com/codeorangedevs" target="_blank" rel="noopener">Instagram</a>
+        <a class="ghost small" href="https://njump.me/npub1gxqyeea3xspkd68mxlxsvvk3gdzdd555u504ynwpdj0ghg503mvq2gydt0" target="_blank" rel="noopener">Nostr</a>
+        <a class="ghost small" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a>
       </div>
     </div>
-  </section>
-
-  <!-- ══════════ FOOTER ══════════ -->
-  <footer data-screen-label="Footer" style="border-top: 1px solid rgba(255,255,255,0.08); background: #060606;">
-    <div style="max-width: 1240px; margin: 0 auto; padding: 42px 32px 0;">
-      <div style="position: relative; min-height: 260px; overflow: hidden; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); background: #0F0F0F; box-shadow: 0 20px 60px rgba(0,0,0,0.35);">
-        <video src="/assets/co-footer.mp4" poster="/assets/co-footer-poster.jpg" autoplay muted loop playsinline style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></video>
-        <div style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6,6,6,0.86), rgba(6,6,6,0.36) 56%, rgba(6,6,6,0.72));"></div>
-        <div style="position: relative; z-index: 1; max-width: 560px; padding: 34px;">
-          <p style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #F7931A; margin: 0 0 14px;">Scenes from the school</p>
-          <h3 style="font-family: 'Inter', system-ui, sans-serif; font-weight: 400; font-size: clamp(28px, 3vw, 44px); line-height: 1.08; margin: 0; color: #F5F5F5;">Hands-on Bitcoin education.</h3>
-        </div>
+    <div>
+      <div class="link-list">
+        <strong>School</strong>
+        <a href="/about">About</a>
+        <a href="/impact">Impact</a>
+        <a href="/community">Community</a>
+        <a href="/fellowships">Fellowships</a>
+        <a href="/calendar">Calendar</a>
+        <a href="https://geyser.fund/project/codeorangedevschool" target="_blank" rel="noopener">Support on Geyser</a>
       </div>
     </div>
-    <div style="max-width: 1240px; margin: 0 auto; padding: 36px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
-      <a href="/" style="display: flex; align-items: center; text-decoration: none;">
-        <img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School" style="height: 39px; width: auto; display: block;">
-      </a>
-      <span style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; color: #5E5E5E;">© 2026 Code Orange Dev School</span>
-      <div style="display: flex; gap: 16px;">
-        <a href="/rawbit" style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; color: #858585; text-decoration: none;" style-hover="color: #F7931A;">rawBit →</a>
-        <a href="/apply" style="font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; color: #F7931A; text-decoration: none;" style-hover="color: #FFB347;">Apply →</a>
-      </div>
-    </div>
-  </footer>
-
-</div>
-
-</x-dc>
-<script type="text/x-dc" data-dc-script>
-class Component extends DCLogic {
-  modules = [
-    { quarter: 'Month 01', sessions: 'Sessions 01-02', emoji: '01', title: 'Silent Payments: build it', desc: 'Build a BIP352 sender and scanner from scratch, graded against the official test vectors, then compare full-node, indexer and remote-scanner privacy trade-offs.', repos: ['BIP352', 'BlindBit', 'bitcoin-core'] },
-    { quarter: 'Month 02', sessions: 'Sessions 03-04', emoji: '02', title: 'Silent Payments in Core, then think like the adversary', desc: 'Review the live Bitcoin Core Silent Payments PRs as a Review Club, then learn the chain-analysis heuristics and wallet fingerprints used to follow funds.', repos: ['bitcoin-core', 'libsecp256k1', 'BDK'] },
-    { quarter: 'Month 03', sessions: 'Sessions 05-06', emoji: '03', title: 'Coin selection and Payjoin', desc: 'Work through UTXO management and change, then break the common-input heuristic with collaborative transactions.', repos: ['BDK', 'rust-payjoin', 'issue pool'] },
-    { quarter: 'Month 04', sessions: 'Sessions 07-08', emoji: '04', title: 'Light clients and network privacy', desc: 'Run your own node with Floresta and Kyoto, then use Bitcoin Core 31 private broadcast, BIP324 and ASmap against network surveillance.', repos: ['Floresta', 'Kyoto', 'peer-observer'] },
-    { quarter: 'Month 05', sessions: 'Sessions 09-10', emoji: '05', title: 'CoinJoin, OpenSwap and Lightning privacy', desc: 'Autopsy a CoinJoin, complete an atomic swap on regtest, then compare what BOLT11 and BOLT12 blinded paths leak.', repos: ['JoinMarket', 'OpenSwap', 'LDK'] },
-    { quarter: 'Month 06', sessions: 'Sessions 11-12', emoji: '06', title: 'Ecash and the contribution sprint', desc: 'Mint and redeem ecash on a test mint, then close with a sprint that turns prepared issues and test reports into polished upstream work.', repos: ['Cashu', 'Fedimint', 'PR checklist'] }
-  ];
-
-  repos = [
-    { name: 'rust-bitcoin', what: 'Foundational Bitcoin library in Rust with strong good-first-issue pathways' },
-    { name: 'Floresta', what: 'Utreexo-based node work that helps people run Bitcoin privately and cheaply' },
-    { name: 'BDK', what: 'Wallet privacy primitives: coin selection, change handling, and descriptors' },
-    { name: 'rust-payjoin', what: 'Payjoin Dev Kit for collaborative transactions that break common-input assumptions' },
-    { name: 'Silent Payments tooling', what: 'BIP352 libraries for reusable payment codes without address reuse' },
-    { name: 'Kyoto', what: 'Compact-block-filter light client work for private wallet sync' }
-  ];
-
-  renderVals() {
-    return { modules: this.modules, repos: this.repos };
+  </div>
+</footer>
+<script>
+(() => {
+  // Next session: 1st and 3rd Tuesday of each month, 07:00 UTC, 90 minutes.
+  const sessionsIn = (y, m) => {
+    const first = new Date(Date.UTC(y, m, 1));
+    const day = 1 + ((2 - first.getUTCDay() + 7) % 7);
+    return [day, day + 14].map((d) => new Date(Date.UTC(y, m, d, 7)));
+  };
+  const now = new Date();
+  let next;
+  for (let i = 0; i < 3 && !next; i++) {
+    const t = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + i, 1));
+    next = sessionsIn(t.getUTCFullYear(), t.getUTCMonth()).find((d) => d.getTime() + 90 * 6e4 > now.getTime());
   }
-}
-
+  if (!next) return;
+  const live = next <= now;
+  const pill = document.querySelector("[data-pt-next]");
+  pill.textContent = live ? "Live now on Discord" : "Next: " + next.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" });
+  const local = document.querySelector("[data-pt-local]");
+  try {
+    const t = next.toLocaleTimeString([], { hour: "numeric", minute: "2-digit", timeZoneName: "short" });
+    if (!/UTC$/.test(t)) local.textContent = " (" + t + " your time)";
+  } catch (e) {}
+  const stamp = (d) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+  document.querySelector("[data-pt-gcal]").href = "https://calendar.google.com/calendar/render?" + new URLSearchParams({
+    action: "TEMPLATE", text: "Bitcoin Privacy Track (Code Orange)",
+    dates: stamp(next) + "/" + stamp(new Date(next.getTime() + 90 * 6e4)),
+    recur: "RRULE:FREQ=MONTHLY;BYDAY=1TU,3TU",
+    details: "Free, drop-in Bitcoin privacy session on Discord: https://discord.gg/ZtvA79paWa\nSessions and labs: https://codeorange.dev/privacy-track",
+    location: "Discord",
+  });
+  const cd = document.querySelector("[data-pt-countdown]");
+  if (live || !cd) return;
+  cd.hidden = false;
+  const set = (k, v) => { cd.querySelector('[data-cd="' + k + '"]').textContent = String(v).padStart(2, "0"); };
+  const tick = () => {
+    const s = Math.max(0, Math.floor((next - Date.now()) / 1000));
+    set("d", Math.floor(s / 86400)); set("h", Math.floor(s / 3600) % 24); set("m", Math.floor(s / 60) % 60); set("s", s % 60);
+  };
+  tick(); setInterval(tick, 1000);
+})();
+// Open a session when its link (#s1 ... #s12) is followed.
+(() => {
+  const open = () => { const d = location.hash && document.querySelector("details" + location.hash); if (d) d.open = true; };
+  addEventListener("hashchange", open); open();
+})();
 </script>
 </body>
 </html>
