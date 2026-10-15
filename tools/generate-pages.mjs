@@ -983,7 +983,7 @@ for (const p of programs.filter((item) => item.href.startsWith("/programs/"))) {
   );
 }
 
-["programs", "about", "community", "impact", "strategy", "fellowships", "calendar", "consulting", "rawbit", "privacy-track", "decoding-bitcoin", "apply", "articles"].forEach((path) => {
+["programs", "about", "community", "impact", "strategy", "fellowships", "calendar", "consulting", "rawbit", "privacy-track", "decoding-bitcoin", "apply", "articles", "session-notes"].forEach((path) => {
   try {
     mirrorCleanUrl(path);
   } catch {}
@@ -1003,12 +1003,20 @@ for (const path of articlePages) {
   mirrorCleanUrl(path);
 }
 
+const sessionNotePages = readdirSync(new URL("session-notes/", root))
+  .filter((name) => name.endsWith(".html") && name !== "index.html")
+  .map((name) => `session-notes/${name.replace(/\.html$/, "")}`);
+for (const path of sessionNotePages) {
+  mirrorCleanUrl(path);
+}
+
 // Sitemap: every page on disk whose canonical URL is itself. Alias pages (e.g. the
 // old /programs/openclaw, which points at /programs/agentic-engineering) are left out.
 const sitemapPages = [
   ...readdirSync(root).filter((name) => name.endsWith(".html") && name !== "home.dc.html").map((name) => name.replace(/\.html$/, "")),
   ...programPages,
   ...articlePages,
+  ...sessionNotePages,
 ];
 const sitemapUrls = sitemapPages
   .map((path) => {
