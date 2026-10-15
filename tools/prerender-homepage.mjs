@@ -130,7 +130,7 @@ const staticHomepage = `
   <a class="co-announce" href="/rawbit">⚡ rawBit cohort is live now · Bitcoin Privacy Track open for enrollment · Apply →</a>
   <header class="co-band"><div class="co-wrap co-nav">
     <a href="#top"><img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School"></a>
-    <nav class="co-links" aria-label="Primary"><a href="/programs">Programs</a><a href="/calendar">Calendar</a><a href="/community">Community</a><a href="/impact">Impact</a><a href="/about">About</a></nav>
+    <nav class="co-links" aria-label="Primary"><a href="/programs">Programs</a><a href="/calendar">Calendar</a><a href="/community">Community</a><a href="/about">About</a></nav>
     <div class="co-actions"><a class="co-button" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a><a class="co-button primary" href="/apply">Apply now</a></div>
   </div></header>
   <section id="top" class="co-hero"><video class="co-hero-video" src="/assets/co-hero-agentic.mp4" poster="/assets/new-workshops/workshop-nodes-miners.jpg" autoplay muted loop playsinline preload="none" aria-hidden="true"></video><div class="co-wrap">

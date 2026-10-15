@@ -258,3 +258,5 @@ html.no-site-bg::before, html.no-site-bg::after { content: none; }
 
 /* Keep nav labels on one line (e.g. "Start here"). */
 .desktop-nav a, #static-homepage .co-links a { white-space: nowrap; }
+/* With "Start here" added the menu needs more room: switch to the burger menu below 1200px. */
+@media (max-width: 1199px) { .desktop-nav, #static-homepage .co-links { display: none !important; } }

@@ -16,7 +16,7 @@
     },
     {
       "source": "/strategy",
-      "destination": "/impact",
+      "destination": "/community",
       "permanent": true
     },
     {
@@ -32,6 +32,16 @@
     {
       "source": "/mastering-bitcoin/",
       "destination": "/decoding-bitcoin",
+      "permanent": true
+    },
+    {
+      "source": "/impact",
+      "destination": "/community",
+      "permanent": true
+    },
+    {
+      "source": "/impact/",
+      "destination": "/community",
       "permanent": true
     }
   ],

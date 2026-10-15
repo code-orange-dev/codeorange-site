@@ -305,7 +305,6 @@ ${styles()}
       <a href="/fellowships">Fellowships</a>
       <a href="/calendar">Calendar</a>
       <a href="/community">Community</a>
-      <a href="/impact">Impact</a>
       <a href="/strategy">Strategy</a>
       <a href="/about">About</a>
     </nav>
@@ -319,7 +318,6 @@ ${styles()}
     <a href="/consulting">Consulting</a>
     <a href="/calendar">Calendar</a>
     <a href="/community">Community</a>
-    <a href="/impact">Impact</a>
     <a href="/strategy">Strategy</a>
     <a href="/about">About</a>
   </nav>
@@ -604,7 +602,6 @@ function footer() {
         <strong>School</strong>
         <a href="/about">About</a>
         <a href="/consulting">Consulting</a>
-        <a href="/impact">Impact</a>
         <a href="/community">Community</a>
         <a href="/fellowships">Fellowships</a>
         <a href="/calendar">Calendar</a>
@@ -820,7 +817,7 @@ renderTemplate(
     ["Days 31-60", "Add a contribution dashboard page, program-fit guidance, host-a-workshop intake, sponsor tiers, and stronger repo READMEs."],
     ["Days 61-90", "Publish monthly impact notes, add a graduate map, expose contribution logs, and turn workshop assets into a public library."],
   ])}
-  <div class="cta-row" style="margin-top:30px"><a class="button" href="${links.strategyReport}">Read full strategy report</a><a class="ghost" href="/impact">View impact proof</a></div>
+  <div class="cta-row" style="margin-top:30px"><a class="button" href="${links.strategyReport}">Read full strategy report</a><a class="ghost" href="/community">View impact proof</a></div>
 </div></section>
 <section class="section-inner">
   <div class="split"><div><p class="eyebrow">Weekly Metrics</p><h2>Measure the flywheel.</h2></div><p class="lead">Track the signals that prove Code Orange is moving people from attendance into contribution.</p></div>

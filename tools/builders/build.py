@@ -1,4 +1,4 @@
-"""Builds the "Builders wall" section on /impact from the data on /dashboard.
+"""Builds the "Builders wall" section on /community from the data on /dashboard.
 
 Run after updating dashboard.html:  python3 tools/builders/build.py
 It rewrites the block between <!-- builders:start --> and <!-- builders:end --> in impact.html and impact/index.html.
@@ -48,7 +48,7 @@ block = f'''<!-- builders:start -->
 <!-- builders:end -->'''
 
 head = '<link rel="stylesheet" href="/assets/co-builders.css?v=1"><script src="/assets/co-builders.js?v=1" defer></script>'
-for f in ['impact.html', 'impact/index.html']:
+for f in ['community.html', 'community/index.html']:
     p = ROOT / f; t = p.read_text()
     if '<!-- builders:start -->' in t:
         t = re.sub(r'<!-- builders:start -->.*?<!-- builders:end -->', lambda m: block, t, flags=re.S)
