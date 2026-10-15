@@ -8,6 +8,7 @@
   "summary": "The first Privacy Track: why Bitcoin needs privacy, how PayJoin fools chain analysis, and a real PayJoin sent live on the call.",
   "share_text": "How PayJoin works: notes + every resource from the first @CodeOrangeDevs Privacy Track",
   "minutes": 5,
+  "video": "lsgyE7OxpsM",
   "tldr": [
     "Privacy keeps Bitcoin free, censorship-resistant and fungible. Without private payments it can be captured like gold.",
     "PayJoin mixes coins from the sender and the receiver in one transaction that looks completely normal.",
