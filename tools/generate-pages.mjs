@@ -983,7 +983,7 @@ for (const p of programs.filter((item) => item.href.startsWith("/programs/"))) {
   );
 }
 
-["programs", "about", "community", "impact", "strategy", "fellowships", "calendar", "consulting", "rawbit", "privacy-track", "decoding-bitcoin", "apply", "articles", "session-notes"].forEach((path) => {
+["programs", "about", "community", "impact", "strategy", "fellowships", "calendar", "consulting", "rawbit", "privacy-track", "decoding-bitcoin", "apply", "articles", "session-notes", "resources"].forEach((path) => {
   try {
     mirrorCleanUrl(path);
   } catch {}

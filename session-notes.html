@@ -18,13 +18,13 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Code Orange Dev School Bitcoin workshop">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "CollectionPage", "name": "Session Notes", "description": "Short recaps of Code Orange Dev School sessions: highlights, key takeaways and every resource shared on the call.", "url": "https://codeorange.dev/session-notes"}</script>
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@CodeOrangeDevs">
 <meta name="twitter:title" content="Session Notes - Code Orange Dev School">
 <meta name="twitter:description" content="Short recaps of Code Orange Dev School sessions: highlights, key takeaways and every resource shared on the call.">
 <meta name="twitter:image" content="https://codeorange.dev/assets/og-codeorange-workshop.jpg">
 <link rel="icon" type="image/svg+xml" href="/assets/favicon-co.svg">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Session Notes - Code Orange Dev School","description":"Short recaps of Code Orange Dev School sessions: highlights, key takeaways and every resource shared on the call.","url":"https://codeorange.dev/session-notes","isPartOf":{"@type":"WebSite","name":"Code Orange Dev School","url":"https://codeorange.dev"},"publisher":{"@type":"EducationalOrganization","name":"Code Orange Dev School","url":"https://codeorange.dev","email":"hello@codeorange.dev","sameAs":["https://github.com/code-orange-dev","https://x.com/CodeOrangeDevs","https://www.instagram.com/codeorangedevs","https://njump.me/npub1gxqyeea3xspkd68mxlxsvvk3gdzdd555u504ynwpdj0ghg503mvq2gydt0"]}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
@@ -297,6 +297,22 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 @media (max-width: 700px) { .chapters ol { grid-template-columns: 1fr; } .next-card { grid-template-columns: 1fr; } .quote p { font-size: 19px; } }
 
 @media (max-width: 560px) { .viz { padding: 18px; font-size: 15px; } .q-grid { grid-template-columns: 1fr; } .flow-hop { flex: 0 0 100%; text-align: center; } .flow-step { flex-basis: 100%; } .flow-hop i { display: inline-block; font-style: normal; transform: rotate(90deg); } }
+.res-tools { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 0 0 28px; }
+.res-tools input { flex: 1 1 260px; min-height: 46px; padding: 10px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,.18); background: var(--card); color: var(--text); font: 500 16px "Inter", system-ui, sans-serif; }
+.res-tools input:focus { outline: 2px solid var(--orange); outline-offset: 1px; }
+.chip { min-height: 38px; padding: 8px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.16); background: transparent; color: var(--muted); font: 600 13px "Plus Jakarta Sans", monospace; cursor: pointer; }
+.chip:hover, .chip[aria-pressed="true"] { border-color: var(--orange); color: var(--orange); }
+.res-group { margin: 0 0 36px; }
+.res-group h2 { font-size: clamp(24px, 2.4vw, 32px); margin: 0 0 14px; }
+.res-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+.res { display: block; padding: 18px 20px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; text-decoration: none; transition: border-color .15s ease, transform .15s ease; }
+a.res:hover { border-color: rgba(247,147,26,.55); transform: translateY(-2px); }
+.res strong { display: block; color: var(--text); font-size: 17px; line-height: 1.35; }
+.res p { margin: 6px 0 10px; color: var(--muted); font-size: 15px; line-height: 1.5; }
+.res small { color: var(--dim); font: 600 12px "Plus Jakarta Sans", monospace; }
+.res small a { color: var(--orange); text-decoration: none; position: relative; z-index: 1; }
+.res-empty { color: var(--dim); }
+@media (max-width: 700px) { .res-grid { grid-template-columns: 1fr; } }
 </style>
 <link rel="stylesheet" href="/assets/theme.css?v=20261011a">
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
@@ -337,7 +353,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
         <p class="eyebrow">/Session-notes_</p>
         <h1>Session <span class="orange">notes.</span></h1>
         <p class="lead">Short recaps of our sessions: one or two highlights, the key takeaways, and every resource shared on the call.</p>
-        <p class="note-meta"><a class="pill" href="https://github.com/code-orange-dev/session-notes" target="_blank" rel="noopener" style="text-decoration:none">Also on GitHub &rarr;</a></p>
+        <p class="note-meta"><a class="pill orange" href="/resources" style="text-decoration:none">Resource library &rarr;</a><a class="pill" href="https://github.com/code-orange-dev/session-notes" target="_blank" rel="noopener" style="text-decoration:none">Also on GitHub &rarr;</a></p>
       </div>
     </div>
   </section>

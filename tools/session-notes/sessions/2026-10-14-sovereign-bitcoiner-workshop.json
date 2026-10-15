@@ -1,0 +1,277 @@
+{
+  "slug": "2026-10-14-sovereign-bitcoiner-workshop",
+  "date": "2026-10-14",
+  "series": "Sovereign Bitcoiner Workshop",
+  "title": "Why Privacy Matters",
+  "host": "Razor",
+  "tag": "Privacy",
+  "summary": "Why “nothing to hide” is the wrong question, a live Lightning privacy test, and every link shared on the call.",
+  "share_text": "Why privacy matters: notes + every resource from the @CodeOrangeDevs Sovereign Bitcoiner Workshop",
+  "minutes": 5,
+  "video": "NENhVbqtGTs",
+  "duration": "1h 18m",
+  "tldr": [
+    "“Nothing to hide” is the wrong question. Privacy is about power.",
+    "Bitcoin is public on purpose. Privacy is added in layers on top.",
+    "Custodial wallets can hand your payment history to anyone who asks.",
+    "Pick your defences with a simple threat model, not fear."
+  ],
+  "chapters": [
+    [
+      0,
+      "Why read “The Eternal Value of Privacy”"
+    ],
+    [
+      261,
+      "The $100 carpet that leaked 1 BTC"
+    ],
+    [
+      411,
+      "Is privacy a basic human right?"
+    ],
+    [
+      483,
+      "<em>1984</em> vs Kafka’s <em>The Trial</em>"
+    ],
+    [
+      724,
+      "Did Satoshi make Bitcoin transparent on purpose?"
+    ],
+    [
+      1113,
+      "Why the base layer must be auditable"
+    ],
+    [
+      1259,
+      "The cypherpunk manifestos"
+    ],
+    [
+      1444,
+      "What is privacy? Three definitions"
+    ],
+    [
+      1712,
+      "Mass data collection and laws that change"
+    ],
+    [
+      1908,
+      "Fun fact: 2016 blocks is 6102 backwards"
+    ],
+    [
+      2038,
+      "Private payments on a public chain"
+    ],
+    [
+      2235,
+      "Is Lightning more secure? Liveness and watchtowers"
+    ],
+    [
+      2487,
+      "Invoices reveal your node: Tor, ecash, guard nodes"
+    ],
+    [
+      2778,
+      "Live demo: tracing a Lightning payment"
+    ],
+    [
+      2923,
+      "LN Proxy and 1ML"
+    ],
+    [
+      3125,
+      "Hardware wallet or dedicated laptop?"
+    ],
+    [
+      3476,
+      "The Intel Management Engine"
+    ],
+    [
+      3709,
+      "Who are we protecting our bitcoin from?"
+    ],
+    [
+      4213,
+      "How much trouble are you willing to go through?"
+    ],
+    [
+      4456,
+      "Private messengers: White Noise and Keychat"
+    ]
+  ],
+  "next": {
+    "title": "Self-Custody & Multisig with Andy",
+    "when": "Friday 16 October, on Discord. Free for everyone."
+  },
+  "resources": [
+    {
+      "group": "Reading",
+      "topic": "Privacy",
+      "title": "The Eternal Value of Privacy",
+      "url": "https://www.schneier.com/essays/archives/2006/05/the_eternal_value_of.html",
+      "by": "Bruce Schneier (2006)"
+    },
+    {
+      "group": "Reading",
+      "topic": "Privacy",
+      "title": "‘I’ve Got Nothing to Hide’ and Other Misunderstandings of Privacy",
+      "url": "https://papers.ssrn.com/abstract=998565",
+      "by": "Daniel J. Solove (2007)"
+    },
+    {
+      "group": "Reading",
+      "topic": "Privacy",
+      "title": "Why Privacy Matters",
+      "url": "https://www.privacyguides.org/en/basics/why-privacy-matters/",
+      "by": "Privacy Guides"
+    },
+    {
+      "group": "Reading",
+      "topic": "Cypherpunk history",
+      "title": "A Cypherpunk’s Manifesto",
+      "url": "https://www.activism.net/cypherpunk/manifesto.html",
+      "by": "Eric Hughes (1993)"
+    },
+    {
+      "group": "Reading",
+      "topic": "Cypherpunk history",
+      "title": "The Crypto Anarchist Manifesto",
+      "url": "https://www.activism.net/cypherpunk/crypto-anarchy.html",
+      "by": "Timothy C. May (1988)"
+    },
+    {
+      "group": "Reading",
+      "topic": "Bitcoin basics",
+      "title": "Bitcoin: A Peer-to-Peer Electronic Cash System",
+      "url": "https://bitcoin.org/bitcoin.pdf",
+      "by": "Satoshi Nakamoto (2008)"
+    },
+    {
+      "group": "Reading",
+      "topic": "Privacy",
+      "title": "<em>1984</em> and <em>The Trial</em>",
+      "by": "George Orwell, Franz Kafka",
+      "note": "the two metaphors for surveillance (self-censorship) and data collection (power imbalance)"
+    },
+    {
+      "group": "Reading",
+      "topic": "History",
+      "title": "Executive Order 6102",
+      "url": "https://en.wikipedia.org/wiki/Executive_Order_6102",
+      "by": "1933",
+      "note": "fun fact from the call is that Bitcoin’s difficulty adjusts every 2016 blocks, which is 6102 backwards"
+    },
+    {
+      "group": "Reading",
+      "topic": "Security",
+      "title": "Intel Management Engine",
+      "url": "https://en.wikipedia.org/wiki/Intel_Management_Engine",
+      "note": "why a general-purpose laptop is a hard place to keep keys"
+    },
+    {
+      "group": "Tools",
+      "topic": "Explorers",
+      "title": "mempool.space",
+      "url": "https://mempool.space",
+      "note": "block explorer used in the carpet story"
+    },
+    {
+      "group": "Tools",
+      "topic": "Explorers",
+      "title": "1ML",
+      "url": "https://1ml.com",
+      "note": "Lightning node explorer"
+    },
+    {
+      "group": "Tools",
+      "topic": "Lightning",
+      "title": "LN Proxy",
+      "url": "https://lnproxy.org",
+      "note": "wraps a Lightning invoice so payers don’t see your node"
+    },
+    {
+      "group": "Tools",
+      "topic": "Lightning",
+      "title": "RoboSats",
+      "url": "https://learn.robosats.org",
+      "note": "private peer-to-peer exchange over Lightning, uses LN Proxy"
+    },
+    {
+      "group": "Tools",
+      "topic": "Ecash",
+      "title": "Fedimint",
+      "url": "https://fedimint.org",
+      "note": "federated ecash mint protocol"
+    },
+    {
+      "group": "Tools",
+      "topic": "Ecash",
+      "title": "Fedi",
+      "url": "https://www.fedi.xyz",
+      "note": "app for Fedimint federations"
+    },
+    {
+      "group": "Tools",
+      "topic": "Messaging",
+      "title": "White Noise",
+      "url": "https://www.whitenoise.chat",
+      "note": "private group chat built on Nostr"
+    },
+    {
+      "group": "Tools",
+      "topic": "Messaging",
+      "title": "Keychat",
+      "url": "https://www.keychat.io",
+      "note": "Nostr messenger with ecash and Lightning built in"
+    },
+    {
+      "group": "Wallets",
+      "topic": "Wallets",
+      "title": "Phoenix",
+      "url": "https://phoenix.acinq.co",
+      "note": "self-custodial Lightning wallet"
+    },
+    {
+      "group": "Wallets",
+      "topic": "Wallets",
+      "title": "Blink",
+      "url": "https://www.blink.sv",
+      "note": "custodial Lightning wallet used in the demo"
+    },
+    {
+      "group": "Wallets",
+      "topic": "Wallets",
+      "title": "Primal",
+      "url": "https://primal.net",
+      "note": "Nostr client with a built-in wallet, used in the demo"
+    },
+    {
+      "group": "Wallets",
+      "topic": "Wallets",
+      "title": "Wallet of Satoshi",
+      "url": "https://www.walletofsatoshi.com",
+      "note": "custodial Lightning wallet used in the demo"
+    },
+    {
+      "group": "Wallets",
+      "topic": "Wallets",
+      "title": "BlueWallet",
+      "url": "https://bluewallet.io",
+      "note": "on-chain wallet that can freeze UTXOs"
+    },
+    {
+      "group": "Wallets",
+      "topic": "Wallets",
+      "title": "Sparrow",
+      "url": "https://sparrowwallet.com",
+      "note": "desktop wallet with coin control"
+    },
+    {
+      "group": "Code Orange",
+      "topic": "Code Orange",
+      "title": "Privacy Developer Track",
+      "url": "/privacy-track",
+      "note": "every 1st and 3rd Tuesday, covering PayJoin, Silent Payments, Lightning and ecash"
+    }
+  ],
+  "ideas": "Ideas for future sessions: a White Noise vs Keychat comparison, and a Fedimint deep dive."
+}

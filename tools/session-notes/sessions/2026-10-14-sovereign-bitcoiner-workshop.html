@@ -1,0 +1,46 @@
+      <h2>Highlights</h2>
+      <p><strong>A $100 carpet that leaked 1 BTC.</strong> A community member bought a carpet for bitcoin on Facebook Marketplace and looked the on-chain payment up on a block explorer. It showed the seller&rsquo;s wallet held a full bitcoin. Now a stranger knew what the seller looked like, where they lived and how much they had. That is what a privacy leak looks like in real life.</p>
+      <p><strong>A live Lightning privacy test.</strong> We passed sats between four wallets on the call, then traced what each company could hand over if a government came knocking.</p>
+      <div class="viz" role="figure" aria-label="Live Lightning privacy test">
+        <p class="eyebrow">Live demo</p>
+        <p class="viz-title">We passed sats through 4 Lightning wallets</p>
+        <div class="flow">
+          <div class="flow-step">Blink<small>Custodial</small></div><span class="flow-hop">$6 <i>&rarr;</i></span>
+          <div class="flow-step">Primal<small>Custodial</small></div><span class="flow-hop">$4 <i>&rarr;</i></span>
+          <div class="flow-step">Wallet of Satoshi<small>Custodial</small></div><span class="flow-hop">$2 <i>&rarr;</i></span>
+          <div class="flow-step">Wallet of Satoshi<small>Custodial</small></div>
+        </div>
+        <p style="margin:0 0 8px;color:var(--text)"><strong>If a government asks, each company can hand over:</strong></p>
+        <ul>
+          <li>the account behind each payment (email, phone)</li>
+          <li>amounts, times and the node it went to next</li>
+          <li>possibly your IP address</li>
+        </ul>
+        <p class="viz-fix"><b>Do better:</b> a self-custodial wallet like Phoenix, your own node behind Tor, and no email sign-up.</p>
+      </div>
+
+      <h2>Key takeaways</h2>
+      <p><strong>1. &ldquo;Nothing to hide&rdquo; is the wrong question.</strong> Privacy is about the balance of power between you and whoever holds your data. Laws change, but data stays: Executive Order 6102 made owning gold illegal in the US overnight. Think of Kafka&rsquo;s <em>The Trial</em>: the danger is them knowing everything about you while you know nothing about what they hold.</p>
+      <blockquote class="quote"><p>&ldquo;Arguing that you don&rsquo;t care about the right to privacy because you have nothing to hide is no different than saying you don&rsquo;t care about free speech because you have nothing to say.&rdquo;</p><cite>Edward Snowden, quoted on the call</cite></blockquote>
+      <p><strong>2. Bitcoin&rsquo;s base layer is transparent on purpose.</strong> Anyone can verify the 21 million supply. Privacy is added in layers on top.</p>
+      <div class="viz" role="figure" aria-label="Bitcoin privacy layers">
+        <p class="eyebrow">The big picture</p>
+        <p class="viz-title">Bitcoin privacy comes in layers</p>
+        <div class="layer-scale"><b>More private</b><span></span></div>
+        <div class="layers">
+          <div class="layer top"><strong>Ecash mints</strong><p>Hide in the crowd: the mint can&rsquo;t tell which member paid which.</p><span>Fedimint &middot; Fedi</span></div>
+          <div class="layer"><strong>Lightning</strong><p>Off-chain and hard to trace for outsiders, but invoices reveal your node.</p><span>Own node &middot; Tor &middot; LN Proxy &middot; self-custodial wallets</span></div>
+          <div class="layer"><strong>On-chain</strong><p>Public on purpose, so anyone can verify the 21 million supply.</p><span>Coin control &middot; PayJoin &middot; Silent Payments &middot; CoinJoin</span></div>
+        </div>
+        <div class="layer-scale" style="margin:8px 0 0"><span>More visible</span><span></span></div>
+      </div>
+      <p><strong>3. Be productively paranoid, but practical.</strong> You can&rsquo;t defend against everyone. Answer four questions, then pick your tools:</p>
+      <div class="viz" role="figure" aria-label="Threat model in four questions">
+        <p class="eyebrow">Your threat model</p>
+        <div class="q-grid">
+          <div class="q"><b>01 Who?</b><span>Who am I protecting my bitcoin from?</span></div>
+          <div class="q"><b>02 How likely?</b><span>How likely is it that they come for it?</span></div>
+          <div class="q"><b>03 How bad?</b><span>What happens if I fail?</span></div>
+          <div class="q"><b>04 How much effort?</b><span>How much time and money will I spend?</span></div>
+        </div>
+      </div>
