@@ -236,6 +236,39 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 .prose ol li strong:first-child { color: var(--text); }
 .source-box { margin: 40px 0 0; padding: 20px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; color: var(--dim); font-size: 15px; line-height: 1.6; }
 .source-box a { color: var(--orange); }
+.tldr { margin: 0 0 40px; padding: 22px 24px; background: linear-gradient(145deg, rgba(247,147,26,.12), rgba(20,20,20,.9) 55%); border: 1px solid rgba(247,147,26,.3); border-radius: 16px; }
+.tldr .eyebrow { margin: 0 0 10px; }
+.tldr ul { margin: 0; padding-left: 20px; }
+.tldr li { margin: 0 0 6px; color: var(--text); }
+.viz { margin: 8px 0 36px; padding: 24px; background: var(--band); border: 1px solid var(--line); border-radius: 16px; font-size: 16px; line-height: 1.55; }
+.viz .eyebrow { margin: 0 0 6px; }
+.viz-title { margin: 0 0 18px; color: var(--text); font-size: 21px; font-weight: 600; }
+.flow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
+.flow-step { flex: 1 1 120px; padding: 14px 12px; text-align: center; background: var(--card); border: 1px solid rgba(255,255,255,.12); border-radius: 12px; color: var(--text); font-weight: 600; }
+.flow-step small { display: block; margin-top: 4px; color: var(--dim); font: 600 11px "Plus Jakarta Sans", monospace; letter-spacing: .12em; text-transform: uppercase; }
+.flow-hop { color: var(--orange); font: 700 15px "Plus Jakarta Sans", monospace; white-space: nowrap; }
+.viz ul { margin: 0 0 16px; padding-left: 20px; }
+.viz li { margin: 0 0 4px; }
+.viz-fix { margin: 0; padding: 14px 16px; border-radius: 12px; background: rgba(247,147,26,.12); border: 1px solid rgba(247,147,26,.4); color: var(--text); }
+.viz-fix b { color: var(--orange); }
+.layers { display: grid; gap: 10px; }
+.layer { padding: 16px 18px; background: var(--card); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; }
+.layer.top { background: rgba(247,147,26,.12); border-color: rgba(247,147,26,.5); }
+.layer strong { display: block; color: var(--text); font-size: 18px; }
+.layer p { margin: 4px 0 6px; }
+.layer span { color: var(--orange); font: 600 13px "Plus Jakarta Sans", monospace; }
+.layer-scale { display: flex; justify-content: space-between; margin: 0 0 8px; color: var(--dim); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .12em; text-transform: uppercase; }
+.layer-scale b { color: var(--orange); }
+.q-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
+.q { padding: 16px; background: var(--card); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; }
+.q b { display: block; color: var(--orange); font: 700 13px "Plus Jakarta Sans", monospace; margin-bottom: 4px; }
+.q span { color: var(--text); }
+.share-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 32px 0 0; }
+.share-row strong { color: var(--text); margin-right: 4px; }
+.share-row a, .share-row button { min-height: 38px; padding: 8px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,.16); background: transparent; color: var(--text); font: 600 14px "Inter", system-ui, sans-serif; text-decoration: none; cursor: pointer; }
+.share-row a:hover, .share-row button:hover { border-color: var(--orange); color: var(--orange); }
+.note-figure img { aspect-ratio: 1200 / 630; }
+@media (max-width: 560px) { .viz { padding: 18px; font-size: 15px; } .q-grid { grid-template-columns: 1fr; } .flow-hop { flex: 0 0 100%; text-align: center; } .flow-step { flex-basis: 100%; } }
 </style>
 <link rel="stylesheet" href="/assets/theme.css?v=20261011a">
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
@@ -282,7 +315,8 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
   </section>
   <section class="section-inner" style="padding-top:56px">
     <div class="article-list">
-      <a class="article-card" href="/session-notes/2026-10-14-sovereign-bitcoiner-workshop" style="grid-template-columns:1fr">
+      <a class="article-card" href="/session-notes/2026-10-14-sovereign-bitcoiner-workshop">
+        <img src="/assets/session-notes/2026-10-14-sovereign-bitcoiner-workshop.jpg" alt="" loading="lazy" style="object-position:left center">
         <div class="card-body">
           <span class="pill orange">Privacy</span>
           <h3 style="margin-top:16px">Sovereign Bitcoiner Workshop: Why Privacy Matters</h3>
