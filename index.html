@@ -31,7 +31,7 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"EducationalOrganization","name":"Code Orange Dev School","url":"https://codeorange.dev","email":"hello@codeorange.dev","description":"Bitcoin developer workshops, technical cohorts, open-source contributor training, and fellowships for builders.","sameAs":["https://github.com/code-orange-dev","https://x.com/CodeOrangeDevs","https://www.instagram.com/codeorangedevs","https://njump.me/npub1gxqyeea3xspkd68mxlxsvvk3gdzdd555u504ynwpdj0ghg503mvq2gydt0"]}</script>
 <link rel="stylesheet" href="/assets/theme.css?v=20261015c">
 <link rel="stylesheet" href="/assets/co-calendar.css?v=20261012a">
-<script src="/assets/co-calendar.js?v=20261012a" defer></script>
+<script src="/assets/co-calendar.js?v=20261015a" defer></script>
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
 <style>
     #static-homepage .co-upnext { padding: 34px 0 6px; }
@@ -50,7 +50,7 @@
     #static-homepage .co-upnext-text em { display: inline-block; margin-bottom: 4px; padding: 2px 8px; border-radius: 99px; background: #F7931A; color: #0A0A0A; font: 700 10px "Plus Jakarta Sans", monospace; font-style: normal; letter-spacing: .1em; text-transform: uppercase; }
     @media (max-width: 900px) { #static-homepage .co-upnext-list { grid-template-columns: minmax(0,1fr); } }
   </style>
-<script src="/assets/co-upnext.js?v=1" defer></script>
+<script src="/assets/co-upnext.js?v=2" defer></script>
 </head>
 <body>
 
@@ -373,7 +373,7 @@ f.addEventListener('submit',function(e){e.preventDefault();var b=f.querySelector
 fetch(f.action,{method:'POST',body:new FormData(f)}).then(function(r){return r.json()}).then(function(d){
 m.hidden=false;if(d&&d.success){m.textContent='Almost done: check your inbox and click the confirmation link.';f.reset();}else{m.textContent='That did not work. Please check the email address and try again.';}
 }).catch(function(){f.removeAttribute('data-co-weekly');f.submit();}).then(function(){b.disabled=false;});});})();
-</script><div class="co-calendar"><div class="co-calendar-label"><span><b>● Live schedule</b> · updates automatically</span><span>Central Indonesia time</span></div><iframe title="Code Orange public student calendar" src="https://calendar.google.com/calendar/embed?src=466de2be7431d78be2049f96f5fd31f9b06b5a9cd94f909ba3182b18442ed499%40group.calendar.google.com&ctz=Asia%2FMakassar" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><p style="margin-top:28px"><a class="co-button" href="/calendar">Open calendar page →</a></p></div></section>
+</script><div class="co-calendar"><div class="co-calendar-label"><span><b>● Live schedule</b> · updates automatically</span><span>Times in UTC+8</span></div><iframe title="Code Orange public student calendar" src="https://calendar.google.com/calendar/embed?src=466de2be7431d78be2049f96f5fd31f9b06b5a9cd94f909ba3182b18442ed499%40group.calendar.google.com&ctz=Asia%2FMakassar" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><p style="margin-top:28px"><a class="co-button" href="/calendar">Open calendar page →</a></p></div></section>
   <section class="co-section co-photo-section" style="--co-bg:url('/assets/latest-workshops/workshop-latest-table.webp'); --co-bg-pos:center 52%;"><div class="co-wrap"><p class="co-eyebrow">Programs</p><h2>Pick a practical next step.</h2><div class="co-grid">
     <a class="co-card co-photo" style="--bg:url(/assets/home-cards/self-custody.webp)" href="https://discord.gg/6XPJ96sCY4?event=1520663887471710248" target="_blank" rel="noopener"><span>🛡️ Discord event</span><h3>Self-custody workshop</h3><p>Build practical confidence with the tools and habits of Bitcoin self-custody.</p></a>
     <a class="co-card co-photo" style="--bg:url(/assets/home-cards/reading-club.webp)" href="https://discord.gg/6XPJ96sCY4?event=1387624917339472053" target="_blank" rel="noopener"><span>📚 Discord event</span><h3>Bitcoin Reading Club</h3><p>Read the essential Bitcoin canon alongside builders who care about the details.</p></a>

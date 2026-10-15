@@ -22,13 +22,13 @@
       var here = Intl.DateTimeFormat().resolvedOptions().timeZone;
       box.querySelector("[data-upnext-list]").innerHTML = picks.map(function (e) {
         var s = new Date(e.start), live = Date.parse(e.start) <= now;
-        var local = here && here !== TZ && fmt(s, { hour: "2-digit", minute: "2-digit" }) !== new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit" }).format(s)
+        var local = here && here !== TZ && [fmt(s, { hour: "2-digit", minute: "2-digit" }), s.toLocaleTimeString("en-GB", { timeZone: "UTC", hour: "2-digit", minute: "2-digit" })].indexOf(new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit" }).format(s)) < 0
           ? '<small>' + esc(s.toLocaleString(undefined, { weekday: "short", hour: "numeric", minute: "2-digit" })) + " your time</small>" : "";
         var where = /discord/i.test(e.location + " " + (e.url || "")) ? "Online · Discord" : (e.location ? e.location.split(",")[0] : "Code Orange");
         return '<a class="co-upnext-card" href="' + esc(e.url || "/calendar") + '"' + (e.url ? ' target="_blank" rel="noopener"' : "") + ">" +
           '<span class="co-upnext-date"><b>' + esc(fmt(s, { weekday: "short" })) + "</b>" + esc(fmt(s, { day: "numeric" })) + "<i>" + esc(fmt(s, { month: "short" })) + "</i></span>" +
           '<span class="co-upnext-text">' + (live ? '<em>Live now</em>' : "") + "<strong>" + esc(e.title) + "</strong>" +
-          "<span>" + esc(fmt(s, { hour: "numeric", minute: "2-digit", hour12: true })) + " Bali time · " + esc(where) + "</span>" + local + "</span></a>";
+          "<span>" + esc(s.toLocaleTimeString("en-GB", { timeZone: "UTC", hour: "2-digit", minute: "2-digit" })) + " UTC · " + esc(fmt(s, { hour: "2-digit", minute: "2-digit" })) + " UTC+8</span><span>" + esc(where) + "</span>" + local + "</span></a>";
       }).join("");
       box.hidden = false;
     })
