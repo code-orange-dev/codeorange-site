@@ -245,7 +245,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 .viz .eyebrow { margin: 0 0 6px; }
 .viz-title { margin: 0 0 18px; color: var(--text); font-size: 21px; font-weight: 600; }
 .flow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
-.flow-step { flex: 1 1 120px; padding: 14px 12px; text-align: center; background: var(--card); border: 1px solid rgba(255,255,255,.12); border-radius: 12px; color: var(--text); font-weight: 600; }
+.flow-step { flex: 1 1 0; min-width: 92px; padding: 14px 12px; text-align: center; background: var(--card); border: 1px solid rgba(255,255,255,.12); border-radius: 12px; color: var(--text); font-weight: 600; }
 .flow-step small { display: block; margin-top: 4px; color: var(--dim); font: 600 11px "Plus Jakarta Sans", monospace; letter-spacing: .12em; text-transform: uppercase; }
 .flow-hop { color: var(--orange); font: 700 15px "Plus Jakarta Sans", monospace; white-space: nowrap; }
 .viz ul { margin: 0 0 16px; padding-left: 20px; }
@@ -290,6 +290,12 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 .quote { margin: 8px 0 32px; padding: 24px 26px; border-left: 3px solid var(--orange); background: var(--card); border-radius: 0 16px 16px 0; }
 .quote p { margin: 0 0 10px; color: var(--text); font-size: 22px; line-height: 1.45; }
 .quote cite { color: var(--dim); font: 600 13px "Plus Jakarta Sans", monospace; font-style: normal; }
+.more-notes { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; margin: 28px 0 0; }
+.more-notes a { display: block; padding: 18px 20px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; text-decoration: none; color: var(--text); }
+.more-notes a:hover { border-color: rgba(247,147,26,.5); }
+.more-notes small { display: block; margin-bottom: 6px; color: var(--orange); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .12em; text-transform: uppercase; }
+.more-notes a.newer { text-align: right; grid-column: 2; }
+@media (max-width: 560px) { .more-notes { grid-template-columns: 1fr; } .more-notes a.newer { grid-column: 1; text-align: left; } }
 .next-card { display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center; margin: 40px 0 0; padding: 24px; background: linear-gradient(145deg, rgba(247,147,26,.14), rgba(20,20,20,.9) 55%); border: 1px solid rgba(247,147,26,.35); border-radius: 16px; }
 .next-card .eyebrow { margin: 0 0 8px; }
 .next-card h3 { font-size: 24px; }
@@ -464,6 +470,7 @@ a.res:hover { border-color: rgba(247,147,26,.55); transform: translateY(-2px); }
     <div class="share-row"><strong>Share these notes:</strong><a href="https://x.com/intent/post?text=Why%20privacy%20matters%3A%20notes%20%2B%20every%20resource%20from%20the%20%40CodeOrangeDevs%20Sovereign%20Bitcoiner%20Workshop&amp;url=https%3A%2F%2Fcodeorange.dev%2Fsession-notes%2F2026-10-14-sovereign-bitcoiner-workshop" target="_blank" rel="noopener">Post on X</a><button type="button" data-copy="https://codeorange.dev/session-notes/2026-10-14-sovereign-bitcoiner-workshop">Copy link</button></div>
     <script>document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){navigator.clipboard&&navigator.clipboard.writeText(b.dataset.copy).then(function(){b.textContent='Link copied';});});});
 (function(){var v=document.getElementById('video');if(!v)return;function play(t){v.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+v.dataset.yt+'?autoplay=1&rel=0&start='+(t||0)+'" title="Session recording" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';}v.querySelector('button').addEventListener('click',function(){play(0);});document.querySelectorAll('.chapters a[data-t]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();play(a.dataset.t);v.scrollIntoView({behavior:'smooth',block:'center'});});});})();</script>
+    <nav class="more-notes" aria-label="More session notes"><a class="older" href="/session-notes/2026-10-08-code-review-club"><small>&larr; Earlier session</small>Code Review Club: Your First Code Review</a></nav>
     <p class="source-box">These notes are also on GitHub: <a href="https://github.com/code-orange-dev/session-notes/blob/main/2026/2026-10-14-sovereign-bitcoiner-workshop.md" target="_blank" rel="noopener">code-orange-dev/session-notes</a>. Free to share and reuse (CC0).</p>
   </article>
   <section class="section-inner final-cta">

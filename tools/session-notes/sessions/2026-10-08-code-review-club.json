@@ -8,6 +8,8 @@
   "summary": "Our first Code Review Club: a Nostr identity in one command, then a real Bitcoin pull request reviewed live, step by step.",
   "share_text": "How to review your first open-source PR: notes + every resource from the first @CodeOrangeDevs Code Review Club",
   "minutes": 5,
+  "video": "wQPdlsrxidY",
+  "duration": "1h 26m",
   "tldr": [
     "Nostr is to X what Bitcoin is to a bank: you hold the key, nobody can ban your identity.",
     "One command (nihao) gives you a Nostr identity, relays, a Lightning address and an ecash wallet.",

@@ -29,7 +29,7 @@ style = src[src.index('<style>'):head_end] + """
 .viz .eyebrow { margin: 0 0 6px; }
 .viz-title { margin: 0 0 18px; color: var(--text); font-size: 21px; font-weight: 600; }
 .flow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
-.flow-step { flex: 1 1 120px; padding: 14px 12px; text-align: center; background: var(--card); border: 1px solid rgba(255,255,255,.12); border-radius: 12px; color: var(--text); font-weight: 600; }
+.flow-step { flex: 1 1 0; min-width: 92px; padding: 14px 12px; text-align: center; background: var(--card); border: 1px solid rgba(255,255,255,.12); border-radius: 12px; color: var(--text); font-weight: 600; }
 .flow-step small { display: block; margin-top: 4px; color: var(--dim); font: 600 11px "Plus Jakarta Sans", monospace; letter-spacing: .12em; text-transform: uppercase; }
 .flow-hop { color: var(--orange); font: 700 15px "Plus Jakarta Sans", monospace; white-space: nowrap; }
 .viz ul { margin: 0 0 16px; padding-left: 20px; }
@@ -74,6 +74,12 @@ style = src[src.index('<style>'):head_end] + """
 .quote { margin: 8px 0 32px; padding: 24px 26px; border-left: 3px solid var(--orange); background: var(--card); border-radius: 0 16px 16px 0; }
 .quote p { margin: 0 0 10px; color: var(--text); font-size: 22px; line-height: 1.45; }
 .quote cite { color: var(--dim); font: 600 13px "Plus Jakarta Sans", monospace; font-style: normal; }
+.more-notes { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; margin: 28px 0 0; }
+.more-notes a { display: block; padding: 18px 20px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; text-decoration: none; color: var(--text); }
+.more-notes a:hover { border-color: rgba(247,147,26,.5); }
+.more-notes small { display: block; margin-bottom: 6px; color: var(--orange); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .12em; text-transform: uppercase; }
+.more-notes a.newer { text-align: right; grid-column: 2; }
+@media (max-width: 560px) { .more-notes { grid-template-columns: 1fr; } .more-notes a.newer { grid-column: 1; text-align: left; } }
 .next-card { display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center; margin: 40px 0 0; padding: 24px; background: linear-gradient(145deg, rgba(247,147,26,.14), rgba(20,20,20,.9) 55%); border: 1px solid rgba(247,147,26,.35); border-radius: 16px; }
 .next-card .eyebrow { margin: 0 0 8px; }
 .next-card h3 { font-size: 24px; }
@@ -218,7 +224,7 @@ def resources_html(n):
 SCRIPT = '''<script>document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){navigator.clipboard&&navigator.clipboard.writeText(b.dataset.copy).then(function(){b.textContent='Link copied';});});});
 (function(){var v=document.getElementById('video');if(!v)return;function play(t){v.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+v.dataset.yt+'?autoplay=1&rel=0&start='+(t||0)+'" title="Session recording" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';}v.querySelector('button').addEventListener('click',function(){play(0);});document.querySelectorAll('.chapters a[data-t]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();play(a.dataset.t);v.scrollIntoView({behavior:'smooth',block:'center'});});});})();</script>'''
 
-def recap_page(n):
+def recap_page(n, sessions=()):
     url, title = n['url'], f"{n['series']}: {n['title']} - Session Notes"
     words = n['title'].rsplit(' ', 1)
     h1 = f'{words[0]} <span class="orange">{words[1]}.</span>' if len(words) == 2 else f'<span class="orange">{words[0]}.</span>'
@@ -249,12 +255,22 @@ def recap_page(n):
     share = urllib.parse.quote(n.get('share_text') or f"{n['series']}: {n['title']} - notes from @CodeOrangeDevs", safe='')
     page += f'''    <div class="share-row"><strong>Share these notes:</strong><a href="https://x.com/intent/post?text={share}&amp;url={urllib.parse.quote('https://codeorange.dev' + url, safe='')}" target="_blank" rel="noopener">Post on X</a><button type="button" data-copy="https://codeorange.dev{url}">Copy link</button></div>
     {SCRIPT}
+    {more_notes(n, sessions)}
     <p class="source-box">These notes are also on GitHub: {a(f"{REPO}/blob/main/{n['date'][:4]}/{n['slug']}.md", "code-orange-dev/session-notes")}. Free to share and reuse (CC0).</p>
   </article>
 ''' + final_cta
     return page
 
 import urllib.parse
+
+def more_notes(n, sessions):
+    # sessions are sorted newest first
+    i = next((k for k, s in enumerate(sessions) if s['slug'] == n['slug']), None)
+    if i is None or len(sessions) < 2: return ''
+    older = sessions[i + 1] if i + 1 < len(sessions) else None
+    newer = sessions[i - 1] if i > 0 else None
+    card = lambda s, label, cls: f'<a class="{cls}" href="{s["url"]}"><small>{label}</small>{s["series"]}: {s["title"]}</a>'
+    return '<nav class="more-notes" aria-label="More session notes">' + (card(older, '&larr; Earlier session', 'older') if older else '') + (card(newer, 'Later session &rarr;', 'newer') if newer else '') + '</nav>'
 
 def list_page(sessions):
     cards = ''.join(f'''      <a class="article-card" href="{n['url']}">
@@ -329,7 +345,7 @@ sessions = load_sessions()
 for n in sessions:
     if not (site / n['img'].lstrip('/')).exists():
         raise SystemExit(f"Missing share image {n['img']}: run tools/session-notes/make-image.js first")
-    write(f"session-notes/{n['slug']}.html", recap_page(n))
+    write(f"session-notes/{n['slug']}.html", recap_page(n, sessions))
 write('session-notes.html', list_page(sessions))
 write('resources.html', resources_page(sessions))
 

@@ -244,7 +244,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 .viz .eyebrow { margin: 0 0 6px; }
 .viz-title { margin: 0 0 18px; color: var(--text); font-size: 21px; font-weight: 600; }
 .flow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
-.flow-step { flex: 1 1 120px; padding: 14px 12px; text-align: center; background: var(--card); border: 1px solid rgba(255,255,255,.12); border-radius: 12px; color: var(--text); font-weight: 600; }
+.flow-step { flex: 1 1 0; min-width: 92px; padding: 14px 12px; text-align: center; background: var(--card); border: 1px solid rgba(255,255,255,.12); border-radius: 12px; color: var(--text); font-weight: 600; }
 .flow-step small { display: block; margin-top: 4px; color: var(--dim); font: 600 11px "Plus Jakarta Sans", monospace; letter-spacing: .12em; text-transform: uppercase; }
 .flow-hop { color: var(--orange); font: 700 15px "Plus Jakarta Sans", monospace; white-space: nowrap; }
 .viz ul { margin: 0 0 16px; padding-left: 20px; }
@@ -289,6 +289,12 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 .quote { margin: 8px 0 32px; padding: 24px 26px; border-left: 3px solid var(--orange); background: var(--card); border-radius: 0 16px 16px 0; }
 .quote p { margin: 0 0 10px; color: var(--text); font-size: 22px; line-height: 1.45; }
 .quote cite { color: var(--dim); font: 600 13px "Plus Jakarta Sans", monospace; font-style: normal; }
+.more-notes { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; margin: 28px 0 0; }
+.more-notes a { display: block; padding: 18px 20px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; text-decoration: none; color: var(--text); }
+.more-notes a:hover { border-color: rgba(247,147,26,.5); }
+.more-notes small { display: block; margin-bottom: 6px; color: var(--orange); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .12em; text-transform: uppercase; }
+.more-notes a.newer { text-align: right; grid-column: 2; }
+@media (max-width: 560px) { .more-notes { grid-template-columns: 1fr; } .more-notes a.newer { grid-column: 1; text-align: left; } }
 .next-card { display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center; margin: 40px 0 0; padding: 24px; background: linear-gradient(145deg, rgba(247,147,26,.14), rgba(20,20,20,.9) 55%); border: 1px solid rgba(247,147,26,.35); border-radius: 16px; }
 .next-card .eyebrow { margin: 0 0 8px; }
 .next-card h3 { font-size: 24px; }
