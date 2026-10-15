@@ -581,7 +581,7 @@ function finalCta() {
 function footer() {
   return `<footer class="footer">
   <div class="footer-media">
-    <video data-lazy-video data-src="/assets/co-footer.mp4" poster="/assets/co-footer-poster.jpg" autoplay muted loop playsinline preload="none"></video>
+    <video data-lazy-video data-src="/assets/co-footer-720.mp4" poster="/assets/co-footer-poster.jpg" autoplay muted loop playsinline preload="none"></video>
     <div class="footer-media-copy">
       <p class="eyebrow">Scenes from the school</p>
       <h2>Real workshops. Real devices. Real Bitcoin builders.</h2>

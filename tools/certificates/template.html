@@ -1,0 +1,33 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+*{box-sizing:border-box;margin:0}
+html,body{width:1600px;height:1131px;background:#0A0A0A;font-family:"Inter Display","Inter",sans-serif;color:#F5F5F5}
+.c{position:relative;width:1600px;height:1131px;padding:84px 110px;overflow:hidden;
+  background:radial-gradient(60% 55% at 92% 8%,rgba(247,147,26,.22),transparent 70%),radial-gradient(40% 40% at 0% 100%,rgba(247,147,26,.10),transparent 70%),#0A0A0A}
+.c:before{content:"";position:absolute;inset:34px;border:1.5px solid rgba(247,147,26,.55);border-radius:28px}
+.c:after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(80% 80% at 50% 40%,#000,transparent)}
+.dot{position:absolute;right:120px;top:110px;width:210px;height:210px;border-radius:50%;background:#F7931A;box-shadow:0 0 120px rgba(247,147,26,.55)}
+.ring{position:absolute;right:65px;top:55px;width:320px;height:320px;border-radius:50%;border:1.5px solid rgba(247,147,26,.35)}
+.ring.r2{right:15px;top:5px;width:420px;height:420px;border-color:rgba(247,147,26,.18)}
+.in{position:relative;z-index:2;height:100%;display:flex;flex-direction:column}
+.logo{height:62px;width:auto;align-self:flex-start}
+.k{margin-top:96px;color:#F7931A;font:700 22px "Plus Jakarta Sans","Inter",monospace;letter-spacing:.28em;text-transform:uppercase}
+.lbl{margin-top:34px;color:#9A9A9A;font-size:28px}
+.name{margin-top:12px;font-size:112px;font-weight:700;letter-spacing:-.03em;line-height:1}
+.what{margin-top:34px;max-width:1080px;color:#CFCFCF;font-size:31px;line-height:1.45}
+.what b{color:#F5F5F5}
+.tags{display:flex;flex-wrap:wrap;gap:12px;margin-top:40px;max-width:1150px}.tags span{padding:10px 20px;border:1.5px solid rgba(247,147,26,.45);border-radius:999px;color:#F5F5F5;font-size:22px;font-weight:600;background:rgba(247,147,26,.07)}
+.foot{margin-top:auto;display:flex;gap:70px;align-items:flex-end}
+.foot div{border-top:1.5px solid rgba(255,255,255,.22);padding-top:16px;min-width:250px}
+.foot small{display:block;color:#8A8A8A;font:600 16px "Plus Jakarta Sans",monospace;letter-spacing:.14em;text-transform:uppercase}
+.foot span{display:block;margin-top:8px;font-size:26px;font-weight:600}
+.foot .v{margin-left:auto;text-align:right;border:0;min-width:0}
+.foot .v span{color:#F7931A;font-size:22px}
+</style></head><body><div class="c"><i class="ring r2"></i><i class="ring"></i><i class="dot"></i><div class="in">
+<img class="logo" src="LOGO">
+<p class="k">Certificate of completion</p>
+<p class="lbl">This certifies that</p>
+<p class="name">NAME</p>
+<p class="what">has completed <b>COHORT</b>DETAILS</p>
+<div class="tags">TAGS</div>
+<div class="foot"><div><small>Completed</small><span>DATE</span></div>HOSTS<div class="v"><small>Verify</small><span>codeorange.dev/certificates/ID</span></div></div>
+</div></div></body></html>

@@ -54,7 +54,7 @@ a { color: inherit; }
 .ghost { border: 1px solid rgba(255,255,255,.16); color: var(--text); }
 .ghost:hover { border-color: var(--orange); color: var(--orange); }
 .small { min-height: 40px; padding: 9px 18px; font-size: 14px; }
-.hero { position: relative; overflow: hidden; background-image: linear-gradient(rgba(10,10,10,.78), rgba(10,10,10,.92)), linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px), url("/assets/latest-workshops/workshop-latest-builders.jpg"); background-size: auto, 48px 48px, 48px 48px, cover; background-position: center, 0 0, 0 0, center 42%; }
+.hero { position: relative; overflow: hidden; background-image: linear-gradient(rgba(10,10,10,.78), rgba(10,10,10,.92)), linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px), url("/assets/latest-workshops/workshop-latest-builders.webp"); background-size: auto, 48px 48px, 48px 48px, cover; background-position: center, 0 0, 0 0, center 42%; }
 .hero-grid, .section-inner { max-width: 1240px; margin: 0 auto; padding: 96px 32px; }
 .hero-grid { display: grid; grid-template-columns: minmax(0,1.08fr) minmax(320px,.92fr); gap: 64px; align-items: center; }
 .glow { position: absolute; top: -160px; right: -110px; width: 740px; height: 740px; border-radius: 50%; background: radial-gradient(circle, rgba(247,147,26,.14), transparent 66%); pointer-events: none; }
@@ -174,8 +174,9 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
   .mobile-nav a { font-size: 11px; padding-inline: 10px; }
 }
 </style>
-<link rel="stylesheet" href="/assets/theme.css?v=20261015b">
+<link rel="stylesheet" href="/assets/theme.css?v=20261015c">
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
+<link rel="stylesheet" href="/assets/co-builders.css?v=1"><script src="/assets/co-builders.js?v=1" defer></script>
 </head>
 <body>
 <a class="announce" href="/decoding-bitcoin">Decoding Bitcoin study cohort starts Monday 16 November &middot; free, on Discord <span>Sign up &rarr;</span></a>
@@ -183,6 +184,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
   <div class="header-inner">
     <a class="brand" href="/" aria-label="Code Orange Dev School home"><img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School"></a>
     <nav class="desktop-nav" aria-label="Primary">
+      <a href="/start">Start here</a>
       <a href="/programs">Programs</a>
       <a href="/portal">Portal</a>
       <a href="/fellowships">Fellowships</a>
@@ -197,6 +199,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
     </div>
   </div>
   <nav class="mobile-nav" aria-label="Mobile">
+    <a href="/start">Start here</a>
     <a href="/programs">Programs</a>
     <a href="/portal">Portal</a>
     <a href="/calendar">Calendar</a>
@@ -229,13 +232,30 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
   <section class="section-inner">
   <div class="grid three"><div class="stat"><strong>Every PR</strong><span class="pill">Linked</span><p>Each community PR on the <a href="https://github.com/code-orange-dev/PR-tracking-dashboard" target="_blank" rel="noopener">PR dashboard</a> has a direct link, and its state is re-checked weekly.</p></div><div class="stat"><strong>CC0</strong><span class="pill">Curriculum</span><p>All syllabi, exercises and facilitator guides are public domain.</p></div><div class="stat"><strong>Free</strong><span class="pill">Programs</span><p>Programs are free of charge for everyone joining.</p></div></div>
   <div class="photo-grid"><div class="photo-card wide tall">
-  <img src="/assets/new-workshops/workshop-nodes-miners.jpg" alt="Bitcoin nodes, miners, and devices on a Code Orange workshop table" loading="lazy">
+  <img src="/assets/new-workshops/workshop-nodes-miners.webp" alt="Bitcoin nodes, miners, and devices on a Code Orange workshop table" loading="lazy">
   <span class="photo-caption">Nodes, miners, and signers</span>
 </div><div class="photo-card tall">
-  <img src="/assets/new-workshops/workshop-miner-close.jpg" alt="Close-up of Code Orange Bitcoin mining hardware" loading="lazy">
+  <img src="/assets/new-workshops/workshop-miner-close.webp" alt="Close-up of Code Orange Bitcoin mining hardware" loading="lazy">
   <span class="photo-caption">Mining hardware close-up</span>
 </div></div>
 </section>
+<!-- builders:start -->
+<section class="cob" id="builders" aria-labelledby="cob-title"><div class="section-inner">
+  <div class="split"><div><p class="eyebrow">Builders wall</p><h2 id="cob-title">Real code, merged into real Bitcoin projects.</h2></div>
+  <p class="lead">Every pull request is public on GitHub. The latest merges below update automatically, and the totals are checked by hand each month on the <a href="/dashboard">PR dashboard</a>.</p></div>
+  <div class="cob-stats">
+    <div><strong>94</strong><span>merged pull requests</span></div>
+    <div><strong>29</strong><span>open-source repos</span></div>
+    <div><strong>11</strong><span>builders with merged code</span></div>
+    <div><strong data-cob-30>17</strong><span data-cob-30-label>open pull requests in review</span></div>
+  </div>
+  <div class="cob-grid">
+    <div class="cob-feed"><p class="cob-label"><i aria-hidden="true"></i>Latest merged</p><ul data-cob-feed><li><a href="https://github.com/rust-bitcoin/rust-bitcoin/pull/6394" target="_blank" rel="noopener"><b>rust-bitcoin #6394</b><span>rust-bitcoin/rust-bitcoin · Muhammad · Jun 2026</span></a></li><li><a href="https://github.com/bitcoindevkit/bdk-ffi/pull/1008" target="_blank" rel="noopener"><b>BDK (bdk-ffi) #1008</b><span>bitcoindevkit/bdk-ffi · Peter · Jun 2026</span></a></li><li><a href="https://github.com/bitcoindevkit/bdk_wallet/pull/487" target="_blank" rel="noopener"><b>bdk_wallet #487</b><span>bitcoindevkit/bdk_wallet · Muhammad · May 2026</span></a></li><li><a href="https://github.com/bitcoindevkit/bdk_wallet/pull/476" target="_blank" rel="noopener"><b>bdk_wallet #476</b><span>bitcoindevkit/bdk_wallet · Muhammad · May 2026</span></a></li><li><a href="https://github.com/bitcoindevkit/bdk_wallet/pull/471" target="_blank" rel="noopener"><b>bdk_wallet #471</b><span>bitcoindevkit/bdk_wallet · Muhammad · May 2026</span></a></li><li><a href="https://github.com/bitcoinppl/cove/pull/728" target="_blank" rel="noopener"><b>Cove wallet #728</b><span>bitcoinppl/cove · Muhammad · May 2026</span></a></li></ul></div>
+    <div class="cob-people"><p class="cob-label">The builders</p><div class="cob-people-grid"><a class="cob-person" href="https://github.com/pzafonte" target="_blank" rel="noopener"><img src="https://github.com/pzafonte.png?size=96" alt="" width="48" height="48" loading="lazy" decoding="async"><span><b>Peter</b><small>30 merged</small></span></a><a class="cob-person" href="https://github.com/va-an" target="_blank" rel="noopener"><img src="https://github.com/va-an.png?size=96" alt="" width="48" height="48" loading="lazy" decoding="async"><span><b>Vaan</b><small>14 merged</small></span></a><a class="cob-person" href="https://github.com/dayvvo" target="_blank" rel="noopener"><img src="https://github.com/dayvvo.png?size=96" alt="" width="48" height="48" loading="lazy" decoding="async"><span><b>Dayvvo</b><small>9 merged</small></span></a><a class="cob-person" href="https://github.com/muhahahmad68" target="_blank" rel="noopener"><img src="https://github.com/muhahahmad68.png?size=96" alt="" width="48" height="48" loading="lazy" decoding="async"><span><b>Muhammad</b><small>8 merged</small></span></a><a class="cob-person" href="https://github.com/psychemist" target="_blank" rel="noopener"><img src="https://github.com/psychemist.png?size=96" alt="" width="48" height="48" loading="lazy" decoding="async"><span><b>Psychemist</b><small>7 merged</small></span></a><a class="cob-person" href="https://github.com/RazorBest" target="_blank" rel="noopener"><img src="https://github.com/RazorBest.png?size=96" alt="" width="48" height="48" loading="lazy" decoding="async"><span><b>Razor</b><small>6 merged</small></span></a><a class="cob-person" href="https://github.com/Arowolokehinde" target="_blank" rel="noopener"><img src="https://github.com/Arowolokehinde.png?size=96" alt="" width="48" height="48" loading="lazy" decoding="async"><span><b>Arowolo</b><small>6 merged</small></span></a><a class="cob-person" href="https://github.com/0xlaga" target="_blank" rel="noopener"><img src="https://github.com/0xlaga.png?size=96" alt="" width="48" height="48" loading="lazy" decoding="async"><span><b>Diegodev</b><small>5 merged</small></span></a><a class="cob-person" href="https://github.com/alexgrad42" target="_blank" rel="noopener"><img src="https://github.com/alexgrad42.png?size=96" alt="" width="48" height="48" loading="lazy" decoding="async"><span><b>Gradale</b><small>5 merged</small></span></a><a class="cob-person" href="https://github.com/alexxie16" target="_blank" rel="noopener"><img src="https://github.com/alexxie16.png?size=96" alt="" width="48" height="48" loading="lazy" decoding="async"><span><b>Alex Xie</b><small>3 merged</small></span></a><a class="cob-person" href="https://github.com/mwihoti" target="_blank" rel="noopener"><img src="https://github.com/mwihoti.png?size=96" alt="" width="48" height="48" loading="lazy" decoding="async"><span><b>Mwihoti</b><small>1 merged</small></span></a></div>
+    <a class="cob-more" href="/dashboard">See every pull request &rarr;</a></div>
+  </div>
+</div></section>
+<!-- builders:end -->
 <section class="band"><div class="section-inner split">
   <div><p class="eyebrow">Example program</p><h2>Bitcoin Dojo: seven weeks.</h2><p class="lead">Build Bitcoin's cryptographic primitives from scratch with Jimmy Song's <em>Programming Bitcoin</em>. The exercises are graded against real mainnet transactions. <a href="https://github.com/code-orange-dev/curriculum/tree/main/bitcoin-dojo" target="_blank" rel="noopener">Full syllabus</a>.</p></div>
   <div class="timeline"><div class="timeline-item"><div><h3>Weeks 1-2</h3><p>Finite fields and elliptic curves.</p></div></div><div class="timeline-item"><div><h3>Week 3</h3><p>Keys, SEC, Base58 and bech32 addresses.</p></div></div><div class="timeline-item"><div><h3>Week 4</h3><p>Parsing and serialising transactions.</p></div></div><div class="timeline-item"><div><h3>Week 5</h3><p>Script, ECDSA verification and multisig.</p></div></div><div class="timeline-item"><div><h3>Week 6</h3><p>SegWit, weight and timelocks.</p></div></div><div class="timeline-item"><div><h3>Week 7</h3><p>Capstone: verify your own transaction with your own code.</p></div></div></div>
@@ -317,7 +337,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 </main>
 <footer class="footer">
   <div class="footer-media">
-    <video data-lazy-video data-src="/assets/co-footer.mp4" poster="/assets/co-footer-poster.jpg" autoplay muted loop playsinline preload="none"></video>
+    <video data-lazy-video data-src="/assets/co-footer-720.mp4" poster="/assets/co-footer-poster.webp" autoplay muted loop playsinline preload="none"></video>
     <div class="footer-media-copy">
       <p class="eyebrow">Scenes from the school</p>
       <h2>Hands-on Bitcoin education.</h2>

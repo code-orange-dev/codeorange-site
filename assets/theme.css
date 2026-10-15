@@ -161,7 +161,7 @@ html.co-menu-open, html.co-menu-open body { overflow: hidden; }
 .desktop-nav { gap: clamp(12px, 1.6vw, 28px) !important; }
 .desktop-nav a { padding-inline: 2px !important; }
 @media (prefers-reduced-motion: reduce) {
-  #static-homepage .co-hero:before { display: block !important; background: url("/assets/new-workshops/workshop-nodes-miners.jpg") center / cover no-repeat !important; opacity: .7 !important; }
+  #static-homepage .co-hero:before { display: block !important; background: url("/assets/new-workshops/workshop-nodes-miners.webp") center / cover no-repeat !important; opacity: .7 !important; }
 }
 
 /* ── Developer community: each person is a pill button ── */
@@ -255,3 +255,6 @@ html.no-site-bg::before, html.no-site-bg::after { content: none; }
   html::after { display: none; }
 }
 @media print { html::before, html::after { content: none; } }
+
+/* Keep nav labels on one line (e.g. "Start here"). */
+.desktop-nav a, #static-homepage .co-links a { white-space: nowrap; }

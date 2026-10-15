@@ -54,7 +54,7 @@ a { color: inherit; }
 .ghost { border: 1px solid rgba(255,255,255,.16); color: var(--text); }
 .ghost:hover { border-color: var(--orange); color: var(--orange); }
 .small { min-height: 40px; padding: 9px 18px; font-size: 14px; }
-.hero { position: relative; overflow: hidden; background-image: linear-gradient(rgba(10,10,10,.78), rgba(10,10,10,.92)), linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px), url("/assets/latest-workshops/workshop-latest-builders.jpg"); background-size: auto, 48px 48px, 48px 48px, cover; background-position: center, 0 0, 0 0, center 42%; }
+.hero { position: relative; overflow: hidden; background-image: linear-gradient(rgba(10,10,10,.78), rgba(10,10,10,.92)), linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px), url("/assets/latest-workshops/workshop-latest-builders.webp"); background-size: auto, 48px 48px, 48px 48px, cover; background-position: center, 0 0, 0 0, center 42%; }
 .hero-grid, .section-inner { max-width: 1240px; margin: 0 auto; padding: 96px 32px; }
 .hero-grid { display: grid; grid-template-columns: minmax(0,1.08fr) minmax(320px,.92fr); gap: 64px; align-items: center; }
 .glow { position: absolute; top: -160px; right: -110px; width: 740px; height: 740px; border-radius: 50%; background: radial-gradient(circle, rgba(247,147,26,.14), transparent 66%); pointer-events: none; }
@@ -525,7 +525,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
   .pt-labs td:first-child { white-space: normal; }
 }
 </style>
-<link rel="stylesheet" href="/assets/theme.css?v=20261015b">
+<link rel="stylesheet" href="/assets/theme.css?v=20261015c">
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
 </head>
 <body>
@@ -534,6 +534,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
   <div class="header-inner">
     <a class="brand" href="/" aria-label="Code Orange Dev School home"><img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School"></a>
     <nav class="desktop-nav" aria-label="Primary">
+      <a href="/start">Start here</a>
       <a href="/programs">Programs</a>
       <a href="/portal">Portal</a>
       <a href="/fellowships">Fellowships</a>
@@ -548,6 +549,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
     </div>
   </div>
   <nav class="mobile-nav" aria-label="Mobile">
+    <a href="/start">Start here</a>
     <a href="/programs">Programs</a>
     <a href="/portal">Portal</a>
     <a href="/calendar">Calendar</a>
@@ -557,7 +559,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
   </nav>
 </header>
 <main>
-  <section class="hero"><div class="co-fx" aria-hidden="true"><i></i><i></i><i></i><svg class="co-fx-glow" viewBox="0 0 1200 400" preserveAspectRatio="none"><defs><filter id="co-glow-blur" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="25"/></filter><radialGradient id="co-glow-fill"><stop offset="0" stop-color="#F7931A" stop-opacity=".55"/><stop offset=".55" stop-color="#C2620A" stop-opacity=".28"/><stop offset="1" stop-color="#4A2600" stop-opacity="0"/></radialGradient></defs><ellipse cx="600" cy="200" rx="520" ry="110" fill="url(#co-glow-fill)" filter="url(#co-glow-blur)"/></svg></div><video class="mb-hero-video" poster="/assets/co-hero-first.jpg" autoplay muted loop playsinline preload="auto" aria-hidden="true"><source src="/assets/co-hero-720.mp4" type="video/mp4"><source src="/assets/co-hero-720.webm" type="video/webm"></video>
+  <section class="hero"><div class="co-fx" aria-hidden="true"><i></i><i></i><i></i><svg class="co-fx-glow" viewBox="0 0 1200 400" preserveAspectRatio="none"><defs><filter id="co-glow-blur" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="25"/></filter><radialGradient id="co-glow-fill"><stop offset="0" stop-color="#F7931A" stop-opacity=".55"/><stop offset=".55" stop-color="#C2620A" stop-opacity=".28"/><stop offset="1" stop-color="#4A2600" stop-opacity="0"/></radialGradient></defs><ellipse cx="600" cy="200" rx="520" ry="110" fill="url(#co-glow-fill)" filter="url(#co-glow-blur)"/></svg></div><video class="mb-hero-video" poster="/assets/co-hero-first.webp" autoplay muted loop playsinline preload="auto" aria-hidden="true"><source src="/assets/co-hero-v2-540.mp4" type="video/mp4" media="(max-width: 760px)"><source src="/assets/co-hero-v2.mp4" type="video/mp4"><source src="/assets/co-hero-720.webm" type="video/webm"></video>
     <div class="glow"></div>
     <div class="hero-grid">
       <div>
@@ -607,7 +609,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
     </div>
   </section>
 
-  <section id="sessions" class="section-inner mb-bg mb-bg-right" style="--mb-bg:url(/assets/programs/privacy-workshop-roundtable.jpg);scroll-margin-top:96px">
+  <section id="sessions" class="section-inner mb-bg mb-bg-right" style="--mb-bg:url(/assets/programs/privacy-workshop-roundtable.webp);scroll-margin-top:96px">
     <div class="split"><div><p class="eyebrow">Season one</p><h2>12 sessions, one at a time.</h2></div><p class="lead">Each session stands alone, so you can drop in anywhere. Tap one to learn the idea, try it yourself, and see what we do live.</p></div>
     <div class="mb-weeks">
         <details id="s1" class="mb-week" data-week="0">
@@ -923,7 +925,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
 </main>
 <footer class="footer">
   <div class="footer-media">
-    <video data-lazy-video data-src="/assets/co-footer.mp4" poster="/assets/co-footer-poster.jpg" autoplay muted loop playsinline preload="none"></video>
+    <video data-lazy-video data-src="/assets/co-footer-720.mp4" poster="/assets/co-footer-poster.webp" autoplay muted loop playsinline preload="none"></video>
     <div class="footer-media-copy">
       <p class="eyebrow">Scenes from the school</p>
       <h2>Hands-on Bitcoin education.</h2>

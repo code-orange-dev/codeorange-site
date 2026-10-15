@@ -183,7 +183,7 @@ const staticHomepage = `
     <details><summary>Can I run a workshop in my city?</summary><p>Yes. The curriculum is open source and the community can help with local adaptation, links, and promotion.</p></details>
   </div></section>
   <footer><div class="co-wrap">
-    <div class="co-media-footer"><video data-lazy-video data-src="/assets/co-footer.mp4" poster="/assets/co-footer-poster.jpg" autoplay muted loop playsinline preload="none"></video><div><p class="co-eyebrow">Scenes from the school</p><h2>Real workshops. Real devices. Real Bitcoin builders.</h2></div></div>
+    <div class="co-media-footer"><video data-lazy-video data-src="/assets/co-footer-720.mp4" poster="/assets/co-footer-poster.jpg" autoplay muted loop playsinline preload="none"></video><div><p class="co-eyebrow">Scenes from the school</p><h2>Real workshops. Real devices. Real Bitcoin builders.</h2></div></div>
     <div class="co-foot"><span>Code Orange Dev School · Singapore 🇸🇬</span><span><a href="mailto:hello@codeorange.dev">hello@codeorange.dev</a> · <a href="https://github.com/code-orange-dev" target="_blank" rel="noopener">GitHub</a> · <a href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a></span></div>
   </div></footer>
 </main>`;

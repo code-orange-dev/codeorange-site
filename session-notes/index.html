@@ -55,7 +55,7 @@ a { color: inherit; }
 .ghost { border: 1px solid rgba(255,255,255,.16); color: var(--text); }
 .ghost:hover { border-color: var(--orange); color: var(--orange); }
 .small { min-height: 40px; padding: 9px 18px; font-size: 14px; }
-.hero { position: relative; overflow: hidden; background-image: linear-gradient(rgba(10,10,10,.78), rgba(10,10,10,.92)), linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px), url("/assets/latest-workshops/workshop-latest-builders.jpg"); background-size: auto, 48px 48px, 48px 48px, cover; background-position: center, 0 0, 0 0, center 42%; }
+.hero { position: relative; overflow: hidden; background-image: linear-gradient(rgba(10,10,10,.78), rgba(10,10,10,.92)), linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px), url("/assets/latest-workshops/workshop-latest-builders.webp"); background-size: auto, 48px 48px, 48px 48px, cover; background-position: center, 0 0, 0 0, center 42%; }
 .hero-grid, .section-inner { max-width: 1240px; margin: 0 auto; padding: 96px 32px; }
 .hero-grid { display: grid; grid-template-columns: minmax(0,1.08fr) minmax(320px,.92fr); gap: 64px; align-items: center; }
 .glow { position: absolute; top: -160px; right: -110px; width: 740px; height: 740px; border-radius: 50%; background: radial-gradient(circle, rgba(247,147,26,.14), transparent 66%); pointer-events: none; }
@@ -342,7 +342,7 @@ a.res:hover { border-color: rgba(247,147,26,.55); transform: translateY(-2px); }
 .res-empty { color: var(--dim); }
 @media (max-width: 700px) { .res-grid { grid-template-columns: 1fr; } }
 </style>
-<link rel="stylesheet" href="/assets/theme.css?v=20261015b">
+<link rel="stylesheet" href="/assets/theme.css?v=20261015c">
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
 </head>
 <body>
@@ -351,6 +351,7 @@ a.res:hover { border-color: rgba(247,147,26,.55); transform: translateY(-2px); }
   <div class="header-inner">
     <a class="brand" href="/" aria-label="Code Orange Dev School home"><img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School"></a>
     <nav class="desktop-nav" aria-label="Primary">
+      <a href="/start">Start here</a>
       <a href="/programs">Programs</a>
       <a href="/portal">Portal</a>
       <a href="/fellowships">Fellowships</a>
@@ -365,6 +366,7 @@ a.res:hover { border-color: rgba(247,147,26,.55); transform: translateY(-2px); }
     </div>
   </div>
   <nav class="mobile-nav" aria-label="Mobile">
+    <a href="/start">Start here</a>
     <a href="/programs">Programs</a>
     <a href="/portal">Portal</a>
     <a href="/calendar">Calendar</a>
@@ -425,7 +427,7 @@ a.res:hover { border-color: rgba(247,147,26,.55); transform: translateY(-2px); }
 </main>
 <footer class="footer">
   <div class="footer-media">
-    <video data-lazy-video data-src="/assets/co-footer.mp4" poster="/assets/co-footer-poster.jpg" autoplay muted loop playsinline preload="none"></video>
+    <video data-lazy-video data-src="/assets/co-footer-720.mp4" poster="/assets/co-footer-poster.webp" autoplay muted loop playsinline preload="none"></video>
     <div class="footer-media-copy">
       <p class="eyebrow">Scenes from the school</p>
       <h2>Real workshops. Real devices. Real Bitcoin builders.</h2>
