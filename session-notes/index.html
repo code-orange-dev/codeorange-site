@@ -268,7 +268,35 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 .share-row a, .share-row button { min-height: 38px; padding: 8px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,.16); background: transparent; color: var(--text); font: 600 14px "Inter", system-ui, sans-serif; text-decoration: none; cursor: pointer; }
 .share-row a:hover, .share-row button:hover { border-color: var(--orange); color: var(--orange); }
 .note-figure img { aspect-ratio: 1200 / 630; }
-@media (max-width: 560px) { .viz { padding: 18px; font-size: 15px; } .q-grid { grid-template-columns: 1fr; } .flow-hop { flex: 0 0 100%; text-align: center; } .flow-step { flex-basis: 100%; } }
+.video { position: relative; margin: 0 0 14px; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: #000; box-shadow: 0 24px 70px rgba(0,0,0,.32); }
+.video img, .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; object-fit: cover; }
+.video button { position: absolute; inset: 0; width: 100%; border: 0; padding: 0; background: transparent; cursor: pointer; }
+.video .play { position: absolute; left: 72%; top: 50%; width: 84px; height: 84px; margin: -42px 0 0 -42px; border-radius: 50%; background: var(--orange); box-shadow: 0 10px 40px rgba(0,0,0,.5); transition: transform .15s ease; }
+.video .play:after { content: ""; position: absolute; left: 33px; top: 26px; border-style: solid; border-width: 16px 0 16px 26px; border-color: transparent transparent transparent #0A0A0A; }
+.video button:hover .play { transform: scale(1.08); }
+.video-note { margin: 0 0 32px; color: var(--dim); font: 500 13px/1.5 "Plus Jakarta Sans", monospace; }
+.video-note a { color: var(--orange); }
+.chapters { margin: 0 0 40px; border: 1px solid var(--line); border-radius: 16px; background: var(--band); }
+.chapters summary { padding: 16px 20px; cursor: pointer; color: var(--text); font-weight: 600; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+.chapters summary::-webkit-details-marker { display: none; }
+.chapters summary:after { content: "+"; color: var(--orange); font-size: 22px; line-height: 1; }
+.chapters[open] summary:after { content: "−"; }
+.chapters ol { list-style: none; margin: 0; padding: 0 8px 12px; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 2px 12px; }
+.chapters li { margin: 0; }
+.chapters a { display: flex; gap: 12px; padding: 8px 12px; border-radius: 8px; color: var(--muted); text-decoration: none; font-size: 15px; line-height: 1.4; }
+.chapters a:hover { background: var(--card); color: var(--text); }
+.chapters time { flex: 0 0 auto; min-width: 56px; color: var(--orange); font: 600 13px/1.6 "Plus Jakarta Sans", monospace; }
+.quote { margin: 8px 0 32px; padding: 24px 26px; border-left: 3px solid var(--orange); background: var(--card); border-radius: 0 16px 16px 0; }
+.quote p { margin: 0 0 10px; color: var(--text); font-size: 22px; line-height: 1.45; }
+.quote cite { color: var(--dim); font: 600 13px "Plus Jakarta Sans", monospace; font-style: normal; }
+.next-card { display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center; margin: 40px 0 0; padding: 24px; background: linear-gradient(145deg, rgba(247,147,26,.14), rgba(20,20,20,.9) 55%); border: 1px solid rgba(247,147,26,.35); border-radius: 16px; }
+.next-card .eyebrow { margin: 0 0 8px; }
+.next-card h3 { font-size: 24px; }
+.next-card p { margin: 6px 0 0; color: var(--muted); }
+.next-card .cta-row { flex-wrap: wrap; }
+@media (max-width: 700px) { .chapters ol { grid-template-columns: 1fr; } .next-card { grid-template-columns: 1fr; } .quote p { font-size: 19px; } }
+
+@media (max-width: 560px) { .viz { padding: 18px; font-size: 15px; } .q-grid { grid-template-columns: 1fr; } .flow-hop { flex: 0 0 100%; text-align: center; } .flow-step { flex-basis: 100%; } .flow-hop i { display: inline-block; font-style: normal; transform: rotate(90deg); } }
 </style>
 <link rel="stylesheet" href="/assets/theme.css?v=20261011a">
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
@@ -321,7 +349,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
           <span class="pill orange">Privacy</span>
           <h3 style="margin-top:16px">Sovereign Bitcoiner Workshop: Why Privacy Matters</h3>
           <p>Why “nothing to hide” is the wrong question, a live Lightning privacy test, and every link shared on the call.</p>
-          <div class="meta"><span class="pill"><time datetime="2026-10-14">October 14, 2026</time></span><span class="pill">Hosted by Razor</span></div>
+          <div class="meta"><span class="pill"><time datetime="2026-10-14">October 14, 2026</time></span><span class="pill">Hosted by Razor</span><span class="pill">&#9654; Recording</span></div>
         </div>
       </a>
     </div>

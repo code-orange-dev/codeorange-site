@@ -19,13 +19,13 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Sovereign Bitcoiner Workshop: Why Privacy Matters">
 <meta property="article:published_time" content="2026-10-14">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Sovereign Bitcoiner Workshop: Why Privacy Matters", "description": "Why “nothing to hide” is the wrong question, a live Lightning privacy test, and every link shared on the call.", "datePublished": "2026-10-14", "url": "https://codeorange.dev/session-notes/2026-10-14-sovereign-bitcoiner-workshop", "image": "https://codeorange.dev/assets/session-notes/2026-10-14-sovereign-bitcoiner-workshop.jpg", "author": {"@type": "Organization", "name": "Code Orange Dev School", "url": "https://codeorange.dev"}, "publisher": {"@type": "EducationalOrganization", "name": "Code Orange Dev School", "url": "https://codeorange.dev"}, "video": {"@type": "VideoObject", "name": "Sovereign Bitcoiner Workshop: Why Privacy Matters", "description": "Why “nothing to hide” is the wrong question, a live Lightning privacy test, and every link shared on the call.", "uploadDate": "2026-10-14", "thumbnailUrl": "https://codeorange.dev/assets/session-notes/2026-10-14-sovereign-bitcoiner-workshop.jpg", "embedUrl": "https://www.youtube-nocookie.com/embed/NENhVbqtGTs", "contentUrl": "https://www.youtube.com/watch?v=NENhVbqtGTs"}}</script>
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@CodeOrangeDevs">
 <meta name="twitter:title" content="Sovereign Bitcoiner Workshop: Why Privacy Matters - Session Notes">
 <meta name="twitter:description" content="Why &ldquo;nothing to hide&rdquo; is the wrong question, a live Lightning privacy test, and every link shared on the call.">
 <meta name="twitter:image" content="https://codeorange.dev/assets/session-notes/2026-10-14-sovereign-bitcoiner-workshop.jpg">
 <link rel="icon" type="image/svg+xml" href="/assets/favicon-co.svg">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Sovereign Bitcoiner Workshop: Why Privacy Matters - Session Notes","description":"Why &ldquo;nothing to hide&rdquo; is the wrong question, a live Lightning privacy test, and every link shared on the call.","url":"https://codeorange.dev/session-notes/2026-10-14-sovereign-bitcoiner-workshop","isPartOf":{"@type":"WebSite","name":"Code Orange Dev School","url":"https://codeorange.dev"},"publisher":{"@type":"EducationalOrganization","name":"Code Orange Dev School","url":"https://codeorange.dev","email":"hello@codeorange.dev","sameAs":["https://github.com/code-orange-dev","https://x.com/CodeOrangeDevs","https://www.instagram.com/codeorangedevs","https://njump.me/npub1gxqyeea3xspkd68mxlxsvvk3gdzdd555u504ynwpdj0ghg503mvq2gydt0"]}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
@@ -269,13 +269,41 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 .share-row a, .share-row button { min-height: 38px; padding: 8px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,.16); background: transparent; color: var(--text); font: 600 14px "Inter", system-ui, sans-serif; text-decoration: none; cursor: pointer; }
 .share-row a:hover, .share-row button:hover { border-color: var(--orange); color: var(--orange); }
 .note-figure img { aspect-ratio: 1200 / 630; }
+.video { position: relative; margin: 0 0 14px; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: #000; box-shadow: 0 24px 70px rgba(0,0,0,.32); }
+.video img, .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; object-fit: cover; }
+.video button { position: absolute; inset: 0; width: 100%; border: 0; padding: 0; background: transparent; cursor: pointer; }
+.video .play { position: absolute; left: 72%; top: 50%; width: 84px; height: 84px; margin: -42px 0 0 -42px; border-radius: 50%; background: var(--orange); box-shadow: 0 10px 40px rgba(0,0,0,.5); transition: transform .15s ease; }
+.video .play:after { content: ""; position: absolute; left: 33px; top: 26px; border-style: solid; border-width: 16px 0 16px 26px; border-color: transparent transparent transparent #0A0A0A; }
+.video button:hover .play { transform: scale(1.08); }
+.video-note { margin: 0 0 32px; color: var(--dim); font: 500 13px/1.5 "Plus Jakarta Sans", monospace; }
+.video-note a { color: var(--orange); }
+.chapters { margin: 0 0 40px; border: 1px solid var(--line); border-radius: 16px; background: var(--band); }
+.chapters summary { padding: 16px 20px; cursor: pointer; color: var(--text); font-weight: 600; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+.chapters summary::-webkit-details-marker { display: none; }
+.chapters summary:after { content: "+"; color: var(--orange); font-size: 22px; line-height: 1; }
+.chapters[open] summary:after { content: "−"; }
+.chapters ol { list-style: none; margin: 0; padding: 0 8px 12px; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 2px 12px; }
+.chapters li { margin: 0; }
+.chapters a { display: flex; gap: 12px; padding: 8px 12px; border-radius: 8px; color: var(--muted); text-decoration: none; font-size: 15px; line-height: 1.4; }
+.chapters a:hover { background: var(--card); color: var(--text); }
+.chapters time { flex: 0 0 auto; min-width: 56px; color: var(--orange); font: 600 13px/1.6 "Plus Jakarta Sans", monospace; }
+.quote { margin: 8px 0 32px; padding: 24px 26px; border-left: 3px solid var(--orange); background: var(--card); border-radius: 0 16px 16px 0; }
+.quote p { margin: 0 0 10px; color: var(--text); font-size: 22px; line-height: 1.45; }
+.quote cite { color: var(--dim); font: 600 13px "Plus Jakarta Sans", monospace; font-style: normal; }
+.next-card { display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center; margin: 40px 0 0; padding: 24px; background: linear-gradient(145deg, rgba(247,147,26,.14), rgba(20,20,20,.9) 55%); border: 1px solid rgba(247,147,26,.35); border-radius: 16px; }
+.next-card .eyebrow { margin: 0 0 8px; }
+.next-card h3 { font-size: 24px; }
+.next-card p { margin: 6px 0 0; color: var(--muted); }
+.next-card .cta-row { flex-wrap: wrap; }
+@media (max-width: 700px) { .chapters ol { grid-template-columns: 1fr; } .next-card { grid-template-columns: 1fr; } .quote p { font-size: 19px; } }
+
 @media (max-width: 560px) { .viz { padding: 18px; font-size: 15px; } .q-grid { grid-template-columns: 1fr; } .flow-hop { flex: 0 0 100%; text-align: center; } .flow-step { flex-basis: 100%; } .flow-hop i { display: inline-block; font-style: normal; transform: rotate(90deg); } }
 </style>
 <link rel="stylesheet" href="/assets/theme.css?v=20261011a">
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
 </head>
 <body>
-<a class="announce" href="/decoding-bitcoin">Decoding Bitcoin study cohort starts Monday 16 November &middot; free, on Discord <span>Sign up <i>&rarr;</i></span></a>
+<a class="announce" href="/decoding-bitcoin">Decoding Bitcoin study cohort starts Monday 16 November &middot; free, on Discord <span>Sign up &rarr;</span></a>
 <header class="site-header">
   <div class="header-inner">
     <a class="brand" href="/" aria-label="Code Orange Dev School home"><img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School"></a>
@@ -310,12 +338,14 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
         <p class="eyebrow"><a href="/session-notes" style="text-decoration:none">/Session-notes</a>/2026-10-14_</p>
         <h1>Why Privacy <span class="orange">Matters.</span></h1>
         <p class="lead">Why “nothing to hide” is the wrong question, a live Lightning privacy test, and every link shared on the call.</p>
-        <p class="note-meta"><span class="pill orange">Sovereign Bitcoiner Workshop</span><span class="pill"><time datetime="2026-10-14">October 14, 2026</time></span><span class="pill">Hosted by Razor</span></p>
+        <p class="note-meta"><span class="pill orange">Sovereign Bitcoiner Workshop</span><span class="pill"><time datetime="2026-10-14">October 14, 2026</time></span><span class="pill">Hosted by Razor</span><span class="pill">5 min read</span><a class="pill" href="#video" style="text-decoration:none">&#9654; Recording</a></p>
       </div>
     </div>
   </section>
   <article class="article-wrap">
-    <figure class="article-figure note-figure"><img src="/assets/session-notes/2026-10-14-sovereign-bitcoiner-workshop.jpg" alt="Sovereign Bitcoiner Workshop: Why Privacy Matters" width="1200" height="630"></figure>
+    <div class="video" id="video" data-yt="NENhVbqtGTs"><img src="/assets/session-notes/2026-10-14-sovereign-bitcoiner-workshop.jpg" alt="Sovereign Bitcoiner Workshop: Why Privacy Matters" width="1200" height="630"><button type="button" aria-label="Play the session recording"><span class="play"></span></button></div>
+    <p class="video-note">Full recording, 1h 18m. Plays from youtube-nocookie.com. <a href="https://www.youtube.com/watch?v=NENhVbqtGTs" target="_blank" rel="noopener">Watch on YouTube</a></p>
+    <details class="chapters"><summary>Jump to a chapter <span style="color:var(--dim);font-weight:500">(20 chapters)</span></summary><ol><li><a href="https://www.youtube.com/watch?v=NENhVbqtGTs&amp;t=0s" data-t="0"><time>00:00</time><span>Why read &ldquo;The Eternal Value of Privacy&rdquo;</span></a></li><li><a href="https://www.youtube.com/watch?v=NENhVbqtGTs&amp;t=261s" data-t="261"><time>04:21</time><span>The $100 carpet that leaked 1 BTC</span></a></li><li><a href="https://www.youtube.com/watch?v=NENhVbqtGTs&amp;t=411s" data-t="411"><time>06:51</time><span>Is privacy a basic human right?</span></a></li><li><a href="https://www.youtube.com/watch?v=NENhVbqtGTs&amp;t=483s" data-t="483"><time>08:03</time><span><em>1984</em> vs Kafka&rsquo;s <em>The Trial</em></span></a></li><li><a href="https://www.youtube.com/watch?v=NENhVbqtGTs&amp;t=724s" data-t="724"><time>12:04</time><span>Did Satoshi make Bitcoin transparent on purpose?</span></a></li><li><a href="https://www.youtube.com/watch?v=NENhVbqtGTs&amp;t=1113s" data-t="1113"><time>18:33</time><span>Why the base layer must be auditable</span></a></li><li><a href="https://www.youtube.com/watch?v=NENhVbqtGTs&amp;t=1259s" data-t="1259"><time>20:59</time><span>The cypherpunk manifestos</span></a></li><li><a href="https://www.youtube.com/watch?v=NENhVbqtGTs&amp;t=1444s" data-t="1444"><time>24:04</time><span>What is privacy? Three definitions</span></a></li><li><a href="https://www.youtube.com/watch?v=NENhVbqtGTs&amp;t=1712s" data-t="1712"><time>28:32</time><span>Mass data collection and laws that change</span></a></li><li><a href="https://www.youtube.com/watch?v=NENhVbqtGTs&amp;t=1908s" data-t="1908"><time>31:48</time><span>Fun fact: 2016 blocks is 6102 backwards</span></a></li><li><a href="https://www.youtube.com/watch?v=NENhVbqtGTs&amp;t=2038s" data-t="2038"><time>33:58</time><span>Private payments on a public chain</span></a></li><li><a href="https://www.youtube.com/watch?v=NENhVbqtGTs&amp;t=2235s" data-t="2235"><time>37:15</time><span>Is Lightning more secure? Liveness and watchtowers</span></a></li><li><a href="https://www.youtube.com/watch?v=NENhVbqtGTs&amp;t=2487s" data-t="2487"><time>41:27</time><span>Invoices reveal your node: Tor, ecash, guard nodes</span></a></li><li><a href="https://www.youtube.com/watch?v=NENhVbqtGTs&amp;t=2778s" data-t="2778"><time>46:18</time><span>Live demo: tracing a Lightning payment</span></a></li><li><a href="https://www.youtube.com/watch?v=NENhVbqtGTs&amp;t=2923s" data-t="2923"><time>48:43</time><span>LN Proxy and 1ML</span></a></li><li><a href="https://www.youtube.com/watch?v=NENhVbqtGTs&amp;t=3125s" data-t="3125"><time>52:05</time><span>Hardware wallet or dedicated laptop?</span></a></li><li><a href="https://www.youtube.com/watch?v=NENhVbqtGTs&amp;t=3476s" data-t="3476"><time>57:56</time><span>The Intel Management Engine</span></a></li><li><a href="https://www.youtube.com/watch?v=NENhVbqtGTs&amp;t=3709s" data-t="3709"><time>1:01:49</time><span>Who are we protecting our bitcoin from?</span></a></li><li><a href="https://www.youtube.com/watch?v=NENhVbqtGTs&amp;t=4213s" data-t="4213"><time>1:10:13</time><span>How much trouble are you willing to go through?</span></a></li><li><a href="https://www.youtube.com/watch?v=NENhVbqtGTs&amp;t=4456s" data-t="4456"><time>1:14:16</time><span>Private messengers: White Noise and Keychat</span></a></li></ol></details>
     <div class="prose">
       <div class="tldr">
         <p class="eyebrow">TL;DR</p>
@@ -350,6 +380,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 
       <h2>Key takeaways</h2>
       <p><strong>1. &ldquo;Nothing to hide&rdquo; is the wrong question.</strong> Privacy is about the balance of power between you and whoever holds your data. Laws change, but data stays: Executive Order 6102 made owning gold illegal in the US overnight. Think of Kafka&rsquo;s <em>The Trial</em>: the danger is them knowing everything about you while you know nothing about what they hold.</p>
+      <blockquote class="quote"><p>&ldquo;Arguing that you don&rsquo;t care about the right to privacy because you have nothing to hide is no different than saying you don&rsquo;t care about free speech because you have nothing to say.&rdquo;</p><cite>Edward Snowden, quoted on the call</cite></blockquote>
       <p><strong>2. Bitcoin&rsquo;s base layer is transparent on purpose.</strong> Anyone can verify the 21 million supply. Privacy is added in layers on top.</p>
       <div class="viz" role="figure" aria-label="Bitcoin privacy layers">
         <p class="eyebrow">The big picture</p>
@@ -398,12 +429,13 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
       <h3>Code Orange</h3>
       <ul>
         <li><a href="/privacy-track">Privacy Developer Track</a>: every 1st and 3rd Tuesday, covering PayJoin, Silent Payments, Lightning and ecash</li>
-        <li>Next up: Self-Custody and Multisig workshop with Andy, Friday 16 October. See the <a href="/calendar">calendar</a>.</li>
         <li>Ideas for future sessions: a White Noise vs Keychat comparison, and a Fedimint deep dive</li>
       </ul>
     </div>
+    <aside class="next-card"><div><p class="eyebrow">Next session</p><h3>Self-Custody &amp; Multisig with Andy</h3><p>Friday 16 October, on Discord. Free for everyone.</p></div><div class="cta-row"><a class="button small" href="/calendar">See the calendar</a><a class="ghost small" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord</a></div></aside>
     <div class="share-row"><strong>Share these notes:</strong><a href="https://x.com/intent/post?text=Why%20privacy%20matters%3A%20notes%20%2B%20every%20resource%20from%20the%20%40CodeOrangeDevs%20Sovereign%20Bitcoiner%20Workshop&amp;url=https%3A%2F%2Fcodeorange.dev%2Fsession-notes%2F2026-10-14-sovereign-bitcoiner-workshop" target="_blank" rel="noopener">Post on X</a><button type="button" data-copy="https://codeorange.dev/session-notes/2026-10-14-sovereign-bitcoiner-workshop">Copy link</button></div>
-    <script>document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){navigator.clipboard&&navigator.clipboard.writeText(b.dataset.copy).then(function(){b.textContent='Link copied';});});});</script>
+    <script>document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){navigator.clipboard&&navigator.clipboard.writeText(b.dataset.copy).then(function(){b.textContent='Link copied';});});});
+    (function(){var v=document.getElementById('video');if(!v)return;function play(t){v.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+v.dataset.yt+'?autoplay=1&rel=0&start='+(t||0)+'" title="Session recording" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';}v.querySelector('button').addEventListener('click',function(){play(0);});document.querySelectorAll('.chapters a[data-t]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();play(a.dataset.t);v.scrollIntoView({behavior:'smooth',block:'center'});});});})();</script>
     <p class="source-box">These notes are also on GitHub: <a href="https://github.com/code-orange-dev/session-notes/blob/main/2026/2026-10-14-sovereign-bitcoiner-workshop.md" target="_blank" rel="noopener">code-orange-dev/session-notes</a>. Free to share and reuse (CC0).</p>
   </article>
   <section class="section-inner final-cta">
