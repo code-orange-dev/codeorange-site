@@ -1,0 +1,42 @@
+      <h2>Highlights</h2>
+      <p><strong>A Nostr identity in one command.</strong> Alex installed Gigi&rsquo;s <em>nihao</em> and created a &ldquo;Code Orange&rdquo; account live. One command made the key pair, a profile, a relay list, a Lightning address and an ecash wallet. No company, no sign-up, no permission.</p>
+      <div class="viz" role="figure" aria-label="What one nihao command sets up">
+        <p class="eyebrow">Live demo</p>
+        <p class="viz-title">What one <code>nihao</code> command sets up</p>
+        <div class="q-grid">
+          <div class="q"><b>Keys</b><span>npub is your account number, nsec is your password. Never paste the nsec anywhere.</span></div>
+          <div class="q"><b>Profile + follows</b><span>Kind 0 is your profile, kind 3 your follow list.</span></div>
+          <div class="q"><b>Relays</b><span>Your posts go to several relays, so no single one can silence you.</span></div>
+          <div class="q"><b>Get paid</b><span>A Lightning address and an ecash wallet. People can send you money without an invoice.</span></div>
+        </div>
+      </div>
+      <p><strong>Reviewing a real Bitcoin PR, live.</strong> Razor picked a pull request on Peer Observer, a tool that watches the Bitcoin P2P network for attacks, and reviewed it in front of everyone. He hit the walls a beginner hits (tests that need root, a missing NATS binary) and showed how to get past each one, partly by asking Claude.</p>
+      <div class="viz" role="figure" aria-label="How to review a pull request">
+        <p class="eyebrow">The method</p>
+        <p class="viz-title">How Razor reviews a pull request</p>
+        <div class="flow">
+          <div class="flow-step">Get context<small>Readme, PR, issue</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Build it<small>Check out the branch</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Run the tests<small>Make them pass</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Break them<small>Make them fail</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Find the entry point<small>Then it clicks</small></div>
+        </div>
+        <p class="viz-fix"><b>Stuck?</b> Paste the PR link into Claude and ask how to build and test it. Then check what it says.</p>
+      </div>
+
+      <h2>Key takeaways</h2>
+      <p><strong>1. Nostr is to X what Bitcoin is to a bank.</strong> On X a company owns your account. On Mastodon your account lives on someone&rsquo;s server, and if they shut it down it is gone. On Nostr you hold the key: relays can drop your posts, but nobody can take your identity, and you can move your followers and reputation to any app.</p>
+      <div class="viz" role="figure" aria-label="X, Mastodon and Nostr compared">
+        <p class="eyebrow">The analogy from the call</p>
+        <div class="layer-scale"><b>You own it</b><span></span></div>
+        <div class="layers">
+          <div class="layer top"><strong>Nostr is like Bitcoin</strong><p>You hold the key pair. Your identity can&rsquo;t be deleted or banned.</p><span>npub &middot; nsec &middot; many relays</span></div>
+          <div class="layer"><strong>Mastodon is like &ldquo;crypto&rdquo;</strong><p>Half decentralized: whoever runs your server can delete your account.</p><span>Instances run by admins</span></div>
+          <div class="layer"><strong>X is like a central bank</strong><p>One company owns the accounts, the data and the ban button.</p><span>One owner</span></div>
+        </div>
+        <div class="layer-scale" style="margin:8px 0 0"><span>They own it</span><span></span></div>
+      </div>
+      <p><strong>2. Ecash makes money as easy as a message.</strong> With Lightning you have to ask for money with an invoice. With ecash someone can drop sats on your npub like a note on your desk. That opens up paying for content in sats instead of selling attention to advertisers.</p>
+      <p><strong>3. Review before you code.</strong> You don&rsquo;t need to be a maintainer to review. Running the tests and saying they pass on your machine is a valid review, and so is asking a question about something unclear. For a small fix, just open the PR. For a bigger change, open an issue first so nobody wastes their time.</p>
+      <blockquote class="quote"><p>&ldquo;The more you learn about it, the more you realize how little you know.&rdquo;</p><cite>Razor, on Bitcoin</cite></blockquote>
+      <p><strong>4. LLMs: useful, but you still own the review.</strong> The room was split. Some let agents write and review most of the code; Razor still drives by hand. His rule: a contributor should put in at least as much effort as the person reviewing their work.</p>
