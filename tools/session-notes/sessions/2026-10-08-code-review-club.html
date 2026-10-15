@@ -1,16 +1,114 @@
       <h2>Highlights</h2>
+      <p class="part"><b>1</b>Nostr with Alex</p>
       <p><strong>A Nostr identity in one command.</strong> Alex installed Gigi&rsquo;s <em>nihao</em> and created a &ldquo;Code Orange&rdquo; account live. One command made the key pair, a profile, a relay list, a Lightning address and an ecash wallet. No company, no sign-up, no permission.</p>
-      <div class="viz" role="figure" aria-label="What one nihao command sets up">
-        <p class="eyebrow">Live demo</p>
-        <p class="viz-title">What one <code>nihao</code> command sets up</p>
-        <div class="q-grid">
-          <div class="q"><b>Keys</b><span>npub is your account number, nsec is your password. Never paste the nsec anywhere.</span></div>
-          <div class="q"><b>Profile + follows</b><span>Kind 0 is your profile, kind 3 your follow list.</span></div>
-          <div class="q"><b>Relays</b><span>Your posts go to several relays, so no single one can silence you.</span></div>
-          <div class="q"><b>Get paid</b><span>A Lightning address and an ecash wallet. People can send you money without an invoice.</span></div>
+      <div class="term" role="figure" aria-label="Terminal: creating a Nostr identity with nihao">
+        <div class="term-bar"><i></i><i></i><i></i><span>~ nihao</span></div>
+<pre><span class="p">$</span> go install github.com/dergigi/nihao@latest
+<span class="p">$</span> nihao --name "Code Orange"
+<span class="ok">✓</span> key pair         npub1… <span class="c">(share this)</span>  nsec1… <span class="c">(never share this)</span>
+<span class="ok">✓</span> profile          kind 0 &rarr; 4 relays
+<span class="ok">✓</span> follow list      kind 3
+<span class="ok">✓</span> DM relays        published
+<span class="ok">✓</span> lightning address lud16 set
+<span class="ok">✓</span> ecash wallet     mint validated
+<span class="c"># done. no company, no sign-up, no permission</span></pre>
+      </div>
+      <p class="term-note">Simplified from the live demo.</p>
+
+      <p>Your npub is your account number and your nsec is your password, just like a Bitcoin key. You sign once and publish to several relays, so no single relay can silence you, and any Nostr app can read your posts.</p>
+      <div class="viz svg-viz" role="figure" aria-label="One key, many relays, any app">
+        <p class="eyebrow">How Nostr works</p>
+        <p class="viz-title">One key, many relays, any app</p>
+        <div class="svg-scroll"><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs><radialGradient id="glow"><stop offset="0" stop-color="#F7931A" stop-opacity=".45"/><stop offset="1" stop-color="#F7931A" stop-opacity="0"/></radialGradient></defs>
+          <g stroke="#F7931A" stroke-width="2" fill="none" opacity=".8">
+            <path d="M118 150 C 200 150, 200 50, 250 50"/><path d="M118 150 C 200 150, 200 116, 250 116"/><path d="M118 150 C 200 150, 200 184, 250 184"/><path d="M118 150 C 200 150, 200 250, 250 250"/>
+          </g>
+          <g stroke="#ffffff" stroke-opacity=".18" stroke-width="1.5" fill="none">
+            <path d="M400 50 L480 50"/><path d="M400 50 L480 116"/><path d="M400 116 L480 116"/><path d="M400 116 L480 184"/><path d="M400 184 L480 184"/><path d="M400 184 L480 250"/><path d="M400 250 L480 250"/><path d="M400 250 L480 50"/>
+          </g>
+          <circle cx="78" cy="150" r="70" fill="url(#glow)"/>
+          <circle cx="78" cy="150" r="40" fill="#F7931A"/>
+          <text x="78" y="146" text-anchor="middle" font-size="15" font-weight="700" fill="#0A0A0A">You</text>
+          <text x="78" y="164" text-anchor="middle" font-size="11" font-weight="600" fill="#0A0A0A">npub + nsec</text>
+          <g font-size="13" fill="#e8e8e8">
+            <rect x="250" y="32" width="150" height="36" rx="10" fill="#161616" stroke="#ffffff" stroke-opacity=".14"/><text x="325" y="55" text-anchor="middle">relay.damus.io</text>
+            <rect x="250" y="98" width="150" height="36" rx="10" fill="#161616" stroke="#ffffff" stroke-opacity=".14"/><text x="325" y="121" text-anchor="middle">relay.primal.net</text>
+            <rect x="250" y="166" width="150" height="36" rx="10" fill="#161616" stroke="#ffffff" stroke-opacity=".14"/><text x="325" y="189" text-anchor="middle">nos.lol</text>
+            <rect x="250" y="232" width="150" height="36" rx="10" fill="#161616" stroke="#F7931A" stroke-opacity=".6" stroke-dasharray="4 4"/><text x="325" y="255" text-anchor="middle" fill="#F7931A">your own relay</text>
+          </g>
+          <g font-size="13" font-weight="600" fill="#e8e8e8">
+            <rect x="480" y="32" width="120" height="36" rx="18" fill="#222"/><text x="540" y="55" text-anchor="middle">Jumble</text>
+            <rect x="480" y="98" width="120" height="36" rx="18" fill="#222"/><text x="540" y="121" text-anchor="middle">Primal</text>
+            <rect x="480" y="166" width="120" height="36" rx="18" fill="#222"/><text x="540" y="189" text-anchor="middle">Damus</text>
+            <rect x="480" y="232" width="120" height="36" rx="18" fill="#222"/><text x="540" y="255" text-anchor="middle">Amethyst</text>
+          </g>
+          <g font-size="11" font-weight="700" fill="#8A8A8A" letter-spacing="1.5"><text x="78" y="22" text-anchor="middle">SIGN</text><text x="325" y="14" text-anchor="middle">PUBLISH</text><text x="540" y="14" text-anchor="middle">READ ANYWHERE</text></g>
+        </svg></div>
+        <p class="swipe">Swipe to see the whole diagram &rarr;</p>
+        <p class="viz-fix"><b>Why it matters:</b> a relay can drop your posts, but nobody can delete your identity. Switch apps and your followers come with you.</p>
+      </div>
+
+      <p>Everything on Nostr is an <em>event</em>, and every event has the same shape. The <em>kind</em> number says what it is. The NIPs, like BIPs for Bitcoin, say what each kind means.</p>
+      <div class="viz" role="figure" aria-label="Anatomy of a Nostr event">
+        <p class="eyebrow">Anatomy of a Nostr event</p>
+        <div class="anatomy">
+          <code>id</code><span>Fingerprint of the event</span>
+          <code>pubkey</code><span>Who sent it <em>(your npub)</em></span>
+          <code>created_at</code><span>When</span>
+          <code>kind</code><span>What it is: <em>0 profile &middot; 1 note &middot; 3 follow list &middot; 7 reaction &middot; 14 direct message</em></span>
+          <code>tags</code><span>Mentions, replies, subjects</span>
+          <code>content</code><span>The text itself</span>
+          <code>sig</code><span>Signature made with your nsec, so nobody can fake your posts</span>
         </div>
       </div>
-      <p><strong>Reviewing a real Bitcoin PR, live.</strong> Razor picked a pull request on Peer Observer, a tool that watches the Bitcoin P2P network for attacks, and reviewed it in front of everyone. He hit the walls a beginner hits (tests that need root, a missing NATS binary) and showed how to get past each one, partly by asking Claude.</p>
+
+      <p class="part"><b>2</b>Peer Observer with Razor</p>
+      <p><strong>Reviewing a real Bitcoin PR, live.</strong> Bitcoin nodes talk to each other over the peer-to-peer network. Peer Observer runs honeypot nodes that watch that network for anomalies and attacks, like a security team for Bitcoin. It has already helped spot <em>LinkingLion</em>: nodes that connect to you and only listen.</p>
+      <div class="viz svg-viz" role="figure" aria-label="Peer Observer watching the Bitcoin P2P network">
+        <p class="eyebrow">What Peer Observer sees</p>
+        <p class="viz-title">An eagle eye on the P2P network</p>
+        <div class="svg-scroll"><svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs><radialGradient id="glow2"><stop offset="0" stop-color="#F7931A" stop-opacity=".4"/><stop offset="1" stop-color="#F7931A" stop-opacity="0"/></radialGradient></defs>
+          <g stroke="#ffffff" stroke-opacity=".28" stroke-width="1.5">
+            <line x1="250" y1="150" x2="120" y2="60"/><line x1="250" y1="150" x2="90" y2="150"/><line x1="250" y1="150" x2="120" y2="240"/><line x1="250" y1="150" x2="250" y2="40"/><line x1="250" y1="150" x2="250" y2="262"/>
+          </g>
+          <g stroke="#ff6b6b" stroke-opacity=".75" stroke-width="1.5" stroke-dasharray="5 5">
+            <line x1="250" y1="150" x2="470" y2="90"/><line x1="250" y1="150" x2="490" y2="160"/><line x1="250" y1="150" x2="460" y2="225"/>
+          </g>
+          <g fill="#2a2a2a" stroke="#ffffff" stroke-opacity=".3"><circle cx="120" cy="60" r="16"/><circle cx="90" cy="150" r="16"/><circle cx="120" cy="240" r="16"/><circle cx="250" cy="40" r="16"/><circle cx="250" cy="262" r="16"/></g>
+          <g font-size="11" fill="#8A8A8A" text-anchor="middle"><text x="120" y="31">peer</text><text x="54" y="154">peer</text><text x="120" y="276">peer</text><text x="290" y="44">peer</text><text x="290" y="266">peer</text></g>
+          <g font-size="11" fill="#8A8A8A"><text x="150" y="112" transform="rotate(35 150 112)">blocks, txs</text></g>
+          <circle cx="250" cy="150" r="64" fill="url(#glow2)"/>
+          <circle cx="250" cy="150" r="34" fill="#F7931A"/>
+          <circle cx="250" cy="150" r="46" fill="none" stroke="#F7931A" stroke-opacity=".5"/>
+          <circle cx="250" cy="150" r="58" fill="none" stroke="#F7931A" stroke-opacity=".2"/>
+          <text x="250" y="147" text-anchor="middle" font-size="12" font-weight="700" fill="#0A0A0A">honeypot</text>
+          <text x="250" y="162" text-anchor="middle" font-size="12" font-weight="700" fill="#0A0A0A">node</text>
+          <g fill="#1a0d0d" stroke="#ff6b6b" stroke-opacity=".9" stroke-dasharray="3 3"><circle cx="478" cy="88" r="16"/><circle cx="500" cy="160" r="16"/><circle cx="468" cy="228" r="16"/></g>
+          <g fill="#ff6b6b" font-size="12" font-weight="700"><text x="525" y="120">LinkingLion</text></g>
+          <g fill="#c9c9c9" font-size="12"><text x="525" y="138">connects to you,</text><text x="525" y="154">sends nothing,</text><text x="525" y="170">just listens</text></g>
+        </svg></div>
+        <p class="swipe">Swipe to see the whole diagram &rarr;</p>
+        <p class="viz-fix"><b>Likely:</b> a chain analysis company linking transactions to IP addresses. Watching how peers behave is how you catch them.</p>
+      </div>
+      <p>Razor then reviewed a pull request that adds integration tests to Peer Observer&rsquo;s eBPF extractor, hitting the same walls any beginner hits along the way.</p>
+      <div class="term" role="figure" aria-label="Terminal: reviewing the pull request">
+        <div class="term-bar"><i></i><i></i><i></i><span>~/peer-observer</span></div>
+<pre><span class="c"># 1. get the PR branch</span>
+<span class="p">$</span> git remote add b10c https://github.com/0xB10C/peer-observer
+<span class="p">$</span> git fetch b10c &amp;&amp; git checkout &lt;pr-branch&gt;
+<span class="c"># 2. build it (as your normal user)</span>
+<span class="p">$</span> cargo test -p ebpf-extractor --no-run
+<span class="c"># 3. run it (eBPF tests need root)</span>
+<span class="p">$</span> sudo -E &lt;test-binary&gt; --ignored
+<span class="bad">✗</span> 4 failed: NATS server binary not set
+<span class="p">$</span> export NATS_SERVER_BINARY=$(which nats-server)
+<span class="ok">✓</span> test result: ok. 4 passed
+<span class="c"># 4. break it on purpose: assert!(false)</span>
+<span class="bad">✗</span> test result: FAILED. 1 failed  <span class="c">(line 301: now you know where to look)</span></pre>
+      </div>
+      <p class="term-note">Simplified from the live review. Stuck at any step? Razor pasted the PR link into Claude&rsquo;s free plan and asked.</p>
       <div class="viz" role="figure" aria-label="How to review a pull request">
         <p class="eyebrow">The method</p>
         <p class="viz-title">How Razor reviews a pull request</p>
@@ -21,11 +119,10 @@
           <div class="flow-step">Break them<small>Make them fail</small></div><span class="flow-hop"><i>&rarr;</i></span>
           <div class="flow-step">Find the entry point<small>Then it clicks</small></div>
         </div>
-        <p class="viz-fix"><b>Stuck?</b> Paste the PR link into Claude and ask how to build and test it. Then check what it says.</p>
       </div>
 
       <h2>Key takeaways</h2>
-      <p><strong>1. Nostr is to X what Bitcoin is to a bank.</strong> On X a company owns your account. On Mastodon your account lives on someone&rsquo;s server, and if they shut it down it is gone. On Nostr you hold the key: relays can drop your posts, but nobody can take your identity, and you can move your followers and reputation to any app.</p>
+      <p><strong>1. Nostr is to X what Bitcoin is to a bank.</strong> On X a company owns your account. On Mastodon your account lives on someone&rsquo;s server, and if they shut it down it is gone. On Nostr you hold the key.</p>
       <div class="viz" role="figure" aria-label="X, Mastodon and Nostr compared">
         <p class="eyebrow">The analogy from the call</p>
         <div class="layer-scale"><b>You own it</b><span></span></div>

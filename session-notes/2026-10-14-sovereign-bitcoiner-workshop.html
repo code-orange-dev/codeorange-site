@@ -290,6 +290,28 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 .quote { margin: 8px 0 32px; padding: 24px 26px; border-left: 3px solid var(--orange); background: var(--card); border-radius: 0 16px 16px 0; }
 .quote p { margin: 0 0 10px; color: var(--text); font-size: 22px; line-height: 1.45; }
 .quote cite { color: var(--dim); font: 600 13px "Plus Jakarta Sans", monospace; font-style: normal; }
+.part { display: flex; align-items: center; gap: 12px; margin: 44px 0 14px; color: var(--orange); font: 700 12px "Plus Jakarta Sans", monospace; letter-spacing: .14em; text-transform: uppercase; }
+.part::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(247,147,26,.5), transparent); }
+.part b { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--orange); color: #0A0A0A; font-size: 13px; letter-spacing: 0; }
+.term { margin: 8px 0 30px; border-radius: 14px; overflow: hidden; background: #0d0d0d; border: 1px solid rgba(255,255,255,.12); box-shadow: 0 24px 60px rgba(0,0,0,.45); }
+.term-bar { display: flex; align-items: center; gap: 7px; padding: 11px 14px; background: #1a1a1a; border-bottom: 1px solid rgba(255,255,255,.08); }
+.term-bar i { width: 11px; height: 11px; border-radius: 50%; background: #3a3a3a; }
+.term-bar i:first-child { background: #F7931A; }
+.term-bar span { margin-left: 8px; color: var(--dim); font: 600 12px "Plus Jakarta Sans", monospace; }
+.term pre { margin: 0; padding: 18px 20px; overflow-x: auto; color: #d8d8d8; font: 500 13.5px/1.75 ui-monospace, "SF Mono", Menlo, Consolas, monospace; white-space: pre; }
+.term .p { color: #F7931A; } .term .ok { color: #7bd88f; } .term .bad { color: #ff6b6b; } .term .c { color: #7a7a7a; }
+.term-note { margin: -22px 0 30px; color: var(--dim); font-size: 13px; }
+.svg-viz svg { display: block; width: 100%; height: auto; }
+.svg-scroll { overflow-x: auto; margin: 0 -6px 16px; padding: 0 6px; }
+@media (max-width: 560px) { .svg-scroll svg { min-width: 540px; } .prose .term pre { font-size: 12px; } }
+.prose .term-note { margin-top: -20px; }
+.swipe { display: none; margin: -8px 0 14px; color: var(--dim); font-size: 13px; }
+@media (max-width: 560px) { .swipe { display: block; } }
+.svg-viz text { font-family: "Inter", system-ui, sans-serif; }
+.anatomy { display: grid; grid-template-columns: auto 1fr; gap: 0; margin: 0; border: 1px solid rgba(255,255,255,.1); border-radius: 12px; overflow: hidden; font-size: 15px; }
+.anatomy code { padding: 10px 14px; background: #0d0d0d; color: #F7931A; font: 600 13.5px ui-monospace, Menlo, Consolas, monospace; border-bottom: 1px solid rgba(255,255,255,.06); }
+.anatomy span { padding: 10px 14px; color: var(--text); background: var(--card); border-bottom: 1px solid rgba(255,255,255,.06); }
+.anatomy span em { color: var(--dim); font-style: normal; }
 .more-notes { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; margin: 28px 0 0; }
 .more-notes a { display: block; padding: 18px 20px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; text-decoration: none; color: var(--text); }
 .more-notes a:hover { border-color: rgba(247,147,26,.5); }
