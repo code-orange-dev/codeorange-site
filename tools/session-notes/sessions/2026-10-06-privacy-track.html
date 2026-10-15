@@ -1,0 +1,86 @@
+      <h2>Highlights</h2>
+      <p class="part"><b>1</b>Why privacy</p>
+      <p><strong>Why a Privacy Track at all?</strong> You wouldn&rsquo;t post your bank statements online. On Bitcoin, anyone can read your payments and your balance unless you take care. The track opened with three reasons privacy matters.</p>
+      <div class="viz" role="figure" aria-label="Three reasons Bitcoin needs privacy">
+        <p class="eyebrow">Why we need privacy</p>
+        <div class="q-grid">
+          <div class="q"><b>01 Sovereignty</b><span>Nobody needs to know where you buy coffee, what you buy online, or how much you hold.</span></div>
+          <div class="q"><b>02 No censorship</b><span>You shouldn&rsquo;t need permission to pay someone. Privacy makes censorship harder.</span></div>
+          <div class="q"><b>03 Fungibility</b><span>One bitcoin is one bitcoin. No &ldquo;clean&rdquo; and &ldquo;tainted&rdquo; coins, no judging coins by their history.</span></div>
+          <div class="q"><b>04 Trade-off</b><span>You can&rsquo;t get 100% privacy for 0% effort. Every tool asks something of you.</span></div>
+        </div>
+      </div>
+      <blockquote class="quote"><p>&ldquo;If we don&rsquo;t have private payments, Bitcoin as an asset will fail.&rdquo;</p><cite>Jeff Booth&rsquo;s idea, quoted on the call: without private payments it can be captured and centralized like gold</cite></blockquote>
+
+      <p class="part"><b>2</b>A real PayJoin, live</p>
+      <p><strong>12,000 sats that don&rsquo;t show up on the blockchain.</strong> A PayJoin of 12,000 sats from Bull Bitcoin to Cake Wallet was looked up on mempool.space during the call. No output said 12,000. The receiver had added one of their own coins, so the payment was hidden inside the transaction.</p>
+      <div class="viz svg-viz" role="figure" aria-label="The PayJoin transaction from the call">
+        <p class="eyebrow">The transaction from the call</p>
+        <p class="viz-title">Where are the 12,000 sats?</p>
+        <div class="svg-scroll"><svg viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g fill="none" stroke-width="2"><path d="M190 70 C 260 70, 260 130, 300 130" stroke="#F7931A"/><path d="M190 190 C 260 190, 260 130, 300 130" stroke="#5ac8fa"/><path d="M340 130 C 380 130, 380 70, 450 70" stroke="#ffffff" stroke-opacity=".5"/><path d="M340 130 C 380 130, 380 190, 450 190" stroke="#ffffff" stroke-opacity=".5"/></g>
+          <g font-size="11" font-weight="700" fill="#8A8A8A" letter-spacing="1.5"><text x="110" y="24" text-anchor="middle">INPUTS</text><text x="530" y="24" text-anchor="middle">OUTPUTS</text></g>
+          <rect x="30" y="44" width="160" height="52" rx="12" fill="#1d1408" stroke="#F7931A"/><text x="110" y="68" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">≈58,000 sats</text><text x="110" y="86" text-anchor="middle" font-size="12" fill="#F7931A">sender’s coin</text>
+          <rect x="30" y="164" width="160" height="52" rx="12" fill="#0b1720" stroke="#5ac8fa"/><text x="110" y="188" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">≈10,000 sats</text><text x="110" y="206" text-anchor="middle" font-size="12" fill="#5ac8fa">receiver’s coin</text>
+          <circle cx="320" cy="130" r="26" fill="#F7931A"/><text x="320" y="135" text-anchor="middle" font-size="12" font-weight="800" fill="#0A0A0A">PayJoin</text>
+          <rect x="450" y="44" width="160" height="52" rx="12" fill="#161616" stroke="#ffffff" stroke-opacity=".3"/><text x="530" y="68" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">≈22,000 sats</text><text x="530" y="86" text-anchor="middle" font-size="12" fill="#8A8A8A">output 1</text>
+          <rect x="450" y="164" width="160" height="52" rx="12" fill="#161616" stroke="#ffffff" stroke-opacity=".3"/><text x="530" y="188" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">≈45,400 sats</text><text x="530" y="206" text-anchor="middle" font-size="12" fill="#8A8A8A">output 2</text>
+          <text x="320" y="248" text-anchor="middle" font-size="13" fill="#c9c9c9">No output says 12,000. The receiver got 10,000 + 12,000 = 22,000 back.</text>
+        </svg></div>
+        <p class="swipe">Swipe to see the whole diagram &rarr;</p>
+        <div class="q-grid">
+          <div class="q"><b>Story A</b><span>The 58k owner keeps 22k as change and pays about 36,000 sats.</span></div>
+          <div class="q"><b>Story B (the truth)</b><span>The 58k owner keeps 45.4k as change and pays about 12,000 sats.</span></div>
+        </div>
+        <p class="viz-fix" style="margin-top:14px"><b>Chain analysis can&rsquo;t tell which story is true</b> unless someone tells them. Here the sender did, live on the call.</p>
+      </div>
+      <p>A second PayJoin was sent to a co-host live at the end, and it arrived. Others on the call said theirs had failed, and figuring out why is on the list for part 2.</p>
+
+      <p class="part"><b>3</b>How PayJoin works</p>
+      <p><strong>The guesses it breaks.</strong> Chain analysis usually assumes two things: every input in a transaction belongs to the same person, and the big leftover output is the sender&rsquo;s change. PayJoin puts a coin from the receiver into the transaction, so both guesses can be wrong. And unlike a CoinJoin, it looks like any normal payment, so it hides in the crowd.</p>
+      <p><strong>Why it took years to get right.</strong> The obvious design is that the sender asks &ldquo;I want to pay you X&rdquo; and the receiver offers a coin. But a sender who asks again and again, without ever paying, learns every coin the receiver owns. This is called <em>UTXO snooping</em>. The real protocol fixes it by making the sender commit first:</p>
+      <div class="viz svg-viz" role="figure" aria-label="The PayJoin v1 exchange">
+        <p class="eyebrow">PayJoin v1, step by step</p>
+        <p class="viz-title">The sender commits first, so snooping costs them</p>
+        <div class="svg-scroll"><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#F7931A"/></marker></defs>
+          <rect x="40" y="20" width="150" height="40" rx="20" fill="#F7931A"/><text x="115" y="45" text-anchor="middle" font-size="14" font-weight="700" fill="#0A0A0A">Sender</text>
+          <rect x="450" y="20" width="150" height="40" rx="20" fill="#5ac8fa"/><text x="525" y="45" text-anchor="middle" font-size="14" font-weight="700" fill="#0A0A0A">Receiver</text>
+          <g stroke="#ffffff" stroke-opacity=".18" stroke-dasharray="4 5"><line x1="115" y1="60" x2="115" y2="320"/><line x1="525" y1="60" x2="525" y2="320"/></g>
+          <g stroke="#F7931A" stroke-width="2" marker-end="url(#ah)"><line x1="520" y1="100" x2="122" y2="100"/><line x1="120" y1="160" x2="518" y2="160"/><line x1="520" y1="220" x2="122" y2="220"/></g>
+          <g font-size="13" fill="#e8e8e8" text-anchor="middle">
+            <text x="320" y="90"><tspan fill="#F7931A" font-weight="700">1</tspan>  Shares a bitcoin: link with pj=&lt;server&gt;</text>
+            <text x="320" y="150"><tspan fill="#F7931A" font-weight="700">2</tspan>  Sends a fully signed payment (the “original PSBT”)</text>
+            <text x="320" y="210"><tspan fill="#F7931A" font-weight="700">3</tspan>  Adds their own coin, signs it, sends it back</text>
+            <text x="320" y="270"><tspan fill="#F7931A" font-weight="700">4</tspan>  Sender signs again and broadcasts the PayJoin</text>
+          </g>
+          <text x="320" y="306" text-anchor="middle" font-size="12" fill="#8A8A8A">Snooping sender? The receiver can just broadcast step 2 as a normal payment.</text>
+        </svg></div>
+        <p class="swipe">Swipe to see the whole diagram &rarr;</p>
+      </div>
+      <p><strong>v1 vs v2.</strong> In v1 the receiver must run a web server open to the internet, which is why phone and desktop wallets struggled to <em>receive</em>. PayJoin v2 (&ldquo;async PayJoin&rdquo;) swaps that for two helpers run by others, and also hides the sender&rsquo;s IP address from the receiver.</p>
+      <div class="viz" role="figure" aria-label="PayJoin v2 with a mailbox and a relay">
+        <p class="eyebrow">PayJoin v2</p>
+        <p class="viz-title">Messages go through a mailbox, like email</p>
+        <div class="flow">
+          <div class="flow-step">Sender<small>Pays</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">OHTTP relay<small>Hides your IP</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Mailbox<small>Holds the message</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Receiver<small>Checks in later</small></div>
+        </div>
+        <p class="viz-fix"><b>The one rule:</b> the relay and the mailbox must be run by different people who don&rsquo;t collude. Then neither sees the whole picture.</p>
+      </div>
+
+      <h2>Key takeaways</h2>
+      <p><strong>1. PayJoin is not a sidechain or a fork.</strong> It is a way for two wallets to talk, the way email is a protocol. The end result is a normal Bitcoin transaction built in steps with PSBTs.</p>
+      <p><strong>2. It is not instant privacy.</strong> One PayJoin won&rsquo;t clean up coins that are already linked to you, and it only beats two of the chain-analysis guesses. It works best used again and again, together with other tools. The more people use it, the less chain analysis can trust any guess.</p>
+      <p><strong>3. Try it yourself.</strong> Turn on PayJoin in Cake Wallet&rsquo;s settings and copy the receive link (it&rsquo;s long and contains <code>pj=</code>). Paste it into Bull Bitcoin and send. On the call only amounts over 10,000 sats went through, and not every try worked, so start small and check mempool.space.</p>
+      <div class="viz" role="figure" aria-label="Wallets that support PayJoin">
+        <p class="eyebrow">Wallets mentioned on the call</p>
+        <div class="anatomy">
+          <code>Bull Bitcoin</code><span>Send and receive</span>
+          <code>Cake Wallet</code><span>Send and receive <em>(turn it on in settings)</em></span>
+          <code>Sparrow</code><span>Send only (v1), so hardware wallets can pay through it</span>
+          <code>BTCPay Server</code><span>Receive on your own server (v1)</span>
+        </div>
+      </div>
