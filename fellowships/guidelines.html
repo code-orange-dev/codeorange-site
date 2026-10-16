@@ -487,8 +487,9 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
 </style>
 <link rel="stylesheet" href="/assets/theme.css?v=20261015d">
 <link rel="stylesheet" href="/assets/mastering-bitcoin/me.css?v=3">
-<link rel="stylesheet" href="/assets/fellowship/fw.css?v=1">
+<link rel="stylesheet" href="/assets/fellowship/fw.css?v=2">
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
+<script src="/assets/fellowship/guide.js?v=1" defer></script>
 </head>
 <body>
 <header class="site-header">
@@ -518,215 +519,225 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
   </nav>
 </header>
 <main>
-  <section class="me-hero">
+  <section class="me-hero fw-hero">
     <p class="eyebrow">/Fellowships/Guidelines_</p>
-    <h1>Developer fellowship: <span class="orange">guidelines &amp; expectations</span></h1>
-    <p>Everything you need before you apply, and everything we expect once you're in. No surprises: the bar, the rhythm, how pay works, and what happens when a month goes sideways.</p>
-    <div class="fw-cta" style="margin-top:18px">
-      <a class="button" href="/fellowships/apply">Check if you're ready &amp; apply</a>
-      <a class="ghost" href="https://github.com/code-orange-dev/fellowships" target="_blank" rel="noopener">Read it on GitHub</a>
+    <h1>Developer fellowship <span class="orange">guidelines</span></h1>
+    <p>Get paid to build Bitcoin or Nostr open source for 6 months, with a mentor and a clear weekly rhythm. Everything you need to know, before and during.</p>
+    <div class="fw-facts fw-facts-hero">
+      <div><strong>$512</strong><span>a month, in bitcoin</span></div>
+      <div><strong>6 months</strong><span>extendable</span></div>
+      <div><strong>15–20 h</strong><span>a week, part-time ok</span></div>
+      <div><strong>1 project</strong><span>Bitcoin or Nostr</span></div>
+    </div>
+    <div class="fw-cta">
+      <a class="button mb-cta" href="/fellowships/apply">Check if you're ready<svg class="mb-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="ghost mb-cta" href="https://github.com/code-orange-dev/fellowships/blob/main/developer-fellowship/GUIDELINES.md" target="_blank" rel="noopener">Read it on GitHub</a>
     </div>
   </section>
   <div class="fw-wrap fw-doc-grid">
     <nav class="fw-toc" aria-label="On this page">
       <strong>On this page</strong>
-      <a href="#glance">At a glance</a>
-      <a href="#bar">The bar to apply</a>
-      <a href="#build">What you can build</a>
-      <a href="#arc">The 6-month arc</a>
-      <a href="#rhythm">Your weekly rhythm</a>
+      <a href="#deal">The deal</a>
+      <a href="#bar">Who can apply</a>
+      <a href="#select">How we choose</a>
+      <a href="#build">What you build</a>
+      <a href="#arc">6-month plan</a>
+      <a href="#rhythm">Weekly rhythm</a>
       <a href="#pay">Getting paid</a>
-      <a href="#accountability">Accountability</a>
-      <a href="#public">Public proof of work</a>
+      <a href="#accountability">If you fall behind</a>
+      <a href="#public">Public vs private</a>
       <a href="#craft">How we work</a>
-      <a href="#support">What you get</a>
+      <a href="#graduate">Graduation</a>
+      <a href="#faq">FAQ</a>
       <a href="#apply">How to apply</a>
     </nav>
     <div class="fw-doc">
-      <section id="glance">
-        <p class="fw-eyebrow">At a glance</p>
-        <h2>Six months, paid in bitcoin, to build Bitcoin open source.</h2>
-        <div class="fw-facts">
-          <div><strong>$512</strong><span>a month, paid in bitcoin</span></div>
-          <div><strong>6 months</strong><span>extendable after the month-6 review</span></div>
-          <div><strong>15–20 h</strong><span>a week on open source, part-time is fine</span></div>
-          <div><strong>1 project</strong><span>any Bitcoin or Nostr open source project</span></div>
-        </div>
-        <p style="margin-top:14px">This is not a course. You're an open-source contributor working on a real project, with structure around you: a mentor, a weekly rhythm, a peer group of fellows, and a dashboard that turns your work into a public track record.</p>
-        <p class="fw-callout">The deal in one line: <strong>you show up every week and tell us honestly how it's going; we pay you, unblock you, and help you get to your next step.</strong></p>
+      <section id="deal" class="fw-deal">
+        <p class="fw-eyebrow">The deal</p>
+        <h2>You show up every week and tell us honestly how it's going. We pay you, unblock you and help you to your next step.</h2>
+        <p>It's not a course. You're an open-source contributor on a real project, with a mentor, other fellows, a dashboard and a public track record that builds itself.</p>
       </section>
 
       <section id="bar">
-        <p class="fw-eyebrow">Who should apply</p>
-        <h2>The bar to apply</h2>
-        <p>We pick people who have already started. Promise alone isn't enough, but you don't need to be an expert either: we judge where you're heading, not just where you are.</p>
+        <p class="fw-eyebrow">Who can apply</p>
+        <h2>We pick people who have already started</h2>
         <div class="fw-two">
           <div>
-            <h3>Must have</h3>
-            <ul>
-              <li><strong>You've done the learning.</strong> A Code Orange cohort (like <a href="/decoding-bitcoin">Decoding Bitcoin</a>), Chaincode, Summer of Bitcoin, Btrust, or serious self-study.</li>
-              <li><strong>At least one PR or real review</strong> on the project you want to work on. Small is fine; it proves you can navigate the codebase.</li>
-              <li><strong>A working setup:</strong> you can build the project and run its tests.</li>
-              <li><strong>Time:</strong> 15–20 hours a week for 6 months.</li>
-              <li><strong>A 6-month plan</strong> with a goal for each month.</li>
-              <li><strong>Okay with working in public:</strong> your monthly highlights and GitHub work go on your proof-of-work page.</li>
+            <h3>✅ Must have</h3>
+            <ul class="fw-list">
+              <li><strong>Done the learning:</strong> <a href="/decoding-bitcoin">Decoding Bitcoin</a>, Chaincode, Summer of Bitcoin, Btrust or serious self-study</li>
+              <li><strong>One PR or real review</strong> on your project (small is fine)</li>
+              <li><strong>Build and tests running</strong> on your machine</li>
+              <li><strong>15–20 hours a week</strong> for 6 months</li>
+              <li><strong>A goal for each month</strong></li>
+              <li><strong>OK with working in public</strong> (payments stay private)</li>
             </ul>
           </div>
           <div>
-            <h3>Makes you stand out</h3>
-            <ul>
-              <li>A maintainer or contributor of the project who will vouch for your plan.</li>
-              <li>Work on a <a href="/privacy-track">Privacy Track</a> project: Payjoin, Silent Payments, Floresta, JoinMarket, OpenSwap, Fedimint, ecash.</li>
-              <li>Reviews of other people's PRs, not just your own code.</li>
-              <li>Showing up: Code Review Club, BitDevs, project calls, Discord.</li>
-              <li>Helping others learn: a workshop, a write-up, answering newcomers.</li>
-              <li>Builders from Southeast Asia and from regions with few Bitcoin developers get priority.</li>
+            <h3>⭐ Stands out</h3>
+            <ul class="fw-list">
+              <li>A maintainer who will vouch for you</li>
+              <li>A <a href="/privacy-track">Privacy Track</a> project</li>
+              <li>Reviews of other people's PRs</li>
+              <li>Showing up: Code Review Club, BitDevs, Discord</li>
+              <li>Helping others learn</li>
+              <li>Based in Southeast Asia or a region with few Bitcoin devs</li>
             </ul>
           </div>
         </div>
-        <p style="margin-top:14px">Not there yet? Good to know, not a failure. Join <a href="/decoding-bitcoin">Decoding Bitcoin</a> or the <a href="/privacy-track">Privacy Track</a>, open your first PR, and apply next round. The <a href="/fellowships/apply">readiness check</a> tells you exactly what's missing.</p>
+        <p class="fw-tip">Not there yet? Join <a href="/decoding-bitcoin">Decoding Bitcoin</a> or the <a href="/privacy-track">Privacy Track</a>, open your first PR, and apply next round. The <a href="/fellowships/apply">readiness check</a> shows what's missing.</p>
+      </section>
+
+      <section id="select">
+        <p class="fw-eyebrow">Selection</p>
+        <h2>How we choose</h2>
+        <div class="fw-score">
+          <div><b>30</b><span>Proof of work: PRs, reviews, how well you read code</span></div>
+          <div><b>25</b><span>Project fit and value to users (privacy and wallets score high)</span></div>
+          <div><b>20</b><span>A realistic plan with monthly goals</span></div>
+          <div><b>15</b><span>Mentor and maintainer fit</span></div>
+          <div><b>10</b><span>Giving back to the community</span></div>
+        </div>
+        <p>Shortlisted? Expect a <strong>20-minute call where you walk us through one of your own PRs</strong>: why you made each change and what the reviewers asked. We also contact one reference from your project. Then an offer, once your mentor is confirmed.</p>
       </section>
 
       <section id="build">
-        <p class="fw-eyebrow">Where you'll contribute</p>
-        <h2>What you can build</h2>
-        <p><strong>Anything Bitcoin or Nostr, as long as it's open source.</strong> Privacy projects are our sweet spot, because that's where Code Orange teaches the most and where the ecosystem needs the most help.</p>
-        <h3>Privacy (a big plus)</h3>
-        <div class="fw-tags"><span class="hot">Payjoin (rust-payjoin)</span><span class="hot">Silent Payments (rust-silentpayments)</span><span class="hot">Floresta</span><span class="hot">JoinMarket</span><span class="hot">OpenSwap</span><span class="hot">Fedimint</span><span class="hot">Cashu / ecash</span><span class="hot">Kyoto</span></div>
-        <h3>Wallets, Lightning and protocol</h3>
-        <div class="fw-tags"><span>BDK</span><span>LDK</span><span>BTCPay Server</span><span>rust-bitcoin</span><span>Bitcoin Core</span><span>Core Lightning</span><span>LND</span></div>
-        <h3>Nostr</h3>
-        <div class="fw-tags"><span>rust-nostr</span><span>NDK</span><span>nostr-tools</span><span>NIPs</span><span>Nostr Wallet Connect</span><span>relays and clients</span></div>
-        <p style="margin-top:10px">The full, difficulty-rated list (with an honest note on Bitcoin Core) is in the <a href="https://github.com/code-orange-dev/fellowships/blob/main/developer-fellowship/project-menu.md" target="_blank" rel="noopener">project menu</a>.</p>
-        <h3>What counts as work</h3>
-        <p>PRs, yes, but also <strong>code review, tests, benchmarks, bug reports with a reproduction, docs, and design discussion</strong>. A careful review on someone else's PR is worth as much as a small PR of your own. Merges are slow in Bitcoin: we never judge a month by merge count alone, and we never want low-value PRs opened just to look busy.</p>
+        <p class="fw-eyebrow">What you build</p>
+        <h2>Any Bitcoin or Nostr open-source project</h2>
+        <div class="fw-tags"><span class="hot">Payjoin</span><span class="hot">Silent Payments</span><span class="hot">Floresta</span><span class="hot">JoinMarket</span><span class="hot">OpenSwap</span><span class="hot">Fedimint</span><span class="hot">Cashu / ecash</span><span class="hot">Kyoto</span><span>BDK</span><span>LDK</span><span>BTCPay Server</span><span>rust-bitcoin</span><span>Bitcoin Core</span><span>Core Lightning</span><span>LND</span><span>rust-nostr</span><span>NDK</span><span>nostr-tools</span><span>NIPs</span><span>Nostr Wallet Connect</span></div>
+        <p class="me-small">Orange = Privacy Track, a big plus. Full list with difficulty ratings: <a href="https://github.com/code-orange-dev/fellowships/blob/main/developer-fellowship/project-menu.md" target="_blank" rel="noopener">project menu</a>.</p>
+        <p><strong>What counts as work:</strong> PRs, code review, tests, benchmarks, bug reports with a reproduction, docs and design discussion. Bitcoin merges are slow, so we never judge a month by merges alone, and we don't want PRs opened just to look busy.</p>
       </section>
 
       <section id="arc">
         <p class="fw-eyebrow">Milestones</p>
-        <h2>The 6-month arc</h2>
-        <p>You set one milestone per month with your mentor in month 1. These are the defaults; your plan can differ.</p>
-        <ol class="fw-arc">
-          <li><b>Month 1 · Get set up</b>Build and tests pass, introduce yourself to the project, read recent PRs to learn its habits, open your first (small) PR, and refine your 6-month plan with your mentor.</li>
-          <li><b>Month 2 · Find your groove</b>Two or more PRs, at least one with real functionality (not just typos). Review others' work every week.</li>
-          <li><b>Month 3 · Check in honestly</b>Keep shipping. Month-3 review with your mentor: what's working, what to change, is the project still the right fit?</li>
-          <li><b>Month 4 · Go deep</b>Take on something substantial: a feature, a refactor, a hard bug. Start being a peer, not a newcomer.</li>
-          <li><b>Month 5 · Finish the big piece</b>Land it, or get it close. Start your handoff: what's next after the fellowship?</li>
-          <li><b>Month 6 · Land it and show it</b>Wrap up open PRs, document your work so others can pick it up, demo it to the community, and apply for your next step: long-term open-source support, a role, or an extension.</li>
+        <h2>Your 6-month plan</h2>
+        <p>One goal per month, agreed with your mentor in month 1. The defaults:</p>
+        <ol class="fw-arc fw-arc-grid">
+          <li><b>Get set up</b>Build and tests pass, first small PR, plan agreed</li>
+          <li><b>Find your groove</b>2+ PRs, one with real functionality; review weekly</li>
+          <li><b>Check in</b>Month-3 review: what's working, what to change</li>
+          <li><b>Go deep</b>A feature, a refactor or a hard bug</li>
+          <li><b>Finish the big piece</b>Land it and start planning what's next</li>
+          <li><b>Land it, show it</b>Wrap up, document, demo, next step lined up</li>
         </ol>
       </section>
 
       <section id="rhythm">
-        <p class="fw-eyebrow">Accountability, week by week</p>
-        <h2>Your weekly rhythm</h2>
-        <div class="fw-scroll"><table class="fw-table">
-          <thead><tr><th>When</th><th>What</th><th>Where</th></tr></thead>
-          <tbody>
-            <tr><td>Every Monday</td><td>2-minute standup: what you did, what's next, what's blocking you. Tick "I'd like help" and we reach out.</td><td>Your fellow dashboard</td></tr>
-            <tr><td>Every week</td><td>30–60 minute call with your mentor. Come prepared with your blockers and questions.</td><td>Call</td></tr>
-            <tr><td>Every Friday</td><td>Review day: read and comment on at least one PR by someone else.</td><td>GitHub</td></tr>
-            <tr><td>Every 2 weeks</td><td>Fellows sync: a short demo or update to the other fellows.</td><td>Discord</td></tr>
-            <tr><td>By the 5th</td><td>Monthly report: what you shipped, your PRs and reviews, what's next. It's also your invoice.</td><td>Your fellow dashboard</td></tr>
-            <tr><td>Month 3 &amp; 6</td><td>Review call: a 45-minute check at month 3 and a 1-hour review at month 6.</td><td>Call</td></tr>
-          </tbody>
-        </table></div>
-        <p>That's it. No timesheets. If it's useful for the project and you can link to it, it counts.</p>
+        <p class="fw-eyebrow">Weekly rhythm</p>
+        <h2>Small habits, every week</h2>
+        <div class="fw-rhythm">
+          <div><span>🗓️</span><b>Monday</b>2-minute standup on your dashboard: did, next, blocked</div>
+          <div><span>📞</span><b>Weekly</b>30–60 min call with your mentor</div>
+          <div><span>🔍</span><b>Friday</b>Review a PR by someone else (at least 2 real reviews a month)</div>
+          <div><span>🎤</span><b>Every 2 weeks</b>Fellows sync on Discord: a short demo</div>
+          <div><span>🧾</span><b>By the 5th</b>Monthly report on your dashboard: it's your invoice</div>
+          <div><span>🤝</span><b>Months 3 &amp; 6</b>Review calls (45 min and 1 hour)</div>
+        </div>
+        <p class="me-small">No timesheets. If it helps the project and you can link to it, it counts.</p>
       </section>
 
       <section id="pay">
         <p class="fw-eyebrow">Money, clearly</p>
         <h2>Getting paid</h2>
-        <ul>
-          <li><strong>$512 a month, paid in bitcoin.</strong> The dollar amount is fixed; the number of sats depends on the price.</li>
-          <li><strong>The price:</strong> the Coinbase BTC-USD spot price at the moment we send the payment. We never change this mid-fellowship.</li>
-          <li><strong>When:</strong> send your monthly report by the 5th; once it's approved, you're paid by the 10th.</li>
-          <li><strong>How:</strong> your choice of Lightning, on-chain or ecash, and you can switch any month. Add it to your report.</li>
-          <li><strong>Safety:</strong> if you change your payout address, we confirm it with you on a second channel first, so a hacked account can never redirect your pay.</li>
-          <li><strong>Private:</strong> payments, amounts and addresses are never shown publicly. Only you and the organisers see them on your dashboard.</li>
-          <li><strong>Taxes:</strong> this is a fellowship, not a job. Any tax where you live is yours to handle.</li>
+        <ul class="fw-list">
+          <li><strong>$512 a month in bitcoin</strong>, at the Coinbase BTC-USD price when we send it</li>
+          <li><strong>Report by the 5th → paid by the 10th</strong>, once your report is approved</li>
+          <li><strong>Your choice:</strong> Lightning, on-chain or ecash, and you can switch any month</li>
+          <li><strong>Private:</strong> amounts and addresses are never shown publicly</li>
         </ul>
-        <p class="fw-callout">If anything about money is ever unclear, ask right away. We'd much rather over-explain.</p>
+        <details class="fw-more"><summary>More on payments</summary>
+          <p>The price reference never changes mid-fellowship. If you change your payout address, we confirm it with you on a second channel first, so a hacked account can't redirect your pay. This is a fellowship, not a job, so any tax where you live is yours to handle. If anything about money is unclear, ask right away.</p>
+        </details>
       </section>
 
       <section id="accountability">
         <p class="fw-eyebrow">Accountability with support</p>
-        <h2>When a month goes sideways</h2>
-        <p>Open source is messy: builds break, reviews stall, life happens. <strong>A fellow who reports "nothing merged, here's what I was stuck on and what I'm trying next" is in good standing.</strong> A fellow who goes quiet for three weeks isn't, because we can't help someone we can't see.</p>
+        <h2>If you fall behind</h2>
+        <p><strong>An honest bad month is fine. Silence isn't</strong>, because we can't help someone we can't see.</p>
         <div class="fw-lights">
-          <div><b><span class="fw-dot green"></span>Green</b><span class="me-small">Standups and reports coming in. Carry on.</span></div>
-          <div><b><span class="fw-dot yellow"></span>Yellow</b><span class="me-small">Missed standups or a stuck project. We call you and agree a 30-day recovery plan together.</span></div>
-          <div><b><span class="fw-dot red"></span>Red</b><span class="me-small">No contact or no progress after the recovery plan. We pause or end the fellowship, with a respectful handoff.</span></div>
+          <div><b><span class="fw-dot green"></span>Green</b><span class="me-small">Standups and reports coming in</span></div>
+          <div><b><span class="fw-dot yellow"></span>Yellow</b><span class="me-small">A call, then a 30-day plan together</span></div>
+          <div><b><span class="fw-dot red"></span>Red</b><span class="me-small">Pause or end, with a respectful handoff</span></div>
         </div>
-        <h3>What happens, step by step</h3>
-        <ol>
-          <li>Miss a Monday standup: a friendly ping.</li>
-          <li>Two weeks without a word: a call with your mentor or the organisers.</li>
-          <li>A month off track: we name the concern, talk, and write a 30-day plan together.</li>
-          <li>Still off track: we pause or end the fellowship. The last month you worked is always paid.</li>
-        </ol>
-        <h3>Pausing</h3>
-        <p>You can pause for up to 2 months, no explanation needed. There's no pay during a pause, and the fellowship gets longer by the same amount. Pausing is always better than disappearing.</p>
-        <p>Reports late? Tell us before the 5th and it's a non-event. Being honest about a bad month never counts against you; hiding one is the only thing that does.</p>
+        <details class="fw-more"><summary>Step by step, and pausing</summary>
+          <ol>
+            <li>Miss a Monday standup: a friendly ping.</li>
+            <li>Two weeks without a word: a call with your mentor or the organisers.</li>
+            <li>A month off track: we name the concern and write a 30-day plan together.</li>
+            <li>Still off track: we pause or end the fellowship. The last month you worked is always paid.</li>
+          </ol>
+          <p><strong>Pausing:</strong> up to 2 months, no reason needed. No pay during the pause, and the fellowship gets longer by the same amount. Report late? Tell us before the 5th and it's a non-event.</p>
+        </details>
       </section>
 
       <section id="public">
         <p class="fw-eyebrow">Your track record</p>
-        <h2>Public proof of work</h2>
-        <p>Every fellow gets a public page on codeorange.dev that shows their work as it happens: the PRs they open, the reviews they write, their milestones and the highlights of each monthly report. It's your portfolio for maintainers, long-term funding programs and employers, and it builds itself as you work.</p>
-        <div class="fw-scroll"><table class="fw-table">
-          <thead><tr><th>Public</th><th>Private (you + organisers only)</th></tr></thead>
-          <tbody><tr>
-            <td style="white-space:normal;font-weight:400;color:var(--muted)">Your name or nym and GitHub · your project · your 6 milestones · PRs you opened and reviewed on GitHub · monthly highlights (summary, PRs, reviews, what's next) · how many weeks you posted a standup</td>
-            <td>Your application · weekly standups · blockers and help requests · payments, amounts and addresses · your email</td>
-          </tr></tbody>
-        </table></div>
-        <p>If being public about Bitcoin work puts you at real personal risk where you live, tell us. We'll keep your page private, no questions asked, and it won't count against you.</p>
+        <h2>Public vs private</h2>
+        <p>Every fellow gets a public proof-of-work page that fills itself as they work. It's a portfolio for maintainers, funding programs and employers.</p>
+        <div class="fw-two">
+          <div><h3>🌍 Public</h3><ul class="fw-list"><li>Name or nym, GitHub, project</li><li>Your 6 milestones</li><li>PRs opened and reviewed</li><li>Monthly highlights</li><li>Number of weekly standups</li></ul></div>
+          <div><h3>🔒 Private</h3><ul class="fw-list"><li>Your application</li><li>Standups and blockers</li><li>Help requests</li><li>Payments, amounts, addresses</li><li>Your email</li></ul></div>
+        </div>
+        <p class="fw-tip">If being public about Bitcoin work is risky where you live, tell us. Your page stays private, no questions asked.</p>
       </section>
 
       <section id="craft">
         <p class="fw-eyebrow">Professionalism</p>
         <h2>How we work</h2>
-        <ul>
-          <li><strong>Respect maintainers' time.</strong> Read the contributing guide, keep PRs small and focused, write good descriptions, answer review comments.</li>
-          <li><strong>Review before you ask for review.</strong> Reviewing others is how you learn a codebase and earn trust.</li>
-          <li><strong>AI tools are fine; AI slop is not.</strong> You must understand and be able to explain every line you submit. Never open a PR you haven't tested and read yourself. Low-effort generated PRs hurt your reputation and the project's.</li>
-          <li><strong>Learn in public.</strong> Share what you learn: a thread, a Nostr note, a short write-up or a session at Code Review Club. Once a month is plenty.</li>
-          <li><strong>Pay it forward.</strong> Help one newer learner during your fellowship: answer questions in Discord, pair with a Decoding Bitcoin student, or run one session.</li>
-          <li><strong>Be kind.</strong> You represent yourself and Code Orange in public project discussions. Our <a href="https://github.com/code-orange-dev/fellowships/blob/main/CODE_OF_CONDUCT.md" target="_blank" rel="noopener">code of conduct</a> applies everywhere.</li>
+        <ul class="fw-list">
+          <li><strong>Respect maintainers' time:</strong> small focused PRs, good descriptions, answer every review comment</li>
+          <li><strong>Review before you ask for review</strong></li>
+          <li><strong>AI tools yes, AI slop no:</strong> understand and be able to explain every line; never open a PR you haven't tested yourself</li>
+          <li><strong>Security first:</strong> found a vulnerability? Follow the project's security policy and report it privately, never in a public issue</li>
+          <li><strong>Stay safe:</strong> don't share your address, location or holdings publicly; use a nym if you prefer</li>
+          <li><strong>Learn in public:</strong> share one thing a month (a thread, a Nostr note or a session)</li>
+          <li><strong>Pay it forward:</strong> help one newer learner during your fellowship</li>
+          <li><strong>Be kind:</strong> our <a href="https://github.com/code-orange-dev/fellowships/blob/main/CODE_OF_CONDUCT.md" target="_blank" rel="noopener">code of conduct</a> applies everywhere</li>
         </ul>
       </section>
 
-      <section id="support">
-        <p class="fw-eyebrow">Our side of the deal</p>
-        <h2>What you get</h2>
-        <ul>
-          <li><strong>$512 a month in bitcoin</strong> for 6 months, so you can spend your time on open source instead of side gigs.</li>
-          <li><strong>A mentor</strong> who contributes to your project or one close to it, matched before you start, with a weekly call.</li>
-          <li><strong>Your fellow dashboard:</strong> standups, monthly reports, milestones and payment history in one place.</li>
-          <li><strong>A public proof-of-work page</strong> that turns your work into a track record anyone can check.</li>
-          <li><strong>A peer group</strong> of fellows, plus Code Review Club, the Privacy Track and the Code Orange community.</li>
-          <li><strong>Help with your next step:</strong> intros to maintainers and Bitcoin companies, references for good work, and help applying for long-term open-source support.</li>
-        </ul>
-      </section>
-
-      <section id="apply">
-        <p class="fw-eyebrow">The process</p>
-        <h2>How to apply</h2>
-        <ol class="fw-arc">
-          <li><b>Take the readiness check</b>Two minutes. It tells you if you're ready now or what to do first.</li>
-          <li><b>Fill in the application</b>Your proof of work, the project, and your 6-month plan with a goal per month.</li>
-          <li><b>We read every application</b>A human replies within 2 weeks. Shortlisted applicants get a short call on Discord.</li>
-          <li><b>Offer and mentor match</b>We only start a fellowship once your mentor is confirmed.</li>
-          <li><b>Start on the 1st</b>You get your fellow dashboard, set your milestones and post your first standup.</li>
-        </ol>
-        <div class="fw-cta" style="margin-top:16px">
-          <a class="button" href="/fellowships/apply">Check if you're ready &amp; apply</a>
-          <a class="ghost" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Ask in #fellowships on Discord</a>
+      <section id="graduate">
+        <p class="fw-eyebrow">Month 6 and after</p>
+        <h2>Graduation</h2>
+        <div class="fw-rhythm fw-rhythm-2">
+          <div><span>🎤</span><b>Demo</b>Show your work to the community and invited guests</div>
+          <div><span>🎓</span><b>Certificate</b>A verifiable certificate linked to your proof-of-work page</div>
+          <div><span>🚀</span><b>Next step</b>Intros, references and help applying for long-term open-source support or a role</div>
+          <div><span>🔁</span><b>Extend or mentor</b>Strong fellows can extend, or come back to mentor the next round</div>
         </div>
-        <p class="me-small" style="margin-top:14px">The full rules (rubric, payments, FAQ) live in the <a href="https://github.com/code-orange-dev/fellowships" target="_blank" rel="noopener">fellowships repository</a> on GitHub, released under CC0. If this page and the repo ever disagree, ask us.</p>
+      </section>
+
+      <section id="faq">
+        <p class="fw-eyebrow">Questions</p>
+        <h2>FAQ</h2>
+        <details class="fw-more"><summary>Can I keep my job or studies?</summary><p>Yes. It's 15–20 hours a week, so part-time is the norm. Just be honest about your time.</p></details>
+        <details class="fw-more"><summary>Can I use a nym?</summary><p>Yes. Your public page can show a nym. We need a working email for your dashboard and payments.</p></details>
+        <details class="fw-more"><summary>Can I work on two projects?</summary><p>Pick one main project. Reviews and small fixes elsewhere are welcome and count.</p></details>
+        <details class="fw-more"><summary>What if my PRs don't get merged?</summary><p>That's normal in Bitcoin. Reviews, tests and steady, honest progress count. Your mentor helps you get reviews moving.</p></details>
+        <details class="fw-more"><summary>Do I need to live in Southeast Asia?</summary><p>No. Builders from Southeast Asia and regions with few Bitcoin developers get priority, but anyone can apply.</p></details>
+        <details class="fw-more"><summary>Who mentors me?</summary><p>A contributor to your project or a close one, matched before you start. If you already know a maintainer, tell us in your application.</p></details>
+      </section>
+
+      <section id="apply" class="fw-final">
+        <p class="fw-eyebrow">How to apply</p>
+        <h2>Five steps</h2>
+        <ol class="fw-steps">
+          <li><b>Readiness check</b>2 minutes</li>
+          <li><b>Application</b>PRs, project, monthly goals</li>
+          <li><b>We reply</b>within 2 weeks</li>
+          <li><b>PR walkthrough call</b>20 minutes</li>
+          <li><b>Start on the 1st</b>once your mentor is confirmed</li>
+        </ol>
+        <div class="fw-cta">
+          <a class="button mb-cta" href="/fellowships/apply">Check if you're ready &amp; apply<svg class="mb-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="ghost mb-cta" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Ask in #fellowships</a>
+        </div>
+        <p class="me-small" style="margin-top:14px">Full rules (rubric, payments, FAQ) live in the <a href="https://github.com/code-orange-dev/fellowships" target="_blank" rel="noopener">fellowships repository</a> (CC0).</p>
       </section>
     </div>
   </div>
+  <a class="mb-sticky" href="/fellowships/apply">Check if you're ready &amp; apply</a>
 
 </main>
 <footer class="footer">
