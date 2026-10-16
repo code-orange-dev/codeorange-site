@@ -94,5 +94,11 @@
         }
       ]
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/fellowships/f/:handle",
+      "destination": "/fellowships/fellow.html"
+    }
   ]
 }
