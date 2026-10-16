@@ -8,6 +8,7 @@
   "summary": "A live 2-of-3 multisig with Trezor, Ledger and Coldcard in Sparrow, a restore in Nunchuk, and every link shared on the call.",
   "share_text": "Build a 2-of-3 multi-vendor multisig: notes + every resource from the @CodeOrangeDevs Self-Custody Workshop",
   "minutes": 5,
+  "video": "mKleeG4x-Ug",
   "tldr": [
     "Multisig from different vendors means one bad device can't take your coins.",
     "2-of-3: any two keys can spend, so you can lose one and still be fine.",
@@ -19,19 +20,97 @@
     "when": "Tuesday 20 October, 07:00 UTC on Discord. Free for everyone."
   },
   "resources": [
-    {"group": "Tools", "topic": "Wallets", "title": "Sparrow Wallet", "url": "https://sparrowwallet.com", "note": "desktop wallet used to build the multisig. There is no Sparrow mobile app, so a 'Sparrow' app on your phone is a scam"},
-    {"group": "Tools", "topic": "Wallets", "title": "Nunchuk", "url": "https://nunchuk.io", "note": "multisig wallet with desktop and mobile apps, used to restore the wallet. A dedicated Nunchuk workshop is planned"},
-    {"group": "Tools", "topic": "Wallets", "title": "BlueWallet", "url": "https://bluewallet.io", "note": "mobile wallet to practise sending and receiving with a few dollars first"},
-    {"group": "Tools", "topic": "Wallets", "title": "Cake Wallet", "url": "https://cakewallet.com", "note": "mobile wallet that supports PayJoin and Silent Payments, used to receive on the call"},
-    {"group": "Tools", "topic": "Hardware wallets", "title": "Trezor", "url": "https://trezor.io", "note": "key 1 in the demo, connected by USB"},
-    {"group": "Tools", "topic": "Hardware wallets", "title": "Ledger", "url": "https://www.ledger.com", "note": "key 2 in the demo, connected by USB"},
-    {"group": "Tools", "topic": "Hardware wallets", "title": "Coldcard Q", "url": "https://coldcard.com", "note": "key 3 in the demo, air-gapped with a microSD card"},
-    {"group": "Tools", "topic": "Hardware wallets", "title": "Blockstream Jade", "url": "https://blockstream.com/jade/", "note": "recommended for beginners"},
-    {"group": "Tools", "topic": "Hardware wallets", "title": "BitBox02", "url": "https://bitbox.swiss", "note": "recommended for beginners, made in Switzerland"},
-    {"group": "Tools", "topic": "Hardware wallets", "title": "OneKey", "url": "https://onekey.so", "note": "another option popular in Asia"},
-    {"group": "Reading", "topic": "Self-custody", "title": "BIP 48: Multi-script hierarchy for multisig wallets", "url": "https://github.com/bitcoin/bips/blob/master/bip-0048.mediawiki", "note": "where the m/48'/0'/0'/2' path for native SegWit multisig comes from"},
-    {"group": "Reading", "topic": "Self-custody", "title": "Sparrow Wallet docs", "url": "https://sparrowwallet.com/docs/", "note": "guides for multisig, coin control and airgapped signing"},
-    {"group": "Code Orange", "topic": "Code Orange", "title": "Privacy Developer Track", "url": "/privacy-track", "note": "every 1st and 3rd Tuesday, next one 20 October"}
+    {
+      "group": "Tools",
+      "topic": "Wallets",
+      "title": "Sparrow Wallet",
+      "url": "https://sparrowwallet.com",
+      "note": "desktop wallet used to build the multisig. There is no Sparrow mobile app, so a 'Sparrow' app on your phone is a scam"
+    },
+    {
+      "group": "Tools",
+      "topic": "Wallets",
+      "title": "Nunchuk",
+      "url": "https://nunchuk.io",
+      "note": "multisig wallet with desktop and mobile apps, used to restore the wallet. A dedicated Nunchuk workshop is planned"
+    },
+    {
+      "group": "Tools",
+      "topic": "Wallets",
+      "title": "BlueWallet",
+      "url": "https://bluewallet.io",
+      "note": "mobile wallet to practise sending and receiving with a few dollars first"
+    },
+    {
+      "group": "Tools",
+      "topic": "Wallets",
+      "title": "Cake Wallet",
+      "url": "https://cakewallet.com",
+      "note": "mobile wallet that supports PayJoin and Silent Payments, used to receive on the call"
+    },
+    {
+      "group": "Tools",
+      "topic": "Hardware wallets",
+      "title": "Trezor",
+      "url": "https://trezor.io",
+      "note": "key 1 in the demo, connected by USB"
+    },
+    {
+      "group": "Tools",
+      "topic": "Hardware wallets",
+      "title": "Ledger",
+      "url": "https://www.ledger.com",
+      "note": "key 2 in the demo, connected by USB"
+    },
+    {
+      "group": "Tools",
+      "topic": "Hardware wallets",
+      "title": "Coldcard Q",
+      "url": "https://coldcard.com",
+      "note": "key 3 in the demo, air-gapped with a microSD card"
+    },
+    {
+      "group": "Tools",
+      "topic": "Hardware wallets",
+      "title": "Blockstream Jade",
+      "url": "https://blockstream.com/jade/",
+      "note": "recommended for beginners"
+    },
+    {
+      "group": "Tools",
+      "topic": "Hardware wallets",
+      "title": "BitBox02",
+      "url": "https://bitbox.swiss",
+      "note": "recommended for beginners, made in Switzerland"
+    },
+    {
+      "group": "Tools",
+      "topic": "Hardware wallets",
+      "title": "OneKey",
+      "url": "https://onekey.so",
+      "note": "another option popular in Asia"
+    },
+    {
+      "group": "Reading",
+      "topic": "Self-custody",
+      "title": "BIP 48: Multi-script hierarchy for multisig wallets",
+      "url": "https://github.com/bitcoin/bips/blob/master/bip-0048.mediawiki",
+      "note": "where the m/48'/0'/0'/2' path for native SegWit multisig comes from"
+    },
+    {
+      "group": "Reading",
+      "topic": "Self-custody",
+      "title": "Sparrow Wallet docs",
+      "url": "https://sparrowwallet.com/docs/",
+      "note": "guides for multisig, coin control and airgapped signing"
+    },
+    {
+      "group": "Code Orange",
+      "topic": "Code Orange",
+      "title": "Privacy Developer Track",
+      "url": "/privacy-track",
+      "note": "every 1st and 3rd Tuesday, next one 20 October"
+    }
   ],
   "ideas": "Ideas for future sessions: a Nunchuk deep dive (miniscript, group wallets, inheritance), planned for December, and a passphrase wallet demo."
 }
