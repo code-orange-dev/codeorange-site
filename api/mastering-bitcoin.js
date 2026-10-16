@@ -348,7 +348,7 @@ async function selfTest(q) {
 
 async function adminMailerLite() {
   if (!mail.mailerliteOn()) return { status: 503, error: "Add MAILERLITE_API_KEY in Vercel first." };
-  const rows = await sql("SELECT name, email FROM mb_students WHERE cohort = $1 AND NOT hidden AND email IS NOT NULL ORDER BY id", [COHORT]);
+  const rows = await sql("SELECT name, email, token FROM mb_students WHERE cohort = $1 AND NOT hidden AND email IS NOT NULL ORDER BY id", [COHORT]);
   return { status: 200, data: { ok: true, added: await mail.syncMailerLite(rows), total: rows.length } };
 }
 

@@ -127,7 +127,8 @@ async function mlGroup() {
   return groupId;
 }
 
-const subscriber = (s, group) => ({ email: s.email, fields: { name: s.name }, groups: [group] });
+// dashboard_link lets the weekly reminder emails link each student straight into their dashboard.
+const subscriber = (s, group) => ({ email: s.email, fields: { name: s.name, ...(s.token ? { dashboard_link: personalLink(s.token) } : {}) }, groups: [group] });
 
 async function addToMailerLite(student) {
   const group = await mlGroup();
