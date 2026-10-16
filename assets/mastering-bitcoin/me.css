@@ -116,3 +116,28 @@ legend { color: var(--text); font-weight: 600; font-size: 14px; margin-bottom: 8
 .me-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 .me-field small { font-weight: 400; }
 @media (max-width: 480px) { .me-stats-3 { grid-template-columns: repeat(3, 1fr); } .me-nextstep .button { width: 100%; } }
+
+/* Quizzes, knowledge check, final project */
+.me-quiz { display: grid; gap: 14px; }
+.me-q { padding: 14px 16px; border: 1px solid var(--line); border-radius: 14px; background: rgba(0,0,0,.3); }
+.me-q legend { float: left; width: 100%; margin: 0 0 10px; font-size: 15px; line-height: 1.5; color: var(--text); font-weight: 600; }
+.me-q legend b { color: var(--orange); }
+.me-q label { display: block; margin: 0 0 6px; cursor: pointer; }
+.me-q input { position: absolute; opacity: 0; pointer-events: none; }
+.me-q label span { display: block; padding: 9px 12px; border: 1px solid rgba(255,255,255,.12); border-radius: 10px; color: var(--muted); font-size: 14px; line-height: 1.45; transition: border-color .15s, background .15s; }
+.me-q label:hover span { border-color: rgba(247,147,26,.45); }
+.me-q input:checked + span { border-color: var(--orange); background: rgba(247,147,26,.12); color: var(--text); }
+.me-q input:focus-visible + span { outline: 2px solid var(--orange); outline-offset: 2px; }
+.me-q label.is-answer span { border-color: #27C93F; background: rgba(39,201,63,.12); color: var(--text); }
+.me-q label.is-picked span { border-color: #ff5f56; background: rgba(255,95,86,.1); }
+.me-q.is-right { border-color: rgba(39,201,63,.4); }
+.me-q.is-wrong { border-color: rgba(255,95,86,.35); }
+.me-why { margin: 8px 0 0 !important; font-size: 14px; color: var(--text) !important; }
+.me-score { margin: 0 !important; color: var(--text) !important; }
+.me-score b { color: var(--orange); font-size: 22px; margin-right: 6px; }
+@media (min-width: 901px) { .me-quiz { grid-template-columns: 1fr 1fr; } .me-quiz > .me-row, .me-quiz > button { grid-column: 1 / -1; justify-self: start; } .me-quiz > .me-row { justify-self: stretch; } }
+.me-project-form { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+.me-project-form .me-field:nth-of-type(4), .me-project-form .me-help, .me-project-form button { grid-column: 1 / -1; }
+.me-project-form button { justify-self: start; }
+input[type=url] { width: 100%; min-height: 44px; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,.16); background: rgba(0,0,0,.55); color: var(--text); font: 15px/1.5 "Inter", system-ui, sans-serif; }
+@media (max-width: 700px) { .me-project-form { grid-template-columns: 1fr; } }

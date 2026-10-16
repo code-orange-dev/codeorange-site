@@ -3,6 +3,21 @@
 // Curriculum and dates come from cohort.js; data from /api/cohort-me and /api/mastering-bitcoin.
 (() => {
   const C = window.MB_COHORT;
+  const Q = window.MB_QUIZ || { weeks: [], check: [] };
+  // Shuffle each question's options in a fixed order (seeded by the question), so the right
+  // answer isn't always in the same place but stays put between visits.
+  Q.weeks.forEach((wk) => wk.forEach((x) => {
+    let h = 0;
+    for (const ch of x.q) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+    const order = x.options.map((_, i) => i);
+    for (let i = order.length - 1; i > 0; i--) {
+      h ^= h << 13; h >>>= 0; h ^= h >>> 17; h ^= h << 5; h >>>= 0;
+      const j = Math.floor((h / 4294967296) * (i + 1));
+      [order[i], order[j]] = [order[j], order[i]];
+    }
+    x.answer = order.indexOf(x.answer);
+    x.options = order.map((i) => x.options[i]);
+  }));
   const API = "/api/cohort-me";
   const COHORT_API = "/api/mastering-bitcoin";
   const TOKEN_KEY = "mb-token";
@@ -169,6 +184,8 @@
       ["🙋", "Brave ask", "Asked for help (the best habit there is)", d.checkins.some((c) => c.help)],
       ["🛠️", "Hands on", "Finished 10 exercises", s.exDone >= 10],
       ["⛰️", "Halfway", "Lessons done for 5 weeks", s.lessons >= 5],
+      ["🧠", "Quiz whiz", "Got every question right in a weekly quiz", Object.entries(d.quizzes || {}).some(([k, x]) => k.startsWith("w") && x.best === x.total)],
+      ["🚀", "Shipped", "Shared your final project", !!d.project],
       ["🎓", "Graduate", "Lessons done for all 10 weeks", s.lessons >= C.weeks.length],
     ];
     return list.map(([icon, name, why, got]) => `<li class="${got ? "is-got" : ""}" title="${esc(why)}"><span aria-hidden="true">${icon}</span><b>${esc(name)}</b><small>${esc(why)}</small></li>`).join("");
@@ -206,6 +223,8 @@
     if (!p.why && !p.build) return ["Start by writing down why you joined.", "People who name a goal are far more likely to finish.", go("#goals", "Set my goals")];
     if (!p.skillsStart) return ["Rate your starting skills.", "Thirty seconds now, and in week 9 you'll see exactly how far you've come.", go("#skills", "Rate my skills")];
     if (finished) return p.skillsEnd ? null : ["Rate your skills one last time.", "See how far you've come since the start.", go("#skills", "Rate again")];
+    if (!d.quizzes?.pre && !finished && currentWeek < 2) return ["Take the 2-minute knowledge check.", "10 quick questions, not graded. You'll take it again at the end to see what you've learned.", go("#check", "Start the check")];
+    if (currentWeek >= C.weeks.length - 2 && d.quizzes?.pre && !d.quizzes?.post) return ["Take the knowledge check again.", "Same 10 questions as at the start. See how far you've come.", go("#check", "Take it again")];
     if (currentWeek < 0) return ["You're all set for week 1.", `Lessons go up the week before. First session: ${sessionLine(sessionDates[0])}.`, go(`/assets/mastering-bitcoin/sessions.ics?v=20261010a`, "Add the sessions to my calendar")];
     if (!state.done.has(`w${wk}-r1`)) return [`Do this week's lessons before Monday.`, esc(C.weeks[currentWeek].lessons.map((l) => l.title).join(", ")), go("#week", "See this week")];
     if (!d.checkins.some((c) => c.week === wk)) return ["Do your 2-minute check-in.", "It's how we spot who's stuck and what to cover on Monday.", go("#checkin", "Check in")];
@@ -361,6 +380,71 @@
     return `<div class="me-card me-buddy"><p class="me-label">Study buddy</p>${body}</div>`;
   }
 
+  // ── Quizzes ──
+  // One renderer for the weekly quizzes and the knowledge check. Answers are checked here in the
+  // browser (it's practice), and only the score is saved.
+  const quizState = {};
+  function quizForm(id, questions) {
+    const st = quizState[id];
+    return `<form class="me-quiz" data-quiz="${id}">${questions.map((x, qi) => {
+      const picked = st ? st.picked[qi] : null;
+      return `<fieldset class="me-q${st ? (picked === x.answer ? " is-right" : " is-wrong") : ""}"><legend><b>${qi + 1}.</b> ${esc(x.q)}</legend>
+        ${x.options.map((o, oi) => `<label class="${st && oi === x.answer ? "is-answer" : ""}${st && oi === picked && oi !== x.answer ? " is-picked" : ""}"><input type="radio" name="q${qi}" value="${oi}"${picked === oi ? " checked" : ""}${st ? " disabled" : ""} required><span>${esc(o)}</span></label>`).join("")}
+        ${st ? `<p class="me-why">${picked === x.answer ? "✓ Right." : "✗ Not quite."} ${esc(x.why)}</p>` : ""}</fieldset>`;
+    }).join("")}
+    ${st ? (id === "pre" ? `<p class="me-score"><b>${st.score}/${questions.length}</b> That's your starting point. You'll take the same check in week 9.</p>` : `<div class="me-row"><p class="me-score"><b>${st.score}/${questions.length}</b> ${st.score === questions.length ? "Perfect! 🧠" : st.score >= questions.length * 0.75 ? "Nice work." : "Read the explanations, then try again."}</p><button type="button" class="ghost small" data-retry="${id}">Try again</button></div>`) : `<button class="button small" type="submit">Check my answers</button>`}</form>`;
+  }
+
+  function quizCard() {
+    if (currentWeek < 0 || !Q.weeks.length) return "";
+    const last = Math.min(C.weeks.length, currentWeek + 1);
+    const wk = Number(quizCard.week) || last;
+    const best = state.data.quizzes?.[`w${wk}`];
+    const options = Array.from({ length: last }, (_, i) => {
+      const b = state.data.quizzes?.[`w${i + 1}`];
+      return `<option value="${i + 1}"${i + 1 === wk ? " selected" : ""}>Week ${i + 1}${b ? ` · ${b.best}/${b.total}` : ""}</option>`;
+    }).join("");
+    return `<div class="me-card me-wide me-quizcard" id="quiz"><div class="me-row"><div><p class="me-label">Practice quiz · 4 questions</p><h2>Test yourself on week ${wk}</h2></div><select aria-label="Quiz week" data-quiz-week>${options}</select></div>
+      <p class="me-small">Recalling something is how it sticks. ${best ? `Your best: ${best.best}/${best.total} (${best.attempts} ${best.attempts === 1 ? "try" : "tries"}).` : "Only you see your score."}</p>
+      ${quizForm(`w${wk}`, Q.weeks[wk - 1] || [])}</div>`;
+  }
+
+  function checkCard() {
+    if (!Q.check.length) return "";
+    const d = state.data.quizzes || {};
+    const endOpen = finished || currentWeek >= C.weeks.length - 2;
+    const id = endOpen && d.pre ? "post" : "pre";
+    const questions = Q.check.map(([w, i]) => Q.weeks[w][i]);
+    const pct = (x, k) => (x ? Math.round(((k === "first" ? x.first : x.best) / x.total) * 100) : null);
+    const before = pct(d.pre, "first"), after = pct(d.post, "best");
+    const compare = before != null
+      ? `<div class="me-stats me-stats-3"><span><strong>${before}%</strong>at the start</span><span><strong>${after != null ? `${after}%` : "–"}</strong>at the end</span><span><strong>${after != null ? `${after - before >= 0 ? "+" : ""}${after - before}` : "–"}</strong>points gained</span></div>`
+      : "";
+    if (id === "pre" && d.pre && !quizState.pre) {
+      return `<div class="me-card me-check-card" id="check"><p class="me-label">Knowledge check</p><h2>Your starting point: ${before}%</h2>${compare}<p class="me-small">You'll take the same 10 questions again in week 9. Most people jump a long way.</p></div>`;
+    }
+    return `<div class="me-card me-wide me-check-card" id="check"><p class="me-label">Knowledge check · 10 questions · not graded</p>
+      <h2>${id === "pre" ? "Where are you starting from?" : "How much have you learned?"}</h2>
+      <p class="me-small">${id === "pre" ? "Don't look anything up and don't worry about wrong answers: this is your starting point, and you'll take the same check at the end." : "The same 10 questions as at the start."}</p>
+      ${compare}${quizForm(id, questions)}</div>`;
+  }
+
+  function projectCard() {
+    const p = state.data.project;
+    if (!p && currentWeek < 6 && !finished) return "";
+    return `<div class="me-card me-wide me-project" id="project"><p class="me-label">Your final project</p>
+      <h2>${p ? esc(p.title) : "Show what you built"}</h2>
+      <p class="me-small">Your stack machine from week 8, your Taproot capstone, or anything you built along the way. A public repo is proof of work that employers and fellowship programmes look at. See the <a href="/decoding-bitcoin/projects">projects wall</a>.</p>
+      <form id="me-project" class="me-project-form">
+        <label class="me-field">Project name<input type="text" name="title" maxlength="100" required value="${esc(p?.title || "")}" placeholder="e.g. Script stack machine in Rust"></label>
+        <label class="me-field">GitHub link<input type="url" name="repo" maxlength="300" value="${esc(p?.repo || "")}" placeholder="https://github.com/you/project"></label>
+        <label class="me-field">Demo or write-up link <small class="me-small">(optional)</small><input type="url" name="demo" maxlength="300" value="${esc(p?.demo || "")}"></label>
+        <label class="me-field">What it does, in a sentence or two<textarea name="about" rows="2" maxlength="500">${esc(p?.about || "")}</textarea></label>
+        <label class="me-help"><input type="checkbox" name="share"${p?.share ? " checked" : ""}> Show it on the public projects wall with my name</label>
+        <button class="button small" type="submit">${p ? "Update project" : "Save project"}</button>
+      </form></div>`;
+  }
+
   function classCard() {
     const c = state.data.class;
     if (!c || currentWeek < 0) return "";
@@ -424,8 +508,8 @@
         ? `We start ${dayLabel(plus8(sessionDates[0]))}. Set your goals and rate your skills so you can see how far you come.`
         : `Week ${currentWeek + 1} of ${C.weeks.length}. ${s.streak >= 2 ? `${s.streak}-week streak, keep it going!` : "One step at a time."}`;
     const cards = currentWeek < 0
-      ? [followupCard(), nextCardTop(s), goalsCard(), skillsCard(), thisWeekCard(), progressCard(s), buddyCard(), checkinCard(), askCard(), nextCard(), linkCard()]
-      : [followupCard(), nextCardTop(s), thisWeekCard(), checkinCard(), progressCard(s), classCard() || askCard(), buddyCard(), classCard() ? askCard() : "", goalsCard(), skillsCard(), nextCard(), linkCard()];
+      ? [followupCard(), nextCardTop(s), goalsCard(), skillsCard(), checkCard(), thisWeekCard(), progressCard(s), buddyCard(), checkinCard(), askCard(), nextCard(), linkCard()]
+      : [followupCard(), nextCardTop(s), thisWeekCard(), checkinCard(), quizCard(), progressCard(s), classCard() || askCard(), buddyCard(), classCard() ? askCard() : "", projectCard(), checkCard(), goalsCard(), skillsCard(), nextCard(), linkCard()];
     $("#me-app").innerHTML = cards.join("");
     bind();
     if (followupMonths) $("#followup")?.scrollIntoView({ block: "start" });
@@ -490,6 +574,28 @@
     app.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", (e) => {
       const el = e.currentTarget;
       navigator.clipboard?.writeText(el.dataset.copy).then(() => toast(el.dataset.copyMsg || "Link copied."), () => toast("Couldn't copy. Select the text and copy it."));
+    }));
+    app.querySelectorAll("form[data-quiz]").forEach((f) => f.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const id = f.dataset.quiz;
+      const questions = id.startsWith("w") ? Q.weeks[Number(id.slice(1)) - 1] : Q.check.map(([w, i]) => Q.weeks[w][i]);
+      const picked = questions.map((_, qi) => (f[`q${qi}`].value === "" ? null : Number(f[`q${qi}`].value)));
+      const score = picked.filter((v, qi) => v === questions[qi].answer).length;
+      quizState[id] = { picked, score };
+      const prev = state.data.quizzes?.[id];
+      state.data.quizzes = { ...(state.data.quizzes || {}), [id]: id === "pre" && prev ? prev : { best: Math.max(prev?.best ?? 0, score), last: score, total: questions.length, attempts: (prev?.attempts || 0) + 1, first: prev ? prev.first : score } };
+      render();
+      $(`form[data-quiz="${id}"]`)?.scrollIntoView({ block: "start" });
+      try { await post(API, { action: "quiz", token: state.token, quiz: id, score, total: questions.length }); } catch (err) { toast(err.message); }
+    }));
+    app.querySelectorAll("[data-retry]").forEach((b) => b.addEventListener("click", () => { delete quizState[b.dataset.retry]; render(); $(`form[data-quiz="${b.dataset.retry}"]`)?.scrollIntoView({ block: "start" }); }));
+    app.querySelector("[data-quiz-week]")?.addEventListener("change", (e) => { quizCard.week = Number(e.target.value); render(); $("#quiz")?.scrollIntoView({ block: "start" }); });
+    $("#me-project")?.addEventListener("submit", (e) => save(e, async () => {
+      const f = formObj(e.target);
+      const body = { title: f.title, repo: f.repo, demo: f.demo, about: f.about, share: !!f.share };
+      await post(API, { action: "project", token: state.token, ...body });
+      state.data.project = body;
+      return body.share ? "Saved. It's on the projects wall." : "Project saved.";
     }));
     $("#me-ask")?.addEventListener("submit", (e) => save(e, async () => {
       await post(API, { action: "ask", token: state.token, text: e.target.text.value });

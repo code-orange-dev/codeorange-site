@@ -12,6 +12,9 @@
 //   POST /api/cohort-me {action:"profile", token, why, build, experience, goal, skillsStart, skillsEnd}
 //   POST /api/cohort-me {action:"followup", token, months, answer}
 //   POST /api/cohort-me {action:"ask", token, text}   anonymous question for the next session
+//   POST /api/cohort-me {action:"quiz", token, quiz, score, total}   quiz = w1..w10, pre or post
+//   POST /api/cohort-me {action:"project", token, title, repo, demo, about, share}
+//   GET  /api/cohort-me?projects=1            public projects wall (only projects students chose to share)
 //   POST /api/cohort-me {action:"admin-followup", months}   (X-MB-Admin: key)
 
 const crypto = require("node:crypto");
@@ -109,6 +112,26 @@ function ensureTables() {
         text text NOT NULL,
         answered boolean NOT NULL DEFAULT false,
         created_at timestamptz NOT NULL DEFAULT now()
+      )`),
+      q(`CREATE TABLE IF NOT EXISTS mb_quiz (
+        student_id integer NOT NULL REFERENCES mb_students(id) ON DELETE CASCADE,
+        quiz text NOT NULL,
+        best integer NOT NULL,
+        last integer NOT NULL,
+        total integer NOT NULL,
+        attempts integer NOT NULL DEFAULT 1,
+        first_score integer NOT NULL,
+        updated_at timestamptz NOT NULL DEFAULT now(),
+        PRIMARY KEY (student_id, quiz)
+      )`),
+      q(`CREATE TABLE IF NOT EXISTS mb_projects (
+        student_id integer PRIMARY KEY REFERENCES mb_students(id) ON DELETE CASCADE,
+        title text NOT NULL,
+        repo text,
+        demo text,
+        about text,
+        share boolean NOT NULL DEFAULT false,
+        updated_at timestamptz NOT NULL DEFAULT now()
       )`),
       q(`CREATE TABLE IF NOT EXISTS mb_followup_sends (
         cohort text NOT NULL,
@@ -227,9 +250,11 @@ async function dashboard(token) {
                 (SELECT round(avg(c.hours), 1) FROM mb_checkins c JOIN mb_students s ON s.id = c.student_id WHERE s.cohort = $1 AND NOT s.hidden AND c.week = $2) AS hours,
                 (SELECT count(*) FROM mb_done d JOIN mb_students s ON s.id = d.student_id WHERE s.cohort = $1 AND NOT s.hidden AND d.item = 'w' || $2 || '-r1') AS read`, [COHORT, Math.max(1, weekAt())]),
       q("SELECT count(*) AS n FROM mb_questions WHERE student_id = $1 AND week = $2", [me.id, Math.max(1, weekAt())]),
+      q("SELECT quiz, best, last, total, attempts, first_score FROM mb_quiz WHERE student_id = $1", [me.id]),
+      q("SELECT title, repo, demo, about, share FROM mb_projects WHERE student_id = $1", [me.id]),
     ],
   });
-  const [checkins, [profile], [buddy], followups, done, [cls], [asked]] = results.map((r) => r.rows);
+  const [checkins, [profile], [buddy], followups, done, [cls], [asked], quizzes, [project]] = results.map((r) => r.rows);
   return {
     status: 200,
     data: {
@@ -245,6 +270,8 @@ async function dashboard(token) {
         : { week: Math.max(1, weekAt()), students: Number(cls.students), checkins: Number(cls.checkins) },
       certificate: { lessons: CERT_LESSONS, checkins: CERT_CHECKINS },
       asked: Number(asked.n),
+      quizzes: quizMap(quizzes),
+      project: project ? { title: project.title, repo: project.repo || "", demo: project.demo || "", about: project.about || "", share: bool(project.share) } : null,
       buddy: buddy ? { name: buddy.name, discord: buddy.discord, lastWeek: buddy.last_week == null ? 0 : Number(buddy.last_week) } : null,
       buddyFrom: new Date(PAIR_FROM).toISOString(),
       followups: Object.fromEntries(followups.map((f) => [f.months, parseJson(f.answer)])),
@@ -327,6 +354,66 @@ async function followup(body) {
   return { status: 200, data: { ok: true } };
 }
 
+const quizMap = (rows) => Object.fromEntries(rows.map((x) => [x.quiz, { best: Number(x.best), last: Number(x.last), total: Number(x.total), attempts: Number(x.attempts), first: Number(x.first_score) }]));
+const QUIZ_RE = /^(w(10|[1-9])|pre|post)$/;
+
+async function quiz(body) {
+  const me = await student(clean(body.token, 64));
+  if (!me) return { status: 401, error: "Your personal link isn't recognised. Open the link from your welcome email." };
+  const id = clean(body.quiz, 4);
+  const total = int(body.total, 1, 20);
+  const score = total ? int(body.score, 0, total) : null;
+  if (!QUIZ_RE.test(id) || score === null) return { status: 400, error: "Unknown quiz." };
+  // The "before" knowledge check counts once: retakes don't overwrite the starting point.
+  await sql(
+    `INSERT INTO mb_quiz (student_id, quiz, best, last, total, first_score) VALUES ($1, $2, $3, $3, $4, $3)
+     ON CONFLICT (student_id, quiz) DO UPDATE SET
+       best = CASE WHEN $2 = 'pre' THEN mb_quiz.best ELSE greatest(mb_quiz.best, $3) END,
+       last = CASE WHEN $2 = 'pre' THEN mb_quiz.last ELSE $3 END,
+       total = $4, attempts = mb_quiz.attempts + 1, updated_at = now()`,
+    [me.id, id, score, total]
+  );
+  return { status: 200, data: { ok: true } };
+}
+
+const httpUrl = (v) => {
+  const u = clean(v, 300);
+  if (!u) return "";
+  try {
+    const url = new URL(/^https?:\/\//i.test(u) ? u : `https://${u}`);
+    return /^https?:$/.test(url.protocol) ? url.href : null;
+  } catch {
+    return null;
+  }
+};
+
+async function project(body) {
+  const me = await student(clean(body.token, 64));
+  if (!me) return { status: 401, error: "Your personal link isn't recognised. Open the link from your welcome email." };
+  const title = clean(body.title, 100);
+  const repo = httpUrl(body.repo);
+  const demo = httpUrl(body.demo);
+  const about = clean(body.about, 500);
+  if (title.length < 3) return { status: 400, error: "Give your project a name." };
+  if (repo === null || demo === null) return { status: 400, error: "That link doesn't look right." };
+  await sql(
+    `INSERT INTO mb_projects (student_id, title, repo, demo, about, share) VALUES ($1, $2, $3, $4, $5, $6)
+     ON CONFLICT (student_id) DO UPDATE SET title = $2, repo = $3, demo = $4, about = $5, share = $6, updated_at = now()`,
+    [me.id, title, repo, demo, about, body.share === true]
+  );
+  return { status: 200, data: { ok: true } };
+}
+
+// Public: projects their makers chose to show, with the name they signed up with.
+async function projectsWall() {
+  const rows = await sql(
+    `SELECT s.name, p.title, p.repo, p.demo, p.about, p.updated_at FROM mb_projects p JOIN mb_students s ON s.id = p.student_id
+      WHERE s.cohort = $1 AND NOT s.hidden AND p.share ORDER BY p.updated_at DESC`,
+    [COHORT]
+  );
+  return { projects: rows.map((r) => ({ name: r.name, title: r.title, repo: r.repo || "", demo: r.demo || "", about: r.about || "", at: iso(r.updated_at) })) };
+}
+
 async function ask(body) {
   const me = await student(clean(body.token, 64));
   if (!me) return { status: 401, error: "Your personal link isn't recognised. Open the link from your welcome email." };
@@ -365,9 +452,11 @@ async function overview(withEmails) {
       q("SELECT f.student_id, f.months, f.answer, f.updated_at FROM mb_followups f JOIN mb_students s ON s.id = f.student_id WHERE s.cohort = $1", [COHORT]),
       q("SELECT months, sent, sent_at FROM mb_followup_sends WHERE cohort = $1", [COHORT]),
       q("SELECT id, week, text, answered, created_at FROM mb_questions WHERE cohort = $1 ORDER BY created_at DESC LIMIT 200", [COHORT]),
+      q("SELECT x.* FROM mb_quiz x JOIN mb_students s ON s.id = x.student_id WHERE s.cohort = $1", [COHORT]),
+      q("SELECT p.* FROM mb_projects p JOIN mb_students s ON s.id = p.student_id WHERE s.cohort = $1", [COHORT]),
     ],
   });
-  const [students, checkins, profiles, buddies, done, followups, sends, questions] = results.map((r) => r.rows);
+  const [students, checkins, profiles, buddies, done, followups, sends, questions, quizRows, projectRows] = results.map((r) => r.rows);
   const week = weekAt();
   const by = (rows) => {
     const m = new Map();
@@ -378,7 +467,8 @@ async function overview(withEmails) {
     }
     return m;
   };
-  const cBy = by(checkins), dBy = by(done), fBy = by(followups);
+  const cBy = by(checkins), dBy = by(done), fBy = by(followups), qBy = by(quizRows);
+  const prBy = new Map(projectRows.map((p) => [Number(p.student_id), p]));
   const pBy = new Map(profiles.map((p) => [Number(p.student_id), p]));
   const bBy = new Map(buddies.map((b) => [Number(b.student_id), Number(b.buddy_id)]));
   const names = new Map(students.map((s) => [Number(s.id), s.name]));
@@ -413,6 +503,8 @@ async function overview(withEmails) {
       checkins: cs,
       profile: p ? { why: p.why || "", build: p.build || "", experience: p.experience || "", goal: p.goal || "", github: p.github || "", skillsStart: parseJson(p.skills_start), skillsEnd: parseJson(p.skills_end) } : null,
       buddy: bBy.has(id) ? names.get(bBy.get(id)) || null : null,
+      quizzes: quizMap(qBy.get(id) || []),
+      project: prBy.has(id) ? { title: prBy.get(id).title, repo: prBy.get(id).repo || "", demo: prBy.get(id).demo || "", about: prBy.get(id).about || "", share: bool(prBy.get(id).share) } : null,
       followups: Object.fromEntries((fBy.get(id) || []).map((f) => [f.months, parseJson(f.answer)])),
       flags: bool(s.hidden) ? [] : flags,
     };
@@ -429,6 +521,10 @@ async function overview(withEmails) {
       hours: avg(cs.map((c) => c.hours).filter((v) => v != null)),
       help: cs.filter((c) => c.help).length,
       attended: cs.filter((c) => c.attended).length,
+      quiz: (() => {
+        const xs = active.map((s) => s.quizzes[`w${w}`]).filter(Boolean);
+        return xs.length ? { taken: xs.length, firstTry: Math.round((xs.reduce((a, x) => a + x.first / x.total, 0) / xs.length) * 100) } : null;
+      })(),
       read: active.filter((s) => done.some((d) => Number(d.student_id) === s.id && d.item === `w${w}-r1`)).length,
     };
   });
@@ -447,6 +543,16 @@ async function overview(withEmails) {
     atRisk: active.filter((s) => s.flags.length).length,
     pulse,
     skills: { start: skillAvg("skillsStart"), end: skillAvg("skillsEnd") },
+    // Learning gain: the same 10 questions before week 1 and from week 9 (percent right).
+    knowledge: (() => {
+      const avg = (k) => {
+        const xs = active.map((s) => s.quizzes[k]).filter(Boolean);
+        return xs.length ? { taken: xs.length, avg: Math.round((xs.reduce((a, x) => a + (k === "pre" ? x.first : x.best) / x.total, 0) / xs.length) * 100) } : null;
+      };
+      const both = active.filter((s) => s.quizzes.pre && s.quizzes.post);
+      return { before: avg("pre"), after: avg("post"), gain: both.length ? Math.round((both.reduce((a, s) => a + s.quizzes.post.best / s.quizzes.post.total - s.quizzes.pre.first / s.quizzes.pre.total, 0) / both.length) * 100) : null, both: both.length };
+    })(),
+    projects: active.filter((s) => s.project).length,
     certificate: { lessons: CERT_LESSONS, checkins: CERT_CHECKINS, onTrack: active.filter((s) => s.lessonsRead >= CERT_LESSONS && s.checkins.length >= CERT_CHECKINS).length },
     questions: questions.map((x) => ({ id: Number(x.id), week: Number(x.week), text: x.text, answered: bool(x.answered), at: iso(x.created_at) })),
     followupsSent: Object.fromEntries(sends.map((r) => [r.months, { sent: Number(r.sent), at: iso(r.sent_at) }])),
@@ -512,6 +618,10 @@ module.exports = async function handler(req, res) {
         }
         return res.status(200).json(await overview(false));
       }
+      if (req.query?.projects !== undefined) {
+        res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=3600");
+        return res.status(200).json(await projectsWall());
+      }
       if (req.query?.admin !== undefined) {
         if (!isAdmin(req)) return res.status(401).json({ error: "Wrong admin key." });
         return res.status(200).json(await overview(true));
@@ -527,6 +637,8 @@ module.exports = async function handler(req, res) {
         profile: () => profile(body),
         followup: () => followup(body),
         ask: () => ask(body),
+        quiz: () => quiz(body),
+        project: () => project(body),
         "admin-answered": () => (isAdmin(req) ? markAnswered(body) : { status: 401, error: "Wrong admin key." }),
         "admin-followup": () => (isAdmin(req) ? sendFollowups(Number(body.months)) : { status: 401, error: "Wrong admin key." }),
       };
