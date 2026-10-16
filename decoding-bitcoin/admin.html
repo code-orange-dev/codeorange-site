@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
-<title>Cohort sign-ups (organisers)</title>
+<title>Cohort organisers</title>
 <link rel="icon" type="image/svg+xml" href="/assets/favicon-co.svg">
 <style>
 :root { --bg: #0a0a0a; --card: #141414; --line: rgba(255,255,255,.1); --text: #f4f4f4; --muted: #a3a3a3; --dim: #737373; --orange: #F7931A; }
@@ -36,6 +36,17 @@ tr.is-hidden td { opacity: .45; }
 td.num { color: var(--dim); }
 td button { min-height: 30px; padding: 4px 12px; font-size: 12px; }
 .note { min-height: 1.5em; color: var(--orange); }
+h2 { margin: 40px 0 6px; font-size: 20px; }
+.risk { display: grid; gap: 10px; margin: 12px 0; }
+.risk div, details.st { padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); }
+.risk b, details.st summary b { color: var(--text); }
+.flag { display: inline-block; margin: 2px 4px 2px 0; padding: 2px 10px; border-radius: 999px; background: rgba(247,147,26,.15); color: var(--orange); font-size: 12px; font-weight: 600; }
+details.st { margin-bottom: 8px; }
+details.st summary { cursor: pointer; }
+details.st dl { display: grid; grid-template-columns: 160px 1fr; gap: 6px 14px; margin: 12px 0 0; font-size: 14px; }
+details.st dt { color: var(--dim); }
+details.st dd { margin: 0; white-space: pre-wrap; }
+.fu { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 [hidden] { display: none !important; }
 </style>
 </head>
@@ -66,6 +77,25 @@ td button { min-height: 30px; padding: 4px 12px; font-size: 12px; }
       <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Discord</th><th>Nostr</th><th>Signed up</th><th>Ticks</th><th></th></tr></thead>
       <tbody id="rows"></tbody>
     </table></div>
+  </section>
+  <section id="dash2" hidden>
+    <h2>Student dashboards</h2>
+    <p>From <a href="/decoding-bitcoin/me">/decoding-bitcoin/me</a>: weekly check-ins, goals, skill maps and buddies. Check-ins are private to each student and you.</p>
+    <div class="stats" id="stats2"></div>
+    <h2>Needs a nudge</h2>
+    <div class="risk" id="risk"></div>
+    <h2>Class pulse by week</h2>
+    <div class="wrap"><table>
+      <thead><tr><th>Week</th><th>Check-ins</th><th>Avg confidence</th><th>Avg hours</th><th>Asked for help</th><th>Did the lessons</th></tr></thead>
+      <tbody id="pulse"></tbody>
+    </table></div>
+    <h2>Skill map (class average, 0 to 4)</h2>
+    <div class="wrap"><table><thead><tr><th>Topic</th><th>Start</th><th>End</th></tr></thead><tbody id="skills"></tbody></table></div>
+    <h2>Alumni follow-ups</h2>
+    <p>Emails everyone a link to a short "how's it going" form. Each one can only be sent once, from 3, 6 and 12 months after the last session (18 Jan 2027).</p>
+    <div class="fu" id="fu"></div>
+    <h2>Everyone</h2>
+    <div id="people"></div>
   </section>
 </main>
 <script>
@@ -101,6 +131,7 @@ td button { min-height: 30px; padding: 4px 12px; font-size: 12px; }
       if (res.status === 401) { saved.clear(); key = ""; throw new Error("That key didn't work."); }
       if (!res.ok) throw new Error(body.error || "Couldn't load the sign-ups.");
       data = body;
+      loadDash();
       $("#note").textContent = "";
       $("#key-form").hidden = true;
       $("#dash").hidden = false;
@@ -165,7 +196,7 @@ td button { min-height: 30px; padding: 4px 12px; font-size: 12px; }
       ev.target.disabled = false;
     }
   });
-  $("#lock").addEventListener("click", () => { saved.clear(); key = ""; data = null; $("#dash").hidden = true; $("#key-form").hidden = false; $("#rows").innerHTML = ""; });
+  $("#lock").addEventListener("click", () => { saved.clear(); key = ""; data = null; $("#dash").hidden = true; $("#dash2").hidden = true; $("#key-form").hidden = false; $("#rows").innerHTML = ""; });
   $("#copy-emails").addEventListener("click", async () => {
     const list = data.students.filter((s) => !s.hidden && s.email).map((s) => s.email).join(", ");
     try { await navigator.clipboard.writeText(list); $("#note").textContent = "Emails copied."; } catch { $("#note").textContent = list; }
@@ -192,6 +223,76 @@ td button { min-height: 30px; padding: 4px 12px; font-size: 12px; }
       $("#note").textContent = err.message;
       b.disabled = false;
     }
+  });
+
+  // Student dashboards (check-ins, goals, skill map, follow-ups), from /api/cohort-me.
+  const SKILLS = { utxo: "Transactions & UTXOs", structure: "Transaction structure", fees: "Fees", signing: "Signing", script: "Script", p2sh: "P2SH & multisig", taproot: "Taproot & Schnorr", build: "Building tools" };
+  const EXP = { new: "New to coding", some: "Codes a bit", dev: "Developer", "bitcoin-dev": "Builds on Bitcoin" };
+  let dash = null;
+  async function loadDash() {
+    try {
+      const res = await fetch("/api/cohort-me?admin=1", { headers: { "X-MB-Admin": key } });
+      if (!res.ok) throw new Error();
+      dash = await res.json();
+      renderDash();
+      $("#dash2").hidden = false;
+    } catch { $("#dash2").hidden = true; }
+  }
+  function renderDash() {
+    const act = dash.students.filter((s) => !s.hidden);
+    $("#stats2").innerHTML = [
+      [dash.week ? `Week ${dash.week}` : "Not started", "where we are"],
+      [act.filter((s) => s.profile && (s.profile.why || s.profile.build)).length, "set their goals"],
+      [act.filter((s) => s.profile && s.profile.skillsStart).length, "rated their skills"],
+      [act.filter((s) => s.checkins.length).length, "have checked in"],
+      [act.filter((s) => s.buddy).length, "have a buddy"],
+      [dash.atRisk, "need a nudge"],
+    ].map(([n, l]) => `<div><strong>${n}</strong><span>${l}</span></div>`).join("");
+    const risky = act.filter((s) => s.flags.length);
+    $("#risk").innerHTML = risky.map((s) => {
+      const last = s.checkins[s.checkins.length - 1];
+      return `<div><b>${esc(s.name)}</b> · Discord ${esc(s.discord || "–")} · ${s.flags.map((f) => `<span class="flag">${esc(f)}</span>`).join("")}${last && last.blocked ? `<br><span style="color:var(--muted)">Stuck on: ${esc(last.blocked)}</span>` : ""}</div>`;
+    }).join("") || "<p>Nobody right now.</p>";
+    $("#pulse").innerHTML = dash.pulse.map((w) => `<tr><td>${w.week}</td><td>${w.checkins}</td><td>${w.confidence ?? "–"}</td><td>${w.hours ?? "–"}</td><td>${w.help}</td><td>${w.read}</td></tr>`).join("");
+    $("#skills").innerHTML = Object.entries(SKILLS).map(([k, l]) => `<tr><td>${l}</td><td>${dash.skills.start[k] ?? "–"}</td><td>${dash.skills.end[k] ?? "–"}</td></tr>`).join("");
+    $("#fu").innerHTML = [3, 6, 12].map((m) => {
+      const sent = dash.followupsSent[m];
+      const answers = act.filter((s) => s.followups[m]).length;
+      return sent ? `<span class="flag">${m} months: sent to ${sent.sent} on ${new Date(sent.at).toLocaleDateString()} · ${answers} answered</span>` : `<button type="button" data-fu="${m}">Send ${m}-month follow-up</button>`;
+    }).join("");
+    $("#people").innerHTML = act.map((s) => {
+      const p = s.profile || {};
+      const cks = s.checkins.map((c) => `Week ${c.week}: confidence ${c.confidence ?? "–"}/5, ${c.hours ?? "–"} h${c.help ? ", asked for help" : ""}${c.clicked ? `\n  clicked: ${c.clicked}` : ""}${c.blocked ? `\n  stuck: ${c.blocked}` : ""}`).join("\n");
+      const sk = (o) => (o ? Object.entries(o).map(([k, v]) => `${SKILLS[k]} ${v}`).join(", ") : "–");
+      const fus = Object.entries(s.followups).map(([m, a]) => `${m} months: ${a.status || ""} ${a.doing || ""} ${a.contributions || ""} ${a.links || ""}${a.wish ? ` (wants: ${a.wish})` : ""}`).join("\n");
+      return `<details class="st"><summary><b>${esc(s.name)}</b> · ${s.lessonsRead}/10 weeks of lessons · ${s.exercises} exercises · ${s.checkins.length} check-ins ${s.flags.map((f) => `<span class="flag">${esc(f)}</span>`).join("")}</summary><dl>
+        <dt>Discord / email</dt><dd>${esc(s.discord || "–")} · ${esc(s.email || "–")}</dd>
+        <dt>Experience</dt><dd>${esc(EXP[p.experience] || "–")}</dd>
+        <dt>Why they joined</dt><dd>${esc(p.why || "–")}</dd>
+        <dt>Wants to build</dt><dd>${esc(p.build || "–")}</dd>
+        <dt>10-week goal</dt><dd>${esc(p.goal || "–")}</dd>
+        <dt>Skills at start</dt><dd>${esc(sk(p.skillsStart))}</dd>
+        <dt>Skills at end</dt><dd>${esc(sk(p.skillsEnd))}</dd>
+        <dt>Buddy</dt><dd>${esc(s.buddy || "–")}</dd>
+        <dt>Check-ins</dt><dd>${esc(cks || "–")}</dd>
+        <dt>Last active</dt><dd>${s.lastActive ? new Date(s.lastActive).toLocaleString() : "–"}</dd>
+        ${fus ? `<dt>Follow-ups</dt><dd>${esc(fus)}</dd>` : ""}
+      </dl></details>`;
+    }).join("") || "<p>No students yet.</p>";
+  }
+  document.addEventListener("click", async (ev) => {
+    const b = ev.target.closest("[data-fu]");
+    if (!b) return;
+    const m = Number(b.dataset.fu);
+    if (!confirm(`Email the ${m}-month follow-up to everyone in the cohort now? This can only be done once.`)) return;
+    b.disabled = true;
+    try {
+      const res = await fetch("/api/cohort-me", { method: "POST", headers: { "Content-Type": "application/json", "X-MB-Admin": key }, body: JSON.stringify({ action: "admin-followup", months: m }) });
+      const out = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(out.error || "Couldn't send.");
+      $("#note").textContent = `Sent to ${out.sent} of ${out.total}.`;
+      loadDash();
+    } catch (err) { $("#note").textContent = err.message; b.disabled = false; }
   });
 
   if (key) load();

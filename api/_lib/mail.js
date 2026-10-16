@@ -19,7 +19,7 @@ const emailOn = () => !!process.env.RESEND_API_KEY;
 const mailerliteOn = () => !!process.env.MAILERLITE_API_KEY;
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
-const personalLink = (token) => `${SITE}/decoding-bitcoin?me=${encodeURIComponent(token)}`;
+const personalLink = (token) => `${SITE}/decoding-bitcoin/me?me=${encodeURIComponent(token)}`;
 
 function calendarLink() {
   const stamp = (d) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
@@ -34,7 +34,7 @@ function calendarLink() {
   });
 }
 
-async function send(to, subject, lines) {
+async function send(to, subject, lines, replyTo) {
   const html = `<div style="font:16px/1.55 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:#111;max-width:560px">${lines
     .map((l) => (l.startsWith("<") ? l : `<p>${l}</p>`))
     .join("")}<p style="color:#777;font-size:13px">Code Orange Dev School · <a href="${SITE}" style="color:#d97706">codeorange.dev</a></p></div>`;
@@ -45,7 +45,7 @@ async function send(to, subject, lines) {
     headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, "Content-Type": "application/json" },
     body: JSON.stringify({
       from: process.env.MB_EMAIL_FROM || "Code Orange Dev School <cohort@codeorange.dev>",
-      reply_to: "hello@codeorange.dev",
+      reply_to: replyTo || "hello@codeorange.dev",
       to: [to],
       subject,
       html,
@@ -86,6 +86,21 @@ function sendLink({ email, name, token }) {
     "Here's your personal link for the Decoding Bitcoin study cohort. Open it on any device to see your dashboard and tick things off.",
     button(personalLink(token), "Open my dashboard"),
     "Didn't ask for this? You can ignore this email.",
+  ]);
+}
+
+const dashboardLink = (token, extra = "") => `${SITE}/decoding-bitcoin/me?me=${encodeURIComponent(token)}${extra}`;
+
+// Alumni follow-up, 3, 6 and 12 months after the last session (sent from api/cohort-me.js).
+function sendFollowup({ email, name, token, months }) {
+  const when = months === 12 ? "a year" : `${months} months`;
+  return send(email, `It's been ${when}! How's your Bitcoin journey going?`, [
+    `Hi ${esc(name)},`,
+    `It's been ${when} since we finished Decoding Bitcoin together. We'd love to hear what you've been up to: building, contributing, studying, or taking a break. All of it counts.`,
+    "It takes two minutes, and it helps us make the next cohort better.",
+    button(dashboardLink(token, `&followup=${months}`), "Tell us how it's going"),
+    "If you'd like a hand with a next step (a first open-source PR, a fellowship application, a project idea), say so in the form and we'll reach out.",
+    "Thanks for being part of it!<br>The Code Orange crew",
   ]);
 }
 
@@ -134,4 +149,4 @@ async function syncMailerLite(students) {
   return added;
 }
 
-module.exports = { emailOn, mailerliteOn, sendWelcome, sendLink, addToMailerLite, syncMailerLite };
+module.exports = { esc, sendTo: send, sendFollowup, dashboardLink, emailOn, mailerliteOn, sendWelcome, sendLink, addToMailerLite, syncMailerLite };
