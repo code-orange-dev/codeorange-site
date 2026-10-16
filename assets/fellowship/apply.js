@@ -12,6 +12,7 @@
     ["time", "I can give 15–20 hours a week for 6 months", "", true, "If your time is tighter right now, apply in a later round. Pausing is allowed, but the fellowship needs steady weeks."],
     ["plan", "I have a goal for each of the 6 months", "", true, "Talk to the project: read open issues and the roadmap, then sketch one goal per month."],
     ["public", "I'm okay with my work being shown on a public proof-of-work page", "Payments stay private. If being public is risky where you live, tell us and we'll keep it private.", true, "Read the public vs private table in the guidelines."],
+    ["clubs", "I'll join Code Review Club and the Privacy Track, and present my work at Code Review Club", "Present at least once every 2 months. Privacy Track: 1st & 3rd Tuesday, 07:00 UTC.", true, 'Drop into a <a href="/calendar">Code Review Club or Privacy Track session</a> before you apply.'],
     ["reviews", "I've reviewed someone else's PR", "", false, "Review one open PR on your project this week. Even questions count."],
     ["vouch", "A maintainer or contributor of the project knows my work", "", false, "Introduce yourself in the project's chat and ask for feedback on your first PR."],
     ["privacy", "My project is on the Privacy Track list", "Payjoin, Silent Payments, Floresta, JoinMarket, OpenSwap, Fedimint, ecash.", false, ""],

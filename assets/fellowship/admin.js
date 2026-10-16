@@ -14,7 +14,7 @@
   const app = $("#fw-admin");
   const STATUSES = ["new", "shortlisted", "interview", "waitlist", "accepted", "declined"];
   const FSTATUS = ["green", "yellow", "red", "paused", "graduated", "ended"];
-  const READY = { learned: "Finished a course", pr: "Has a PR or review on the project", builds: "Builds and runs tests", time: "15-20 h/week", plan: "Monthly goals", public: "OK with public page", reviews: "Has reviewed PRs", vouch: "Maintainer knows them", privacy: "Privacy project", community: "Shows up" };
+  const READY = { learned: "Finished a course", pr: "Has a PR or review on the project", builds: "Builds and runs tests", time: "15-20 h/week", plan: "Monthly goals", public: "OK with public page", reviews: "Has reviewed PRs", vouch: "Maintainer knows them", privacy: "Privacy project", community: "Shows up", clubs: "Code Review Club + Privacy Track" };
   let D;
   let filter = "open";
 

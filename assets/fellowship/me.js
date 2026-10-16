@@ -188,7 +188,7 @@
         <label class="me-field">Summary <span class="fw-hint">(public) What happened this month, in a few sentences.</span><textarea name="summary" rows="4" maxlength="4000"></textarea></label>
         <label class="me-field">PRs opened and merged <span class="fw-hint">(public) Links, one per line.</span><textarea name="prs" rows="3" maxlength="3000"></textarea></label>
         <label class="me-field">Reviews you wrote <span class="fw-hint">(public)</span><textarea name="reviews" rows="2" maxlength="3000"></textarea></label>
-        <label class="me-field">Other work <span class="fw-hint">(public) Issues, tests, docs, talks, write-ups.</span><textarea name="other" rows="2" maxlength="2000"></textarea></label>
+        <label class="me-field">Other work <span class="fw-hint">(public) Code Review Club talks, Privacy Track sessions, issues, tests, docs, write-ups.</span><textarea name="other" rows="2" maxlength="2000"></textarea></label>
         <label class="me-field">Next month's focus <span class="fw-hint">(public)</span><textarea name="next" rows="2" maxlength="2000"></textarea></label>
         <label class="me-field">What got in the way? <span class="fw-hint">(private)</span><textarea name="blockers" rows="2" maxlength="2000"></textarea></label>
         <fieldset class="me-pills"><legend>Pay me by <span class="fw-hint">(private)</span></legend>
@@ -261,10 +261,11 @@
         <li>🗓️ <strong>Monday:</strong> standup here</li>
         <li>📞 <strong>Weekly:</strong> mentor call, come prepared</li>
         <li>🔍 <strong>Friday:</strong> review one PR by someone else</li>
-        <li>🎤 <strong>Every 2 weeks:</strong> fellows sync on Discord</li>
+        <li>🎤 <strong>Code Review Club:</strong> join, and present your work every 2 months</li>
+        <li>🛡️ <strong>Privacy Track:</strong> 1st &amp; 3rd Tuesday, 07:00 UTC · 15:00 UTC+8</li>
         <li>🧾 <strong>By the 5th:</strong> monthly report, paid by the 10th</li>
       </ul>
-      <p class="me-small"><a href="/fellowships/guidelines">Guidelines</a> · <a href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">#fellowships on Discord</a> · <a href="/calendar">Code Review Club &amp; sessions</a></p>
+      <p class="me-small"><a href="/fellowships/guidelines">Guidelines</a> · <a href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">#fellowships on Discord</a> · <a href="/calendar">Calendar</a> · <a href="/privacy-track">Privacy Track</a></p>
       <p class="me-small"><button class="ghost small" type="button" id="fw-signout">Sign out on this device</button></p></section>`;
   }
 
