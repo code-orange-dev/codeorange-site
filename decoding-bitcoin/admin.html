@@ -84,9 +84,12 @@ details.st dd { margin: 0; white-space: pre-wrap; }
     <div class="stats" id="stats2"></div>
     <h2>Needs a nudge</h2>
     <div class="risk" id="risk"></div>
+    <h2>Anonymous questions for Monday</h2>
+    <p>Students can't be identified from these. Tick one off once it's been covered.</p>
+    <div class="risk" id="questions"></div>
     <h2>Class pulse by week</h2>
     <div class="wrap"><table>
-      <thead><tr><th>Week</th><th>Check-ins</th><th>Avg confidence</th><th>Avg hours</th><th>Asked for help</th><th>Did the lessons</th></tr></thead>
+      <thead><tr><th>Week</th><th>Check-ins</th><th>Avg confidence</th><th>Avg hours</th><th>Came to the session</th><th>Asked for help</th><th>Did the lessons</th></tr></thead>
       <tbody id="pulse"></tbody>
     </table></div>
     <h2>Skill map (class average, 0 to 4)</h2>
@@ -247,13 +250,15 @@ details.st dd { margin: 0; white-space: pre-wrap; }
       [act.filter((s) => s.checkins.length).length, "have checked in"],
       [act.filter((s) => s.buddy).length, "have a buddy"],
       [dash.atRisk, "need a nudge"],
+      [dash.certificate.onTrack, `earned a certificate (${dash.certificate.lessons} weeks + ${dash.certificate.checkins} check-ins)`],
     ].map(([n, l]) => `<div><strong>${n}</strong><span>${l}</span></div>`).join("");
     const risky = act.filter((s) => s.flags.length);
     $("#risk").innerHTML = risky.map((s) => {
       const last = s.checkins[s.checkins.length - 1];
       return `<div><b>${esc(s.name)}</b> · Discord ${esc(s.discord || "–")} · ${s.flags.map((f) => `<span class="flag">${esc(f)}</span>`).join("")}${last && last.blocked ? `<br><span style="color:var(--muted)">Stuck on: ${esc(last.blocked)}</span>` : ""}</div>`;
     }).join("") || "<p>Nobody right now.</p>";
-    $("#pulse").innerHTML = dash.pulse.map((w) => `<tr><td>${w.week}</td><td>${w.checkins}</td><td>${w.confidence ?? "–"}</td><td>${w.hours ?? "–"}</td><td>${w.help}</td><td>${w.read}</td></tr>`).join("");
+    $("#questions").innerHTML = dash.questions.map((x) => `<div style="${x.answered ? "opacity:.5" : ""}"><span class="flag">Week ${x.week}</span> ${esc(x.text)} <button type="button" data-q="${x.id}" data-to="${!x.answered}" style="float:right">${x.answered ? "Undo" : "Covered"}</button></div>`).join("") || "<p>None yet.</p>";
+    $("#pulse").innerHTML = dash.pulse.map((w) => `<tr><td>${w.week}</td><td>${w.checkins}</td><td>${w.confidence ?? "–"}</td><td>${w.hours ?? "–"}</td><td>${w.attended}</td><td>${w.help}</td><td>${w.read}</td></tr>`).join("");
     $("#skills").innerHTML = Object.entries(SKILLS).map(([k, l]) => `<tr><td>${l}</td><td>${dash.skills.start[k] ?? "–"}</td><td>${dash.skills.end[k] ?? "–"}</td></tr>`).join("");
     $("#fu").innerHTML = [3, 6, 12].map((m) => {
       const sent = dash.followupsSent[m];
@@ -262,11 +267,12 @@ details.st dd { margin: 0; white-space: pre-wrap; }
     }).join("");
     $("#people").innerHTML = act.map((s) => {
       const p = s.profile || {};
-      const cks = s.checkins.map((c) => `Week ${c.week}: confidence ${c.confidence ?? "–"}/5, ${c.hours ?? "–"} h${c.help ? ", asked for help" : ""}${c.clicked ? `\n  clicked: ${c.clicked}` : ""}${c.blocked ? `\n  stuck: ${c.blocked}` : ""}`).join("\n");
+      const cks = s.checkins.map((c) => `Week ${c.week}: confidence ${c.confidence ?? "–"}/5, ${c.hours ?? "–"} h${c.attended === true ? ", came to the session" : c.attended === false ? ", missed the session" : ""}${c.help ? ", asked for help" : ""}${c.clicked ? `\n  clicked: ${c.clicked}` : ""}${c.blocked ? `\n  stuck: ${c.blocked}` : ""}`).join("\n");
       const sk = (o) => (o ? Object.entries(o).map(([k, v]) => `${SKILLS[k]} ${v}`).join(", ") : "–");
       const fus = Object.entries(s.followups).map(([m, a]) => `${m} months: ${a.status || ""} ${a.doing || ""} ${a.contributions || ""} ${a.links || ""}${a.wish ? ` (wants: ${a.wish})` : ""}`).join("\n");
       return `<details class="st"><summary><b>${esc(s.name)}</b> · ${s.lessonsRead}/10 weeks of lessons · ${s.exercises} exercises · ${s.checkins.length} check-ins ${s.flags.map((f) => `<span class="flag">${esc(f)}</span>`).join("")}</summary><dl>
         <dt>Discord / email</dt><dd>${esc(s.discord || "–")} · ${esc(s.email || "–")}</dd>
+        <dt>GitHub</dt><dd>${p.github ? `<a href="https://github.com/${esc(p.github)}" target="_blank" rel="noopener noreferrer">${esc(p.github)}</a>` : "–"}</dd>
         <dt>Experience</dt><dd>${esc(EXP[p.experience] || "–")}</dd>
         <dt>Why they joined</dt><dd>${esc(p.why || "–")}</dd>
         <dt>Wants to build</dt><dd>${esc(p.build || "–")}</dd>
@@ -280,6 +286,13 @@ details.st dd { margin: 0; white-space: pre-wrap; }
       </dl></details>`;
     }).join("") || "<p>No students yet.</p>";
   }
+  document.addEventListener("click", async (ev) => {
+    const b = ev.target.closest("[data-q]");
+    if (!b) return;
+    b.disabled = true;
+    await fetch("/api/cohort-me", { method: "POST", headers: { "Content-Type": "application/json", "X-MB-Admin": key }, body: JSON.stringify({ action: "admin-answered", id: Number(b.dataset.q), answered: b.dataset.to === "true" }) }).catch(() => {});
+    loadDash();
+  });
   document.addEventListener("click", async (ev) => {
     const b = ev.target.closest("[data-fu]");
     if (!b) return;

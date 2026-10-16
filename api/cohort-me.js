@@ -11,6 +11,7 @@
 //   POST /api/cohort-me {action:"checkin", token, week, confidence, hours, clicked, blocked, help}
 //   POST /api/cohort-me {action:"profile", token, why, build, experience, goal, skillsStart, skillsEnd}
 //   POST /api/cohort-me {action:"followup", token, months, answer}
+//   POST /api/cohort-me {action:"ask", token, text}   anonymous question for the next session
 //   POST /api/cohort-me {action:"admin-followup", months}   (X-MB-Admin: key)
 
 const crypto = require("node:crypto");
@@ -28,6 +29,9 @@ const WEEKS = 10;
 // Buddies are paired from a week before the first session.
 const PAIR_FROM = FIRST_SESSION - 7 * 864e5;
 const FOLLOWUP_MONTHS = [3, 6, 12];
+// Certificate: lessons done for 8 of the 10 weeks and at least 6 weekly check-ins.
+const CERT_LESSONS = 8;
+const CERT_CHECKINS = 6;
 const SKILLS = ["utxo", "structure", "fees", "signing", "script", "p2sh", "taproot", "build"];
 const ALERT_TO = process.env.MB_ALERT_EMAIL || "codeorangedevs@gmail.com";
 const TOKEN_RE = /^[A-Za-z0-9_-]{24}$/;
@@ -92,6 +96,19 @@ function ensureTables() {
         answer jsonb NOT NULL,
         updated_at timestamptz NOT NULL DEFAULT now(),
         PRIMARY KEY (student_id, months)
+      )`),
+      q("ALTER TABLE mb_checkins ADD COLUMN IF NOT EXISTS attended boolean"),
+      q("ALTER TABLE mb_profile ADD COLUMN IF NOT EXISTS github text"),
+      // Anonymous questions for the next session. The student id is kept only to limit how
+      // many one person can send; organisers and reports never see who asked.
+      q(`CREATE TABLE IF NOT EXISTS mb_questions (
+        id serial PRIMARY KEY,
+        cohort text NOT NULL,
+        student_id integer REFERENCES mb_students(id) ON DELETE SET NULL,
+        week integer NOT NULL,
+        text text NOT NULL,
+        answered boolean NOT NULL DEFAULT false,
+        created_at timestamptz NOT NULL DEFAULT now()
       )`),
       q(`CREATE TABLE IF NOT EXISTS mb_followup_sends (
         cohort text NOT NULL,
@@ -197,24 +214,37 @@ async function dashboard(token) {
   await pairBuddy(me).catch((err) => console.error("cohort-me: pairing:", err.message));
   const { results } = await neon({
     queries: [
-      q("SELECT week, confidence, hours, clicked, blocked, help, updated_at FROM mb_checkins WHERE student_id = $1 ORDER BY week", [me.id]),
-      q("SELECT why, build, experience, goal, skills_start, skills_end FROM mb_profile WHERE student_id = $1", [me.id]),
+      q("SELECT week, confidence, hours, clicked, blocked, help, attended, updated_at FROM mb_checkins WHERE student_id = $1 ORDER BY week", [me.id]),
+      q("SELECT why, build, experience, goal, github, skills_start, skills_end FROM mb_profile WHERE student_id = $1", [me.id]),
       q(`SELECT s.name, s.discord, (SELECT max(week) FROM mb_checkins c WHERE c.student_id = s.id) AS last_week
            FROM mb_buddies b JOIN mb_students s ON s.id = b.buddy_id WHERE b.student_id = $1 AND NOT s.hidden`, [me.id]),
       q("SELECT months, answer FROM mb_followups WHERE student_id = $1", [me.id]),
       q("SELECT item, done_at FROM mb_done WHERE student_id = $1", [me.id]),
+      // Anonymous class numbers for this week, so students can see how the group is doing.
+      q(`SELECT (SELECT count(*) FROM mb_students WHERE cohort = $1 AND NOT hidden) AS students,
+                (SELECT count(*) FROM mb_checkins c JOIN mb_students s ON s.id = c.student_id WHERE s.cohort = $1 AND NOT s.hidden AND c.week = $2) AS checkins,
+                (SELECT round(avg(c.confidence), 1) FROM mb_checkins c JOIN mb_students s ON s.id = c.student_id WHERE s.cohort = $1 AND NOT s.hidden AND c.week = $2) AS confidence,
+                (SELECT round(avg(c.hours), 1) FROM mb_checkins c JOIN mb_students s ON s.id = c.student_id WHERE s.cohort = $1 AND NOT s.hidden AND c.week = $2) AS hours,
+                (SELECT count(*) FROM mb_done d JOIN mb_students s ON s.id = d.student_id WHERE s.cohort = $1 AND NOT s.hidden AND d.item = 'w' || $2 || '-r1') AS read`, [COHORT, Math.max(1, weekAt())]),
+      q("SELECT count(*) AS n FROM mb_questions WHERE student_id = $1 AND week = $2", [me.id, Math.max(1, weekAt())]),
     ],
   });
-  const [checkins, [profile], [buddy], followups, done] = results.map((r) => r.rows);
+  const [checkins, [profile], [buddy], followups, done, [cls], [asked]] = results.map((r) => r.rows);
   return {
     status: 200,
     data: {
       me: { id: me.id, name: me.name, discord: me.discord, joined: iso(me.created_at) },
       week: weekAt(),
-      checkins: checkins.map((c) => ({ week: Number(c.week), confidence: c.confidence == null ? null : Number(c.confidence), hours: c.hours == null ? null : Number(c.hours), clicked: c.clicked || "", blocked: c.blocked || "", help: bool(c.help), at: iso(c.updated_at) })),
+      checkins: checkins.map((c) => ({ week: Number(c.week), confidence: c.confidence == null ? null : Number(c.confidence), hours: c.hours == null ? null : Number(c.hours), clicked: c.clicked || "", blocked: c.blocked || "", help: bool(c.help), attended: c.attended == null ? null : bool(c.attended), at: iso(c.updated_at) })),
       profile: profile
-        ? { why: profile.why || "", build: profile.build || "", experience: profile.experience || "", goal: profile.goal || "", skillsStart: parseJson(profile.skills_start), skillsEnd: parseJson(profile.skills_end) }
+        ? { why: profile.why || "", build: profile.build || "", experience: profile.experience || "", goal: profile.goal || "", github: profile.github || "", skillsStart: parseJson(profile.skills_start), skillsEnd: parseJson(profile.skills_end) }
         : null,
+      // Class averages only once enough people have checked in that nobody's answers stand out.
+      class: Number(cls.checkins) >= 3
+        ? { week: Math.max(1, weekAt()), students: Number(cls.students), checkins: Number(cls.checkins), confidence: cls.confidence == null ? null : Number(cls.confidence), hours: cls.hours == null ? null : Number(cls.hours), read: Number(cls.read) }
+        : { week: Math.max(1, weekAt()), students: Number(cls.students), checkins: Number(cls.checkins) },
+      certificate: { lessons: CERT_LESSONS, checkins: CERT_CHECKINS },
+      asked: Number(asked.n),
       buddy: buddy ? { name: buddy.name, discord: buddy.discord, lastWeek: buddy.last_week == null ? 0 : Number(buddy.last_week) } : null,
       buddyFrom: new Date(PAIR_FROM).toISOString(),
       followups: Object.fromEntries(followups.map((f) => [f.months, parseJson(f.answer)])),
@@ -234,14 +264,15 @@ async function checkin(body) {
   const clicked = clean(body.clicked, 1000);
   const blocked = clean(body.blocked, 1000);
   const help = body.help === true;
-  if (!confidence && hours === null && !clicked && !blocked && !help) return { status: 400, error: "Fill in at least one thing." };
+  const attended = typeof body.attended === "boolean" ? body.attended : null;
+  if (!confidence && hours === null && !clicked && !blocked && !help && attended === null) return { status: 400, error: "Fill in at least one thing." };
   const [row] = await sql(
     `WITH old AS (SELECT help FROM mb_checkins WHERE student_id = $1 AND week = $2)
-     INSERT INTO mb_checkins (student_id, week, confidence, hours, clicked, blocked, help)
-     VALUES ($1, $2, $3, $4, $5, $6, $7)
-     ON CONFLICT (student_id, week) DO UPDATE SET confidence = $3, hours = $4, clicked = $5, blocked = $6, help = $7, updated_at = now()
+     INSERT INTO mb_checkins (student_id, week, confidence, hours, clicked, blocked, help, attended)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+     ON CONFLICT (student_id, week) DO UPDATE SET confidence = $3, hours = $4, clicked = $5, blocked = $6, help = $7, attended = $8, updated_at = now()
      RETURNING (SELECT help FROM old) AS was_help`,
-    [me.id, week, confidence, hours, clicked, blocked, help]
+    [me.id, week, confidence, hours, clicked, blocked, help, attended]
   );
   // "I'd like some help": tell the organisers once, when it's first asked.
   if (help && !bool(row?.was_help) && mail.emailOn()) {
@@ -264,15 +295,17 @@ async function profile(body) {
     build: clean(body.build, 1000),
     experience: ["new", "some", "dev", "bitcoin-dev"].includes(body.experience) ? body.experience : "",
     goal: clean(body.goal, 1000),
+    github: clean(body.github, 80).replace(/^@|^(https?:\/\/)?(www\.)?github\.com\//i, "").replace(/\/.*$/, ""),
   };
+  if (fields.github && !/^[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})$/.test(fields.github)) return { status: 400, error: "That GitHub username doesn't look right." };
   const start = skills(body.skillsStart);
   const end = skills(body.skillsEnd);
   await sql(
-    `INSERT INTO mb_profile (student_id, why, build, experience, goal, skills_start, skills_end)
-     VALUES ($1, $2, $3, $4, $5, $6::jsonb, $7::jsonb)
-     ON CONFLICT (student_id) DO UPDATE SET why = $2, build = $3, experience = $4, goal = $5,
+    `INSERT INTO mb_profile (student_id, why, build, experience, goal, skills_start, skills_end, github)
+     VALUES ($1, $2, $3, $4, $5, $6::jsonb, $7::jsonb, $8)
+     ON CONFLICT (student_id) DO UPDATE SET why = $2, build = $3, experience = $4, goal = $5, github = $8,
        skills_start = COALESCE($6::jsonb, mb_profile.skills_start), skills_end = COALESCE($7::jsonb, mb_profile.skills_end), updated_at = now()`,
-    [me.id, fields.why, fields.build, fields.experience, fields.goal, start && JSON.stringify(start), end && JSON.stringify(end)]
+    [me.id, fields.why, fields.build, fields.experience, fields.goal, start && JSON.stringify(start), end && JSON.stringify(end), fields.github]
   );
   return { status: 200, data: { ok: true } };
 }
@@ -291,6 +324,22 @@ async function followup(body) {
      ON CONFLICT (student_id, months) DO UPDATE SET answer = $3::jsonb, updated_at = now()`,
     [me.id, months, JSON.stringify(answer)]
   );
+  return { status: 200, data: { ok: true } };
+}
+
+async function ask(body) {
+  const me = await student(clean(body.token, 64));
+  if (!me) return { status: 401, error: "Your personal link isn't recognised. Open the link from your welcome email." };
+  const text = clean(body.text, 800);
+  if (text.length < 5) return { status: 400, error: "Write your question first." };
+  const week = Math.max(1, weekAt());
+  const [row] = await sql(
+    `INSERT INTO mb_questions (cohort, student_id, week, text)
+     SELECT $1, $2, $3, $4 WHERE (SELECT count(*) FROM mb_questions WHERE student_id = $2 AND week = $3) < 5
+     RETURNING id`,
+    [COHORT, me.id, week, text]
+  );
+  if (!row) return { status: 429, error: "That's 5 questions this week. Bring the rest to Monday's session!" };
   return { status: 200, data: { ok: true } };
 }
 
@@ -315,9 +364,10 @@ async function overview(withEmails) {
       q("SELECT d.student_id, d.item, d.done_at FROM mb_done d JOIN mb_students s ON s.id = d.student_id WHERE s.cohort = $1", [COHORT]),
       q("SELECT f.student_id, f.months, f.answer, f.updated_at FROM mb_followups f JOIN mb_students s ON s.id = f.student_id WHERE s.cohort = $1", [COHORT]),
       q("SELECT months, sent, sent_at FROM mb_followup_sends WHERE cohort = $1", [COHORT]),
+      q("SELECT id, week, text, answered, created_at FROM mb_questions WHERE cohort = $1 ORDER BY created_at DESC LIMIT 200", [COHORT]),
     ],
   });
-  const [students, checkins, profiles, buddies, done, followups, sends] = results.map((r) => r.rows);
+  const [students, checkins, profiles, buddies, done, followups, sends, questions] = results.map((r) => r.rows);
   const week = weekAt();
   const by = (rows) => {
     const m = new Map();
@@ -337,7 +387,7 @@ async function overview(withEmails) {
 
   const list = students.map((s) => {
     const id = Number(s.id);
-    const cs = (cBy.get(id) || []).map((c) => ({ week: Number(c.week), confidence: c.confidence == null ? null : Number(c.confidence), hours: c.hours == null ? null : Number(c.hours), clicked: c.clicked || "", blocked: c.blocked || "", help: bool(c.help), at: iso(c.updated_at) }));
+    const cs = (cBy.get(id) || []).map((c) => ({ week: Number(c.week), confidence: c.confidence == null ? null : Number(c.confidence), hours: c.hours == null ? null : Number(c.hours), clicked: c.clicked || "", blocked: c.blocked || "", help: bool(c.help), attended: c.attended == null ? null : bool(c.attended), at: iso(c.updated_at) }));
     const ds = dBy.get(id) || [];
     const p = pBy.get(id);
     const lastActive = [iso(s.created_at), ...ds.map((d) => iso(d.done_at)), ...cs.map((c) => c.at)].sort().pop();
@@ -361,7 +411,7 @@ async function overview(withEmails) {
       lessonsRead: ds.filter((d) => /-r1$/.test(d.item)).length,
       exercises: ds.filter((d) => /-e\d+$/.test(d.item)).length,
       checkins: cs,
-      profile: p ? { why: p.why || "", build: p.build || "", experience: p.experience || "", goal: p.goal || "", skillsStart: parseJson(p.skills_start), skillsEnd: parseJson(p.skills_end) } : null,
+      profile: p ? { why: p.why || "", build: p.build || "", experience: p.experience || "", goal: p.goal || "", github: p.github || "", skillsStart: parseJson(p.skills_start), skillsEnd: parseJson(p.skills_end) } : null,
       buddy: bBy.has(id) ? names.get(bBy.get(id)) || null : null,
       followups: Object.fromEntries((fBy.get(id) || []).map((f) => [f.months, parseJson(f.answer)])),
       flags: bool(s.hidden) ? [] : flags,
@@ -378,6 +428,7 @@ async function overview(withEmails) {
       confidence: avg(cs.map((c) => c.confidence).filter((v) => v != null)),
       hours: avg(cs.map((c) => c.hours).filter((v) => v != null)),
       help: cs.filter((c) => c.help).length,
+      attended: cs.filter((c) => c.attended).length,
       read: active.filter((s) => done.some((d) => Number(d.student_id) === s.id && d.item === `w${w}-r1`)).length,
     };
   });
@@ -396,6 +447,8 @@ async function overview(withEmails) {
     atRisk: active.filter((s) => s.flags.length).length,
     pulse,
     skills: { start: skillAvg("skillsStart"), end: skillAvg("skillsEnd") },
+    certificate: { lessons: CERT_LESSONS, checkins: CERT_CHECKINS, onTrack: active.filter((s) => s.lessonsRead >= CERT_LESSONS && s.checkins.length >= CERT_CHECKINS).length },
+    questions: questions.map((x) => ({ id: Number(x.id), week: Number(x.week), text: x.text, answered: bool(x.answered), at: iso(x.created_at) })),
     followupsSent: Object.fromEntries(sends.map((r) => [r.months, { sent: Number(r.sent), at: iso(r.sent_at) }])),
     students: list,
   };
@@ -426,6 +479,13 @@ async function sendFollowups(months) {
   }
   await sql("UPDATE mb_followup_sends SET sent = $3 WHERE cohort = $1 AND months = $2", [COHORT, months, sent]);
   return { status: 200, data: { ok: true, sent, total: rows.length } };
+}
+
+async function markAnswered(body) {
+  const id = Number(body.id);
+  if (!Number.isInteger(id)) return { status: 400, error: "Unknown question." };
+  await sql("UPDATE mb_questions SET answered = $3 WHERE cohort = $1 AND id = $2", [COHORT, id, body.answered !== false]);
+  return { status: 200, data: { ok: true } };
 }
 
 function sameOrigin(req) {
@@ -466,6 +526,8 @@ module.exports = async function handler(req, res) {
         checkin: () => checkin(body),
         profile: () => profile(body),
         followup: () => followup(body),
+        ask: () => ask(body),
+        "admin-answered": () => (isAdmin(req) ? markAnswered(body) : { status: 401, error: "Wrong admin key." }),
         "admin-followup": () => (isAdmin(req) ? sendFollowups(Number(body.months)) : { status: 401, error: "Wrong admin key." }),
       };
       const r = Object.hasOwn(actions, body.action) ? await actions[body.action]() : { status: 400, error: "Unknown action." };

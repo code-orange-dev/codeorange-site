@@ -174,6 +174,15 @@
     return list.map(([icon, name, why, got]) => `<li class="${got ? "is-got" : ""}" title="${esc(why)}"><span aria-hidden="true">${icon}</span><b>${esc(name)}</b><small>${esc(why)}</small></li>`).join("");
   }
 
+  function certBox(s) {
+    const need = state.data.certificate || { lessons: 8, checkins: 6 };
+    const pct = Math.round(((Math.min(s.lessons, need.lessons) + Math.min(s.checkins, need.checkins)) / (need.lessons + need.checkins)) * 100);
+    const got = pct >= 100;
+    return `<div class="me-cert${got ? " is-got" : ""}"><div class="me-row"><b>${got ? "🎓 You've earned your certificate!" : "Certificate"}</b><span>${pct}%</span></div>
+      <span class="me-bar"><i style="width:${pct}%"></i></span>
+      <small>${got ? "We'll send it after graduation. Add your GitHub username in your goals so it shows on it." : `Lessons for ${need.lessons} of 10 weeks (${Math.min(s.lessons, need.lessons)}/${need.lessons}) and ${need.checkins} check-ins (${Math.min(s.checkins, need.checkins)}/${need.checkins}). <a href="/certificates/sample">See a sample</a>`}</small></div>`;
+  }
+
   function weekStrip(s) {
     return C.weeks.map((w, i) => {
       const n = i + 1;
@@ -185,6 +194,29 @@
   function tick(item, label) {
     const done = state.done.has(item);
     return `<li class="${done ? "is-done" : ""}"><button type="button" class="me-tick" data-item="${item}" aria-pressed="${done}"><span class="me-box" aria-hidden="true">${done ? "✓" : ""}</span><span>${label}</span></button></li>`;
+  }
+
+  // The one thing to do next, worked out from where the student is.
+  function nextStep(s) {
+    const d = state.data;
+    const p = d.profile || {};
+    const wk = currentWeek + 1;
+    const go = (href, label) => `<a class="button small" href="${href}">${label}</a>`;
+    if (followupMonths) return null;
+    if (!p.why && !p.build) return ["Start by writing down why you joined.", "People who name a goal are far more likely to finish.", go("#goals", "Set my goals")];
+    if (!p.skillsStart) return ["Rate your starting skills.", "Thirty seconds now, and in week 9 you'll see exactly how far you've come.", go("#skills", "Rate my skills")];
+    if (finished) return p.skillsEnd ? null : ["Rate your skills one last time.", "See how far you've come since the start.", go("#skills", "Rate again")];
+    if (currentWeek < 0) return ["You're all set for week 1.", `Lessons go up the week before. First session: ${sessionLine(sessionDates[0])}.`, go(`/assets/mastering-bitcoin/sessions.ics?v=20261010a`, "Add the sessions to my calendar")];
+    if (!state.done.has(`w${wk}-r1`)) return [`Do this week's lessons before Monday.`, esc(C.weeks[currentWeek].lessons.map((l) => l.title).join(", ")), go("#week", "See this week")];
+    if (!d.checkins.some((c) => c.week === wk)) return ["Do your 2-minute check-in.", "It's how we spot who's stuck and what to cover on Monday.", go("#checkin", "Check in")];
+    if (currentWeek >= C.weeks.length - 2 && !p.skillsEnd) return ["Rate your skills again.", "See how far you've come since the start.", go("#skills", "Rate again")];
+    if (d.buddy && d.buddy.lastWeek < wk) return [`Nudge your buddy ${esc(d.buddy.name)}.`, "They haven't checked in this week yet. A quick hello on Discord helps.", `<a class="button small" href="${C.discord}" target="_blank" rel="noopener">Open Discord</a>`];
+    return ["You're on top of this week. 🙌", s.streak >= 2 ? `${s.streak}-week streak. See you Monday!` : "See you Monday!", ""];
+  }
+  function nextCardTop(s) {
+    const n = nextStep(s);
+    if (!n) return "";
+    return `<div class="me-card me-wide me-nextstep"><div><p class="me-label">Your next step</p><h2>${n[0]}</h2><p>${n[1]}</p></div>${n[2]}</div>`;
   }
 
   function thisWeekCard() {
@@ -203,14 +235,14 @@
       ...myQs.map((k) => tick(k, `Answer your question Q${k.split("-q")[1]} on Discord: <em>${esc(w.questions[Number(k.split("-q")[1]) - 1])}</em>`)),
       ...w.exercises.map((ex, ei) => tick(`w${wk}-e${ei + 1}`, `Exercise ${ei + 1}: ${esc(ex)}`)),
     ].join("");
-    return `<div class="me-card me-week">
+    return `<div class="me-card me-week" id="week">
       <p class="me-label">${before ? "Coming up · week 1" : `This week · week ${wk} of ${C.weeks.length}`}</p>
       <h2>${esc(w.title)}</h2>
       <p class="me-when">Next session: <strong>${esc(sessionLine(sessionDates[wi]))}</strong> on <a href="${C.discord}" target="_blank" rel="noopener">Discord</a></p>
       ${roles.length ? `<p class="me-role">On Monday you're the <strong>${roles.map((r) => esc(r.name)).join("</strong> and <strong>")}</strong>. ${esc(roles[0].job)}</p>` : ""}
       <p class="me-open">Opening question: <em>${esc(w.opening)}</em></p>
       <ul class="me-check">${items}</ul>
-      <a class="me-jump" href="/decoding-bitcoin#week-${wk}">Open week ${wk} on the cohort page →</a>
+      <p class="me-jumps"><a class="me-jump" href="/decoding-bitcoin#week-${wk}">Open week ${wk} on the cohort page →</a> <a class="me-jump" href="/assets/mastering-bitcoin/sessions.ics?v=20261010a" download="decoding-bitcoin-sessions.ics">Add sessions to my calendar</a></p>
     </div>`;
   }
 
@@ -229,13 +261,24 @@
         <fieldset class="me-scale"><legend>How confident do you feel about this week's topic?</legend>
           ${[1, 2, 3, 4, 5].map((n) => `<label><input type="radio" name="confidence" value="${n}"${c.confidence === n ? " checked" : ""}><span><b>${n}</b>${CONF[n]}</span></label>`).join("")}
         </fieldset>
+        <fieldset class="me-pills"><legend>Did you make it to Monday's session?</legend>${[["yes", "Yes"], ["no", "Not this time"]].map(([v, l]) => `<label><input type="radio" name="attended" value="${v}"${c.attended === (v === "yes") && c.attended != null ? " checked" : ""}><span>${l}</span></label>`).join("")}</fieldset>
         <label class="me-field">Hours spent this week<input type="number" name="hours" min="0" max="80" step="0.5" inputmode="decimal" value="${c.hours ?? ""}" placeholder="e.g. 3"></label>
         <label class="me-field">What clicked?<textarea name="clicked" rows="2" maxlength="1000" placeholder="One thing that made sense this week">${esc(c.clicked || "")}</textarea></label>
         <label class="me-field">Where did you get stuck?<textarea name="blocked" rows="2" maxlength="1000" placeholder="Anything confusing, broken or slow">${esc(c.blocked || "")}</textarea></label>
         <label class="me-help"><input type="checkbox" name="help"${c.help ? " checked" : ""}> I'd like some help with this (an organiser will reach out on Discord)</label>
         <button class="button small" type="submit">${c.week ? "Update check-in" : "Save check-in"}</button>
       </form>
+      ${shareBox(c.week ? c.clicked : "")}
     </div>`;
+  }
+
+  // Learning in public: turn "what clicked" into a post. Builders who share what they learn get noticed.
+  function shareBox(clicked) {
+    const text = state.shareText || clicked;
+    if (!text || text.length < 9) return "";
+    const post = `This week in #DecodingBitcoin I learned: ${text.slice(0, 200)}\n\nStudying with @CodeOrangeDevs, free 10-week cohort: https://codeorange.dev/decoding-bitcoin`;
+    return `<div class="me-share"><p><b>Learn in public.</b> Share what clicked: it helps you remember it, and people notice builders who share.</p>
+      <div class="me-row"><a class="ghost small" href="https://x.com/intent/post?text=${encodeURIComponent(post)}" target="_blank" rel="noopener">Post on X</a><button type="button" class="ghost small" data-copy="${esc(post)}" data-copy-msg="Copied. Paste it into your Nostr app.">Copy for Nostr</button></div></div>`;
   }
 
   function progressCard(s) {
@@ -257,6 +300,7 @@
         <span><strong>${s.checkins}</strong>check-ins</span>
       </div>
       <ol class="me-strip" aria-label="The 10 weeks">${weekStrip(s)}</ol>
+      ${certBox(s)}
       ${spark}
       <p class="me-label">Badges</p>
       <ul class="me-badges">${badges(s)}</ul>
@@ -273,6 +317,7 @@
         <label class="me-field">Why did you join?<textarea name="why" rows="2" maxlength="1000" placeholder="e.g. I want to understand what my wallet is really doing">${esc(p.why || "")}</textarea></label>
         <label class="me-field">What would you love to build or do with Bitcoin?<textarea name="build" rows="2" maxlength="1000" placeholder="e.g. a Lightning tip jar, my first PR to Bitcoin Core">${esc(p.build || "")}</textarea></label>
         <label class="me-field">Your goal for the 10 weeks<textarea name="goal" rows="2" maxlength="1000" placeholder="One thing you'll be able to do by the end">${esc(p.goal || "")}</textarea></label>
+        <label class="me-field">Your GitHub username <small class="me-small">(for your certificate and the builders wall)</small><input type="text" name="github" maxlength="80" value="${esc(p.github || "")}" placeholder="satoshi" autocomplete="off" autocapitalize="off" spellcheck="false"></label>
         <fieldset class="me-pills"><legend>Your experience</legend>${exp.map(([v, l]) => `<label><input type="radio" name="experience" value="${v}"${p.experience === v ? " checked" : ""}><span>${l}</span></label>`).join("")}</fieldset>
         <button class="button small" type="submit">Save goals</button>
       </form>
@@ -314,6 +359,24 @@
       body = `<h2>Finding your buddy…</h2><p>You'll be paired with the next classmate who opens their dashboard. Check back soon.</p>`;
     }
     return `<div class="me-card me-buddy"><p class="me-label">Study buddy</p>${body}</div>`;
+  }
+
+  function classCard() {
+    const c = state.data.class;
+    if (!c || currentWeek < 0) return "";
+    const body = c.confidence != null
+      ? `<div class="me-stats me-stats-3"><span><strong>${c.checkins}/${c.students}</strong>checked in</span><span><strong>${c.confidence}</strong>avg confidence</span><span><strong>${c.hours ?? "–"}</strong>avg hours</span></div>
+         <p class="me-small">${c.read} of ${c.students} have done this week's lessons. ${c.confidence < 3 ? "A tough week for everyone, so you're not alone. Bring your questions on Monday." : "Nice work, everyone."}</p>`
+      : `<p>${c.checkins} of ${c.students} have checked in for week ${c.week} so far. Class averages show up once a few more people have.</p>`;
+    return `<div class="me-card me-class"><p class="me-label">The class this week · anonymous</p><h2>How everyone's doing</h2>${body}</div>`;
+  }
+
+  function askCard() {
+    if (finished) return "";
+    return `<div class="me-card me-ask" id="ask"><p class="me-label">Ask anonymously</p><h2>Stuck on something?</h2>
+      <p>Ask a question for the next session. Your name is never shown with it, not even to the organisers. We answer it on Monday.</p>
+      <form id="me-ask"><label class="me-field"><span class="me-sr">Your question</span><textarea name="text" rows="3" maxlength="800" required placeholder="e.g. Why does the witness not count towards the txid?"></textarea></label>
+      <div class="me-row"><button class="button small" type="submit">Send question</button>${state.data.asked ? `<span class="me-small">You've asked ${state.data.asked} this week.</span>` : ""}</div></form></div>`;
   }
 
   function nextCard() {
@@ -360,7 +423,10 @@
       : currentWeek < 0
         ? `We start ${dayLabel(plus8(sessionDates[0]))}. Set your goals and rate your skills so you can see how far you come.`
         : `Week ${currentWeek + 1} of ${C.weeks.length}. ${s.streak >= 2 ? `${s.streak}-week streak, keep it going!` : "One step at a time."}`;
-    $("#me-app").innerHTML = [followupCard(), thisWeekCard(), currentWeek < 0 ? goalsCard() : checkinCard(), progressCard(s), buddyCard(), currentWeek < 0 ? checkinCard() : goalsCard(), skillsCard(), nextCard(), linkCard()].join("");
+    const cards = currentWeek < 0
+      ? [followupCard(), nextCardTop(s), goalsCard(), skillsCard(), thisWeekCard(), progressCard(s), buddyCard(), checkinCard(), askCard(), nextCard(), linkCard()]
+      : [followupCard(), nextCardTop(s), thisWeekCard(), checkinCard(), progressCard(s), classCard() || askCard(), buddyCard(), classCard() ? askCard() : "", goalsCard(), skillsCard(), nextCard(), linkCard()];
+    $("#me-app").innerHTML = cards.join("");
     bind();
     if (followupMonths) $("#followup")?.scrollIntoView({ block: "start" });
   }
@@ -388,21 +454,22 @@
     $("#me-checkin")?.week?.addEventListener("change", (e) => { checkinCard.week = Number(e.target.value); render(); $("#checkin")?.scrollIntoView({ block: "start" }); });
     $("#me-checkin")?.addEventListener("submit", (e) => save(e, async () => {
       const f = formObj(e.target);
-      const body = { action: "checkin", token: state.token, week: Number(f.week), confidence: f.confidence ? Number(f.confidence) : null, hours: f.hours === "" ? null : Number(f.hours), clicked: f.clicked, blocked: f.blocked, help: !!f.help };
+      const body = { action: "checkin", token: state.token, week: Number(f.week), confidence: f.confidence ? Number(f.confidence) : null, hours: f.hours === "" ? null : Number(f.hours), clicked: f.clicked, blocked: f.blocked, help: !!f.help, attended: f.attended ? f.attended === "yes" : null };
       await post(API, body);
       const rest = state.data.checkins.filter((c) => c.week !== body.week);
       state.data.checkins = [...rest, { ...body, at: new Date().toISOString() }].sort((a, b) => a.week - b.week);
+      state.shareText = body.clicked && body.clicked.length > 8 ? body.clicked : "";
       return body.help ? "Saved. An organiser will reach out on Discord soon." : "Check-in saved. Thank you!";
     }));
     const profileBody = (extra) => {
       const p = state.data.profile || {};
-      return { action: "profile", token: state.token, why: p.why || "", build: p.build || "", goal: p.goal || "", experience: p.experience || "", ...extra };
+      return { action: "profile", token: state.token, why: p.why || "", build: p.build || "", goal: p.goal || "", github: p.github || "", experience: p.experience || "", ...extra };
     };
     $("#me-profile")?.addEventListener("submit", (e) => save(e, async () => {
       const f = formObj(e.target);
-      const body = profileBody({ why: f.why, build: f.build, goal: f.goal, experience: f.experience || "" });
+      const body = profileBody({ why: f.why, build: f.build, goal: f.goal, github: f.github.trim(), experience: f.experience || "" });
       await post(API, body);
-      state.data.profile = { ...(state.data.profile || {}), why: body.why, build: body.build, goal: body.goal, experience: body.experience };
+      state.data.profile = { ...(state.data.profile || {}), why: body.why, build: body.build, goal: body.goal, github: body.github.replace(/^@|^(https?:\/\/)?(www\.)?github\.com\//i, "").replace(/\/.*$/, ""), experience: body.experience };
       return "Goals saved.";
     }));
     $("#me-skills")?.addEventListener("submit", (e) => save(e, async () => {
@@ -420,9 +487,15 @@
       state.data.followups = { ...(state.data.followups || {}), [followupMonths]: { ...f, share: !!f.share } };
       return "Thank you! We read every one.";
     }));
-    app.querySelector("[data-copy]")?.addEventListener("click", (e) => {
-      navigator.clipboard?.writeText(e.currentTarget.dataset.copy).then(() => toast("Link copied."), () => toast("Couldn't copy. Select the link and copy it."));
-    });
+    app.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", (e) => {
+      const el = e.currentTarget;
+      navigator.clipboard?.writeText(el.dataset.copy).then(() => toast(el.dataset.copyMsg || "Link copied."), () => toast("Couldn't copy. Select the text and copy it."));
+    }));
+    $("#me-ask")?.addEventListener("submit", (e) => save(e, async () => {
+      await post(API, { action: "ask", token: state.token, text: e.target.text.value });
+      state.data.asked = (state.data.asked || 0) + 1;
+      return "Sent anonymously. We'll pick it up on Monday.";
+    }));
     app.querySelector("[data-signout]")?.addEventListener("click", () => { store.set(""); state.token = ""; renderSignedOut(); });
   }
 
