@@ -221,7 +221,7 @@
       <div class="mb-me-stats"><span><strong>${me.done.filter((k) => k.endsWith("-r1")).length}/${C.weeks.length}</strong> weeks of lessons</span>${state.rosterVisible ? `<span><strong>${qDone}/${mine.length}</strong> questions</span>` : ""}<span><strong>${exDone}/${exTotal}</strong> exercises</span></div></div>
       ${weekChecklist(me, assigned, focus, thisWeek)}
       <div class="mb-link"><span>Your personal link (open it on any device to tick things off):</span><code>${esc(link)}</code><button type="button" class="ghost small" data-copy="${esc(link)}">Copy link</button><button type="button" class="mb-signout" data-signout>Not you? Sign out</button></div>
-      <div class="cta-row mb-me-cta"><a class="button small" href="${C.discord}" target="_blank" rel="noopener">Join the Discord</a>${first ? `<a class="ghost small" href="${esc(gcalHref())}" target="_blank" rel="noopener">Add to Google Calendar</a>` : ""}</div>`;
+      <div class="cta-row mb-me-cta"><a class="button small" href="/decoding-bitcoin/me">Open my full dashboard →</a><a class="ghost small" href="${C.discord}" target="_blank" rel="noopener">Join the Discord</a>${first ? `<a class="ghost small" href="${esc(gcalHref())}" target="_blank" rel="noopener">Add to Google Calendar</a>` : ""}</div>`;
   }
 
   // "Before Monday" list for the student's current week: read, own questions, role, exercises.

@@ -130,7 +130,7 @@ const staticHomepage = `
   <a class="co-announce" href="/rawbit">⚡ rawBit cohort is live now · Bitcoin Privacy Track open for enrollment · Apply →</a>
   <header class="co-band"><div class="co-wrap co-nav">
     <a href="#top"><img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School"></a>
-    <nav class="co-links" aria-label="Primary"><a href="/programs">Programs</a><a href="/calendar">Calendar</a><a href="/community">Community</a><a href="/impact">Impact</a><a href="/about">About</a></nav>
+    <nav class="co-links" aria-label="Primary"><a href="/programs">Programs</a><a href="/calendar">Calendar</a><a href="/community">Community</a><a href="/about">About</a></nav>
     <div class="co-actions"><a class="co-button" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a><a class="co-button primary" href="/apply">Apply now</a></div>
   </div></header>
   <section id="top" class="co-hero"><video class="co-hero-video" src="/assets/co-hero-agentic.mp4" poster="/assets/new-workshops/workshop-nodes-miners.jpg" autoplay muted loop playsinline preload="none" aria-hidden="true"></video><div class="co-wrap">
@@ -183,7 +183,7 @@ const staticHomepage = `
     <details><summary>Can I run a workshop in my city?</summary><p>Yes. The curriculum is open source and the community can help with local adaptation, links, and promotion.</p></details>
   </div></section>
   <footer><div class="co-wrap">
-    <div class="co-media-footer"><video data-lazy-video data-src="/assets/co-footer.mp4" poster="/assets/co-footer-poster.jpg" autoplay muted loop playsinline preload="none"></video><div><p class="co-eyebrow">Scenes from the school</p><h2>Real workshops. Real devices. Real Bitcoin builders.</h2></div></div>
+    <div class="co-media-footer"><video data-lazy-video data-src="/assets/co-footer-720.mp4" poster="/assets/co-footer-poster.jpg" autoplay muted loop playsinline preload="none"></video><div><p class="co-eyebrow">Scenes from the school</p><h2>Real workshops. Real devices. Real Bitcoin builders.</h2></div></div>
     <div class="co-foot"><span>Code Orange Dev School · Singapore 🇸🇬</span><span><a href="mailto:hello@codeorange.dev">hello@codeorange.dev</a> · <a href="https://github.com/code-orange-dev" target="_blank" rel="noopener">GitHub</a> · <a href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a></span></div>
   </div></footer>
 </main>`;

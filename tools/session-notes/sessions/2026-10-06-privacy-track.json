@@ -1,0 +1,132 @@
+{
+  "slug": "2026-10-06-privacy-track",
+  "date": "2026-10-06",
+  "series": "Privacy Track",
+  "title": "How PayJoin Works",
+  "host": "Razor",
+  "tag": "Privacy",
+  "summary": "The first Privacy Track: why Bitcoin needs privacy, how PayJoin fools chain analysis, and a real PayJoin sent live on the call.",
+  "share_text": "How PayJoin works: notes + every resource from the first @CodeOrangeDevs Privacy Track",
+  "minutes": 5,
+  "video": "lsgyE7OxpsM",
+  "tldr": [
+    "Privacy keeps Bitcoin free, censorship-resistant and fungible. Without private payments it can be captured like gold.",
+    "PayJoin mixes coins from the sender and the receiver in one transaction that looks completely normal.",
+    "That breaks two chain-analysis guesses: all inputs belong to one person, and the big leftover is the change.",
+    "PayJoin v2 needs no server of your own: a mailbox and a relay pass messages, and neither sees the whole picture."
+  ],
+  "next": {
+    "title": "Privacy Track: PayJoin, part 2",
+    "when": "Tuesday 20 October, 07:00 UTC on Discord. Free for everyone."
+  },
+  "resources": [
+    {
+      "group": "Reading",
+      "topic": "Privacy",
+      "title": "Extreme Privacy",
+      "url": "https://inteltechniques.com/book7.html",
+      "by": "Michael Bazzell",
+      "note": "privacy in every area of life: operating system, browser, Tor and more"
+    },
+    {
+      "group": "Reading",
+      "topic": "Privacy",
+      "title": "Bitcoin Fog verdict",
+      "url": "https://www.irs.gov/compliance/criminal-investigation/jury-finds-russian-swedish-operator-of-bitcoin-fog-guilty-of-running-the-darknet-cryptocurrency-mixer",
+      "by": "IRS-CI (2024)",
+      "note": "this session’s chain-analysis case: a mixer run from 2011 to 2021, where the reports never say how the tracing worked"
+    },
+    {
+      "group": "Reading",
+      "topic": "PayJoin",
+      "title": "BIP 78: PayJoin (v1)",
+      "url": "https://github.com/bitcoin/bips/blob/master/bip-0078.mediawiki",
+      "note": "the original protocol, where the receiver runs a web server"
+    },
+    {
+      "group": "Reading",
+      "topic": "PayJoin",
+      "title": "BIP 77: Async PayJoin (v2)",
+      "url": "https://github.com/bitcoin/bips/blob/master/bip-0077.md",
+      "note": "mailbox directory plus an oblivious HTTP relay, no receiver server needed"
+    },
+    {
+      "group": "Reading",
+      "topic": "PayJoin",
+      "title": "BIP 21: payment URIs",
+      "url": "https://github.com/bitcoin/bips/blob/master/bip-0021.mediawiki",
+      "note": "the bitcoin: link that carries the pj= PayJoin parameter"
+    },
+    {
+      "group": "Reading",
+      "topic": "PayJoin",
+      "title": "BIP 174: PSBT",
+      "url": "https://github.com/bitcoin/bips/blob/master/bip-0174.mediawiki",
+      "note": "partially signed Bitcoin transactions, the data format PayJoin passes back and forth (they can be unsigned or fully signed too)"
+    },
+    {
+      "group": "Tools",
+      "topic": "PayJoin",
+      "title": "payjoin.org",
+      "url": "https://payjoin.org",
+      "note": "the PayJoin Dev Kit and docs"
+    },
+    {
+      "group": "Tools",
+      "topic": "Explorers",
+      "title": "mempool.space",
+      "url": "https://mempool.space",
+      "note": "used live to read the PayJoin transaction"
+    },
+    {
+      "group": "Tools",
+      "topic": "Privacy",
+      "title": "Blooket",
+      "url": "https://play.blooket.com",
+      "note": "the quiz Razor ran on the call"
+    },
+    {
+      "group": "Wallets",
+      "topic": "Wallets",
+      "title": "Bull Bitcoin",
+      "url": "https://www.bullbitcoin.com",
+      "note": "sends and receives PayJoin; used for the live demo"
+    },
+    {
+      "group": "Wallets",
+      "topic": "Wallets",
+      "title": "Cake Wallet",
+      "url": "https://cakewallet.com",
+      "note": "turn PayJoin on in settings, then share the receive link"
+    },
+    {
+      "group": "Wallets",
+      "topic": "Wallets",
+      "title": "Sparrow",
+      "url": "https://sparrowwallet.com",
+      "note": "can send PayJoin v1, so hardware wallets can pay through it, but can’t receive"
+    },
+    {
+      "group": "Wallets",
+      "topic": "Wallets",
+      "title": "BTCPay Server",
+      "url": "https://btcpayserver.org",
+      "note": "how merchants received PayJoin v1 with their own server"
+    },
+    {
+      "group": "Code Orange",
+      "topic": "Code Orange",
+      "title": "Privacy Developer Track",
+      "url": "/privacy-track",
+      "note": "every 1st and 3rd Tuesday: PayJoin, Silent Payments, Floresta, JoinMarket, Fedimint and more"
+    },
+    {
+      "group": "Code Orange",
+      "topic": "Code Orange",
+      "title": "Code Review Club, 8 October",
+      "url": "/session-notes/2026-10-08-code-review-club",
+      "note": "the follow-up session two days later"
+    }
+  ],
+  "ideas": "Ideas from the call: a guide to choosing the right privacy tool for each risk profile, a quiz leaderboard (opt out any time), and a capture-the-flag privacy challenge in about six months."
+}

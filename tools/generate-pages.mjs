@@ -305,7 +305,6 @@ ${styles()}
       <a href="/fellowships">Fellowships</a>
       <a href="/calendar">Calendar</a>
       <a href="/community">Community</a>
-      <a href="/impact">Impact</a>
       <a href="/strategy">Strategy</a>
       <a href="/about">About</a>
     </nav>
@@ -319,7 +318,6 @@ ${styles()}
     <a href="/consulting">Consulting</a>
     <a href="/calendar">Calendar</a>
     <a href="/community">Community</a>
-    <a href="/impact">Impact</a>
     <a href="/strategy">Strategy</a>
     <a href="/about">About</a>
   </nav>
@@ -581,7 +579,7 @@ function finalCta() {
 function footer() {
   return `<footer class="footer">
   <div class="footer-media">
-    <video data-lazy-video data-src="/assets/co-footer.mp4" poster="/assets/co-footer-poster.jpg" autoplay muted loop playsinline preload="none"></video>
+    <video data-lazy-video data-src="/assets/co-footer-720.mp4" poster="/assets/co-footer-poster.jpg" autoplay muted loop playsinline preload="none"></video>
     <div class="footer-media-copy">
       <p class="eyebrow">Scenes from the school</p>
       <h2>Real workshops. Real devices. Real Bitcoin builders.</h2>
@@ -604,7 +602,6 @@ function footer() {
         <strong>School</strong>
         <a href="/about">About</a>
         <a href="/consulting">Consulting</a>
-        <a href="/impact">Impact</a>
         <a href="/community">Community</a>
         <a href="/fellowships">Fellowships</a>
         <a href="/calendar">Calendar</a>
@@ -820,7 +817,7 @@ renderTemplate(
     ["Days 31-60", "Add a contribution dashboard page, program-fit guidance, host-a-workshop intake, sponsor tiers, and stronger repo READMEs."],
     ["Days 61-90", "Publish monthly impact notes, add a graduate map, expose contribution logs, and turn workshop assets into a public library."],
   ])}
-  <div class="cta-row" style="margin-top:30px"><a class="button" href="${links.strategyReport}">Read full strategy report</a><a class="ghost" href="/impact">View impact proof</a></div>
+  <div class="cta-row" style="margin-top:30px"><a class="button" href="${links.strategyReport}">Read full strategy report</a><a class="ghost" href="/community">View impact proof</a></div>
 </div></section>
 <section class="section-inner">
   <div class="split"><div><p class="eyebrow">Weekly Metrics</p><h2>Measure the flywheel.</h2></div><p class="lead">Track the signals that prove Code Orange is moving people from attendance into contribution.</p></div>
@@ -983,7 +980,7 @@ for (const p of programs.filter((item) => item.href.startsWith("/programs/"))) {
   );
 }
 
-["programs", "about", "community", "impact", "strategy", "fellowships", "calendar", "consulting", "rawbit", "privacy-track", "decoding-bitcoin", "apply", "articles"].forEach((path) => {
+["programs", "about", "community", "impact", "strategy", "fellowships", "calendar", "consulting", "rawbit", "privacy-track", "decoding-bitcoin", "apply", "articles", "session-notes", "resources"].forEach((path) => {
   try {
     mirrorCleanUrl(path);
   } catch {}
@@ -1003,12 +1000,20 @@ for (const path of articlePages) {
   mirrorCleanUrl(path);
 }
 
+const sessionNotePages = readdirSync(new URL("session-notes/", root))
+  .filter((name) => name.endsWith(".html") && name !== "index.html")
+  .map((name) => `session-notes/${name.replace(/\.html$/, "")}`);
+for (const path of sessionNotePages) {
+  mirrorCleanUrl(path);
+}
+
 // Sitemap: every page on disk whose canonical URL is itself. Alias pages (e.g. the
 // old /programs/openclaw, which points at /programs/agentic-engineering) are left out.
 const sitemapPages = [
   ...readdirSync(root).filter((name) => name.endsWith(".html") && name !== "home.dc.html").map((name) => name.replace(/\.html$/, "")),
   ...programPages,
   ...articlePages,
+  ...sessionNotePages,
 ];
 const sitemapUrls = sitemapPages
   .map((path) => {

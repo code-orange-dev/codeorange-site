@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Track: How PayJoin Works - Session Notes</title>
+<meta name="description" content="The first Privacy Track: why Bitcoin needs privacy, how PayJoin fools chain analysis, and a real PayJoin sent live on the call.">
+<link rel="canonical" href="https://codeorange.dev/session-notes/2026-10-06-privacy-track">
+<meta name="theme-color" content="#F7931A">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Code Orange Dev School">
+<meta property="og:url" content="https://codeorange.dev/session-notes/2026-10-06-privacy-track">
+<meta property="og:title" content="Privacy Track: How PayJoin Works - Session Notes">
+<meta property="og:description" content="The first Privacy Track: why Bitcoin needs privacy, how PayJoin fools chain analysis, and a real PayJoin sent live on the call.">
+<meta property="og:image" content="https://codeorange.dev/assets/session-notes/2026-10-06-privacy-track.jpg">
+<meta property="og:image:secure_url" content="https://codeorange.dev/assets/session-notes/2026-10-06-privacy-track.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Privacy Track: How PayJoin Works">
+<meta property="article:published_time" content="2026-10-06">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Privacy Track: How PayJoin Works", "description": "The first Privacy Track: why Bitcoin needs privacy, how PayJoin fools chain analysis, and a real PayJoin sent live on the call.", "datePublished": "2026-10-06", "url": "https://codeorange.dev/session-notes/2026-10-06-privacy-track", "image": "https://codeorange.dev/assets/session-notes/2026-10-06-privacy-track.jpg", "author": {"@type": "Organization", "name": "Code Orange Dev School", "url": "https://codeorange.dev"}, "publisher": {"@type": "EducationalOrganization", "name": "Code Orange Dev School", "url": "https://codeorange.dev"}, "video": {"@type": "VideoObject", "name": "Privacy Track: How PayJoin Works", "description": "The first Privacy Track: why Bitcoin needs privacy, how PayJoin fools chain analysis, and a real PayJoin sent live on the call.", "uploadDate": "2026-10-06", "thumbnailUrl": "https://codeorange.dev/assets/session-notes/2026-10-06-privacy-track.jpg", "embedUrl": "https://www.youtube-nocookie.com/embed/lsgyE7OxpsM", "contentUrl": "https://www.youtube.com/watch?v=lsgyE7OxpsM"}}</script>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@CodeOrangeDevs">
+<meta name="twitter:title" content="Privacy Track: How PayJoin Works - Session Notes">
+<meta name="twitter:description" content="The first Privacy Track: why Bitcoin needs privacy, how PayJoin fools chain analysis, and a real PayJoin sent live on the call.">
+<meta name="twitter:image" content="https://codeorange.dev/assets/session-notes/2026-10-06-privacy-track.jpg">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon-co.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<script src="/assets/lazy-video.js?v=20260902b" defer></script>
+<style>
+:root { color-scheme: dark; --bg:#0A0A0A; --band:#0F0F0F; --card:#141414; --text:#F5F5F5; --muted:#B8B8B8; --dim:#858585; --orange:#F7931A; --orange2:#FFB347; --line:rgba(255,255,255,.08); }
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; overflow-x: hidden; background: var(--bg); color: var(--text); font-family: "Inter", system-ui, sans-serif; scroll-behavior: smooth; }
+body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+img, video, iframe { max-width: 100%; }
+a { color: inherit; }
+.announce { display: flex; justify-content: center; gap: 10px; padding: 9px 24px; background: var(--orange); color: var(--bg); text-decoration: none; font: 700 13px "Plus Jakarta Sans", monospace; text-align: center; }
+.announce span { text-decoration: underline; text-underline-offset: 3px; }
+.site-header { position: sticky; top: 0; z-index: 50; background: rgba(10,10,10,.74); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.header-inner { max-width: 1240px; height: 78px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; gap: 22px; }
+.brand img { display: block; width: auto; height: 50px; }
+.desktop-nav, .header-actions, .cta-row { display: flex; align-items: center; gap: 12px; }
+  .desktop-nav { gap: 28px; }
+  .desktop-nav a { padding: 8px 4px; }
+.desktop-nav a, .mobile-nav a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 600; padding: 8px 10px; border-radius: 8px; }
+.desktop-nav a:hover, .mobile-nav a:hover { color: var(--orange); }
+.mobile-nav { display: none; gap: 8px; overflow-x: auto; padding: 0 16px 10px; scrollbar-width: none; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; }
+.mobile-nav::-webkit-scrollbar { display: none; }
+.mobile-nav a { flex: 0 0 auto; scroll-snap-align: start; }
+.button, .ghost { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 13px 24px; border-radius: 8px; text-decoration: none; font-weight: 700; transition: border-color .15s ease, color .15s ease, background .15s ease, transform .15s ease; }
+.button { background: var(--orange); color: var(--bg); }
+.button:hover { background: var(--orange2); }
+.ghost { border: 1px solid rgba(255,255,255,.16); color: var(--text); }
+.ghost:hover { border-color: var(--orange); color: var(--orange); }
+.small { min-height: 40px; padding: 9px 18px; font-size: 14px; }
+.hero { position: relative; overflow: hidden; background-image: linear-gradient(rgba(10,10,10,.78), rgba(10,10,10,.92)), linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px), url("/assets/latest-workshops/workshop-latest-builders.webp"); background-size: auto, 48px 48px, 48px 48px, cover; background-position: center, 0 0, 0 0, center 42%; }
+.hero-grid, .section-inner { max-width: 1240px; margin: 0 auto; padding: 96px 32px; }
+.hero-grid { display: grid; grid-template-columns: minmax(0,1.08fr) minmax(320px,.92fr); gap: 64px; align-items: center; }
+.glow { position: absolute; top: -160px; right: -110px; width: 740px; height: 740px; border-radius: 50%; background: radial-gradient(circle, rgba(247,147,26,.14), transparent 66%); pointer-events: none; }
+.eyebrow { margin: 0 0 22px; color: var(--orange); font: 700 12px "Plus Jakarta Sans", monospace; letter-spacing: .16em; text-transform: uppercase; }
+h1, h2, h3 { font-family: "Inter", system-ui, sans-serif; font-weight: 400; color: var(--text); }
+h1 { margin: 0 0 26px; max-width: 780px; font-size: clamp(40px, 4.6vw, 68px); line-height: 1.05; }
+h2 { margin: 0 0 18px; font-size: clamp(32px, 3.3vw, 50px); line-height: 1.08; }
+h3 { margin: 0; font-size: 26px; line-height: 1.15; }
+.lead { max-width: 620px; margin: 0 0 34px; color: var(--muted); font-size: 18px; line-height: 1.65; }
+.terminal-card, .card, .program-card, .stat, .timeline-item { background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.32); }
+.terminal-bar { display: flex; align-items: center; gap: 8px; padding: 14px 18px; background: var(--band); border-bottom: 1px solid var(--line); }
+.terminal-bar span { width: 12px; height: 12px; border-radius: 50%; }
+.terminal-bar span:nth-child(1){ background:#FF5F56; } .terminal-bar span:nth-child(2){ background:#FFBD2E; } .terminal-bar span:nth-child(3){ background:#27C93F; }
+.terminal-bar strong { margin-left: 10px; color: var(--dim); font: 500 12px "Plus Jakarta Sans", monospace; }
+.terminal-body { padding: 24px; font: 14px/1.9 "Plus Jakarta Sans", monospace; }
+.terminal-body p { margin: 0; } .orange { color: var(--orange); } .muted { color: var(--dim); }
+.band { background: var(--band); border-block: 1px solid var(--line); }
+.grid { display: grid; gap: 22px; }
+.grid.two { grid-template-columns: repeat(2, minmax(0,1fr)); } .grid.three { grid-template-columns: repeat(3, minmax(0,1fr)); }
+.program-card { display: grid; grid-template-rows: 210px 1fr; text-decoration: none; transition: transform .18s ease, border-color .18s ease; }
+.program-card:hover { transform: translateY(-4px); border-color: rgba(247,147,26,.55); }
+.program-card img, .card > img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.012); }
+.card-body { padding: 24px; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; }
+.pill { display: inline-flex; padding: 7px 12px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; color: var(--muted); font: 600 12px "Plus Jakarta Sans", monospace; }
+.pill.orange { color: var(--orange); border-color: rgba(247,147,26,.42); }
+.card p, .program-card p, .timeline-item p { color: var(--muted); line-height: 1.65; }
+.repo-card { display: block; text-decoration: none; transition: transform .18s ease, border-color .18s ease; }
+.repo-card:hover { transform: translateY(-4px); border-color: rgba(247,147,26,.55); }
+.repo-card h3 { margin-top: 14px; }
+.stat { padding: 26px; }
+.stat strong { display: block; color: var(--orange); font: 400 40px/1 "Inter", monospace; margin-bottom: 10px; }
+.timeline { display: grid; gap: 14px; counter-reset: step; }
+.timeline-item { display: grid; grid-template-columns: 70px 1fr; gap: 22px; padding: 24px; counter-increment: step; }
+.timeline-item:before { content: counter(step, decimal-leading-zero); color: var(--orange); font: 700 16px "Plus Jakarta Sans", monospace; }
+.split { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 42px; align-items: start; }
+.feature-panel { background: linear-gradient(145deg, rgba(247,147,26,.12), rgba(20,20,20,.86) 42%, rgba(15,15,15,.96)); border: 1px solid rgba(247,147,26,.26); border-radius: 16px; box-shadow: 0 28px 80px rgba(0,0,0,.34); overflow: hidden; }
+.feature-panel-inner { padding: 28px; }
+.photo-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 30px; }
+.photo-card { position: relative; min-height: 300px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--card); box-shadow: 0 20px 60px rgba(0,0,0,.28); }
+.photo-card.tall { min-height: 420px; }
+.photo-card.wide { grid-column: span 2; }
+.photo-card img, .feature-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.012); }
+.photo-card:after, .feature-photo:after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(6,6,6,.78) 100%); pointer-events: none; }
+.photo-caption { position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 1; display: inline-flex; width: max-content; max-width: calc(100% - 28px); padding: 7px 11px; border-radius: 999px; background: rgba(6,6,6,.78); border: 1px solid rgba(255,255,255,.13); color: var(--text); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .08em; text-transform: uppercase; }
+.feature-photo { position: relative; min-height: 430px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--card); box-shadow: 0 24px 70px rgba(0,0,0,.32); }
+.calendar-frame { margin-top: 28px; background: #fff; border: 1px solid rgba(255,255,255,.12); border-radius: 16px; overflow: hidden; box-shadow: 0 24px 70px rgba(0,0,0,.36); }
+.calendar-frame iframe { display: block; width: 100%; height: 680px; border: 0; background: #fff; }
+.booking-panel { display: grid; gap: 16px; padding: 24px; background: rgba(6,6,6,.48); border: 1px solid var(--line); border-radius: 16px; }
+.price-tag { display: inline-flex; width: max-content; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 999px; background: rgba(247,147,26,.14); border: 1px solid rgba(247,147,26,.34); color: var(--orange); font: 700 13px "Plus Jakarta Sans", monospace; }
+.footer { border-top: 1px solid var(--line); background: #060606; }
+.footer-media { position: relative; max-width: 1240px; min-height: 300px; margin: 56px auto 0; border: 1px solid rgba(255,255,255,.1); border-radius: 16px; overflow: hidden; background: var(--band); box-shadow: 0 24px 70px rgba(0,0,0,.34); }
+.footer-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.footer-media:after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6,6,6,.9), rgba(6,6,6,.34) 56%, rgba(6,6,6,.74)); pointer-events: none; }
+.footer-media-copy { position: relative; z-index: 1; max-width: 560px; padding: 42px; }
+.footer-grid { max-width: 1240px; margin: 0 auto; padding: 56px 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.footer a { color: var(--dim); text-decoration: none; } .footer a:hover { color: var(--orange); }
+.link-list { display: grid; gap: 10px; }
+.final-cta { text-align: center; border-top: 1px solid var(--line); }
+@media (max-width: 900px) {
+  .announce { padding: 8px 16px; line-height: 1.42; }
+  .desktop-nav { display: none; } .mobile-nav { display: flex; padding-bottom: 12px; gap: 6px; }
+  .header-inner { height: 62px; padding: 0 16px; gap: 12px; } .brand img { height: 40px; }
+  .hero-grid, .section-inner { padding: 64px 20px; }
+  .hero-grid { gap: 30px; }
+  .hero-grid, .split, .grid.two, .grid.three { grid-template-columns: minmax(0, 1fr); }
+  .glow { right: -260px; width: 520px; height: 520px; }
+  h1 { font-size: clamp(34px, 10.5vw, 48px); line-height: 1.05; }
+  h2 { font-size: clamp(30px, 8.5vw, 40px); line-height: 1.08; }
+  h3 { font-size: clamp(21px, 6vw, 27px); }
+  .lead { font-size: 16px; line-height: 1.62; }
+  .terminal-body { padding: 20px; font-size: 12px; line-height: 1.75; overflow-wrap: anywhere; }
+  .terminal-bar strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .program-card { grid-template-rows: 190px 1fr; border-radius: 14px; }
+  .card-body, .stat, .timeline-item { padding: 20px; }
+  .stat strong { font-size: 34px; overflow-wrap: anywhere; }
+  .pill { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+  .photo-grid { grid-template-columns: 1fr; }
+  .photo-card.wide { grid-column: auto; }
+  .photo-card, .photo-card.tall, .feature-photo { min-height: 320px; }
+  .photo-caption { width: auto; max-width: calc(100% - 28px); white-space: normal; border-radius: 8px; line-height: 1.35; }
+  .feature-panel-inner { padding: 24px; }
+  .booking-panel { padding: 20px; }
+  .header-actions .ghost { display: none; }
+  .cta-row { flex-direction: column; align-items: stretch; }
+  .cta-row .button, .cta-row .ghost { width: 100%; }
+  .footer-grid { grid-template-columns: 1fr; padding: 48px 20px; }
+  .calendar-frame iframe { height: 560px; }
+  .footer-media { min-height: 260px; margin: 42px 20px 0; }
+  .footer-media-copy { padding: 30px 24px; }
+}
+@media (max-width: 560px) {
+  .announce { flex-direction: column; gap: 2px; font-size: 12px; }
+  .header-inner { height: 58px; padding-inline: 14px; }
+  .brand img { height: 36px; }
+  .mobile-nav { padding-inline: 12px; }
+  .mobile-nav a { font-size: 12px; padding: 7px 12px; }
+  .header-actions .button.small { min-height: 36px; padding: 8px 12px; font-size: 13px; }
+  .hero-grid, .section-inner { padding: 54px 18px; }
+  .button, .ghost { width: 100%; min-height: 46px; padding: 12px 18px; }
+  .header-actions .button, .header-actions .ghost { width: auto; }
+  .terminal-card, .card, .program-card, .stat, .timeline-item, .feature-panel, .calendar-frame, .booking-panel { border-radius: 14px; }
+  .program-card { grid-template-rows: 174px 1fr; }
+  .photo-card, .photo-card.tall, .feature-photo { min-height: 260px; }
+  .timeline-item { grid-template-columns: 1fr; gap: 10px; }
+  .timeline-item:before { font-size: 14px; }
+  .calendar-frame iframe { height: 500px; }
+  .footer-media { min-height: 240px; margin-inline: 18px; border-radius: 14px; }
+  .footer-media-copy { padding: 26px 20px; }
+  .feature-panel-inner { padding: 20px; }
+  .footer-grid { padding: 42px 18px; }
+}
+@media (max-width: 380px) {
+  .hero-grid, .section-inner { padding-inline: 16px; }
+  .photo-card, .photo-card.tall, .feature-photo { min-height: 230px; }
+  .calendar-frame iframe { height: 455px; }
+  .mobile-nav a { font-size: 11px; padding-inline: 10px; }
+}
+
+.article-hero .hero-grid { grid-template-columns: minmax(0, 1fr); padding-bottom: 56px; }
+.article-hero h1 { max-width: 900px; }
+.byline { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; }
+.article-wrap { max-width: 760px; margin: 0 auto; padding: 56px 32px 24px; }
+.article-figure { margin: 0 0 40px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--card); box-shadow: 0 24px 70px rgba(0,0,0,.32); }
+.article-figure img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+.article-figure.inline { margin: 8px 0 32px; }
+.article-figure.inline img { aspect-ratio: auto; }
+.article-figure figcaption { padding: 12px 16px; color: var(--dim); font: 500 13px/1.5 "Plus Jakarta Sans", monospace; }
+.byline { align-items: center; }
+.byline-avatar { width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(247,147,26,.5); }
+.author-box { display: flex; align-items: center; gap: 16px; margin: 40px 0 0; padding: 20px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; }
+.author-box img { width: 72px; height: 72px; border-radius: 50%; border: 2px solid var(--orange); flex: 0 0 auto; }
+.author-box strong { font-size: 18px; }
+.author-box p { margin: 2px 0 0; color: var(--dim); }
+.prose { color: var(--muted); font-size: 19px; line-height: 1.78; }
+.prose p, .prose ul, .prose ol { margin: 0 0 24px; }
+.prose h2 { margin: 52px 0 18px; font-size: clamp(28px, 2.8vw, 40px); }
+.prose strong { color: var(--text); }
+.prose a { color: var(--orange); text-underline-offset: 3px; }
+.prose ul, .prose ol { padding-left: 24px; }
+.prose li { margin-bottom: 10px; padding-left: 4px; }
+.prose li::marker { color: var(--orange); font-weight: 700; }
+.prose .pull { margin: 0 0 28px; padding: 18px 22px; border-left: 3px solid var(--orange); background: var(--card); border-radius: 0 12px 12px 0; color: var(--text); font-size: 21px; }
+.prose .closing { color: var(--text); font-size: 21px; }
+.newsletter { max-width: 760px; margin: 24px auto 0; padding: 0 32px; }
+.newsletter-card { padding: 30px; background: linear-gradient(145deg, rgba(247,147,26,.12), rgba(20,20,20,.86) 42%, rgba(15,15,15,.96)); border: 1px solid rgba(247,147,26,.26); border-radius: 16px; }
+.newsletter-card h2 { font-size: clamp(26px, 2.6vw, 34px); margin-bottom: 10px; }
+.newsletter-card p { margin: 0 0 20px; color: var(--muted); line-height: 1.6; }
+.newsletter-form { display: flex; gap: 10px; flex-wrap: wrap; }
+.newsletter-form input[type=email] { flex: 1 1 240px; min-height: 48px; padding: 12px 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,.18); background: rgba(6,6,6,.6); color: var(--text); font: 500 16px "Inter", system-ui, sans-serif; }
+.newsletter-form input[type=email]:focus { outline: 2px solid var(--orange); outline-offset: 1px; }
+.newsletter-form button { border: 0; cursor: pointer; font: inherit; font-weight: 700; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+.article-list { display: grid; gap: 22px; }
+.article-card { display: grid; grid-template-columns: 320px 1fr; text-decoration: none; background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.32); transition: transform .18s ease, border-color .18s ease; }
+.article-card:hover { transform: translateY(-4px); border-color: rgba(247,147,26,.55); }
+.article-card img { width: 100%; height: 100%; min-height: 220px; object-fit: cover; }
+.article-card p { color: var(--muted); line-height: 1.65; }
+@media (max-width: 900px) {
+  .article-wrap { padding: 40px 20px 16px; }
+  .newsletter { padding: 0 20px; }
+  .prose { font-size: 17px; }
+  .prose .pull, .prose .closing { font-size: 19px; }
+  .article-card { grid-template-columns: 1fr; }
+  .article-card img { min-height: 200px; max-height: 240px; }
+}
+@media (max-width: 560px) {
+  .article-wrap { padding: 32px 18px 12px; }
+  .newsletter { padding: 0 18px; }
+  .newsletter-card { padding: 22px; }
+  .newsletter-form button { width: 100%; }
+}
+
+.notes-link { display:inline-flex; align-items:center; gap:8px; margin-top:4px; color: var(--dim); font: 600 13px "Plus Jakarta Sans", monospace; text-decoration:none; }
+.notes-link:hover { color: var(--orange); }
+.note-meta { display:flex; flex-wrap:wrap; gap:8px; margin:0; }
+.prose h3 { margin: 30px 0 12px; font-size: 21px; color: var(--text); }
+.prose ol li strong:first-child { color: var(--text); }
+.source-box { margin: 40px 0 0; padding: 20px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; color: var(--dim); font-size: 15px; line-height: 1.6; }
+.source-box a { color: var(--orange); }
+.tldr { margin: 0 0 40px; padding: 22px 24px; background: linear-gradient(145deg, rgba(247,147,26,.12), rgba(20,20,20,.9) 55%); border: 1px solid rgba(247,147,26,.3); border-radius: 16px; }
+.tldr .eyebrow { margin: 0 0 10px; }
+.tldr ul { margin: 0; padding-left: 20px; }
+.tldr li { margin: 0 0 6px; color: var(--text); }
+.viz { margin: 8px 0 36px; padding: 24px; background: var(--band); border: 1px solid var(--line); border-radius: 16px; font-size: 16px; line-height: 1.55; }
+.viz .eyebrow { margin: 0 0 6px; }
+.viz-title { margin: 0 0 18px; color: var(--text); font-size: 21px; font-weight: 600; }
+.flow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
+.flow-step { flex: 1 1 0; min-width: 92px; padding: 14px 12px; text-align: center; background: var(--card); border: 1px solid rgba(255,255,255,.12); border-radius: 12px; color: var(--text); font-weight: 600; }
+.flow-step small { display: block; margin-top: 4px; color: var(--dim); font: 600 11px "Plus Jakarta Sans", monospace; letter-spacing: .12em; text-transform: uppercase; }
+.flow-hop { color: var(--orange); font: 700 15px "Plus Jakarta Sans", monospace; white-space: nowrap; }
+.viz ul { margin: 0 0 16px; padding-left: 20px; }
+.viz li { margin: 0 0 4px; }
+.viz-fix { margin: 0; padding: 14px 16px; border-radius: 12px; background: rgba(247,147,26,.12); border: 1px solid rgba(247,147,26,.4); color: var(--text); }
+.viz-fix b { color: var(--orange); }
+.layers { display: grid; gap: 10px; }
+.layer { padding: 16px 18px; background: var(--card); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; }
+.layer.top { background: rgba(247,147,26,.12); border-color: rgba(247,147,26,.5); }
+.layer strong { display: block; color: var(--text); font-size: 18px; }
+.layer p { margin: 4px 0 6px; }
+.layer span { color: var(--orange); font: 600 13px "Plus Jakarta Sans", monospace; }
+.layer-scale { display: flex; justify-content: space-between; margin: 0 0 8px; color: var(--dim); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .12em; text-transform: uppercase; }
+.layer-scale b { color: var(--orange); }
+.q-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
+.q { padding: 16px; background: var(--card); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; }
+.q b { display: block; color: var(--orange); font: 700 13px "Plus Jakarta Sans", monospace; margin-bottom: 4px; }
+.q span { color: var(--text); }
+.share-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 32px 0 0; }
+.share-row strong { color: var(--text); margin-right: 4px; }
+.share-row a, .share-row button { min-height: 38px; padding: 8px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,.16); background: transparent; color: var(--text); font: 600 14px "Inter", system-ui, sans-serif; text-decoration: none; cursor: pointer; }
+.share-row a:hover, .share-row button:hover { border-color: var(--orange); color: var(--orange); }
+.note-figure img { aspect-ratio: 1200 / 630; }
+.video { position: relative; margin: 0 0 14px; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: #000; box-shadow: 0 24px 70px rgba(0,0,0,.32); }
+.video img, .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; object-fit: cover; }
+.video button { position: absolute; inset: 0; width: 100%; border: 0; padding: 0; background: transparent; cursor: pointer; }
+.video .play { position: absolute; left: 72%; top: 50%; width: 84px; height: 84px; margin: -42px 0 0 -42px; border-radius: 50%; background: var(--orange); box-shadow: 0 10px 40px rgba(0,0,0,.5); transition: transform .15s ease; }
+.video .play:after { content: ""; position: absolute; left: 33px; top: 26px; border-style: solid; border-width: 16px 0 16px 26px; border-color: transparent transparent transparent #0A0A0A; }
+.video button:hover .play { transform: scale(1.08); }
+.video-note { margin: 0 0 32px; color: var(--dim); font: 500 13px/1.5 "Plus Jakarta Sans", monospace; }
+.video-note a { color: var(--orange); }
+.chapters { margin: 0 0 40px; border: 1px solid var(--line); border-radius: 16px; background: var(--band); }
+.chapters summary { padding: 16px 20px; cursor: pointer; color: var(--text); font-weight: 600; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+.chapters summary::-webkit-details-marker { display: none; }
+.chapters summary:after { content: "+"; color: var(--orange); font-size: 22px; line-height: 1; }
+.chapters[open] summary:after { content: "−"; }
+.chapters ol { list-style: none; margin: 0; padding: 0 8px 12px; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 2px 12px; }
+.chapters li { margin: 0; }
+.chapters a { display: flex; gap: 12px; padding: 8px 12px; border-radius: 8px; color: var(--muted); text-decoration: none; font-size: 15px; line-height: 1.4; }
+.chapters a:hover { background: var(--card); color: var(--text); }
+.chapters time { flex: 0 0 auto; min-width: 56px; color: var(--orange); font: 600 13px/1.6 "Plus Jakarta Sans", monospace; }
+.quote { margin: 8px 0 32px; padding: 24px 26px; border-left: 3px solid var(--orange); background: var(--card); border-radius: 0 16px 16px 0; }
+.quote p { margin: 0 0 10px; color: var(--text); font-size: 22px; line-height: 1.45; }
+.quote cite { color: var(--dim); font: 600 13px "Plus Jakarta Sans", monospace; font-style: normal; }
+.part { display: flex; align-items: center; gap: 12px; margin: 44px 0 14px; color: var(--orange); font: 700 12px "Plus Jakarta Sans", monospace; letter-spacing: .14em; text-transform: uppercase; }
+.part::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(247,147,26,.5), transparent); }
+.part b { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--orange); color: #0A0A0A; font-size: 13px; letter-spacing: 0; }
+.term { margin: 8px 0 30px; border-radius: 14px; overflow: hidden; background: #0d0d0d; border: 1px solid rgba(255,255,255,.12); box-shadow: 0 24px 60px rgba(0,0,0,.45); }
+.term-bar { display: flex; align-items: center; gap: 7px; padding: 11px 14px; background: #1a1a1a; border-bottom: 1px solid rgba(255,255,255,.08); }
+.term-bar i { width: 11px; height: 11px; border-radius: 50%; background: #3a3a3a; }
+.term-bar i:first-child { background: #F7931A; }
+.term-bar span { margin-left: 8px; color: var(--dim); font: 600 12px "Plus Jakarta Sans", monospace; }
+.term pre { margin: 0; padding: 18px 20px; overflow-x: auto; color: #d8d8d8; font: 500 13.5px/1.75 ui-monospace, "SF Mono", Menlo, Consolas, monospace; white-space: pre; }
+.term .p { color: #F7931A; } .term .ok { color: #7bd88f; } .term .bad { color: #ff6b6b; } .term .c { color: #7a7a7a; }
+.term-note { margin: -22px 0 30px; color: var(--dim); font-size: 13px; }
+.svg-viz svg { display: block; width: 100%; height: auto; }
+.svg-scroll { overflow-x: auto; margin: 0 -6px 16px; padding: 0 6px; }
+@media (max-width: 560px) { .svg-scroll svg { min-width: 540px; } .prose .term pre { font-size: 12px; } }
+.prose .term-note { margin-top: -20px; }
+.swipe { display: none; margin: -8px 0 14px; color: var(--dim); font-size: 13px; }
+@media (max-width: 560px) { .swipe { display: block; } }
+.svg-viz text { font-family: "Inter", system-ui, sans-serif; }
+.anatomy { display: grid; grid-template-columns: auto 1fr; gap: 0; margin: 0; border: 1px solid rgba(255,255,255,.1); border-radius: 12px; overflow: hidden; font-size: 15px; }
+.anatomy code { padding: 10px 14px; background: #0d0d0d; color: #F7931A; font: 600 13.5px ui-monospace, Menlo, Consolas, monospace; border-bottom: 1px solid rgba(255,255,255,.06); }
+.anatomy span { padding: 10px 14px; color: var(--text); background: var(--card); border-bottom: 1px solid rgba(255,255,255,.06); }
+.anatomy span em { color: var(--dim); font-style: normal; }
+.more-notes { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; margin: 28px 0 0; }
+.more-notes a { display: block; padding: 18px 20px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; text-decoration: none; color: var(--text); }
+.more-notes a:hover { border-color: rgba(247,147,26,.5); }
+.more-notes small { display: block; margin-bottom: 6px; color: var(--orange); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .12em; text-transform: uppercase; }
+.more-notes a.newer { text-align: right; grid-column: 2; }
+@media (max-width: 560px) { .more-notes { grid-template-columns: 1fr; } .more-notes a.newer { grid-column: 1; text-align: left; } }
+.next-card { display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center; margin: 40px 0 0; padding: 24px; background: linear-gradient(145deg, rgba(247,147,26,.14), rgba(20,20,20,.9) 55%); border: 1px solid rgba(247,147,26,.35); border-radius: 16px; }
+.next-card .eyebrow { margin: 0 0 8px; }
+.next-card h3 { font-size: 24px; }
+.next-card p { margin: 6px 0 0; color: var(--muted); }
+.next-card .cta-row { flex-wrap: wrap; }
+@media (max-width: 700px) { .chapters ol { grid-template-columns: 1fr; } .next-card { grid-template-columns: 1fr; } .quote p { font-size: 19px; } }
+
+@media (max-width: 560px) { .viz { padding: 18px; font-size: 15px; } .q-grid { grid-template-columns: 1fr; } .flow-hop { flex: 0 0 100%; text-align: center; } .flow-step { flex-basis: 100%; } .flow-hop i { display: inline-block; font-style: normal; transform: rotate(90deg); } }
+.res-tools { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 0 0 28px; }
+.res-tools input { flex: 1 1 260px; min-height: 46px; padding: 10px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,.18); background: var(--card); color: var(--text); font: 500 16px "Inter", system-ui, sans-serif; }
+.res-tools input:focus { outline: 2px solid var(--orange); outline-offset: 1px; }
+.chip { min-height: 38px; padding: 8px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.16); background: transparent; color: var(--muted); font: 600 13px "Plus Jakarta Sans", monospace; cursor: pointer; }
+.chip:hover, .chip[aria-pressed="true"] { border-color: var(--orange); color: var(--orange); }
+.res-group { margin: 0 0 36px; }
+.res-group h2 { font-size: clamp(24px, 2.4vw, 32px); margin: 0 0 14px; }
+.res-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+.res { display: block; padding: 18px 20px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; text-decoration: none; transition: border-color .15s ease, transform .15s ease; }
+a.res:hover { border-color: rgba(247,147,26,.55); transform: translateY(-2px); }
+.res strong { display: block; color: var(--text); font-size: 17px; line-height: 1.35; }
+.res p { margin: 6px 0 10px; color: var(--muted); font-size: 15px; line-height: 1.5; }
+.res small { color: var(--dim); font: 600 12px "Plus Jakarta Sans", monospace; }
+.res small a { color: var(--orange); text-decoration: none; position: relative; z-index: 1; }
+.res-empty { color: var(--dim); }
+@media (max-width: 700px) { .res-grid { grid-template-columns: 1fr; } }
+</style>
+<link rel="stylesheet" href="/assets/theme.css?v=20261015d">
+<script src="/assets/site-menu.js?v=20261004b" defer></script>
+</head>
+<body>
+<a class="announce" href="/decoding-bitcoin">Decoding Bitcoin study cohort starts Monday 16 November &middot; free, on Discord <span>Sign up &rarr;</span></a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="Code Orange Dev School home"><img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School"></a>
+    <nav class="desktop-nav" aria-label="Primary">
+      <a href="/start">Start here</a>
+      <a href="/programs">Programs</a>
+      <a href="/portal">Portal</a>
+      <a href="/fellowships">Fellowships</a>
+      <a href="/calendar">Calendar</a>
+      <a href="/community">Community</a>
+      <a href="/about">About</a>
+    </nav>
+    <div class="header-actions">
+      <a class="ghost small" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a>
+      <a class="button small" href="/apply">Apply Now</a>
+    </div>
+  </div>
+  <nav class="mobile-nav" aria-label="Mobile">
+    <a href="/start">Start here</a>
+    <a href="/programs">Programs</a>
+    <a href="/portal">Portal</a>
+    <a href="/calendar">Calendar</a>
+    <a href="/community">Community</a>
+    <a href="/about">About</a>
+  </nav>
+</header>
+<main>
+  <section class="hero article-hero"><div class="co-fx" aria-hidden="true"><i></i><i></i><i></i><svg class="co-fx-glow" viewBox="0 0 1200 400" preserveAspectRatio="none"><defs><filter id="co-glow-blur" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="25"/></filter><radialGradient id="co-glow-fill"><stop offset="0" stop-color="#F7931A" stop-opacity=".55"/><stop offset=".55" stop-color="#C2620A" stop-opacity=".28"/><stop offset="1" stop-color="#4A2600" stop-opacity="0"/></radialGradient></defs><ellipse cx="600" cy="200" rx="520" ry="110" fill="url(#co-glow-fill)" filter="url(#co-glow-blur)"/></svg></div>
+    <div class="glow"></div>
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow"><a href="/session-notes" style="text-decoration:none">/Session-notes</a>/2026-10-06_</p>
+        <h1>How PayJoin <span class="orange">Works.</span></h1>
+        <p class="lead">The first Privacy Track: why Bitcoin needs privacy, how PayJoin fools chain analysis, and a real PayJoin sent live on the call.</p>
+        <p class="note-meta"><span class="pill orange">Privacy Track</span><span class="pill"><time datetime="2026-10-06">October 6, 2026</time></span><span class="pill">Hosted by Razor</span><span class="pill">5 min read</span><a class="pill" href="#video" style="text-decoration:none">&#9654; Recording</a></p>
+      </div>
+    </div>
+  </section>
+  <article class="article-wrap">
+    <div class="video" id="video" data-yt="lsgyE7OxpsM"><img src="/assets/session-notes/2026-10-06-privacy-track.jpg" alt="Privacy Track: How PayJoin Works" width="1200" height="630"><button type="button" aria-label="Play the session recording"><span class="play"></span></button></div>
+    <p class="video-note">Full recording. Plays from youtube-nocookie.com. <a href="https://www.youtube.com/watch?v=lsgyE7OxpsM" target="_blank" rel="noopener">Watch on YouTube</a></p>
+    <div class="prose">
+      <div class="tldr">
+        <p class="eyebrow">TL;DR</p>
+        <ul>
+          <li>Privacy keeps Bitcoin free, censorship-resistant and fungible. Without private payments it can be captured like gold.</li>
+          <li>PayJoin mixes coins from the sender and the receiver in one transaction that looks completely normal.</li>
+          <li>That breaks two chain-analysis guesses: all inputs belong to one person, and the big leftover is the change.</li>
+          <li>PayJoin v2 needs no server of your own: a mailbox and a relay pass messages, and neither sees the whole picture.</li>
+        </ul>
+      </div>
+
+      <h2>Highlights</h2>
+      <p class="part"><b>1</b>Why privacy</p>
+      <p><strong>Why a Privacy Track at all?</strong> You wouldn&rsquo;t post your bank statements online. On Bitcoin, anyone can read your payments and your balance unless you take care. The track opened with three reasons privacy matters.</p>
+      <div class="viz" role="figure" aria-label="Three reasons Bitcoin needs privacy">
+        <p class="eyebrow">Why we need privacy</p>
+        <div class="q-grid">
+          <div class="q"><b>01 Sovereignty</b><span>Nobody needs to know where you buy coffee, what you buy online, or how much you hold.</span></div>
+          <div class="q"><b>02 No censorship</b><span>You shouldn&rsquo;t need permission to pay someone. Privacy makes censorship harder.</span></div>
+          <div class="q"><b>03 Fungibility</b><span>One bitcoin is one bitcoin. No &ldquo;clean&rdquo; and &ldquo;tainted&rdquo; coins, no judging coins by their history.</span></div>
+          <div class="q"><b>04 Trade-off</b><span>You can&rsquo;t get 100% privacy for 0% effort. Every tool asks something of you.</span></div>
+        </div>
+      </div>
+      <blockquote class="quote"><p>&ldquo;If we don&rsquo;t have private payments, Bitcoin as an asset will fail.&rdquo;</p><cite>Jeff Booth&rsquo;s idea, quoted on the call: without private payments it can be captured and centralized like gold</cite></blockquote>
+
+      <p class="part"><b>2</b>A real PayJoin, live</p>
+      <p><strong>12,000 sats that don&rsquo;t show up on the blockchain.</strong> A PayJoin of 12,000 sats from Bull Bitcoin to Cake Wallet was looked up on mempool.space during the call. No output said 12,000. The receiver had added one of their own coins, so the payment was hidden inside the transaction.</p>
+      <div class="viz svg-viz" role="figure" aria-label="The PayJoin transaction from the call">
+        <p class="eyebrow">The transaction from the call</p>
+        <p class="viz-title">Where are the 12,000 sats?</p>
+        <div class="svg-scroll"><svg viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g fill="none" stroke-width="2"><path d="M190 70 C 260 70, 260 130, 300 130" stroke="#F7931A"/><path d="M190 190 C 260 190, 260 130, 300 130" stroke="#5ac8fa"/><path d="M340 130 C 380 130, 380 70, 450 70" stroke="#ffffff" stroke-opacity=".5"/><path d="M340 130 C 380 130, 380 190, 450 190" stroke="#ffffff" stroke-opacity=".5"/></g>
+          <g font-size="11" font-weight="700" fill="#8A8A8A" letter-spacing="1.5"><text x="110" y="24" text-anchor="middle">INPUTS</text><text x="530" y="24" text-anchor="middle">OUTPUTS</text></g>
+          <rect x="30" y="44" width="160" height="52" rx="12" fill="#1d1408" stroke="#F7931A"/><text x="110" y="68" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">≈58,000 sats</text><text x="110" y="86" text-anchor="middle" font-size="12" fill="#F7931A">sender’s coin</text>
+          <rect x="30" y="164" width="160" height="52" rx="12" fill="#0b1720" stroke="#5ac8fa"/><text x="110" y="188" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">≈10,000 sats</text><text x="110" y="206" text-anchor="middle" font-size="12" fill="#5ac8fa">receiver’s coin</text>
+          <circle cx="320" cy="130" r="26" fill="#F7931A"/><text x="320" y="135" text-anchor="middle" font-size="12" font-weight="800" fill="#0A0A0A">PayJoin</text>
+          <rect x="450" y="44" width="160" height="52" rx="12" fill="#161616" stroke="#ffffff" stroke-opacity=".3"/><text x="530" y="68" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">≈22,000 sats</text><text x="530" y="86" text-anchor="middle" font-size="12" fill="#8A8A8A">output 1</text>
+          <rect x="450" y="164" width="160" height="52" rx="12" fill="#161616" stroke="#ffffff" stroke-opacity=".3"/><text x="530" y="188" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">≈45,400 sats</text><text x="530" y="206" text-anchor="middle" font-size="12" fill="#8A8A8A">output 2</text>
+          <text x="320" y="248" text-anchor="middle" font-size="13" fill="#c9c9c9">No output says 12,000. The receiver got 10,000 + 12,000 = 22,000 back.</text>
+        </svg></div>
+        <p class="swipe">Swipe to see the whole diagram &rarr;</p>
+        <div class="q-grid">
+          <div class="q"><b>Story A</b><span>The 58k owner keeps 22k as change and pays about 36,000 sats.</span></div>
+          <div class="q"><b>Story B (the truth)</b><span>The 58k owner keeps 45.4k as change and pays about 12,000 sats.</span></div>
+        </div>
+        <p class="viz-fix" style="margin-top:14px"><b>Chain analysis can&rsquo;t tell which story is true</b> unless someone tells them. Here the sender did, live on the call.</p>
+      </div>
+      <p>A second PayJoin was sent to a co-host live at the end, and it arrived. Others on the call said theirs had failed, and figuring out why is on the list for part 2.</p>
+
+      <p class="part"><b>3</b>How PayJoin works</p>
+      <p><strong>The guesses it breaks.</strong> Chain analysis usually assumes two things: every input in a transaction belongs to the same person, and the big leftover output is the sender&rsquo;s change. PayJoin puts a coin from the receiver into the transaction, so both guesses can be wrong. And unlike a CoinJoin, it looks like any normal payment, so it hides in the crowd.</p>
+      <p><strong>Why it took years to get right.</strong> The obvious design is that the sender asks &ldquo;I want to pay you X&rdquo; and the receiver offers a coin. But a sender who asks again and again, without ever paying, learns every coin the receiver owns. This is called <em>UTXO snooping</em>. The real protocol fixes it by making the sender commit first:</p>
+      <div class="viz svg-viz" role="figure" aria-label="The PayJoin v1 exchange">
+        <p class="eyebrow">PayJoin v1, step by step</p>
+        <p class="viz-title">The sender commits first, so snooping costs them</p>
+        <div class="svg-scroll"><svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#F7931A"/></marker></defs>
+          <rect x="40" y="20" width="150" height="40" rx="20" fill="#F7931A"/><text x="115" y="45" text-anchor="middle" font-size="14" font-weight="700" fill="#0A0A0A">Sender</text>
+          <rect x="450" y="20" width="150" height="40" rx="20" fill="#5ac8fa"/><text x="525" y="45" text-anchor="middle" font-size="14" font-weight="700" fill="#0A0A0A">Receiver</text>
+          <g stroke="#ffffff" stroke-opacity=".18" stroke-dasharray="4 5"><line x1="115" y1="60" x2="115" y2="320"/><line x1="525" y1="60" x2="525" y2="320"/></g>
+          <g stroke="#F7931A" stroke-width="2" marker-end="url(#ah)"><line x1="520" y1="100" x2="122" y2="100"/><line x1="120" y1="160" x2="518" y2="160"/><line x1="520" y1="220" x2="122" y2="220"/></g>
+          <g font-size="13" fill="#e8e8e8" text-anchor="middle">
+            <text x="320" y="90"><tspan fill="#F7931A" font-weight="700">1</tspan>  Shares a bitcoin: link with pj=&lt;server&gt;</text>
+            <text x="320" y="150"><tspan fill="#F7931A" font-weight="700">2</tspan>  Sends a fully signed payment (the “original PSBT”)</text>
+            <text x="320" y="210"><tspan fill="#F7931A" font-weight="700">3</tspan>  Adds their own coin, signs it, sends it back</text>
+            <text x="320" y="270"><tspan fill="#F7931A" font-weight="700">4</tspan>  Sender signs again and broadcasts the PayJoin</text>
+          </g>
+          <text x="320" y="306" text-anchor="middle" font-size="12" fill="#8A8A8A">Snooping sender? The receiver can just broadcast step 2 as a normal payment.</text>
+        </svg></div>
+        <p class="swipe">Swipe to see the whole diagram &rarr;</p>
+      </div>
+      <p><strong>v1 vs v2.</strong> In v1 the receiver must run a web server open to the internet, which is why phone and desktop wallets struggled to <em>receive</em>. PayJoin v2 (&ldquo;async PayJoin&rdquo;) swaps that for two helpers run by others, and also hides the sender&rsquo;s IP address from the receiver.</p>
+      <div class="viz" role="figure" aria-label="PayJoin v2 with a mailbox and a relay">
+        <p class="eyebrow">PayJoin v2</p>
+        <p class="viz-title">Messages go through a mailbox, like email</p>
+        <div class="flow">
+          <div class="flow-step">Sender<small>Pays</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">OHTTP relay<small>Hides your IP</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Mailbox<small>Holds the message</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Receiver<small>Checks in later</small></div>
+        </div>
+        <p class="viz-fix"><b>The one rule:</b> the relay and the mailbox must be run by different people who don&rsquo;t collude. Then neither sees the whole picture.</p>
+      </div>
+
+      <h2>Key takeaways</h2>
+      <p><strong>1. PayJoin is not a sidechain or a fork.</strong> It is a way for two wallets to talk, the way email is a protocol. The end result is a normal Bitcoin transaction built in steps with PSBTs.</p>
+      <p><strong>2. It is not instant privacy.</strong> One PayJoin won&rsquo;t clean up coins that are already linked to you, and it only beats two of the chain-analysis guesses. It works best used again and again, together with other tools. The more people use it, the less chain analysis can trust any guess.</p>
+      <p><strong>3. Try it yourself.</strong> Turn on PayJoin in Cake Wallet&rsquo;s settings and copy the receive link (it&rsquo;s long and contains <code>pj=</code>). Paste it into Bull Bitcoin and send. On the call only amounts over 10,000 sats went through, and not every try worked, so start small and check mempool.space.</p>
+      <div class="viz" role="figure" aria-label="Wallets that support PayJoin">
+        <p class="eyebrow">Wallets mentioned on the call</p>
+        <div class="anatomy">
+          <code>Bull Bitcoin</code><span>Send and receive</span>
+          <code>Cake Wallet</code><span>Send and receive <em>(turn it on in settings)</em></span>
+          <code>Sparrow</code><span>Send only (v1), so hardware wallets can pay through it</span>
+          <code>BTCPay Server</code><span>Receive on your own server (v1)</span>
+        </div>
+      </div>
+
+      <h2>Resources shared</h2>
+      <h3>Reading</h3>
+      <ul>
+        <li><a href="https://inteltechniques.com/book7.html" target="_blank" rel="noopener">Extreme Privacy</a>, Michael Bazzell: privacy in every area of life: operating system, browser, Tor and more</li>
+        <li><a href="https://www.irs.gov/compliance/criminal-investigation/jury-finds-russian-swedish-operator-of-bitcoin-fog-guilty-of-running-the-darknet-cryptocurrency-mixer" target="_blank" rel="noopener">Bitcoin Fog verdict</a>, IRS-CI (2024): this session’s chain-analysis case: a mixer run from 2011 to 2021, where the reports never say how the tracing worked</li>
+        <li><a href="https://github.com/bitcoin/bips/blob/master/bip-0078.mediawiki" target="_blank" rel="noopener">BIP 78: PayJoin (v1)</a>: the original protocol, where the receiver runs a web server</li>
+        <li><a href="https://github.com/bitcoin/bips/blob/master/bip-0077.md" target="_blank" rel="noopener">BIP 77: Async PayJoin (v2)</a>: mailbox directory plus an oblivious HTTP relay, no receiver server needed</li>
+        <li><a href="https://github.com/bitcoin/bips/blob/master/bip-0021.mediawiki" target="_blank" rel="noopener">BIP 21: payment URIs</a>: the bitcoin: link that carries the pj= PayJoin parameter</li>
+        <li><a href="https://github.com/bitcoin/bips/blob/master/bip-0174.mediawiki" target="_blank" rel="noopener">BIP 174: PSBT</a>: partially signed Bitcoin transactions, the data format PayJoin passes back and forth (they can be unsigned or fully signed too)</li>
+      </ul>
+      <h3>Tools</h3>
+      <ul>
+        <li><a href="https://payjoin.org" target="_blank" rel="noopener">payjoin.org</a>: the PayJoin Dev Kit and docs</li>
+        <li><a href="https://mempool.space" target="_blank" rel="noopener">mempool.space</a>: used live to read the PayJoin transaction</li>
+        <li><a href="https://play.blooket.com" target="_blank" rel="noopener">Blooket</a>: the quiz Razor ran on the call</li>
+      </ul>
+      <h3>Wallets</h3>
+      <ul>
+        <li><a href="https://www.bullbitcoin.com" target="_blank" rel="noopener">Bull Bitcoin</a>: sends and receives PayJoin; used for the live demo</li>
+        <li><a href="https://cakewallet.com" target="_blank" rel="noopener">Cake Wallet</a>: turn PayJoin on in settings, then share the receive link</li>
+        <li><a href="https://sparrowwallet.com" target="_blank" rel="noopener">Sparrow</a>: can send PayJoin v1, so hardware wallets can pay through it, but can’t receive</li>
+        <li><a href="https://btcpayserver.org" target="_blank" rel="noopener">BTCPay Server</a>: how merchants received PayJoin v1 with their own server</li>
+      </ul>
+      <h3>Code Orange</h3>
+      <ul>
+        <li><a href="/privacy-track">Privacy Developer Track</a>: every 1st and 3rd Tuesday: PayJoin, Silent Payments, Floresta, JoinMarket, Fedimint and more</li>
+        <li><a href="/session-notes/2026-10-08-code-review-club">Code Review Club, 8 October</a>: the follow-up session two days later</li>
+      </ul>
+      <p>Ideas from the call: a guide to choosing the right privacy tool for each risk profile, a quiz leaderboard (opt out any time), and a capture-the-flag privacy challenge in about six months.</p>
+      <p><a href="/resources">Browse every resource from every session &rarr;</a></p>
+    </div>
+    <aside class="next-card"><div><p class="eyebrow">Next session</p><h3>Privacy Track: PayJoin, part 2</h3><p>Tuesday 20 October, 07:00 UTC on Discord. Free for everyone.</p></div><div class="cta-row"><a class="button small" href="/calendar">See the calendar</a><a class="ghost small" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord</a></div></aside>
+    <div class="share-row"><strong>Share these notes:</strong><a href="https://x.com/intent/post?text=How%20PayJoin%20works%3A%20notes%20%2B%20every%20resource%20from%20the%20first%20%40CodeOrangeDevs%20Privacy%20Track&amp;url=https%3A%2F%2Fcodeorange.dev%2Fsession-notes%2F2026-10-06-privacy-track" target="_blank" rel="noopener">Post on X</a><button type="button" data-copy="https://codeorange.dev/session-notes/2026-10-06-privacy-track">Copy link</button></div>
+    <script>document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){navigator.clipboard&&navigator.clipboard.writeText(b.dataset.copy).then(function(){b.textContent='Link copied';});});});
+(function(){var v=document.getElementById('video');if(!v)return;function play(t){v.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+v.dataset.yt+'?autoplay=1&rel=0&start='+(t||0)+'" title="Session recording" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';}v.querySelector('button').addEventListener('click',function(){play(0);});document.querySelectorAll('.chapters a[data-t]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();play(a.dataset.t);v.scrollIntoView({behavior:'smooth',block:'center'});});});})();</script>
+    <nav class="more-notes" aria-label="More session notes"><a class="newer" href="/session-notes/2026-10-08-code-review-club"><small>Later session &rarr;</small>Code Review Club: Your First Code Review</a></nav>
+    <p class="source-box">These notes are also on GitHub: <a href="https://github.com/code-orange-dev/session-notes/blob/main/2026/2026-10-06-privacy-track.md" target="_blank" rel="noopener">code-orange-dev/session-notes</a>. Free to share and reuse (CC0).</p>
+  </article>
+  <section class="section-inner final-cta">
+  <p class="eyebrow">Bitcoin Only</p>
+  <h2>Ready to become a Bitcoin builder?</h2>
+  <p class="lead" style="margin-left:auto;margin-right:auto">Join the next cohort, drop into a workshop, or come say hello in Discord. The community is free and open.</p>
+  <div class="cta-row" style="justify-content:center"><a class="button" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord</a><a class="ghost" href="/apply">Apply Now</a></div>
+</section>
+</main>
+<footer class="footer">
+  <div class="footer-media">
+    <video data-lazy-video data-src="/assets/co-footer-720.mp4" poster="/assets/co-footer-poster.webp" autoplay muted loop playsinline preload="none"></video>
+    <div class="footer-media-copy">
+      <p class="eyebrow">Scenes from the school</p>
+      <h2>Real workshops. Real devices. Real Bitcoin builders.</h2>
+    </div>
+  </div>
+  <div class="footer-grid">
+    <div>
+      <img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School" style="height:58px;width:auto;margin-bottom:18px">
+      <p style="color:var(--dim);max-width:420px;line-height:1.7">Code Orange Dev School trains Bitcoin developers, node runners, and technical community leaders through practical education and open-source contribution.</p>
+      <p><a href="mailto:hello@codeorange.dev">hello@codeorange.dev</a></p>
+      <div class="cta-row" style="gap:10px;justify-content:flex-start">
+        <a class="ghost small" href="https://x.com/CodeOrangeDevs" target="_blank" rel="noopener">X</a>
+        <a class="ghost small" href="https://www.instagram.com/codeorangedevs" target="_blank" rel="noopener">Instagram</a>
+        <a class="ghost small" href="https://njump.me/npub1gxqyeea3xspkd68mxlxsvvk3gdzdd555u504ynwpdj0ghg503mvq2gydt0" target="_blank" rel="noopener">Nostr</a>
+        <a class="ghost small" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a>
+      </div>
+    </div>
+    <div>
+      <div class="link-list">
+        <strong>School</strong>
+        <a href="/about">About</a>
+        <a href="/community">Community</a>
+        <a href="/fellowships">Fellowships</a>
+        <a href="/calendar">Calendar</a>
+        <a href="https://geyser.fund/project/codeorangedevschool" target="_blank" rel="noopener">Support on Geyser</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

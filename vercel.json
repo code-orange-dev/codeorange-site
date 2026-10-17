@@ -16,7 +16,7 @@
     },
     {
       "source": "/strategy",
-      "destination": "/impact",
+      "destination": "/community",
       "permanent": true
     },
     {
@@ -32,6 +32,16 @@
     {
       "source": "/mastering-bitcoin/",
       "destination": "/decoding-bitcoin",
+      "permanent": true
+    },
+    {
+      "source": "/impact",
+      "destination": "/community",
+      "permanent": true
+    },
+    {
+      "source": "/impact/",
+      "destination": "/community",
       "permanent": true
     }
   ],
@@ -83,6 +93,12 @@
           "value": "public, max-age=3600"
         }
       ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/fellowships/f/:handle",
+      "destination": "/fellowships/fellow"
     }
   ]
 }

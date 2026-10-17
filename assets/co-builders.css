@@ -1,0 +1,25 @@
+/* Builders wall on /impact (tools/builders/build.py writes the HTML, co-builders.js refreshes the feed). */
+.cob { border-block: 1px solid rgba(255,255,255,.08); background: radial-gradient(70% 60% at 85% 0%, rgba(247,147,26,.08), transparent 70%); }
+.cob h2 a, .cob .lead a { color: #F7931A; }
+.cob-stats { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; margin: 10px 0 34px; }
+.cob-stats div { padding: 22px 20px; border: 1px solid rgba(255,255,255,.1); border-radius: 18px; background: rgba(255,255,255,.03); }
+.cob-stats strong { display: block; color: #F7931A; font-size: clamp(30px, 4vw, 46px); line-height: 1; font-weight: 700; letter-spacing: -.02em; }
+.cob-stats span { display: block; margin-top: 10px; color: #B8B8B8; font-size: 14px; }
+.cob-grid { display: grid; grid-template-columns: minmax(0,1.25fr) minmax(0,1fr); gap: 22px; align-items: start; }
+.cob-feed, .cob-people { padding: 22px; border: 1px solid rgba(255,255,255,.1); border-radius: 20px; background: rgba(10,10,10,.6); }
+.cob-label { display: flex; align-items: center; gap: 9px; margin: 0 0 14px; color: #8A8A8A; font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .14em; text-transform: uppercase; }
+.cob-label i { width: 8px; height: 8px; border-radius: 50%; background: #3ddc84; box-shadow: 0 0 0 4px rgba(61,220,132,.15); }
+.cob-feed ul { list-style: none; margin: 0; padding: 0; }
+.cob-feed li + li { border-top: 1px solid rgba(255,255,255,.07); }
+.cob-feed li a { display: block; padding: 12px 4px; color: #F5F5F5; text-decoration: none; }
+.cob-feed li a:hover b { color: #F7931A; }
+.cob-feed b { display: block; font-size: 15px; font-weight: 600; line-height: 1.4; overflow-wrap: anywhere; }
+.cob-feed span { display: block; margin-top: 3px; color: #8A8A8A; font-size: 13px; overflow-wrap: anywhere; }
+.cob-people-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; }
+.cob-person { display: flex; align-items: center; gap: 10px; padding: 8px; border-radius: 14px; color: #F5F5F5; text-decoration: none; }
+.cob-person:hover { background: rgba(247,147,26,.08); }
+.cob-person img { width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(247,147,26,.4); background: #1a1a1a; flex: 0 0 auto; }
+.cob-person b { display: block; font-size: 14px; font-weight: 600; }
+.cob-person small { color: #F7931A; font-size: 12px; }
+.cob-more { display: inline-block; margin-top: 16px; color: #F7931A; font-weight: 600; text-decoration: none; }
+@media (max-width: 860px) { .cob-stats { grid-template-columns: repeat(2, minmax(0,1fr)); } .cob-grid { grid-template-columns: minmax(0,1fr); } }

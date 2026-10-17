@@ -60,7 +60,7 @@ a { color: inherit; }
 .ghost { border: 1px solid rgba(255,255,255,.16); color: var(--text); }
 .ghost:hover { border-color: var(--orange); color: var(--orange); }
 .small { min-height: 40px; padding: 9px 18px; font-size: 14px; }
-.hero { position: relative; overflow: hidden; background-image: linear-gradient(rgba(10,10,10,.78), rgba(10,10,10,.92)), linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px), url("/assets/latest-workshops/workshop-latest-builders.jpg"); background-size: auto, 48px 48px, 48px 48px, cover; background-position: center, 0 0, 0 0, center 42%; }
+.hero { position: relative; overflow: hidden; background-image: linear-gradient(rgba(10,10,10,.78), rgba(10,10,10,.92)), linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px), url("/assets/latest-workshops/workshop-latest-builders.webp"); background-size: auto, 48px 48px, 48px 48px, cover; background-position: center, 0 0, 0 0, center 42%; }
 .hero-grid, .section-inner { max-width: 1240px; margin: 0 auto; padding: 96px 32px; }
 .hero-grid { display: grid; grid-template-columns: minmax(0,1.08fr) minmax(320px,.92fr); gap: 64px; align-items: center; }
 .glow { position: absolute; top: -160px; right: -110px; width: 740px; height: 740px; border-radius: 50%; background: radial-gradient(circle, rgba(247,147,26,.14), transparent 66%); pointer-events: none; }
@@ -234,7 +234,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
   .newsletter-form button { width: 100%; }
 }
 </style>
-<link rel="stylesheet" href="/assets/theme.css?v=20261011a">
+<link rel="stylesheet" href="/assets/theme.css?v=20261015d">
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
 </head>
 <body>
@@ -243,12 +243,12 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
   <div class="header-inner">
     <a class="brand" href="/" aria-label="Code Orange Dev School home"><img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School"></a>
     <nav class="desktop-nav" aria-label="Primary">
+      <a href="/start">Start here</a>
       <a href="/programs">Programs</a>
       <a href="/portal">Portal</a>
       <a href="/fellowships">Fellowships</a>
       <a href="/calendar">Calendar</a>
       <a href="/community">Community</a>
-      <a href="/impact">Impact</a>
       <a href="/about">About</a>
     </nav>
     <div class="header-actions">
@@ -257,11 +257,11 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
     </div>
   </div>
   <nav class="mobile-nav" aria-label="Mobile">
+    <a href="/start">Start here</a>
     <a href="/programs">Programs</a>
     <a href="/portal">Portal</a>
     <a href="/calendar">Calendar</a>
     <a href="/community">Community</a>
-    <a href="/impact">Impact</a>
     <a href="/about">About</a>
   </nav>
 </header>
@@ -273,12 +273,12 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
         <p class="eyebrow"><a href="/articles" style="text-decoration:none">/Articles</a>/why-self-custody-matters_</p>
         <h1>Why Self-Custody <span class="orange">Matters.</span></h1>
         <p class="lead">Why leaving bitcoin on an exchange means holding an IOU, and three simple steps to start self-custody with a hardware wallet and a tested seed phrase backup.</p>
-        <p class="byline"><img class="byline-avatar" src="/assets/articles/andy.jpg" alt="" width="34" height="34"><span class="pill orange">By Andy</span><span class="pill"><time datetime="2026-10-01">October 1, 2026</time></span><span class="pill">3 min read</span></p>
+        <p class="byline"><img class="byline-avatar" src="/assets/articles/andy.webp" alt="" width="34" height="34"><span class="pill orange">By Andy</span><span class="pill"><time datetime="2026-10-01">October 1, 2026</time></span><span class="pill">3 min read</span></p>
       </div>
     </div>
   </section>
   <article class="article-wrap">
-    <figure class="article-figure"><img src="/assets/articles/self-custody-hero.jpg?v=2" alt="Signing a Bitcoin transaction with a hardware wallet at a Code Orange workshop" width="1536" height="1152"></figure>
+    <figure class="article-figure"><img src="/assets/articles/self-custody-hero.webp?v=2" alt="Signing a Bitcoin transaction with a hardware wallet at a Code Orange workshop" width="1536" height="1152"></figure>
     <div class="prose">
       <p>The most common question beginners ask when getting into Bitcoin is simple:</p>
       <p class="pull">&ldquo;Why can&rsquo;t I just leave my coins on the exchange?&rdquo;</p>
@@ -296,7 +296,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
         <li><strong>Complete independence:</strong> Nobody can censor your transactions or touch your balance.</li>
       </ul>
       <p>That is what financial sovereignty actually means: having absolute control over the value you worked for.</p>
-      <figure class="article-figure inline"><img src="/assets/articles/self-custody-devices.jpg?v=2" alt="Hardware signing devices, SeedQR plates and seed word cards on a workshop table" width="1050" height="1400" loading="lazy"><figcaption>Hardware signing devices from a Code Orange self-custody workshop.</figcaption></figure>
+      <figure class="article-figure inline"><img src="/assets/articles/self-custody-devices.webp?v=2" alt="Hardware signing devices, SeedQR plates and seed word cards on a workshop table" width="1050" height="1400" loading="lazy"><figcaption>Hardware signing devices from a Code Orange self-custody workshop.</figcaption></figure>
 
       <h2>How to get started</h2>
       <p>Starting out does not require a complicated setup:</p>
@@ -305,7 +305,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
         <li><strong>Back up your seed phrase on paper or metal</strong>, never digitally.</li>
         <li><strong>Send a $10 test</strong>, wipe the device clean, and restore it from your words.</li>
       </ol>
-      <figure class="article-figure inline"><img src="/assets/articles/self-custody-metal-backup.jpg?v=2" alt="Stamped steel seed phrase backup plates with a letter punch set and hammer" width="1050" height="1400" loading="lazy"><figcaption>Seed phrases stamped into steel, ready to survive fire and water.</figcaption></figure>
+      <figure class="article-figure inline"><img src="/assets/articles/self-custody-metal-backup.webp?v=2" alt="Stamped steel seed phrase backup plates with a letter punch set and hammer" width="1050" height="1400" loading="lazy"><figcaption>Seed phrases stamped into steel, ready to survive fire and water.</figcaption></figure>
       <p>Once you watch those test funds reappear, the fear disappears. You realize your Bitcoin doesn&rsquo;t live inside that small piece of plastic. It lives on the network, accessible only by your keys.</p>
 
       <h2>Exchanges are for buying. Self-custody is for saving.</h2>
@@ -313,7 +313,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
       <p>Want to do this hands-on with others? Join a <a href="/programs/sovereign-bitcoiner">Sovereign Bitcoiner</a> session at Code Orange Dev School.</p>
     </div>
     <aside class="author-box" aria-label="About the author">
-      <img src="/assets/articles/andy.jpg" alt="Andy" width="72" height="72" loading="lazy">
+      <img src="/assets/articles/andy.webp" alt="Andy" width="72" height="72" loading="lazy">
       <div><p class="eyebrow" style="margin:0 0 4px">Written by</p><strong>Andy</strong><p>Code Orange Dev School</p></div>
     </aside>
   </article>
@@ -339,7 +339,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 </main>
 <footer class="footer">
   <div class="footer-media">
-    <video data-lazy-video data-src="/assets/co-footer.mp4" poster="/assets/co-footer-poster.jpg" autoplay muted loop playsinline preload="none"></video>
+    <video data-lazy-video data-src="/assets/co-footer-720.mp4" poster="/assets/co-footer-poster.webp" autoplay muted loop playsinline preload="none"></video>
     <div class="footer-media-copy">
       <p class="eyebrow">Scenes from the school</p>
       <h2>Real workshops. Real devices. Real Bitcoin builders.</h2>
@@ -361,7 +361,6 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
       <div class="link-list">
         <strong>School</strong>
         <a href="/about">About</a>
-        <a href="/impact">Impact</a>
         <a href="/community">Community</a>
         <a href="/fellowships">Fellowships</a>
         <a href="/calendar">Calendar</a>

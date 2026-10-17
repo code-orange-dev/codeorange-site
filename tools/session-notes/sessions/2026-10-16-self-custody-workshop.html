@@ -1,0 +1,47 @@
+      <h2>Highlights</h2>
+      <p><strong>Can you sleep well at night?</strong> The call opened with a simple question. If your whole stack sits on one Ledger, Trezor or Coldcard and you read about a supply chain attack on that brand, what then? The call brought up recent news of a Ledger supply chain attack through resellers and a Coldcard exploit. Spreading your keys across different vendors means one bad device can&rsquo;t take your coins.</p>
+
+      <p class="part"><b>1</b>Build the 2-of-3 in Sparrow</p>
+      <p>Andy built the wallet live in Sparrow with three hardware wallets from three different companies, then spent from it with two of them.</p>
+      <div class="viz" role="figure" aria-label="2-of-3 multi-vendor multisig">
+        <p class="eyebrow">Live demo</p>
+        <p class="viz-title">Three vendors, any two can spend</p>
+        <div class="flow">
+          <div class="flow-step">Trezor<small>USB</small></div><span class="flow-hop">+</span>
+          <div class="flow-step">Ledger<small>USB</small></div><span class="flow-hop">+</span>
+          <div class="flow-step">Coldcard Q<small>microSD</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">2-of-3 wallet<small>Sparrow</small></div>
+        </div>
+        <ul>
+          <li><b>New wallet</b> &rarr; policy type <em>Multi Signature</em>, slider set to 2 of 3.</li>
+          <li><b>Keys 1 and 2</b>: plug in, enter the PIN, <em>Connected Hardware Wallet</em> &rarr; Scan &rarr; Import Keystore.</li>
+          <li><b>Key 3</b> (air-gapped): on the Coldcard, Advanced Tools &rarr; Export Wallet &rarr; Sparrow, then load the JSON file from the microSD card.</li>
+          <li><b>Spend</b>: Trezor signs over USB, then the unsigned transaction (a PSBT) goes to the Coldcard on the microSD card, gets signed and comes back to Sparrow to broadcast.</li>
+        </ul>
+        <p class="viz-fix"><b>Check:</b> each key&rsquo;s derivation path should read <code>m/48'/0'/0'/2'</code>, the standard path for native SegWit multisig (BIP 48).</p>
+      </div>
+
+      <p class="part"><b>2</b>Restore it in another app</p>
+      <p>What if Sparrow stops being maintained one day? Andy rebuilt the same wallet in Nunchuk: export the wallet from Sparrow (Settings &rarr; Export), then in Nunchuk choose <em>Recover existing wallet</em> &rarr; <em>via BSMS/descriptor</em>. He added the three keys again, signed with the Ledger and the Trezor, and sent the rest of the coins. Importing the raw descriptor needed manual edits, so the exported file was the easier route.</p>
+
+      <h2>Key takeaways</h2>
+      <p><strong>1. The wallet file matters as much as the keys.</strong> The output descriptor is the blueprint of a multisig. With only two seeds and no descriptor, rebuilding the wallet is very hard. Anyone who finds it can see your balance and history, but can&rsquo;t spend.</p>
+      <div class="anatomy">
+        <code>Seed phrase</code><span>Can spend <em>(with one other key)</em>. Keep each one in a different place.</span>
+        <code>Output descriptor</code><span>Can&rsquo;t spend, but reveals every transaction. Keep copies in many places.</span>
+        <code>Hardware wallet</code><span>Holds one key. Buy it straight from the maker, never a reseller.</span>
+      </div>
+      <blockquote class="quote"><p>&ldquo;On average, the biggest risk to your bitcoin is not the hacker. It&rsquo;s you.&rdquo;</p><cite>One of the hosts, who once lost $13 in a test multisig by forgetting which keys he had used</cite></blockquote>
+      <p><strong>2. Climb one step at a time.</strong> Multisig is the most advanced setup, and it&rsquo;s easy to lock yourself out.</p>
+      <div class="viz" role="figure" aria-label="Self-custody steps">
+        <p class="eyebrow">Where to start</p>
+        <div class="layer-scale"><b>More advanced</b><span></span></div>
+        <div class="layers">
+          <div class="layer top"><strong>Multisig</strong><p>2-of-3 across vendors. One stolen device or seed can&rsquo;t spend your coins.</p><span>Sparrow &middot; Nunchuk</span></div>
+          <div class="layer"><strong>Passphrase</strong><p>A secret extra word on top of your seed. A found seed alone opens nothing.</p><span>Keep it apart from the seed</span></div>
+          <div class="layer"><strong>One hardware wallet</strong><p>Keys stay on the device, not on your phone or laptop.</p><span>Jade &middot; Trezor &middot; BitBox</span></div>
+          <div class="layer"><strong>Mobile wallet</strong><p>Practise sending and receiving with $10 first.</p><span>BlueWallet</span></div>
+        </div>
+        <div class="layer-scale" style="margin:8px 0 0"><span>Start here</span><span></span></div>
+      </div>
+      <p><strong>3. 2-of-4 is possible too.</strong> An extra key protects against a dead device, but means one more place to keep safe. There is no perfect setup, only the one you can actually manage.</p>

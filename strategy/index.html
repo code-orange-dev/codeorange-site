@@ -54,7 +54,7 @@ a { color: inherit; }
 .ghost { border: 1px solid rgba(255,255,255,.16); color: var(--text); }
 .ghost:hover { border-color: var(--orange); color: var(--orange); }
 .small { min-height: 40px; padding: 9px 18px; font-size: 14px; }
-.hero { position: relative; overflow: hidden; background-image: linear-gradient(rgba(10,10,10,.78), rgba(10,10,10,.92)), linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px), url("/assets/latest-workshops/workshop-latest-builders.jpg"); background-size: auto, 48px 48px, 48px 48px, cover; background-position: center, 0 0, 0 0, center 42%; }
+.hero { position: relative; overflow: hidden; background-image: linear-gradient(rgba(10,10,10,.78), rgba(10,10,10,.92)), linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px), url("/assets/latest-workshops/workshop-latest-builders.webp"); background-size: auto, 48px 48px, 48px 48px, cover; background-position: center, 0 0, 0 0, center 42%; }
 .hero-grid, .section-inner { max-width: 1240px; margin: 0 auto; padding: 96px 32px; }
 .hero-grid { display: grid; grid-template-columns: minmax(0,1.08fr) minmax(320px,.92fr); gap: 64px; align-items: center; }
 .glow { position: absolute; top: -160px; right: -110px; width: 740px; height: 740px; border-radius: 50%; background: radial-gradient(circle, rgba(247,147,26,.14), transparent 66%); pointer-events: none; }
@@ -174,7 +174,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
   .mobile-nav a { font-size: 11px; padding-inline: 10px; }
 }
 </style>
-<link rel="stylesheet" href="/assets/theme.css?v=20261011a">
+<link rel="stylesheet" href="/assets/theme.css?v=20261015d">
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
 </head>
 <body>
@@ -183,12 +183,12 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
   <div class="header-inner">
     <a class="brand" href="/" aria-label="Code Orange Dev School home"><img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School"></a>
     <nav class="desktop-nav" aria-label="Primary">
+      <a href="/start">Start here</a>
       <a href="/programs">Programs</a>
       <a href="/portal">Portal</a>
       <a href="/fellowships">Fellowships</a>
       <a href="/calendar">Calendar</a>
       <a href="/community">Community</a>
-      <a href="/impact">Impact</a>
       <a href="/about">About</a>
     </nav>
     <div class="header-actions">
@@ -197,11 +197,11 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
     </div>
   </div>
   <nav class="mobile-nav" aria-label="Mobile">
+    <a href="/start">Start here</a>
     <a href="/programs">Programs</a>
     <a href="/portal">Portal</a>
     <a href="/calendar">Calendar</a>
     <a href="/community">Community</a>
-    <a href="/impact">Impact</a>
     <a href="/about">About</a>
   </nav>
 </header>
@@ -287,7 +287,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 <section class="band"><div class="section-inner">
   <div class="split"><div><p class="eyebrow">90-Day Plan</p><h2>What to ship next.</h2></div><p class="lead">The practical path from a strong website into a stronger public institution.</p></div>
   <div class="timeline"><div class="timeline-item"><div><h3>Days 1-30</h3><p>Publish strategy, make Impact and GitHub proof explicit, tighten CTAs, and keep the monthly social calendar workflow alive.</p></div></div><div class="timeline-item"><div><h3>Days 31-60</h3><p>Add a contribution dashboard page, program-fit guidance, host-a-workshop intake, workshop-host resources, and stronger repo READMEs.</p></div></div><div class="timeline-item"><div><h3>Days 61-90</h3><p>Publish monthly impact notes, add a graduate map, expose contribution logs, and turn workshop assets into a public library.</p></div></div></div>
-  <div class="cta-row" style="margin-top:30px"><a class="button" href="/strategy-report.md">Read full strategy report</a><a class="ghost" href="/impact">View impact proof</a></div>
+  <div class="cta-row" style="margin-top:30px"><a class="button" href="/strategy-report.md">Read full strategy report</a><a class="ghost" href="/community">View impact proof</a></div>
 </div></section>
 <section class="section-inner">
   <div class="split"><div><p class="eyebrow">Weekly Metrics</p><h2>Measure the flywheel.</h2></div><p class="lead">Track the signals that prove Code Orange is moving people from attendance into contribution.</p></div>
@@ -302,7 +302,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 </main>
 <footer class="footer">
   <div class="footer-media">
-    <video data-lazy-video data-src="/assets/co-footer.mp4" poster="/assets/co-footer-poster.jpg" autoplay muted loop playsinline preload="none"></video>
+    <video data-lazy-video data-src="/assets/co-footer-720.mp4" poster="/assets/co-footer-poster.webp" autoplay muted loop playsinline preload="none"></video>
     <div class="footer-media-copy">
       <p class="eyebrow">Scenes from the school</p>
       <h2>Hands-on Bitcoin education.</h2>
@@ -324,7 +324,6 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
       <div class="link-list">
         <strong>School</strong>
         <a href="/about">About</a>
-        <a href="/impact">Impact</a>
         <a href="/community">Community</a>
         <a href="/fellowships">Fellowships</a>
         <a href="/calendar">Calendar</a>

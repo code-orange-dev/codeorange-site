@@ -4,7 +4,7 @@
 (function () {
   "use strict";
   var TZ = "Asia/Makassar";
-  var TZ_LABEL = "Bali time (UTC+8)";
+  var TZ_LABEL = "UTC+8";
   var CAL_ID = "466de2be7431d78be2049f96f5fd31f9b06b5a9cd94f909ba3182b18442ed499@group.calendar.google.com";
   var SUBSCRIBE = "https://calendar.google.com/calendar/r?cid=" + encodeURIComponent(CAL_ID);
   var WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -118,7 +118,7 @@
     this.body = el("div", "cocal-body");
 
     var foot = el("div", "cocal-foot");
-    foot.appendChild(el("span", "", "Times in " + TZ_LABEL));
+    foot.appendChild(el("span", "", "Times in UTC+8 (Bali, Singapore, Perth)"));
     var sub = el("a", "", "Add all events to Google Calendar ↗");
     sub.href = SUBSCRIBE; sub.target = "_blank"; sub.rel = "noopener";
     foot.appendChild(sub);
@@ -285,6 +285,7 @@
       when.appendChild(el("b", "", timeRange(ev)));
       if (!ev.allDay) when.appendChild(document.createTextNode(" " + TZ_LABEL));
       box.appendChild(when);
+      if (!ev.allDay) box.appendChild(el("p", "cocal-local", new Date(ev.start).toLocaleTimeString("en-GB", { timeZone: "UTC", hour: "2-digit", minute: "2-digit" }) + " UTC"));
       var vt = viewerTime(ev);
       if (vt) box.appendChild(el("p", "cocal-local", vt));
       var where = place(ev);

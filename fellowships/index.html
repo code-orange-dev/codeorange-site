@@ -54,7 +54,7 @@ a { color: inherit; }
 .ghost { border: 1px solid rgba(255,255,255,.16); color: var(--text); }
 .ghost:hover { border-color: var(--orange); color: var(--orange); }
 .small { min-height: 40px; padding: 9px 18px; font-size: 14px; }
-.hero { position: relative; overflow: hidden; background-image: linear-gradient(rgba(10,10,10,.78), rgba(10,10,10,.92)), linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px), url("/assets/latest-workshops/workshop-latest-builders.jpg"); background-size: auto, 48px 48px, 48px 48px, cover; background-position: center, 0 0, 0 0, center 42%; }
+.hero { position: relative; overflow: hidden; background-image: linear-gradient(rgba(10,10,10,.78), rgba(10,10,10,.92)), linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px), url("/assets/latest-workshops/workshop-latest-builders.webp"); background-size: auto, 48px 48px, 48px 48px, cover; background-position: center, 0 0, 0 0, center 42%; }
 .hero-grid, .section-inner { max-width: 1240px; margin: 0 auto; padding: 96px 32px; }
 .hero-grid { display: grid; grid-template-columns: minmax(0,1.08fr) minmax(320px,.92fr); gap: 64px; align-items: center; }
 .glow { position: absolute; top: -160px; right: -110px; width: 740px; height: 740px; border-radius: 50%; background: radial-gradient(circle, rgba(247,147,26,.14), transparent 66%); pointer-events: none; }
@@ -185,8 +185,10 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
   .mobile-nav a { font-size: 11px; padding-inline: 10px; }
 }
 </style>
-<link rel="stylesheet" href="/assets/theme.css?v=20261011a">
+<link rel="stylesheet" href="/assets/theme.css?v=20261015d">
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
+<link rel="stylesheet" href="/assets/fellowship/fw.css?v=2">
+<script src="/assets/fellowship/fellow.js?v=1" defer></script>
 </head>
 <body>
 <a class="announce" href="/decoding-bitcoin">Decoding Bitcoin study cohort starts Monday 16 November &middot; free, on Discord <span>Sign up &rarr;</span></a>
@@ -194,12 +196,12 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
   <div class="header-inner">
     <a class="brand" href="/" aria-label="Code Orange Dev School home"><img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School"></a>
     <nav class="desktop-nav" aria-label="Primary">
+      <a href="/start">Start here</a>
       <a href="/programs">Programs</a>
       <a href="/portal">Portal</a>
       <a href="/fellowships">Fellowships</a>
       <a href="/calendar">Calendar</a>
       <a href="/community">Community</a>
-      <a href="/impact">Impact</a>
       <a href="/about">About</a>
     </nav>
     <div class="header-actions">
@@ -208,11 +210,11 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
     </div>
   </div>
   <nav class="mobile-nav" aria-label="Mobile">
+    <a href="/start">Start here</a>
     <a href="/programs">Programs</a>
     <a href="/portal">Portal</a>
     <a href="/calendar">Calendar</a>
     <a href="/community">Community</a>
-    <a href="/impact">Impact</a>
     <a href="/about">About</a>
   </nav>
 </header>
@@ -225,7 +227,8 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
         <h1>Get paid to build <span class="orange">Bitcoin open source.</span></h1>
         <p class="lead">Fellowships fund developers and educators to contribute to Bitcoin open source software and technical education for six months.</p>
         <div class="cta-row">
-          <a class="button" href="/apply">Apply to a Program</a>
+          <a class="button" href="/fellowships/apply">Apply for the developer fellowship</a>
+          <a class="ghost" href="/fellowships/guidelines">Guidelines</a>
           <a class="ghost" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Ask in Discord</a>
         </div>
       </div>
@@ -239,32 +242,37 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
   </section>
   <section class="section-inner">
   <div class="grid two">
-    <article class="card fellowship-card"><div class="card-body"><p class="fellowship-track">Developer Track</p><div class="fellowship-price"><span>Monthly support</span><strong>$512</strong><small>/ month</small></div><p class="fellowship-commitment"><strong>6 months, extendable</strong><span>15–20 hours per week contributing to Bitcoin open source with mentor review on every PR.</span></p><a class="button" href="/apply?program=fellowship-developer">Apply by Email</a></div></article>
+    <article class="card fellowship-card"><div class="card-body"><p class="fellowship-track">Developer Track</p><div class="fellowship-price"><span>Monthly support</span><strong>$512</strong><small>/ month</small></div><p class="fellowship-commitment"><strong>6 months, extendable</strong><span>15–20 hours per week building Bitcoin or Nostr open source, with a mentor and a weekly rhythm.</span></p><div class="cta-row" style="gap:10px;justify-content:flex-start"><a class="button" href="/fellowships/apply">Apply now</a><a class="ghost" href="/fellowships/guidelines">Read the guidelines</a></div></div></article>
     <article class="card fellowship-card"><div class="card-body"><p class="fellowship-track">Educator Track</p><div class="fellowship-price"><span>Monthly support</span><strong>$256</strong><small>/ month</small></div><p class="fellowship-commitment"><strong>6 months, extendable</strong><span>10–15 hours per week creating educational material, running workshops, and growing local builder communities.</span></p><a class="button" href="/apply?program=fellowship-educator">Apply by Email</a></div></article>
   </div>
   <div class="photo-grid"><div class="photo-card wide tall">
-  <img src="/assets/uploaded-workshops/fellowship-presentation.jpg" alt="Code Orange fellowship presentation with students around a table" loading="lazy">
+  <img src="/assets/uploaded-workshops/fellowship-presentation.webp" alt="Code Orange fellowship presentation with students around a table" loading="lazy">
   <span class="photo-caption">Fellowship briefing</span>
 </div><div class="photo-card tall">
-  <img src="/assets/uploaded-workshops/builder-roundtable-wide.jpg" alt="Code Orange builders in a roundtable workshop with laptops" loading="lazy">
+  <img src="/assets/uploaded-workshops/builder-roundtable-wide.webp" alt="Code Orange builders in a roundtable workshop with laptops" loading="lazy">
   <span class="photo-caption">Builder roundtable</span>
 </div></div>
 </section>
 <section class="band"><div class="section-inner">
-  <div class="split"><div><p class="eyebrow">The Process</p><h2>How it works.</h2></div><p class="lead">No portals. Send a focused proposal with your GitHub, project target, background, and what you plan to build or teach. Applications go to hello@codeorange.dev.</p></div>
-  <div class="timeline"><div class="timeline-item"><div><h3>Apply</h3><p>Send a proposal to hello@codeorange.dev with your project, background, and plan.</p></div></div><div class="timeline-item"><div><h3>Get accepted</h3><p>Selection is based on technical ability, project fit, and commitment to Bitcoin open source.</p></div></div><div class="timeline-item"><div><h3>Onboard</h3><p>Month 1 is environment setup, mentor matching, codebase orientation, and first small PR.</p></div></div><div class="timeline-item"><div><h3>Build</h3><p>Months 2-5 are focused contribution, weekly check-ins, and open status updates.</p></div></div><div class="timeline-item"><div><h3>Graduate</h3><p>Month 6 ends with review, demo, and paths into long-term contribution, roles, or extended contribution.</p></div></div></div>
+  <div class="split"><div><p class="eyebrow">The Process</p><h2>How it works.</h2></div><p class="lead">Developers apply on the website with their proof of work and a 6-month plan. Educators send a proposal to hello@codeorange.dev. Every application is read by a human.</p></div>
+  <div class="timeline"><div class="timeline-item"><div><h3>Check you're ready</h3><p>Take the <a href="/fellowships/apply" style="color:var(--orange)">2-minute readiness check</a>, then apply with your PRs, project and a goal for each month.</p></div></div><div class="timeline-item"><div><h3>Get accepted</h3><p>Selection is based on proof of work, project fit and commitment. We only start once your mentor is confirmed.</p></div></div><div class="timeline-item"><div><h3>Onboard</h3><p>Month 1 is setup, mentor matching, codebase orientation and a first small PR. You get your own fellow dashboard.</p></div></div><div class="timeline-item"><div><h3>Build</h3><p>A standup every Monday, a review every Friday, Code Review Club and the Privacy Track, a report by the 5th, paid in bitcoin by the 10th.</p></div></div><div class="timeline-item"><div><h3>Graduate</h3><p>Month 6 ends with a demo, a review, and your next step: long-term open source, a role, or an extension.</p></div></div></div>
 </div></section>
+<section class="section-inner">
+  <div class="split"><div><p class="eyebrow">Proof of work</p><h2>Built in public.</h2></div><p class="lead">Every developer fellow gets a public page that fills itself as they work: pull requests, reviews, milestones and monthly highlights. Payments stay private.</p></div>
+  <div id="fw-fellows" hidden><div class="fw-people" id="fw-fellows-grid"></div></div>
+  <div class="cta-row" style="justify-content:flex-start;margin-top:18px"><a class="ghost" href="/fellowships/guidelines#public">What's public and what's private</a><a class="ghost" href="/fellowships/me">Fellow sign in</a></div>
+</section>
 <section class="section-inner"><div class="grid three"><div class="stat"><strong>$3,072</strong><span class="pill">Developer fellow</span><p>Six months of the Developer Track.</p></div><div class="stat"><strong>$1,536</strong><span class="pill">Educator fellow</span><p>Six months of the Educator Track.</p></div><div class="stat"><strong>6+ PRs</strong><span class="pill">Minimum output</span><p>Expected open source output per developer fellow.</p></div></div></section>
   <section class="section-inner final-cta">
   <p class="eyebrow">Bitcoin Only</p>
   <h2>Ready to become a Bitcoin builder?</h2>
   <p class="lead" style="margin-left:auto;margin-right:auto">Join the next cohort, drop into a workshop, or come say hello in Discord. The community is free and open.</p>
-  <div class="cta-row" style="justify-content:center"><a class="button" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord</a><a class="ghost" href="/apply">Apply Now</a></div>
+  <div class="cta-row" style="justify-content:center"><a class="button" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord</a><a class="ghost" href="/fellowships/apply">Apply for a fellowship</a></div>
 </section>
 </main>
 <footer class="footer">
   <div class="footer-media">
-    <video data-lazy-video data-src="/assets/co-footer.mp4" poster="/assets/co-footer-poster.jpg" autoplay muted loop playsinline preload="none"></video>
+    <video data-lazy-video data-src="/assets/co-footer-720.mp4" poster="/assets/co-footer-poster.webp" autoplay muted loop playsinline preload="none"></video>
     <div class="footer-media-copy">
       <p class="eyebrow">Scenes from the school</p>
       <h2>Hands-on Bitcoin education.</h2>
@@ -286,7 +294,6 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
       <div class="link-list">
         <strong>School</strong>
         <a href="/about">About</a>
-        <a href="/impact">Impact</a>
         <a href="/community">Community</a>
         <a href="/fellowships">Fellowships</a>
         <a href="/calendar">Calendar</a>

@@ -1,0 +1,256 @@
+{
+  "slug": "2026-10-08-code-review-club",
+  "date": "2026-10-08",
+  "series": "Code Review Club",
+  "title": "Your First Code Review",
+  "host": "Alex and Razor",
+  "tag": "Code review",
+  "summary": "Our first Code Review Club: a Nostr identity in one command, then a real Bitcoin pull request reviewed live, step by step.",
+  "share_text": "How to review your first open-source PR: notes + every resource from the first @CodeOrangeDevs Code Review Club",
+  "minutes": 5,
+  "video": "wQPdlsrxidY",
+  "duration": "1h 26m",
+  "tldr": [
+    "Nostr is to X what Bitcoin is to a bank: you hold the key, nobody can ban your identity.",
+    "One command (nihao) gives you a Nostr identity, relays, a Lightning address and an ecash wallet.",
+    "Reviewing a PR starts with context, then build it, run the tests and try to break them.",
+    "Start contributing by reviewing, not coding. “I ran the tests and they pass” is a real review."
+  ],
+  "chapters": [
+    [
+      0,
+      "Welcome: the Code Orange pipeline"
+    ],
+    [
+      211,
+      "Part 1: a Nostr identity with nihao"
+    ],
+    [
+      575,
+      "Why Nostr? No sign-up, no permission"
+    ],
+    [
+      705,
+      "Blossom and owning your own data"
+    ],
+    [
+      894,
+      "Mastodon vs Nostr vs X"
+    ],
+    [
+      1243,
+      "npub, nsec and relays"
+    ],
+    [
+      1444,
+      "NIPs and event kinds"
+    ],
+    [
+      2006,
+      "Ecash mints: get paid to your npub"
+    ],
+    [
+      2360,
+      "Logging in safely, and nak"
+    ],
+    [
+      2520,
+      "Should we run a Nostr workshop?"
+    ],
+    [
+      2701,
+      "Part 2: Bitcoin’s P2P network"
+    ],
+    [
+      2927,
+      "Peer Observer and LinkingLion"
+    ],
+    [
+      3076,
+      "Reviewing a PR: get context first"
+    ],
+    [
+      3271,
+      "Checking out the PR branch"
+    ],
+    [
+      3404,
+      "Asking Claude how to build it"
+    ],
+    [
+      3677,
+      "Running the tests as root, and NATS"
+    ],
+    [
+      3965,
+      "LLMs in open source: the debate"
+    ],
+    [
+      4415,
+      "Break the test on purpose"
+    ],
+    [
+      4643,
+      "Finding the entry point"
+    ],
+    [
+      4884,
+      "Start by reviewing, not coding"
+    ],
+    [
+      4997,
+      "Issue first, or PR first?"
+    ]
+  ],
+  "next": {
+    "title": "Privacy Track: PayJoin",
+    "when": "Tuesday 20 October, 07:00 UTC on Discord. Free for everyone."
+  },
+  "resources": [
+    {
+      "group": "Reading",
+      "topic": "Nostr",
+      "title": "Nostr NIPs",
+      "url": "https://github.com/nostr-protocol/nips",
+      "note": "the Nostr Implementation Possibilities, like BIPs for Nostr, with the list of event kinds"
+    },
+    {
+      "group": "Reading",
+      "topic": "Nostr",
+      "title": "Blossom",
+      "url": "https://github.com/hzrd149/blossom",
+      "note": "spec for storing media on servers you choose, tied to your Nostr key"
+    },
+    {
+      "group": "Reading",
+      "topic": "Bitcoin network",
+      "title": "Bitcoin P2P network reference",
+      "url": "https://developer.bitcoin.org/reference/p2p_networking.html",
+      "note": "how nodes talk: message headers, magic bytes, block and getblocks messages"
+    },
+    {
+      "group": "Reading",
+      "topic": "Bitcoin network",
+      "title": "LinkingLion: An entity linking Bitcoin transactions to IPs?",
+      "url": "https://b10c.me/observations/06-linkinglion/",
+      "by": "0xB10C",
+      "note": "suspicious nodes that connect and only listen, spotted with Peer Observer"
+    },
+    {
+      "group": "Tools",
+      "topic": "Nostr",
+      "title": "nihao",
+      "url": "https://github.com/dergigi/nihao",
+      "by": "Gigi",
+      "note": "one command sets up a Nostr identity, relays, Lightning address and Cashu wallet, and health-checks an npub"
+    },
+    {
+      "group": "Tools",
+      "topic": "Nostr",
+      "title": "nak",
+      "url": "https://github.com/fiatjaf/nak",
+      "by": "fiatjaf",
+      "note": "command-line tool to sign, publish and query Nostr events"
+    },
+    {
+      "group": "Tools",
+      "topic": "Code review",
+      "title": "Peer Observer",
+      "url": "https://github.com/0xB10C/peer-observer",
+      "by": "0xB10C",
+      "note": "monitors the Bitcoin P2P network for anomalies and attacks with honeypot nodes; the PR we reviewed adds integration tests to its eBPF extractor"
+    },
+    {
+      "group": "Tools",
+      "topic": "Code review",
+      "title": "NATS",
+      "url": "https://nats.io",
+      "note": "the message queue Peer Observer’s tests need (set NATS_SERVER_BINARY)"
+    },
+    {
+      "group": "Tools",
+      "topic": "Code review",
+      "title": "Claude",
+      "url": "https://claude.ai",
+      "note": "the free plan is enough to paste a PR link and ask how to build and test it"
+    },
+    {
+      "group": "Tools",
+      "topic": "Ecash",
+      "title": "Cashu",
+      "url": "https://cashu.space",
+      "note": "ecash protocol behind the wallet nihao sets up"
+    },
+    {
+      "group": "Tools",
+      "topic": "Ecash",
+      "title": "Minibits",
+      "url": "https://www.minibits.cash",
+      "note": "Cashu ecash wallet and mint"
+    },
+    {
+      "group": "Tools",
+      "topic": "Ecash",
+      "title": "Coinos",
+      "url": "https://coinos.io",
+      "note": "web wallet that runs a Cashu mint"
+    },
+    {
+      "group": "Tools",
+      "topic": "Bitcoin network",
+      "title": "Arkade",
+      "url": "https://arkadeos.com",
+      "note": "Bitcoin project an attendee contributes to, where LLMs do most first-pass reviews"
+    },
+    {
+      "group": "Nostr apps",
+      "topic": "Nostr",
+      "title": "Jumble",
+      "url": "https://jumble.social",
+      "note": "Nostr web client used in the demo"
+    },
+    {
+      "group": "Nostr apps",
+      "topic": "Nostr",
+      "title": "Primal",
+      "url": "https://primal.net",
+      "note": "Nostr client and relay"
+    },
+    {
+      "group": "Nostr apps",
+      "topic": "Nostr",
+      "title": "Damus",
+      "url": "https://damus.io",
+      "note": "Nostr client for iPhone"
+    },
+    {
+      "group": "Nostr apps",
+      "topic": "Nostr",
+      "title": "Amethyst",
+      "url": "https://github.com/vitorpamplona/amethyst",
+      "note": "Nostr client for Android"
+    },
+    {
+      "group": "Nostr apps",
+      "topic": "Nostr",
+      "title": "Mastodon",
+      "url": "https://joinmastodon.org",
+      "note": "the “half-decentralized” comparison: your account lives on someone’s server"
+    },
+    {
+      "group": "Code Orange",
+      "topic": "Code Orange",
+      "title": "Privacy Developer Track",
+      "url": "/privacy-track",
+      "note": "every 1st and 3rd Tuesday; PayJoin is next"
+    },
+    {
+      "group": "Code Orange",
+      "topic": "Code Orange",
+      "title": "Decoding Bitcoin cohort",
+      "url": "/decoding-bitcoin",
+      "note": "10-week study cohort starting Monday 16 November (announced on the call as Mastering Bitcoin)"
+    }
+  ],
+  "ideas": "Ideas from the call: a monthly Nostr workshop (several people asked for it), and one topic per Code Review Club instead of two."
+}

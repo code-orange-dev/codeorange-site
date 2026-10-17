@@ -54,7 +54,7 @@ a { color: inherit; }
 .ghost { border: 1px solid rgba(255,255,255,.16); color: var(--text); }
 .ghost:hover { border-color: var(--orange); color: var(--orange); }
 .small { min-height: 40px; padding: 9px 18px; font-size: 14px; }
-.hero { position: relative; overflow: hidden; background-image: linear-gradient(rgba(10,10,10,.78), rgba(10,10,10,.92)), linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px), url("/assets/latest-workshops/workshop-latest-builders.jpg"); background-size: auto, 48px 48px, 48px 48px, cover; background-position: center, 0 0, 0 0, center 42%; }
+.hero { position: relative; overflow: hidden; background-image: linear-gradient(rgba(10,10,10,.78), rgba(10,10,10,.92)), linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px), url("/assets/latest-workshops/workshop-latest-builders.webp"); background-size: auto, 48px 48px, 48px 48px, cover; background-position: center, 0 0, 0 0, center 42%; }
 .hero-grid, .section-inner { max-width: 1240px; margin: 0 auto; padding: 96px 32px; }
 .hero-grid { display: grid; grid-template-columns: minmax(0,1.08fr) minmax(320px,.92fr); gap: 64px; align-items: center; }
 .glow { position: absolute; top: -160px; right: -110px; width: 740px; height: 740px; border-radius: 50%; background: radial-gradient(circle, rgba(247,147,26,.14), transparent 66%); pointer-events: none; }
@@ -174,7 +174,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
   .mobile-nav a { font-size: 11px; padding-inline: 10px; }
 }
 </style>
-<link rel="stylesheet" href="/assets/theme.css?v=20261011a">
+<link rel="stylesheet" href="/assets/theme.css?v=20261015d">
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
 </head>
 <body>
@@ -183,12 +183,12 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
   <div class="header-inner">
     <a class="brand" href="/" aria-label="Code Orange Dev School home"><img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School"></a>
     <nav class="desktop-nav" aria-label="Primary">
+      <a href="/start">Start here</a>
       <a href="/programs">Programs</a>
       <a href="/portal">Portal</a>
       <a href="/fellowships">Fellowships</a>
       <a href="/calendar">Calendar</a>
       <a href="/community">Community</a>
-      <a href="/impact">Impact</a>
       <a href="/about">About</a>
     </nav>
     <div class="header-actions">
@@ -197,11 +197,11 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
     </div>
   </div>
   <nav class="mobile-nav" aria-label="Mobile">
+    <a href="/start">Start here</a>
     <a href="/programs">Programs</a>
     <a href="/portal">Portal</a>
     <a href="/calendar">Calendar</a>
     <a href="/community">Community</a>
-    <a href="/impact">Impact</a>
     <a href="/about">About</a>
   </nav>
 </header>
@@ -229,7 +229,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
   <section class="section-inner">
   <div class="split"><div><p class="eyebrow">All Programs</p><h2>Developer cohorts, sovereignty workshops, and community sessions.</h2></div><p class="lead">Use this page as the front desk for the school: choose a technical cohort if you write code, a sovereignty workshop if you want practical self-custody, or a recurring meetup if you want a gentle first step.</p></div>
   <div class="grid three"><a class="program-card" href="/privacy-track">
-  <img src="/assets/programs/privacy-workshop-roundtable.jpg" alt="Bitcoin Privacy Track workshop at Code Orange" loading="lazy">
+  <img src="/assets/programs/privacy-workshop-roundtable.webp" alt="Bitcoin Privacy Track workshop at Code Orange" loading="lazy">
   <div class="card-body">
     <span class="pill orange">For Developers</span>
     <h3 style="margin-top:16px">Bitcoin Privacy Track</h3>
@@ -237,7 +237,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
     <div class="meta"><span class="pill">12 sessions</span><span class="pill">Drop-in</span></div>
   </div>
 </a><a class="program-card" href="/decoding-bitcoin">
-  <img src="/assets/programs/community-session-screen.jpg" alt="Decoding Bitcoin study cohort at Code Orange" loading="lazy">
+  <img src="/assets/programs/community-session-screen.webp" alt="Decoding Bitcoin study cohort at Code Orange" loading="lazy">
   <div class="card-body">
     <span class="pill orange">Study Cohort</span>
     <h3 style="margin-top:16px">Decoding Bitcoin</h3>
@@ -245,7 +245,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
     <div class="meta"><span class="pill orange">Starts Nov 16</span><span class="pill">10 weeks</span><span class="pill">Beginner to intermediate</span></div>
   </div>
 </a><a class="program-card" href="/rawbit">
-  <img src="/assets/programs/node-laptop-workshop.jpg" alt="rawBit workshop at Code Orange" loading="lazy">
+  <img src="/assets/programs/node-laptop-workshop.webp" alt="rawBit workshop at Code Orange" loading="lazy">
   <div class="card-body">
     <span class="pill orange">For Developers</span>
     <h3 style="margin-top:16px">rawBit</h3>
@@ -253,7 +253,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
     <div class="meta"><span class="pill">10 weeks</span><span class="pill">Intermediate</span></div>
   </div>
 </a><a class="program-card" href="/programs/sovereign-bitcoiner">
-  <img src="/assets/programs/workshop-coldcard-table.jpg" alt="Sovereign Bitcoiner workshop at Code Orange" loading="lazy">
+  <img src="/assets/programs/workshop-coldcard-table.webp" alt="Sovereign Bitcoiner workshop at Code Orange" loading="lazy">
   <div class="card-body">
     <span class="pill orange">For Bitcoiners</span>
     <h3 style="margin-top:16px">Sovereign Bitcoiner</h3>
@@ -261,7 +261,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
     <div class="meta"><span class="pill">Monthly</span><span class="pill">Intermediate</span></div>
   </div>
 </a><a class="program-card" href="/programs/agentic-engineering">
-  <img src="/assets/programs/workshop-mining-laptop.jpg" alt="Agentic Engineering workshop at Code Orange" loading="lazy">
+  <img src="/assets/programs/workshop-mining-laptop.webp" alt="Agentic Engineering workshop at Code Orange" loading="lazy">
   <div class="card-body">
     <span class="pill orange">For Bitcoiners</span>
     <h3 style="margin-top:16px">Agentic Engineering</h3>
@@ -269,7 +269,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
     <div class="meta"><span class="pill">Monthly</span><span class="pill">All levels</span></div>
   </div>
 </a><a class="program-card" href="/programs/vibe-coding">
-  <img src="/assets/programs/builder-roundtable-wide.jpg" alt="Vibe Coding on Nostr workshop at Code Orange" loading="lazy">
+  <img src="/assets/programs/builder-roundtable-wide.webp" alt="Vibe Coding on Nostr workshop at Code Orange" loading="lazy">
   <div class="card-body">
     <span class="pill orange">No Code Required</span>
     <h3 style="margin-top:16px">Vibe Coding on Nostr</h3>
@@ -277,7 +277,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
     <div class="meta"><span class="pill">Monthly</span><span class="pill">Beginner</span></div>
   </div>
 </a><a class="program-card" href="/programs/bitcoin-basics">
-  <img src="/assets/programs/workshop-bitcoin-toolkit.jpg" alt="Bitcoin Basics workshop at Code Orange" loading="lazy">
+  <img src="/assets/programs/workshop-bitcoin-toolkit.webp" alt="Bitcoin Basics workshop at Code Orange" loading="lazy">
   <div class="card-body">
     <span class="pill orange">For Everyone</span>
     <h3 style="margin-top:16px">Bitcoin Basics</h3>
@@ -285,7 +285,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
     <div class="meta"><span class="pill">Monthly</span><span class="pill">Beginner</span></div>
   </div>
 </a><a class="program-card" href="/programs/bitcoin-reading-club">
-  <img src="/assets/programs/signing-devices-table.jpg" alt="Bitcoin Reading Club workshop at Code Orange" loading="lazy">
+  <img src="/assets/programs/signing-devices-table.webp" alt="Bitcoin Reading Club workshop at Code Orange" loading="lazy">
   <div class="card-body">
     <span class="pill orange">For Everyone</span>
     <h3 style="margin-top:16px">Bitcoin Reading Club</h3>
@@ -293,7 +293,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
     <div class="meta"><span class="pill">Monthly</span><span class="pill">All levels</span></div>
   </div>
 </a><a class="program-card" href="/programs/talk-a-bit">
-  <img src="/assets/programs/workshop-september-0514.jpg" alt="Talk-a-Bit workshop at Code Orange" loading="lazy">
+  <img src="/assets/programs/workshop-september-0514.webp" alt="Talk-a-Bit workshop at Code Orange" loading="lazy">
   <div class="card-body">
     <span class="pill orange">For Everyone</span>
     <h3 style="margin-top:16px">Talk-a-Bit</h3>
@@ -301,7 +301,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
     <div class="meta"><span class="pill">Monthly</span><span class="pill">All levels</span></div>
   </div>
 </a><a class="program-card" href="/programs/accountability-sessions">
-  <img src="/assets/programs/workshop-hands-on-devices.jpg" alt="Accountability Sessions workshop at Code Orange" loading="lazy">
+  <img src="/assets/programs/workshop-hands-on-devices.webp" alt="Accountability Sessions workshop at Code Orange" loading="lazy">
   <div class="card-body">
     <span class="pill orange">For Builders</span>
     <h3 style="margin-top:16px">Accountability Sessions</h3>
@@ -310,16 +310,16 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
   </div>
 </a></div>
   <div class="photo-grid"><div class="photo-card wide">
-  <img src="/assets/programs/workshop-nodes-miners.jpg" alt="Bitcoin nodes, miners, and devices on a Code Orange workshop table" loading="lazy">
+  <img src="/assets/programs/workshop-nodes-miners.webp" alt="Bitcoin nodes, miners, and devices on a Code Orange workshop table" loading="lazy">
   <span class="photo-caption">Nodes, miners, and signers</span>
 </div><div class="photo-card ">
-  <img src="/assets/programs/workshop-table-builders.jpg" alt="Code Orange builders learning with Bitcoin workshop hardware" loading="lazy">
+  <img src="/assets/programs/workshop-table-builders.webp" alt="Code Orange builders learning with Bitcoin workshop hardware" loading="lazy">
   <span class="photo-caption">Builders around real Bitcoin hardware</span>
 </div><div class="photo-card ">
-  <img src="/assets/programs/workshop-new-0740.jpg" alt="Steel seed backup plates and a stamping kit from a Code Orange workshop" loading="lazy">
+  <img src="/assets/programs/workshop-new-0740.webp" alt="Steel seed backup plates and a stamping kit from a Code Orange workshop" loading="lazy">
   <span class="photo-caption">Steel seed backups</span>
 </div><div class="photo-card wide">
-  <img src="/assets/programs/hardware-privacy-kit.jpg" alt="Bitcoin nodes and hardware wallets laid out for a workshop" loading="lazy">
+  <img src="/assets/programs/hardware-privacy-kit.webp" alt="Bitcoin nodes and hardware wallets laid out for a workshop" loading="lazy">
   <span class="photo-caption">Hands-on device lab</span>
 </div></div>
   <div class="cta-row" style="margin-top:34px"><a class="ghost" href="https://github.com/code-orange-dev/curriculum" target="_blank" rel="noopener">Browse Curriculum on GitHub</a><a class="ghost" href="https://github.com/code-orange-dev/workshops" target="_blank" rel="noopener">Open Workshop Assets</a></div>
@@ -333,7 +333,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 </main>
 <footer class="footer">
   <div class="footer-media">
-    <video data-lazy-video data-src="/assets/co-footer.mp4" poster="/assets/co-footer-poster.jpg" autoplay muted loop playsinline preload="none"></video>
+    <video data-lazy-video data-src="/assets/co-footer-720.mp4" poster="/assets/co-footer-poster.webp" autoplay muted loop playsinline preload="none"></video>
     <div class="footer-media-copy">
       <p class="eyebrow">Scenes from the school</p>
       <h2>Hands-on Bitcoin education.</h2>
@@ -355,7 +355,6 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
       <div class="link-list">
         <strong>School</strong>
         <a href="/about">About</a>
-        <a href="/impact">Impact</a>
         <a href="/community">Community</a>
         <a href="/fellowships">Fellowships</a>
         <a href="/calendar">Calendar</a>

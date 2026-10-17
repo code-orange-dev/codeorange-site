@@ -1,0 +1,12 @@
+{
+  "cohorts": {
+    "decoding-bitcoin-2026": {
+      "name": "Decoding Bitcoin",
+      "details": ", a 10-week study cohort on Bitcoin transactions, Script and Taproot with The Bitcoin Dev Project's Decoding Bitcoin course, run on Discord by Code Orange Dev School.",
+      "topics": ["Transactions", "Script", "SegWit", "Taproot", "Keys and signatures"],
+      "hosts": "Code Orange Dev School",
+      "date": "2027-01-18"
+    }
+  },
+  "graduates": []
+}

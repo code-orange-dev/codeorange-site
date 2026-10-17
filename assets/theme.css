@@ -161,7 +161,7 @@ html.co-menu-open, html.co-menu-open body { overflow: hidden; }
 .desktop-nav { gap: clamp(12px, 1.6vw, 28px) !important; }
 .desktop-nav a { padding-inline: 2px !important; }
 @media (prefers-reduced-motion: reduce) {
-  #static-homepage .co-hero:before { display: block !important; background: url("/assets/new-workshops/workshop-nodes-miners.jpg") center / cover no-repeat !important; opacity: .7 !important; }
+  #static-homepage .co-hero:before { display: block !important; background: url("/assets/new-workshops/workshop-nodes-miners.webp") center / cover no-repeat !important; opacity: .7 !important; }
 }
 
 /* ── Developer community: each person is a pill button ── */
@@ -239,3 +239,24 @@ html.co-menu-open, html.co-menu-open body { overflow: hidden; }
 #static-homepage .co-foot-bottom a:hover { color: var(--co-accent); }
 @media (max-width: 980px) { #static-homepage .co-foot-grid { grid-template-columns: 1fr 1fr; } #static-homepage .co-foot-brand, #static-homepage .co-foot-join { grid-column: 1 / -1; } }
 @media (max-width: 560px) { #static-homepage .co-foot-grid { gap: 30px; } #static-homepage .co-foot-bottom { flex-direction: column; align-items: flex-start; } }
+
+/* ── Site-wide background photos (2026-10-15): the two Decoding Bitcoin photos, faded behind every page.
+   Drawn on top with mix-blend-mode: lighten so they only show through dark areas; text and photos stay as they are. ── */
+html::before, html::after {
+  content: ""; position: fixed; z-index: 2147483000; pointer-events: none; mix-blend-mode: lighten;
+  width: min(36vw, 620px); aspect-ratio: 3 / 4; opacity: .12; filter: grayscale(.15) contrast(1.05);
+  -webkit-mask-image: radial-gradient(closest-side, #000 55%, transparent); mask-image: radial-gradient(closest-side, #000 55%, transparent);
+}
+html::before { top: 8vh; right: -9vw; background: url(/assets/site-bg/workshop-table.jpg) center / contain no-repeat; }
+html::after { bottom: -8vh; left: -11vw; background: url(/assets/site-bg/seed-plates.jpg) center / contain no-repeat; opacity: .1; }
+html.no-site-bg::before, html.no-site-bg::after { content: none; }
+@media (max-width: 760px) {
+  html::before { width: 110vw; right: -40vw; top: 12vh; opacity: .08; }
+  html::after { display: none; }
+}
+@media print { html::before, html::after { content: none; } }
+
+/* Keep nav labels on one line (e.g. "Start here"). */
+.desktop-nav a, #static-homepage .co-links a { white-space: nowrap; }
+/* With "Start here" added the menu needs more room: switch to the burger menu below 1200px. */
+@media (max-width: 1199px) { .desktop-nav, #static-homepage .co-links { display: none !important; } }

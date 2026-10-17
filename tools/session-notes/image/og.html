@@ -1,0 +1,21 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:ID;src:url(file:///usr/share/fonts/opentype/inter/InterDisplay-Bold.otf);font-weight:700}
+@font-face{font-family:ID;src:url(file:///usr/share/fonts/opentype/inter/InterDisplay-SemiBold.otf);font-weight:600}
+@font-face{font-family:ID;src:url(file:///usr/share/fonts/opentype/inter/InterDisplay-Medium.otf);font-weight:500}
+*{margin:0;box-sizing:border-box}body{width:1200px;height:630px;overflow:hidden;background:#0A0A0A;font-family:ID;color:#fff;position:relative}
+.ph{position:absolute;right:0;top:0;width:700px;height:630px;background:url(PHOTO) 50% 62%/cover;filter:brightness(1.05) saturate(1.1)}
+.fade{position:absolute;inset:0;background:linear-gradient(90deg,#0A0A0A 0%,#0A0A0A 42%,rgba(10,10,10,.92) 56%,rgba(10,10,10,.35) 74%,rgba(10,10,10,.05) 92%)}
+.glow{position:absolute;width:700px;height:700px;left:-260px;top:-300px;border-radius:50%;background:radial-gradient(circle,rgba(247,147,26,.26),rgba(247,147,26,0) 65%)}
+.logo{position:absolute;left:60px;top:52px;width:220px}
+.eb{position:absolute;left:62px;top:168px;color:#F7931A;font-weight:600;font-size:24px;letter-spacing:.14em;text-transform:uppercase}
+.t{position:absolute;left:58px;top:214px;font-weight:700;font-size:112px;line-height:.95;letter-spacing:-.035em;text-shadow:0 6px 30px rgba(0,0,0,.6)}
+.t .o{color:#F7931A}
+.pill{position:absolute;left:62px;bottom:54px;display:flex;align-items:center;gap:12px;font-weight:600;font-size:24px;padding:12px 22px;border:3px solid #F7931A;border-radius:999px;background:rgba(10,10,10,.85)}
+.pill i{width:6px;height:6px;border-radius:50%;background:#F7931A;display:inline-block}
+</style></head><body>
+<div class="ph"></div><div class="fade"></div><div class="glow"></div>
+<img class="logo" src="logo.png">
+<div class="eb">Session notes · DATE</div>
+<div class="t">TITLE</div>
+<div class="pill">PILL</div>
+</body></html>
