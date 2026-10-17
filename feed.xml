@@ -7,6 +7,14 @@
     <language>en</language>
     <atom:link href="https://codeorange.dev/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>Just Show Up: Why Learning Bitcoin Together Beats Learning Alone</title>
+      <link>https://codeorange.dev/articles/just-show-up</link>
+      <guid isPermaLink="true">https://codeorange.dev/articles/just-show-up</guid>
+      <description>Online in a Discord call or around a table at Bitcoin House Bali, learning Bitcoin with other people is faster, friendlier and better for everyone. Here is why it is worth showing up.</description>
+      <dc:creator>Andy</dc:creator>
+      <pubDate>Sat, 17 Oct 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>Why Self-Custody Matters: Get Your Bitcoin Off the Exchange</title>
       <link>https://codeorange.dev/articles/why-self-custody-matters</link>
       <guid isPermaLink="true">https://codeorange.dev/articles/why-self-custody-matters</guid>
