@@ -1,0 +1,40 @@
+{
+  "slug": "2026-10-20-privacy-track",
+  "date": "2026-10-20",
+  "series": "Privacy Track",
+  "title": "PayJoin v2, tested live",
+  "host": "Razor",
+  "tag": "Privacy",
+  "summary": "PayJoin part 2: how v2 hides your payment and your IP from the servers that pass the messages, what broke when we tried it live, and where you can help fix it.",
+  "share_text": "PayJoin v2, tested live: what works, what breaks, and where to contribute. Notes + every resource from the @CodeOrangeDevs Privacy Track",
+  "minutes": 5,
+  "tldr": [
+    "PayJoin v2 needs no server of your own: a mailbox directory holds encrypted messages and a relay hides your IP address.",
+    "Neither server ever touches your bitcoin or can read the payment. Run by two different parties, neither can link sender and receiver.",
+    "Live tests mostly failed: silent fallbacks to normal payments, v1/v2 mismatches, and no clear error messages.",
+    "The protocol is simple. The wallet experience is the work left to do, and that is where new contributors come in."
+  ],
+  "next": {
+    "title": "Privacy Track: next topic to be announced (Silent Payments planned)",
+    "when": "Tuesday 3 November, 07:00 UTC on Discord. Free for everyone."
+  },
+  "resources": [
+    {"group": "Reading", "topic": "PayJoin", "title": "BIP 77: Async PayJoin (v2)", "url": "https://github.com/bitcoin/bips/blob/master/bip-0077.md", "note": "the mailbox directory and relay design covered in this session"},
+    {"group": "Reading", "topic": "PayJoin", "title": "BIP 78: PayJoin (v1)", "url": "https://github.com/bitcoin/bips/blob/master/bip-0078.mediawiki", "note": "the older version, where the receiver runs a server that is always online"},
+    {"group": "Reading", "topic": "PayJoin", "title": "RFC 9458: Oblivious HTTP", "url": "https://www.rfc-editor.org/rfc/rfc9458", "note": "the standard behind the OHTTP relay that hides your IP from the directory"},
+    {"group": "Reading", "topic": "PayJoin", "title": "RFC 9180: HPKE", "url": "https://www.rfc-editor.org/rfc/rfc9180", "note": "hybrid public key encryption, used to lock the PSBT so only the receiver can read it"},
+    {"group": "Tools", "topic": "PayJoin", "title": "rust-payjoin", "url": "https://github.com/payjoin/rust-payjoin", "note": "the core PayJoin library, now with the OHTTP relay inside it; FFI bindings for other languages need testing and help"},
+    {"group": "Tools", "topic": "PayJoin", "title": "PayJoin on GitHub", "url": "https://github.com/payjoin", "note": "all PayJoin projects, including the new BTCPay Server plugin (alpha)"},
+    {"group": "Tools", "topic": "PayJoin", "title": "payjoin.org", "url": "https://payjoin.org", "note": "docs and the list of wallets that support PayJoin"},
+    {"group": "Tools", "topic": "Wallets", "title": "Cake Wallet issues", "url": "https://github.com/cake-tech/cake_wallet/issues", "note": "search here first, then open an issue if a PayJoin bug isn't reported yet"},
+    {"group": "Tools", "topic": "Explorers", "title": "mempool.space", "url": "https://mempool.space", "note": "used live to check whether a payment really was a PayJoin (2 inputs, 2 outputs)"},
+    {"group": "Tools", "topic": "Privacy", "title": "Blooket", "url": "https://play.blooket.com", "note": "the quiz Razor ran on the call (not private, so use any name)"},
+    {"group": "Wallets", "topic": "Wallets", "title": "Cake Wallet", "url": "https://cakewallet.com", "note": "PayJoin v2; quietly sends a normal payment if the PayJoin fails"},
+    {"group": "Wallets", "topic": "Wallets", "title": "Bull Bitcoin", "url": "https://www.bullbitcoin.com", "note": "PayJoin v2; the live test showed a v1 error and a minimum amount"},
+    {"group": "Wallets", "topic": "Wallets", "title": "Sparrow", "url": "https://sparrowwallet.com", "note": "sends PayJoin v1 only, so it can't pay a v2-only wallet"},
+    {"group": "Wallets", "topic": "Wallets", "title": "BTCPay Server", "url": "https://btcpayserver.org", "note": "receives PayJoin v1 for merchants; a v2 plugin is in alpha"},
+    {"group": "Code Orange", "topic": "Code Orange", "title": "PayJoin part 1, 6 October", "url": "/session-notes/2026-10-06-privacy-track", "note": "why privacy matters and how PayJoin fools chain analysis"},
+    {"group": "Code Orange", "topic": "Code Orange", "title": "Privacy Developer Track", "url": "/privacy-track", "note": "every 1st and 3rd Tuesday, 07:00 UTC · 15:00 UTC+8"}
+  ],
+  "ideas": "Coming next: Razor is building hands-on PayJoin labs (make a PayJoin, talk to the relay, talk to the directory, find and fix a bug) and a quiz leaderboard on GitHub that will also count code reviews and pull requests. Ideas from the call: invite someone from the PayJoin team as a guest speaker."
+}
