@@ -146,6 +146,7 @@ def head(title, desc, url, og_type='website', extra='', img='/assets/og-codeoran
 <meta name="twitter:description" content="{desc}">
 <meta name="twitter:image" content="https://codeorange.dev{img}">
 <link rel="icon" type="image/svg+xml" href="/assets/favicon-co.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 {fonts}{style}
 {header_to_main}'''
 
