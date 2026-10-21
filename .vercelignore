@@ -14,3 +14,9 @@ assets/co-footer-new.mov
 # Internal docs and tooling: not part of the public site.
 *.md
 tools/
+
+# Old videos no page uses any more (checked 2026-10-21).
+assets/co-footer.mp4
+assets/co-footer-new.mp4
+assets/co-hero-720.mp4
+assets/mission-video.mp4

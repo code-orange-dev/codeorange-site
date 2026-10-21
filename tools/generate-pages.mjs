@@ -1,4 +1,5 @@
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 
 const root = new URL("../", import.meta.url);
 const writtenPages = new Set();
@@ -1014,12 +1015,28 @@ const sitemapPages = [
   ...programPages,
   ...articlePages,
   ...sessionNotePages,
+  "fellowships/apply",
+  "fellowships/guidelines",
 ];
+const redirectSources = new Set(
+  (JSON.parse(readFileSync(new URL("vercel.json", root), "utf8")).redirects || []).map((r) => r.source.replace(/\/$/, "") || "/")
+);
+// Last change date of each page's source file, from git (skipped if git is not available).
+const lastModified = (path) => {
+  try {
+    return execFileSync("git", ["log", "-1", "--format=%cs", "--", `${path}.html`], { cwd: new URL(".", root), encoding: "utf8" }).trim();
+  } catch {
+    return "";
+  }
+};
+const sitemapPathFile = new Map(sitemapPages.map((path) => [path === "index" ? "/" : `/${path}`, path]));
 const sitemapUrls = sitemapPages
   .map((path) => {
     const own = path === "index" ? "/" : `/${path}`;
     const html = readFileSync(new URL(`${path}.html`, root), "utf8");
     const canonical = html.match(/<link rel="canonical" href="https:\/\/codeorange\.dev([^"]*)">/)?.[1];
+    // Leave out hidden pages and pages that vercel.json redirects elsewhere.
+    if (/<meta name="robots" content="noindex/.test(html) || redirectSources.has(own)) return null;
     return canonical === undefined || canonical === own || (own === "/" && canonical === "") ? own : null;
   })
   .filter(Boolean)
@@ -1041,7 +1058,7 @@ writeFileSync(
 ${sitemapUrls
   .map(
     (path) => `  <url>
-    <loc>https://codeorange.dev${path}</loc>
+    <loc>https://codeorange.dev${path}</loc>${(() => { const d = lastModified(sitemapPathFile.get(path)); return d ? `\n    <lastmod>${d}</lastmod>` : ""; })()}
     <changefreq>${path === "/" ? "weekly" : "monthly"}</changefreq>
     <priority>${path === "/" ? "1.0" : path.includes("/programs/") || path.includes("/articles/") ? "0.7" : "0.8"}</priority>
   </url>`

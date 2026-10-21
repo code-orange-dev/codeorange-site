@@ -41,12 +41,26 @@
   const handle = decodeURIComponent((m && m[1]) || new URLSearchParams(location.search).get("f") || "");
   const prItem = (p) => `<li><span class="fw-state ${esc(p.state)}">${esc(p.state)}</span><div style="min-width:0"><a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.title)}</a><small>${esc(p.repo)} · ${day(p.createdAt)}</small></div></li>`;
 
+  // Give each fellow's page its own canonical URL and description; hide empty or unknown pages from search.
+  function setHead(canonical, description) {
+    let link = document.querySelector('link[rel="canonical"]');
+    if (!link) { link = document.createElement("link"); link.rel = "canonical"; document.head.appendChild(link); }
+    link.href = canonical;
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta && description) meta.content = description;
+  }
+  function noindex() {
+    const robots = document.querySelector('meta[name="robots"]');
+    if (robots) robots.content = "noindex, follow";
+  }
+
   function render(d) {
     const f = d.fellow;
     const gh = d.github;
     const merged = gh.prs.filter((p) => p.state === "merged").length;
     const projects = new Set([...gh.prs, ...gh.reviews].map((p) => p.repo)).size;
     document.title = `${f.name} · Code Orange developer fellow`;
+    setHead(`https://codeorange.dev/fellowships/f/${encodeURIComponent(handle)}`, `${f.name} is building ${f.project} as a Code Orange developer fellow: public pull requests, reviews and monthly reports.`);
     $("#me-hello").textContent = f.name;
     $("#me-sub").innerHTML = `Code Orange developer fellow building <strong>${esc(f.project)}</strong> · ${f.graduated ? "Graduated 🎓" : f.month < 1 ? `starts ${ymLabel(f.startMonth)}` : f.month > f.months ? "Fellowship finished" : `month ${f.month} of ${f.months}`}`;
     const links = (f.links || "").split(/\s+/).filter((u) => /^https?:\/\//.test(u));
@@ -81,6 +95,7 @@
   }
 
   if (!handle) {
+    noindex();
     app.innerHTML = '<div class="me-card me-wide">No fellow picked. <a href="/fellowships">See all fellows</a>.</div>';
     return;
   }
@@ -91,6 +106,7 @@
       render(d);
     })
     .catch((err) => {
+      noindex();
       $("#me-hello").textContent = "Fellow not found";
       $("#me-sub").textContent = "";
       app.innerHTML = `<div class="me-card me-wide">${esc(err.message)} <a href="/fellowships">See all fellows</a>.</div>`;

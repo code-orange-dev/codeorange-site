@@ -305,8 +305,8 @@ def list_page(sessions):
         </div>
       </a>
 ''' for n in sessions)
-    desc = 'Short recaps of Code Orange Dev School sessions: highlights, key takeaways and every resource shared on the call.'
-    page = head('Session Notes - Code Orange Dev School', desc, '/session-notes',
+    desc = 'Recaps of every Code Orange Dev School session: highlights, key takeaways, recordings and every Bitcoin resource shared on the call, all in one place.'
+    page = head('Bitcoin Workshop Recaps &amp; Session Notes - Code Orange', desc, '/session-notes',
                 extra=ld_json({"@context": "https://schema.org", "@type": "CollectionPage", "name": "Session Notes", "description": desc, "url": "https://codeorange.dev/session-notes"}))
     page += hero('/Session-notes_', 'Session <span class="orange">notes.</span>',
                  'Short recaps of our sessions: one or two highlights, the key takeaways, and every resource shared on the call.',
@@ -341,8 +341,8 @@ def resources_page(sessions):
 ''' for t in order)
     chips = '<button class="chip" type="button" aria-pressed="true" data-chip="">All</button>' + ''.join(f'<button class="chip" type="button" aria-pressed="false" data-chip="{esc(t)}">{t}</button>' for t in order)
     count = len(by_url)
-    desc = f'Every book, article, tool and wallet shared in Code Orange Dev School sessions, in one searchable list ({count} so far).'
-    page = head('Resource Library - Code Orange Dev School', desc, '/resources',
+    desc = f'Every Bitcoin book, article, tool and wallet shared in Code Orange Dev School sessions, in one searchable list by topic ({count} so far).'
+    page = head('Bitcoin Learning Resources Library - Code Orange Dev School', desc, '/resources',
                 extra=ld_json({"@context": "https://schema.org", "@type": "CollectionPage", "name": "Resource Library", "description": desc, "url": "https://codeorange.dev/resources"}))
     page += hero('<a href="/session-notes" style="text-decoration:none">/Session-notes</a>/resources_', 'Resource <span class="orange">library.</span>',
                  f'Every book, article, tool and wallet shared in our sessions, in one place. {count} resources from {len(sessions)} session{"s" if len(sessions) != 1 else ""} so far.',
