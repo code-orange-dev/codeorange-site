@@ -1,0 +1,51 @@
+      <h2>Highlights</h2>
+      <p class="part"><b>1</b>How PayJoin v2 works</p>
+      <p><strong>The hard part is not the transaction, it&rsquo;s the conversation.</strong> In a PayJoin, the receiver adds one of their own coins to your payment, so the sender and receiver have to swap a partly signed transaction (a PSBT) before it is sent. In v1 the receiver had to run a web server that was always online. Version 2 moves that job to two shared servers that anyone can run.</p>
+      <div class="viz" role="figure" aria-label="How a PayJoin v2 message travels">
+        <p class="eyebrow">PayJoin v2, the message path</p>
+        <div class="flow">
+          <div class="flow-step">Sender<small>locks the PSBT</small></div><span class="flow-hop">encrypted <i>&rarr;</i></span>
+          <div class="flow-step">OHTTP relay<small>hides your IP</small></div><span class="flow-hop">blob <i>&rarr;</i></span>
+          <div class="flow-step">Directory<small>a mailbox</small></div><span class="flow-hop">via relay <i>&rarr;</i></span>
+          <div class="flow-step">Receiver<small>unlocks, adds a coin</small></div>
+        </div>
+        <p class="viz-fix"><b>The reply goes back the same way.</b> The receiver can be offline when you pay. Their wallet picks up the mailbox later, and the payment finishes then.</p>
+      </div>
+      <p><strong>Everything is in the PayJoin link.</strong> A v2 receive link looks like a normal Bitcoin address with a long tail. That tail carries three things:</p>
+      <div class="viz" role="figure" aria-label="What is inside a PayJoin v2 link">
+        <p class="eyebrow">Inside a PayJoin v2 link</p>
+        <div class="anatomy">
+          <code>directory</code><span>Which mailbox server to use</span>
+          <code>mailbox ID</code><span>Like an email address for this one payment</span>
+          <code>public key</code><span>The receiver&rsquo;s key. The sender uses it to encrypt the PSBT, so the directory only sees a locked blob</span>
+        </div>
+      </div>
+      <p><strong>What do you have to trust?</strong> Very little. The servers never touch bitcoin and can&rsquo;t read the payment. The directory could still see which IP addresses use the same mailbox, so the relay sits in front of it, a bit like Tor. If one company ran both the relay and the directory, it could link the IPs again, so they should be run by different people. You can see which ones your wallet uses under PayJoin in the advanced settings of Cake Wallet or Bull Bitcoin.</p>
+
+      <p class="part"><b>2</b>Testing it live</p>
+      <p><strong>The protocol works. The wallets don&rsquo;t, yet.</strong> One incoming PayJoin from an earlier session showed up on mempool.space as 2 inputs and 2 outputs, exactly as it should. Then we tried to send more on the call, and almost every attempt hit a different wall:</p>
+      <div class="viz" role="figure" aria-label="What went wrong in the live tests">
+        <p class="eyebrow">What we ran into</p>
+        <div class="q-grid">
+          <div class="q"><b>Silent fallback</b><span>Cake Wallet to Cake Wallet sent a normal payment. Cake quietly falls back when a PayJoin fails, and doesn&rsquo;t say so.</span></div>
+          <div class="q"><b>Paste vs scan</b><span>Pasting the link failed with an address error. Scanning the QR code worked.</span></div>
+          <div class="q"><b>Version mismatch</b><span>Bull Bitcoin showed a &ldquo;v1&rdquo; error. Sender and receiver need the same version.</span></div>
+          <div class="q"><b>Empty or unconfirmed</b><span>The receiver needs confirmed coins of their own. An empty wallet can&rsquo;t join, and unconfirmed coins gave &ldquo;confirmation failed&rdquo;.</span></div>
+        </div>
+        <p class="viz-fix"><b>Also:</b> Bull Bitcoin asked for a minimum of about 10,000 sats, which isn&rsquo;t in the PayJoin spec, and some wallets just spin with no error at all.</p>
+      </div>
+      <blockquote class="quote"><p>&ldquo;Show me the error. Show me what I can do. Tell me if it worked.&rdquo;</p><cite>A participant who has tried PayJoin more than ten times, on what wallets need most</cite></blockquote>
+
+      <h2>Key takeaways</h2>
+      <p><strong>Use it every time, not once in a while.</strong> PayJoin looks like any normal payment, unlike a CoinJoin, which is easy to spot and often gets flagged. The idea shared on the call: if even 5 to 10% of payments were PayJoins, chain analysis could no longer trust its &ldquo;all inputs belong to one person&rdquo; guess for any payment.</p>
+      <p><strong>Know the trade-off.</strong> The person who receives your PayJoin learns a little about your coins, and you about theirs. It&rsquo;s similar to what happens when you combine coins in one transaction anyway.</p>
+      <p><strong>Where to start contributing.</strong> Build and run <a href="https://github.com/payjoin/rust-payjoin">rust-payjoin</a> first. Make a PayJoin, break a test. Then pick one of the open pull requests and review it. It can take days, and feeling lost is normal. Bindings for other languages and the new BTCPay Server plugin both need help, and the wallet issues from the live test are worth reporting.</p>
+      <h3 style="margin-top:28px">Quiz recap</h3>
+      <div class="q-grid">
+        <div class="q"><b>Inputs in a PayJoin?</b><span>At least two. More is allowed in theory, but wallets use two today.</span></div>
+        <div class="q"><b>Is v2 more private than v1?</b><span>Yes, thanks to the relay and the directory.</span></div>
+        <div class="q"><b>Who can host the relay?</b><span>Anyone.</span></div>
+        <div class="q"><b>What does the directory see?</b><span>Only the receiver&rsquo;s public key, not the PSBT or your IP.</span></div>
+        <div class="q"><b>Who needs to read the UTXO set?</b><span>Only the receiver. The relay and directory need no Bitcoin node.</span></div>
+        <div class="q"><b>PayJoin or CoinJoin, which is safer?</b><span>It depends on what you are protecting against.</span></div>
+      </div>

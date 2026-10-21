@@ -119,7 +119,7 @@ hero_fx = re.search(r'<div class="co-fx".*?</div>\n', after_style, re.S).group(0
 final_cta = after_style[after_style.index('  <section class="section-inner final-cta">'):]
 fonts = src[src.index('<link rel="preconnect"'):src.index('<style>')]
 
-def head(title, desc, url, og_type='website', extra='', img='/assets/og-codeorange-workshop.jpg', img_alt='Code Orange Dev School Bitcoin workshop'):
+def head(title, desc, url, og_type='website', extra='', img='/assets/og-codeorange-2026.jpg', img_alt='Code Orange Dev School: learn to build on Bitcoin'):
     return f'''<!DOCTYPE html>
 <html lang="en">
 <head>
