@@ -188,7 +188,7 @@ a.res:hover { border-color: rgba(247,147,26,.55); transform: translateY(-2px); }
 REPO = 'https://github.com/code-orange-dev/session-notes'
 DISCORD = 'https://discord.gg/ZtvA79paWa'
 HERE = pathlib.Path(__file__).resolve().parent
-TOPIC_ORDER = ['Bitcoin basics', 'Self-custody', 'Hardware wallets', 'Privacy', 'PayJoin', 'Cypherpunk history', 'History', 'Bitcoin network', 'Code review', 'Nostr', 'Lightning', 'Ecash', 'Wallets', 'Security', 'Explorers', 'Messaging', 'Code Orange']
+TOPIC_ORDER = ['Bitcoin basics', 'Self-custody', 'Hardware wallets', 'Privacy', 'PayJoin', 'Cypherpunk history', 'History', 'Bitcoin network', 'Code review', 'Nostr', 'Lightning', 'Ecash', 'Wallets', 'Security', 'Explorers', 'Messaging', 'AI agents', 'Vibe coding', 'Self-hosting', 'Productivity', 'Code Orange']
 
 def esc(s): return _html.escape(s, quote=True)
 def strip_tags(s): return re.sub(r'<[^>]+>', '', s)

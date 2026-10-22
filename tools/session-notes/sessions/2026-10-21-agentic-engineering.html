@@ -1,0 +1,52 @@
+      <h2>Highlights</h2>
+      <p class="part"><b>1</b>A self-custody simulator, built by talking to an agent</p>
+      <p><strong>Practise before it's real.</strong> Some people own a hardware wallet but are still too scared to move their bitcoin onto it. Andy built an interactive simulator so they can practise first, guided by a mentor character, with no real money at stake. He built it in Bolt: type (or say) what you want, click any element to change it, roll back from the history if you don't like the result, and publish with one button.</p>
+      <div class="viz" role="figure" aria-label="The simulator's missions, in order">
+        <p class="eyebrow">Missions, one after another</p>
+        <div class="flow">
+          <div class="flow-step">Set up<small>a hardware wallet</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Withdraw<small>from an exchange</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Recover<small>reset, re-enter 12 words</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Connect<small>pair wallet software</small></div>
+        </div>
+        <p class="viz-fix"><b>Guard rails:</b> click a button that isn't part of the step and the mentor says &ldquo;let's stick to the plan&rdquo;. Seed words can be typed straight in instead of scrolling letter by letter.</p>
+      </div>
+      <p><strong>Feedback from the call.</strong> Make one rule impossible to miss: seed words go into the hardware wallet only, never into a website or software wallet, and explain why (it stops being cold storage). And add translations: Chinese-speaking Bitcoiners asked for it first. Missions run in order for now; letting people skip ahead and link back to earlier steps was another suggestion.</p>
+
+      <p class="part"><b>2</b>The mempool as a fish tank, a beehive and a T-shirt factory</p>
+      <p><strong>One prompt, one HTML file.</strong> A builder asked several AI models for a live Bitcoin transaction visualizer. One answer was a single HTML file that pulled live data from the mempool.space API and just worked. From there he kept adding ideas with a cheap model in OpenCode, committed to GitHub and let Vercel deploy each change.</p>
+      <div class="viz" role="figure" aria-label="The visualizers">
+        <p class="eyebrow">BTC, letter by letter</p>
+        <div class="q-grid">
+          <div class="q"><b>Sea</b><span>Transactions swim in as fish and whales by size. The biggest arrive as ships and cargo ships.</span></div>
+          <div class="q"><b>Bee</b><span>The same idea as a beehive. It switches to night when it's evening for the viewer.</span></div>
+          <div class="q"><b>Tee</b><span>A T-shirt factory conveyor belt, with shirt sizes for transaction sizes.</span></div>
+          <div class="q"><b>Matrix &amp; Tetris</b><span>Falling green code, and a Tetris game played with real transactions.</span></div>
+        </div>
+        <p class="viz-fix"><b>Lightning on every screen:</b> send a tip with a message and lightning bolts rain on everyone who has the page open, with the message shown big. There's a shared chat box too.</p>
+      </div>
+      <blockquote class="quote"><p>&ldquo;Now we need to unlearn the things we think we cannot do. Come up with an idea, speak to the laptop, and it becomes real.&rdquo;</p><cite>Said on the call</cite></blockquote>
+
+      <p class="part"><b>3</b>From finding issues to running a team of agents</p>
+      <p><strong>An issue finder for Bitcoin open source.</strong> One builder scans about 50 Bitcoin repositories, analyses their open issues and good first issues, matches them to your skills from your GitHub account, and sends daily updates to Telegram. PayJoin was the first project he dug into.</p>
+      <p><strong>One agent to talk to, many to do the work.</strong> Another builder is making his own Mac and iPhone app around an orchestrator. You speak to it, and it hands the task to the right agent and model.</p>
+      <div class="viz" role="figure" aria-label="How the orchestrator hands out work">
+        <p class="eyebrow">The orchestrator pattern</p>
+        <div class="flow">
+          <div class="flow-step">You<small>speak or type</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Orchestrator<small>picks the agent</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Builder<small>writes the code</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Reviewer<small>checks it</small></div>
+        </div>
+        <p class="viz-fix"><b>Mix harnesses:</b> the builder can run in Claude and the reviewer in Codex. Herdr does this in the terminal. A home server, reached from the phone through a Cloudflare Tunnel, keeps it private and runs nightly jobs.</p>
+      </div>
+
+      <h2>Key takeaways</h2>
+      <p><strong>1. Speak, don't type.</strong> Rambling for two minutes into the microphone gives the agent more context than a short typed prompt, and it's faster. Superwhisper and Omarchy's dictation were both recommended.</p>
+      <p><strong>2. Small and cheap goes a long way.</strong> A single HTML file and a free API made a fun, useful Bitcoin tool. Cheap models were good enough for most of the work, with a stronger model only when the agent got stuck. One organiser rebuilt a business website with bookings, SMS checks and newsletters in two days, then set up its ads the same way.</p>
+      <p><strong>3. Payments are easy to hand to an agent.</strong> A Bitcoin tip button now sits on the workshop page, made with BTCPay Server on an Umbrel. Alby Hub was even quicker to wire up: give the agent the connection details and it gets done.</p>
+      <div class="anatomy">
+        <code>Alby Hub</code><span>Fastest for agents. Lightning, self-custodial.</span>
+        <code>BTCPay Server</code><span>Lightning and on-chain on your own server. A bit more setup.</span>
+        <code>TollGate</code><span>Routers that sell Wi-Fi (or AI access) by usage for ecash. A session on it is planned.</span>
+      </div>

@@ -9,12 +9,14 @@ const [slug, photo = 'assets/event-cards/self-custody.jpg'] = process.argv.slice
 const s = JSON.parse(fs.readFileSync(path.join(__dirname, 'sessions', slug + '.json'), 'utf8'));
 const d = new Date(s.date + 'T00:00:00Z');
 const date = `${d.getUTCDate()} ${d.toLocaleString('en', { month: 'short', timeZone: 'UTC' })} ${d.getUTCFullYear()}`;
+// Optional "image_title": "first line|orange line" for titles too long for the default layout.
+const [line1, line2] = (s.image_title || '').split('|');
 const words = s.title.split(' '), last = words.pop();
-const title = `${words.join(' ')}<br><span class="o">${last.toLowerCase()}.</span>`;
+const title = s.image_title ? `${line1}<br><span class="o">${line2}.</span>` : `${words.join(' ')}<br><span class="o">${last.toLowerCase()}.</span>`;
 const pill = [s.series, s.host && `Hosted by ${s.host}`].filter(Boolean).join(' <i></i> ');
 const html = fs.readFileSync(path.join(__dirname, 'image/og.html'), 'utf8')
   .replace('PHOTO', 'file://' + path.join(root, photo)).replace('DATE', date)
-  .replace('TITLE', title.charAt(0).toUpperCase() + title.slice(1).toLowerCase())
+  .replace('TITLE', s.image_title ? title : title.charAt(0).toUpperCase() + title.slice(1).toLowerCase())
   .replace('PILL', pill).replace('src="logo.png"', 'src="file://' + path.join(__dirname, 'image/logo.png') + '"');
 const tmp = path.join(require('os').tmpdir(), `og-${slug}.html`), png = tmp.replace('.html', '.png');
 fs.writeFileSync(tmp, html);

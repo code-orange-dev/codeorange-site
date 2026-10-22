@@ -1,0 +1,269 @@
+{
+  "slug": "2026-10-21-agentic-engineering",
+  "date": "2026-10-21",
+  "series": "Agentic Engineering & Coding Workshop",
+  "title": "Agentic engineering and vibe coding",
+  "image_title": "Agentic engineering|&amp; vibe coding",
+  "host": "Andy",
+  "tag": "AI agents",
+  "summary": "Four builders showed what they made with AI agents this month: a self-custody simulator, mempool visualizers that rain lightning tips, a Bitcoin open-source issue finder and a voice-driven orchestrator for coding agents.",
+  "share_text": "Agentic engineering + vibe coding for Bitcoin: a self-custody simulator, mempool games, an issue finder and an agent orchestrator. Notes + every tool from the @CodeOrangeDevs workshop",
+  "minutes": 5,
+  "duration": "1h 26m",
+  "tldr": [
+    "You don't need to code to build: describe what you want, speak instead of typing, and let the agent do the work.",
+    "Andy's self-custody simulator lets newcomers practise a hardware wallet, a seed backup and a recovery before using real bitcoin.",
+    "A one-shot HTML page plus the mempool.space API became a set of live transaction visualizers with lightning tips that rain on every viewer's screen.",
+    "The next step is orchestration: one agent you talk to that hands work to builder and reviewer agents in Claude, Codex and Hermes."
+  ],
+  "chapters": [
+    [
+      0,
+      "Warm-up: Omarchy on an Umbrel Home"
+    ],
+    [
+      123,
+      "Selling Wi-Fi and AI for ecash with TollGate"
+    ],
+    [
+      330,
+      "Intros: how everyone uses AI"
+    ],
+    [
+      780,
+      "A business website rebuilt in two days"
+    ],
+    [
+      975,
+      "BTCPay tips on the page, BTCPay vs Alby Hub"
+    ],
+    [
+      1210,
+      "Andy: a self-custody simulator built with Bolt"
+    ],
+    [
+      1410,
+      "Bolt's agent modes, history and plan mode"
+    ],
+    [
+      1800,
+      "Simulator missions: recover a wallet, pair software"
+    ],
+    [
+      2470,
+      "Feedback: seed warnings and translations"
+    ],
+    [
+      2640,
+      "Mempool visualizers: Sea, Bee and Tee"
+    ],
+    [
+      3120,
+      "Lightning tips that rain on every screen"
+    ],
+    [
+      3300,
+      "Matrix and Tetris views of the mempool"
+    ],
+    [
+      3600,
+      "An issue finder for Bitcoin open source"
+    ],
+    [
+      4090,
+      "An orchestrator agent across harnesses"
+    ],
+    [
+      4370,
+      "Darkbloom, Buzz and Herdr"
+    ],
+    [
+      5040,
+      "Voice tools, window managers and wrap-up"
+    ]
+  ],
+  "next": {
+    "title": "Bitcoin Reading Club (run by Alex)",
+    "when": "Wednesday 28 October, 12:00 UTC (20:00 UTC+8) on Discord. Free for everyone."
+  },
+  "resources": [
+    {
+      "group": "Tools",
+      "topic": "Vibe coding",
+      "title": "Bolt",
+      "url": "https://bolt.new",
+      "note": "the vibe coding app Andy used for the simulator: chat with the agent, click an element to change it, roll back from history, publish in one click"
+    },
+    {
+      "group": "Tools",
+      "topic": "AI agents",
+      "title": "OpenCode",
+      "url": "https://opencode.ai",
+      "note": "open-source coding agent for the terminal, paired with a cheap DeepSeek model to build the visualizers"
+    },
+    {
+      "group": "Tools",
+      "topic": "AI agents",
+      "title": "Hermes Agent",
+      "url": "https://github.com/NousResearch/hermes-agent",
+      "by": "Nous Research",
+      "note": "open-source agent used as a personal workspace and one of the harnesses an orchestrator can hand work to"
+    },
+    {
+      "group": "Tools",
+      "topic": "AI agents",
+      "title": "DeepSeek",
+      "url": "https://www.deepseek.com",
+      "note": "low-cost models (V4 Flash) that were \"cheap, reliable and enough\" for small web projects"
+    },
+    {
+      "group": "Tools",
+      "topic": "AI agents",
+      "title": "Buzz",
+      "url": "https://github.com/block/buzz",
+      "by": "Block",
+      "note": "lets agents in different harnesses talk to each other; ideas from it went into the orchestrator app"
+    },
+    {
+      "group": "Tools",
+      "topic": "AI agents",
+      "title": "Herdr",
+      "url": "https://betterstack.com/community/guides/ai/herdr-ai-agent/",
+      "note": "a tmux-style terminal for agents: an orchestrator hands tasks to a builder pane and a reviewer pane (guide)"
+    },
+    {
+      "group": "Tools",
+      "topic": "AI agents",
+      "title": "Darkbloom",
+      "url": "https://docs.darkbloom.dev/introduction",
+      "note": "rent out a Mac's spare compute to run open models for OpenRouter users and get paid"
+    },
+    {
+      "group": "Tools",
+      "topic": "AI agents",
+      "title": "OpenRouter",
+      "url": "https://openrouter.ai",
+      "note": "one API for many AI models, where Darkbloom machines show up as a provider"
+    },
+    {
+      "group": "Tools",
+      "topic": "AI agents",
+      "title": "Superwhisper",
+      "url": "https://superwhisper.com",
+      "note": "voice-to-text on your computer, recommended for talking to agents instead of typing"
+    },
+    {
+      "group": "Tools",
+      "topic": "Vibe coding",
+      "title": "Suno",
+      "url": "https://suno.com",
+      "note": "AI music, used for the soundtrack of the mempool visualizers"
+    },
+    {
+      "group": "Tools",
+      "topic": "Vibe coding",
+      "title": "Vercel",
+      "url": "https://vercel.com",
+      "note": "commit to GitHub and the site deploys itself, so a refresh shows the agent's change"
+    },
+    {
+      "group": "Tools",
+      "topic": "Explorers",
+      "title": "mempool.space API",
+      "url": "https://mempool.space/docs/api",
+      "note": "the free data source behind the live transaction visualizers"
+    },
+    {
+      "group": "Tools",
+      "topic": "Explorers",
+      "title": "BitListen",
+      "url": "https://www.bitlisten.com",
+      "note": "listen to Bitcoin transactions as bubbles and sounds; one of the inspirations for the visualizers"
+    },
+    {
+      "group": "Tools",
+      "topic": "Self-hosting",
+      "title": "Omarchy",
+      "url": "https://omarchy.org",
+      "note": "a keyboard-driven Linux setup several builders are trying; it comes with Herdr and voice dictation"
+    },
+    {
+      "group": "Tools",
+      "topic": "Self-hosting",
+      "title": "Umbrel",
+      "url": "https://umbrel.com",
+      "note": "home server that runs BTCPay Server and more; it travels with the host"
+    },
+    {
+      "group": "Tools",
+      "topic": "Self-hosting",
+      "title": "Start9",
+      "url": "https://start9.com",
+      "note": "home server; one builder turned an old one into the always-on box for nightly agent jobs"
+    },
+    {
+      "group": "Tools",
+      "topic": "Self-hosting",
+      "title": "Cloudflare Tunnel",
+      "url": "https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/",
+      "note": "reach a home server from your phone without opening ports"
+    },
+    {
+      "group": "Tools",
+      "topic": "Self-hosting",
+      "title": "Jellyfin",
+      "url": "https://jellyfin.org",
+      "note": "open-source media server; the orchestrator can read its subtitles and \"watch\" with you"
+    },
+    {
+      "group": "Tools",
+      "topic": "Lightning",
+      "title": "Alby Hub",
+      "url": "https://albyhub.com",
+      "note": "self-custodial lightning node; the quickest one to hand to an agent for payments"
+    },
+    {
+      "group": "Tools",
+      "topic": "Lightning",
+      "title": "BTCPay Server",
+      "url": "https://btcpayserver.org",
+      "note": "used for the tip button on the workshop page (lightning and on-chain); a bit more setup than Alby Hub"
+    },
+    {
+      "group": "Tools",
+      "topic": "Productivity",
+      "title": "AeroSpace",
+      "url": "https://github.com/nikitabobko/AeroSpace",
+      "note": "open-source tiling window manager for macOS"
+    },
+    {
+      "group": "Tools",
+      "topic": "Productivity",
+      "title": "Komorebi",
+      "url": "https://github.com/LGUG2Z/komorebi",
+      "note": "tiling window manager for Windows"
+    },
+    {
+      "group": "Tools",
+      "topic": "Productivity",
+      "title": "Raycast",
+      "url": "https://www.raycast.com",
+      "note": "keyboard launcher for macOS"
+    },
+    {
+      "group": "Code Orange",
+      "topic": "Code Orange",
+      "title": "Agentic Engineering workshop",
+      "url": "https://codeorange.dev/programs/agentic-engineering",
+      "note": "every 3rd Wednesday, 12:00 UTC on Discord"
+    },
+    {
+      "group": "Code Orange",
+      "topic": "Code Orange",
+      "title": "Bitcoin Reading Club",
+      "url": "https://codeorange.dev/programs/bitcoin-reading-club",
+      "note": "the next session, Wednesday 28 October"
+    }
+  ],
+  "ideas": "Ideas for future sessions: a TollGate session (routers that sell Wi-Fi, and even AI access, for ecash and lightning), a hands-on Omarchy workshop, and a screen-shared demo of the orchestrator app and Herdr. Feedback for the simulator: warn clearly never to type seed words into a website or software wallet, and add translations (Chinese was asked for first)."
+}
