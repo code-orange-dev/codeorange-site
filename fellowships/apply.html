@@ -490,7 +490,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
 <link rel="stylesheet" href="/assets/mastering-bitcoin/me.css?v=3">
 <link rel="stylesheet" href="/assets/fellowship/fw.css?v=2">
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
-<script src="/assets/fellowship/apply.js?v=2" defer></script>
+<script src="/assets/fellowship/apply.js?v=3" defer></script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://codeorange.dev/"}, {"@type": "ListItem", "position": 2, "name": "Fellowships", "item": "https://codeorange.dev/fellowships"}, {"@type": "ListItem", "position": 3, "name": "Apply for the developer fellowship", "item": "https://codeorange.dev/fellowships/apply"}]}</script>
 </head>
 <body>
@@ -530,7 +530,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
     <section class="me-card" id="fw-check">
       <p class="me-label">Step 1 · Readiness check</p>
       <h2>Are you ready to apply?</h2>
-      <p>Tick what's true today. Be honest: it only helps you, and your answers travel with your application.</p>
+      <p>Tick what's true today. None of these are hard rules: they're what helps most. Be honest, your answers travel with your application.</p>
       <div class="fw-ready" id="fw-ready"></div>
       <div class="fw-meter" aria-hidden="true"><i id="fw-meter"></i></div>
       <div class="fw-verdict" id="fw-verdict" aria-live="polite"></div>
@@ -538,7 +538,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
     <section class="me-card" id="fw-apply">
       <p class="me-label">Step 2 · Application</p>
       <h2>Tell us what you'll build</h2>
-      <p>Read the <a href="/fellowships/guidelines">guidelines</a> first. A human reads every application and replies within 2 weeks. A nym is fine.</p>
+      <p>Read the <a href="/fellowships/guidelines">guidelines</a> first. We reply to every application within 2 weeks. A nym is fine.</p>
       <form class="fw-form" id="fw-form" novalidate>
         <label class="me-field">Name or nym<input type="text" name="name" maxlength="80" autocomplete="name" required></label>
         <label class="me-field">Email <span class="fw-hint">(private)</span><input type="email" name="email" maxlength="120" autocomplete="email" required></label>
@@ -565,10 +565,10 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
         <label class="me-field">Project repository<input type="url" name="project_url" maxlength="300" placeholder="https://github.com/…"></label>
         <label class="me-field">Hours you can give
           <select name="hours">
-            <option>15–20 hours a week (part-time)</option>
-            <option>20–35 hours a week</option>
+            <option>10–15 hours a week (part-time)</option>
+            <option>15–35 hours a week</option>
             <option>35+ hours a week (full-time)</option>
-            <option>Less than 15 hours a week</option>
+            <option>Less than 10 hours a week</option>
           </select>
         </label>
         <label class="me-field full">Your proof of work <span class="fw-hint">Links to your PRs, reviews, issues, write-ups or projects. One per line. Your best first.</span>

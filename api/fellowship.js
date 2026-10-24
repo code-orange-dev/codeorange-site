@@ -254,6 +254,61 @@ async function alert(subject, lines) {
 const dashLink = (token) => `${SITE}/fellowships/me?me=${encodeURIComponent(token)}`;
 const box = (label, value) => (value ? `<p><strong>${mail.esc(label)}</strong><br>${mail.esc(value).replace(/\n/g, "<br>")}</p>` : "");
 
+// ---------- Applicant's copy ----------
+const READY_LABELS = {
+  learned: "Finished a Bitcoin dev course or serious self-study",
+  pr: "Opened a PR (or written a review) on the project",
+  builds: "Can build the project and run its tests",
+  time: "Can give 10–15 hours a week for 6 months",
+  plan: "Has a goal for each of the 6 months",
+  public: "OK with a public proof-of-work page",
+  clubs: "Will join Code Review Club and the Privacy Track",
+  reviews: "Has reviewed someone else's PR",
+  vouch: "A maintainer or contributor knows their work",
+  privacy: "Project is on the Privacy Track list",
+  community: "Shows up at sessions and on Discord",
+};
+
+// The confirmation every applicant gets, with a full copy of what they sent.
+function sendCopy(a, opts = {}) {
+  const ready = Object.entries(a.ready || {}).filter(([, v]) => v).map(([k]) => READY_LABELS[k] || k);
+  return mail.sendTo(
+    a.email,
+    "Your Code Orange fellowship application",
+    [
+      `Hey ${mail.esc(a.name)}, thanks for applying for the Code Orange developer fellowship. 🧡`,
+      "We'll get in touch with you directly within 2 weeks.",
+      "While you wait, keep building: open or review a PR on your project, and share what you're doing in #fellowships on Discord. That's the best thing you can add to your application.",
+      `<p>Guidelines: <a href="${SITE}/fellowships/guidelines" style="color:#d97706">codeorange.dev/fellowships/guidelines</a></p>`,
+      `<div style="margin-top:22px;padding:16px 18px;border:1px solid #eee;border-radius:12px;background:#fafafa"><p style="margin:0 0 10px;font-weight:700">Your application</p>${[
+        box("Name", a.name),
+        box("GitHub", a.github ? `github.com/${a.github}` : ""),
+        box("Discord", a.discord),
+        box("Nostr", a.nostr),
+        box("Region", a.region),
+        box("Project", [a.project, a.project_url].filter(Boolean).join(" · ")),
+        box("Hours you can give", a.hours),
+        box("Proof of work", a.proof),
+        box("6-month plan", a.plan),
+        box("Why this project", a.why),
+        box("Mentor / vouch", a.mentor),
+        box("Ready check (what you ticked)", ready.length ? ready.map((r) => `✓ ${r}`).join("\n") : "Nothing ticked"),
+      ].join("")}</div>`,
+    ],
+    undefined,
+    opts,
+  );
+}
+
+// Organiser: email an applicant their copy again (optionally BCC the organiser inbox).
+async function adminCopy(body) {
+  if (!mail.emailOn()) return { status: 400, error: "Email isn't switched on." };
+  const [a] = await sql("SELECT * FROM fw_applications WHERE id = $1", [Number(body.id)]);
+  if (!a) return { status: 404, error: "Unknown application." };
+  await sendCopy({ ...a, ready: parseJson(a.ready) || {} }, body.bcc ? { bcc: ALERT_TO } : {});
+  return { status: 200, data: { ok: true, to: a.email } };
+}
+
 // ---------- Applications ----------
 async function apply(body, req) {
   if (body.website) return { status: 400, error: "Application failed." }; // honeypot
@@ -319,12 +374,7 @@ async function apply(body, req) {
   ]);
   if (mail.emailOn()) {
     try {
-      await mail.sendTo(a.email, "We got your Code Orange fellowship application", [
-        `Hey ${mail.esc(a.name)}, thanks for applying for the Code Orange developer fellowship. 🧡`,
-        "A human reads every application. We'll reply within 2 weeks, usually with a short call on Discord.",
-        "While you wait, keep building: open or review a PR on your project, and share what you're doing in #fellowships on Discord. That's the best thing you can add to your application.",
-        `<p>Guidelines: <a href="${SITE}/fellowships/guidelines" style="color:#d97706">codeorange.dev/fellowships/guidelines</a></p>`,
-      ]);
+      await sendCopy({ ...a, ready: readyOut });
     } catch (err) {
       console.error("fellowship: confirmation failed", err.message);
     }
@@ -802,6 +852,7 @@ module.exports = async function handler(req, res) {
         report: () => report(body),
         plan: () => plan(body),
         "admin-app": () => admin(adminApp),
+        "admin-copy": () => admin(adminCopy),
         "admin-accept": () => admin(adminAccept),
         "admin-fellow": () => admin(adminFellow),
         "admin-approve": () => admin(adminApprove),

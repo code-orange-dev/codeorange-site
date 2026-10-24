@@ -34,11 +34,11 @@ function calendarLink() {
   });
 }
 
-async function send(to, subject, lines, replyTo) {
+async function send(to, subject, lines, replyTo, opts = {}) {
   const html = `<div style="font:16px/1.55 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:#111;max-width:560px">${lines
     .map((l) => (l.startsWith("<") ? l : `<p>${l}</p>`))
     .join("")}<p style="color:#777;font-size:13px">Code Orange Dev School · <a href="${SITE}" style="color:#d97706">codeorange.dev</a></p></div>`;
-  const text = html.replace(/<a [^>]*href="([^"]+)"[^>]*>([^<]*)<\/a>/g, "$2 ($1)").replace(/<li>/g, "- ").replace(/<br>|<\/(p|li|ul)>/g, "\n").replace(/<[^>]+>/g, "").replace(/&amp;/g, "&");
+  const text = html.replace(/<a [^>]*href="([^"]+)"[^>]*>([^<]*)<\/a>/g, "$2 ($1)").replace(/<li>/g, "- ").replace(/<br>|<\/(p|li|ul)>/g, "\n").replace(/<[^>]+>/g, "").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, "&");
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
     signal: AbortSignal.timeout(8000),
@@ -47,6 +47,7 @@ async function send(to, subject, lines, replyTo) {
       from: process.env.MB_EMAIL_FROM || "Code Orange Dev School <cohort@codeorange.dev>",
       reply_to: replyTo || "hello@codeorange.dev",
       to: [to],
+      ...(opts.bcc ? { bcc: [opts.bcc] } : {}),
       subject,
       html,
       text,

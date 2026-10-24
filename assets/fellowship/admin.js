@@ -14,7 +14,7 @@
   const app = $("#fw-admin");
   const STATUSES = ["new", "shortlisted", "interview", "waitlist", "accepted", "declined"];
   const FSTATUS = ["green", "yellow", "red", "paused", "graduated", "ended"];
-  const READY = { learned: "Finished a course", pr: "Has a PR or review on the project", builds: "Builds and runs tests", time: "15-20 h/week", plan: "Monthly goals", public: "OK with public page", reviews: "Has reviewed PRs", vouch: "Maintainer knows them", privacy: "Privacy project", community: "Shows up", clubs: "Code Review Club + Privacy Track" };
+  const READY = { learned: "Finished a course", pr: "Has a PR or review on the project", builds: "Builds and runs tests", time: "10-15 h/week", plan: "Monthly goals", public: "OK with public page", reviews: "Has reviewed PRs", vouch: "Maintainer knows them", privacy: "Privacy project", community: "Shows up", clubs: "Code Review Club + Privacy Track" };
   let D;
   let filter = "open";
 
@@ -91,6 +91,8 @@
       </dl>
       <div class="fw-inline"><select data-f="status">${STATUSES.map((s) => `<option ${s === a.status ? "selected" : ""}>${s}</option>`).join("")}</select>
         <input type="text" data-f="notes" placeholder="Private notes" value="${esc(a.notes)}" style="flex:1;min-width:200px"><button class="ghost small" type="button" data-act="save-app">Save</button></div>
+      <div class="fw-inline"><button class="ghost small" type="button" data-act="copy-app">Email them a copy of their application</button>
+        <label class="me-small"><input type="checkbox" data-f="bcc"> BCC me</label></div>
       ${a.status !== "accepted" ? `<details><summary class="me-small" style="cursor:pointer">Accept as a fellow…</summary>
         <div class="fw-inline"><label class="me-small">First month <input type="month" data-f="start" value="${ym}"></label>
         <input type="text" data-f="mentor" placeholder="Mentor (name)"><input type="text" data-f="project" value="${esc(a.project)}">
@@ -158,6 +160,11 @@
             await call({ action: "admin-app", id: Number(card.dataset.app), status: val("[data-f=status]").value, notes: val("[data-f=notes]").value });
             note("Saved");
             return load();
+          case "copy-app": {
+            const r = await call({ action: "admin-copy", id: Number(card.dataset.app), bcc: val("[data-f=bcc]").checked });
+            note(`Copy sent to ${r.to}`);
+            return;
+          }
           case "accept": {
             const r = await call({ action: "admin-accept", id: Number(card.dataset.app), start: val("[data-f=start]").value, mentor: val("[data-f=mentor]").value, project: val("[data-f=project]").value, email: val("[data-f=email]").checked });
             note(r.emailed ? "Accepted, and their dashboard link was emailed." : "Accepted. Copy their dashboard link from the fellow card.");

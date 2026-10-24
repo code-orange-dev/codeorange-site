@@ -4,12 +4,12 @@
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
   const DRAFT = "fw-apply-draft";
 
-  // key, label, why, must-have, what to do if not yet
+  // key, label, why, highly recommended, what to do if not yet
   const CHECKS = [
     ["learned", "I've finished a Bitcoin dev course or serious self-study", "Decoding Bitcoin, Chaincode, Summer of Bitcoin, Btrust, or your own deep study.", true, 'Join <a href="/decoding-bitcoin">Decoding Bitcoin</a> (free, 10 weeks) or the <a href="/privacy-track">Privacy Track</a>.'],
     ["pr", "I've opened at least one PR (or written a real review) on the project I want to work on", "Small is fine. It proves you can find your way around the codebase.", true, "Pick a good first issue on your project and open a PR. Ask in #fellowships on Discord if you're stuck finding one."],
     ["builds", "I can build the project and run its tests on my machine", "", true, "Follow the project's CONTRIBUTING or build guide until the tests pass. That's day one of the fellowship anyway."],
-    ["time", "I can give 15–20 hours a week for 6 months", "", true, "If your time is tighter right now, apply in a later round. Pausing is allowed, but the fellowship needs steady weeks."],
+    ["time", "I can give 10–15 hours a week for 6 months", "", true, "If your time is tighter right now, apply in a later round. Pausing is allowed, but the fellowship needs steady weeks."],
     ["plan", "I have a goal for each of the 6 months", "", true, "Talk to the project: read open issues and the roadmap, then sketch one goal per month."],
     ["public", "I'm okay with my work being shown on a public proof-of-work page", "Payments stay private. If being public is risky where you live, tell us and we'll keep it private.", true, "Read the public vs private table in the guidelines."],
     ["clubs", "I'll join Code Review Club and the Privacy Track, and present my work at Code Review Club", "Present at least once every 2 months. Privacy Track: 1st & 3rd Tuesday, 07:00 UTC.", true, 'Drop into a <a href="/calendar">Code Review Club or Privacy Track session</a> before you apply.'],
@@ -24,7 +24,7 @@
   draft.ready ||= {};
 
   const ready = $("#fw-ready");
-  ready.innerHTML = CHECKS.map(([k, label, why, must]) => `<label><input type="checkbox" data-k="${k}" ${draft.ready[k] ? "checked" : ""}><span>${esc(label)}${must ? '<span class="must">Must have</span>' : ""}${why ? `<small>${esc(why)}</small>` : ""}</span></label>`).join("");
+  ready.innerHTML = CHECKS.map(([k, label, why, must]) => `<label><input type="checkbox" data-k="${k}" ${draft.ready[k] ? "checked" : ""}><span>${esc(label)}${must ? '<span class="must">Highly recommended</span>' : ""}${why ? `<small>${esc(why)}</small>` : ""}</span></label>`).join("");
 
   function verdict() {
     const musts = CHECKS.filter((c) => c[3]);
@@ -33,12 +33,13 @@
     const score = CHECKS.filter((c) => draft.ready[c[0]]).length;
     $("#fw-meter").style.width = `${Math.round((score / CHECKS.length) * 100)}%`;
     let html;
+    const list = `<ul>${missing.map((c) => `<li><strong>${esc(c[1])}.</strong> ${c[4]}</li>`).join("")}</ul>`;
     if (!missing.length) {
       html = `<h3>🟠 You're ready. Apply below.</h3><p class="me-small" style="margin:0">${extras >= 2 ? "Strong application: you tick the boxes that make people stand out." : "To make it stronger, review a PR or get a maintainer to vouch for you before you send it."}</p>`;
-    } else if (missing.length <= 2) {
-      html = `<h3>Almost there.</h3><p class="me-small" style="margin:0 0 4px">You can apply now and we'll review it, but we only offer a place once these are done:</p><ul>${missing.map((c) => `<li><strong>${esc(c[1])}.</strong> ${c[4]}</li>`).join("")}</ul>`;
+    } else if (musts.length - missing.length >= 4) {
+      html = `<h3>🟠 Looking good. Apply below.</h3><p class="me-small" style="margin:0 0 4px">You don't need every box ticked. These would make your application even stronger:</p>${list}`;
     } else {
-      html = `<h3>Not yet, and that's fine.</h3><p class="me-small" style="margin:0 0 4px">Here's what to do first. It usually takes a month or two of steady work:</p><ul>${missing.map((c) => `<li><strong>${esc(c[1])}.</strong> ${c[4]}</li>`).join("")}</ul><p class="me-small" style="margin:8px 0 0">You can still apply, but the checklist is what we look for.</p>`;
+      html = `<h3>You can still apply.</h3><p class="me-small" style="margin:0 0 4px">These are the things that help most. Working on a few of them first makes a big difference:</p>${list}`;
     }
     $("#fw-verdict").innerHTML = html;
   }
@@ -116,7 +117,7 @@
       if (!res.ok) throw new Error(data.error || "That didn't work. Please try again.");
       try { localStorage.removeItem(DRAFT); } catch {}
       $("#fw-apply").innerHTML = `<div class="fw-done"><p class="me-label">Application sent</p><h2>Thank you, ${esc(v("name"))}! 🧡</h2>
-        <p>We've emailed you a copy. A human reads every application and replies within 2 weeks, usually with a short Discord call.</p>
+        <p>We've emailed you a copy of your application. We'll get in touch with you directly within 2 weeks.</p>
         <p>Best thing to do while you wait: keep building. Open or review a PR on ${esc(project)} and share it in #fellowships.</p>
         <div class="fw-cta" style="justify-content:center"><a class="button" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join #fellowships on Discord</a><a class="ghost" href="/fellowships/guidelines">Re-read the guidelines</a></div></div>`;
       $("#fw-apply").scrollIntoView({ behavior: "smooth", block: "start" });
