@@ -15,9 +15,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://codeorange.dev/progress/s9/share-game.jpg">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600&family=Doto:wght@700;900&display=swap">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
 <style>
-/* Layout: an arcade "save file" for Month 1 — HUD on top, then world map (pipeline), party, quest log, achievements, boss tracker, next level. Single deliberate dark look. */
+/* Layout: an arcade "save file" for Month 1 — HUD on top, then world map (pipeline), party, quest log, achievements, bonus stage, next level. Single deliberate dark look. */
 :root{
   --void:#0b0907;          /* screen black, warm */
   --panel:#16110c;         /* panel fill */
@@ -350,6 +349,13 @@ footer .px{font-size:9px;color:var(--orange)}
 .winbox .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
 #confetti{position:fixed;inset:0;width:100%;height:100%;z-index:46;pointer-events:none}
 @media (prefers-reduced-motion:reduce){.ach.armed .badge{opacity:1;transform:none}.toast{transition:none}.lv.shake,.xbtn.pulse{animation:none}}
+.lootp .loot{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px 28px}
+.qph{all:unset;cursor:pointer;font-family:var(--f-pixel);font-size:8px;color:var(--gold);border:2px solid var(--line);padding:5px 6px;margin-left:8px;vertical-align:middle}
+.qph:hover{border-color:var(--gold)}
+.qph:focus-visible{outline:2px solid var(--gold)}
+.hx .av i{font-style:normal;font-weight:700;font-family:var(--font-sans);font-size:calc(var(--trust-size)*.42);line-height:1}
+.xhud{transition:opacity .3s,transform .3s}
+.xhud.hid{opacity:0;pointer-events:none;transform:translateY(12px)}
 </style>
 </head>
 <body>
@@ -369,7 +375,7 @@ footer .px{font-size:9px;color:var(--orange)}
       <a href="#top" class="active" style="animation-delay:.05s">Home</a><a href="#replay-h" style="animation-delay:.1s">Replay</a><a href="#wall-h" style="animation-delay:.15s">Proof</a><a href="#party-h" style="animation-delay:.2s">Fellows</a><a href="#run-h" style="animation-delay:.22s">Play</a><a href="#vid-h" class="dark" style="animation-delay:.25s">Watch a session</a>
     </nav>
     <main class="hero-c">
-      <div class="trust anim" style="--d:.05s"><span class="av a1"><i class="fa-brands fa-bitcoin"></i></span><span class="av a2"><i class="fa-brands fa-github"></i></span><span class="av a3"><i class="fa-brands fa-discord"></i></span><span class="tpill">Every number linked to public proof</span></div>
+      <div class="trust anim" style="--d:.05s"><span class="av a1"><i>₿</i></span><span class="av a2"><i>⚡</i></span><span class="av a3"><i>#</i></span><span class="tpill">Every number linked to public proof</span></div>
       <h1><span>Code Orange</span><span>Month 1 Cleared</span></h1>
       <p class="subh anim" style="--d:.28s">Our September as a game you can play: every session, every fellow, every proof. Press start, explore, and try to reach 100%.</p>
       <a class="cta anim" href="#lvl" style="--d:.4s">▶ Press Start</a>
@@ -395,10 +401,10 @@ footer .px{font-size:9px;color:var(--orange)}
       </div>
     </div>
     <div class="lvl">
-      <div class="label">Months 1–3 milestones</div>
-      <div class="big num">2<span style="font-size:16px;color:var(--dim)"> / 4</span></div>
-      <div class="xp" id="xp" style="--w:80%"><i></i></div>
-      <div class="xpmeta"><span>2 done · 2 on track</span><span>XP 80%</span></div>
+      <div class="label">Level 1 · sessions run</div>
+      <div class="big num">9<span style="font-size:16px;color:var(--dim)"> / 7 planned</span></div>
+      <div class="xp" id="xp" style="--w:100%"><i></i></div>
+      <div class="xpmeta"><span>Plan beaten by 2 sessions</span><span>XP 100%</span></div>
       <div class="label blink" style="color:var(--gold)">▶ Level 2 loading: October</div>
     </div>
   </section>
@@ -408,7 +414,7 @@ footer .px{font-size:9px;color:var(--orange)}
     <span class="lv on">LVL 1 · SEP <b>✓ CLEARED</b></span>
     <span class="lv">LVL 2 · OCT · LOADING</span>
     <span class="lv">LVL 3 · NOV · LOCKED</span>
-    <span class="lv">BOSS · MONTH 12</span>
+    <span class="lv">FINAL · MONTH 12</span>
   </nav>
 
   <section aria-label="Stats" class="hud">
@@ -561,18 +567,7 @@ footer .px{font-size:9px;color:var(--orange)}
     <div class="runbar"><button class="btn" id="runBtn" type="button">▶ START</button><span class="chip">BEST <b id="runBest">0</b></span><span class="runtip" id="runTip" aria-live="polite">Score 15 to unlock a quest.</span></div>
   </section>
 
-  <div class="two">
-    <section class="panel" aria-labelledby="boss-h">
-      <h2 id="boss-h">Boss tracker: promised vs done</h2>
-      <p class="sub">Our plan for Months 1–3, plus what we pulled forward.</p>
-      <div class="boss">
-        <div class="row"><div>Privacy Track Sessions 1–6: Foundations + Silent Payments <span>Curriculum + labs done, S1 on 6 Oct</span></div><div class="hp"><i style="width:75%;background:var(--sky)"></i></div></div>
-        <div class="row"><div>Onboard Fellowship Cohort 1 (2 dev + 2 educator) <span>3 educator in, 1st dev in Oct</span></div><div class="hp"><i style="width:75%;background:var(--sky)"></i></div></div>
-        <div class="row"><div>7+ monthly workshops feeding the track <span>9 delivered</span></div><div class="hp"><i style="width:100%;background:var(--mint)"></i></div></div>
-        <div class="row"><div>New country (planned Months 10–12) <span>Cebu, unlocked early</span></div><div class="hp"><i style="width:100%;background:var(--gold)"></i></div></div>
-      </div>
-    </section>
-    <section class="panel" aria-labelledby="loot-h">
+    <section class="panel lootp" aria-labelledby="loot-h">
       <h2 id="loot-h">Loot and reach</h2>
       <p class="sub">What we built, and who noticed.</p>
       <div class="loot">
@@ -587,7 +582,6 @@ footer .px{font-size:9px;color:var(--orange)}
         <span class="chip">🇳🇬 BitDevs Zaria <a href="https://x.com/CodeOrangeDevs/status/2104436274467917895">featured us</a></span>
       </div>
     </section>
-  </div>
 
   <section class="panel" aria-labelledby="next-h">
     <h2 id="next-h">Next level: October</h2>
@@ -709,6 +703,7 @@ footer .px{font-size:9px;color:var(--orange)}
     b.innerHTML=`<img src="s9/${im}.jpg" alt="${cap}" loading="lazy" decoding="async"><span class="tag">${tag}</span>`;
     b.addEventListener('click',()=>openLB(im,tag+' · '+cap,tw));wall.appendChild(b)});
   const lb=document.getElementById('lb'),lbI=document.getElementById('lbI');let lastFocus=null;
+  window.__coLB=(im,cap,tw)=>openLB(im,cap,tw);
   function openLB(im,cap,tw){lastFocus=document.activeElement;lbI.src=`s9/${im}.jpg`;lbI.alt=cap;document.getElementById('lbC').textContent=cap;document.getElementById('lbA').href=U+tw;lb.classList.add('open');document.getElementById('lbX').focus()}
   function closeLB(){lb.classList.remove('open');if(lastFocus)lastFocus.focus()}
   document.getElementById('lbX').addEventListener('click',closeLB);lb.addEventListener('click',e=>{if(e.target===lb)closeLB()});
@@ -739,12 +734,14 @@ footer .px{font-size:9px;color:var(--orange)}
     ["30 SEP","Cebu Meetup #1 · Andy","First Philippines meetup","CoffeeBay, Cebu",null,true,"https://x.com/CodeOrangeDevs/status/2103425294032121883"]
   ];
   const qEl=document.getElementById('quests');
-  Q.forEach(([d,t,s,w,n,irl,url])=>{
+  const QI=['basics','robosats-1','protocol-1','agentic-1','custody-1','bali-3','reading-1','workshop-poster','cebu'];
+  Q.forEach(([d,t,s,w,n,irl,url],qi)=>{
     const row=document.createElement('div');row.className='q';
     let ppl='';
     if(n){for(let i=0;i<n;i++)ppl+=`<i class="${irl?'irl':''}"></i>`;ppl+=`<em>${n}${irl?'+':''}</em>`}
     else ppl='<em class="na">not counted</em>';
-    row.innerHTML=`<div class="d">${d}</div><div class="t">${t}<small>${s}</small></div><div class="w">${w}<br><a href="${url}">${n?'recap':'announce'} ↗</a></div><div class="pty" aria-label="${n?n+' people':'not counted'}">${ppl}</div>`;
+    row.innerHTML=`<div class="d">${d}</div><div class="t">${t}<small>${s}</small></div><div class="w">${w}<br><a href="${url}">${n?'recap':'announce'} ↗</a><button class="qph" type="button" aria-label="Photo from ${t}">▣ PHOTO</button></div><div class="pty" aria-label="${n?n+' people':'not counted'}">${ppl}</div>`;
+    row.querySelector('.qph').addEventListener('click',()=>{if(window.__coLB)window.__coLB(QI[qi],d+' · '+t,url.split('/status/')[1]);if(window.__coDone)window.__coDone('photo')});
     qEl.appendChild(row);
   });
 
@@ -858,7 +855,8 @@ footer .px{font-size:9px;color:var(--orange)}
     const b=$('xBtn');b.classList.remove('pulse');void b.offsetWidth;b.classList.add('pulse');
     if(QS.every(x=>save.q[x[0]]))setTimeout(win,1400)}
   window.__coDone=done;renderQ();
-  const xb=$('xBtn'),xp=$('xPanel');
+  const xb=$('xBtn'),xp=$('xPanel'),xh=document.querySelector('.xhud');
+  const hudVis=()=>{const hide=scrollY<innerHeight*.6&&xp.hidden;xh.classList.toggle('hid',hide)};addEventListener('scroll',hudVis,{passive:true});hudVis();
   xb.addEventListener('click',()=>{const o=xp.hidden;xp.hidden=!o;xb.setAttribute('aria-expanded',o);beep(o?740:520)});
   $('xReset').addEventListener('click',()=>{save.q={};save.best=0;persist();renderQ();best=0;$('runBest').textContent=0;toast('SAVE RESET','Start exploring again')});
   addEventListener('keydown',e=>{if(e.key==='Escape'){if(!xp.hidden){xp.hidden=true;xb.setAttribute('aria-expanded',false)}if(!$('win').hidden)$('win').hidden=true}});
@@ -871,7 +869,7 @@ footer .px{font-size:9px;color:var(--orange)}
   const vid=$('vid');vid.addEventListener('click',()=>done('video'));vid.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')done('video')});
 
   // level select
-  const LV=[["LEVEL 1 · SEPTEMBER","Cleared. You are here."],["LEVEL 2 · OCTOBER","Loading: Privacy Track live, Code Review Club, developer fellows"],["LEVEL 3 · NOVEMBER","Locked. Decoding Bitcoin cohort starts 16 Nov"],["BOSS · MONTH 12","40+ developers trained, 8 fellows graduated, a new country"]];
+  const LV=[["LEVEL 1 · SEPTEMBER","Cleared. You are here."],["LEVEL 2 · OCTOBER","Loading: Privacy Track live, Code Review Club, developer fellows"],["LEVEL 3 · NOVEMBER","Locked. Decoding Bitcoin cohort starts 16 Nov"],["FINAL LEVEL · MONTH 12","40+ developers trained, 8 fellows graduated, a new country"]];
   document.querySelectorAll('.lv').forEach((el,i)=>{el.tabIndex=0;el.setAttribute('role','button');
     const go=()=>{toast(LV[i][0],LV[i][1]);if(i>=2){el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake');beep(160,.18,'sawtooth')}else beep(660+i*120)};
     el.addEventListener('click',go);el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}})});
