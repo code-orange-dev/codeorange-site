@@ -356,6 +356,36 @@ footer .px{font-size:9px;color:var(--orange)}
 .hx .av i{font-style:normal;font-weight:700;font-family:var(--font-sans);font-size:calc(var(--trust-size)*.42);line-height:1}
 .xhud{transition:opacity .3s,transform .3s}
 .xhud.hid{opacity:0;pointer-events:none;transform:translateY(12px)}
+.octsc{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+.octsc .big{font-family:var(--f-pixel);font-size:32px;color:var(--mint)}
+.octsc .big small{font-size:14px;color:var(--dim)}
+.octsc span:last-child{color:var(--dim);font-size:14px}
+.objs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:10px}
+.obj{display:grid;grid-template-columns:30px 1fr;gap:10px;border:2px solid var(--line);background:var(--panel-2);padding:12px}
+.obj>i{font-style:normal;font-family:var(--f-pixel);font-size:14px;width:26px;height:26px;display:grid;place-items:center;color:#0b0907}
+.obj.ok>i{background:var(--mint)}.obj.mid>i{background:var(--sky)}.obj.no>i{background:var(--rust)}
+.obj b{display:block;font-size:15px}
+.obj span{font-size:13px;color:var(--dim)}
+.vault{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:16px}
+.vault .label{margin-right:4px}
+.vault a{font-family:var(--f-data);font-size:12px;text-decoration:none;border:2px solid var(--line);padding:6px 9px;color:var(--ink);background:var(--panel-2)}
+.vault a:hover{border-color:var(--orange);color:var(--gold)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.tips{display:grid;gap:10px}
+.tips div{border-left:4px solid var(--orange);background:var(--panel-2);padding:10px 12px;font-size:14px;color:var(--dim)}
+.tips b{display:block;color:var(--ink);font-size:15px;margin-bottom:2px}
+.gbar{display:flex;height:26px;border:3px solid var(--line);background:#000;overflow:hidden}
+.gbar i{display:block;height:100%;width:0;background:var(--c);transition:width 1s steps(10)}
+.gbar.go i{width:calc(var(--w)*1%)}
+.gl{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:8px}
+.gl li{display:grid;grid-template-columns:12px 44px 1fr;gap:10px;align-items:baseline;font-size:14px}
+.gl li i{width:12px;height:12px;display:block;align-self:center}
+.gl li b{font-family:var(--f-pixel);font-size:11px;color:var(--gold)}
+.gl li span{color:var(--ink)}
+.cont{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border-color:var(--orange)}
+.cont .btn{text-decoration:none;font-size:11px;padding:14px 16px}
+@media (max-width:900px){.duo{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.gbar i{transition:none}}
 </style>
 </head>
 <body>
@@ -372,7 +402,7 @@ footer .px{font-size:9px;color:var(--orange)}
     </header>
     <div class="ovl" hidden></div>
     <nav class="sheet" id="sheet" hidden aria-label="Menu">
-      <a href="#top" class="active" style="animation-delay:.05s">Home</a><a href="#replay-h" style="animation-delay:.1s">Replay</a><a href="#wall-h" style="animation-delay:.15s">Proof</a><a href="#party-h" style="animation-delay:.2s">Fellows</a><a href="#run-h" style="animation-delay:.22s">Play</a><a href="#vid-h" class="dark" style="animation-delay:.25s">Watch a session</a>
+      <a href="#top" class="active" style="animation-delay:.05s">Home</a><a href="#replay-h" style="animation-delay:.1s">Replay</a><a href="#wall-h" style="animation-delay:.15s">Proof</a><a href="#party-h" style="animation-delay:.2s">Fellows</a><a href="#run-h" style="animation-delay:.22s">Play</a><a href="#cont-h" style="animation-delay:.24s">Contact</a><a href="#vid-h" class="dark" style="animation-delay:.27s">Watch a session</a>
     </nav>
     <main class="hero-c">
       <div class="trust anim" style="--d:.05s"><span class="av a1"><i>₿</i></span><span class="av a2"><i>⚡</i></span><span class="av a3"><i>#</i></span><span class="tpill">Every number linked to public proof</span></div>
@@ -412,7 +442,7 @@ footer .px{font-size:9px;color:var(--orange)}
 
   <nav class="levels" id="lvl" aria-label="Months">
     <span class="lv on">LVL 1 · SEP <b>✓ CLEARED</b></span>
-    <span class="lv">LVL 2 · OCT · LOADING</span>
+    <span class="lv">LVL 2 · OCT · 5/7</span>
     <span class="lv">LVL 3 · NOV · LOCKED</span>
     <span class="lv">FINAL · MONTH 12</span>
   </nav>
@@ -583,19 +613,72 @@ footer .px{font-size:9px;color:var(--orange)}
       </div>
     </section>
 
+  <section class="panel" aria-labelledby="oct-h">
+    <h2 id="oct-h">Level 2 results: October</h2>
+    <p class="sub">What we set out to do next, checked against what happened by 26 October.</p>
+    <div class="octsc"><span class="big num">5<small> / 7</small></span><span>objectives cleared · 1 in progress · 1 still open</span></div>
+    <div class="objs">
+      <div class="obj ok"><i>✓</i><div><b>Privacy Track goes live</b><span>Sessions on <a href="https://codeorange.dev/session-notes/2026-10-06-privacy-track">6 Oct</a> and <a href="https://codeorange.dev/session-notes/2026-10-20-privacy-track">20 Oct</a>: how payjoin works, then payjoin v2 tested live.</span></div></div>
+      <div class="obj ok"><i>✓</i><div><b>Code Review Club launches</b><span><a href="https://codeorange.dev/session-notes/2026-10-08-code-review-club">8 Oct</a>: a first code review on Nostr and Peer Observer.</span></div></div>
+      <div class="obj ok"><i>✓</i><div><b>Every session gets a public recap</b><span>6 recaps on our <a href="https://codeorange.dev/session-notes">session notes</a>, 5 with the full recording.</span></div></div>
+      <div class="obj ok"><i>✓</i><div><b>First developer fellow</b><span>Alex moved up from educator to developer fellow.</span></div></div>
+      <div class="obj ok"><i>✓</i><div><b>Decoding Bitcoin sign-ups open</b><span>A ten-week cohort, <a href="https://codeorange.dev/decoding-bitcoin">starting 16 Nov</a>.</span></div></div>
+      <div class="obj mid"><i>◐</i><div><b>7+ sessions in the month</b><span>6 so far: also the <a href="https://codeorange.dev/session-notes/2026-10-14-sovereign-bitcoiner-workshop">Sovereign Bitcoiner</a>, <a href="https://codeorange.dev/session-notes/2026-10-16-self-custody-workshop">multisig</a> and <a href="https://codeorange.dev/session-notes/2026-10-21-agentic-engineering">Agentic Engineering</a> workshops.</span></div></div>
+      <div class="obj no"><i>✕</i><div><b>Mentors for developer fellows</b><span>Not confirmed yet. This is our main open item.</span></div></div>
+    </div>
+    <div class="vault"><span class="label">October recordings</span>
+      <a href="https://www.youtube.com/watch?v=lsgyE7OxpsM">▶ Privacy Track: payjoin</a><a href="https://www.youtube.com/watch?v=wQPdlsrxidY">▶ Code Review Club</a><a href="https://www.youtube.com/watch?v=NENhVbqtGTs">▶ Sovereign Bitcoiner</a><a href="https://www.youtube.com/watch?v=g5TAfT07ghE">▶ Payjoin v2, live</a><a href="https://www.youtube.com/watch?v=dQVF4HuU-_I">▶ Agentic Engineering</a>
+    </div>
+  </section>
+
+  <div class="duo">
+  <section class="panel" aria-labelledby="learn-h">
+    <h2 id="learn-h">What we learned</h2>
+    <p class="sub">Respawn notes: what went wrong or slower than planned, and what we changed.</p>
+    <div class="tips">
+      <div><b>The Privacy Track started a month later</b>We spent September finishing the curriculum and labs, so Session 1 ran on 6 October. We chose to finish the materials before teaching from them.</div>
+      <div><b>We held the bar on fellows</b>One developer fellow, not two. We turned away an applicant who didn't meet our criteria rather than fill a seat.</div>
+      <div><b>Mentors are the bottleneck</b>Developer fellows need an experienced mentor. Finding them is our top task for November.</div>
+      <div><b>Rooms beat calls</b>Online sessions draw about 7 people; in-person rooms drew 11+. So we opened a second city, and keep Bali monthly.</div>
+      <div><b>Counting is still manual</b>Attendance comes from screenshots, so our numbers are a floor. We want a simple sign-in for every session.</div>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="gold-h">
+    <h2 id="gold-h">Where the gold goes</h2>
+    <p class="sub">How our 12-month budget is planned, by share. Almost all of it pays people to teach and build.</p>
+    <div class="gbar" role="img" aria-label="Budget split: program lead 33%, developer fellows 27%, teaching assistant 13%, educator fellows 13%, community leaders 8%, guest teachers and mentors 5%"><i style="--w:33;--c:#f7931a"></i><i style="--w:27;--c:#ffcf5a"></i><i style="--w:13;--c:#7cc4ff"></i><i style="--w:13;--c:#6fe3a1"></i><i style="--w:8;--c:#e0694a"></i><i style="--w:6;--c:#c79bff"></i></div>
+    <ul class="gl">
+      <li><i style="background:#f7931a"></i><b>33%</b><span>Program lead: living expenses, so the lead can run the school full time</span></li>
+      <li><i style="background:#ffcf5a"></i><b>27%</b><span>Developer fellows: 4 fellows, 6 months each</span></li>
+      <li><i style="background:#7cc4ff"></i><b>13%</b><span>Teaching assistant for the Privacy Track (Razor)</span></li>
+      <li><i style="background:#6fe3a1"></i><b>13%</b><span>Educator fellows: 4 fellows, 6 months each</span></li>
+      <li><i style="background:#e0694a"></i><b>8%</b><span>10 local community leaders who host meetups</span></li>
+      <li><i style="background:#c79bff"></i><b>5%</b><span>Guest teachers and mentors</span></li>
+    </ul>
+    <p class="sub" style="margin:12px 0 0">Shares are rounded. Exact figures are in our written report.</p>
+  </section>
+  </div>
+
   <section class="panel" aria-labelledby="next-h">
-    <h2 id="next-h">Next level: October</h2>
+    <h2 id="next-h">Next level: November</h2>
     <p class="sub">What the next save file should show.</p>
     <div class="next">
-      <div><b>Privacy Track live</b>Sessions on the 1st and 3rd Tuesday, 07:00 UTC, each with a public recap.</div>
-      <div><b>Decoding Bitcoin</b>A ten-week study cohort from 16 Nov that feeds new developers into the track.</div>
-      <div><b>Mentors wanted</b>Silent Payments, payjoin, BDK or Floresta devs to mentor a fellow or guest-teach.</div>
+      <div><b>Privacy Track, 3 + 17 Nov</b>Two more sessions at 07:00 UTC, each with a public recap and recording.</div>
+      <div><b>Decoding Bitcoin, 16 Nov</b>A ten-week study cohort that feeds new developers into the track.</div>
+      <div><b>Mentors confirmed</b>Silent Payments, payjoin, BDK or Floresta developers to mentor a fellow or guest-teach.</div>
     </div>
+  </section>
+
+  <section class="panel cont" aria-labelledby="cont-h">
+    <div><h2 id="cont-h">Continue? Join the party</h2>
+    <p class="sub" style="margin:0">Mentor a developer fellow, guest-teach a session, or ask us anything about this report.</p></div>
+    <a class="btn" href="mailto:hello@codeorange.dev?subject=Code%20Orange%20progress">✉ TALK TO US</a>
   </section>
 
   <footer>
     <span class="px">Game saved · Code Orange Dev School</span><span>Psst: there is a secret somewhere on this page.</span>
-    <span>Sources: our posts on X, GitHub, Luma and MailerLite. A full written report is available on request.</span>
+    <span>Sources: our posts on X, GitHub, Luma, YouTube and MailerLite. A full written report is available on request: <a href="mailto:hello@codeorange.dev">hello@codeorange.dev</a></span>
   </footer>
 </div>
 
@@ -869,11 +952,12 @@ footer .px{font-size:9px;color:var(--orange)}
   const vid=$('vid');vid.addEventListener('click',()=>done('video'));vid.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')done('video')});
 
   // level select
-  const LV=[["LEVEL 1 · SEPTEMBER","Cleared. You are here."],["LEVEL 2 · OCTOBER","Loading: Privacy Track live, Code Review Club, developer fellows"],["LEVEL 3 · NOVEMBER","Locked. Decoding Bitcoin cohort starts 16 Nov"],["FINAL LEVEL · MONTH 12","40+ developers trained, 8 fellows graduated, a new country"]];
+  const LV=[["LEVEL 1 · SEPTEMBER","Cleared. You are here."],["LEVEL 2 · OCTOBER","5 of 7 objectives cleared. See Level 2 results below."],["LEVEL 3 · NOVEMBER","Locked. Decoding Bitcoin cohort starts 16 Nov"],["FINAL LEVEL · MONTH 12","40+ developers trained, 8 fellows graduated, a new country"]];
   document.querySelectorAll('.lv').forEach((el,i)=>{el.tabIndex=0;el.setAttribute('role','button');
     const go=()=>{toast(LV[i][0],LV[i][1]);if(i>=2){el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake');beep(160,.18,'sawtooth')}else beep(660+i*120)};
     el.addEventListener('click',go);el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}})});
 
+  const gb=document.querySelector('.gbar');if(gb){if(RM||!('IntersectionObserver' in window))gb.classList.add('go');else{const gio=new IntersectionObserver(es=>{if(es[0].isIntersecting){gb.classList.add('go');gio.disconnect()}},{threshold:.4});gio.observe(gb)}}
   // achievements pop in
   const ach=$('ach');ach.querySelectorAll('.badge').forEach((b,i)=>b.style.setProperty('--i',i));
   if(!RM&&'IntersectionObserver' in window){ach.classList.add('armed');const io=new IntersectionObserver(es=>{if(es[0].isIntersecting){ach.classList.add('go');ach.querySelectorAll('.badge').forEach((b,i)=>setTimeout(()=>beep(700+i*60,.05),i*110));io.disconnect()}},{threshold:.3});io.observe(ach)}
