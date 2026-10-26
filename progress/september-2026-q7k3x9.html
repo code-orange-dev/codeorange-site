@@ -6,6 +6,14 @@
 <meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="referrer" content="no-referrer">
 <title>Code Orange Quest Log · September 2026</title>
+<meta name="description" content="Code Orange Dev School, September 2026: 9 sessions, 53+ people, 3 fellows, 94 merged PRs. Every number linked to proof.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Code Orange · Month 1 cleared">
+<meta property="og:description" content="9 sessions, 53+ people, 3 fellows, 94 merged PRs, a second city. Every number linked to proof.">
+<meta property="og:image" content="https://codeorange.dev/progress/s9/share.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://codeorange.dev/progress/s9/share.jpg">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
 /* Layout: an arcade "save file" for Month 1 — HUD on top, then world map (pipeline), party, quest log, achievements, boss tracker, next level. Single deliberate dark look. */
@@ -149,10 +157,76 @@ footer .px{font-size:9px;color:var(--orange)}
   .ach,.stages{grid-template-columns:1fr}
   .stat .v{font-size:18px}
 }
+/*v2*/
+/* press start */
+#boot{position:fixed;inset:0;z-index:50;background:#070504;display:grid;place-items:center;text-align:center;padding:24px;cursor:pointer;
+  background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.03) 0 1px,transparent 1px 3px),radial-gradient(circle at 50% 40%,rgba(247,147,26,.22),transparent 60%)}
+#boot.gone{opacity:0;visibility:hidden;transition:opacity .5s, visibility 0s .5s}
+#boot .logo{font-family:var(--f-pixel);font-size:clamp(22px,5vw,46px);line-height:1.4;color:var(--ink);text-shadow:4px 4px 0 #3a2c1e}
+#boot .logo span{color:var(--orange)}
+#boot .ps{font-family:var(--f-pixel);font-size:13px;color:var(--gold);margin-top:34px;animation:blink 1s steps(2) infinite}
+#boot .hint{font-family:var(--f-data);font-size:12px;color:var(--dim);margin-top:18px}
+#boot .coins{font-family:var(--f-data);font-size:12px;color:var(--dim);margin-top:40px}
+/* level select */
+.levels{display:flex;gap:10px;flex-wrap:wrap}
+.lv{font-family:var(--f-pixel);font-size:10px;padding:10px 12px;border:2px solid var(--line);background:var(--panel-2);color:var(--dim)}
+.lv.on{border-color:var(--orange);color:var(--ink);box-shadow:0 0 0 2px var(--void),0 0 0 4px var(--orange)}
+.lv.on b{color:var(--mint)}
+/* replay */
+.replay{display:grid;grid-template-columns:1.1fr 1fr;gap:20px;align-items:start}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.cal .dw{font-family:var(--f-data);font-size:10px;color:var(--dim);text-align:center}
+.cal .c{aspect-ratio:1;border:2px solid var(--line);background:#0f0b07;display:grid;place-items:center;font-family:var(--f-data);font-size:11px;color:#5b4834;position:relative;cursor:default}
+.cal .c.past{color:var(--dim)}
+.cal .c.ev{border-color:#5b4834}
+.cal .c.ev.past{background:var(--orange);color:#0b0907;border-color:var(--orange);cursor:pointer;font-weight:600}
+.cal .c.ev.irl.past{background:var(--mint);border-color:var(--mint)}
+.cal .c.now{outline:2px solid var(--gold);outline-offset:2px}
+.ctrl{display:flex;gap:12px;align-items:center;margin-top:14px}
+.ctrl input{flex:1;accent-color:var(--orange)}
+.btn{font-family:var(--f-pixel);font-size:10px;padding:10px 12px;background:var(--orange);color:#0b0907;border:0;cursor:pointer;box-shadow:3px 3px 0 #7a4a0d}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #7a4a0d}
+.screen{border:2px solid var(--line);background:#000;display:grid;gap:0}
+.screen .img{aspect-ratio:16/10;background:#0f0b07 center/cover no-repeat;border-bottom:2px solid var(--line);display:grid;place-items:center;font-family:var(--f-pixel);font-size:10px;color:#5b4834}
+.screen .cap{padding:12px;display:grid;gap:4px;min-height:84px}
+.screen .cap b{font-size:15px}
+.screen .cap span{font-size:13px;color:var(--dim)}
+.counters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.counters div{border:2px solid var(--line);padding:10px;background:var(--panel-2)}
+.counters b{display:block;font-family:var(--f-pixel);font-size:18px;color:var(--gold)}
+.counters span{font-size:12px;color:var(--dim)}
+/* proof wall */
+.wall{columns:4 200px;column-gap:10px}
+.wall button{all:unset;display:block;break-inside:avoid;margin:0 0 10px;border:2px solid var(--line);background:#000;cursor:pointer;position:relative;width:100%}
+.wall button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.wall img{display:block;width:100%;height:auto;filter:saturate(.95)}
+.wall button:hover img{filter:none}
+.wall .tag{position:absolute;left:6px;top:6px;font-family:var(--f-pixel);font-size:8px;background:rgba(11,9,7,.85);color:var(--gold);padding:5px 6px}
+#lb{position:fixed;inset:0;z-index:40;background:rgba(5,4,3,.94);display:none;place-items:center;padding:16px}
+#lb.open{display:grid}
+#lb figure{margin:0;max-width:min(960px,100%);display:grid;gap:10px}
+#lb img{max-width:100%;max-height:74vh;margin:0 auto;border:3px solid var(--line)}
+#lb figcaption{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;font-size:14px}
+#lb .x{position:absolute;top:12px;right:max(16px,env(safe-area-inset-right,0px))}
+/* video */
+.vid{aspect-ratio:16/9;border:2px solid var(--line);background:#000 center/cover no-repeat;display:grid;place-items:center;cursor:pointer;position:relative}
+.vid .play{font-family:var(--f-pixel);font-size:12px;background:var(--orange);color:#0b0907;padding:14px 16px;box-shadow:4px 4px 0 #7a4a0d}
+.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+@media (max-width:900px){.replay{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){#boot .ps{animation:none}#boot.gone{transition:none}}
+
 @media (prefers-reduced-motion:reduce){.xp i{transition:none}.blink{animation:none}}
 </style>
 </head>
 <body>
+<div id="boot" role="button" tabindex="0" aria-label="Press start to open the dashboard">
+  <div>
+    <div class="logo">CODE <span>ORANGE</span><br>QUEST LOG</div>
+    <div class="ps">▶ PRESS START</div>
+    <div class="hint">tap, click or press any key</div>
+    <div class="coins">SAVE FILE 01 · SEPTEMBER 2026 · 1 PLAYER = YOU</div>
+  </div>
+</div>
 
 
 <div class="wrap">
@@ -176,6 +250,14 @@ footer .px{font-size:9px;color:var(--orange)}
     </div>
   </section>
 
+
+  <nav class="levels" aria-label="Months">
+    <span class="lv on">LVL 1 · SEP <b>✓ CLEARED</b></span>
+    <span class="lv">LVL 2 · OCT · LOADING</span>
+    <span class="lv">LVL 3 · NOV · LOCKED</span>
+    <span class="lv">BOSS · MONTH 12</span>
+  </nav>
+
   <section aria-label="Stats" class="hud">
     <div class="stat"><span class="label">Sessions run</span><span class="v num">9</span><span class="k">Plan: 7+ a month. 6 online, 2 Bali, 1 Cebu</span></div>
     <div class="stat"><span class="label">Party size</span><span class="v num">53<small>+</small></span><span class="k">42 seats across 6 calls, plus 11+ in the Bali room</span></div>
@@ -185,6 +267,24 @@ footer .px{font-size:9px;color:var(--orange)}
     <div class="stat"><span class="label">Applications</span><span class="v num">4</span><span class="k">From India, the UK, Nigeria and more</span></div>
     <div class="stat"><span class="label">Newsletter opens</span><span class="v num">40.5<small>%</small></span><span class="k">Privacy Track launch to 79 subscribers</span></div>
     <div class="stat"><span class="label">X posts</span><span class="v num">61</span><span class="k">305 likes, 92 reposts in September</span></div>
+  </section>
+
+
+  <section class="panel" aria-labelledby="replay-h">
+    <h2 id="replay-h">Replay September</h2>
+    <p class="sub">Press play, or drag through the month. Lit squares are sessions: orange online, green in person. Tap one to see it.</p>
+    <div class="replay">
+      <div>
+        <div class="cal" id="cal"></div>
+        <div class="ctrl"><button class="btn" id="playBtn" type="button">▶ PLAY</button><input type="range" id="day" min="1" max="30" value="30" aria-label="Day of September"></div>
+        <div class="counters">
+          <div><b id="cS">9</b><span>sessions</span></div>
+          <div><b id="cP">53+</b><span>people counted</span></div>
+          <div><b id="cC">3</b><span>places: Discord, Bali, Cebu</span></div>
+        </div>
+      </div>
+      <div class="screen"><div class="img" id="scrImg"></div><div class="cap"><b id="scrT"></b><span id="scrS"></span><a id="scrA" href="#" target="_blank" rel="noopener">see the post ↗</a></div></div>
+    </div>
   </section>
 
   <section class="panel map" aria-labelledby="map-h">
@@ -259,6 +359,19 @@ footer .px{font-size:9px;color:var(--orange)}
     <div class="legend"><span><i class="pty"><i></i></i> Online, 1 person</span><span><i class="pty"><i class="irl"></i></i> In person, 1 person</span></div>
   </section>
 
+
+  <section class="panel" aria-labelledby="wall-h">
+    <h2 id="wall-h">Proof wall</h2>
+    <p class="sub">Straight from our public posts: live Discord calls, the rooms in Bali and Cebu, and the posters for every session. Tap any picture to open it, with a link to the original post.</p>
+    <div class="wall" id="wall"></div>
+  </section>
+
+  <section class="panel" aria-labelledby="vid-h">
+    <h2 id="vid-h">Watch a session</h2>
+    <p class="sub">The Self-Custody Workshop (18 Sep), the first upload on our new YouTube channel.</p>
+    <div class="vid" id="vid" role="button" tabindex="0" aria-label="Play the Self-Custody Workshop video" style="background-image:url(https://i.ytimg.com/vi/6nIOLQD_d5s/hqdefault.jpg)"><span class="play">▶ PLAY VIDEO</span></div>
+  </section>
+
   <section class="panel" aria-labelledby="ach-h">
     <h2 id="ach-h">Achievements unlocked</h2>
     <p class="sub">Things that exist now and didn't on 1 September.</p>
@@ -311,6 +424,99 @@ footer .px{font-size:9px;color:var(--orange)}
   </footer>
 </div>
 
+<div id="lb" role="dialog" aria-modal="true" aria-label="Photo"><button class="btn x" id="lbX" type="button">✕ CLOSE</button><figure><img id="lbI" alt=""><figcaption><span id="lbC"></span><a id="lbA" href="#" target="_blank" rel="noopener">open the post on X ↗</a></figcaption></figure></div>
+<script>
+(function(){
+  const U="https://x.com/CodeOrangeDevs/status/";
+  // press start
+  const boot=document.getElementById('boot');
+  let started=false;
+  function start(){if(started)return;started=true;boot.classList.add('gone');document.getElementById('xp').classList.add('ready');}
+  boot.addEventListener('click',start);addEventListener('keydown',e=>{if(!started){start();}});
+  try{if(sessionStorage.getItem('co-started')){start()}sessionStorage.setItem('co-started','1')}catch(e){}
+  boot.focus();
+
+  // sessions by day: [day, title, sub, irl, people, img, tweet]
+  const EV=[
+    [3,"Bitcoin Basics","Mining, difficulty, Proof of Work. 7 people on the call.",0,7,"basics","2095495035722809562"],
+    [9,"Sovereign Bitcoiner · Razor","RoboSats and KYC-free P2P trading. 6 people.",0,6,"robosats-1","2097874437769158953"],
+    [12,"Protocol Fundamentals · Maxima","Liquid vs Fedimint, sidechains. 5 people.",0,5,"protocol-1","2100047809890390514"],
+    [16,"Agentic Engineering · guest clearmined","Ark wallet and L402 payments for AI agents. 9 people.",0,9,"agentic-1","2100525120418873683"],
+    [18,"Self-Custody · Andy","Sparrow, passphrases, PGP, Silent Payments live. 6 people.",0,6,"custody-1","2101184634369577459"],
+    [22,"AI + Bitcoin meetup, Bali","Buzz by Block, Maple AI, agents paying with Ark + L402. 11+ in the room.",1,11,"bali-3","2102378775162024219"],
+    [23,"Reading Club · Alex","The Bitcoin Standard, network effects. 9 people.",0,9,"reading-1","2102939817051091045"],
+    [25,"Bitcoin Workshop, Bali","Hardware wallets and multisig.",1,0,"workshop-poster","2102959218777350633"],
+    [30,"Cebu Meetup #1 · Andy","Our first meetup in the Philippines.",1,0,"cebu","2103425294032121883"]
+  ];
+  const cal=document.getElementById('cal');
+  ['M','T','W','T','F','S','S'].forEach(d=>{const e=document.createElement('div');e.className='dw';e.textContent=d;cal.appendChild(e)});
+  // 1 Sep 2026 is a Tuesday
+  cal.appendChild(document.createElement('div'));
+  const cells={};
+  for(let d=1;d<=30;d++){const c=document.createElement('div');c.className='c';c.textContent=d;const ev=EV.find(e=>e[0]===d);
+    if(ev){c.classList.add('ev');if(ev[3])c.classList.add('irl');c.title=ev[1];c.addEventListener('click',()=>{if(+day.value>=d)show(ev)})}
+    cal.appendChild(c);cells[d]=c}
+  const day=document.getElementById('day');
+  const sImg=document.getElementById('scrImg'),sT=document.getElementById('scrT'),sS=document.getElementById('scrS'),sA=document.getElementById('scrA');
+  function show(ev){sImg.style.backgroundImage=`url(s9/${ev[5]}.jpg)`;sImg.textContent='';sT.textContent=`${ev[0]} Sep · ${ev[1]}`;sS.textContent=ev[2];sA.href=U+ev[6];sA.style.display=''}
+  function render(n){
+    let S=0,P=0,places=new Set(),last=null;
+    for(let d=1;d<=30;d++){cells[d].classList.toggle('past',d<=n);cells[d].classList.toggle('now',d===n)}
+    EV.forEach(e=>{if(e[0]<=n){S++;P+=e[4];places.add(e[3]?(e[0]===30?'Cebu':'Bali'):'Discord');last=e}});
+    document.getElementById('cS').textContent=S;document.getElementById('cP').textContent=P+(n>=22?'+':'');document.getElementById('cC').textContent=places.size;
+    if(last)show(last);else{sImg.style.backgroundImage='';sImg.textContent='NO SESSIONS YET';sT.textContent=n+' Sep';sS.textContent='The month is just starting.';sA.style.display='none'}
+  }
+  day.addEventListener('input',()=>{stop();render(+day.value)});
+  let timer=null;const pb=document.getElementById('playBtn');
+  function stop(){clearInterval(timer);timer=null;pb.textContent='▶ PLAY'}
+  pb.addEventListener('click',()=>{if(timer){stop();return}let n=+day.value>=30?0:+day.value;pb.textContent='❚❚ PAUSE';
+    timer=setInterval(()=>{n++;day.value=n;render(n);if(n>=30)stop()},matchMedia('(prefers-reduced-motion: reduce)').matches?60:260)});
+  render(30);
+
+  // proof wall: [img, tag, caption, tweet]
+  const PW=[
+    ["bali-1","22 SEP","AI + Bitcoin meetup at Bitcoin House Bali","2102378775162024219"],
+    ["basics","3 SEP","Bitcoin Basics, live on Discord","2095495035722809562"],
+    ["robosats-1","9 SEP","Sovereign Bitcoiner: a RoboSats trade, live","2097874437769158953"],
+    ["custody-poster","18 SEP","Self-Custody Workshop, hosted by Andy","2100447146072047806"],
+    ["protocol-2","12 SEP","Protocol Fundamentals: the session plan","2100047809890390514"],
+    ["bali-2","22 SEP","Agents paying in sats, demoed on a laptop","2102378775162024219"],
+    ["agentic-1","16 SEP","Agentic Engineering: AI agents betting in sats over Ark + L402","2100525120418873683"],
+    ["cebu","30 SEP","Cebu Meetup #1, our first in the Philippines","2103425294032121883"],
+    ["robosats-3","9 SEP","satsmonitor.org, vibe-coded by Razor for the session","2097874437769158953"],
+    ["privacy-poster","19 SEP","Privacy Track launch announced for 6 Oct","2101174813725426104"],
+    ["custody-1","18 SEP","Self-Custody Workshop on Discord","2101184634369577459"],
+    ["bali-4","22 SEP","Bitcoin House Bali, full room","2102378775162024219"],
+    ["reading-poster","23 SEP","Bitcoin Reading Club, hosted by Alex","2102600220752445608"],
+    ["protocol-1","12 SEP","Protocol Fundamentals: a Fedimint wallet on screen","2100047809890390514"],
+    ["review-poster","25 SEP","Code Review Club announced for 8 Oct","2103315077231464524"],
+    ["zaria","28 SEP","BitDevs Zaria (Nigeria) shows our online workshops","2104436274467917895"],
+    ["robosats-2","9 SEP","Learning RoboSats step by step","2097874437769158953"],
+    ["reading-1","23 SEP","Reading Club on Discord","2102939817051091045"],
+    ["sovereign-poster","9 SEP","Sovereign Bitcoiner Workshop, hosted by Razor","2097177813757399382"],
+    ["bali-3","22 SEP","Building with agents in Bali","2102378775162024219"],
+    ["protocol-poster","12 SEP","Protocol Fundamentals, hosted by Maxima","2098279034610495568"],
+    ["agentic-poster","16 SEP","Agentic Engineering Workshop poster","2100138502067507680"],
+    ["workshop-poster","25 SEP","Self-Custody workshop in Bali: the $5 wrench attack","2102959218777350633"],
+    ["basics-poster","3 SEP","Bitcoin Basics, hosted by The Quiet Satoshi","2095032874550583720"],
+    ["bali-poster","22 SEP","AI + Bitcoin meetup poster","2102317936342135236"]
+  ];
+  const wall=document.getElementById('wall');
+  PW.forEach(([im,tag,cap,tw])=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-label',cap);
+    b.innerHTML=`<img src="s9/${im}.jpg" alt="${cap}" loading="lazy" decoding="async"><span class="tag">${tag}</span>`;
+    b.addEventListener('click',()=>openLB(im,tag+' · '+cap,tw));wall.appendChild(b)});
+  const lb=document.getElementById('lb'),lbI=document.getElementById('lbI');let lastFocus=null;
+  function openLB(im,cap,tw){lastFocus=document.activeElement;lbI.src=`s9/${im}.jpg`;lbI.alt=cap;document.getElementById('lbC').textContent=cap;document.getElementById('lbA').href=U+tw;lb.classList.add('open');document.getElementById('lbX').focus()}
+  function closeLB(){lb.classList.remove('open');if(lastFocus)lastFocus.focus()}
+  document.getElementById('lbX').addEventListener('click',closeLB);lb.addEventListener('click',e=>{if(e.target===lb)closeLB()});
+  addEventListener('keydown',e=>{if(e.key==='Escape'&&lb.classList.contains('open'))closeLB()});
+
+  // video facade
+  const vid=document.getElementById('vid');
+  function playVid(){if(vid.querySelector('iframe'))return;vid.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/6nIOLQD_d5s?autoplay=1&rel=0" title="Self-Custody Workshop" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>'}
+  vid.addEventListener('click',playVid);vid.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();playVid()}});
+})();
+</script>
 <script>
 (function(){
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
