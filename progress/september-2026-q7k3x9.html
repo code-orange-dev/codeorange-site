@@ -5,797 +5,448 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="referrer" content="no-referrer">
-<title>Code Orange Quest Log · September 2026</title>
-<meta name="description" content="Code Orange Dev School, September 2026: 9 sessions, 53+ people, 3 fellows, 94 merged PRs. Every number linked to proof.">
+<title>Code Orange · September 2026 Progress</title>
+<meta name="description" content="Code Orange Dev School, September 2026: 9 sessions, 53+ people, 3 educator fellows, a second city. Every number linked to public proof.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Code Orange · Month 1 cleared">
-<meta property="og:description" content="9 sessions, 53+ people, 3 fellows, 94 merged PRs, a second city. Every number linked to proof.">
-<meta property="og:image" content="https://codeorange.dev/progress/s9/share.jpg">
+<meta property="og:title" content="Code Orange · September 2026 Progress">
+<meta property="og:description" content="9 sessions, 53+ people, 3 educator fellows and a second city in our first month. Every number linked to public proof.">
+<meta property="og:image" content="https://codeorange.dev/progress/s9/share-v2.jpg">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://codeorange.dev/progress/s9/share.jpg">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600&family=Doto:wght@700;900&display=swap">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+<meta name="twitter:image" content="https://codeorange.dev/progress/s9/share-v2.jpg">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon-co.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@500&display=swap">
 <style>
-/* Layout: an arcade "save file" for Month 1 — HUD on top, then world map (pipeline), party, quest log, achievements, boss tracker, next level. Single deliberate dark look. */
+/* Editorial progress report: video hero, then calm sections on near-black with one orange accent. */
 :root{
-  --void:#0b0907;          /* screen black, warm */
-  --panel:#16110c;         /* panel fill */
-  --panel-2:#1f1811;       /* raised */
-  --line:#3a2c1e;          /* pixel borders */
-  --ink:#f3e9dc;           /* main text */
-  --dim:#a8957f;           /* secondary text */
-  --orange:#f7931a;        /* bitcoin orange */
-  --gold:#ffcf5a;          /* xp / loot */
-  --mint:#6fe3a1;          /* cleared */
-  --sky:#7cc4ff;           /* in progress */
-  --rust:#e0694a;          /* locked / challenge */
-  --f-pixel:"Press Start 2P", ui-monospace, monospace;
-  --f-body:"Chakra Petch", system-ui, sans-serif;
-  --f-data:"JetBrains Mono", ui-monospace, monospace;
+  --bg:#0a0a0a; --bg-2:#111111; --card:#141414; --line:rgba(255,255,255,.09); --line-2:rgba(255,255,255,.16);
+  --text:#f5f5f5; --muted:#9a9a9a; --dim:#6b6b6b;
+  --orange:#f7931a; --orange-soft:rgba(247,147,26,.12); --green:#4ade80; --green-soft:rgba(74,222,128,.12); --blue:#7cb8ff; --blue-soft:rgba(124,184,255,.12);
+  --sans:"Inter","Segoe UI",system-ui,sans-serif; --serif:"Instrument Serif",Georgia,serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+  --gutter:max(20px, env(safe-area-inset-left,0px)); --gutter-r:max(20px, env(safe-area-inset-right,0px));
   color-scheme:dark;
 }
 *{box-sizing:border-box}
-body{background:var(--void);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;
-  background-image:radial-gradient(circle at 50% -10%, rgba(247,147,26,.16), transparent 55%),
-  repeating-linear-gradient(0deg, rgba(255,255,255,.018) 0 1px, transparent 1px 3px);}
-.wrap{max-width:1120px;margin:0 auto;padding-block:28px 64px;
-  padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px));
-  display:grid;gap:28px}
-a{color:var(--gold)}
-a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-.px{font-family:var(--f-pixel);letter-spacing:.02em}
-.label{font-family:var(--f-pixel);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
-.panel{background:var(--panel);border:3px solid var(--line);box-shadow:0 0 0 3px var(--void), 0 0 0 6px var(--line);padding:20px;min-width:0}
-h2{font-family:var(--f-pixel);font-size:13px;line-height:1.6;color:var(--orange);margin:0 0 4px;text-wrap:balance}
-.sub{color:var(--dim);margin:0 0 16px;font-size:14px}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:2px solid var(--orange);outline-offset:3px;border-radius:6px}
 .num{font-variant-numeric:tabular-nums}
+.container{max-width:1120px;margin:0 auto;padding-left:var(--gutter);padding-right:var(--gutter-r)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--orange)}
+.serif{font-family:var(--serif);font-style:italic;font-weight:400}
+section.block{padding:clamp(56px,9vw,104px) 0;border-top:1px solid var(--line)}
+.head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(20px,4vw,56px);align-items:end;margin-bottom:clamp(28px,4vw,44px)}
+.head h2{font-size:clamp(28px,3.6vw,44px);line-height:1.08;letter-spacing:-.025em;font-weight:600;margin:10px 0 0;text-wrap:balance}
+.head p{color:var(--muted);margin:0;max-width:52ch}
 
-/* title screen */
-.title{display:grid;grid-template-columns:1.3fr 1fr;gap:24px;align-items:center}
-.title h1{font-family:var(--f-pixel);font-size:clamp(20px,3.6vw,34px);line-height:1.35;margin:10px 0 14px;color:var(--ink);text-wrap:balance}
-.title h1 span{color:var(--orange)}
-.title p{color:var(--dim);margin:0;max-width:56ch}
-.save{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-.chip{font-family:var(--f-data);font-size:12px;border:2px solid var(--line);padding:4px 8px;color:var(--ink);background:var(--panel-2)}
-.chip b{color:var(--gold);font-weight:600}
-.lvl{display:grid;gap:12px}
-.lvl .big{font-family:var(--f-pixel);font-size:40px;color:var(--gold);line-height:1}
-.xp{height:22px;border:3px solid var(--line);background:#000;position:relative}
-.xp i{position:absolute;inset:0 auto 0 0;background:repeating-linear-gradient(90deg,var(--orange) 0 10px,#ffb347 10px 12px);width:0;transition:width 1.4s steps(18)}
-.xp.ready i{width:var(--w)}
-.xpmeta{display:flex;justify-content:space-between;font-family:var(--f-data);font-size:12px;color:var(--dim)}
+/* hero */
+.hero{position:relative;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;overflow:hidden;background:#000}
+.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.42}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,.15) 35%,rgba(0,0,0,.35) 70%,var(--bg))}
+.hero>*{position:relative;z-index:1}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px var(--gutter-r) 0 var(--gutter)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:600;letter-spacing:-.01em}
+.brand img{width:34px;height:34px;border-radius:50%;background:#fff;padding:6px}
+.topnav{display:flex;gap:4px;background:rgba(255,255,255,.08);border:1px solid var(--line-2);border-radius:999px;padding:4px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.topnav a{text-decoration:none;font-size:14px;color:#d6d6d6;padding:8px 14px;border-radius:999px;transition:background .2s,color .2s}
+.topnav a:hover{background:rgba(255,255,255,.1);color:#fff}
+.hero-body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:48px var(--gutter-r) 32px var(--gutter);max-width:1120px;width:100%;margin:0 auto}
+.hero h1{font-size:clamp(44px,8vw,104px);line-height:.98;letter-spacing:-.045em;font-weight:600;margin:18px 0 0;max-width:12ch}
+.hero h1 .serif{color:var(--orange);letter-spacing:-.02em}
+.hero .lede{font-size:clamp(17px,1.6vw,20px);color:#cfcfcf;max-width:56ch;margin:22px 0 0}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:600;font-size:15px;padding:13px 22px;border-radius:999px;transition:transform .2s,background .2s}
+.btn.primary{background:#fff;color:#000}
+.btn.primary:hover{transform:translateY(-1px)}
+.btn.ghost{border:1px solid var(--line-2);color:#fff;background:rgba(0,0,0,.25)}
+.btn.ghost:hover{background:rgba(255,255,255,.08)}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line-2);max-width:1120px;width:100%;margin:0 auto;padding:0 var(--gutter-r) 0 var(--gutter)}
+.kpi{padding:22px 18px 28px 0}
+.kpi+.kpi{padding-left:18px;border-left:1px solid var(--line)}
+.kpi b{display:block;font-size:clamp(32px,4vw,48px);font-weight:600;letter-spacing:-.035em;line-height:1}
+.kpi span{display:block;color:var(--muted);font-size:14px;margin-top:8px}
 
-/* HUD stats */
-.hud{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
-.stat{background:var(--panel-2);border:2px solid var(--line);padding:14px;display:grid;gap:6px;min-width:0}
-.stat .v{font-family:var(--f-pixel);font-size:22px;color:var(--ink)}
-.stat .v small{font-size:11px;color:var(--gold)}
-.stat .k{font-size:13px;color:var(--dim);line-height:1.35}
+/* summary */
+.summary{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,56px)}
+.summary .quote{font-size:clamp(22px,2.4vw,30px);line-height:1.3;letter-spacing:-.015em;margin:0;text-wrap:pretty}
+.summary .quote em{font-family:var(--serif);color:var(--orange)}
+.hl{display:grid;gap:14px;margin:0;padding:0;list-style:none}
+.hl li{display:grid;grid-template-columns:28px 1fr;gap:12px;color:#d9d9d9}
+.hl li span{font-family:var(--mono);font-size:12px;color:var(--orange);padding-top:4px}
 
-/* world map */
-.map{position:relative}
-.map canvas{width:100%;height:150px;display:block;image-rendering:pixelated;border:2px solid var(--line);background:#0f0b07}
-.stages{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:14px}
-.stage{border:2px solid var(--line);padding:12px;background:var(--panel-2);display:grid;gap:6px;align-content:start;min-width:0}
-.stage .st{font-family:var(--f-pixel);font-size:8px;padding:4px 6px;justify-self:start;color:#0b0907}
-.st.clear{background:var(--mint)} .st.open{background:var(--sky)} .st.lock{background:var(--rust)}
-.stage h3{margin:0;font-size:16px;font-weight:700}
-.stage p{margin:0;color:var(--dim);font-size:13px}
+/* plan table */
+.plan{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--bg-2)}
+.plan .row{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1.5fr) 130px;gap:20px;padding:18px 22px;align-items:center}
+.plan .row+.row{border-top:1px solid var(--line)}
+.plan .row.th{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);padding-top:14px;padding-bottom:14px}
+.plan .row b{font-weight:600}
+.plan .row p{margin:0;color:var(--muted);font-size:15px}
+.chip{justify-self:start;font-size:12px;font-weight:600;padding:5px 10px;border-radius:999px;white-space:nowrap}
+.chip.done{background:var(--green-soft);color:var(--green)}
+.chip.ahead{background:var(--orange-soft);color:var(--orange)}
+.chip.prog{background:var(--blue-soft);color:var(--blue)}
 
-/* party */
-.party{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.hero{border:2px solid var(--line);background:var(--panel-2);padding:16px;display:grid;gap:10px;align-content:start;min-width:0}
-.hero header{display:flex;gap:12px;align-items:center}
-.sprite{width:56px;height:56px;flex:none;image-rendering:pixelated;border:2px solid var(--line);background:#000}
-.hero h3{margin:0;font-family:var(--f-pixel);font-size:12px;line-height:1.5}
-.hero .cls{color:var(--gold);font-size:13px;font-weight:600}
-.bars{display:grid;gap:6px}
-.bar{display:grid;grid-template-columns:72px 1fr;gap:8px;align-items:center;font-family:var(--f-data);font-size:11px;color:var(--dim)}
-.bar span{height:10px;background:#000;border:1px solid var(--line);position:relative}
-.bar span i{position:absolute;inset:0 auto 0 0;background:var(--orange)}
-.hero ul{margin:0;padding-left:18px;font-size:13px;color:var(--ink);display:grid;gap:4px}
-.hero ul li::marker{content:"▸ ";color:var(--orange)}
+/* pillars */
+.pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.card .n{font-family:var(--mono);font-size:12px;color:var(--dim)}
+.card h3{margin:0;font-size:21px;letter-spacing:-.015em;font-weight:600}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.card ul{margin:4px 0 0;padding:0;list-style:none;display:grid;gap:8px;font-size:15px;color:#d9d9d9}
+.card ul li{padding-left:18px;position:relative}
+.card ul li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--orange)}
+.card a{color:#fff;text-decoration-color:rgba(255,255,255,.3);text-underline-offset:3px}
+.card a:hover{text-decoration-color:var(--orange)}
 
-/* quest log */
-.quests{display:grid;gap:8px}
-.q{display:grid;grid-template-columns:62px minmax(0,1.6fr) minmax(0,1fr) 150px;gap:12px;align-items:center;border:2px solid var(--line);background:var(--panel-2);padding:10px 12px}
-.q .d{font-family:var(--f-pixel);font-size:10px;color:var(--gold)}
-.q .t{font-weight:700}
-.q .t small{display:block;font-weight:400;color:var(--dim);font-size:13px}
-.q .w{font-size:13px;color:var(--dim)}
-.q .w a{font-size:12px}
-.pty{display:flex;gap:3px;flex-wrap:wrap;align-items:center}
-.pty i{width:9px;height:12px;background:var(--orange);display:inline-block;clip-path:polygon(25% 0,75% 0,75% 35%,100% 35%,100% 100%,0 100%,0 35%,25% 35%)}
-.pty i.irl{background:var(--mint)}
-.pty em{font-style:normal;font-family:var(--f-data);font-size:12px;color:var(--ink);margin-left:6px}
-.pty em.na{color:var(--dim)}
-.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--dim);margin-top:10px}
-.legend span{display:flex;gap:6px;align-items:center}
+/* sessions */
+.sess{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(20px,4vw,48px);align-items:start}
+.chart{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px}
+.chart h3{margin:0 0 4px;font-size:16px;font-weight:600}
+.chart .cap{color:var(--muted);font-size:13px;margin:0 0 18px}
+.bars{display:grid;gap:10px}
+.bar{display:grid;grid-template-columns:62px minmax(0,1fr) 36px;gap:12px;align-items:center;font-size:13px}
+.bar .d{color:var(--muted);font-family:var(--mono);font-size:12px}
+.bar .t{height:22px;background:rgba(255,255,255,.04);border-radius:6px;position:relative;overflow:hidden}
+.bar .t i{position:absolute;inset:0 auto 0 0;border-radius:6px;background:var(--orange);width:0;transition:width 1s cubic-bezier(.22,1,.36,1)}
+.bar .t i.irl{background:var(--green)}
+.bar .t em{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-style:normal;font-size:12px;color:#fff;font-weight:600;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.55)}
+.bar .t.na em{color:var(--dim)}
+.bar .v{text-align:right;font-weight:600}
+.legend{display:flex;gap:18px;margin-top:16px;font-size:13px;color:var(--muted)}
+.legend span{display:flex;align-items:center;gap:8px}
+.legend i{width:10px;height:10px;border-radius:3px;background:var(--orange)}
+.legend i.irl{background:var(--green)}
+.list{border-top:1px solid var(--line)}
+.item{display:grid;grid-template-columns:70px minmax(0,1fr) auto;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.item .d{font-family:var(--mono);font-size:13px;color:var(--orange)}
+.item b{font-weight:600;display:block}
+.item small{color:var(--muted);font-size:14px}
+.item a{font-size:13px;color:var(--muted);text-decoration:none;white-space:nowrap}
+.item a:hover{color:#fff}
 
-/* achievements */
-.ach{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.badge{border:2px solid var(--line);background:var(--panel-2);padding:12px;display:grid;grid-template-columns:40px 1fr;gap:10px;align-items:start;min-width:0}
-.badge canvas{width:40px;height:40px;image-rendering:pixelated}
-.badge b{display:block;font-size:14px;line-height:1.3}
-.badge p{margin:2px 0 0;font-size:12px;color:var(--dim)}
-.badge a{font-size:12px}
+/* fellows */
+.fellows{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.person{display:flex;gap:14px;align-items:center}
+.avatar{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-weight:600;font-size:18px;color:#0a0a0a;flex:none}
+.person b{display:block;font-size:19px;letter-spacing:-.01em}
+.person div>span{color:var(--orange);font-size:14px}
 
-/* boss tracker + loot */
-.two{display:grid;grid-template-columns:1.2fr 1fr;gap:28px}
-.boss{display:grid;gap:12px}
-.boss .row{display:grid;gap:6px}
-.boss .row div:first-child{display:flex;justify-content:space-between;gap:10px;font-size:14px}
-.boss .row div:first-child span{font-family:var(--f-data);font-size:12px;color:var(--dim);white-space:nowrap}
-.hp{height:14px;border:2px solid var(--line);background:#000;position:relative}
-.hp i{position:absolute;inset:0 auto 0 0}
-.loot{display:grid;gap:10px}
-.loot .it{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:baseline;font-size:14px}
-.loot .it b{font-family:var(--f-pixel);font-size:12px;color:var(--gold);white-space:nowrap}
-.reach{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+/* reach */
+.reach{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.metric{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;display:grid;gap:6px;align-content:start}
+.metric b{font-size:clamp(28px,3vw,38px);font-weight:600;letter-spacing:-.03em;line-height:1.05}
+.metric span{color:var(--muted);font-size:14px}
+.notice{margin-top:16px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.notice blockquote{margin:0;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px}
+.notice blockquote p{font-family:var(--serif);font-style:italic;font-size:24px;line-height:1.3;margin:0 0 10px}
+.notice blockquote footer{color:var(--muted);font-size:14px}
+.notice a{color:var(--muted)}
 
-/* next level */
-.next{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.next div{border:2px dashed var(--line);padding:12px;font-size:14px}
-.next div b{display:block;font-family:var(--f-pixel);font-size:9px;color:var(--sky);margin-bottom:6px;letter-spacing:.06em}
+/* gallery */
+.gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:180px;grid-auto-flow:dense;gap:10px}
+.gallery button{all:unset;cursor:pointer;position:relative;border-radius:12px;overflow:hidden;background:#000;border:1px solid var(--line)}
+.gallery button:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.gallery button.w{grid-column:span 2}.gallery button.h{grid-row:span 2}
+.gallery img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s,opacity .3s;opacity:.92}
+.gallery button:hover img{transform:scale(1.03);opacity:1}
+.gallery .c{position:absolute;left:0;right:0;bottom:0;padding:28px 12px 10px;background:linear-gradient(transparent,rgba(0,0,0,.8));font-size:12px;color:#e5e5e5}
+.gallery .c b{font-family:var(--mono);font-weight:500;color:var(--orange);margin-right:6px}
+#lb{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.92);display:none;place-items:center;padding:16px var(--gutter-r) 16px var(--gutter)}
+#lb.open{display:grid}
+#lb figure{margin:0;max-width:min(980px,100%);display:grid;gap:12px}
+#lb img{max-width:100%;max-height:76vh;margin:0 auto;border-radius:12px}
+#lb figcaption{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:14px;color:#ddd}
+#lb figcaption a{color:var(--orange)}
+#lb .x{position:absolute;top:14px;right:var(--gutter-r);background:#fff;color:#000;border:0;border-radius:999px;padding:9px 16px;font-weight:600;font-family:var(--sans);cursor:pointer}
 
-footer{color:var(--dim);font-size:12px;text-align:center;display:grid;gap:6px}
-footer .px{font-size:9px;color:var(--orange)}
-.blink{animation:blink 1.1s steps(2) infinite}
-@keyframes blink{50%{opacity:.25}}
+/* video + built */
+.split{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:16px}
+.vid{aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#000 center/cover no-repeat;position:relative;cursor:pointer;border:1px solid var(--line)}
+.vid::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.35)}
+.vid .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:10px;background:#fff;color:#000;font-weight:600;padding:12px 20px;border-radius:999px}
+.vid .meta{position:absolute;left:18px;bottom:16px;font-size:14px;color:#fff}
+.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.built{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.built li{display:grid;grid-template-columns:72px 1fr;gap:14px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--line)}
+.built li b{font-size:22px;font-weight:600;letter-spacing:-.02em;color:var(--orange)}
+.built li span{color:#d4d4d4;font-size:15px}
+.built a{color:#fff;text-underline-offset:3px;text-decoration-color:rgba(255,255,255,.3)}
+
+/* milestones */
+.ms{display:grid;gap:18px}
+.ms .r{display:grid;gap:8px}
+.ms .top{display:flex;justify-content:space-between;gap:16px;font-size:15px}
+.ms .top span{color:var(--muted);font-size:14px;text-align:right}
+.track{height:6px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden}
+.track i{display:block;height:100%;border-radius:99px;width:0;transition:width 1.2s cubic-bezier(.22,1,.36,1)}
+.next{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:40px}
+
+footer.site{border-top:1px solid var(--line);padding:36px 0 48px;color:var(--dim);font-size:13px}
+footer.site .container{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}
+.reveal.in{opacity:1;transform:none}
 
 @media (max-width:900px){
-  .title,.two{grid-template-columns:1fr}
-  .hud{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .stages{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .party{grid-template-columns:1fr}
-  .ach{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .next{grid-template-columns:1fr}
-  .q{grid-template-columns:54px minmax(0,1fr);}
-  .q .w,.q .pty{grid-column:2}
+  .head,.summary,.sess,.split{grid-template-columns:1fr}
+  .pillars,.fellows,.next{grid-template-columns:1fr}
+  .reach{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .notice{grid-template-columns:1fr}
+  .gallery{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:150px}
+  .topnav{display:none}
+  .plan .row{grid-template-columns:1fr;gap:6px}
+  .plan .row.th{display:none}
 }
-@media (max-width:480px){
-  .ach,.stages{grid-template-columns:1fr}
-  .stat .v{font-size:18px}
+@media (max-width:640px){
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kpi:nth-child(3){padding-left:0;border-left:0}
+  .kpi:nth-child(n+3){border-top:1px solid var(--line)}
+  .item{grid-template-columns:56px minmax(0,1fr)}
+  .item a{grid-column:2}
 }
-/*v2*/
-/* ===== video hero ===== */
-.hx{--bg:#000;--text:#fff;--muted:#8e8e8e;--nav-text:#2e2e2e;--pill-dark:#28282a;--sign-in-text:#c8c8c8;--nav-shadow:0 4px 14px rgba(0,0,0,.16);
-  --trust-bg:#28282a;--trust-border:rgba(255,255,255,.4);--trust-text:#c4c2c3;--font-sans:"Inter","Segoe UI",system-ui,sans-serif;--font-display:"Doto","Geist Pixel Circle",monospace;
-  position:relative;height:100vh;height:100dvh;min-height:560px;overflow:hidden;background:#000;color:#fff;font-family:var(--font-sans);-webkit-font-smoothing:antialiased}
-.hx .bg{position:absolute;inset:0;background:#000;overflow:hidden}
-.hx .bg-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;z-index:0;opacity:.55}
-.hx .bg::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,.15),rgba(0,0,0,.7) 75%),linear-gradient(180deg,rgba(0,0,0,.35),transparent 30%,transparent 70%,rgba(11,9,7,1))}
-.hx .page{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;height:100%;
-  padding:clamp(16px,2.4vh,28px) max(clamp(14px,3vw,32px),env(safe-area-inset-right,0px)) clamp(16px,2.4vh,28px) max(clamp(14px,3vw,32px),env(safe-area-inset-left,0px))}
-.hx header{position:relative;z-index:33;display:flex;align-items:center;justify-content:center;gap:clamp(18px,2.8vw,28px);width:100%;max-width:720px;flex-shrink:0;animation:hxDown .7s cubic-bezier(.22,1,.36,1) both}
-.hx .logo{width:clamp(40px,4.4vw,46px);height:clamp(40px,4.4vw,46px);border-radius:50%;background:#fff;box-shadow:var(--nav-shadow);display:grid;place-items:center;flex:none;transition:transform .25s}
-.hx .logo:hover{transform:scale(1.04)}
-.hx .logo img{width:72%;height:72%;object-fit:contain}
-.hx nav.pill{flex:1;max-width:430px;height:clamp(44px,5.2vw,48px);background:#fff;border-radius:999px;box-shadow:var(--nav-shadow);padding:4px 8px;display:flex;align-items:center;justify-content:space-around}
-.hx nav.pill a{position:relative;color:var(--nav-text);text-decoration:none;font-weight:500;font-size:clamp(13px,1.4vw,15px);letter-spacing:-.01em;opacity:.5;padding:8px 6px;transition:opacity .2s}
-.hx nav.pill a:hover{opacity:.75}
-.hx nav.pill a.active{opacity:1}
-.hx nav.pill a.active::after,.hx .sheet a.active::after{content:"";position:absolute;left:50%;bottom:5px;width:3px;height:3px;margin-left:-1.5px;background:#000;border-radius:50%;box-shadow:-5px 0 0 #000,5px 0 0 #000}
-.hx .signin{height:clamp(44px,5.2vw,48px);display:inline-flex;align-items:center;padding:0 22px;border-radius:999px;background:var(--pill-dark);color:var(--sign-in-text);text-decoration:none;font-weight:500;font-size:clamp(13px,1.4vw,15px);box-shadow:var(--nav-shadow);transition:all .2s;white-space:nowrap}
-.hx .signin:hover{background:#323234;color:#fff;transform:translateY(-1px)}
-.hx .burger{display:none}
-.hx .hero-c{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;max-width:900px;width:100%}
-.hx .trust{--trust-size:clamp(36px,4.5vw,42px);display:inline-flex;align-items:center;margin-bottom:clamp(16px,2.5vh,26px)}
-.hx .av{width:var(--trust-size);height:var(--trust-size);border-radius:50%;background:var(--trust-bg);border:1px solid var(--trust-border);padding:5px;position:relative;transition:transform .35s}
-.hx .av i{width:100%;height:100%;border-radius:50%;background:#fff;color:#111;display:grid;place-items:center;font-size:calc(var(--trust-size)*.34)}
-.hx .av+.av{margin-left:calc(var(--trust-size)*-.42)}
-.hx .av.a1{z-index:1}.hx .av.a2{z-index:2}.hx .av.a3{z-index:4}
-.hx .trust:hover .a1{transform:translateY(-2px)}.hx .trust:hover .a2{transform:translateY(-4px)}.hx .trust:hover .a3{transform:translateY(-2px)}
-.hx .tpill{height:var(--trust-size);display:inline-flex;align-items:center;background:var(--trust-bg);border:1px solid var(--trust-border);border-radius:999px;margin-left:calc(var(--trust-size)*-.42);padding:0 16px 0 calc(var(--trust-size)*.58);color:var(--trust-text);font-weight:500;font-size:clamp(12px,1.4vw,13.5px);z-index:3;white-space:nowrap}
-.hx h1{font-family:var(--font-display);font-weight:900;color:#fff;font-size:clamp(28px,6.6vw,84px);letter-spacing:-.04em;line-height:1.08;margin:0;white-space:nowrap;overflow:hidden}
-.hx h1 span{display:block;opacity:0;transform:translateY(14px);animation:hxFade .85s cubic-bezier(.22,1,.36,1) forwards}
-.hx h1 span:nth-child(1){animation-delay:.12s}.hx h1 span:nth-child(2){animation-delay:.3s;color:#F7931A}
-.hx .subh{max-width:min(520px,92%);font-size:clamp(calc(13.5px + 2pt),calc(1.55vw + 2pt),calc(16.5px + 2pt));color:#d0d0d0;opacity:.8;line-height:1.55;font-weight:400;margin:clamp(14px,2.2vh,22px) 0 clamp(18px,3vh,30px)}
-.hx .cta{display:inline-block;background:#fff;color:#000;text-decoration:none;font-weight:600;font-size:clamp(13.5px,1.5vw,14.5px);padding:clamp(11px,1.6vh,13px) clamp(22px,3vw,28px);border-radius:999px;
-  box-shadow:0 0 0 1px rgba(255,255,255,.15),0 0 22px rgba(255,255,255,.32),0 0 44px rgba(255,255,255,.12);transition:transform .25s,box-shadow .25s}
-.hx .cta:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 0 0 1px rgba(255,255,255,.25),0 0 30px rgba(255,255,255,.45),0 0 60px rgba(247,147,26,.3)}
-.hx .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;width:100%;max-width:920px;flex-shrink:0}
-.hx .st4{display:grid;justify-items:center;gap:4px;text-align:center}
-.hx .st4 .ic{font-family:var(--font-display);font-weight:900;font-size:clamp(22px,3vw,33px);color:#F7931A;line-height:1}
-.hx .st4 .val{font-size:clamp(18px,2.2vw,26px);letter-spacing:-.025em;font-variant-numeric:tabular-nums;font-weight:500}
-.hx .st4 .lab{color:var(--muted);font-size:clamp(11px,1.2vw,12.5px)}
-.hx .anim{opacity:0;transform:translateY(22px) scale(.98);filter:blur(6px);animation:hxReveal .85s cubic-bezier(.22,1,.36,1) forwards;animation-delay:var(--d,0s)}
-.hx .cta.anim{animation-name:hxPulse}
-.hx .scrollhint{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);font-family:var(--f-data);font-size:10px;color:#8e8e8e;z-index:1}
-@keyframes hxDown{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:none}}
-@keyframes hxFade{to{opacity:1;transform:none}}
-@keyframes hxReveal{to{opacity:1;transform:none;filter:none}}
-@keyframes hxPulse{0%{opacity:0;transform:translateY(22px) scale(.98);filter:blur(6px)}70%{opacity:1;transform:none;filter:none}85%{transform:scale(1.04)}100%{opacity:1;transform:none;filter:none}}
-/* mobile menu */
-.hx .ovl{position:fixed;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:30;animation:hxOv .28s ease both}
-.hx .sheet{position:fixed;top:88px;left:16px;right:16px;max-width:420px;margin:0 auto;background:#fff;border-radius:28px;padding:22px 18px 20px;box-shadow:0 20px 60px rgba(0,0,0,.45);z-index:31;display:grid;gap:4px;animation:hxMenu .38s cubic-bezier(.22,1,.36,1) both}
-.hx .sheet a{position:relative;color:#2e2e2e;text-decoration:none;font-weight:500;font-size:17px;padding:12px 10px;text-align:center;opacity:0;animation:hxLink .4s cubic-bezier(.22,1,.36,1) forwards}
-.hx .sheet a.active::after{bottom:8px}
-.hx .sheet a.dark{background:#28282a;color:#fff;border-radius:999px;margin-top:8px}
-.hx .ovl[hidden],.hx .sheet[hidden]{display:none}
-@keyframes hxOv{from{opacity:0}}
-@keyframes hxMenu{from{opacity:0;transform:translateY(-10px) scale(.97)}}
-@keyframes hxLink{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-@media (max-width:720px){
-  .hx nav.pill,.hx .signin.desk{display:none}
-  .hx header{justify-content:space-between}
-  .hx .logo{width:48px;height:48px}
-  .hx .burger{display:grid;place-content:center;gap:5px;width:48px;height:48px;border-radius:50%;background:#28282a;border:0;cursor:pointer;position:relative;z-index:32}
-  .hx .burger span{display:block;width:18px;height:1.5px;background:#fff;transition:transform .3s,opacity .3s}
-  .hx .burger[aria-expanded="true"]{background:#fff}
-  .hx .burger[aria-expanded="true"] span{background:#000}
-  .hx .burger[aria-expanded="true"] span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
-  .hx .burger[aria-expanded="true"] span:nth-child(2){opacity:0}
-  .hx .burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
-  .hx h1{font-size:clamp(30px,9.2vw,64px);letter-spacing:-.06em;line-height:1.05}
-  .hx .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 10px}
-}
-@media (max-width:420px){.hx .trust{--trust-size:34px}.hx .tpill{font-size:12px}.hx h1{letter-spacing:-.07em;line-height:1.04}}
-@media (max-height:700px){.hx .subh{margin:10px 0 16px}.hx .trust{margin-bottom:12px}}
-/* flip cards */
-.flip{perspective:1400px;min-width:0}
-.flip-in{display:grid;transition:transform .7s cubic-bezier(.22,1,.36,1);transform-style:preserve-3d;height:100%}
-.flip.on .flip-in{transform:rotateY(180deg)}
-.flip-in>.hero{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden}
-.flip-in>.back{transform:rotateY(180deg)}
-.fbtn{all:unset;cursor:pointer;font-family:var(--f-pixel);font-size:8px;color:var(--gold);border:2px solid var(--line);padding:6px 8px;justify-self:start;margin-top:auto}
-.fbtn:focus-visible{outline:2px solid var(--gold)}
-.back h4{margin:0;font-family:var(--f-pixel);font-size:10px;color:var(--orange)}
-.back ol{margin:0;padding-left:20px;display:grid;gap:6px;font-size:13px}
-.back ol li span{color:var(--dim);font-size:12px}
-.live{font-family:var(--f-data);font-size:10px;color:var(--mint)}
-/* high scores */
-.hs{display:grid;gap:6px;font-family:var(--f-data);font-size:13px}
-.hs .r{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 10px;border:2px solid var(--line);background:var(--panel-2)}
-.hs .r:nth-child(1){border-color:var(--gold)}.hs .r:nth-child(2){border-color:#c9c9c9}.hs .r:nth-child(3){border-color:#c47f3c}
-.hs .rk{font-family:var(--f-pixel);font-size:10px;color:var(--gold)}
-.hs .bar2{height:8px;background:#000;border:1px solid var(--line);margin-top:4px}
-.hs .bar2 i{display:block;height:100%;background:var(--orange)}
-.hs .sc{font-family:var(--f-pixel);font-size:11px;color:var(--ink)}
-@media (prefers-reduced-motion:reduce){.hx *,.hx .anim,.hx h1 span{animation:none!important;opacity:1!important;transform:none!important;filter:none!important}.flip-in{transition:none}}
-
-/* level select */
-.levels{display:flex;gap:10px;flex-wrap:wrap}
-.lv{font-family:var(--f-pixel);font-size:10px;padding:10px 12px;border:2px solid var(--line);background:var(--panel-2);color:var(--dim)}
-.lv.on{border-color:var(--orange);color:var(--ink);box-shadow:0 0 0 2px var(--void),0 0 0 4px var(--orange)}
-.lv.on b{color:var(--mint)}
-/* replay */
-.replay{display:grid;grid-template-columns:1.1fr 1fr;gap:20px;align-items:start}
-.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
-.cal .dw{font-family:var(--f-data);font-size:10px;color:var(--dim);text-align:center}
-.cal .c{aspect-ratio:1;border:2px solid var(--line);background:#0f0b07;display:grid;place-items:center;font-family:var(--f-data);font-size:11px;color:#5b4834;position:relative;cursor:default}
-.cal .c.past{color:var(--dim)}
-.cal .c.ev{border-color:#5b4834}
-.cal .c.ev.past{background:var(--orange);color:#0b0907;border-color:var(--orange);cursor:pointer;font-weight:600}
-.cal .c.ev.irl.past{background:var(--mint);border-color:var(--mint)}
-.cal .c.now{outline:2px solid var(--gold);outline-offset:2px}
-.ctrl{display:flex;gap:12px;align-items:center;margin-top:14px}
-.ctrl input{flex:1;accent-color:var(--orange)}
-.btn{font-family:var(--f-pixel);font-size:10px;padding:10px 12px;background:var(--orange);color:#0b0907;border:0;cursor:pointer;box-shadow:3px 3px 0 #7a4a0d}
-.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #7a4a0d}
-.screen{border:2px solid var(--line);background:#000;display:grid;gap:0}
-.screen .img{aspect-ratio:16/10;background:#0f0b07 center/cover no-repeat;border-bottom:2px solid var(--line);display:grid;place-items:center;font-family:var(--f-pixel);font-size:10px;color:#5b4834}
-.screen .cap{padding:12px;display:grid;gap:4px;min-height:84px}
-.screen .cap b{font-size:15px}
-.screen .cap span{font-size:13px;color:var(--dim)}
-.counters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
-.counters div{border:2px solid var(--line);padding:10px;background:var(--panel-2)}
-.counters b{display:block;font-family:var(--f-pixel);font-size:18px;color:var(--gold)}
-.counters span{font-size:12px;color:var(--dim)}
-/* proof wall */
-.wall{columns:4 200px;column-gap:10px}
-.wall button{all:unset;display:block;break-inside:avoid;margin:0 0 10px;border:2px solid var(--line);background:#000;cursor:pointer;position:relative;width:100%}
-.wall button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-.wall img{display:block;width:100%;height:auto;filter:saturate(.95)}
-.wall button:hover img{filter:none}
-.wall .tag{position:absolute;left:6px;top:6px;font-family:var(--f-pixel);font-size:8px;background:rgba(11,9,7,.85);color:var(--gold);padding:5px 6px}
-#lb{position:fixed;inset:0;z-index:40;background:rgba(5,4,3,.94);display:none;place-items:center;padding:16px}
-#lb.open{display:grid}
-#lb figure{margin:0;max-width:min(960px,100%);display:grid;gap:10px}
-#lb img{max-width:100%;max-height:74vh;margin:0 auto;border:3px solid var(--line)}
-#lb figcaption{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;font-size:14px}
-#lb .x{position:absolute;top:12px;right:max(16px,env(safe-area-inset-right,0px))}
-/* video */
-.vid{aspect-ratio:16/9;border:2px solid var(--line);background:#000 center/cover no-repeat;display:grid;place-items:center;cursor:pointer;position:relative}
-.vid .play{font-family:var(--f-pixel);font-size:12px;background:var(--orange);color:#0b0907;padding:14px 16px;box-shadow:4px 4px 0 #7a4a0d}
-.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-@media (max-width:900px){.replay{grid-template-columns:1fr}}
-
-
-@media (prefers-reduced-motion:reduce){.xp i{transition:none}.blink{animation:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}.bar .t i,.track i{transition:none}.hero video{display:none}}
 </style>
 </head>
 <body>
-<div class="hx" id="top">
-  <div class="bg"><video class="bg-video" autoplay muted loop playsinline poster="/assets/co-hero-first.jpg"><source src="/assets/co-hero-720.webm" type="video/webm"><source src="/assets/co-hero-720.mp4" type="video/mp4"></video></div>
-  <div class="page">
-    <header>
-      <a class="logo" href="#top" aria-label="Code Orange, top of page"><img src="/assets/favicon-co.svg" alt="" width="52" height="52"></a>
-      <nav class="pill" aria-label="Sections">
-        <a href="#top" class="active">Home</a><a href="#replay-h">Replay</a><a href="#wall-h">Proof</a><a href="#party-h">Fellows</a>
-      </nav>
-      <a class="signin desk" href="#vid-h">Watch a session</a>
-      <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="sheet"><span></span><span></span><span></span></button>
-    </header>
-    <div class="ovl" hidden></div>
-    <nav class="sheet" id="sheet" hidden aria-label="Menu">
-      <a href="#top" class="active" style="animation-delay:.05s">Home</a><a href="#replay-h" style="animation-delay:.1s">Replay</a><a href="#wall-h" style="animation-delay:.15s">Proof</a><a href="#party-h" style="animation-delay:.2s">Fellows</a><a href="#vid-h" class="dark" style="animation-delay:.25s">Watch a session</a>
+
+<header class="hero" id="top">
+  <video autoplay muted loop playsinline poster="/assets/co-hero-first.jpg" aria-hidden="true"><source src="/assets/co-hero-720.webm" type="video/webm"><source src="/assets/co-hero-720.mp4" type="video/mp4"></video>
+  <div class="topbar">
+    <a class="brand" href="#top"><img src="/assets/favicon-co.svg" alt="" width="34" height="34">Code Orange Dev School</a>
+    <nav class="topnav" aria-label="Sections">
+      <a href="#summary">Summary</a><a href="#sessions">Sessions</a><a href="#fellows">Fellows</a><a href="#reach">Reach</a><a href="#proof">Proof</a><a href="#next">Next</a>
     </nav>
-    <main class="hero-c">
-      <div class="trust anim" style="--d:.05s"><span class="av a1"><i class="fa-brands fa-bitcoin"></i></span><span class="av a2"><i class="fa-brands fa-github"></i></span><span class="av a3"><i class="fa-brands fa-discord"></i></span><span class="tpill">Every number linked to public proof</span></div>
-      <h1><span>Code Orange</span><span>Month 1 Cleared</span></h1>
-      <p class="subh anim" style="--d:.28s">From first workshop to first merged PR. Our September in one page: every session, every fellow, every pull request.</p>
-      <a class="cta anim" href="#lvl" style="--d:.4s">▶ Press Start</a>
-    </main>
-    <section class="stats" aria-label="Headline numbers">
-      <div class="st4 anim" style="--d:.5s"><span class="ic">&lt;</span><span class="val" data-to="9" data-suf="">9</span><span class="lab">Sessions in September</span></div>
-      <div class="st4 anim" style="--d:.58s"><span class="ic">@</span><span class="val" data-to="53" data-suf="+">53+</span><span class="lab">People counted</span></div>
-      <div class="st4 anim" style="--d:.66s"><span class="ic">*</span><span class="val" data-to="3" data-suf="">3</span><span class="lab">Educator fellows</span></div>
-      <div class="st4 anim" style="--d:.74s"><span class="ic">#</span><span class="val" data-to="94" data-suf="" data-live="merged">94</span><span class="lab">Merged PRs <span class="live" data-live-short></span></span></div>
-    </section>
   </div>
-</div>
-<div class="wrap">
+  <div class="hero-body">
+    <div class="eyebrow">Progress report · September 2026</div>
+    <h1>Month one, <span class="serif">delivered.</span></h1>
+    <p class="lede">Our first month of the Bitcoin Privacy Developer Track program: the sessions we ran, the fellows who now lead them, and the groundwork for the Privacy Track. Every number links to public proof.</p>
+    <div class="hero-actions"><a class="btn primary" href="#summary">Read the summary ↓</a><a class="btn ghost" href="#proof">See the proof</a></div>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><b class="num" data-to="9">9</b><span>Sessions run</span></div>
+    <div class="kpi"><b class="num" data-to="53" data-suf="+">53+</b><span>People counted</span></div>
+    <div class="kpi"><b class="num" data-to="3">3</b><span>Educator fellows</span></div>
+    <div class="kpi"><b class="num" data-to="2">2</b><span>Cities: Bali and Cebu</span></div>
+  </div>
+</header>
 
-  <section class="panel title" aria-label="Save file">
-    <div>
-      <div class="label">Progress report · save file 01 · September 2026</div>
-      <h1>Code Orange<br><span>Month 1 cleared</span></h1>
-      <p>Our September, as a quest log: who joined the party, which levels opened, and what we unlocked. Every number links to public proof.</p>
-      <div class="save">
-        <span class="chip">World <b>Bali · Cebu · Discord</b></span>
-        <span class="chip">Start <b>1 Sep 2026</b></span>
+<main>
+  <section class="block" id="summary">
+    <div class="container">
+      <div class="summary reveal">
+        <div>
+          <div class="eyebrow">Summary</div>
+          <p class="quote" style="margin-top:14px">September was about building the foundation: <em>three fellows now run programs</em>, the Privacy Track is written and announced, and Code Orange opened a second city.</p>
+        </div>
+        <ol class="hl">
+          <li><span>01</span>Three educator fellows took ownership of programs, so the school no longer depends on one teacher.</li>
+          <li><span>02</span>Privacy Track Season One curriculum rewritten around Silent Payments, with new open-source labs. Code Review Club announced alongside it.</li>
+          <li><span>03</span>Nine sessions in one month, against a plan of seven, across Discord, Bali and Cebu.</li>
+          <li><span>04</span>A second city, Cebu in the Philippines, opened in month one. Our plan expected a new country in months 10 to 12.</li>
+        </ol>
+      </div>
+
+      <div class="plan reveal" style="margin-top:48px" role="table" aria-label="Plan against delivery">
+        <div class="row th" role="row"><span>Plan for months 1–3</span><span>End of September</span><span>Status</span></div>
+        <div class="row" role="row"><b>Privacy Track, Sessions 1–6: foundations and Silent Payments</b><p>Curriculum and labs complete. Session 1 ran on 6 October.</p><span class="chip prog">On track</span></div>
+        <div class="row" role="row"><b>Onboard Fellowship Cohort 1</b><p>Three educator fellows started. First developer fellow joined in October.</p><span class="chip prog">On track</span></div>
+        <div class="row" role="row"><b>7+ monthly workshops feeding the track</b><p>Nine sessions delivered: six online, two in Bali, one in Cebu.</p><span class="chip done">Done</span></div>
+        <div class="row" role="row"><b>Sessions in a new country (planned months 10–12)</b><p>First Cebu meetup on 30 September.</p><span class="chip ahead">Ahead of plan</span></div>
       </div>
     </div>
-    <div class="lvl">
-      <div class="label">Months 1–3 milestones</div>
-      <div class="big num">3<span style="font-size:16px;color:var(--dim)"> / 6</span></div>
-      <div class="xp" id="xp" style="--w:70%"><i></i></div>
-      <div class="xpmeta"><span>3 done · 2 on track · 1 due Month 3</span><span>XP 70%</span></div>
-      <div class="label blink" style="color:var(--gold)">▶ Level 2 loading: October</div>
-    </div>
   </section>
 
-
-  <nav class="levels" id="lvl" aria-label="Months">
-    <span class="lv on">LVL 1 · SEP <b>✓ CLEARED</b></span>
-    <span class="lv">LVL 2 · OCT · LOADING</span>
-    <span class="lv">LVL 3 · NOV · LOCKED</span>
-    <span class="lv">BOSS · MONTH 12</span>
-  </nav>
-
-  <section aria-label="Stats" class="hud">
-    <div class="stat"><span class="label">Sessions run</span><span class="v num">9</span><span class="k">Plan: 7+ a month. 6 online, 2 Bali, 1 Cebu</span></div>
-    <div class="stat"><span class="label">Party size</span><span class="v num">53<small>+</small></span><span class="k">42 seats across 6 calls, plus 11+ in the Bali room</span></div>
-    <div class="stat"><span class="label">Educator fellows</span><span class="v num">3</span><span class="k">Razor, Alex, Andy each run a program</span></div>
-    <div class="stat"><span class="label">Merged PRs</span><span class="v num" data-live="merged">94</span><span class="k">Every one linked and checked weekly by CI</span></div>
-    <div class="stat"><span class="label">Cities</span><span class="v num">2</span><span class="k">Cebu, Philippines joins Bali</span></div>
-    <div class="stat"><span class="label">Applications</span><span class="v num">4</span><span class="k">From India, the UK, Nigeria and more</span></div>
-    <div class="stat"><span class="label">Newsletter opens</span><span class="v num">40.5<small>%</small></span><span class="k">Privacy Track launch to 79 subscribers</span></div>
-    <div class="stat"><span class="label">X posts</span><span class="v num">61</span><span class="k">305 likes, 92 reposts in September</span></div>
-  </section>
-
-
-  <section class="panel" aria-labelledby="replay-h">
-    <h2 id="replay-h">Replay September</h2>
-    <p class="sub">Press play, or drag through the month. Lit squares are sessions: orange online, green in person. Tap one to see it.</p>
-    <div class="replay">
-      <div>
-        <div class="cal" id="cal"></div>
-        <div class="ctrl"><button class="btn" id="playBtn" type="button">▶ PLAY</button><input type="range" id="day" min="1" max="30" value="30" aria-label="Day of September"></div>
-        <div class="counters">
-          <div><b id="cS">9</b><span>sessions</span></div>
-          <div><b id="cP">53+</b><span>people counted</span></div>
-          <div><b id="cC">3</b><span>places: Discord, Bali, Cebu</span></div>
-        </div>
+  <section class="block" id="program">
+    <div class="container">
+      <div class="head reveal">
+        <div><div class="eyebrow">The program</div><h2>Three parts, <span class="serif">one pipeline.</span></h2></div>
+        <p>Workshops bring developers in, the Privacy Track teaches them, and fellowships support the best of them to keep going.</p>
       </div>
-      <div class="screen"><div class="img" id="scrImg"></div><div class="cap"><b id="scrT"></b><span id="scrS"></span><a id="scrA" href="#" target="_blank" rel="noopener">see the post ↗</a></div></div>
-    </div>
-  </section>
-
-  <section class="panel map" aria-labelledby="map-h">
-    <h2 id="map-h">World map: the developer pipeline</h2>
-    <p class="sub">Five levels from first workshop to full-time Bitcoin developer. In September we opened the middle of the map.</p>
-    <canvas id="world" width="560" height="75" aria-label="Pixel map of the five pipeline stages with a runner walking from workshops toward full-time development"></canvas>
-    <div class="stages">
-      <div class="stage"><span class="st clear">Cleared</span><h3>Workshops</h3><p>9 sessions online, in Bali and in Cebu.</p></div>
-      <div class="stage"><span class="st open">Unlocked</span><h3>Study cohorts</h3><p>Reading Club running; Decoding Bitcoin opens 16 Nov.</p></div>
-      <div class="stage"><span class="st open">Unlocked</span><h3>Code review</h3><p>Privacy Track and Code Review Club built and announced.</p></div>
-      <div class="stage"><span class="st open">Unlocked</span><h3>Fellowships</h3><p>3 educator fellows started. Developer criteria written.</p></div>
-      <div class="stage"><span class="st lock">Locked</span><h3>Full-time dev</h3><p>Next: mentors for developer fellows.</p></div>
-    </div>
-  </section>
-
-  <section class="panel" aria-labelledby="party-h">
-    <h2 id="party-h">The party: Cohort 1 educator fellows</h2>
-    <p class="sub">Three people took ownership of programs, so Code Orange no longer depends on one teacher.</p>
-    <div class="party">
-      <div class="flip"><div class="flip-in">
-      <article class="hero front">
-        <header><canvas class="sprite" width="14" height="14" data-sprite="mage"></canvas>
-          <div><h3>Razor</h3><div class="cls">Privacy Mage</div></div></header>
-        <div class="bars">
-          <div class="bar">Privacy<span><i style="width:95%"></i></span></div>
-          <div class="bar">Build<span><i style="width:85%"></i></span></div>
-          <div class="bar">Teach<span><i style="width:75%"></i></span></div>
-        </div>
-        <ul>
-          <li>Privacy Track teaching assistant; leads the track and Code Review Club</li>
-          <li>Ran the RoboSats workshop and vibe-coded <a href="https://satsmonitor.org">satsmonitor.org</a> for it</li>
-          <li>Proposed the chain-analysis workshop (<a href="https://github.com/code-orange-dev/curriculum/pull/1">curriculum #1</a>)</li>
-          <li>Shipped BIP324 privacy tooling: <a href="https://github.com/RazorBest/bip324-mitm/pull/29">bip324-mitm</a>, <a href="https://github.com/RazorBest/snarf-rs/pull/17">snarf-rs</a></li>
-        </ul>
-        <button class="fbtn" type="button" aria-label="Flip Razor's card">↻ FLIP CARD</button>
-      </article>
-      <article class="hero back" aria-label="Razor, card back">
-        <h4>Razor · Recent GitHub work <span class="live" data-gh-tag="RazorBest"></span></h4>
-        <ol data-gh="RazorBest"><li><a href="https://github.com/RazorBest/bip324-mitm/pull/29">bip324-mitm #29</a> <span>BIP324</span></li><li><a href="https://github.com/RazorBest/bip324-mitm/pull/30">bip324-mitm #30</a></li><li><a href="https://github.com/RazorBest/snarf-rs/pull/17">snarf-rs #17</a></li><li><a href="https://github.com/code-orange-dev/curriculum/pull/1">curriculum #1</a> <span>chain-analysis workshop</span></li></ol>
-        <button class="fbtn" type="button" aria-label="Flip Razor's card back">↻ FLIP BACK</button>
-      </article>
-      </div></div>
-      <div class="flip"><div class="flip-in">
-      <article class="hero front">
-        <header><canvas class="sprite" width="14" height="14" data-sprite="sage"></canvas>
-          <div><h3>Alex</h3><div class="cls">Lorekeeper</div></div></header>
-        <div class="bars">
-          <div class="bar">Community<span><i style="width:90%"></i></span></div>
-          <div class="bar">Review<span><i style="width:70%"></i></span></div>
-          <div class="bar">Teach<span><i style="width:80%"></i></span></div>
-        </div>
-        <ul>
-          <li>Hosts the Bitcoin Reading Club (9 in the 23 Sep call)</li>
-          <li>Co-hosts Code Review Club: rust-payjoin and Nostr NIPs first</li>
-          <li>Leveled up to developer fellow in October</li>
-          <li><a href="https://github.com/alexxie16">github.com/alexxie16</a></li>
-        </ul>
-        <button class="fbtn" type="button" aria-label="Flip Alex's card">↻ FLIP CARD</button>
-      </article>
-      <article class="hero back" aria-label="Alex, card back">
-        <h4>Alex · Recent GitHub work <span class="live" data-gh-tag="alexxie16"></span></h4>
-        <ol data-gh="alexxie16"><li><a href="https://github.com/alexxie16">github.com/alexxie16</a> <span>3 merged PRs on our dashboard</span></li><li>Reading Club host, 23 Sep: 9 people</li><li>Code Review Club co-host from 8 Oct</li></ol>
-        <button class="fbtn" type="button" aria-label="Flip Alex's card back">↻ FLIP BACK</button>
-      </article>
-      </div></div>
-      <div class="flip"><div class="flip-in">
-      <article class="hero front">
-        <header><canvas class="sprite" width="14" height="14" data-sprite="ranger"></canvas>
-          <div><h3>Andy</h3><div class="cls">Custody Ranger</div></div></header>
-        <div class="bars">
-          <div class="bar">Custody<span><i style="width:95%"></i></span></div>
-          <div class="bar">Explore<span><i style="width:85%"></i></span></div>
-          <div class="bar">Teach<span><i style="width:80%"></i></span></div>
-        </div>
-        <ul>
-          <li>Ran the Self-Custody Workshop; attendees received Silent Payments live</li>
-          <li>Opened a new map zone: the monthly Cebu meetup (30 Sep)</li>
-          <li>DIY Bitcoin offered a Cebu ESP32 workshop for January</li>
-          <li><a href="https://x.com/andywong311">@andywong311</a></li>
-        </ul>
-        <button class="fbtn" type="button" aria-label="Flip Andy's card">↻ FLIP CARD</button>
-      </article>
-      <article class="hero back" aria-label="Andy, card back">
-        <h4>Andy · Quest log</h4>
-        <ol data-gh=""><li><a href="https://x.com/CodeOrangeDevs/status/2101184634369577459">Self-Custody Workshop, 18 Sep</a> <span>Silent Payments received live</span></li><li><a href="https://x.com/CodeOrangeDevs/status/2103425294032121883">Cebu Meetup #1, 30 Sep</a> <span>new country</span></li><li>DIY Bitcoin ESP32 workshop offered for January</li><li><a href="https://x.com/andywong311">@andywong311</a></li></ol>
-        <button class="fbtn" type="button" aria-label="Flip Andy's card back">↻ FLIP BACK</button>
-      </article>
-      </div></div>
-    </div>
-  </section>
-
-  <section class="panel" aria-labelledby="quest-h">
-    <h2 id="quest-h">Quest log: September sessions</h2>
-    <p class="sub">Party size is counted from the screenshots and photos in our own recap posts, taken partway through each call. The real numbers are the same or higher.</p>
-    <div class="quests" id="quests"></div>
-    <div class="legend"><span><i class="pty"><i></i></i> Online, 1 person</span><span><i class="pty"><i class="irl"></i></i> In person, 1 person</span></div>
-  </section>
-
-
-  <section class="panel" aria-labelledby="wall-h">
-    <h2 id="wall-h">Proof wall</h2>
-    <p class="sub">Straight from our public posts: live Discord calls, the rooms in Bali and Cebu, and the posters for every session. Tap any picture to open it, with a link to the original post.</p>
-    <div class="wall" id="wall"></div>
-  </section>
-
-  <section class="panel" aria-labelledby="vid-h">
-    <h2 id="vid-h">Watch a session</h2>
-    <p class="sub">The Self-Custody Workshop (18 Sep), the first upload on our new YouTube channel.</p>
-    <div class="vid" id="vid" role="button" tabindex="0" aria-label="Play the Self-Custody Workshop video" style="background-image:url(https://i.ytimg.com/vi/6nIOLQD_d5s/hqdefault.jpg)"><span class="play">▶ PLAY VIDEO</span></div>
-  </section>
-
-  <section class="panel" aria-labelledby="ach-h">
-    <h2 id="ach-h">Achievements unlocked</h2>
-    <p class="sub">Things that exist now and didn't on 1 September.</p>
-    <div class="ach" id="ach"></div>
-  </section>
-
-  <section class="panel" aria-labelledby="hs-h">
-    <h2 id="hs-h">High scores: merged PRs by developer</h2>
-    <p class="sub">Community developers ranked by merged pull requests to Bitcoin open-source projects. Loaded live from our <a href="https://github.com/code-orange-dev/PR-tracking-dashboard">public PR dashboard</a> <span class="live" data-live-tag></span></p>
-    <div class="hs" id="hs"></div>
-  </section>
-
-  <div class="two">
-    <section class="panel" aria-labelledby="boss-h">
-      <h2 id="boss-h">Boss tracker: promised vs done</h2>
-      <p class="sub">Our plan for Months 1–3, plus what we pulled forward.</p>
-      <div class="boss">
-        <div class="row"><div>Privacy Track Sessions 1–6: Foundations + Silent Payments <span>Curriculum + labs done, S1 on 6 Oct</span></div><div class="hp"><i style="width:75%;background:var(--sky)"></i></div></div>
-        <div class="row"><div>Onboard Fellowship Cohort 1 (2 dev + 2 educator) <span>3 educator in, 1st dev in Oct</span></div><div class="hp"><i style="width:75%;background:var(--sky)"></i></div></div>
-        <div class="row"><div>Baseline merge rate on a public dashboard <span>Done + weekly CI</span></div><div class="hp"><i style="width:100%;background:var(--mint)"></i></div></div>
-        <div class="row"><div>7+ monthly workshops feeding the track <span>9 delivered</span></div><div class="hp"><i style="width:100%;background:var(--mint)"></i></div></div>
-        <div class="row"><div>New country (planned Months 10–12) <span>Cebu, unlocked early</span></div><div class="hp"><i style="width:100%;background:var(--gold)"></i></div></div>
-        <div class="row"><div>10 issues filed, 5 PRs from the track <span>Due Month 3, counting from Oct</span></div><div class="hp"><i style="width:4%;background:var(--rust)"></i></div></div>
+      <div class="pillars">
+        <article class="card reveal"><span class="n">01</span><h3>Privacy Track</h3><p>24 bi-weekly sessions, open-source curriculum, drop-in at any point.</p>
+          <ul><li>Season One rewritten to open with Silent Payments (BIP352)</li><li>New labs: Silent Payments sender and scanner, chain analysis, compact block filters, payjoin, network privacy</li><li>Launch announced for 6 October; Code Review Club for 8 October</li><li><a href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track">Curriculum (CC0)</a></li></ul></article>
+        <article class="card reveal"><span class="n">02</span><h3>Fellowships</h3><p>Paid fellowships for the people who teach and build.</p>
+          <ul><li>Cohort 1: three educator fellows running programs</li><li>Clear criteria for developer fellows written and published</li><li>First developer fellow joined in October</li><li><a href="https://github.com/code-orange-dev/fellowships">Fellowship guidelines</a></li></ul></article>
+        <article class="card reveal"><span class="n">03</span><h3>Workshops</h3><p>The entry point: free sessions online and in person.</p>
+          <ul><li>Nine sessions across Discord, Bali and Cebu</li><li>Topics from mining and self-custody to AI agents paying in sats</li><li>Every session on Luma with automatic reminders</li><li><a href="https://codeorange.dev/calendar">Calendar</a></li></ul></article>
       </div>
-    </section>
-    <section class="panel" aria-labelledby="loot-h">
-      <h2 id="loot-h">Loot and reach</h2>
-      <p class="sub">What we built, and who noticed.</p>
-      <div class="loot">
-        <div class="it"><b>~30</b><span>website updates on <a href="https://github.com/code-orange-dev/codeorange-site/commits/main">codeorange.dev</a>: pipeline hero, one-click calendar, Privacy Track page</span></div>
-        <div class="it"><b>28</b><span>official BIP352 test vectors our Silent Payments lab is checked against</span></div>
-        <div class="it"><b>9</b><span>Luma event pages with automatic reminder emails</span></div>
-        <div class="it"><b>CC0</b><span>labs and <a href="https://github.com/code-orange-dev/bitcoin-basics-slides">Bitcoin Basics slides</a> any meetup can reuse</span></div>
-        <div class="it"><b>1</b><span>new <a href="https://www.youtube.com/watch?v=6nIOLQD_d5s">YouTube channel</a>, first upload 19 Sep</span></div>
+    </div>
+  </section>
+
+  <section class="block" id="sessions">
+    <div class="container">
+      <div class="head reveal">
+        <div><div class="eyebrow">Sessions</div><h2>Nine sessions, <span class="serif">three places.</span></h2></div>
+        <p>Attendance is counted from the screenshots and photos in our own public posts, taken partway through each session, so real numbers are the same or higher.</p>
+      </div>
+      <div class="sess">
+        <div class="chart reveal">
+          <h3>People per session</h3>
+          <p class="cap">42 across six online calls (about seven each), plus 11+ in the room in Bali.</p>
+          <div class="bars" id="bars"></div>
+          <div class="legend"><span><i></i>Online</span><span><i class="irl"></i>In person</span></div>
+        </div>
+        <div class="list reveal" id="list"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="fellows">
+    <div class="container">
+      <div class="head reveal">
+        <div><div class="eyebrow">Fellows · Cohort 1</div><h2>The people <span class="serif">behind the programs.</span></h2></div>
+        <p>Each educator fellow owns a program and runs it every month. This is how Code Orange grows without growing its costs.</p>
+      </div>
+      <div class="fellows">
+        <article class="card reveal"><div class="person"><span class="avatar" style="background:#7cb8ff">R</span><div><b>Razor</b><span>Privacy Track lead</span></div></div>
+          <ul><li>Privacy Track teaching assistant; leads the track and Code Review Club</li><li>Ran the Sovereign Bitcoiner workshop on RoboSats and built <a href="https://satsmonitor.org">satsmonitor.org</a> for it</li><li>Proposed the chain-analysis workshop</li></ul></article>
+        <article class="card reveal"><div class="person"><span class="avatar" style="background:#4ade80">A</span><div><b>Alex</b><span>Reading Club host</span></div></div>
+          <ul><li>Hosts the Bitcoin Reading Club (9 people on 23 September)</li><li>Co-hosts Code Review Club</li><li>Became a developer fellow in October</li></ul></article>
+        <article class="card reveal"><div class="person"><span class="avatar" style="background:#f7931a">A</span><div><b>Andy</b><span>Self-custody and Cebu</span></div></div>
+          <ul><li>Ran the Self-Custody Workshop, where attendees received Silent Payments live</li><li>Started the monthly Cebu meetup on 30 September</li><li>DIY Bitcoin offered a Cebu hardware workshop for January</li></ul></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="reach">
+    <div class="container">
+      <div class="head reveal">
+        <div><div class="eyebrow">Reach</div><h2>Seen <span class="serif">beyond Bali.</span></h2></div>
+        <p>New learners joined from the UK and Nigeria, and other communities started pointing to our work.</p>
       </div>
       <div class="reach">
-        <span class="chip">🇬🇧 Coding in London: <a href="https://x.com/CodingInLondon/status/2096139785874341951">"very active in APAC"</a></span>
-        <span class="chip">🇳🇬 BitDevs Zaria <a href="https://x.com/CodeOrangeDevs/status/2104436274467917895">featured us</a></span>
+        <div class="metric reveal"><b class="num">79</b><span>Newsletter subscribers received the Privacy Track launch</span></div>
+        <div class="metric reveal"><b class="num">40.5%</b><span>Open rate on that launch email</span></div>
+        <div class="metric reveal"><b class="num">61</b><span>Posts on X in September, with 305 likes and 92 reposts</span></div>
+        <div class="metric reveal"><b class="num">1</b><span>New YouTube channel, first upload on 19 September</span></div>
       </div>
-    </section>
-  </div>
-
-  <section class="panel" aria-labelledby="next-h">
-    <h2 id="next-h">Next level: October</h2>
-    <p class="sub">What the next save file should show.</p>
-    <div class="next">
-      <div><b>Privacy Track live</b>Sessions on the 1st and 3rd Tuesday, 07:00 UTC, each with a public recap.</div>
-      <div><b>First contributions</b>Count issues and PRs from track participants toward 10 and 5.</div>
-      <div><b>Mentors wanted</b>Silent Payments, payjoin, BDK or Floresta devs to mentor a fellow or guest-teach.</div>
+      <div class="notice">
+        <blockquote class="reveal"><p>“Very active communities in APAC”</p><footer>Coding in London, 5 September · <a href="https://x.com/CodingInLondon/status/2096139785874341951">post</a></footer></blockquote>
+        <blockquote class="reveal"><p>Our online workshops, shown at a meetup in Nigeria</p><footer>BitDevs Zaria, 28 September · <a href="https://x.com/CodeOrangeDevs/status/2104436274467917895">post</a></footer></blockquote>
+      </div>
     </div>
   </section>
 
-  <footer>
-    <span class="px">Game saved · Code Orange Dev School</span>
-    <span>Sources: our posts on X, GitHub, Luma and MailerLite. A full written report is available on request.</span>
-  </footer>
-</div>
+  <section class="block" id="proof">
+    <div class="container">
+      <div class="head reveal">
+        <div><div class="eyebrow">Proof of work</div><h2>From our <span class="serif">public posts.</span></h2></div>
+        <p>Live Discord calls and full rooms in Bali and Cebu. Tap any photo to open it, with a link to the original post.</p>
+      </div>
+      <div class="gallery reveal" id="gallery"></div>
+    </div>
+  </section>
 
-<div id="lb" role="dialog" aria-modal="true" aria-label="Photo"><button class="btn x" id="lbX" type="button">✕ CLOSE</button><figure><img id="lbI" alt=""><figcaption><span id="lbC"></span><a id="lbA" href="#" target="_blank" rel="noopener">open the post on X ↗</a></figcaption></figure></div>
+  <section class="block" id="built">
+    <div class="container">
+      <div class="head reveal">
+        <div><div class="eyebrow">Watch and build</div><h2>Open materials, <span class="serif">free to reuse.</span></h2></div>
+        <p>Everything we teach is published under CC0, so any community can run the same sessions.</p>
+      </div>
+      <div class="split">
+        <div class="vid reveal" id="vid" role="button" tabindex="0" aria-label="Play the Self-Custody Workshop video" style="background-image:url(https://i.ytimg.com/vi/6nIOLQD_d5s/hqdefault.jpg)"><span class="play">▶ Play</span><span class="meta">Self-Custody Workshop · 18 September</span></div>
+        <ul class="built reveal">
+          <li><b>28</b><span>Official BIP352 test vectors our Silent Payments lab is checked against</span></li>
+          <li><b>5</b><span>New privacy labs in the <a href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track/labs">open curriculum</a></span></li>
+          <li><b>~30</b><span>Updates to codeorange.dev, including the Privacy Track page and a one-click calendar</span></li>
+          <li><b>CC0</b><span><a href="https://github.com/code-orange-dev/bitcoin-basics-slides">Bitcoin Basics slides</a> any meetup can use</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="next">
+    <div class="container">
+      <div class="head reveal">
+        <div><div class="eyebrow">Milestones and next steps</div><h2>Where we are <span class="serif">on the plan.</span></h2></div>
+        <p>Progress toward our months 1–3 milestones at the end of September.</p>
+      </div>
+      <div class="ms reveal">
+        <div class="r"><div class="top"><b>Workshops feeding the track</b><span>9 of 7+ planned</span></div><div class="track"><i data-w="100" style="background:var(--green)"></i></div></div>
+        <div class="r"><div class="top"><b>New country</b><span>Cebu, ahead of plan</span></div><div class="track"><i data-w="100" style="background:var(--orange)"></i></div></div>
+        <div class="r"><div class="top"><b>Fellowship Cohort 1</b><span>3 educator fellows in; developer fellows from October</span></div><div class="track"><i data-w="70" style="background:var(--blue)"></i></div></div>
+        <div class="r"><div class="top"><b>Privacy Track, Sessions 1–6</b><span>Curriculum ready; sessions from 6 October</span></div><div class="track"><i data-w="40" style="background:var(--blue)"></i></div></div>
+      </div>
+      <div class="next">
+        <article class="card reveal"><span class="n">October</span><h3>Privacy Track live</h3><p>Sessions on the 1st and 3rd Tuesday at 07:00 UTC, each with a public recap.</p></article>
+        <article class="card reveal"><span class="n">October</span><h3>Developer fellows</h3><p>Select developer fellows under the new criteria, each with a mentor and a six-month plan.</p></article>
+        <article class="card reveal"><span class="n">16 November</span><h3>Decoding Bitcoin cohort</h3><p>A ten-week study cohort that feeds new developers into the track.</p></article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site"><div class="container"><span>Code Orange Dev School · Bali, Indonesia</span><span>Sources: our posts on X, GitHub, Luma and MailerLite. A full written report is available on request.</span></div></footer>
+
+<div id="lb" role="dialog" aria-modal="true" aria-label="Photo"><button class="x" id="lbX" type="button">Close ✕</button><figure><img id="lbI" alt=""><figcaption><span id="lbC"></span><a id="lbA" href="#" target="_blank" rel="noopener">Open the post on X ↗</a></figcaption></figure></div>
+
 <script>
 (function(){
   const U="https://x.com/CodeOrangeDevs/status/";
-
-
-  // hero: count-up, menu
-  document.getElementById('xp').classList.add('ready');
   const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const ease=t=>1-Math.pow(1-t,3);
-  function countUp(el,to,i){const suf=el.dataset.suf||'';const dec=(String(to).split('.')[1]||'').length;
-    if(RM){el.textContent=to.toFixed(dec)+suf;return}
-    const dur=1500+i*80,st=performance.now()+480+i*90;
-    (function f(now){const t=Math.min(1,Math.max(0,(now-st)/dur));el.textContent=(to*ease(t)).toFixed(dec)+suf;if(t<1)requestAnimationFrame(f)})(performance.now())}
-  const vals=[...document.querySelectorAll('.hx .val')];
-  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){vals.forEach((v,i)=>countUp(v,+v.dataset.to,i));io.disconnect()}})},{threshold:.25});
-  io.observe(document.querySelector('.hx .stats'));
-  const burger=document.querySelector('.hx .burger'),sheet=document.getElementById('sheet'),ovl=document.querySelector('.hx .ovl');
-  function menu(open){burger.setAttribute('aria-expanded',open);burger.setAttribute('aria-label',open?'Close menu':'Open menu');sheet.hidden=!open;ovl.hidden=!open;document.body.classList.toggle('menu-open',open)}
-  burger.addEventListener('click',()=>menu(burger.getAttribute('aria-expanded')!=='true'));
-  ovl.addEventListener('click',()=>menu(false));sheet.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>menu(false)));
-  addEventListener('keydown',e=>{if(e.key==='Escape'&&!sheet.hidden)menu(false)});
-  addEventListener('resize',()=>{if(innerWidth>720&&!sheet.hidden)menu(false)});
 
-  // flip cards
-  document.querySelectorAll('.flip').forEach(f=>f.querySelectorAll('.fbtn').forEach(b=>b.addEventListener('click',()=>{f.classList.toggle('on');
-    const fr=f.querySelector('.front'),bk=f.querySelector('.back');const on=f.classList.contains('on');fr.inert=on;bk.inert=!on;(on?bk:fr).querySelector('.fbtn').focus()})));
-  document.querySelectorAll('.flip .back').forEach(b=>b.inert=true);
-
-  // live numbers from the public PR dashboard
-  const HS0=[["Peter",30],["Vaan",14],["Dayvvo",9],["Muhammad",8],["Psychemist",7],["Razor",6],["Arowolo",6],["Diegodev",5],["Gradale",5],["Alex Xie",3],["Mwihoti",1]];
-  function drawHS(list){const max=list[0][1];document.getElementById('hs').innerHTML=list.slice(0,8).map(([n,c],i)=>`<div class="r"><span class="rk">${String(i+1).padStart(2,'0')}</span><div>${n}<div class="bar2"><i style="width:${Math.round(c/max*100)}%"></i></div></div><span class="sc">${c}</span></div>`).join('')}
-  drawHS(HS0);
-  fetch('https://raw.githubusercontent.com/code-orange-dev/PR-tracking-dashboard/main/README.md',{cache:'no-store'}).then(r=>r.ok?r.text():Promise.reject()).then(t=>{
-    const m=t.match(/Merged PRs[^|]*\|\s*\*\*(\d+)\*\*/);const up=t.match(/Last updated:\s*([^|\n]+)/);
-    const list=[...t.matchAll(/^### ([^(\n]+?) \(\[@[^\]]+\]\([^)]+\)\) - (\d+) merged/gm)].map(x=>[x[1].trim(),+x[2]]).sort((a,b)=>b[1]-a[1]);
-    if(list.length)drawHS(list);
-    if(m){document.querySelectorAll('[data-live="merged"]').forEach(el=>{el.dataset.to=m[1];el.textContent=m[1]+(el.dataset.suf||'')})}
-    document.querySelectorAll('[data-live-tag]').forEach(el=>el.textContent='● live'+(up?' · updated '+up[1].trim():''));document.querySelectorAll('[data-live-short]').forEach(el=>el.textContent='● live');
-  }).catch(()=>{});
-  // fellows' latest public PRs from GitHub
-  document.querySelectorAll('ol[data-gh]').forEach(ol=>{const u=ol.dataset.gh;if(!u)return;
-    fetch(`https://api.github.com/search/issues?q=author:${u}+is:pr+is:public&sort=updated&order=desc&per_page=5`).then(r=>r.ok?r.json():Promise.reject()).then(j=>{
-      if(!j.items||!j.items.length)return;
-      ol.innerHTML=j.items.map(it=>{const repo=it.repository_url.split('/repos/')[1];const st=it.pull_request&&it.pull_request.merged_at?'merged':it.state;
-        return `<li><a href="${it.html_url}">${repo} #${it.number}</a> <span>${st} · ${it.title.replace(/[<>&]/g,'').slice(0,60)}</span></li>`}).join('');
-      const tag=document.querySelector(`[data-gh-tag="${u}"]`);if(tag)tag.textContent='● live';
-    }).catch(()=>{})});
-
-  // sessions by day: [day, title, sub, irl, people, img, tweet]
-  const EV=[
-    [3,"Bitcoin Basics","Mining, difficulty, Proof of Work. 7 people on the call.",0,7,"basics","2095495035722809562"],
-    [9,"Sovereign Bitcoiner · Razor","RoboSats and KYC-free P2P trading. 6 people.",0,6,"robosats-1","2097874437769158953"],
-    [12,"Protocol Fundamentals · Maxima","Liquid vs Fedimint, sidechains. 5 people.",0,5,"protocol-1","2100047809890390514"],
-    [16,"Agentic Engineering · guest clearmined","Ark wallet and L402 payments for AI agents. 9 people.",0,9,"agentic-1","2100525120418873683"],
-    [18,"Self-Custody · Andy","Sparrow, passphrases, PGP, Silent Payments live. 6 people.",0,6,"custody-1","2101184634369577459"],
-    [22,"AI + Bitcoin meetup, Bali","Buzz by Block, Maple AI, agents paying with Ark + L402. 11+ in the room.",1,11,"bali-3","2102378775162024219"],
-    [23,"Reading Club · Alex","The Bitcoin Standard, network effects. 9 people.",0,9,"reading-1","2102939817051091045"],
-    [25,"Bitcoin Workshop, Bali","Hardware wallets and multisig.",1,0,"workshop-poster","2102959218777350633"],
-    [30,"Cebu Meetup #1 · Andy","Our first meetup in the Philippines.",1,0,"cebu","2103425294032121883"]
+  // sessions: [date, title, detail, place, people, inPerson, post]
+  const S=[
+    ["3 Sep","Bitcoin Basics","Mining, difficulty and Proof of Work","Discord",7,0,"2095495035722809562"],
+    ["9 Sep","Sovereign Bitcoiner · Razor","RoboSats and peer-to-peer trading without KYC","Discord",6,0,"2097874437769158953"],
+    ["12 Sep","Protocol Fundamentals · Maxima","Liquid and Fedimint compared","Discord",5,0,"2100047809890390514"],
+    ["16 Sep","Agentic Engineering · guest clearmined","AI agents paying with Ark and L402","Discord",9,0,"2100525120418873683"],
+    ["18 Sep","Self-Custody · Andy","Sparrow, passphrases, PGP, Silent Payments live","Discord",6,0,"2101184634369577459"],
+    ["22 Sep","AI + Bitcoin meetup","Buzz by Block, Maple AI, agents paying in sats","Bitcoin House Bali",11,1,"2102378775162024219"],
+    ["23 Sep","Reading Club · Alex","The Bitcoin Standard, network effects","Discord",9,0,"2102939817051091045"],
+    ["25 Sep","Bitcoin Workshop","Hardware wallets and multisig","Bitcoin House Bali",0,1,"2102959218777350633"],
+    ["30 Sep","Cebu Meetup #1 · Andy","Our first meetup in the Philippines","CoffeeBay, Cebu",0,1,"2103425294032121883"]
   ];
-  const cal=document.getElementById('cal');
-  ['M','T','W','T','F','S','S'].forEach(d=>{const e=document.createElement('div');e.className='dw';e.textContent=d;cal.appendChild(e)});
-  // 1 Sep 2026 is a Tuesday
-  cal.appendChild(document.createElement('div'));
-  const cells={};
-  for(let d=1;d<=30;d++){const c=document.createElement('div');c.className='c';c.textContent=d;const ev=EV.find(e=>e[0]===d);
-    if(ev){c.classList.add('ev');if(ev[3])c.classList.add('irl');c.title=ev[1];c.addEventListener('click',()=>{if(+day.value>=d)show(ev)})}
-    cal.appendChild(c);cells[d]=c}
-  const day=document.getElementById('day');
-  const sImg=document.getElementById('scrImg'),sT=document.getElementById('scrT'),sS=document.getElementById('scrS'),sA=document.getElementById('scrA');
-  function show(ev){sImg.style.backgroundImage=`url(s9/${ev[5]}.jpg)`;sImg.textContent='';sT.textContent=`${ev[0]} Sep · ${ev[1]}`;sS.textContent=ev[2];sA.href=U+ev[6];sA.style.display=''}
-  function render(n){
-    let S=0,P=0,places=new Set(),last=null;
-    for(let d=1;d<=30;d++){cells[d].classList.toggle('past',d<=n);cells[d].classList.toggle('now',d===n)}
-    EV.forEach(e=>{if(e[0]<=n){S++;P+=e[4];places.add(e[3]?(e[0]===30?'Cebu':'Bali'):'Discord');last=e}});
-    document.getElementById('cS').textContent=S;document.getElementById('cP').textContent=P+(n>=22?'+':'');document.getElementById('cC').textContent=places.size;
-    if(last)show(last);else{sImg.style.backgroundImage='';sImg.textContent='NO SESSIONS YET';sT.textContent=n+' Sep';sS.textContent='The month is just starting.';sA.style.display='none'}
-  }
-  day.addEventListener('input',()=>{stop();render(+day.value)});
-  let timer=null;const pb=document.getElementById('playBtn');
-  function stop(){clearInterval(timer);timer=null;pb.textContent='▶ PLAY'}
-  pb.addEventListener('click',()=>{if(timer){stop();return}let n=+day.value>=30?0:+day.value;pb.textContent='❚❚ PAUSE';
-    timer=setInterval(()=>{n++;day.value=n;render(n);if(n>=30)stop()},matchMedia('(prefers-reduced-motion: reduce)').matches?60:260)});
-  render(30);
+  const max=11;
+  document.getElementById('bars').innerHTML=S.map(s=>{
+    const w=s[4]?Math.round(s[4]/max*100):0;
+    return `<div class="bar"><span class="d">${s[0]}</span><span class="t${s[4]?'':' na'}"><i class="${s[5]?'irl':''}" data-w="${w}"></i><em>${s[4]?s[1].split(' · ')[0]:'Not counted · '+s[1].split(' · ')[0]}</em></span><span class="v num">${s[4]?s[4]+(s[5]?'+':''):'–'}</span></div>`}).join('');
+  document.getElementById('list').innerHTML=S.map(s=>`<div class="item"><span class="d">${s[0]}</span><div><b>${s[1]}</b><small>${s[2]} · ${s[3]}</small></div><a href="${U+s[6]}" target="_blank" rel="noopener">Post ↗</a></div>`).join('');
 
-  // proof wall: [img, tag, caption, tweet]
-  const PW=[
-    ["bali-1","22 SEP","AI + Bitcoin meetup at Bitcoin House Bali","2102378775162024219"],
-    ["basics","3 SEP","Bitcoin Basics, live on Discord","2095495035722809562"],
-    ["robosats-1","9 SEP","Sovereign Bitcoiner: a RoboSats trade, live","2097874437769158953"],
-    ["custody-poster","18 SEP","Self-Custody Workshop, hosted by Andy","2100447146072047806"],
-    ["protocol-2","12 SEP","Protocol Fundamentals: the session plan","2100047809890390514"],
-    ["bali-2","22 SEP","Agents paying in sats, demoed on a laptop","2102378775162024219"],
-    ["agentic-1","16 SEP","Agentic Engineering: AI agents betting in sats over Ark + L402","2100525120418873683"],
-    ["cebu","30 SEP","Cebu Meetup #1, our first in the Philippines","2103425294032121883"],
-    ["robosats-3","9 SEP","satsmonitor.org, vibe-coded by Razor for the session","2097874437769158953"],
-    ["privacy-poster","19 SEP","Privacy Track launch announced for 6 Oct","2101174813725426104"],
-    ["custody-1","18 SEP","Self-Custody Workshop on Discord","2101184634369577459"],
-    ["bali-4","22 SEP","Bitcoin House Bali, full room","2102378775162024219"],
-    ["reading-poster","23 SEP","Bitcoin Reading Club, hosted by Alex","2102600220752445608"],
-    ["protocol-1","12 SEP","Protocol Fundamentals: a Fedimint wallet on screen","2100047809890390514"],
-    ["review-poster","25 SEP","Code Review Club announced for 8 Oct","2103315077231464524"],
-    ["zaria","28 SEP","BitDevs Zaria (Nigeria) shows our online workshops","2104436274467917895"],
-    ["robosats-2","9 SEP","Learning RoboSats step by step","2097874437769158953"],
-    ["reading-1","23 SEP","Reading Club on Discord","2102939817051091045"],
-    ["sovereign-poster","9 SEP","Sovereign Bitcoiner Workshop, hosted by Razor","2097177813757399382"],
-    ["bali-3","22 SEP","Building with agents in Bali","2102378775162024219"],
-    ["protocol-poster","12 SEP","Protocol Fundamentals, hosted by Maxima","2098279034610495568"],
-    ["agentic-poster","16 SEP","Agentic Engineering Workshop poster","2100138502067507680"],
-    ["workshop-poster","25 SEP","Self-Custody workshop in Bali: the $5 wrench attack","2102959218777350633"],
-    ["basics-poster","3 SEP","Bitcoin Basics, hosted by The Quiet Satoshi","2095032874550583720"],
-    ["bali-poster","22 SEP","AI + Bitcoin meetup poster","2102317936342135236"]
+  // gallery: [img, date, caption, post, class]
+  const G=[
+    ["bali-1","22 Sep","AI + Bitcoin meetup, Bitcoin House Bali","2102378775162024219","w h"],
+    ["basics","3 Sep","Bitcoin Basics, live on Discord","2095495035722809562",""],
+    ["robosats-1","9 Sep","Sovereign Bitcoiner: a RoboSats trade, live","2097874437769158953",""],
+    ["cebu","30 Sep","Cebu Meetup #1","2103425294032121883","h"],
+    ["agentic-1","16 Sep","Agentic Engineering on Discord","2100525120418873683",""],
+    ["bali-4","22 Sep","A full room in Bali","2102378775162024219",""],
+    ["custody-1","18 Sep","Self-Custody Workshop on Discord","2101184634369577459","w"],
+    ["bali-2","22 Sep","Agents paying in sats, demoed","2102378775162024219",""],
+    ["protocol-2","12 Sep","Protocol Fundamentals: the session plan","2100047809890390514",""],
+    ["reading-1","23 Sep","Reading Club on Discord","2102939817051091045","w"],
+    ["robosats-3","9 Sep","satsmonitor.org, built for the session","2097874437769158953",""],
+    ["zaria","28 Sep","BitDevs Zaria, Nigeria","2104436274467917895",""]
   ];
-  const wall=document.getElementById('wall');
-  PW.forEach(([im,tag,cap,tw])=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-label',cap);
-    b.innerHTML=`<img src="s9/${im}.jpg" alt="${cap}" loading="lazy" decoding="async"><span class="tag">${tag}</span>`;
-    b.addEventListener('click',()=>openLB(im,tag+' · '+cap,tw));wall.appendChild(b)});
-  const lb=document.getElementById('lb'),lbI=document.getElementById('lbI');let lastFocus=null;
-  function openLB(im,cap,tw){lastFocus=document.activeElement;lbI.src=`s9/${im}.jpg`;lbI.alt=cap;document.getElementById('lbC').textContent=cap;document.getElementById('lbA').href=U+tw;lb.classList.add('open');document.getElementById('lbX').focus()}
-  function closeLB(){lb.classList.remove('open');if(lastFocus)lastFocus.focus()}
+  const gal=document.getElementById('gallery');
+  G.forEach(([im,d,c,p,cl])=>{const b=document.createElement('button');b.type='button';if(cl)b.className=cl;b.setAttribute('aria-label',c+', '+d);
+    b.innerHTML=`<img src="s9/${im}.jpg" alt="${c}" loading="lazy" decoding="async"><span class="c"><b>${d}</b>${c}</span>`;
+    b.addEventListener('click',()=>openLB(im,d+' · '+c,p));gal.appendChild(b)});
+  const lb=document.getElementById('lb'),lbI=document.getElementById('lbI');let last=null;
+  function openLB(im,c,p){last=document.activeElement;lbI.src=`s9/${im}.jpg`;lbI.alt=c;document.getElementById('lbC').textContent=c;document.getElementById('lbA').href=U+p;lb.classList.add('open');document.getElementById('lbX').focus()}
+  function closeLB(){lb.classList.remove('open');if(last)last.focus()}
   document.getElementById('lbX').addEventListener('click',closeLB);lb.addEventListener('click',e=>{if(e.target===lb)closeLB()});
   addEventListener('keydown',e=>{if(e.key==='Escape'&&lb.classList.contains('open'))closeLB()});
 
-  // video facade
+  // video
   const vid=document.getElementById('vid');
-  function playVid(){if(vid.querySelector('iframe'))return;vid.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/6nIOLQD_d5s?autoplay=1&rel=0" title="Self-Custody Workshop" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>'}
-  vid.addEventListener('click',playVid);vid.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();playVid()}});
+  function play(){if(vid.querySelector('iframe'))return;vid.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/6nIOLQD_d5s?autoplay=1&rel=0" title="Self-Custody Workshop" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>'}
+  vid.addEventListener('click',play);vid.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();play()}});
+
+  // count-up for hero numbers
+  const ease=t=>1-Math.pow(1-t,3);
+  document.querySelectorAll('.kpi b').forEach((el,i)=>{const to=+el.dataset.to,suf=el.dataset.suf||'';if(RM)return;
+    const st=performance.now()+300+i*90,dur=1400+i*80;(function f(now){const t=Math.min(1,Math.max(0,(now-st)/dur));el.textContent=Math.round(to*ease(t))+suf;if(t<1)requestAnimationFrame(f)})(performance.now())});
+
+  // reveal on scroll, fill bars
+  const fill=root=>root.querySelectorAll('[data-w]').forEach(i=>i.style.width=i.dataset.w+'%');
+  if(RM||!('IntersectionObserver' in window)){document.querySelectorAll('.reveal').forEach(e=>e.classList.add('in'));fill(document);return}
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');fill(e.target);io.unobserve(e.target)}}),{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(e=>io.observe(e));
 })();
 </script>
-<script>
-(function(){
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // XP bar fill
-  requestAnimationFrame(()=>document.getElementById('xp').classList.add('ready'));
-
-  // Quest log
-  const Q=[
-    ["3 SEP","Bitcoin Basics","Mining, difficulty, Proof of Work, BitAxe","Discord",7,false,"https://x.com/CodeOrangeDevs/status/2095495035722809562"],
-    ["9 SEP","Sovereign Bitcoiner · Razor","RoboSats and KYC-free P2P exchanges","Discord",6,false,"https://x.com/CodeOrangeDevs/status/2097874437769158953"],
-    ["12 SEP","Protocol Fundamentals · Maxima","Liquid vs Fedimint, sidechains","Discord",5,false,"https://x.com/CodeOrangeDevs/status/2100047809890390514"],
-    ["16 SEP","Agentic Engineering · guest clearmined","Ark wallet + L402 payments for AI agents","Discord",9,false,"https://x.com/CodeOrangeDevs/status/2100525120418873683"],
-    ["18 SEP","Self-Custody · Andy","Sparrow, passphrases, PGP, Silent Payments live","Discord",6,false,"https://x.com/CodeOrangeDevs/status/2101184634369577459"],
-    ["22 SEP","AI + Bitcoin meetup","Buzz by Block, Maple AI, Ark + L402 agents with Alby","Bitcoin House Bali",11,true,"https://x.com/CodeOrangeDevs/status/2102378775162024219"],
-    ["23 SEP","Reading Club · Alex","The Bitcoin Standard, network effects","Discord",9,false,"https://x.com/CodeOrangeDevs/status/2102939817051091045"],
-    ["25 SEP","Bitcoin Workshop","Hardware wallets, multisig","Bitcoin House Bali",null,true,"https://x.com/CodeOrangeDevs/status/2102959218777350633"],
-    ["30 SEP","Cebu Meetup #1 · Andy","First Philippines meetup","CoffeeBay, Cebu",null,true,"https://x.com/CodeOrangeDevs/status/2103425294032121883"]
-  ];
-  const qEl=document.getElementById('quests');
-  Q.forEach(([d,t,s,w,n,irl,url])=>{
-    const row=document.createElement('div');row.className='q';
-    let ppl='';
-    if(n){for(let i=0;i<n;i++)ppl+=`<i class="${irl?'irl':''}"></i>`;ppl+=`<em>${n}${irl?'+':''}</em>`}
-    else ppl='<em class="na">not counted</em>';
-    row.innerHTML=`<div class="d">${d}</div><div class="t">${t}<small>${s}</small></div><div class="w">${w}<br><a href="${url}">${n?'recap':'announce'} ↗</a></div><div class="pty" aria-label="${n?n+' people':'not counted'}">${ppl}</div>`;
-    qEl.appendChild(row);
-  });
-
-  // Achievements with tiny pixel icons
-  const A=[
-    ["key","Silent Payments first","Privacy Track Season One opens with BIP352","https://github.com/code-orange-dev/curriculum/pull/2"],
-    ["flask","CC0 lab pack","Sender/scanner, chain analysis, payjoin on regtest, BIP324","https://github.com/code-orange-dev/curriculum/tree/main/privacy-track/labs"],
-    ["flag","Second city","First Cebu meetup on 30 Sep","https://x.com/CodeOrangeDevs/status/2103425294032121883"],
-    ["shield","Proof over hype","94 merged PRs, each link verified weekly in CI","https://github.com/code-orange-dev/PR-tracking-dashboard"],
-    ["eye","Code Review Club","Monthly reviews of real PRs, starting 8 Oct","https://x.com/CodeOrangeDevs/status/2103315077231464524"],
-    ["bolt","Agents that pay","Ark + L402 demo where AI agents bet in sats","https://github.com/clarionchain/keel"],
-    ["scroll","Rulebook written","Fellowship criteria: no prior funding, public proof of work","https://github.com/code-orange-dev/fellowships"],
-    ["broom","Clean save","Removed every number we couldn't verify from site and READMEs","https://github.com/code-orange-dev/codeorange-site/pull/3"]
-  ];
-  const ICON={ // 8x8 pixel masks
-    key:["00111000","01000100","01000100","00111000","00010000","00011000","00010000","00011000"],
-    flask:["00111100","00011000","00011000","00100100","01000010","01111110","11111111","01111110"],
-    flag:["01000000","01111100","01111110","01111100","01000000","01000000","01000000","11100000"],
-    shield:["01111110","11111111","11011011","11011011","11111111","01111110","00111100","00011000"],
-    eye:["00000000","00111100","01100110","11011011","11011011","01100110","00111100","00000000"],
-    bolt:["00001100","00011000","00110000","01111110","00001100","00011000","00110000","01100000"],
-    scroll:["01111110","10000001","01111110","01000010","01011010","01000010","01111110","10000001"],
-    broom:["00000011","00000110","00001100","00011000","01111000","11111100","11111100","01111000"]
-  };
-  function drawIcon(c,name,col){const x=c.getContext('2d');c.width=8;c.height=8;ICON[name].forEach((r,y)=>[...r].forEach((b,i)=>{if(b==='1'){x.fillStyle=col;x.fillRect(i,y,1,1)}}))}
-  const aEl=document.getElementById('ach');
-  A.forEach(([ic,b,p,u],i)=>{
-    const d=document.createElement('div');d.className='badge';
-    const c=document.createElement('canvas');drawIcon(c,ic,i%2?'#ffcf5a':'#f7931a');
-    d.appendChild(c);
-    const t=document.createElement('div');t.innerHTML=`<b>${b}</b><p>${p}</p><a href="${u}">proof ↗</a>`;
-    d.appendChild(t);aEl.appendChild(d);
-  });
-
-  // Hero sprites (14x14)
-  const S={
-    mage:{pal:{h:'#7cc4ff',s:'#f1c9a0',r:'#3b5bdb',o:'#f7931a',k:'#0b0907'},px:[
-      "......hh......",".....hhhh.....","....hhhhhh....","...hhhhhhhh...","....ssssss....","....skssks....","....ssssss....",
-      "...rrrrrrrr...","..rrrorrorrr..","..rr.rrrr.rr..","....rrrrrr....","....rr..rr....","....rr..rr....","...kkk..kkk..."]},
-    sage:{pal:{h:'#2a1d12',s:'#f1c9a0',r:'#6fe3a1',o:'#ffcf5a',k:'#0b0907',b:'#a8957f'},px:[
-      "..............","....hhhhhh....","...hhhhhhhh...","...hssssssh...","...skssssks...","....ssssss....",".....ssss.....",
-      "...rrrrrrrr...","..rrrrrrrrrr..","..ss.oooo.ss..","....oooooo....","....rr..rr....","....rr..rr....","...kkk..kkk..."]},
-    ranger:{pal:{h:'#f7931a',s:'#f1c9a0',r:'#8a5a2b',o:'#ffcf5a',k:'#0b0907',g:'#6fe3a1'},px:[
-      "..............","....hhhhhh....","..hhhhhhhhhh..","....ssssss....","....skssks....","....ssssss....",".....ssss.....",
-      "...gggggggg...","..gggoggoggg..","..ss.gggg.ss..","....rrrrrr....","....rr..rr....","....rr..rr....","...kkk..kkk..."]}
-  };
-  document.querySelectorAll('canvas[data-sprite]').forEach(c=>{
-    const s=S[c.dataset.sprite],x=c.getContext('2d');
-    s.px.forEach((r,y)=>[...r].forEach((ch,i)=>{if(ch!=='.'){x.fillStyle=s.pal[ch];x.fillRect(i,y,1,1)}}));
-  });
-
-  // World map canvas: path with 5 stages and a walking runner
-  const W=document.getElementById('world'),g=W.getContext('2d');
-  const nodes=[[50,40],[160,24],[275,46],[390,26],[505,42]];
-  const state=['#6fe3a1','#7cc4ff','#7cc4ff','#7cc4ff','#e0694a'];
-  const labels=['WORKSHOPS','COHORTS','REVIEW','FELLOWS','FULL-TIME'];
-  function pathPt(t){ // t in [0,4]
-    const i=Math.min(3,Math.floor(t)),f=t-i,a=nodes[i],b=nodes[i+1];
-    return [a[0]+(b[0]-a[0])*f, a[1]+(b[1]-a[1])*f];
-  }
-  function draw(t){
-    g.fillStyle='#0f0b07';g.fillRect(0,0,560,75);
-    // stars
-    g.fillStyle='#3a2c1e';for(let i=0;i<60;i++){g.fillRect((i*97)%560,(i*37)%75,1,1)}
-    // dotted path
-    for(let s=0;s<=4;s+=0.02){const[x,y]=pathPt(s);g.fillStyle=s<=3.05?'#f7931a':'#3a2c1e';if(Math.round(s*50)%2===0)g.fillRect(Math.round(x),Math.round(y),2,2)}
-    // nodes
-    nodes.forEach(([x,y],i)=>{g.fillStyle='#0b0907';g.fillRect(x-7,y-7,14,14);g.fillStyle=state[i];g.fillRect(x-5,y-5,10,10);
-      g.fillStyle='#a8957f';g.font='6px "Press Start 2P", monospace';g.textAlign='center';g.fillText(labels[i],x,y+(y<35?20:-11))});
-    // runner
-    const[x,y]=pathPt(t);const step=Math.floor(t*12)%2;
-    g.fillStyle='#ffcf5a';g.fillRect(x-2,y-12,5,4);           // head
-    g.fillStyle='#f7931a';g.fillRect(x-3,y-8,7,5);            // body
-    g.fillStyle='#f3e9dc';g.fillRect(x-3+step*2,y-3,2,3);g.fillRect(x+2-step*2,y-3,2,3); // legs
-  }
-  if(reduce){draw(3)}else{
-    let t=0;(function loop(){t+=0.006;if(t>3.2)t=0;draw(t);requestAnimationFrame(loop)})();
-  }
-})();
-</script>
-
 </body>
 </html>
