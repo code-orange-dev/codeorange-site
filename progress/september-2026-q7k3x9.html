@@ -14,7 +14,8 @@
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://codeorange.dev/progress/s9/share.jpg">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600&family=Doto:wght@700;900&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
 <style>
 /* Layout: an arcade "save file" for Month 1 — HUD on top, then world map (pipeline), party, quest log, achievements, boss tracker, next level. Single deliberate dark look. */
 :root{
@@ -158,15 +159,102 @@ footer .px{font-size:9px;color:var(--orange)}
   .stat .v{font-size:18px}
 }
 /*v2*/
-/* press start */
-#boot{position:fixed;inset:0;z-index:50;background:#070504;display:grid;place-items:center;text-align:center;padding:24px;cursor:pointer;
-  background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.03) 0 1px,transparent 1px 3px),radial-gradient(circle at 50% 40%,rgba(247,147,26,.22),transparent 60%)}
-#boot.gone{opacity:0;visibility:hidden;transition:opacity .5s, visibility 0s .5s}
-#boot .logo{font-family:var(--f-pixel);font-size:clamp(22px,5vw,46px);line-height:1.4;color:var(--ink);text-shadow:4px 4px 0 #3a2c1e}
-#boot .logo span{color:var(--orange)}
-#boot .ps{font-family:var(--f-pixel);font-size:13px;color:var(--gold);margin-top:34px;animation:blink 1s steps(2) infinite}
-#boot .hint{font-family:var(--f-data);font-size:12px;color:var(--dim);margin-top:18px}
-#boot .coins{font-family:var(--f-data);font-size:12px;color:var(--dim);margin-top:40px}
+/* ===== video hero ===== */
+.hx{--bg:#000;--text:#fff;--muted:#8e8e8e;--nav-text:#2e2e2e;--pill-dark:#28282a;--sign-in-text:#c8c8c8;--nav-shadow:0 4px 14px rgba(0,0,0,.16);
+  --trust-bg:#28282a;--trust-border:rgba(255,255,255,.4);--trust-text:#c4c2c3;--font-sans:"Inter","Segoe UI",system-ui,sans-serif;--font-display:"Doto","Geist Pixel Circle",monospace;
+  position:relative;height:100vh;height:100dvh;min-height:560px;overflow:hidden;background:#000;color:#fff;font-family:var(--font-sans);-webkit-font-smoothing:antialiased}
+.hx .bg{position:absolute;inset:0;background:#000;overflow:hidden}
+.hx .bg-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;z-index:0;opacity:.55}
+.hx .bg::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,.15),rgba(0,0,0,.7) 75%),linear-gradient(180deg,rgba(0,0,0,.35),transparent 30%,transparent 70%,rgba(11,9,7,1))}
+.hx .page{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;height:100%;
+  padding:clamp(16px,2.4vh,28px) max(clamp(14px,3vw,32px),env(safe-area-inset-right,0px)) clamp(16px,2.4vh,28px) max(clamp(14px,3vw,32px),env(safe-area-inset-left,0px))}
+.hx header{position:relative;z-index:33;display:flex;align-items:center;justify-content:center;gap:clamp(18px,2.8vw,28px);width:100%;max-width:720px;flex-shrink:0;animation:hxDown .7s cubic-bezier(.22,1,.36,1) both}
+.hx .logo{width:clamp(40px,4.4vw,46px);height:clamp(40px,4.4vw,46px);border-radius:50%;background:#fff;box-shadow:var(--nav-shadow);display:grid;place-items:center;flex:none;transition:transform .25s}
+.hx .logo:hover{transform:scale(1.04)}
+.hx .logo img{width:72%;height:72%;object-fit:contain}
+.hx nav.pill{flex:1;max-width:430px;height:clamp(44px,5.2vw,48px);background:#fff;border-radius:999px;box-shadow:var(--nav-shadow);padding:4px 8px;display:flex;align-items:center;justify-content:space-around}
+.hx nav.pill a{position:relative;color:var(--nav-text);text-decoration:none;font-weight:500;font-size:clamp(13px,1.4vw,15px);letter-spacing:-.01em;opacity:.5;padding:8px 6px;transition:opacity .2s}
+.hx nav.pill a:hover{opacity:.75}
+.hx nav.pill a.active{opacity:1}
+.hx nav.pill a.active::after,.hx .sheet a.active::after{content:"";position:absolute;left:50%;bottom:5px;width:3px;height:3px;margin-left:-1.5px;background:#000;border-radius:50%;box-shadow:-5px 0 0 #000,5px 0 0 #000}
+.hx .signin{height:clamp(44px,5.2vw,48px);display:inline-flex;align-items:center;padding:0 22px;border-radius:999px;background:var(--pill-dark);color:var(--sign-in-text);text-decoration:none;font-weight:500;font-size:clamp(13px,1.4vw,15px);box-shadow:var(--nav-shadow);transition:all .2s;white-space:nowrap}
+.hx .signin:hover{background:#323234;color:#fff;transform:translateY(-1px)}
+.hx .burger{display:none}
+.hx .hero-c{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;max-width:900px;width:100%}
+.hx .trust{--trust-size:clamp(36px,4.5vw,42px);display:inline-flex;align-items:center;margin-bottom:clamp(16px,2.5vh,26px)}
+.hx .av{width:var(--trust-size);height:var(--trust-size);border-radius:50%;background:var(--trust-bg);border:1px solid var(--trust-border);padding:5px;position:relative;transition:transform .35s}
+.hx .av i{width:100%;height:100%;border-radius:50%;background:#fff;color:#111;display:grid;place-items:center;font-size:calc(var(--trust-size)*.34)}
+.hx .av+.av{margin-left:calc(var(--trust-size)*-.42)}
+.hx .av.a1{z-index:1}.hx .av.a2{z-index:2}.hx .av.a3{z-index:4}
+.hx .trust:hover .a1{transform:translateY(-2px)}.hx .trust:hover .a2{transform:translateY(-4px)}.hx .trust:hover .a3{transform:translateY(-2px)}
+.hx .tpill{height:var(--trust-size);display:inline-flex;align-items:center;background:var(--trust-bg);border:1px solid var(--trust-border);border-radius:999px;margin-left:calc(var(--trust-size)*-.42);padding:0 16px 0 calc(var(--trust-size)*.58);color:var(--trust-text);font-weight:500;font-size:clamp(12px,1.4vw,13.5px);z-index:3;white-space:nowrap}
+.hx h1{font-family:var(--font-display);font-weight:900;color:#fff;font-size:clamp(28px,6.6vw,84px);letter-spacing:-.04em;line-height:1.08;margin:0;white-space:nowrap;overflow:hidden}
+.hx h1 span{display:block;opacity:0;transform:translateY(14px);animation:hxFade .85s cubic-bezier(.22,1,.36,1) forwards}
+.hx h1 span:nth-child(1){animation-delay:.12s}.hx h1 span:nth-child(2){animation-delay:.3s;color:#F7931A}
+.hx .subh{max-width:min(520px,92%);font-size:clamp(calc(13.5px + 2pt),calc(1.55vw + 2pt),calc(16.5px + 2pt));color:#d0d0d0;opacity:.8;line-height:1.55;font-weight:400;margin:clamp(14px,2.2vh,22px) 0 clamp(18px,3vh,30px)}
+.hx .cta{display:inline-block;background:#fff;color:#000;text-decoration:none;font-weight:600;font-size:clamp(13.5px,1.5vw,14.5px);padding:clamp(11px,1.6vh,13px) clamp(22px,3vw,28px);border-radius:999px;
+  box-shadow:0 0 0 1px rgba(255,255,255,.15),0 0 22px rgba(255,255,255,.32),0 0 44px rgba(255,255,255,.12);transition:transform .25s,box-shadow .25s}
+.hx .cta:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 0 0 1px rgba(255,255,255,.25),0 0 30px rgba(255,255,255,.45),0 0 60px rgba(247,147,26,.3)}
+.hx .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;width:100%;max-width:920px;flex-shrink:0}
+.hx .st4{display:grid;justify-items:center;gap:4px;text-align:center}
+.hx .st4 .ic{font-family:var(--font-display);font-weight:900;font-size:clamp(22px,3vw,33px);color:#F7931A;line-height:1}
+.hx .st4 .val{font-size:clamp(18px,2.2vw,26px);letter-spacing:-.025em;font-variant-numeric:tabular-nums;font-weight:500}
+.hx .st4 .lab{color:var(--muted);font-size:clamp(11px,1.2vw,12.5px)}
+.hx .anim{opacity:0;transform:translateY(22px) scale(.98);filter:blur(6px);animation:hxReveal .85s cubic-bezier(.22,1,.36,1) forwards;animation-delay:var(--d,0s)}
+.hx .cta.anim{animation-name:hxPulse}
+.hx .scrollhint{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);font-family:var(--f-data);font-size:10px;color:#8e8e8e;z-index:1}
+@keyframes hxDown{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:none}}
+@keyframes hxFade{to{opacity:1;transform:none}}
+@keyframes hxReveal{to{opacity:1;transform:none;filter:none}}
+@keyframes hxPulse{0%{opacity:0;transform:translateY(22px) scale(.98);filter:blur(6px)}70%{opacity:1;transform:none;filter:none}85%{transform:scale(1.04)}100%{opacity:1;transform:none;filter:none}}
+/* mobile menu */
+.hx .ovl{position:fixed;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:30;animation:hxOv .28s ease both}
+.hx .sheet{position:fixed;top:88px;left:16px;right:16px;max-width:420px;margin:0 auto;background:#fff;border-radius:28px;padding:22px 18px 20px;box-shadow:0 20px 60px rgba(0,0,0,.45);z-index:31;display:grid;gap:4px;animation:hxMenu .38s cubic-bezier(.22,1,.36,1) both}
+.hx .sheet a{position:relative;color:#2e2e2e;text-decoration:none;font-weight:500;font-size:17px;padding:12px 10px;text-align:center;opacity:0;animation:hxLink .4s cubic-bezier(.22,1,.36,1) forwards}
+.hx .sheet a.active::after{bottom:8px}
+.hx .sheet a.dark{background:#28282a;color:#fff;border-radius:999px;margin-top:8px}
+.hx .ovl[hidden],.hx .sheet[hidden]{display:none}
+@keyframes hxOv{from{opacity:0}}
+@keyframes hxMenu{from{opacity:0;transform:translateY(-10px) scale(.97)}}
+@keyframes hxLink{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (max-width:720px){
+  .hx nav.pill,.hx .signin.desk{display:none}
+  .hx header{justify-content:space-between}
+  .hx .logo{width:48px;height:48px}
+  .hx .burger{display:grid;place-content:center;gap:5px;width:48px;height:48px;border-radius:50%;background:#28282a;border:0;cursor:pointer;position:relative;z-index:32}
+  .hx .burger span{display:block;width:18px;height:1.5px;background:#fff;transition:transform .3s,opacity .3s}
+  .hx .burger[aria-expanded="true"]{background:#fff}
+  .hx .burger[aria-expanded="true"] span{background:#000}
+  .hx .burger[aria-expanded="true"] span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+  .hx .burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+  .hx .burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+  .hx h1{font-size:clamp(30px,9.2vw,64px);letter-spacing:-.06em;line-height:1.05}
+  .hx .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 10px}
+}
+@media (max-width:420px){.hx .trust{--trust-size:34px}.hx .tpill{font-size:12px}.hx h1{letter-spacing:-.07em;line-height:1.04}}
+@media (max-height:700px){.hx .subh{margin:10px 0 16px}.hx .trust{margin-bottom:12px}}
+/* flip cards */
+.flip{perspective:1400px;min-width:0}
+.flip-in{display:grid;transition:transform .7s cubic-bezier(.22,1,.36,1);transform-style:preserve-3d;height:100%}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.flip-in>.hero{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.flip-in>.back{transform:rotateY(180deg)}
+.fbtn{all:unset;cursor:pointer;font-family:var(--f-pixel);font-size:8px;color:var(--gold);border:2px solid var(--line);padding:6px 8px;justify-self:start;margin-top:auto}
+.fbtn:focus-visible{outline:2px solid var(--gold)}
+.back h4{margin:0;font-family:var(--f-pixel);font-size:10px;color:var(--orange)}
+.back ol{margin:0;padding-left:20px;display:grid;gap:6px;font-size:13px}
+.back ol li span{color:var(--dim);font-size:12px}
+.live{font-family:var(--f-data);font-size:10px;color:var(--mint)}
+/* high scores */
+.hs{display:grid;gap:6px;font-family:var(--f-data);font-size:13px}
+.hs .r{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 10px;border:2px solid var(--line);background:var(--panel-2)}
+.hs .r:nth-child(1){border-color:var(--gold)}.hs .r:nth-child(2){border-color:#c9c9c9}.hs .r:nth-child(3){border-color:#c47f3c}
+.hs .rk{font-family:var(--f-pixel);font-size:10px;color:var(--gold)}
+.hs .bar2{height:8px;background:#000;border:1px solid var(--line);margin-top:4px}
+.hs .bar2 i{display:block;height:100%;background:var(--orange)}
+.hs .sc{font-family:var(--f-pixel);font-size:11px;color:var(--ink)}
+@media (prefers-reduced-motion:reduce){.hx *,.hx .anim,.hx h1 span{animation:none!important;opacity:1!important;transform:none!important;filter:none!important}.flip-in{transition:none}}
+
 /* level select */
 .levels{display:flex;gap:10px;flex-wrap:wrap}
 .lv{font-family:var(--f-pixel);font-size:10px;padding:10px 12px;border:2px solid var(--line);background:var(--panel-2);color:var(--dim)}
@@ -213,22 +301,41 @@ footer .px{font-size:9px;color:var(--orange)}
 .vid .play{font-family:var(--f-pixel);font-size:12px;background:var(--orange);color:#0b0907;padding:14px 16px;box-shadow:4px 4px 0 #7a4a0d}
 .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 @media (max-width:900px){.replay{grid-template-columns:1fr}}
-@media (prefers-reduced-motion:reduce){#boot .ps{animation:none}#boot.gone{transition:none}}
+
 
 @media (prefers-reduced-motion:reduce){.xp i{transition:none}.blink{animation:none}}
 </style>
 </head>
 <body>
-<div id="boot" role="button" tabindex="0" aria-label="Press start to open the dashboard">
-  <div>
-    <div class="logo">CODE <span>ORANGE</span><br>QUEST LOG</div>
-    <div class="ps">▶ PRESS START</div>
-    <div class="hint">tap, click or press any key</div>
-    <div class="coins">SAVE FILE 01 · SEPTEMBER 2026 · 1 PLAYER = YOU</div>
+<div class="hx" id="top">
+  <div class="bg"><video class="bg-video" autoplay muted loop playsinline poster="/assets/co-hero-first.jpg"><source src="/assets/co-hero-720.webm" type="video/webm"><source src="/assets/co-hero-720.mp4" type="video/mp4"></video></div>
+  <div class="page">
+    <header>
+      <a class="logo" href="#top" aria-label="Code Orange, top of page"><img src="/assets/favicon-co.svg" alt="" width="52" height="52"></a>
+      <nav class="pill" aria-label="Sections">
+        <a href="#top" class="active">Home</a><a href="#replay-h">Replay</a><a href="#wall-h">Proof</a><a href="#party-h">Fellows</a>
+      </nav>
+      <a class="signin desk" href="#vid-h">Watch a session</a>
+      <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="sheet"><span></span><span></span><span></span></button>
+    </header>
+    <div class="ovl" hidden></div>
+    <nav class="sheet" id="sheet" hidden aria-label="Menu">
+      <a href="#top" class="active" style="animation-delay:.05s">Home</a><a href="#replay-h" style="animation-delay:.1s">Replay</a><a href="#wall-h" style="animation-delay:.15s">Proof</a><a href="#party-h" style="animation-delay:.2s">Fellows</a><a href="#vid-h" class="dark" style="animation-delay:.25s">Watch a session</a>
+    </nav>
+    <main class="hero-c">
+      <div class="trust anim" style="--d:.05s"><span class="av a1"><i class="fa-brands fa-bitcoin"></i></span><span class="av a2"><i class="fa-brands fa-github"></i></span><span class="av a3"><i class="fa-brands fa-discord"></i></span><span class="tpill">Every number linked to public proof</span></div>
+      <h1><span>Code Orange</span><span>Month 1 Cleared</span></h1>
+      <p class="subh anim" style="--d:.28s">From first workshop to first merged PR. Our September in one page: every session, every fellow, every pull request.</p>
+      <a class="cta anim" href="#lvl" style="--d:.4s">▶ Press Start</a>
+    </main>
+    <section class="stats" aria-label="Headline numbers">
+      <div class="st4 anim" style="--d:.5s"><span class="ic">&lt;</span><span class="val" data-to="9" data-suf="">9</span><span class="lab">Sessions in September</span></div>
+      <div class="st4 anim" style="--d:.58s"><span class="ic">@</span><span class="val" data-to="53" data-suf="+">53+</span><span class="lab">People counted</span></div>
+      <div class="st4 anim" style="--d:.66s"><span class="ic">*</span><span class="val" data-to="3" data-suf="">3</span><span class="lab">Educator fellows</span></div>
+      <div class="st4 anim" style="--d:.74s"><span class="ic">#</span><span class="val" data-to="94" data-suf="" data-live="merged">94</span><span class="lab">Merged PRs <span class="live" data-live-short></span></span></div>
+    </section>
   </div>
 </div>
-
-
 <div class="wrap">
 
   <section class="panel title" aria-label="Save file">
@@ -251,7 +358,7 @@ footer .px{font-size:9px;color:var(--orange)}
   </section>
 
 
-  <nav class="levels" aria-label="Months">
+  <nav class="levels" id="lvl" aria-label="Months">
     <span class="lv on">LVL 1 · SEP <b>✓ CLEARED</b></span>
     <span class="lv">LVL 2 · OCT · LOADING</span>
     <span class="lv">LVL 3 · NOV · LOCKED</span>
@@ -262,7 +369,7 @@ footer .px{font-size:9px;color:var(--orange)}
     <div class="stat"><span class="label">Sessions run</span><span class="v num">9</span><span class="k">Plan: 7+ a month. 6 online, 2 Bali, 1 Cebu</span></div>
     <div class="stat"><span class="label">Party size</span><span class="v num">53<small>+</small></span><span class="k">42 seats across 6 calls, plus 11+ in the Bali room</span></div>
     <div class="stat"><span class="label">Educator fellows</span><span class="v num">3</span><span class="k">Razor, Alex, Andy each run a program</span></div>
-    <div class="stat"><span class="label">Merged PRs</span><span class="v num">94</span><span class="k">Every one linked and checked weekly by CI</span></div>
+    <div class="stat"><span class="label">Merged PRs</span><span class="v num" data-live="merged">94</span><span class="k">Every one linked and checked weekly by CI</span></div>
     <div class="stat"><span class="label">Cities</span><span class="v num">2</span><span class="k">Cebu, Philippines joins Bali</span></div>
     <div class="stat"><span class="label">Applications</span><span class="v num">4</span><span class="k">From India, the UK, Nigeria and more</span></div>
     <div class="stat"><span class="label">Newsletter opens</span><span class="v num">40.5<small>%</small></span><span class="k">Privacy Track launch to 79 subscribers</span></div>
@@ -304,7 +411,8 @@ footer .px{font-size:9px;color:var(--orange)}
     <h2 id="party-h">The party: Cohort 1 educator fellows</h2>
     <p class="sub">Three people took ownership of programs, so Code Orange no longer depends on one teacher.</p>
     <div class="party">
-      <article class="hero">
+      <div class="flip"><div class="flip-in">
+      <article class="hero front">
         <header><canvas class="sprite" width="14" height="14" data-sprite="mage"></canvas>
           <div><h3>Razor</h3><div class="cls">Privacy Mage</div></div></header>
         <div class="bars">
@@ -318,8 +426,16 @@ footer .px{font-size:9px;color:var(--orange)}
           <li>Proposed the chain-analysis workshop (<a href="https://github.com/code-orange-dev/curriculum/pull/1">curriculum #1</a>)</li>
           <li>Shipped BIP324 privacy tooling: <a href="https://github.com/RazorBest/bip324-mitm/pull/29">bip324-mitm</a>, <a href="https://github.com/RazorBest/snarf-rs/pull/17">snarf-rs</a></li>
         </ul>
+        <button class="fbtn" type="button" aria-label="Flip Razor's card">↻ FLIP CARD</button>
       </article>
-      <article class="hero">
+      <article class="hero back" aria-label="Razor, card back">
+        <h4>Razor · Recent GitHub work <span class="live" data-gh-tag="RazorBest"></span></h4>
+        <ol data-gh="RazorBest"><li><a href="https://github.com/RazorBest/bip324-mitm/pull/29">bip324-mitm #29</a> <span>BIP324</span></li><li><a href="https://github.com/RazorBest/bip324-mitm/pull/30">bip324-mitm #30</a></li><li><a href="https://github.com/RazorBest/snarf-rs/pull/17">snarf-rs #17</a></li><li><a href="https://github.com/code-orange-dev/curriculum/pull/1">curriculum #1</a> <span>chain-analysis workshop</span></li></ol>
+        <button class="fbtn" type="button" aria-label="Flip Razor's card back">↻ FLIP BACK</button>
+      </article>
+      </div></div>
+      <div class="flip"><div class="flip-in">
+      <article class="hero front">
         <header><canvas class="sprite" width="14" height="14" data-sprite="sage"></canvas>
           <div><h3>Alex</h3><div class="cls">Lorekeeper</div></div></header>
         <div class="bars">
@@ -333,8 +449,16 @@ footer .px{font-size:9px;color:var(--orange)}
           <li>Leveled up to developer fellow in October</li>
           <li><a href="https://github.com/alexxie16">github.com/alexxie16</a></li>
         </ul>
+        <button class="fbtn" type="button" aria-label="Flip Alex's card">↻ FLIP CARD</button>
       </article>
-      <article class="hero">
+      <article class="hero back" aria-label="Alex, card back">
+        <h4>Alex · Recent GitHub work <span class="live" data-gh-tag="alexxie16"></span></h4>
+        <ol data-gh="alexxie16"><li><a href="https://github.com/alexxie16">github.com/alexxie16</a> <span>3 merged PRs on our dashboard</span></li><li>Reading Club host, 23 Sep: 9 people</li><li>Code Review Club co-host from 8 Oct</li></ol>
+        <button class="fbtn" type="button" aria-label="Flip Alex's card back">↻ FLIP BACK</button>
+      </article>
+      </div></div>
+      <div class="flip"><div class="flip-in">
+      <article class="hero front">
         <header><canvas class="sprite" width="14" height="14" data-sprite="ranger"></canvas>
           <div><h3>Andy</h3><div class="cls">Custody Ranger</div></div></header>
         <div class="bars">
@@ -348,7 +472,14 @@ footer .px{font-size:9px;color:var(--orange)}
           <li>DIY Bitcoin offered a Cebu ESP32 workshop for January</li>
           <li><a href="https://x.com/andywong311">@andywong311</a></li>
         </ul>
+        <button class="fbtn" type="button" aria-label="Flip Andy's card">↻ FLIP CARD</button>
       </article>
+      <article class="hero back" aria-label="Andy, card back">
+        <h4>Andy · Quest log</h4>
+        <ol data-gh=""><li><a href="https://x.com/CodeOrangeDevs/status/2101184634369577459">Self-Custody Workshop, 18 Sep</a> <span>Silent Payments received live</span></li><li><a href="https://x.com/CodeOrangeDevs/status/2103425294032121883">Cebu Meetup #1, 30 Sep</a> <span>new country</span></li><li>DIY Bitcoin ESP32 workshop offered for January</li><li><a href="https://x.com/andywong311">@andywong311</a></li></ol>
+        <button class="fbtn" type="button" aria-label="Flip Andy's card back">↻ FLIP BACK</button>
+      </article>
+      </div></div>
     </div>
   </section>
 
@@ -376,6 +507,12 @@ footer .px{font-size:9px;color:var(--orange)}
     <h2 id="ach-h">Achievements unlocked</h2>
     <p class="sub">Things that exist now and didn't on 1 September.</p>
     <div class="ach" id="ach"></div>
+  </section>
+
+  <section class="panel" aria-labelledby="hs-h">
+    <h2 id="hs-h">High scores: merged PRs by developer</h2>
+    <p class="sub">Community developers ranked by merged pull requests to Bitcoin open-source projects. Loaded live from our <a href="https://github.com/code-orange-dev/PR-tracking-dashboard">public PR dashboard</a> <span class="live" data-live-tag></span></p>
+    <div class="hs" id="hs"></div>
   </section>
 
   <div class="two">
@@ -428,13 +565,50 @@ footer .px{font-size:9px;color:var(--orange)}
 <script>
 (function(){
   const U="https://x.com/CodeOrangeDevs/status/";
-  // press start
-  const boot=document.getElementById('boot');
-  let started=false;
-  function start(){if(started)return;started=true;boot.classList.add('gone');document.getElementById('xp').classList.add('ready');}
-  boot.addEventListener('click',start);addEventListener('keydown',e=>{if(!started){start();}});
-  try{if(sessionStorage.getItem('co-started')){start()}sessionStorage.setItem('co-started','1')}catch(e){}
-  boot.focus();
+
+
+  // hero: count-up, menu
+  document.getElementById('xp').classList.add('ready');
+  const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ease=t=>1-Math.pow(1-t,3);
+  function countUp(el,to,i){const suf=el.dataset.suf||'';const dec=(String(to).split('.')[1]||'').length;
+    if(RM){el.textContent=to.toFixed(dec)+suf;return}
+    const dur=1500+i*80,st=performance.now()+480+i*90;
+    (function f(now){const t=Math.min(1,Math.max(0,(now-st)/dur));el.textContent=(to*ease(t)).toFixed(dec)+suf;if(t<1)requestAnimationFrame(f)})(performance.now())}
+  const vals=[...document.querySelectorAll('.hx .val')];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){vals.forEach((v,i)=>countUp(v,+v.dataset.to,i));io.disconnect()}})},{threshold:.25});
+  io.observe(document.querySelector('.hx .stats'));
+  const burger=document.querySelector('.hx .burger'),sheet=document.getElementById('sheet'),ovl=document.querySelector('.hx .ovl');
+  function menu(open){burger.setAttribute('aria-expanded',open);burger.setAttribute('aria-label',open?'Close menu':'Open menu');sheet.hidden=!open;ovl.hidden=!open;document.body.classList.toggle('menu-open',open)}
+  burger.addEventListener('click',()=>menu(burger.getAttribute('aria-expanded')!=='true'));
+  ovl.addEventListener('click',()=>menu(false));sheet.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>menu(false)));
+  addEventListener('keydown',e=>{if(e.key==='Escape'&&!sheet.hidden)menu(false)});
+  addEventListener('resize',()=>{if(innerWidth>720&&!sheet.hidden)menu(false)});
+
+  // flip cards
+  document.querySelectorAll('.flip').forEach(f=>f.querySelectorAll('.fbtn').forEach(b=>b.addEventListener('click',()=>{f.classList.toggle('on');
+    const fr=f.querySelector('.front'),bk=f.querySelector('.back');const on=f.classList.contains('on');fr.inert=on;bk.inert=!on;(on?bk:fr).querySelector('.fbtn').focus()})));
+  document.querySelectorAll('.flip .back').forEach(b=>b.inert=true);
+
+  // live numbers from the public PR dashboard
+  const HS0=[["Peter",30],["Vaan",14],["Dayvvo",9],["Muhammad",8],["Psychemist",7],["Razor",6],["Arowolo",6],["Diegodev",5],["Gradale",5],["Alex Xie",3],["Mwihoti",1]];
+  function drawHS(list){const max=list[0][1];document.getElementById('hs').innerHTML=list.slice(0,8).map(([n,c],i)=>`<div class="r"><span class="rk">${String(i+1).padStart(2,'0')}</span><div>${n}<div class="bar2"><i style="width:${Math.round(c/max*100)}%"></i></div></div><span class="sc">${c}</span></div>`).join('')}
+  drawHS(HS0);
+  fetch('https://raw.githubusercontent.com/code-orange-dev/PR-tracking-dashboard/main/README.md',{cache:'no-store'}).then(r=>r.ok?r.text():Promise.reject()).then(t=>{
+    const m=t.match(/Merged PRs[^|]*\|\s*\*\*(\d+)\*\*/);const up=t.match(/Last updated:\s*([^|\n]+)/);
+    const list=[...t.matchAll(/^### ([^(\n]+?) \(\[@[^\]]+\]\([^)]+\)\) - (\d+) merged/gm)].map(x=>[x[1].trim(),+x[2]]).sort((a,b)=>b[1]-a[1]);
+    if(list.length)drawHS(list);
+    if(m){document.querySelectorAll('[data-live="merged"]').forEach(el=>{el.dataset.to=m[1];el.textContent=m[1]+(el.dataset.suf||'')})}
+    document.querySelectorAll('[data-live-tag]').forEach(el=>el.textContent='● live'+(up?' · updated '+up[1].trim():''));document.querySelectorAll('[data-live-short]').forEach(el=>el.textContent='● live');
+  }).catch(()=>{});
+  // fellows' latest public PRs from GitHub
+  document.querySelectorAll('ol[data-gh]').forEach(ol=>{const u=ol.dataset.gh;if(!u)return;
+    fetch(`https://api.github.com/search/issues?q=author:${u}+is:pr+is:public&sort=updated&order=desc&per_page=5`).then(r=>r.ok?r.json():Promise.reject()).then(j=>{
+      if(!j.items||!j.items.length)return;
+      ol.innerHTML=j.items.map(it=>{const repo=it.repository_url.split('/repos/')[1];const st=it.pull_request&&it.pull_request.merged_at?'merged':it.state;
+        return `<li><a href="${it.html_url}">${repo} #${it.number}</a> <span>${st} · ${it.title.replace(/[<>&]/g,'').slice(0,60)}</span></li>`}).join('');
+      const tag=document.querySelector(`[data-gh-tag="${u}"]`);if(tag)tag.textContent='● live';
+    }).catch(()=>{})});
 
   // sessions by day: [day, title, sub, irl, people, img, tweet]
   const EV=[
