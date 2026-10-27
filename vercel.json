@@ -10,6 +10,11 @@
   },
   "redirects": [
     {
+      "source": "/progress/september-2026-q7k3x9",
+      "destination": "/progress/september-2026",
+      "permanent": true
+    },
+    {
       "source": "/programs/openclaw",
       "destination": "/programs/agentic-engineering",
       "permanent": true
