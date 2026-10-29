@@ -1,3 +1,85 @@
+      <style>
+      .wq{margin:0 0 40px;border:1px solid rgba(247,147,26,.35);border-radius:18px;background:radial-gradient(120% 90% at 0 0,rgba(247,147,26,.14),transparent 60%),var(--card);padding:22px;position:relative;overflow:hidden}
+      .wq-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;font:700 12px/1.2 "Plus Jakarta Sans",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--orange)}
+      .wq-xp{color:var(--text);letter-spacing:.04em}
+      .wq-bar{height:8px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden;margin-bottom:18px}
+      .wq-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--orange),var(--orange2));transition:width .5s ease}
+      .wq-map{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap}
+      .wq-map span{flex:1;min-width:36px;text-align:center;padding:6px 0;border-radius:8px;border:1px solid var(--line);font:700 12px/1 monospace;color:var(--dim)}
+      .wq-map span.on{border-color:var(--orange);color:var(--orange)}
+      .wq-map span.ok{background:var(--orange);border-color:var(--orange);color:#0A0A0A}
+      .wq-map span.miss{background:rgba(255,255,255,.08);color:var(--muted)}
+      .wq h3{margin:0 0 6px;font-size:22px;line-height:1.25}
+      .wq-quote{margin:0 0 14px;padding:12px 14px;border-left:3px solid var(--orange);background:rgba(0,0,0,.35);border-radius:0 10px 10px 0;font:italic 16px/1.55 Georgia,serif;color:var(--muted)}
+      .wq-q{margin:0 0 12px;color:var(--text);font-weight:600}
+      .wq-opts{display:grid;gap:8px}
+      .wq-opts button{all:unset;box-sizing:border-box;cursor:pointer;padding:13px 16px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.03);color:var(--text);font-size:15px;line-height:1.4;transition:border-color .15s,background .15s}
+      .wq-opts button:hover:not([disabled]){border-color:var(--orange)}
+      .wq-opts button.right{border-color:var(--orange);background:rgba(247,147,26,.18)}
+      .wq-opts button.wrong{border-color:#7a3b3b;background:rgba(160,60,60,.18);color:var(--muted)}
+      .wq-opts button[disabled]{cursor:default}
+      .wq-why{display:none;margin:14px 0 0;padding:12px 14px;border-radius:12px;background:rgba(247,147,26,.08);color:var(--muted);font-size:15px;line-height:1.55}
+      .wq-why b{color:var(--orange)}
+      .wq-next{display:none;margin-top:14px;padding:12px 22px;border:0;border-radius:99px;background:var(--orange);color:#0A0A0A;font-weight:800;cursor:pointer;font-size:14px;letter-spacing:.04em}
+      .wq-end{display:none;text-align:center;padding:10px 0}
+      .wq-badge{width:110px;height:110px;margin:4px auto 14px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,var(--orange2),var(--orange) 55%,#a85c00);box-shadow:0 0 0 6px rgba(247,147,26,.18),0 0 60px rgba(247,147,26,.45);font:800 40px/1 sans-serif;color:#0A0A0A}
+      .wq-end h3{font-size:26px}
+      .wq-end p{color:var(--muted);margin:6px auto 16px;max-width:460px}
+      .wq-acts{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+      .wq-acts a,.wq-acts button{padding:11px 18px;border-radius:99px;border:1px solid var(--line);background:transparent;color:var(--text);font-weight:700;font-size:14px;cursor:pointer;text-decoration:none}
+      .wq-acts .p{background:var(--orange);border-color:var(--orange);color:#0A0A0A}
+      .wq-pop{position:absolute;right:22px;top:52px;font:800 18px/1 monospace;color:var(--orange);opacity:0;transform:translateY(8px);pointer-events:none}
+      .wq-pop.go{animation:wqpop 1s ease}
+      @keyframes wqpop{20%{opacity:1;transform:translateY(0)}80%{opacity:1}100%{opacity:0;transform:translateY(-14px)}}
+      </style>
+      <h2>Play the abstract</h2>
+      <p>Six sentences, six levels. Pick an answer to unlock the next line of the whitepaper and earn XP. Everything here comes from what we discussed on the call.</p>
+      <div class="wq" id="wq" aria-live="polite">
+        <div class="wq-top"><span id="wq-lvl">Level 1 of 6</span><span class="wq-xp"><span id="wq-xp">0</span> XP</span></div>
+        <div class="wq-bar"><i id="wq-bar"></i></div>
+        <div class="wq-map" id="wq-map"></div>
+        <div class="wq-pop" id="wq-pop">+100 XP</div>
+        <div id="wq-play">
+          <h3 id="wq-title"></h3>
+          <p class="wq-quote" id="wq-quote"></p>
+          <p class="wq-q" id="wq-q"></p>
+          <div class="wq-opts" id="wq-opts"></div>
+          <p class="wq-why" id="wq-why"></p>
+          <button class="wq-next" id="wq-next" type="button">Next level &rarr;</button>
+        </div>
+        <div class="wq-end" id="wq-end">
+          <div class="wq-badge" id="wq-badge">&#8383;</div>
+          <h3 id="wq-rank"></h3>
+          <p id="wq-msg"></p>
+          <div class="wq-acts"><a class="p" id="wq-share" target="_blank" rel="noopener">Post my score on X</a><button type="button" id="wq-again">Play again</button></div>
+        </div>
+      </div>
+      <script>
+      (function(){
+      var L=[
+       {t:"Peer-to-peer cash",s:"A purely peer-to-peer version of electronic cash would allow online payments to be sent directly from one party to another without going through a financial institution.",q:"Why did the group call this the most important line in the paper?",o:["It means Bitcoin is faster than a bank","There is no middleman, so there is nobody to shut it down","It means Bitcoin is free to use"],a:1,w:"As long as two people want to trade, they can. No bank in the middle means no single place to ban or block it."},
+       {t:"What is “cash”?",s:"…electronic cash…",q:"One reading from the call: “cash” here is the opposite of…",o:["Credit: once paid, it can’t be reversed","Savings: you should always spend it","Gold: it has to be physical"],a:0,w:"Cash is final. Nobody else’s promise stands behind it, which makes bitcoin a <b>bearer asset</b>: control the keys and you own it."},
+       {t:"The double spend",s:"Digital signatures provide part of the solution, but the main benefits are lost if a trusted third party is still required to prevent double-spending.",q:"Signatures prove a coin is yours. So what problem is left?",o:["Someone could guess your private key","You could sign the same coin over to ten people at once","Signatures are too slow"],a:1,w:"Digital things copy easily. Paper cash can only be handed to one person, but a signed message can be sent to many. Something has to decide which payment counts."},
+       {t:"The chain",s:"The network timestamps transactions by hashing them into an ongoing chain of hash-based proof-of-work, forming a record that cannot be changed without redoing the proof-of-work.",q:"Why not just keep a plain public list of transactions?",o:["A list would take too much disk space","Anyone could quietly edit a list. Changing the chain means redoing all the work","Lists can’t hold timestamps"],a:1,w:"Proof of work makes history expensive to rewrite. In the airplane analogy, proof of work is the <b>engine</b> and the blockchain is the <b>wings</b>."},
+       {t:"The longest chain",s:"The longest chain not only serves as proof of the sequence of events witnessed, but proof that it came from the largest pool of CPU power.",q:"What would it take to rewrite Bitcoin’s history?",o:["Hacking one big exchange","More than half of all the hash power","A vote of the node runners"],a:1,w:"That’s the 51% attack. Miners chase rewards with better machines (CPU, GPU, ASIC), which makes that much power hugely expensive. Energy is the security."},
+       {t:"Come and go",s:"Nodes can leave and rejoin the network at will, accepting the longest proof-of-work chain as proof of what happened while they were gone.",q:"Why is it a big deal that the network doesn’t care who you are?",o:["There is no central point to attack, like mycelium under a forest","It makes transactions free","It means nodes don’t need software"],a:0,w:"No ID, no account, no choke point. Every node checks every rule. <b>Node runners are the police.</b>"}
+      ];
+      var R=[[0,"Fiat Tourist","Everyone starts somewhere. Read the notes below and try again."],[2,"Pleb in Training","Good start. The notes below fill in the gaps."],[4,"Whitepaper Reader","Solid. You’re ready for chapter 1 next month."],[6,"Satoshi’s Apprentice","Perfect score. Bring this energy to the sats quiz next month."]];
+      var i=0,xp=0,res=[],$=function(id){return document.getElementById(id)};
+      function map(){$('wq-map').innerHTML=L.map(function(_,k){var c=k<res.length?(res[k]?'ok':'miss'):(k==i?'on':'');return '<span class="'+c+'">'+(k+1)+'</span>'}).join('');$('wq-bar').style.width=(res.length/L.length*100)+'%';$('wq-xp').textContent=xp;}
+      function show(){var l=L[i];$('wq-lvl').textContent='Level '+(i+1)+' of '+L.length;$('wq-title').textContent=l.t;$('wq-quote').textContent='“'+l.s+'”';$('wq-q').textContent=l.q;$('wq-why').style.display='none';$('wq-next').style.display='none';
+        $('wq-opts').innerHTML='';l.o.forEach(function(o,k){var b=document.createElement('button');b.type='button';b.textContent=o;b.onclick=function(){pick(k)};$('wq-opts').appendChild(b)});map();}
+      function pick(k){var l=L[i],bs=$('wq-opts').children,ok=k===l.a;for(var j=0;j<bs.length;j++){bs[j].disabled=true;if(j===l.a)bs[j].classList.add('right');else if(j===k)bs[j].classList.add('wrong');}
+        res.push(ok);if(ok){xp+=100;var p=$('wq-pop');p.classList.remove('go');void p.offsetWidth;p.classList.add('go');}
+        $('wq-why').innerHTML=(ok?'<b>Correct!</b> ':'<b>Not quite.</b> ')+l.w;$('wq-why').style.display='block';$('wq-next').textContent=i<L.length-1?'Next level →':'See my rank →';$('wq-next').style.display='inline-block';map();}
+      $('wq-next').onclick=function(){if(i<L.length-1){i++;show();}else end();};
+      function end(){var n=res.filter(Boolean).length,r=R[0];R.forEach(function(x){if(n>=x[0])r=x});$('wq-play').style.display='none';$('wq-end').style.display='block';$('wq-lvl').textContent='Quest complete';
+        $('wq-rank').textContent=r[1];$('wq-msg').textContent=n+' of '+L.length+' right, '+xp+' XP. '+r[2];
+        $('wq-share').href='https://x.com/intent/post?text='+encodeURIComponent('I scored '+n+'/6 on the Bitcoin whitepaper quest and ranked "'+r[1]+'" ₿\n\nCan you beat it? @CodeOrangeDevs')+'&url='+encodeURIComponent(location.href.split('#')[0]);map();}
+      $('wq-again').onclick=function(){i=0;xp=0;res=[];$('wq-play').style.display='block';$('wq-end').style.display='none';show();};
+      show();})();
+      </script>
+
       <h2>Highlights</h2>
       <p><strong>One sentence that started it all.</strong> Alex opened the whitepaper on an annotated reading site and went through the abstract one sentence at a time. The first line got the most time: <em>&ldquo;A purely peer-to-peer version of electronic cash would allow online payments to be sent directly from one party to another without going through a financial institution.&rdquo;</em> It is the reason Bitcoin is so hard to ban. As long as two people want to trade, there is no middleman to shut down.</p>
       <blockquote class="quote"><p>&ldquo;Peer-to-peer is the way to get it, the way Satoshi intended it to be.&rdquo;</p><cite>Alex, on where to get your first bitcoin</cite></blockquote>
