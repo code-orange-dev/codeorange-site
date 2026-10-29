@@ -78,7 +78,7 @@
         <p class="me-small" style="margin-top:8px">${ymLabel(f.startMonth)} to ${ymLabel(f.startMonth, f.months - 1)}${f.mentor ? ` · mentored by ${esc(f.mentor)}` : ""} ${projects ? ` · work since the fellowship started, on ${projects} project${projects === 1 ? "" : "s"}` : ""}</p>
         <div class="me-row" style="justify-content:flex-start"><a class="ghost small" href="https://x.com/intent/post?text=${share}&url=${encodeURIComponent(url)}" target="_blank" rel="noopener">Share on X</a><button class="ghost small" type="button" id="fw-copy">Copy link</button></div>
       </section>
-      <section class="me-card"><p class="me-label">Milestones</p><h2>The 6-month plan</h2>
+      <section class="me-card"><p class="me-label">Milestones</p><h2>The ${f.months}-month plan</h2>
         <ol class="fw-plan read">${f.plan.map((p, i) => `<li class="${p.done ? "is-done" : ""}"><span class="fw-m">${i + 1}</span><span>${esc(p.goal)}</span></li>`).join("")}</ol></section>
       <section class="me-card"><p class="me-label">Live from GitHub</p><h2>Pull requests</h2>
         ${gh.prs.length ? `<ul class="fw-prs">${gh.prs.slice(0, 20).map(prItem).join("")}</ul>` : `<p>${gh.ok ? "No pull requests yet since the fellowship started." : "GitHub didn't answer just now. Try again in a bit."}</p>`}
@@ -87,7 +87,7 @@
       </section>
       <section class="me-card me-wide"><p class="me-label">Monthly reports</p><h2>Month by month</h2>
         ${d.reports.length ? `<div class="fw-log">${d.reports.map((r, i) => `<details ${i === 0 ? "open" : ""}><summary>Month ${r.month} · ${ymLabel(f.startMonth, r.month - 1)}</summary><p>${linkify(r.summary)}</p>${r.prs ? `<p><strong>PRs:</strong><br>${linkify(r.prs)}</p>` : ""}${r.reviews ? `<p><strong>Reviews:</strong><br>${linkify(r.reviews)}</p>` : ""}${r.other ? `<p><strong>Other work:</strong><br>${linkify(r.other)}</p>` : ""}${r.next ? `<p><strong>Next:</strong> ${linkify(r.next)}</p>` : ""}</details>`).join("")}</div>` : "<p>The first monthly report appears here after month 1.</p>"}
-        <p class="me-small" style="margin-top:14px">Code Orange developer fellows build Bitcoin and Nostr open source for 6 months with a mentor. <a href="/fellowships/guidelines">How the fellowship works</a> · <a href="/fellowships/apply">Apply</a></p>
+        <p class="me-small" style="margin-top:14px">Code Orange developer fellows build Bitcoin and Nostr open source with a mentor. <a href="/fellowships/guidelines">How the fellowship works</a> · <a href="/fellowships/apply">Apply</a></p>
       </section>`;
     $("#fw-copy").addEventListener("click", async () => {
       try { await navigator.clipboard.writeText(url); $("#fw-copy").textContent = "Copied ✓"; } catch {}

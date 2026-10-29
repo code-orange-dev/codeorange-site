@@ -9,7 +9,7 @@
 //   POST /api/fellowship {action:"apply", ...}                 application form
 //   POST /api/fellowship {action:"link", email}                email a fellow their dashboard link
 //   GET  /api/fellowship                                       my dashboard (X-FW-Token: token)
-//   POST /api/fellowship {action:"standup"|"report"|"plan", token, ...}
+//   POST /api/fellowship {action:"standup"|"report"|"plan"|"check", token, ...}
 //   GET  /api/fellowship?fellows=1                             public list of fellows
 //   GET  /api/fellowship?fellow=<github>                       one fellow's public proof of work
 //   GET  /api/fellowship?admin=1                               everything (X-MB-Admin: key)
@@ -33,6 +33,12 @@ const GITHUB_RE = /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})$/;
 const MONTH_RE = /^20\d\d-(0[1-9]|1[0-2])$/;
 const APP_STATUSES = ["new", "shortlisted", "interview", "waitlist", "accepted", "declined"];
 const FELLOW_STATUSES = ["green", "yellow", "red", "paused", "graduated", "ended"];
+// When the monthly report is due and when it's paid. Set per fellow by the organisers.
+//   next  report by the 5th of the following month, paid by the 10th (the guidelines' default)
+//   end   report by the 21st of the same month, paid by the end of that month
+const SCHEDULES = ["next", "end"];
+// The monthly to-dos a fellow ticks on their dashboard (private; organisers see them).
+const CHECKS = ["reviews", "mentor", "crc", "privacy", "post"];
 const DEFAULT_PLAN = [
   "Set up: build and tests pass, introduce yourself to the project, first small PR, refine this plan with your mentor",
   "Find your groove: 2+ PRs, one with real functionality; review others' PRs every week",
@@ -147,6 +153,10 @@ function ensureTables() {
         submitted_at timestamptz NOT NULL DEFAULT now(),
         PRIMARY KEY (fellow_id, month)
       )`),
+      q("ALTER TABLE fw_fellows ADD COLUMN IF NOT EXISTS schedule text NOT NULL DEFAULT 'next'"),
+      q("ALTER TABLE fw_fellows ADD COLUMN IF NOT EXISTS focus text"),
+      q("ALTER TABLE fw_fellows ADD COLUMN IF NOT EXISTS checks jsonb"),
+      q("ALTER TABLE fw_reports ADD COLUMN IF NOT EXISTS mentor_note text"),
       q(`CREATE TABLE IF NOT EXISTS fw_payouts (
         id serial PRIMARY KEY,
         fellow_id integer NOT NULL REFERENCES fw_fellows(id) ON DELETE CASCADE,
@@ -201,15 +211,41 @@ const urlish = (v, max = 300) => {
 };
 
 // ---------- Fellowship calendar ----------
-// A fellowship runs in calendar months from start_month ("2027-01"). The report for
-// month k is due on the 5th of the following month and paid by the 10th.
+// A fellowship runs in calendar months from start_month ("2027-01"). When month k's report
+// is due depends on the fellow's schedule (see SCHEDULES).
 const monthNo = (ym) => Number(ym.slice(0, 4)) * 12 + Number(ym.slice(5, 7)) - 1;
 const ymOf = (n) => `${Math.floor(n / 12)}-${String((n % 12) + 1).padStart(2, "0")}`;
 function fellowMonth(startYm, t = Date.now()) {
   const d = new Date(t);
   return d.getUTCFullYear() * 12 + d.getUTCMonth() - monthNo(startYm) + 1;
 }
-const reportDue = (startYm, k) => `${ymOf(monthNo(startYm) + k)}-05`;
+const lastDay = (ym) => String(new Date(Date.UTC(Number(ym.slice(0, 4)), Number(ym.slice(5, 7)), 0)).getUTCDate()).padStart(2, "0");
+const scheduleOf = (f) => (SCHEDULES.includes(f.schedule) ? f.schedule : "next");
+function reportDue(f, k) {
+  if (scheduleOf(f) === "end") return `${ymOf(monthNo(f.start_month) + k - 1)}-21`;
+  return `${ymOf(monthNo(f.start_month) + k)}-05`;
+}
+function payBy(f, k) {
+  if (scheduleOf(f) === "end") {
+    const ym = ymOf(monthNo(f.start_month) + k - 1);
+    return `${ym}-${lastDay(ym)}`;
+  }
+  return `${ymOf(monthNo(f.start_month) + k)}-10`;
+}
+// The day the dashboard starts asking for month k's report: a week before an "end" due
+// date, or the first day of the next month for "next".
+function reportOpens(f, k) {
+  if (scheduleOf(f) === "end") return `${ymOf(monthNo(f.start_month) + k - 1)}-14`;
+  return `${ymOf(monthNo(f.start_month) + k)}-01`;
+}
+const calendarOf = (f) =>
+  Array.from({ length: Number(f.months) || MONTHS }, (_, i) => ({ month: i + 1, due: reportDue(f, i + 1), payBy: payBy(f, i + 1), opens: reportOpens(f, i + 1) }));
+function checksOf(f) {
+  const c = parseJson(f.checks) || {};
+  const out = {};
+  for (const [m, v] of Object.entries(c)) if (v && typeof v === "object") out[m] = Object.fromEntries(CHECKS.map((k) => [k, !!v[k]]));
+  return out;
+}
 // Weeks are keyed by their Monday (UTC).
 function mondayOf(t = Date.now()) {
   const d = new Date(t);
@@ -398,7 +434,7 @@ const shapeReport = (r, priv) => ({
   other: r.other || "",
   next: r.next || "",
   submittedAt: iso(r.submitted_at),
-  ...(priv ? { blockers: r.blockers || "", rail: r.rail || "", address: r.address || "", help: bool(r.help), approved: bool(r.approved) } : {}),
+  ...(priv ? { mentorNote: r.mentor_note || "", blockers: r.blockers || "", rail: r.rail || "", address: r.address || "", help: bool(r.help), approved: bool(r.approved) } : {}),
 });
 const shapePayout = (p) => ({ id: Number(p.id), month: Number(p.month), usd: num(p.usd), rate: num(p.rate), sats: num(p.sats), rail: p.rail || "", ref: p.ref || "", paidAt: iso(p.paid_at) });
 
@@ -416,6 +452,7 @@ function fellowCore(f) {
     bio: f.bio || "",
     links: f.links || "",
     plan: planOf(f),
+    focus: f.focus || "",
   };
 }
 
@@ -437,7 +474,10 @@ async function dashboard(token) {
       me: { ...core, email: f.email, discord: f.discord || "", status: f.status, public: bool(f.public) },
       thisWeek: mondayOf(),
       stipendUsd: STIPEND_USD,
-      dueDates: Array.from({ length: core.months }, (_, i) => reportDue(f.start_month, i + 1)),
+      schedule: scheduleOf(f),
+      calendar: calendarOf(f),
+      dueDates: calendarOf(f).map((c) => c.due),
+      checks: checksOf(f),
       standups: standups.map(shapeStandup),
       reports: reports.map((r) => shapeReport(r, true)),
       payouts: payouts.map(shapePayout),
@@ -487,22 +527,24 @@ async function report(body) {
     next: clean(body.next, 2000),
     rail: ["lightning", "onchain", "ecash"].includes(body.rail) ? body.rail : "",
     address: clean(body.address, 600),
+    mentor_note: clean(body.mentorNote, 2000),
     help: !!body.help,
   };
   if (r.summary.length < 40) return { status: 400, error: "Add a short summary of the month (a few sentences)." };
   const [old] = await sql("SELECT month FROM fw_reports WHERE fellow_id = $1 AND month = $2", [f.id, month]);
   await sql(
-    `INSERT INTO fw_reports (fellow_id, month, summary, prs, reviews, other, blockers, next, rail, address, help)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
+    `INSERT INTO fw_reports (fellow_id, month, summary, prs, reviews, other, blockers, next, rail, address, help, mentor_note)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
      ON CONFLICT (fellow_id, month) DO UPDATE SET summary = $3, prs = $4, reviews = $5, other = $6, blockers = $7,
-       next = $8, rail = $9, address = $10, help = $11, submitted_at = now()`,
-    [f.id, month, r.summary, r.prs, r.reviews, r.other, r.blockers, r.next, r.rail, r.address, r.help],
+       next = $8, rail = $9, address = $10, help = $11, mentor_note = $12, submitted_at = now()`,
+    [f.id, month, r.summary, r.prs, r.reviews, r.other, r.blockers, r.next, r.rail, r.address, r.help, r.mentor_note],
   );
   await alert(`${old ? "Updated" : "New"} monthly report: ${f.name}, month ${month}`, [
     `<p><strong>${mail.esc(f.name)}</strong> ${old ? "updated" : "sent"} the report for month ${month} of ${f.months} (${mail.esc(f.project)}).${r.help ? " <strong>They asked for help.</strong>" : ""}</p>`,
     box("Summary", r.summary),
     box("PRs", r.prs),
     box("Reviews", r.reviews),
+    box("Note from the mentor", r.mentor_note),
     box("Blocked on", r.blockers),
     box("Paid by", `${r.rail} ${r.address}`),
     `<p><a href="${SITE}/fellowships/admin" style="color:#d97706">Approve it on the organiser page</a></p>`,
@@ -518,14 +560,27 @@ async function plan(body) {
     goal: given[i] && typeof given[i].goal === "string" ? clean(given[i].goal, 400) || p.goal : p.goal,
     done: given[i] ? !!given[i].done : p.done,
   }));
-  await sql("UPDATE fw_fellows SET plan = $2::jsonb, bio = $3, links = $4, project_url = COALESCE(NULLIF($5, ''), project_url) WHERE id = $1", [
+  await sql("UPDATE fw_fellows SET plan = $2::jsonb, bio = $3, links = $4, project_url = COALESCE(NULLIF($5, ''), project_url), focus = COALESCE($6, focus) WHERE id = $1", [
     f.id,
     JSON.stringify(out),
     clean(body.bio, 600),
     clean(body.links, 600),
     urlish(body.projectUrl),
+    typeof body.focus === "string" ? clean(body.focus, 1500) : null,
   ]);
   return { status: 200, data: { ok: true } };
+}
+
+// Tick or untick one of this month's to-dos.
+async function check(body) {
+  const f = await fellowByToken(clean(body.token, 64));
+  if (!f) return { status: 401, error: "Please sign in again." };
+  const month = Math.round(Number(body.month));
+  if (!(month >= 1 && month <= Number(f.months)) || !CHECKS.includes(body.key)) return { status: 400, error: "Unknown to-do." };
+  const all = checksOf(f);
+  all[month] = { ...Object.fromEntries(CHECKS.map((k) => [k, false])), ...(all[month] || {}), [body.key]: !!body.on };
+  await sql("UPDATE fw_fellows SET checks = $2::jsonb WHERE id = $1", [f.id, JSON.stringify(all)]);
+  return { status: 200, data: { ok: true, checks: all } };
 }
 
 async function emailLink(body) {
@@ -660,9 +715,9 @@ async function overview(withPrivate) {
       const active = ["green", "yellow", "red"].includes(f.status) && core.month >= 1 && core.month <= core.months + 1;
       if (active) {
         if (!mine.some((s) => s.week === thisWeek || s.week === lastWeek) && core.month >= 1) flags.push("No standup for 2 weeks");
-        for (let k = 1; k < Math.min(core.month, core.months + 1); k++) {
-          if (!reps.some((r) => Number(r.month) === k) && today > reportDue(f.start_month, k)) flags.push(`Month ${k} report overdue`);
-          else if (reps.some((r) => Number(r.month) === k && bool(r.approved)) && !pays.some((p) => Number(p.month) === k)) flags.push(`Month ${k} approved, not paid yet`);
+        for (let k = 1; k <= Math.min(core.month, core.months); k++) {
+          if (!reps.some((r) => Number(r.month) === k) && today > reportDue(f, k)) flags.push(`Month ${k} report overdue`);
+          else if (reps.some((r) => Number(r.month) === k && bool(r.approved)) && !pays.some((p) => Number(p.month) === k)) flags.push(`Month ${k} approved, pay by ${payBy(f, k)}`);
         }
       }
       if (mine.some((s) => bool(s.help) && s.week >= lastWeek) || reps.some((r) => bool(r.help) && Number(r.month) >= core.month - 1)) flags.push("Asked for help");
@@ -675,7 +730,10 @@ async function overview(withPrivate) {
         public: bool(f.public),
         notes: f.notes || "",
         flags,
-        dueDates: Array.from({ length: core.months }, (_, i) => reportDue(f.start_month, i + 1)),
+        schedule: scheduleOf(f),
+        calendar: calendarOf(f),
+        dueDates: calendarOf(f).map((c) => c.due),
+        checks: checksOf(f),
         standups: mine.map(shapeStandup),
         reports: reps.map((r) => {
           const out = shapeReport(r, true);
@@ -716,13 +774,20 @@ async function adminAccept(body) {
   if (!a) return { status: 404, error: "Unknown application." };
   const start = MONTH_RE.test(body.start) ? body.start : null;
   if (!start) return { status: 400, error: "Pick the first month (like 2027-01)." };
+  const months = Number.isInteger(body.months) && body.months >= 1 && body.months <= 12 ? body.months : MONTHS;
+  const schedule = SCHEDULES.includes(body.schedule) ? body.schedule : "next";
+  const mentor = clean(body.mentor, 120);
+  // Milestones typed by the organiser, one line per month (optional; the fellow can edit them).
+  const lines = clean(body.plan, 3000).split("\n").map((l) => l.replace(/^\s*(?:month\s*\d+|[A-Za-z]{3,9}|\d+)\s*[:.)]\s*/i, "").trim()).filter(Boolean);
+  const plan = lines.length ? JSON.stringify(Array.from({ length: months }, (_, i) => ({ goal: clean(lines[i] || "", 400), done: false }))) : null;
+  const focus = clean(body.focus, 1500) || null;
   const token = crypto.randomBytes(18).toString("base64url");
   let fellow;
   try {
     [fellow] = await sql(
-      `INSERT INTO fw_fellows (application_id, github, name, email, discord, token, project, project_url, mentor, start_month)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING id`,
-      [a.id, a.github, a.name, a.email, a.discord, token, clean(body.project, 120) || a.project, a.project_url, clean(body.mentor, 120) || null, start],
+      `INSERT INTO fw_fellows (application_id, github, name, email, discord, token, project, project_url, mentor, start_month, months, schedule, plan, focus)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13::jsonb,$14) RETURNING id`,
+      [a.id, a.github, a.name, a.email, a.discord, token, clean(body.project, 120) || a.project, a.project_url, mentor || null, start, months, schedule, plan, focus],
     );
   } catch (err) {
     if (err.code === "23505") return { status: 409, error: "This GitHub user is already a fellow." };
@@ -731,12 +796,16 @@ async function adminAccept(body) {
   await sql("UPDATE fw_applications SET status = 'accepted', updated_at = now() WHERE id = $1", [a.id]);
   let emailed = false;
   if (mail.emailOn() && body.email !== false) {
+    const MN = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const startLabel = `1 ${MN[Number(start.slice(5, 7)) - 1]} ${start.slice(0, 4)}`;
+    const rhythm = schedule === "end" ? "send your monthly report by the 21st, and you're paid before the end of that month" : "send your monthly report by the 5th of the next month, and you're paid by the 10th";
     try {
-      await mail.sendTo(a.email, "Welcome to the Code Orange developer fellowship 🧡", [
-        `Hey ${mail.esc(a.name)}, congratulations: you're a Code Orange developer fellow! Your fellowship starts in ${start} and runs for ${MONTHS} months.`,
-        "Everything lives on your fellow dashboard: your weekly standup, your monthly report (it doubles as your invoice), your milestones and your payouts. Your link signs you in, so keep it private.",
+      await mail.sendTo(a.email, "Your Code Orange fellow dashboard 🧡", [
+        `Hey ${mail.esc(a.name)}, welcome to the Code Orange developer fellowship! It starts on ${startLabel} and runs for ${months} months${mentor ? `, with ${mail.esc(mentor)} as your mentor` : ""}.`,
+        "Everything lives on your fellow dashboard: your Monday check-in, your monthly report (it doubles as your invoice), your milestones, this month's to-dos and your payouts. The link below signs you in, so keep it private.",
         `<p><a href="${dashLink(token)}" style="display:inline-block;padding:12px 20px;border-radius:999px;background:#F7931A;color:#000;font-weight:700;text-decoration:none">Open my fellow dashboard</a></p>`,
-        "First steps: refine your 6 milestones on the dashboard, post your first standup on Monday, and say hi in #fellowships on Discord.",
+        `The rhythm: a short check-in every Monday; ${rhythm}.`,
+        "First steps: check your milestones on the dashboard, add the PRs you want to keep moving, and post your first check-in on the first Monday.",
         `<p>Guidelines: <a href="${SITE}/fellowships/guidelines" style="color:#d97706">codeorange.dev/fellowships/guidelines</a></p>`,
       ]);
       emailed = true;
@@ -754,7 +823,8 @@ async function adminFellow(body) {
   const months = Number.isInteger(body.months) && body.months >= 1 && body.months <= 12 ? body.months : null;
   await sql(
     `UPDATE fw_fellows SET status = COALESCE($2, status), mentor = COALESCE($3, mentor), public = COALESCE($4, public),
-       months = COALESCE($5, months), start_month = COALESCE($6, start_month), project = COALESCE($7, project), notes = COALESCE($8, notes)
+       months = COALESCE($5, months), start_month = COALESCE($6, start_month), project = COALESCE($7, project), notes = COALESCE($8, notes),
+       schedule = COALESCE($9, schedule)
      WHERE id = $1`,
     [
       id,
@@ -765,6 +835,7 @@ async function adminFellow(body) {
       MONTH_RE.test(body.start) ? body.start : null,
       typeof body.project === "string" && body.project.trim() ? clean(body.project, 120) : null,
       typeof body.notes === "string" ? clean(body.notes, 3000) : null,
+      SCHEDULES.includes(body.schedule) ? body.schedule : null,
     ],
   );
   return { status: 200, data: { ok: true } };
@@ -851,6 +922,7 @@ module.exports = async function handler(req, res) {
         standup: () => standup(body),
         report: () => report(body),
         plan: () => plan(body),
+        check: () => check(body),
         "admin-app": () => admin(adminApp),
         "admin-copy": () => admin(adminCopy),
         "admin-accept": () => admin(adminAccept),

@@ -1,5 +1,6 @@
 // Fellow dashboard (/fellowships/me): weekly standup, monthly report (the invoice), milestones,
-// private payout history and a link to the public proof-of-work page. Data: /api/fellowship.
+// this month's to-dos, PRs to keep moving, private payout history and a link to the public
+// proof-of-work page. Data: /api/fellowship.
 (() => {
   const API = "/api/fellowship";
   const TOKEN_KEY = "fw-token";
@@ -96,11 +97,17 @@
     for (const p of D.payouts) (paid[p.month] ||= []).push(p);
     const today = new Date().toISOString().slice(0, 10);
     const thisStandup = D.standups.find((s) => s.week === D.thisWeek);
-    // The report owed right now: last month's (until paid) or, in the final month, this one.
+    // The report owed right now: the first month without a report whose report window has opened.
     let owed = null;
-    for (let k = 1; k <= Math.min(month - 1, me.months); k++) if (!reports[k]) { owed = k; break; }
+    for (const c of cal()) if (!reports[c.month] && today >= c.opens) { owed = c.month; break; }
     return { me, month, reports, paid, today, thisStandup, owed };
   }
+  // Report and pay dates per month (from the API; older API answers only had dueDates).
+  const cal = () => D.calendar || D.dueDates.map((due, i) => ({ month: i + 1, due, payBy: `${due.slice(0, 8)}10`, opens: `${due.slice(0, 8)}01` }));
+  const calOf = (k) => cal()[k - 1] || {};
+  const isEnd = () => D.schedule === "end";
+  const rhythmLine = () => (isEnd() ? "report by the 21st, paid before the month ends" : "report by the 5th of the next month, paid by the 10th");
+  const payLine = (k) => `paid by ${dayLabel(calOf(k).payBy)}`;
 
   function render() {
     const S = state();
@@ -111,7 +118,7 @@
       month < 1 ? `Your fellowship on <strong>${esc(me.project)}</strong> starts on 1 ${ymLabel(me.startMonth)}. Set your milestones now.` :
       month > me.months ? `You finished your ${me.months}-month fellowship on <strong>${esc(me.project)}</strong>. Thank you for building. 🧡` :
       `Month <strong>${month} of ${me.months}</strong> on <strong>${esc(me.project)}</strong>${me.mentor ? ` · mentor: ${esc(me.mentor)}` : ""}`;
-    app.innerHTML = [nextStep(S), timeline(S), standupCard(S), reportCard(S), planCard(S), payoutsCard(S), proofCard(S), rhythmCard(S)].join("");
+    app.innerHTML = [nextStep(S), timeline(S), monthCard(S), focusCard(S), standupCard(S), reportCard(S), planCard(S), payoutsCard(S), proofCard(S), rhythmCard(S)].join("");
     wire(S);
   }
 
@@ -119,10 +126,11 @@
     const { me, month, thisStandup, owed } = S;
     let title, text, href, label;
     if (month < 1) {
-      title = "Set your 6 milestones"; text = "Agree them with your mentor; you can tweak them during month 1."; href = "#fw-plan"; label = "Edit milestones";
+      title = `Check your ${me.months} milestones`; text = `Your fellowship starts on 1 ${ymLabel(me.startMonth)}. Agree the milestones with your mentor, add the PRs you want to keep moving, and post your first check-in on the first Monday.`; href = "#fw-plan"; label = "See my milestones";
     } else if (owed) {
       const due = D.dueDates[owed - 1];
-      title = `Send your month ${owed} report`; text = `It was due on ${dayLabel(due)}. It's also your invoice: once it's approved you're paid by the 10th.`; href = "#fw-report"; label = "Write my report";
+      const late = S.today > due;
+      title = `Send your month ${owed} report`; text = `${late ? "It was due on" : "It's due on"} ${dayLabel(due)}. It's also your invoice: once it's approved you're ${payLine(owed)}.`; href = "#fw-report"; label = "Write my report";
     } else if (month <= me.months && !thisStandup) {
       title = "Post this week's standup"; text = "Two minutes: what you did, what's next, what's blocking you."; href = "#fw-standup"; label = "Post my standup";
     } else if (month === me.months && !S.reports[month]) {
@@ -146,8 +154,74 @@
     const st = D.standups.length;
     const doneM = me.plan.filter((p) => p.done).length;
     return `<section class="me-card me-wide"><p class="me-label">Your fellowship</p><h2>${me.months} months, one step at a time</h2>
-      <ol class="fw-months">${items}</ol>
+      <ol class="fw-months" style="grid-template-columns:repeat(${Math.min(me.months, 6)},1fr)">${items}</ol>
       <div class="me-stats"><span><strong>${Math.max(0, Math.min(month, me.months))}/${me.months}</strong>months in</span><span><strong>${st}</strong>standups posted</span><span><strong>${D.reports.length}</strong>reports sent</span><span><strong>${doneM}/${me.months}</strong>milestones done</span></div></section>`;
+  }
+
+  // This month's to-dos: ticked by the fellow, seen by the organisers.
+  const TODOS = [
+    ["reviews", "Reviewed other people's PRs", "aim for 3+ solid reviews a month"],
+    ["mentor", "Call with your mentor", "at least once a month; bring questions"],
+    ["crc", "Code Review Club", "join, and present a PR when it's your turn"],
+    ["privacy", "Privacy Track session", "1st & 3rd Tuesday, 07:00 UTC"],
+    ["post", "One public post about your work", "X, Nostr or a blog: what you shipped and learned"],
+  ];
+  function monthCard(S) {
+    const { me, month } = S;
+    if (month < 1 || month > me.months) return "";
+    const done = (D.checks && D.checks[month]) || {};
+    const ym = ymLabel(me.startMonth, month - 1);
+    const monthStart = `${ym.slice(-4)}-${String(MONTHS.indexOf(ym.slice(0, 3)) + 1).padStart(2, "0")}-01`;
+    const standups = D.standups.filter((s) => s.week >= monthStart && s.week.slice(0, 7) === monthStart.slice(0, 7)).length;
+    const ticked = TODOS.filter(([k]) => done[k]).length;
+    const reviewsUrl = `https://github.com/pulls?q=${encodeURIComponent(`is:pr reviewed-by:${me.github} -author:${me.github} updated:>=${monthStart}`)}`;
+    const c = calOf(month);
+    return `<section class="me-card me-wide" id="fw-month"><p class="me-label">This month · ${esc(ym)}</p><h2>Month ${month} to-dos <span class="fw-badge ${ticked === TODOS.length ? "ok" : ""}">${ticked}/${TODOS.length}</span></h2>
+      <p class="me-small">Tick them as you go. Private: only you and the organisers see this.</p>
+      <ul class="fw-todo">${TODOS.map(([k, t, hint]) => `<li><button type="button" class="mb-tick fw-tick ${done[k] ? "is-done" : ""}" data-check="${k}" aria-pressed="${done[k] ? "true" : "false"}"><span class="mb-box">${done[k] ? "✓" : ""}</span></button><div><strong>${esc(t)}</strong><span>${esc(hint)}${k === "reviews" ? ` · <a href="${reviewsUrl}" target="_blank" rel="noopener">see my reviews on GitHub</a>` : ""}</span></div></li>`).join("")}
+        <li class="fw-auto"><span class="fw-autobox">${standups}</span><div><strong>Monday check-ins this month</strong><span>counted automatically</span></div></li>
+        <li class="fw-auto"><span class="fw-autobox">${S.reports[month] ? "✓" : "…"}</span><div><strong>Monthly report</strong><span>due ${dayLabel(c.due)}, ${payLine(month)}</span></div></li>
+      </ul></section>`;
+  }
+
+  // PRs the fellow wants to keep moving, with their live state from GitHub.
+  // Full GitHub links, or "#1105" for a PR on the fellow's own project repository.
+  function prRefs(text, projectUrl) {
+    const out = [];
+    const base = String(projectUrl || "").match(/^https:\/\/github\.com\/([\w.-]+)\/([\w.-]+?)(?:\.git)?\/?$/);
+    for (const m of String(text || "").matchAll(/https:\/\/github\.com\/([\w.-]+)\/([\w.-]+)\/(?:pull|issues)\/(\d+)|(?:^|[\s,(])#(\d+)\b/g)) {
+      if (m[1]) out.push({ owner: m[1], repo: m[2], num: m[3], url: `https://github.com/${m[1]}/${m[2]}/pull/${m[3]}` });
+      else if (base) out.push({ owner: base[1], repo: base[2], num: m[4], url: `https://github.com/${base[1]}/${base[2]}/pull/${m[4]}` });
+    }
+    return out.filter((r, i) => out.findIndex((x) => x.url === r.url) === i).slice(0, 12);
+  }
+  function focusCard(S) {
+    const refs = prRefs(S.me.focus, S.me.projectUrl);
+    const body = refs.length
+      ? `<ul class="fw-prs">${refs.map((r) => `<li data-pr="${esc(`${r.owner}/${r.repo}/${r.num}`)}"><a href="${esc(r.url)}" target="_blank" rel="noopener"><span class="fw-badge">#${esc(r.num)}</span> <span class="fw-pr-title">${esc(`${r.repo} #${r.num}`)}</span></a><span class="fw-pr-state"></span></li>`).join("")}</ul>`
+      : `<p>Add the links of the PRs you want to keep moving (yours or ones you're reviewing) under <a href="#fw-plan">your plan</a>. Their live status shows up here.</p>`;
+    return `<section class="me-card" id="fw-focus"><p class="me-label">PRs to keep moving</p><h2>Open work</h2>${body}</section>`;
+  }
+  const prCache = new Map();
+  async function loadPrStates() {
+    for (const li of app.querySelectorAll("[data-pr]")) {
+      const [owner, repo, num] = li.dataset.pr.split("/");
+      try {
+        let d = prCache.get(li.dataset.pr);
+        if (!d) {
+          const r = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues/${num}`, { headers: { Accept: "application/vnd.github+json" } });
+          if (!r.ok) continue;
+          d = await r.json();
+          prCache.set(li.dataset.pr, d);
+        }
+        const merged = d.pull_request && d.pull_request.merged_at;
+        const st = merged ? "merged" : d.state === "closed" ? "closed" : d.draft ? "draft" : "open";
+        li.querySelector(".fw-pr-title").textContent = d.title;
+        const el = li.querySelector(".fw-pr-state");
+        el.textContent = st;
+        el.className = `fw-pr-state fw-badge ${st === "merged" ? "ok" : st === "closed" ? "late" : ""}`;
+      } catch {}
+    }
   }
 
   function standupCard(S) {
@@ -177,7 +251,7 @@
   function reportCard(S) {
     const { me, month, reports, paid } = S;
     const open = Math.min(Math.max(month, 0), me.months);
-    if (open < 1) return `<section class="me-card" id="fw-report"><p class="me-label">Monthly report</p><h2>Due on the 5th</h2><p>Your first report covers ${ymLabel(me.startMonth)} and is due on ${dayLabel(D.dueDates[0])}.</p></section>`;
+    if (open < 1) return `<section class="me-card" id="fw-report"><p class="me-label">Monthly report · your invoice</p><h2>${isEnd() ? "Due on the 21st" : "Due on the 5th"}</h2><p>Your first report covers ${ymLabel(me.startMonth)} and is due on ${dayLabel(calOf(1).due)}. Once it's approved you're ${payLine(1)}.</p><p class="me-small">It covers: milestone progress, PRs and reviews (links), a short note from your mentor, and next month's plan.</p></section>`;
     const pick = S.owed || (reports[open] ? open : open);
     const options = Array.from({ length: open }, (_, i) => i + 1).map((k) => `<option value="${k}" ${k === pick ? "selected" : ""}>Month ${k} · ${ymLabel(me.startMonth, k - 1)}${reports[k] ? " ✓" : ""}</option>`).join("");
     return `<section class="me-card" id="fw-report"><p class="me-label">Monthly report · your invoice</p>
@@ -190,6 +264,7 @@
         <label class="me-field">Reviews you wrote <span class="fw-hint">(public)</span><textarea name="reviews" rows="2" maxlength="3000"></textarea></label>
         <label class="me-field">Other work <span class="fw-hint">(public) Code Review Club talks, Privacy Track sessions, issues, tests, docs, write-ups.</span><textarea name="other" rows="2" maxlength="2000"></textarea></label>
         <label class="me-field">Next month's focus <span class="fw-hint">(public)</span><textarea name="next" rows="2" maxlength="2000"></textarea></label>
+        <label class="me-field">Note from your mentor <span class="fw-hint">(private) A line or two from ${esc(me.mentor || "your mentor")} on how the month went. Paste it from chat or email.</span><textarea name="mentorNote" rows="2" maxlength="2000"></textarea></label>
         <label class="me-field">What got in the way? <span class="fw-hint">(private)</span><textarea name="blockers" rows="2" maxlength="2000"></textarea></label>
         <fieldset class="me-pills"><legend>Pay me by <span class="fw-hint">(private)</span></legend>
           ${[["lightning", "Lightning"], ["onchain", "On-chain"], ["ecash", "eCash"]].map(([v, l]) => `<label><input type="radio" name="rail" value="${v}"><span>${l}</span></label>`).join("")}
@@ -204,7 +279,7 @@
     const f = $("#fw-report-form");
     if (!f) return;
     const r = state().reports[k] || {};
-    for (const n of ["summary", "prs", "reviews", "other", "next", "blockers", "address"]) f[n].value = r[n] || "";
+    for (const n of ["summary", "prs", "reviews", "other", "next", "mentorNote", "blockers", "address"]) f[n].value = r[n] || "";
     // Carry the last payout choice forward to a new report.
     const lastRail = r.rail || (D.reports.length ? D.reports[D.reports.length - 1].rail : "");
     const lastAddr = r.address || (D.reports.length ? D.reports[D.reports.length - 1].address : "");
@@ -215,18 +290,19 @@
     const due = D.dueDates[k - 1];
     $("#fw-report-status").innerHTML = paid
       ? `<span class="fw-badge ok">Paid</span> ${paid.map((p) => sats(p.sats) || `$${p.usd}`).join(" + ")}`
-      : r.approved ? '<span class="fw-badge ok">Approved</span> Payment is on its way, by the 10th.'
+      : r.approved ? `<span class="fw-badge ok">Approved</span> Payment is on its way, ${payLine(k)}.`
       : r.submittedAt ? `<span class="fw-badge">Sent</span> Waiting for approval. You can still edit it.`
-      : `<span class="fw-badge ${S_today() > due ? "late" : "due"}">Due ${dayLabel(due)}</span>`;
+      : `<span class="fw-badge ${S_today() > due ? "late" : "due"}">Due ${dayLabel(due)}</span> Once approved, you're ${payLine(k)}.`;
     f.querySelector("button[type=submit]").textContent = r.submittedAt ? "Update report" : "Send report";
   }
   const S_today = () => new Date().toISOString().slice(0, 10);
 
   function planCard(S) {
     const { me } = S;
-    return `<section class="me-card" id="fw-plan"><p class="me-label">Milestones · public</p><h2>Your 6-month plan</h2>
-      <p class="me-small">One goal per month. Agree them with your mentor in month 1; tick each one when it's done.</p>
+    return `<section class="me-card" id="fw-plan"><p class="me-label">Milestones · public</p><h2>Your ${me.months}-month plan</h2>
+      <p class="me-small">One goal per month, agreed with your mentor. If priorities shift, your mentor has the final say: just update it here. Tick each one when it's done.</p>
       <form id="fw-plan-form"><ol class="fw-plan">${me.plan.map((p, i) => `<li class="${p.done ? "is-done" : ""}"><span class="fw-m">${i + 1}</span><input type="checkbox" name="done${i}" ${p.done ? "checked" : ""} aria-label="Month ${i + 1} done"><textarea name="goal${i}" rows="2" maxlength="400" aria-label="Month ${i + 1} goal">${esc(p.goal)}</textarea></li>`).join("")}</ol>
+      <label class="me-field">PRs to keep moving <span class="fw-hint">(#numbers on your project, or full GitHub links)</span><textarea name="focus" rows="3" maxlength="1500" placeholder="#1105, or a full GitHub link">${esc(me.focus)}</textarea></label>
       <label class="me-field">About you <span class="fw-hint">(public, one or two lines)</span><textarea name="bio" rows="2" maxlength="600">${esc(me.bio)}</textarea></label>
       <label class="me-field">Your links <span class="fw-hint">(public: Nostr, X, blog; one per line)</span><textarea name="links" rows="2" maxlength="600">${esc(me.links)}</textarea></label>
       <label class="me-field">Project repository<input type="url" name="projectUrl" maxlength="300" value="${esc(me.projectUrl)}" placeholder="https://github.com/…"></label>
@@ -240,7 +316,7 @@
     return `<section class="me-card" id="fw-pay"><p class="me-label">Payouts · private</p><h2>Your payments</h2>
       <p class="fw-private">🔒 Only you and the organisers see this. Never shown publicly.</p>
       ${D.payouts.length ? `<div class="me-stats me-stats-3" style="grid-template-columns:repeat(3,1fr)"><span><strong>${D.payouts.length}</strong>payments</span><span><strong>$${usd.toLocaleString("en-US")}</strong>received</span><span><strong>${(total / 1e8).toFixed(4)}</strong>BTC</span></div>
-      <div class="fw-scroll"><table class="fw-pay"><thead><tr><th>For</th><th>USD</th><th>Sats</th><th>BTC price</th><th>Paid</th></tr></thead><tbody>${rows}</tbody></table></div>` : `<p>No payments yet. Each month: send your report by the 5th, it gets approved, and you're paid <strong>$${D.stipendUsd} in bitcoin</strong> by the 10th, at the Coinbase BTC-USD price when we send it.</p>`}
+      <div class="fw-scroll"><table class="fw-pay"><thead><tr><th>For</th><th>USD</th><th>Sats</th><th>BTC price</th><th>Paid</th></tr></thead><tbody>${rows}</tbody></table></div>` : `<p>No payments yet. Each month: ${isEnd() ? "send your report by the 21st, it gets approved, and you're paid" : "send your report by the 5th, it gets approved, and you're paid"} <strong>$${D.stipendUsd} in bitcoin</strong> ${isEnd() ? "before the month ends" : "by the 10th"}, at the Coinbase BTC-USD price when we send it.</p>`}
     </section>`;
   }
 
@@ -258,12 +334,12 @@
   function rhythmCard() {
     return `<section class="me-card"><p class="me-label">Your rhythm</p><h2>Every week</h2>
       <ul class="me-check" style="list-style:none">
-        <li>🗓️ <strong>Monday:</strong> standup here</li>
-        <li>📞 <strong>Weekly:</strong> mentor call, come prepared</li>
-        <li>🔍 <strong>Friday:</strong> review one PR by someone else</li>
-        <li>🎤 <strong>Code Review Club:</strong> join, and present your work every 2 months</li>
+        <li>🗓️ <strong>Monday:</strong> check-in here: what you did (PR links), what's next, blockers, rough hours</li>
+        <li>🔍 <strong>Every week:</strong> review a PR by someone else (3+ a month)</li>
+        <li>📞 <strong>Every month:</strong> a call with your mentor${D.me.mentor ? ` (${esc(D.me.mentor)})` : ""}</li>
+        <li>🎤 <strong>Code Review Club:</strong> join, and present a PR when it's your turn</li>
         <li>🛡️ <strong>Privacy Track:</strong> 1st &amp; 3rd Tuesday, 07:00 UTC · 15:00 UTC+8</li>
-        <li>🧾 <strong>By the 5th:</strong> monthly report, paid by the 10th</li>
+        <li>🧾 <strong>Monthly report:</strong> ${rhythmLine()}</li>
       </ul>
       <p class="me-small"><a href="/fellowships/guidelines">Guidelines</a> · <a href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">#fellowships on Discord</a> · <a href="/calendar">Calendar</a> · <a href="/privacy-track">Privacy Track</a></p>
       <p class="me-small"><button class="ghost small" type="button" id="fw-signout">Sign out on this device</button></p></section>`;
@@ -289,8 +365,8 @@
         const f = e.target;
         const rail = (f.querySelector("input[name=rail]:checked") || {}).value || "";
         try {
-          await post({ action: "report", month: Number(f.month.value), summary: f.summary.value, prs: f.prs.value, reviews: f.reviews.value, other: f.other.value, next: f.next.value, blockers: f.blockers.value, rail, address: f.address.value, help: f.help.checked });
-          toast("Report sent ✓ We'll review it and pay by the 10th.");
+          await post({ action: "report", month: Number(f.month.value), summary: f.summary.value, prs: f.prs.value, reviews: f.reviews.value, other: f.other.value, next: f.next.value, mentorNote: f.mentorNote.value, blockers: f.blockers.value, rail, address: f.address.value, help: f.help.checked });
+          toast(`Report sent ✓ We'll review it; once approved you're ${payLine(Number(f.month.value))}.`);
           load();
         } catch (err) { toast(err.message); }
       });
@@ -301,7 +377,7 @@
       const f = e.target;
       const plan = D.me.plan.map((_, i) => ({ goal: f[`goal${i}`].value, done: f[`done${i}`].checked }));
       try {
-        await post({ action: "plan", plan, bio: f.bio.value, links: f.links.value, projectUrl: f.projectUrl.value });
+        await post({ action: "plan", plan, bio: f.bio.value, links: f.links.value, projectUrl: f.projectUrl.value, focus: f.focus.value });
         toast("Plan saved ✓");
         load();
       } catch (err) { toast(err.message); }
@@ -311,6 +387,17 @@
       try { await navigator.clipboard.writeText(`${location.origin}/fellowships/f/${D.me.github}`); toast("Link copied"); } catch { toast("Couldn't copy"); }
     });
     $("#fw-signout").addEventListener("click", () => { store.set(""); signIn(); });
+    app.querySelectorAll("[data-check]").forEach((b) => b.addEventListener("click", async () => {
+      const on = b.getAttribute("aria-pressed") !== "true";
+      const month = D.me.month;
+      try {
+        const r = await post({ action: "check", month, key: b.dataset.check, on });
+        D.checks = r.checks;
+        render();
+        if (on) toast("Ticked ✓");
+      } catch (err) { toast(err.message); }
+    }));
+    loadPrStates();
   }
 
   load();

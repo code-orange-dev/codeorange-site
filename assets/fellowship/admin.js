@@ -95,12 +95,20 @@
         <label class="me-small"><input type="checkbox" data-f="bcc"> BCC me</label></div>
       ${a.status !== "accepted" ? `<details><summary class="me-small" style="cursor:pointer">Accept as a fellow…</summary>
         <div class="fw-inline"><label class="me-small">First month <input type="month" data-f="start" value="${ym}"></label>
-        <input type="text" data-f="mentor" placeholder="Mentor (name)"><input type="text" data-f="project" value="${esc(a.project)}">
-        <label class="me-small"><input type="checkbox" data-f="email" checked> email them their dashboard link</label>
+        <label class="me-small">Months <input type="number" data-f="months" min="1" max="12" value="6" style="width:70px;min-width:0"></label>
+        <input type="text" data-f="mentor" placeholder="Mentor (name)"><input type="text" data-f="project" value="${esc(a.project)}"></div>
+        <div class="fw-inline"><label class="me-small">Pay schedule ${scheduleSelect("next")}</label></div>
+        <div class="fw-inline"><label class="me-small" style="flex:1;min-width:240px">Milestones, one line per month (optional, they can edit them)<textarea data-f="plan" rows="3" style="width:100%"></textarea></label>
+        <label class="me-small" style="flex:1;min-width:200px">PRs to keep moving (optional: #numbers or links)<textarea data-f="focus" rows="3" style="width:100%"></textarea></label></div>
+        <div class="fw-inline"><label class="me-small"><input type="checkbox" data-f="email" checked> email them their dashboard link</label>
         <button class="button small" type="button" data-act="accept">Accept</button></div>
         <p class="me-small">The guidelines say: only start once a mentor is confirmed.</p></details>` : ""}
     </article>`;
   }
+
+  const SCHEDULES = { next: "Report by the 5th of next month, paid by the 10th", end: "Report by the 21st, paid by the end of the month" };
+  const scheduleSelect = (cur) => `<select data-f="schedule">${Object.entries(SCHEDULES).map(([v, l]) => `<option value="${v}" ${v === cur ? "selected" : ""}>${l}</option>`).join("")}</select>`;
+  const TODO_LABELS = { reviews: "reviews", mentor: "mentor call", crc: "Code Review Club", privacy: "Privacy Track", post: "public post" };
 
   function fellowCard(f) {
     const rep = Object.fromEntries(f.reports.map((r) => [r.month, r]));
@@ -110,11 +118,13 @@
       <p class="me-small">@${esc(f.github)} · ${esc(f.project)} · ${f.month < 1 ? `starts ${f.startMonth}` : `month ${f.month} of ${f.months}`} · ${f.standups.length} standups · $${f.paidUsd} paid
         · <a href="/fellowships/f/${encodeURIComponent(f.github)}" target="_blank">public page</a> · <button class="ghost small" type="button" data-act="copy-link" data-link="${esc(location.origin)}/fellowships/me?me=${esc(f.token)}">copy dashboard link</button></p>
       ${f.flags.length ? `<p>${f.flags.map((x) => `<span class="fw-flag">${esc(x)}</span>`).join("")}</p>` : ""}
+      ${f.month >= 1 && f.month <= f.months ? `<p class="me-small">Month ${f.month} to-dos ticked: ${Object.entries((f.checks || {})[f.month] || {}).filter(([, v]) => v).map(([k]) => esc(TODO_LABELS[k] || k)).join(", ") || "none yet"}</p>` : ""}
       <div class="fw-inline">
         <select data-f="status">${FSTATUS.map((s) => `<option ${s === f.status ? "selected" : ""}>${s}</option>`).join("")}</select>
         <input type="text" data-f="mentor" placeholder="Mentor" value="${esc(f.mentor)}">
         <label class="me-small">Start <input type="month" data-f="start" value="${esc(f.startMonth)}"></label>
         <label class="me-small">Months <input type="number" data-f="months" min="1" max="12" value="${f.months}" style="width:70px;min-width:0"></label>
+        <label class="me-small">Pay ${scheduleSelect(f.schedule || "next")}</label>
         <label class="me-small"><input type="checkbox" data-f="public" ${f.public ? "checked" : ""}> public page</label>
         <input type="text" data-f="notes" placeholder="Private notes" value="${esc(f.notes)}" style="flex:1;min-width:180px">
         <button class="ghost small" type="button" data-act="save-fellow">Save</button></div>
@@ -123,11 +133,11 @@
         ${months.map((k) => {
           const r = rep[k];
           const p = f.payouts.filter((x) => x.month === k);
-          return `<tr><td>${k}</td><td>${f.dueDates[k - 1]}</td><td>${r ? `${r.approved ? "✓ approved" : "sent"} <button class="ghost small" type="button" data-act="approve" data-month="${k}" data-to="${!r.approved}">${r.approved ? "un-approve" : "approve"}</button>${r.help ? ' <span class="fw-flag">help</span>' : ""}` : "—"}</td>
+          return `<tr><td>${k}</td><td>${f.dueDates[k - 1]}${f.calendar ? `<br><span class="me-small">pay by ${f.calendar[k - 1].payBy}</span>` : ""}</td><td>${r ? `${r.approved ? "✓ approved" : "sent"} <button class="ghost small" type="button" data-act="approve" data-month="${k}" data-to="${!r.approved}">${r.approved ? "un-approve" : "approve"}</button>${r.help ? ' <span class="fw-flag">help</span>' : ""}` : "—"}</td>
             <td>${p.map((x) => `${x.sats ? x.sats.toLocaleString("en-US") + " sats" : "$" + x.usd} (${(x.paidAt || "").slice(0, 10)}) <button class="ghost small" type="button" data-act="del-pay" data-pay="${x.id}" title="Delete payout">×</button>`).join("<br>") || "—"}</td></tr>`;
         }).join("")}</tbody></table></div>
         ${f.reports.map((r) => `<div class="fw-log"><details><summary>Month ${r.month} report (${(r.submittedAt || "").slice(0, 10)})</summary>
-          <p>${linkify(r.summary)}</p>${r.prs ? `<p><strong>PRs</strong><br>${linkify(r.prs)}</p>` : ""}${r.reviews ? `<p><strong>Reviews</strong><br>${linkify(r.reviews)}</p>` : ""}${r.other ? `<p><strong>Other</strong><br>${linkify(r.other)}</p>` : ""}${r.next ? `<p><strong>Next</strong> ${linkify(r.next)}</p>` : ""}${r.blockers ? `<p><strong>Got in the way (private)</strong> ${linkify(r.blockers)}</p>` : ""}
+          <p>${linkify(r.summary)}</p>${r.prs ? `<p><strong>PRs</strong><br>${linkify(r.prs)}</p>` : ""}${r.reviews ? `<p><strong>Reviews</strong><br>${linkify(r.reviews)}</p>` : ""}${r.other ? `<p><strong>Other</strong><br>${linkify(r.other)}</p>` : ""}${r.next ? `<p><strong>Next</strong> ${linkify(r.next)}</p>` : ""}${r.mentorNote ? `<p><strong>Mentor's note</strong> ${linkify(r.mentorNote)}</p>` : ""}${r.blockers ? `<p><strong>Got in the way (private)</strong> ${linkify(r.blockers)}</p>` : ""}
           <p><strong>Pay by (private)</strong> ${esc(r.rail || "not given")} · <code style="word-break:break-all">${esc(r.address || "no address")}</code></p></details></div>`).join("")}
         <p class="me-label" style="margin-top:14px">Record a payout</p>
         <div class="fw-inline">
@@ -166,12 +176,12 @@
             return;
           }
           case "accept": {
-            const r = await call({ action: "admin-accept", id: Number(card.dataset.app), start: val("[data-f=start]").value, mentor: val("[data-f=mentor]").value, project: val("[data-f=project]").value, email: val("[data-f=email]").checked });
+            const r = await call({ action: "admin-accept", id: Number(card.dataset.app), start: val("[data-f=start]").value, months: Number(val("[data-f=months]").value), schedule: val("[data-f=schedule]").value, mentor: val("[data-f=mentor]").value, project: val("[data-f=project]").value, plan: val("[data-f=plan]").value, focus: val("[data-f=focus]").value, email: val("[data-f=email]").checked });
             note(r.emailed ? "Accepted, and their dashboard link was emailed." : "Accepted. Copy their dashboard link from the fellow card.");
             return load();
           }
           case "save-fellow":
-            await call({ action: "admin-fellow", id: Number(card.dataset.fellow), status: val("[data-f=status]").value, mentor: val("[data-f=mentor]").value, start: val("[data-f=start]").value, months: Number(val("[data-f=months]").value), public: val("[data-f=public]").checked, notes: val("[data-f=notes]").value });
+            await call({ action: "admin-fellow", id: Number(card.dataset.fellow), status: val("[data-f=status]").value, mentor: val("[data-f=mentor]").value, start: val("[data-f=start]").value, months: Number(val("[data-f=months]").value), schedule: val("[data-f=schedule]").value, public: val("[data-f=public]").checked, notes: val("[data-f=notes]").value });
             note("Saved");
             return load();
           case "approve":
