@@ -1,0 +1,90 @@
+{
+  "slug": "2026-10-28-bitcoin-reading-club",
+  "date": "2026-10-28",
+  "series": "Bitcoin Reading Club",
+  "title": "The whitepaper abstract, line by line",
+  "host": "Alex",
+  "tag": "Bitcoin basics",
+  "summary": "Our first Reading Club: the Bitcoin whitepaper abstract read sentence by sentence, from peer-to-peer cash to proof of work, the longest chain and nodes that come and go.",
+  "share_text": "We read the Bitcoin whitepaper abstract line by line: notes from the first @CodeOrangeDevs Bitcoin Reading Club",
+  "minutes": 4,
+  "duration": "79 min",
+  "tldr": [
+    "The key line: peer-to-peer cash, without going through a financial institution.",
+    "Signatures prove you own coins, but they can't stop you paying the same coins twice. The network does that.",
+    "Proof of work plus the longest chain decide which history is true, so rewriting it would take most of the world's hash power.",
+    "Spend some bitcoin and buy it back. A coin that never moves ends up like gold in a vault."
+  ],
+  "chapters": [
+    [0, "Intro: reading the whitepaper together"],
+    [107, "The first line: peer-to-peer, no financial institution"],
+    [254, "What did Satoshi mean by \"electronic cash\"?"],
+    [431, "Bitcoin as the ultimate bearer asset"],
+    [807, "Digital signatures and the double spending problem"],
+    [963, "Peer-to-peer network: node runners are the police"],
+    [1028, "Timestamps, hashing and the chain of proof of work"],
+    [1152, "The airplane analogy: how all the parts fit together"],
+    [1320, "Should you spend your Bitcoin? Spend and replace"],
+    [1800, "The longest chain and the 51% attack"],
+    [2170, "CPUs, GPUs and ASICs: how mining changed"],
+    [2577, "Why run your own node?"],
+    [2727, "\"Minimal structure\" and best-effort broadcasting"],
+    [3154, "Discussion: the paper's core proposal"],
+    [3395, "Proof of work, energy and game theory"],
+    [3653, "Why signatures are only part of the solution"],
+    [4107, "Why the largest pool of CPU power matters"],
+    [4271, "Nodes leave and rejoin at will"],
+    [4414, "Why a timestamped chain and not a plain list?"],
+    [4576, "Wrap-up and what's next"]
+  ],
+  "next": {
+    "title": "Bitcoin Basics",
+    "when": "Thursday 5 November on Discord. The Reading Club is back on the 4th Wednesday of November, 12:00 UTC, with a sats quiz."
+  },
+  "resources": [
+    {
+      "group": "Reading",
+      "topic": "Bitcoin basics",
+      "title": "Bitcoin: A Peer-to-Peer Electronic Cash System",
+      "url": "https://bitcoin.org/bitcoin.pdf",
+      "by": "Satoshi Nakamoto, 2008",
+      "note": "the whitepaper itself. We covered the abstract; chapter 1 (Introduction) and 2 (Transactions) are next"
+    },
+    {
+      "group": "Reading",
+      "topic": "Bitcoin basics",
+      "title": "Bearer instrument",
+      "url": "https://en.wikipedia.org/wiki/Bearer_instrument",
+      "note": "an asset where holding or controlling it is what proves you own it. We looked up the definition on the call"
+    },
+    {
+      "group": "Reading",
+      "topic": "Bitcoin basics",
+      "title": "Byzantine fault (the Byzantine Generals Problem)",
+      "url": "https://en.wikipedia.org/wiki/Byzantine_fault",
+      "note": "the coordination problem proof of work solves without a central party"
+    },
+    {
+      "group": "Tools",
+      "topic": "Bitcoin network",
+      "title": "Bitcoin Core",
+      "url": "https://bitcoincore.org",
+      "note": "run your own node to check the bitcoin you receive is real and choose which rules you enforce"
+    },
+    {
+      "group": "Code Orange",
+      "topic": "Code Orange",
+      "title": "Decoding Bitcoin cohort",
+      "url": "/decoding-bitcoin",
+      "note": "10 weeks on how Bitcoin works under the hood, including the signatures and hashing from the abstract. Starts Monday 16 November"
+    },
+    {
+      "group": "Code Orange",
+      "topic": "Code Orange",
+      "title": "Bitcoin Basics",
+      "url": "/programs/bitcoin-basics",
+      "note": "beginner meetup, next one Thursday 5 November"
+    }
+  ],
+  "ideas": "Ideas for next time: simpler discussion questions, a sats quiz with prizes, then chapter 1 (Introduction) and chapter 2 (Transactions) of the whitepaper."
+}

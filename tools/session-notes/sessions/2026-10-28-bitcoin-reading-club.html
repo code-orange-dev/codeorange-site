@@ -1,0 +1,46 @@
+      <h2>Highlights</h2>
+      <p><strong>One sentence that started it all.</strong> Alex opened the whitepaper on an annotated reading site and went through the abstract one sentence at a time. The first line got the most time: <em>&ldquo;A purely peer-to-peer version of electronic cash would allow online payments to be sent directly from one party to another without going through a financial institution.&rdquo;</em> It is the reason Bitcoin is so hard to ban. As long as two people want to trade, there is no middleman to shut down.</p>
+      <blockquote class="quote"><p>&ldquo;Peer-to-peer is the way to get it, the way Satoshi intended it to be.&rdquo;</p><cite>Alex, on where to get your first bitcoin</cite></blockquote>
+
+      <p class="part"><b>1</b>The abstract in five steps</p>
+      <div class="viz" role="figure" aria-label="The whitepaper abstract in five steps">
+        <p class="eyebrow">What each sentence adds</p>
+        <p class="viz-title">From a problem to a working system</p>
+        <div class="flow">
+          <div class="flow-step">Peer-to-peer cash<small>no bank in the middle</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Signatures<small>prove you own it</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Double spend?<small>still unsolved</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Proof of work chain<small>timestamps history</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Longest chain<small>is the truth</small></div>
+        </div>
+        <ul>
+          <li><b>Signatures</b> already worked before Bitcoin. They prove a payment came from you.</li>
+          <li><b>But digital things copy easily.</b> You could sign the same coin over to ten people at once. Paper cash can only be handed to one.</li>
+          <li><b>So the network keeps one shared, time-ordered ledger</b>, chained together with proof of work, and every node follows the chain with the most work behind it.</li>
+        </ul>
+        <p class="viz-fix"><b>The airplane:</b> Bitcoin is the plane, proof of work is the engine, the blockchain is the wings, the peer-to-peer network and cryptography are the cabin. A blockchain on its own is just a metal dining table. It only flies with every part together.</p>
+      </div>
+
+      <p class="part"><b>2</b>Should you spend your bitcoin?</p>
+      <p>A question from the chat: if bitcoin is a savings asset, doesn&rsquo;t spending it mean losing future value? The answer from the room was <strong>spend and replace</strong>. Pay for small things in bitcoin, then buy the same amount back. Merchants only accept bitcoin if people pay with it, and coins that never move end up like gold: locked in vaults while a credit system runs on top.</p>
+      <div class="anatomy">
+        <code>Spend</code><span>Small, everyday amounts. It keeps the circular economy going.</span>
+        <code>Replace</code><span>Buy it back right away, so price moves barely matter.</span>
+        <code>Save</code><span>Keep the rest. You don&rsquo;t have to spend all of it.</span>
+      </div>
+
+      <h2>Key takeaways</h2>
+      <p><strong>1. &ldquo;Cash&rdquo; means final, not small.</strong> Some read &ldquo;electronic cash&rdquo; as coffee payments on-chain. Another reading: cash is the opposite of credit. Once paid, it can&rsquo;t be reversed, and nobody else&rsquo;s promise stands behind it. That makes bitcoin a bearer asset: control the keys, and you own it. Lightning and ecash now handle the small, fast payments on top.</p>
+      <p><strong>2. Node runners are the police.</strong> Every node checks every rule. Running your own means you verify the bitcoin you receive is real and you choose the software and rules you support. Nodes can leave and rejoin at will and simply catch up on the longest chain. No central server, no choke point, like mycelium under a forest.</p>
+      <p><strong>3. Energy is the security.</strong> Miners chase rewards with better machines (CPU, then GPU, then ASIC). That greed is what makes rewriting history so expensive that a big company couldn&rsquo;t just break Bitcoin for fun.</p>
+      <div class="viz" role="figure" aria-label="How mining hardware changed">
+        <p class="eyebrow">Mining hardware</p>
+        <div class="layer-scale"><b>Today</b><span></span></div>
+        <div class="layers">
+          <div class="layer top"><strong>ASIC</strong><p>Built for one job: hashing. Fast to upgrade, fast to lose value.</p><span>5 nm chips and below</span></div>
+          <div class="layer"><strong>GPU</strong><p>Graphics cards turned out great at parallel hashing.</p><span>Early 2010s</span></div>
+          <div class="layer"><strong>CPU</strong><p>The whitepaper&rsquo;s &ldquo;CPU power&rdquo;. Every node was also a miner.</p><span>2009</span></div>
+        </div>
+        <div class="layer-scale" style="margin:8px 0 0"><span>2009</span><span></span></div>
+        <p class="viz-fix"><b>Hope from the call:</b> as chip gains flatten out, home miners stay useful for longer, which is good for decentralization.</p>
+      </div>
