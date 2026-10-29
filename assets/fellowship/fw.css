@@ -218,3 +218,22 @@
 .fw-pr-state:empty { display: none; }
 @media (max-width: 760px) { .fw-todo { grid-template-columns: minmax(0, 1fr); } }
 .fw-prs .fw-badge { flex: 0 0 auto; white-space: nowrap; margin-left: 0; }
+
+/* Monday check-in: tick chips + optional note */
+.fw-ticks { border: 0; margin: 4px 0 14px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.fw-ticks legend { width: 100%; margin-bottom: 8px; color: var(--muted); font: 600 13px "Plus Jakarta Sans", monospace; }
+.fw-ticks label { position: relative; cursor: pointer; }
+.fw-ticks input { position: absolute; opacity: 0; pointer-events: none; }
+.fw-ticks span { display: inline-flex; align-items: center; gap: 6px; padding: 9px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.16); background: rgba(0,0,0,.35); color: var(--text); font-size: 14px; line-height: 1.3; transition: border-color .15s, background .15s, color .15s; }
+.fw-ticks span::before { content: ""; width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.35); flex: 0 0 14px; }
+.fw-ticks label:hover span { border-color: rgba(247,147,26,.5); }
+.fw-ticks input:checked + span { border-color: rgba(39,201,63,.55); background: rgba(39,201,63,.1); color: #3ecf8e; }
+.fw-ticks input:checked + span::before { content: "✓"; display: grid; place-items: center; font-size: 10px; color: #0a0a0a; background: #27C93F; border-color: #27C93F; }
+.fw-ticks label.is-warn input:checked + span { border-color: rgba(240,96,93,.6); background: rgba(240,96,93,.1); color: #f0605d; }
+.fw-ticks label.is-warn input:checked + span::before { background: #f0605d; border-color: #f0605d; }
+.fw-ticks input:focus-visible + span { outline: 2px solid var(--orange); outline-offset: 2px; }
+.fw-hours input { max-width: 140px; }
+.fw-more { margin: 4px 0 12px; }
+.fw-more > summary { cursor: pointer; color: var(--orange); font: 700 13px "Plus Jakarta Sans", monospace; margin-bottom: 10px; }
+.fw-weekline { margin: 8px 0 10px; padding: 10px 14px; border-radius: 12px; border: 1px solid rgba(247,147,26,.3); background: rgba(247,147,26,.05); } .fw-weekline p { margin: 4px 0; }
+.fw-more > summary { display: block; padding: 0; border: 0; background: none; }

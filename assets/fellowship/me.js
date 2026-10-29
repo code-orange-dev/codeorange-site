@@ -112,13 +112,13 @@
   function render() {
     const S = state();
     const { me, month } = S;
-    const first = me.name.split(" ")[0];
+    const first = me.nick || me.name.split(" ")[0];
     $("#me-hello").textContent = `Hi ${first} 👋`;
     $("#me-sub").innerHTML =
       month < 1 ? `Your fellowship on <strong>${esc(me.project)}</strong> starts on 1 ${ymLabel(me.startMonth)}. Set your milestones now.` :
       month > me.months ? `You finished your ${me.months}-month fellowship on <strong>${esc(me.project)}</strong>. Thank you for building. 🧡` :
       `Month <strong>${month} of ${me.months}</strong> on <strong>${esc(me.project)}</strong>${me.mentor ? ` · mentor: ${esc(me.mentor)}` : ""}`;
-    app.innerHTML = [nextStep(S), timeline(S), monthCard(S), focusCard(S), standupCard(S), reportCard(S), planCard(S), payoutsCard(S), proofCard(S), rhythmCard(S)].join("");
+    app.innerHTML = [nextStep(S), timeline(S), standupCard(S), focusCard(S), monthCard(S), reportCard(S), planCard(S), payoutsCard(S), proofCard(S), rhythmCard(S)].join("");
     wire(S);
   }
 
@@ -132,11 +132,11 @@
       const late = S.today > due;
       title = `Send your month ${owed} report`; text = `${late ? "It was due on" : "It's due on"} ${dayLabel(due)}. It's also your invoice: once it's approved you're ${payLine(owed)}.`; href = "#fw-report"; label = "Write my report";
     } else if (month <= me.months && !thisStandup) {
-      title = "Post this week's standup"; text = "Two minutes: what you did, what's next, what's blocking you."; href = "#fw-standup"; label = "Post my standup";
+      title = "Post this week's check-in"; text = "One minute: tick what happened last week, add a line if you like."; href = "#fw-standup"; label = "Post my check-in";
     } else if (month === me.months && !S.reports[month]) {
       title = "Last month: land it and show it"; text = "Wrap up open PRs, document your work and plan your demo. Your final report is due on " + dayLabel(D.dueDates[month - 1]) + "."; href = "#fw-report"; label = "Start my final report";
     } else {
-      title = "You're all caught up ✓"; text = "Standup posted and reports in. Go build, and review one PR by someone else this week."; href = "#fw-proof"; label = "See my proof of work";
+      title = "You're all caught up ✓"; text = "Check-in posted and reports in. Go build, and review one PR by someone else this week."; href = "#fw-proof"; label = "See my proof of work";
     }
     return `<section class="me-card me-wide me-nextstep"><div><p class="me-label">Next step</p><h2>${esc(title)}</h2><p style="margin:0">${esc(text)}</p></div><a class="button" href="${href}">${esc(label)}</a></section>`;
   }
@@ -155,7 +155,7 @@
     const doneM = me.plan.filter((p) => p.done).length;
     return `<section class="me-card me-wide"><p class="me-label">Your fellowship</p><h2>${me.months} months, one step at a time</h2>
       <ol class="fw-months" style="grid-template-columns:repeat(${Math.min(me.months, 6)},1fr)">${items}</ol>
-      <div class="me-stats"><span><strong>${Math.max(0, Math.min(month, me.months))}/${me.months}</strong>months in</span><span><strong>${st}</strong>standups posted</span><span><strong>${D.reports.length}</strong>reports sent</span><span><strong>${doneM}/${me.months}</strong>milestones done</span></div></section>`;
+      <div class="me-stats"><span><strong>${Math.max(0, Math.min(month, me.months))}/${me.months}</strong>months in</span><span><strong>${st}</strong>check-ins posted</span><span><strong>${D.reports.length}</strong>reports sent</span><span><strong>${doneM}/${me.months}</strong>milestones done</span></div></section>`;
   }
 
   // This month's to-dos: ticked by the fellow, seen by the organisers.
@@ -227,25 +227,35 @@
   function standupCard(S) {
     const { month, me, thisStandup } = S;
     if (month < 1 || month > me.months) {
-      return `<section class="me-card" id="fw-standup"><p class="me-label">Weekly standup</p><h2>Every Monday</h2><p>${month < 1 ? "Your first standup is due on the first Monday of your fellowship." : "Your fellowship has ended, so no more standups."}</p>${pastStandups()}</section>`;
+      return `<section class="me-card" id="fw-standup"><p class="me-label">Monday check-in</p><h2>Every Monday</h2><p>${month < 1 ? "Your first check-in is due on the first Monday of your fellowship: tick a few boxes about your week and add a line if you like." : "Your fellowship has ended, so no more check-ins."}</p>${pastStandups()}</section>`;
     }
     const s = thisStandup || {};
-    return `<section class="me-card" id="fw-standup"><p class="me-label">Weekly standup · week of ${dayLabel(D.thisWeek)}</p>
-      <h2>${thisStandup ? "This week's standup ✓" : "Post this week's standup"}</h2>
-      <p class="me-small">Private: only you and the organisers see standups.</p>
+    const ticks = D.weekTicks || {};
+    const mine = new Set(s.ticks || []);
+    const hasText = !!(s.did || s.next || s.blockers || s.links);
+    return `<section class="me-card" id="fw-standup"><p class="me-label">Monday check-in · week of ${dayLabel(D.thisWeek)}</p>
+      <h2>${thisStandup ? "This week's check-in ✓" : "Post this week's check-in"}</h2>
+      <p class="me-small">One minute: tick what happened last week, add a line if you like. Private: only you and the organisers see it.</p>
       <form id="fw-standup-form">
-        <label class="me-field">What did you do last week?<textarea name="did" rows="3" maxlength="2000" placeholder="Opened PR #… on …, reviewed …, read …">${esc(s.did)}</textarea></label>
-        <label class="me-field">What's next this week?<textarea name="next" rows="2" maxlength="1500">${esc(s.next)}</textarea></label>
-        <label class="me-field">Anything blocking you?<textarea name="blockers" rows="2" maxlength="1500" placeholder="Waiting on review, build fails on …, not sure how …">${esc(s.blockers)}</textarea></label>
-        <label class="me-field">Links <span class="fw-hint">(PRs, reviews, notes; one per line)</span><textarea name="links" rows="2" maxlength="2000">${esc(s.links)}</textarea></label>
+        <fieldset class="fw-ticks"><legend>Last week I…</legend>
+          ${Object.entries(ticks).map(([k, l]) => `<label class="${k === "blocked" ? "is-warn" : ""}"><input type="checkbox" name="tick" value="${k}" ${mine.has(k) ? "checked" : ""}><span>${esc(l)}</span></label>`).join("")}
+        </fieldset>
+        <label class="me-field fw-hours">Rough hours last week<input type="number" name="hours" min="0" max="80" step="0.5" inputmode="decimal" value="${s.hours ?? ""}" placeholder="e.g. 12"></label>
+        <details class="fw-more" ${hasText ? "open" : ""}><summary>Add a short update <span class="fw-hint">(optional)</span></summary>
+          <label class="me-field">What did you do?<textarea name="did" rows="3" maxlength="2000" placeholder="Opened PR #… on …, reviewed …, read …">${esc(s.did)}</textarea></label>
+          <label class="me-field">What's next this week?<textarea name="next" rows="2" maxlength="1500">${esc(s.next)}</textarea></label>
+          <label class="me-field">Anything blocking you?<textarea name="blockers" rows="2" maxlength="1500" placeholder="Waiting on review, build fails on …, not sure how …">${esc(s.blockers)}</textarea></label>
+          <label class="me-field">Links <span class="fw-hint">(PRs, reviews, notes; one per line)</span><textarea name="links" rows="2" maxlength="2000">${esc(s.links)}</textarea></label>
+        </details>
         <label class="me-help"><input type="checkbox" name="help" ${s.help ? "checked" : ""}> <span>I'd like help this week. An organiser will reach out.</span></label>
-        <button class="button" type="submit">${thisStandup ? "Update standup" : "Post standup"}</button>
+        <button class="button" type="submit">${thisStandup ? "Update check-in" : "Post check-in"}</button>
       </form>${pastStandups()}</section>`;
   }
+  const tickLabels = (s) => (s.ticks || []).map((k) => (D.weekTicks || {})[k] || k);
   function pastStandups() {
     const old = D.standups.filter((s) => s.week !== D.thisWeek).slice(0, 6);
     if (!old.length) return "";
-    return `<div class="fw-log">${old.map((s) => `<details><summary>Week of ${dayLabel(s.week)}${s.help ? '<span class="fw-badge due">asked for help</span>' : ""}</summary>${s.did ? `<p><strong>Did:</strong> ${linkify(s.did)}</p>` : ""}${s.next ? `<p><strong>Next:</strong> ${linkify(s.next)}</p>` : ""}${s.blockers ? `<p><strong>Blocked:</strong> ${linkify(s.blockers)}</p>` : ""}${s.links ? `<p>${linkify(s.links)}</p>` : ""}</details>`).join("")}</div>`;
+    return `<div class="fw-log">${old.map((s) => `<details><summary>Week of ${dayLabel(s.week)}${s.help ? '<span class="fw-badge due">asked for help</span>' : ""}</summary>${s.ticks && s.ticks.length ? `<p>${tickLabels(s).map((t) => `✓ ${esc(t)}`).join("<br>")}</p>` : ""}${s.hours != null ? `<p><strong>Hours:</strong> ${esc(s.hours)}</p>` : ""}${s.did ? `<p><strong>Did:</strong> ${linkify(s.did)}</p>` : ""}${s.next ? `<p><strong>Next:</strong> ${linkify(s.next)}</p>` : ""}${s.blockers ? `<p><strong>Blocked:</strong> ${linkify(s.blockers)}</p>` : ""}${s.links ? `<p>${linkify(s.links)}</p>` : ""}</details>`).join("")}</div>`;
   }
 
   function reportCard(S) {
@@ -342,7 +352,9 @@
         <li>🧾 <strong>Monthly report:</strong> ${rhythmLine()}</li>
       </ul>
       <p class="me-small"><a href="/fellowships/guidelines">Guidelines</a> · <a href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">#fellowships on Discord</a> · <a href="/calendar">Calendar</a> · <a href="/privacy-track">Privacy Track</a></p>
-      <p class="me-small"><button class="ghost small" type="button" id="fw-signout">Sign out on this device</button></p></section>`;
+      <p class="me-label" style="margin-top:18px">Signing in</p>
+      <p class="me-small">No password: your personal link is your key, and this device stays signed in. Keep the link private. On a new device, open codeorange.dev/fellowships/me and ask for your link by email. Think someone else has it? Get a new link: the old one stops working everywhere.</p>
+      <p class="me-small"><button class="ghost small" type="button" id="fw-signout">Sign out on this device</button> <button class="ghost small" type="button" id="fw-rotate">Get a new link</button></p></section>`;
   }
 
   function wire() {
@@ -351,8 +363,9 @@
       e.preventDefault();
       const f = e.target;
       try {
-        await post({ action: "standup", week: D.thisWeek, did: f.did.value, next: f.next.value, blockers: f.blockers.value, links: f.links.value, help: f.help.checked });
-        toast(f.help.checked ? "Standup posted. We'll reach out to help." : "Standup posted ✓");
+        const ticks = [...f.querySelectorAll("input[name=tick]:checked")].map((x) => x.value);
+        await post({ action: "standup", week: D.thisWeek, ticks, hours: f.hours.value === "" ? null : Number(f.hours.value), did: f.did.value, next: f.next.value, blockers: f.blockers.value, links: f.links.value, help: f.help.checked });
+        toast(f.help.checked ? "Check-in posted. We'll reach out to help." : "Check-in posted ✓");
         load();
       } catch (err) { toast(err.message); }
     });
@@ -387,6 +400,14 @@
       try { await navigator.clipboard.writeText(`${location.origin}/fellowships/f/${D.me.github}`); toast("Link copied"); } catch { toast("Couldn't copy"); }
     });
     $("#fw-signout").addEventListener("click", () => { store.set(""); signIn(); });
+    $("#fw-rotate").addEventListener("click", async () => {
+      if (!confirm("Get a new sign-in link? Your old link stops working on every device, and the new one is emailed to you.")) return;
+      try {
+        const r = await post({ action: "rotate" });
+        store.set(r.token);
+        toast("New link emailed to you. You're still signed in here.");
+      } catch (err) { toast(err.message); }
+    });
     app.querySelectorAll("[data-check]").forEach((b) => b.addEventListener("click", async () => {
       const on = b.getAttribute("aria-pressed") !== "true";
       const month = D.me.month;
