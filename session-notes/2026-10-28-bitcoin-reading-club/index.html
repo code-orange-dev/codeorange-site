@@ -401,7 +401,7 @@ a.res:hover { border-color: rgba(247,147,26,.55); transform: translateY(-2px); }
       </div>
 
       <style>
-      .wq{margin:0 0 40px;border:1px solid rgba(247,147,26,.35);border-radius:18px;background:radial-gradient(120% 90% at 0 0,rgba(247,147,26,.14),transparent 60%),var(--card);padding:22px;position:relative;overflow:hidden}
+      .wq{margin:0 0 40px;border:1px solid rgba(247,147,26,.35);border-radius:18px;background:radial-gradient(120% 90% at 0 0,rgba(247,147,26,.14),transparent 60%) #141414;padding:22px;position:relative;overflow:hidden}
       .wq-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;font:700 12px/1.2 "Plus Jakarta Sans",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--orange)}
       .wq-xp{color:var(--text);letter-spacing:.04em}
       .wq-bar{height:8px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden;margin-bottom:18px}
@@ -430,7 +430,7 @@ a.res:hover { border-color: rgba(247,147,26,.55); transform: translateY(-2px); }
       .wq-acts{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
       .wq-acts a,.wq-acts button{padding:11px 18px;border-radius:99px;border:1px solid var(--line);background:transparent;color:var(--text);font-weight:700;font-size:14px;cursor:pointer;text-decoration:none}
       .wq-acts .p{background:var(--orange);border-color:var(--orange);color:#0A0A0A}
-      .wq-pop{position:absolute;right:22px;top:52px;font:800 18px/1 monospace;color:var(--orange);opacity:0;transform:translateY(8px);pointer-events:none}
+      .wq-pop{position:absolute;right:92px;top:20px;font:800 18px/1 monospace;color:var(--orange);opacity:0;transform:translateY(8px);pointer-events:none}
       .wq-pop.go{animation:wqpop 1s ease}
       @keyframes wqpop{20%{opacity:1;transform:translateY(0)}80%{opacity:1}100%{opacity:0;transform:translateY(-14px)}}
       </style>
@@ -476,7 +476,8 @@ a.res:hover { border-color: rgba(247,147,26,.55); transform: translateY(-2px); }
         $('wq-why').innerHTML=(ok?'<b>Correct!</b> ':'<b>Not quite.</b> ')+l.w;$('wq-why').style.display='block';$('wq-next').textContent=i<L.length-1?'Next level →':'See my rank →';$('wq-next').style.display='inline-block';map();}
       $('wq-next').onclick=function(){if(i<L.length-1){i++;show();}else end();};
       function end(){var n=res.filter(Boolean).length,r=R[0];R.forEach(function(x){if(n>=x[0])r=x});$('wq-play').style.display='none';$('wq-end').style.display='block';$('wq-lvl').textContent='Quest complete';
-        $('wq-rank').textContent=r[1];$('wq-msg').textContent=n+' of '+L.length+' right, '+xp+' XP. '+r[2];
+        var best=n;try{var b=+localStorage.getItem('rc1-best')||0;if(b>n)best=b;else localStorage.setItem('rc1-best',n);}catch(e){}
+        $('wq-rank').textContent=r[1];$('wq-msg').textContent=n+' of '+L.length+' right, '+xp+' XP. '+r[2]+(best>n?' (Your best so far: '+best+' of 6.)':'');
         $('wq-share').href='https://x.com/intent/post?text='+encodeURIComponent('I scored '+n+'/6 on the Bitcoin whitepaper quest and ranked "'+r[1]+'" ₿\n\nCan you beat it? @CodeOrangeDevs')+'&url='+encodeURIComponent(location.href.split('#')[0]);map();}
       $('wq-again').onclick=function(){i=0;xp=0;res=[];$('wq-play').style.display='block';$('wq-end').style.display='none';show();};
       show();})();
@@ -505,6 +506,64 @@ a.res:hover { border-color: rgba(247,147,26,.55); transform: translateY(-2px); }
         <p class="viz-fix"><b>The airplane:</b> Bitcoin is the plane, proof of work is the engine, the blockchain is the wings, the peer-to-peer network and cryptography are the cabin. A blockchain on its own is just a metal dining table. It only flies with every part together.</p>
       </div>
 
+      <p class="part"><b>&#9876;</b>Mini-game: try to double spend</p>
+      <p>You have <strong>one coin</strong>. Try to pay both shops with it. First with signatures only, then with the Bitcoin network.</p>
+      <div class="ds" id="ds">
+        <div class="ds-mode" role="tablist">
+          <button type="button" class="on" data-m="sig">Signatures only</button>
+          <button type="button" data-m="net">Bitcoin network</button>
+        </div>
+        <div class="ds-row">
+          <div class="ds-you"><span class="ds-coin">&#8383;</span><b>You</b><small>1 coin, signed by your key</small></div>
+          <div class="ds-shops">
+            <div class="ds-shop" id="ds-a"><b>&#9749; Coffee shop</b><button type="button" data-s="a">Pay with my coin</button><small></small></div>
+            <div class="ds-shop" id="ds-b"><b>&#128690; Bike shop</b><button type="button" data-s="b">Pay with my coin</button><small></small></div>
+          </div>
+        </div>
+        <div class="ds-chain" id="ds-chain"></div>
+        <p class="ds-out" id="ds-out">Pick a shop to pay.</p>
+        <button type="button" class="ds-reset" id="ds-reset">Reset</button>
+      </div>
+      <style>
+      .ds{margin:0 0 40px;padding:20px;border:1px solid var(--line);border-radius:18px;background:#141414}
+      .ds-mode{display:flex;gap:6px;padding:4px;border-radius:99px;background:rgba(255,255,255,.05);margin-bottom:18px}
+      .ds-mode button{flex:1;padding:10px 8px;border:0;border-radius:99px;background:transparent;color:var(--muted);font-weight:700;font-size:14px;cursor:pointer}
+      .ds-mode button.on{background:var(--orange);color:#0A0A0A}
+      .ds-row{display:grid;grid-template-columns:150px 1fr;gap:14px;align-items:center}
+      .ds-you{text-align:center;padding:14px 8px;border:1px dashed rgba(247,147,26,.5);border-radius:14px}
+      .ds-you b{display:block;margin-top:8px}.ds-you small,.ds-shop small{display:block;color:var(--dim);font-size:12px;line-height:1.4;margin-top:4px}
+      .ds-coin{display:inline-grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--orange);color:#0A0A0A;font:800 24px/1 sans-serif;box-shadow:0 0 24px rgba(247,147,26,.5)}
+      .ds-shops{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+      .ds-shop{padding:14px;border:1px solid var(--line);border-radius:14px;transition:border-color .2s,background .2s}
+      .ds-shop b{display:block;margin-bottom:10px}
+      .ds-shop button{width:100%;padding:9px;border:1px solid var(--orange);border-radius:99px;background:transparent;color:var(--orange);font-weight:700;cursor:pointer;font-size:13px}
+      .ds-shop button[disabled]{opacity:.35;cursor:default}
+      .ds-shop.ok{border-color:var(--orange);background:rgba(247,147,26,.1)}
+      .ds-shop.no{border-color:#7a3b3b;background:rgba(160,60,60,.14)}
+      .ds-chain{display:flex;gap:8px;align-items:center;min-height:0;margin-top:14px;flex-wrap:wrap}
+      .ds-blk{padding:8px 12px;border-radius:10px;border:1px solid var(--orange);background:rgba(247,147,26,.12);font:600 12px/1.4 monospace;color:var(--text);animation:dsin .4s ease}
+      .ds-blk i{color:var(--orange);font-style:normal}
+      @keyframes dsin{from{opacity:0;transform:translateY(6px)}}
+      .ds-out{margin:14px 0 0;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.04);color:var(--muted);font-size:15px;line-height:1.5}
+      .ds-out b{color:var(--orange)}
+      .ds-reset{margin-top:10px;background:none;border:0;color:var(--dim);text-decoration:underline;cursor:pointer;font-size:13px}
+      @media (max-width:560px){.ds-row{grid-template-columns:1fr}.ds-you{display:flex;align-items:center;gap:12px;text-align:left}.ds-you b{margin:0}}
+      </style>
+      <script>
+      (function(){var m='sig',paid=[],$=function(i){return document.getElementById(i)};
+      var names={a:'Coffee shop',b:'Bike shop'};
+      function reset(){paid=[];['a','b'].forEach(function(k){var el=$('ds-'+k);el.className='ds-shop';el.querySelector('small').textContent='';el.querySelector('button').disabled=false;});$('ds-chain').innerHTML='';
+        $('ds-out').innerHTML=m==='sig'?'Pick a shop to pay. Each shop only checks your signature.':'Pick a shop to pay. Every payment is checked by thousands of nodes and written into a block.';}
+      document.querySelectorAll('.ds-mode button').forEach(function(b){b.onclick=function(){document.querySelectorAll('.ds-mode button').forEach(function(x){x.classList.toggle('on',x===b)});m=b.dataset.m;reset();};});
+      document.querySelectorAll('.ds-shop button').forEach(function(b){b.onclick=function(){var k=b.dataset.s,el=$('ds-'+k),sm=el.querySelector('small');b.disabled=true;
+        if(m==='sig'||paid.length===0){paid.push(k);el.classList.add('ok');sm.textContent=m==='sig'?'\u2713 Signature valid. Accepted!':'\u2713 Confirmed in block #1';
+          if(m==='net'){$('ds-chain').innerHTML='<span class="ds-blk">Block #1 <i>&middot;</i> your coin &rarr; '+names[k]+'</span>';$('ds-out').innerHTML='Paid! Now try the other shop with the same coin.';}
+          else if(paid.length===2){$('ds-out').innerHTML='<b>&#128680; You spent one coin twice.</b> Both signatures were real, so both shops said yes. Nothing tells them the coin was already gone. That&rsquo;s why signatures are &ldquo;only part of the solution&rdquo;.';}
+          else{$('ds-out').innerHTML='Paid! Now try the other shop with the same coin.';}}
+        else{el.classList.add('no');sm.textContent='\u2717 Rejected';$('ds-out').innerHTML='<b>Blocked.</b> The signature is fine, but every node already saw this coin spent in block #1. One shared, time-ordered ledger is what stops the double spend.';}
+      };});reset();})();
+      </script>
+
       <p class="part"><b>2</b>Should you spend your bitcoin?</p>
       <p>A question from the chat: if bitcoin is a savings asset, doesn&rsquo;t spending it mean losing future value? The answer from the room was <strong>spend and replace</strong>. Pay for small things in bitcoin, then buy the same amount back. Merchants only accept bitcoin if people pay with it, and coins that never move end up like gold: locked in vaults while a credit system runs on top.</p>
       <div class="anatomy">
@@ -528,6 +587,20 @@ a.res:hover { border-color: rgba(247,147,26,.55); transform: translateY(-2px); }
         <div class="layer-scale" style="margin:8px 0 0"><span>2009</span><span></span></div>
         <p class="viz-fix"><b>Hope from the call:</b> as chip gains flatten out, home miners stay useful for longer, which is good for decentralization.</p>
       </div>
+
+      <h2>Word bank</h2>
+      <p>The words from the call, in plain English. Tap a card to flip it.</p>
+      <div class="wb"><button type="button" class="wb-card" aria-label="Bearer asset: tap to flip"><span class="wb-f">Bearer asset<small>tap to flip</small></span><span class="wb-b">Owning it means holding or controlling it. No registry, no bank account. Gold, paper cash, and bitcoin keys.</span></button><button type="button" class="wb-card" aria-label="Double spend: tap to flip"><span class="wb-f">Double spend<small>tap to flip</small></span><span class="wb-b">Paying with the same coin twice. Easy with digital files, impossible with paper cash.</span></button><button type="button" class="wb-card" aria-label="Proof of work: tap to flip"><span class="wb-f">Proof of work<small>tap to flip</small></span><span class="wb-b">Miners burn energy to find a valid hash. Rewriting history means redoing all that work.</span></button><button type="button" class="wb-card" aria-label="Longest chain: tap to flip"><span class="wb-f">Longest chain<small>tap to flip</small></span><span class="wb-b">The chain with the most work behind it. Every node treats it as the true history.</span></button><button type="button" class="wb-card" aria-label="51% attack: tap to flip"><span class="wb-f">51% attack<small>tap to flip</small></span><span class="wb-b">Controlling over half the hash power, enough to rewrite recent history.</span></button><button type="button" class="wb-card" aria-label="Node: tap to flip"><span class="wb-f">Node<small>tap to flip</small></span><span class="wb-b">A computer running Bitcoin software that checks every rule. Node runners are the police.</span></button><button type="button" class="wb-card" aria-label="ASIC: tap to flip"><span class="wb-f">ASIC<small>tap to flip</small></span><span class="wb-b">A chip built for one job: hashing. Replaced CPUs and GPUs for mining.</span></button><button type="button" class="wb-card" aria-label="Spend and replace: tap to flip"><span class="wb-f">Spend and replace<small>tap to flip</small></span><span class="wb-b">Pay in bitcoin, then buy the same amount back, so coins keep circulating.</span></button></div>
+      <style>
+      .wb{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin:0 0 32px}
+      .wb-card{position:relative;min-height:132px;padding:0;border:0;background:none;cursor:pointer;perspective:800px;text-align:left;color:var(--text)}
+      .wb-f,.wb-b{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:14px;border-radius:14px;backface-visibility:hidden;transition:transform .45s ease}
+      .wb-f{border:1px solid var(--line);background:linear-gradient(160deg,rgba(247,147,26,.16),#141414 60%) #141414;font-weight:800;font-size:17px;line-height:1.2}
+      .wb-f small{display:block;margin-top:8px;font:600 11px/1 monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--orange)}
+      .wb-b{border:1px solid var(--orange);background:#141414;color:var(--muted);font-size:13.5px;line-height:1.45;transform:rotateY(180deg)}
+      .wb-card.on .wb-f{transform:rotateY(180deg)}.wb-card.on .wb-b{transform:rotateY(360deg)}
+      </style>
+      <script>document.querySelectorAll('.wb-card').forEach(function(c){c.onclick=function(){c.classList.toggle('on')}});</script>
 
       <h2>Resources shared</h2>
       <h3>Reading</h3>
