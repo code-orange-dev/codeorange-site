@@ -199,3 +199,22 @@
   .fw-hero .fw-cta .button, .fw-hero .fw-cta .ghost { width: 100%; }
 }
 .fw-rhythm-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } @media (max-width: 760px) { .fw-rhythm-2 { grid-template-columns: 1fr; } }
+
+/* Dashboard: this month's to-dos and PRs to keep moving */
+.fw-todo { list-style: none; margin: 6px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.fw-todo li { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,.08); background: rgba(0,0,0,.35); }
+.fw-todo li div { display: grid; gap: 2px; min-width: 0; }
+.fw-todo strong { color: var(--text); font-size: 15px; }
+.fw-todo span { color: var(--dim); font-size: 13px; line-height: 1.45; }
+.fw-todo a { color: var(--orange); }
+.fw-tick { flex: 0 0 auto; min-height: 0; padding: 4px; border-radius: 50%; }
+.fw-autobox { flex: 0 0 auto; display: inline-grid; place-items: center; min-width: 32px; height: 32px; padding: 0 6px; border-radius: 999px; border: 1px solid rgba(247,147,26,.45); color: var(--orange) !important; font: 700 13px "Plus Jakarta Sans", monospace !important; }
+.fw-todo li.fw-auto { border-style: dashed; }
+.fw-prs { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 8px; }
+.fw-prs li { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,.08); background: rgba(0,0,0,.35); }
+.fw-prs a { display: flex; gap: 8px; align-items: center; min-width: 0; color: var(--text); text-decoration: none; font-size: 14px; }
+.fw-prs a:hover .fw-pr-title { color: var(--orange); }
+.fw-pr-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fw-pr-state:empty { display: none; }
+@media (max-width: 760px) { .fw-todo { grid-template-columns: minmax(0, 1fr); } }
+.fw-prs .fw-badge { flex: 0 0 auto; white-space: nowrap; margin-left: 0; }
