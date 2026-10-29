@@ -39,6 +39,16 @@ const FELLOW_STATUSES = ["green", "yellow", "red", "paused", "graduated", "ended
 const SCHEDULES = ["next", "end"];
 // The monthly to-dos a fellow ticks on their dashboard (private; organisers see them).
 const CHECKS = ["reviews", "mentor", "crc", "privacy", "post"];
+// Quick ticks on the Monday check-in (what happened last week).
+const WEEK_TICKS = {
+  pr: "Opened or updated a PR",
+  merged: "Got a PR merged",
+  review: "Reviewed someone else's PR",
+  mentor: "Talked with my mentor",
+  session: "Joined a Code Review Club or Privacy Track session",
+  learn: "Studied the codebase or a spec",
+  blocked: "I'm blocked on something",
+};
 const DEFAULT_PLAN = [
   "Set up: build and tests pass, introduce yourself to the project, first small PR, refine this plan with your mentor",
   "Find your groove: 2+ PRs, one with real functionality; review others' PRs every week",
@@ -157,6 +167,9 @@ function ensureTables() {
       q("ALTER TABLE fw_fellows ADD COLUMN IF NOT EXISTS focus text"),
       q("ALTER TABLE fw_fellows ADD COLUMN IF NOT EXISTS checks jsonb"),
       q("ALTER TABLE fw_reports ADD COLUMN IF NOT EXISTS mentor_note text"),
+      q("ALTER TABLE fw_standups ADD COLUMN IF NOT EXISTS ticks jsonb"),
+      q("ALTER TABLE fw_standups ADD COLUMN IF NOT EXISTS hours numeric"),
+      q("ALTER TABLE fw_fellows ADD COLUMN IF NOT EXISTS nick text"),
       q(`CREATE TABLE IF NOT EXISTS fw_payouts (
         id serial PRIMARY KEY,
         fellow_id integer NOT NULL REFERENCES fw_fellows(id) ON DELETE CASCADE,
@@ -425,7 +438,8 @@ async function fellowByToken(token) {
   return f || null;
 }
 
-const shapeStandup = (s) => ({ week: s.week, did: s.did || "", next: s.next || "", blockers: s.blockers || "", links: s.links || "", help: bool(s.help), updatedAt: iso(s.updated_at) });
+const ticksOf = (v) => { const t = parseJson(v) || {}; return Object.keys(WEEK_TICKS).filter((k) => t[k]); };
+const shapeStandup = (s) => ({ week: s.week, did: s.did || "", next: s.next || "", blockers: s.blockers || "", links: s.links || "", help: bool(s.help), ticks: ticksOf(s.ticks), hours: num(s.hours), updatedAt: iso(s.updated_at) });
 const shapeReport = (r, priv) => ({
   month: Number(r.month),
   summary: r.summary || "",
@@ -443,6 +457,7 @@ function fellowCore(f) {
   return {
     github: f.github,
     name: f.name,
+    nick: f.nick || "",
     project: f.project,
     projectUrl: f.project_url || "",
     mentor: f.mentor || "",
@@ -478,6 +493,7 @@ async function dashboard(token) {
       calendar: calendarOf(f),
       dueDates: calendarOf(f).map((c) => c.due),
       checks: checksOf(f),
+      weekTicks: WEEK_TICKS,
       standups: standups.map(shapeStandup),
       reports: reports.map((r) => shapeReport(r, true)),
       payouts: payouts.map(shapePayout),
@@ -492,15 +508,32 @@ async function standup(body) {
   const prev = mondayOf(Date.now() - 7 * 864e5);
   const week = [now, prev].includes(body.week) ? body.week : now;
   const s = { did: clean(body.did, 2000), next: clean(body.next, 1500), blockers: clean(body.blockers, 1500), links: clean(body.links, 2000), help: !!body.help };
-  if (!s.did && !s.next) return { status: 400, error: "Write a line about what you did or what's next." };
+  const tIn = Array.isArray(body.ticks) ? body.ticks : [];
+  const ticks = Object.fromEntries(Object.keys(WEEK_TICKS).filter((k) => tIn.includes(k)).map((k) => [k, true]));
+  const h = Number(body.hours);
+  const hours = Number.isFinite(h) && h >= 0 && h <= 80 ? Math.round(h * 2) / 2 : null;
+  if (!s.did && !s.next && !Object.keys(ticks).length) return { status: 400, error: "Tick at least one box, or write a line about your week." };
   const [old] = await sql("SELECT help FROM fw_standups WHERE fellow_id = $1 AND week = $2", [f.id, week]);
   await sql(
-    `INSERT INTO fw_standups (fellow_id, week, did, next, blockers, links, help) VALUES ($1,$2,$3,$4,$5,$6,$7)
-     ON CONFLICT (fellow_id, week) DO UPDATE SET did = $3, next = $4, blockers = $5, links = $6, help = $7, updated_at = now()`,
-    [f.id, week, s.did, s.next, s.blockers, s.links, s.help],
+    `INSERT INTO fw_standups (fellow_id, week, did, next, blockers, links, help, ticks, hours) VALUES ($1,$2,$3,$4,$5,$6,$7,$8::jsonb,$9)
+     ON CONFLICT (fellow_id, week) DO UPDATE SET did = $3, next = $4, blockers = $5, links = $6, help = $7, ticks = $8::jsonb, hours = $9, updated_at = now()`,
+    [f.id, week, s.did, s.next, s.blockers, s.links, s.help, JSON.stringify(ticks), hours],
   );
+  // The organisers get each new check-in by email, so they see every week without logging in.
+  if (!old && !s.help) {
+    await alert(`Check-in: ${f.nick || f.name}, week of ${week}`, [
+      `<p><strong>${mail.esc(f.nick || f.name)}</strong> (${mail.esc(f.project)}) posted their Monday check-in.</p>`,
+      box("Ticked", Object.keys(ticks).map((k) => `✓ ${WEEK_TICKS[k]}`).join("\n")),
+      box("Hours", hours != null ? String(hours) : ""),
+      box("Did", s.did),
+      box("Next", s.next),
+      box("Blocked on", s.blockers),
+      box("Links", s.links),
+      `<p><a href="${SITE}/fellowships/admin" style="color:#d97706">Open the organiser page</a></p>`,
+    ]);
+  }
   if (s.help && !(old && bool(old.help))) {
-    await alert(`Fellow needs help: ${f.name}`, [
+    await alert(`Fellow needs help: ${f.nick || f.name}`, [
       `<p><strong>${mail.esc(f.name)}</strong> (${mail.esc(f.project)}) asked for help in their standup for the week of ${week}.</p>`,
       box("Blocked on", s.blockers),
       box("Did", s.did),
@@ -587,15 +620,35 @@ async function emailLink(body) {
   const email = clean(body.email, 120).toLowerCase();
   if (!EMAIL_RE.test(email)) return { status: 400, error: "That email doesn't look right." };
   if (!mail.emailOn()) return { status: 503, error: "Email isn't switched on yet. Ask in Discord." };
-  const [f] = await sql("SELECT name, email, token FROM fw_fellows WHERE lower(email) = $1", [email]);
+  const [f] = await sql("SELECT name, nick, email, token FROM fw_fellows WHERE lower(email) = $1", [email]);
   if (f) {
     await mail.sendTo(f.email, "Your Code Orange fellowship dashboard", [
-      `Hey ${mail.esc(f.name)}, here's your personal link. Keep it private: it signs you in.`,
+      `Hey ${mail.esc(f.nick || f.name)}, here's your personal link. Keep it private: it signs you in. If you didn't ask for it, you can ignore this email.`,
       `<p><a href="${dashLink(f.token)}" style="display:inline-block;padding:12px 20px;border-radius:999px;background:#F7931A;color:#000;font-weight:700;text-decoration:none">Open my fellow dashboard</a></p>`,
     ]);
   }
   // Same answer either way, so the form doesn't reveal who is a fellow.
   return { status: 200, data: { ok: true } };
+}
+
+// The fellow swaps their sign-in link for a new one (the old link stops working everywhere)
+// and gets the new one by email.
+async function rotate(body) {
+  const f = await fellowByToken(clean(body.token, 64));
+  if (!f) return { status: 401, error: "Please sign in again." };
+  const token = crypto.randomBytes(18).toString("base64url");
+  await sql("UPDATE fw_fellows SET token = $2 WHERE id = $1", [f.id, token]);
+  if (mail.emailOn()) {
+    try {
+      await mail.sendTo(f.email, "Your new Code Orange dashboard link", [
+        `Hey ${mail.esc(f.nick || f.name)}, you asked for a new sign-in link, so your old one no longer works on any device.`,
+        `<p><a href="${dashLink(token)}" style="display:inline-block;padding:12px 20px;border-radius:999px;background:#F7931A;color:#000;font-weight:700;text-decoration:none">Open my fellow dashboard</a></p>`,
+      ]);
+    } catch (err) {
+      console.error("fellowship: new link email failed", err.message);
+    }
+  }
+  return { status: 200, data: { ok: true, token } };
 }
 
 // ---------- Public proof of work ----------
@@ -685,6 +738,7 @@ async function overview(withPrivate) {
   const today = new Date().toISOString().slice(0, 10);
   return {
     thisWeek,
+    weekTicks: WEEK_TICKS,
     applications: apps.map((a) => ({
       id: Number(a.id),
       name: a.name,
@@ -714,7 +768,7 @@ async function overview(withPrivate) {
       const flags = [];
       const active = ["green", "yellow", "red"].includes(f.status) && core.month >= 1 && core.month <= core.months + 1;
       if (active) {
-        if (!mine.some((s) => s.week === thisWeek || s.week === lastWeek) && core.month >= 1) flags.push("No standup for 2 weeks");
+        if (!mine.some((s) => s.week === thisWeek || s.week === lastWeek) && core.month >= 1) flags.push("No check-in for 2 weeks");
         for (let k = 1; k <= Math.min(core.month, core.months); k++) {
           if (!reps.some((r) => Number(r.month) === k) && today > reportDue(f, k)) flags.push(`Month ${k} report overdue`);
           else if (reps.some((r) => Number(r.month) === k && bool(r.approved)) && !pays.some((p) => Number(p.month) === k)) flags.push(`Month ${k} approved, pay by ${payBy(f, k)}`);
@@ -781,13 +835,14 @@ async function adminAccept(body) {
   const lines = clean(body.plan, 3000).split("\n").map((l) => l.replace(/^\s*(?:month\s*\d+|[A-Za-z]{3,9}|\d+)\s*[:.)]\s*/i, "").trim()).filter(Boolean);
   const plan = lines.length ? JSON.stringify(Array.from({ length: months }, (_, i) => ({ goal: clean(lines[i] || "", 400), done: false }))) : null;
   const focus = clean(body.focus, 1500) || null;
+  const nick = clean(body.nick, 40) || null;
   const token = crypto.randomBytes(18).toString("base64url");
   let fellow;
   try {
     [fellow] = await sql(
-      `INSERT INTO fw_fellows (application_id, github, name, email, discord, token, project, project_url, mentor, start_month, months, schedule, plan, focus)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13::jsonb,$14) RETURNING id`,
-      [a.id, a.github, a.name, a.email, a.discord, token, clean(body.project, 120) || a.project, a.project_url, mentor || null, start, months, schedule, plan, focus],
+      `INSERT INTO fw_fellows (application_id, github, name, email, discord, token, project, project_url, mentor, start_month, months, schedule, plan, focus, nick)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13::jsonb,$14,$15) RETURNING id`,
+      [a.id, a.github, a.name, a.email, a.discord, token, clean(body.project, 120) || a.project, a.project_url, mentor || null, start, months, schedule, plan, focus, nick],
     );
   } catch (err) {
     if (err.code === "23505") return { status: 409, error: "This GitHub user is already a fellow." };
@@ -801,11 +856,12 @@ async function adminAccept(body) {
     const rhythm = schedule === "end" ? "send your monthly report by the 21st, and you're paid before the end of that month" : "send your monthly report by the 5th of the next month, and you're paid by the 10th";
     try {
       await mail.sendTo(a.email, "Your Code Orange fellow dashboard 🧡", [
-        `Hey ${mail.esc(a.name)}, welcome to the Code Orange developer fellowship! It starts on ${startLabel} and runs for ${months} months${mentor ? `, with ${mail.esc(mentor)} as your mentor` : ""}.`,
-        "Everything lives on your fellow dashboard: your Monday check-in, your monthly report (it doubles as your invoice), your milestones, this month's to-dos and your payouts. The link below signs you in, so keep it private.",
+        `Hey ${mail.esc(nick || a.name)}, welcome to the Code Orange developer fellowship! It starts on ${startLabel} and runs for ${months} months${mentor ? `, with ${mail.esc(mentor)} as your mentor` : ""}.`,
+        "Everything lives on your fellow dashboard: your Monday check-in, your monthly report (it doubles as your invoice), your milestones, this month's to-dos and your payouts.",
+        "How signing in works: there's no password. The button below is your personal key and signs you in on this device. Keep it private and don't forward this email. Lost it, or on a new device? Go to codeorange.dev/fellowships/me, type this email address and we'll email you the link again. You can also swap it for a new link from the dashboard at any time, which signs out every other device.",
         `<p><a href="${dashLink(token)}" style="display:inline-block;padding:12px 20px;border-radius:999px;background:#F7931A;color:#000;font-weight:700;text-decoration:none">Open my fellow dashboard</a></p>`,
         `The rhythm: a short check-in every Monday; ${rhythm}.`,
-        "First steps: check your milestones on the dashboard, add the PRs you want to keep moving, and post your first check-in on the first Monday.",
+        "First steps: check your milestones on the dashboard, add the PRs you want to keep moving, and post your first check-in on the first Monday (tick a few boxes, add a line if you like).",
         `<p>Guidelines: <a href="${SITE}/fellowships/guidelines" style="color:#d97706">codeorange.dev/fellowships/guidelines</a></p>`,
       ]);
       emailed = true;
@@ -824,7 +880,7 @@ async function adminFellow(body) {
   await sql(
     `UPDATE fw_fellows SET status = COALESCE($2, status), mentor = COALESCE($3, mentor), public = COALESCE($4, public),
        months = COALESCE($5, months), start_month = COALESCE($6, start_month), project = COALESCE($7, project), notes = COALESCE($8, notes),
-       schedule = COALESCE($9, schedule)
+       schedule = COALESCE($9, schedule), nick = COALESCE($10, nick)
      WHERE id = $1`,
     [
       id,
@@ -836,6 +892,7 @@ async function adminFellow(body) {
       typeof body.project === "string" && body.project.trim() ? clean(body.project, 120) : null,
       typeof body.notes === "string" ? clean(body.notes, 3000) : null,
       SCHEDULES.includes(body.schedule) ? body.schedule : null,
+      typeof body.nick === "string" ? clean(body.nick, 40) : null,
     ],
   );
   return { status: 200, data: { ok: true } };
@@ -923,6 +980,7 @@ module.exports = async function handler(req, res) {
         report: () => report(body),
         plan: () => plan(body),
         check: () => check(body),
+        rotate: () => rotate(body),
         "admin-app": () => admin(adminApp),
         "admin-copy": () => admin(adminCopy),
         "admin-accept": () => admin(adminAccept),

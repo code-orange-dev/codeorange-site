@@ -60,7 +60,7 @@
     const flags = D.fellows.reduce((n, f) => n + f.flags.length, 0);
     app.innerHTML = `
       <section class="me-card"><p class="me-label">Overview</p><h2>Developer fellowship</h2>
-        <div class="me-stats"><span><strong>${apps.filter((a) => a.status === "new").length}</strong>new applications</span><span><strong>${open.length}</strong>open applications</span><span><strong>${active.length}</strong>active fellows</span><span><strong>${flags}</strong>things to check</span></div>
+        <div class="me-stats"><span><strong>${apps.filter((a) => a.status === "new").length}</strong>new applications</span><span><strong>${open.length}</strong>open applications</span><span><strong>${active.length}</strong>active fellows</span><span><strong>${active.filter((f) => f.standups[0] && f.standups[0].week === D.thisWeek).length}/${active.length}</strong>checked in this week</span><span><strong>${flags}</strong>things to check</span></div>
         <p class="me-small">Help requests, new applications and reports also arrive by email. Public list: <a href="/fellowships">/fellowships</a>. <button class="ghost small" id="fw-out" type="button">Sign out</button></p></section>
       <section class="me-card"><p class="me-label">Fellows</p><h2>Fellows (${D.fellows.length})</h2>${D.fellows.length ? D.fellows.map(fellowCard).join("") : "<p>No fellows yet. Accept an application below to create one.</p>"}</section>
       <section class="me-card"><p class="me-label">Applications</p><h2>Applications (${apps.length})</h2>
@@ -96,7 +96,8 @@
       ${a.status !== "accepted" ? `<details><summary class="me-small" style="cursor:pointer">Accept as a fellow…</summary>
         <div class="fw-inline"><label class="me-small">First month <input type="month" data-f="start" value="${ym}"></label>
         <label class="me-small">Months <input type="number" data-f="months" min="1" max="12" value="6" style="width:70px;min-width:0"></label>
-        <input type="text" data-f="mentor" placeholder="Mentor (name)"><input type="text" data-f="project" value="${esc(a.project)}"></div>
+        <input type="text" data-f="mentor" placeholder="Mentor (name)"><input type="text" data-f="project" value="${esc(a.project)}">
+        <label class="me-small">Call them <input type="text" data-f="nick" value="${esc(a.discord || "")}" placeholder="e.g. their Discord name"></label></div>
         <div class="fw-inline"><label class="me-small">Pay schedule ${scheduleSelect("next")}</label></div>
         <div class="fw-inline"><label class="me-small" style="flex:1;min-width:240px">Milestones, one line per month (optional, they can edit them)<textarea data-f="plan" rows="3" style="width:100%"></textarea></label>
         <label class="me-small" style="flex:1;min-width:200px">PRs to keep moving (optional: #numbers or links)<textarea data-f="focus" rows="3" style="width:100%"></textarea></label></div>
@@ -110,6 +111,16 @@
   const scheduleSelect = (cur) => `<select data-f="schedule">${Object.entries(SCHEDULES).map(([v, l]) => `<option value="${v}" ${v === cur ? "selected" : ""}>${l}</option>`).join("")}</select>`;
   const TODO_LABELS = { reviews: "reviews", mentor: "mentor call", crc: "Code Review Club", privacy: "Privacy Track", post: "public post" };
 
+  const tick = (k) => (D.weekTicks || {})[k] || k;
+  const standupBody = (s) => `${s.ticks && s.ticks.length ? `<p>${s.ticks.map((k) => `✓ ${esc(tick(k))}`).join(" · ")}</p>` : ""}${s.hours != null ? `<p><strong>Hours</strong> ${esc(s.hours)}</p>` : ""}`;
+  // The latest Monday check-in, shown without opening anything.
+  function weekLine(f) {
+    const s = f.standups[0];
+    if (!s) return f.month >= 1 ? '<p class="me-small">No check-ins yet.</p>' : "";
+    const fresh = s.week === D.thisWeek;
+    return `<div class="fw-weekline"><p class="me-small"><strong>${fresh ? "This week's check-in" : `Last check-in: week of ${esc(s.week)}`}</strong>${s.help ? ' <span class="fw-flag">help</span>' : ""}</p>${standupBody(s)}${s.did ? `<p class="me-small">${linkify(s.did)}</p>` : ""}${s.blockers ? `<p class="me-small"><strong>Blocked:</strong> ${linkify(s.blockers)}</p>` : ""}</div>`;
+  }
+
   function fellowCard(f) {
     const rep = Object.fromEntries(f.reports.map((r) => [r.month, r]));
     const months = Array.from({ length: f.months }, (_, i) => i + 1);
@@ -118,10 +129,12 @@
       <p class="me-small">@${esc(f.github)} · ${esc(f.project)} · ${f.month < 1 ? `starts ${f.startMonth}` : `month ${f.month} of ${f.months}`} · ${f.standups.length} standups · $${f.paidUsd} paid
         · <a href="/fellowships/f/${encodeURIComponent(f.github)}" target="_blank">public page</a> · <button class="ghost small" type="button" data-act="copy-link" data-link="${esc(location.origin)}/fellowships/me?me=${esc(f.token)}">copy dashboard link</button></p>
       ${f.flags.length ? `<p>${f.flags.map((x) => `<span class="fw-flag">${esc(x)}</span>`).join("")}</p>` : ""}
+      ${weekLine(f)}
       ${f.month >= 1 && f.month <= f.months ? `<p class="me-small">Month ${f.month} to-dos ticked: ${Object.entries((f.checks || {})[f.month] || {}).filter(([, v]) => v).map(([k]) => esc(TODO_LABELS[k] || k)).join(", ") || "none yet"}</p>` : ""}
       <div class="fw-inline">
         <select data-f="status">${FSTATUS.map((s) => `<option ${s === f.status ? "selected" : ""}>${s}</option>`).join("")}</select>
         <input type="text" data-f="mentor" placeholder="Mentor" value="${esc(f.mentor)}">
+        <label class="me-small">Call them <input type="text" data-f="nick" value="${esc(f.nick || "")}" style="width:130px;min-width:0"></label>
         <label class="me-small">Start <input type="month" data-f="start" value="${esc(f.startMonth)}"></label>
         <label class="me-small">Months <input type="number" data-f="months" min="1" max="12" value="${f.months}" style="width:70px;min-width:0"></label>
         <label class="me-small">Pay ${scheduleSelect(f.schedule || "next")}</label>
@@ -152,7 +165,7 @@
           <button class="button small" type="button" data-act="pay">Save payout</button></div>
       </details>
       <details><summary class="me-small" style="cursor:pointer">Standups (${f.standups.length})</summary><div class="fw-log">
-        ${f.standups.slice(0, 12).map((s) => `<details><summary>Week of ${s.week}${s.help ? ' <span class="fw-flag">help</span>' : ""}</summary>${s.did ? `<p><strong>Did</strong> ${linkify(s.did)}</p>` : ""}${s.next ? `<p><strong>Next</strong> ${linkify(s.next)}</p>` : ""}${s.blockers ? `<p><strong>Blocked</strong> ${linkify(s.blockers)}</p>` : ""}${s.links ? `<p>${linkify(s.links)}</p>` : ""}</details>`).join("") || "<p>None yet.</p>"}</div></details>
+        ${f.standups.slice(0, 12).map((s) => `<details><summary>Week of ${s.week}${s.help ? ' <span class="fw-flag">help</span>' : ""}</summary>${standupBody(s)}${s.did ? `<p><strong>Did</strong> ${linkify(s.did)}</p>` : ""}${s.next ? `<p><strong>Next</strong> ${linkify(s.next)}</p>` : ""}${s.blockers ? `<p><strong>Blocked</strong> ${linkify(s.blockers)}</p>` : ""}${s.links ? `<p>${linkify(s.links)}</p>` : ""}</details>`).join("") || "<p>None yet.</p>"}</div></details>
     </article>`;
   }
 
@@ -176,12 +189,12 @@
             return;
           }
           case "accept": {
-            const r = await call({ action: "admin-accept", id: Number(card.dataset.app), start: val("[data-f=start]").value, months: Number(val("[data-f=months]").value), schedule: val("[data-f=schedule]").value, mentor: val("[data-f=mentor]").value, project: val("[data-f=project]").value, plan: val("[data-f=plan]").value, focus: val("[data-f=focus]").value, email: val("[data-f=email]").checked });
+            const r = await call({ action: "admin-accept", id: Number(card.dataset.app), start: val("[data-f=start]").value, months: Number(val("[data-f=months]").value), schedule: val("[data-f=schedule]").value, mentor: val("[data-f=mentor]").value, project: val("[data-f=project]").value, nick: val("[data-f=nick]").value, plan: val("[data-f=plan]").value, focus: val("[data-f=focus]").value, email: val("[data-f=email]").checked });
             note(r.emailed ? "Accepted, and their dashboard link was emailed." : "Accepted. Copy their dashboard link from the fellow card.");
             return load();
           }
           case "save-fellow":
-            await call({ action: "admin-fellow", id: Number(card.dataset.fellow), status: val("[data-f=status]").value, mentor: val("[data-f=mentor]").value, start: val("[data-f=start]").value, months: Number(val("[data-f=months]").value), schedule: val("[data-f=schedule]").value, public: val("[data-f=public]").checked, notes: val("[data-f=notes]").value });
+            await call({ action: "admin-fellow", id: Number(card.dataset.fellow), status: val("[data-f=status]").value, mentor: val("[data-f=mentor]").value, nick: val("[data-f=nick]").value, start: val("[data-f=start]").value, months: Number(val("[data-f=months]").value), schedule: val("[data-f=schedule]").value, public: val("[data-f=public]").checked, notes: val("[data-f=notes]").value });
             note("Saved");
             return load();
           case "approve":
