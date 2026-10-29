@@ -8,6 +8,7 @@
   "summary": "Our first Reading Club: the Bitcoin whitepaper abstract read sentence by sentence, from peer-to-peer cash to proof of work, the longest chain and nodes that come and go.",
   "share_text": "We read the Bitcoin whitepaper abstract line by line: notes from the first @CodeOrangeDevs Bitcoin Reading Club",
   "minutes": 4,
+  "video": "CWejngosDew",
   "duration": "79 min",
   "tldr": [
     "The key line: peer-to-peer cash, without going through a financial institution.",
@@ -16,26 +17,86 @@
     "Spend some bitcoin and buy it back. A coin that never moves ends up like gold in a vault."
   ],
   "chapters": [
-    [0, "Intro: reading the whitepaper together"],
-    [107, "The first line: peer-to-peer, no financial institution"],
-    [254, "What did Satoshi mean by \"electronic cash\"?"],
-    [431, "Bitcoin as the ultimate bearer asset"],
-    [807, "Digital signatures and the double spending problem"],
-    [963, "Peer-to-peer network: node runners are the police"],
-    [1028, "Timestamps, hashing and the chain of proof of work"],
-    [1152, "The airplane analogy: how all the parts fit together"],
-    [1320, "Should you spend your Bitcoin? Spend and replace"],
-    [1800, "The longest chain and the 51% attack"],
-    [2170, "CPUs, GPUs and ASICs: how mining changed"],
-    [2577, "Why run your own node?"],
-    [2727, "\"Minimal structure\" and best-effort broadcasting"],
-    [3154, "Discussion: the paper's core proposal"],
-    [3395, "Proof of work, energy and game theory"],
-    [3653, "Why signatures are only part of the solution"],
-    [4107, "Why the largest pool of CPU power matters"],
-    [4271, "Nodes leave and rejoin at will"],
-    [4414, "Why a timestamped chain and not a plain list?"],
-    [4576, "Wrap-up and what's next"]
+    [
+      0,
+      "Intro: reading the whitepaper together"
+    ],
+    [
+      107,
+      "The first line: peer-to-peer, no financial institution"
+    ],
+    [
+      254,
+      "What did Satoshi mean by \"electronic cash\"?"
+    ],
+    [
+      431,
+      "Bitcoin as the ultimate bearer asset"
+    ],
+    [
+      807,
+      "Digital signatures and the double spending problem"
+    ],
+    [
+      963,
+      "Peer-to-peer network: node runners are the police"
+    ],
+    [
+      1028,
+      "Timestamps, hashing and the chain of proof of work"
+    ],
+    [
+      1152,
+      "The airplane analogy: how all the parts fit together"
+    ],
+    [
+      1320,
+      "Should you spend your Bitcoin? Spend and replace"
+    ],
+    [
+      1800,
+      "The longest chain and the 51% attack"
+    ],
+    [
+      2170,
+      "CPUs, GPUs and ASICs: how mining changed"
+    ],
+    [
+      2577,
+      "Why run your own node?"
+    ],
+    [
+      2727,
+      "\"Minimal structure\" and best-effort broadcasting"
+    ],
+    [
+      3154,
+      "Discussion: the paper's core proposal"
+    ],
+    [
+      3395,
+      "Proof of work, energy and game theory"
+    ],
+    [
+      3653,
+      "Why signatures are only part of the solution"
+    ],
+    [
+      4107,
+      "Why the largest pool of CPU power matters"
+    ],
+    [
+      4271,
+      "Nodes leave and rejoin at will"
+    ],
+    [
+      4414,
+      "Why a timestamped chain and not a plain list?"
+    ],
+    [
+      4576,
+      "Wrap-up and what's next"
+    ]
   ],
   "next": {
     "title": "Bitcoin Basics",
