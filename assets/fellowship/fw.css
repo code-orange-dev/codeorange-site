@@ -237,3 +237,8 @@
 .fw-more > summary { cursor: pointer; color: var(--orange); font: 700 13px "Plus Jakarta Sans", monospace; margin-bottom: 10px; }
 .fw-weekline { margin: 8px 0 10px; padding: 10px 14px; border-radius: 12px; border: 1px solid rgba(247,147,26,.3); background: rgba(247,147,26,.05); } .fw-weekline p { margin: 4px 0; }
 .fw-more > summary { display: block; padding: 0; border: 0; background: none; }
+
+/* Read-only to-do list (mentor page) and the confirmed-mentor tick (proof of work) */
+.fw-todo.read li { color: var(--muted); font-size: 14.5px; }
+.fw-todo.read li.is-done { color: #3ecf8e; border-color: rgba(39,201,63,.35); }
+.fw-ok { display: inline-grid; place-items: center; width: 16px; height: 16px; border-radius: 50%; background: #27C93F; color: #0a0a0a; font-size: 10px; font-weight: 800; vertical-align: 1px; }

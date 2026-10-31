@@ -12,6 +12,8 @@
 //   POST /api/fellowship {action:"standup"|"report"|"plan"|"check", token, ...}
 //   GET  /api/fellowship?fellows=1                             public list of fellows
 //   GET  /api/fellowship?fellow=<github>                       one fellow's public proof of work
+//   GET  /api/fellowship?mentor=<key>                          a mentor's view of their fellow (private link)
+//   POST /api/fellowship {action:"mentor-confirm", key, note}  mentor confirms they'll mentor the fellow
 //   GET  /api/fellowship?admin=1                               everything (X-MB-Admin: key)
 //   GET  /api/fellowship?admin=1&rate=1                        Coinbase BTC/USD spot price now
 //   GET  /api/fellowship?report=<key>                          everything minus emails and addresses
@@ -170,6 +172,29 @@ function ensureTables() {
       q("ALTER TABLE fw_standups ADD COLUMN IF NOT EXISTS ticks jsonb"),
       q("ALTER TABLE fw_standups ADD COLUMN IF NOT EXISTS hours numeric"),
       q("ALTER TABLE fw_fellows ADD COLUMN IF NOT EXISTS nick text"),
+      // Mentor confirm link: a private key per fellow, and when the mentor clicked confirm.
+      q("ALTER TABLE fw_fellows ADD COLUMN IF NOT EXISTS mentor_key text"),
+      q("ALTER TABLE fw_fellows ADD COLUMN IF NOT EXISTS mentor_ok timestamptz"),
+      q("ALTER TABLE fw_fellows ADD COLUMN IF NOT EXISTS mentor_note text"),
+      q("UPDATE fw_fellows SET mentor_key = replace(gen_random_uuid()::text, '-', '') || replace(gen_random_uuid()::text, '-', '') WHERE mentor_key IS NULL"),
+      // Last good GitHub answer per fellow, so the proof-of-work page still shows work when GitHub rate-limits us.
+      q(`CREATE TABLE IF NOT EXISTS fw_gh_cache (
+        github text PRIMARY KEY,
+        data jsonb NOT NULL,
+        fetched_at timestamptz NOT NULL DEFAULT now()
+      )`),
+      // One-off fix (Oct 2026): stonepillar was accepted with the default 6 months and 5th-of-month
+      // schedule; his agreed deal is 3 months from Nov 2026, report by the 21st. No-op once applied.
+      q(
+        `UPDATE fw_fellows SET months = 3, schedule = 'end',
+           plan = COALESCE(plan, $1::jsonb), focus = COALESCE(focus, '#1105 #1249 #926')
+         WHERE lower(github) = 'micah-shallom' AND months = 6 AND schedule = 'next'`,
+        [JSON.stringify([
+          { goal: "Fix #1015 and add the decoderawtransaction RPC", done: false },
+          { goal: "Fix #1103, add the waitfornewblock and waitforblockheight RPCs; present at Code Review Club", done: false },
+          { goal: "Add the verifytxoutproof and decodescript RPCs; writeup and demo", done: false },
+        ])],
+      ),
       q(`CREATE TABLE IF NOT EXISTS fw_payouts (
         id serial PRIMARY KEY,
         fellow_id integer NOT NULL REFERENCES fw_fellows(id) ON DELETE CASCADE,
@@ -461,6 +486,7 @@ function fellowCore(f) {
     project: f.project,
     projectUrl: f.project_url || "",
     mentor: f.mentor || "",
+    mentorConfirmed: !!f.mentor_ok,
     startMonth: f.start_month,
     months: Number(f.months),
     month,
@@ -651,6 +677,50 @@ async function rotate(body) {
   return { status: 200, data: { ok: true, token } };
 }
 
+// ---------- Mentors ----------
+// Each fellow has a private mentor link (/fellowships/mentor?k=<key>) the organisers paste to the
+// mentor in Discord or email, so confirming never depends on an email landing in the inbox.
+const MENTOR_KEY_RE = /^[a-f0-9]{64}$/;
+const mentorLink = (key) => `${SITE}/fellowships/mentor?k=${key}`;
+async function fellowByMentorKey(key) {
+  if (!MENTOR_KEY_RE.test(key || "")) return null;
+  const [f] = await sql("SELECT * FROM fw_fellows WHERE mentor_key = $1", [key]);
+  return f || null;
+}
+
+async function mentorView(key) {
+  const f = await fellowByMentorKey(key);
+  if (!f) return { status: 404, error: "This mentor link doesn't work. Ask the Code Orange team for a new one." };
+  const standups = await sql("SELECT * FROM fw_standups WHERE fellow_id = $1 ORDER BY week DESC LIMIT 4", [f.id]);
+  const core = fellowCore(f);
+  return {
+    status: 200,
+    data: {
+      fellow: { ...core, discord: f.discord || "", schedule: scheduleOf(f), calendar: calendarOf(f), checks: checksOf(f) },
+      mentorOk: iso(f.mentor_ok),
+      mentorNote: f.mentor_note || "",
+      weekTicks: WEEK_TICKS,
+      checkins: standups.map((st) => { const x = shapeStandup(st); delete x.links; return x; }),
+    },
+  };
+}
+
+async function mentorConfirm(body) {
+  const f = await fellowByMentorKey(clean(body.key, 80));
+  if (!f) return { status: 404, error: "This mentor link doesn't work. Ask the Code Orange team for a new one." };
+  const note = clean(body.note, 1000);
+  const name = clean(body.name, 120);
+  const first = !f.mentor_ok;
+  await sql("UPDATE fw_fellows SET mentor_ok = COALESCE(mentor_ok, now()), mentor_note = COALESCE(NULLIF($2, ''), mentor_note), mentor = COALESCE(NULLIF($3, ''), mentor) WHERE id = $1", [f.id, note, name]);
+  if (first) {
+    await alert(`Mentor confirmed: ${name || f.mentor || "mentor"} for ${f.nick || f.name}`, [
+      `<p><strong>${mail.esc(name || f.mentor || "The mentor")}</strong> confirmed they'll mentor <strong>${mail.esc(f.nick || f.name)}</strong> (${mail.esc(f.project)}).</p>`,
+      note ? `<p>Their note: ${mail.esc(note)}</p>` : "",
+    ]);
+  }
+  return { status: 200, data: { ok: true } };
+}
+
 // ---------- Public proof of work ----------
 const ghHeaders = () => {
   const h = { Accept: "application/vnd.github+json", "User-Agent": "codeorange.dev fellowship" };
@@ -664,27 +734,45 @@ async function ghSearch(query) {
   });
   if (!r.ok) throw new Error(`GitHub ${r.status}`);
   const data = await r.json();
-  return (data.items || []).map((it) => ({
+  const items = (data.items || []).map((it) => ({
     title: it.title,
     url: it.html_url,
     repo: (it.repository_url || "").split("/repos/")[1] || "",
     state: it.pull_request && it.pull_request.merged_at ? "merged" : it.state,
     createdAt: it.created_at,
   }));
+  items.total = Number(data.total_count) || items.length;
+  return items;
 }
 
-// PRs they opened on other people's repositories since starting, and PRs they reviewed.
+// The GitHub searches behind a proof-of-work page. The browser runs the same ones itself if
+// we can't reach GitHub and have nothing cached (assets/fellowship/fellow.js).
+const ghQueries = (github, startYm) => ({
+  prs: `is:pr author:${github} -user:${github} created:>=${startYm}-01`,
+  reviews: `is:pr reviewed-by:${github} -author:${github} -user:${github} updated:>=${startYm}-01`,
+  before: `is:pr is:merged author:${github} -user:${github} merged:<${startYm}-01`,
+});
+
+// PRs they opened on other people's repositories since starting, PRs they reviewed, and PRs
+// merged before the fellowship. Cached for 30 minutes; on a GitHub error we serve the last good
+// answer (GitHub's search API allows few unauthenticated calls from shared server IPs).
 async function githubWork(github, startYm) {
-  const since = `${startYm}-01`;
+  const qs = ghQueries(github, startYm);
+  const [cached] = await sql("SELECT data, fetched_at, now() - fetched_at < interval '30 minutes' AS fresh FROM fw_gh_cache WHERE github = lower($1)", [github]).catch(() => []);
+  const old = cached && parseJson(cached.data);
+  if (old && bool(cached.fresh) && old.start === startYm) return { ...old, ok: true, queries: qs };
   try {
-    const [prs, reviews] = await Promise.all([
-      ghSearch(`is:pr author:${github} -user:${github} created:>=${since}`),
-      ghSearch(`is:pr reviewed-by:${github} -author:${github} -user:${github} updated:>=${since}`),
-    ]);
-    return { prs, reviews, ok: true };
+    const [prs, reviews, before] = await Promise.all([ghSearch(qs.prs), ghSearch(qs.reviews), ghSearch(qs.before)]);
+    const data = { start: startYm, prs, reviews, before: before.slice(0, 15), beforeTotal: before.total, at: new Date().toISOString() };
+    await sql(
+      "INSERT INTO fw_gh_cache (github, data, fetched_at) VALUES (lower($1), $2::jsonb, now()) ON CONFLICT (github) DO UPDATE SET data = EXCLUDED.data, fetched_at = now()",
+      [github, JSON.stringify(data)],
+    ).catch(() => {});
+    return { ...data, ok: true, queries: qs };
   } catch (err) {
     console.error("fellowship: github", err.message);
-    return { prs: [], reviews: [], ok: false };
+    if (old && old.start === startYm) return { ...old, ok: true, stale: true, queries: qs };
+    return { prs: [], reviews: [], before: [], beforeTotal: 0, ok: false, queries: qs };
   }
 }
 
@@ -778,7 +866,9 @@ async function overview(withPrivate) {
       return {
         id: Number(id),
         ...core,
-        ...(withPrivate ? { email: f.email, token: f.token } : {}),
+        ...(withPrivate ? { email: f.email, token: f.token, mentorLink: f.mentor_key ? mentorLink(f.mentor_key) : "" } : {}),
+        mentorOk: iso(f.mentor_ok),
+        mentorNote: f.mentor_note || "",
         discord: f.discord || "",
         status: f.status,
         public: bool(f.public),
@@ -837,12 +927,13 @@ async function adminAccept(body) {
   const focus = clean(body.focus, 1500) || null;
   const nick = clean(body.nick, 40) || null;
   const token = crypto.randomBytes(18).toString("base64url");
+  const mentorKey = crypto.randomBytes(32).toString("hex");
   let fellow;
   try {
     [fellow] = await sql(
-      `INSERT INTO fw_fellows (application_id, github, name, email, discord, token, project, project_url, mentor, start_month, months, schedule, plan, focus, nick)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13::jsonb,$14,$15) RETURNING id`,
-      [a.id, a.github, a.name, a.email, a.discord, token, clean(body.project, 120) || a.project, a.project_url, mentor || null, start, months, schedule, plan, focus, nick],
+      `INSERT INTO fw_fellows (application_id, github, name, email, discord, token, project, project_url, mentor, start_month, months, schedule, plan, focus, nick, mentor_key)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13::jsonb,$14,$15,$16) RETURNING id`,
+      [a.id, a.github, a.name, a.email, a.discord, token, clean(body.project, 120) || a.project, a.project_url, mentor || null, start, months, schedule, plan, focus, nick, mentorKey],
     );
   } catch (err) {
     if (err.code === "23505") return { status: 409, error: "This GitHub user is already a fellow." };
@@ -869,7 +960,7 @@ async function adminAccept(body) {
       console.error("fellowship: welcome failed", err.message);
     }
   }
-  return { status: 200, data: { ok: true, id: Number(fellow.id), link: dashLink(token), emailed } };
+  return { status: 200, data: { ok: true, id: Number(fellow.id), link: dashLink(token), mentorLink: mentorLink(mentorKey), emailed } };
 }
 
 async function adminFellow(body) {
@@ -878,7 +969,10 @@ async function adminFellow(body) {
   const status = FELLOW_STATUSES.includes(body.status) ? body.status : null;
   const months = Number.isInteger(body.months) && body.months >= 1 && body.months <= 12 ? body.months : null;
   await sql(
-    `UPDATE fw_fellows SET status = COALESCE($2, status), mentor = COALESCE($3, mentor), public = COALESCE($4, public),
+    `UPDATE fw_fellows SET
+       mentor_ok = CASE WHEN $3::text IS NOT NULL AND $3::text IS DISTINCT FROM mentor THEN NULL ELSE mentor_ok END,
+       mentor_key = CASE WHEN $3::text IS NOT NULL AND $3::text IS DISTINCT FROM mentor THEN $11 ELSE mentor_key END,
+       status = COALESCE($2, status), mentor = COALESCE($3, mentor), public = COALESCE($4, public),
        months = COALESCE($5, months), start_month = COALESCE($6, start_month), project = COALESCE($7, project), notes = COALESCE($8, notes),
        schedule = COALESCE($9, schedule), nick = COALESCE($10, nick)
      WHERE id = $1`,
@@ -893,6 +987,7 @@ async function adminFellow(body) {
       typeof body.notes === "string" ? clean(body.notes, 3000) : null,
       SCHEDULES.includes(body.schedule) ? body.schedule : null,
       typeof body.nick === "string" ? clean(body.nick, 40) : null,
+      crypto.randomBytes(32).toString("hex"),
     ],
   );
   return { status: 200, data: { ok: true } };
@@ -958,13 +1053,14 @@ module.exports = async function handler(req, res) {
         if (query.rate !== undefined) return send(await coinbaseRate());
         return res.status(200).json(await overview(true));
       }
+      if (query.mentor !== undefined) return send(await mentorView(clean(String(query.mentor), 80)));
       if (query.fellows !== undefined) {
         res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=3600");
         return res.status(200).json(await publicList());
       }
       if (query.fellow !== undefined) {
         const r = await publicFellow(clean(String(query.fellow), 60));
-        if (!r.error) res.setHeader("Cache-Control", "public, s-maxage=600, stale-while-revalidate=3600");
+        if (!r.error) res.setHeader("Cache-Control", r.data.github.ok ? "public, s-maxage=600, stale-while-revalidate=3600" : "public, s-maxage=60");
         return send(r);
       }
       return send(await dashboard(clean(req.headers["x-fw-token"], 64)));
@@ -981,6 +1077,7 @@ module.exports = async function handler(req, res) {
         plan: () => plan(body),
         check: () => check(body),
         rotate: () => rotate(body),
+        "mentor-confirm": () => mentorConfirm(body),
         "admin-app": () => admin(adminApp),
         "admin-copy": () => admin(adminCopy),
         "admin-accept": () => admin(adminAccept),

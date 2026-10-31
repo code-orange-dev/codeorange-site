@@ -129,6 +129,8 @@
       <p class="me-small">@${esc(f.github)} · ${esc(f.project)} · ${f.month < 1 ? `starts ${f.startMonth}` : `month ${f.month} of ${f.months}`} · ${f.standups.length} standups · $${f.paidUsd} paid
         · <a href="/fellowships/f/${encodeURIComponent(f.github)}" target="_blank">public page</a> · <button class="ghost small" type="button" data-act="copy-link" data-link="${esc(location.origin)}/fellowships/me?me=${esc(f.token)}">copy dashboard link</button></p>
       ${f.flags.length ? `<p>${f.flags.map((x) => `<span class="fw-flag">${esc(x)}</span>`).join("")}</p>` : ""}
+      <p class="me-small">Mentor: ${f.mentor ? esc(f.mentor) : "not set"} · ${f.mentorOk ? `<span class="fw-ok">✓</span> confirmed ${esc(f.mentorOk.slice(0, 10))}${f.mentorNote ? ` (“${esc(f.mentorNote)}”)` : ""}` : "not confirmed yet"}
+        ${f.mentorLink ? ` · <button class="ghost small" type="button" data-act="copy-mentor" data-link="${esc(f.mentorLink)}">copy mentor link</button>` : ""}</p>
       ${weekLine(f)}
       ${f.month >= 1 && f.month <= f.months ? `<p class="me-small">Month ${f.month} to-dos ticked: ${Object.entries((f.checks || {})[f.month] || {}).filter(([, v]) => v).map(([k]) => esc(TODO_LABELS[k] || k)).join(", ") || "none yet"}</p>` : ""}
       <div class="fw-inline">
@@ -190,7 +192,7 @@
           }
           case "accept": {
             const r = await call({ action: "admin-accept", id: Number(card.dataset.app), start: val("[data-f=start]").value, months: Number(val("[data-f=months]").value), schedule: val("[data-f=schedule]").value, mentor: val("[data-f=mentor]").value, project: val("[data-f=project]").value, nick: val("[data-f=nick]").value, plan: val("[data-f=plan]").value, focus: val("[data-f=focus]").value, email: val("[data-f=email]").checked });
-            note(r.emailed ? "Accepted, and their dashboard link was emailed." : "Accepted. Copy their dashboard link from the fellow card.");
+            note(`${r.emailed ? "Accepted, and their dashboard link was emailed." : "Accepted. Copy their dashboard link from the fellow card."} Send the mentor their confirm link: "copy mentor link" on the fellow card.`);
             return load();
           }
           case "save-fellow":
@@ -220,6 +222,10 @@
             if (!confirm("Delete this payout record?")) return;
             await call({ action: "admin-payout-delete", payout: Number(b.dataset.pay) });
             return load();
+          case "copy-mentor":
+            await navigator.clipboard.writeText(b.dataset.link);
+            note("Mentor link copied. Paste it to the mentor in Discord or email: one click confirms.");
+            return;
           case "copy-link":
             await navigator.clipboard.writeText(b.dataset.link);
             note("Dashboard link copied. It signs them in: send it only to them.");
