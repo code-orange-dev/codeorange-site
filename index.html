@@ -280,6 +280,58 @@
     #static-homepage .co-path h3 { margin: 0; font-size: 15px; font-weight: 700; line-height: 1.3; color: #F5F5F5; }
     #static-homepage .co-path p { margin: 0; font-size: 12.5px; color: #858585; line-height: 1.45; }
     #static-homepage .co-path .co-step-arrow { position: absolute; right: -13px; top: 50%; transform: translateY(-50%); color: #F7931A; font-weight: 700; z-index: 1; pointer-events: none; }
+    /* ── Developer pipeline: 6 photo steps on an orange path (2026-10-31) ── */
+    #static-homepage .pl { --ring: 184px; position: relative; margin-top: 64px; }
+    #static-homepage .pl-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 18px; position: relative; z-index: 1; }
+    #static-homepage .pl-track { position: absolute; z-index: 0; left: calc(100% / 12); right: calc(100% / 12); top: calc(var(--ring) / 2 + 26px); height: 4px; border-radius: 4px; background: rgba(255,255,255,.08); overflow: visible; }
+    #static-homepage .pl-fill { position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(90deg, rgba(247,147,26,.35), #F7931A 70%, #FFB347); box-shadow: 0 0 24px rgba(247,147,26,.55); transform-origin: left center; transform: scaleX(0); transition: transform 1.8s cubic-bezier(.65,0,.35,1); }
+    #static-homepage .pl.is-in .pl-fill { transform: scaleX(1); }
+    #static-homepage .pl-spark { position: absolute; top: 50%; left: 0; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: #FFE2B8; box-shadow: 0 0 0 4px rgba(247,147,26,.35), 0 0 28px 8px rgba(247,147,26,.8); opacity: 0; }
+    #static-homepage .pl.is-in .pl-spark { animation: pl-run 4.5s 1.9s cubic-bezier(.45,0,.55,1) infinite; }
+    @keyframes pl-run { 0% { left: 0; opacity: 0; } 8% { opacity: 1; } 92% { opacity: 1; } 100% { left: 100%; opacity: 0; } }
+    #static-homepage .pl-step a { display: flex; flex-direction: column; align-items: center; text-align: center; color: inherit; text-decoration: none; padding-top: 26px; position: relative; }
+    #static-homepage .pl-step { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1); transition-delay: calc(var(--i) * .22s); }
+    #static-homepage .pl.is-in .pl-step { opacity: 1; transform: none; }
+    #static-homepage .pl-ring { position: relative; display: block; width: var(--ring); max-width: 100%; aspect-ratio: 1; border-radius: 50%; padding: 6px; background: conic-gradient(from 210deg, #F7931A, #FFB347, #C2620A, #F7931A); box-shadow: 0 18px 50px rgba(0,0,0,.55); transition: transform .35s ease, box-shadow .35s ease; }
+    #static-homepage .pl-ring img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 4px solid #0A0A0A; transition: transform .5s ease, filter .35s ease; filter: saturate(.9) brightness(.92); }
+    #static-homepage .pl-ring { overflow: hidden; }
+    #static-homepage .pl-step a:hover .pl-ring, #static-homepage .pl-step a:focus-visible .pl-ring { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(0,0,0,.6), 0 0 0 6px rgba(247,147,26,.18); }
+    #static-homepage .pl-step a:hover .pl-ring img, #static-homepage .pl-step a:focus-visible .pl-ring img { transform: scale(1.07); filter: none; }
+    #static-homepage .pl-num { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; background: #F7931A; color: #0A0A0A; font: 800 22px/1 "Plus Jakarta Sans", system-ui, sans-serif; border: 4px solid #0A0A0A; box-shadow: 0 6px 18px rgba(247,147,26,.45); z-index: 2; }
+    #static-homepage .pl-text { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 20px; }
+    #static-homepage .pl-text h3 { margin: 0; font-size: 19px; line-height: 1.2; color: #F5F5F5; font-weight: 700; text-wrap: balance; }
+    #static-homepage .pl-text p { margin: 0; font-size: 14px; line-height: 1.5; color: #9A9A9A; max-width: 22ch; }
+    #static-homepage .pl-go { margin-top: 2px; font-size: 14px; font-weight: 700; color: #F7931A; letter-spacing: .02em; opacity: .9; transition: opacity .2s ease, transform .2s ease; }
+    #static-homepage .pl-step a:hover .pl-go { opacity: 1; transform: translateX(3px); }
+    #static-homepage .pl-last .pl-ring { box-shadow: 0 0 0 0 rgba(247,147,26,.6), 0 0 60px 6px rgba(247,147,26,.45); }
+    #static-homepage .pl.is-in .pl-last .pl-ring { animation: pl-glow 2.6s 2s ease-in-out infinite; }
+    @keyframes pl-glow { 0%,100% { box-shadow: 0 0 0 0 rgba(247,147,26,.55), 0 0 50px 4px rgba(247,147,26,.4); } 50% { box-shadow: 0 0 0 14px rgba(247,147,26,0), 0 0 80px 12px rgba(247,147,26,.6); } }
+    #static-homepage .pl-last .pl-text h3 { color: #F7931A; }
+    @media (min-width: 1101px) { #static-homepage .pl-text h3 { white-space: nowrap; font-size: 18px; } }
+    @media (max-width: 1100px) { #static-homepage .pl { --ring: 132px; } #static-homepage .pl-text h3 { font-size: 16px; } #static-homepage .pl-text p { font-size: 13px; } }
+    @media (max-width: 760px) {
+      #static-homepage .pl { --ring: 96px; margin-top: 36px; }
+      #static-homepage .pl-steps { grid-template-columns: 1fr; gap: 22px; }
+      #static-homepage .pl-track { left: calc(var(--ring) / 2 - 2px); right: auto; width: 4px; height: auto; top: calc(var(--ring) / 2); bottom: calc(var(--ring) / 2 + 30px); }
+      #static-homepage .pl-fill { transform-origin: center top; transform: scaleY(0); background: linear-gradient(180deg, rgba(247,147,26,.35), #F7931A 70%, #FFB347); }
+      #static-homepage .pl.is-in .pl-fill { transform: scaleY(1); }
+      #static-homepage .pl-spark { left: 50%; top: 0; margin: -7px 0 0 -7px; }
+      #static-homepage .pl.is-in .pl-spark { animation-name: pl-run-v; }
+      @keyframes pl-run-v { 0% { top: 0; opacity: 0; } 8% { opacity: 1; } 92% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+      #static-homepage .pl-step a { flex-direction: row; align-items: center; text-align: left; gap: 18px; padding-top: 0; }
+      #static-homepage .pl-ring { flex: none; padding: 4px; }
+      #static-homepage .pl-ring img { border-width: 3px; }
+      #static-homepage .pl-num { top: -6px; left: calc(var(--ring) - 24px); transform: none; width: 36px; height: 36px; font-size: 16px; border-width: 3px; }
+      #static-homepage .pl-text { align-items: flex-start; margin-top: 0; gap: 4px; min-width: 0; }
+      #static-homepage .pl-text h3 { font-size: 18px; }
+      #static-homepage .pl-text p { max-width: none; font-size: 14px; }
+      #static-homepage .pl-step { transform: translateX(-16px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #static-homepage .pl-step, #static-homepage .pl-fill { transition: none; opacity: 1; transform: none; }
+      #static-homepage .pl-fill { transform: none !important; }
+      #static-homepage .pl-spark, #static-homepage .pl-last .pl-ring { animation: none !important; }
+    }
     #static-homepage .co-path-cta { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 30px; }
     #static-homepage .co-path-cta .co-note { font-size: 13px; color: #858585; }
     @media (max-width: 980px) {
@@ -371,16 +423,24 @@
   </div></section>
   <section class="co-upnext co-dark" data-upnext hidden aria-label="Upcoming sessions"><div class="co-wrap"><div class="co-upnext-head"><p>Up next</p><a href="/calendar">Full calendar &rarr;</a></div><div class="co-upnext-list" data-upnext-list></div></div></section>
   <section id="pathway" class="co-section co-dark"><div class="co-wrap"><p class="co-eyebrow">How it works</p><h2>The pathway: first meetup to full-time Bitcoin OSS.</h2><p class="co-lead">Six steps. Start wherever you are — every step is free, and every step points at real public work.</p>
-    <div class="co-path" aria-label="Code Orange developer pathway">
-      <a href="/calendar"><span class="co-step-num">STEP 01</span><h3>Workshops &amp; meetups</h3><p>The front door. Drop in, no experience needed.</p><span class="co-step-arrow" aria-hidden="true">→</span></a>
-      <a href="/programs"><span class="co-step-num">STEP 02</span><h3>Study cohorts</h3><p>Dojo, rawBit, Decoding Bitcoin — structured weeks, real skills.</p><span class="co-step-arrow" aria-hidden="true">→</span></a>
-      <a href="/privacy-track"><span class="co-step-num">STEP 03</span><h3>Privacy Track</h3><p>12 sessions: Silent Payments, Payjoin, CoinJoin, and more.</p><span class="co-step-arrow" aria-hidden="true">→</span></a>
-      <a href="/programs"><span class="co-step-num">STEP 04</span><h3>Code Review Club</h3><p>Review real upstream Bitcoin PRs, together.</p><span class="co-step-arrow" aria-hidden="true">→</span></a>
-      <a href="/fellowships"><span class="co-step-num">STEP 05</span><h3>Fellowships</h3><p>Focused time, mentors, a real open-source project.</p><span class="co-step-arrow" aria-hidden="true">→</span></a>
-      <a href="/community"><span class="co-step-num">STEP 06</span><h3>Full-time Bitcoin OSS</h3><p>Graduates contribute to Bitcoin for a living.</p></a>
+    <div class="pl" data-pl aria-label="Code Orange developer pathway, 6 steps">
+      <div class="pl-track" aria-hidden="true"><span class="pl-fill"></span><span class="pl-spark"></span></div>
+      <ol class="pl-steps">
+        <li class="pl-step" style="--i:0"><a href="/calendar"><span class="pl-ring"><img src="/assets/pipeline/step1.webp" alt="Builders on the floor at a Code Orange meetup" loading="lazy" width="440" height="440"></span><span class="pl-num">1</span><span class="pl-text"><h3>Workshops &amp; meetups</h3><span class="pl-go">Find a workshop &rarr;</span></span></a></li>
+        <li class="pl-step" style="--i:1"><a href="/decoding-bitcoin"><span class="pl-ring"><img src="/assets/pipeline/step2.webp" alt="Laptop open during a study cohort" loading="lazy" width="440" height="440"></span><span class="pl-num">2</span><span class="pl-text"><h3>Study cohorts</h3><span class="pl-go">Join Decoding Bitcoin &rarr;</span></span></a></li>
+        <li class="pl-step" style="--i:2"><a href="/privacy-track"><span class="pl-ring"><img src="/assets/pipeline/step3.webp" alt="A Privacy Track session in front of the projector" loading="lazy" width="440" height="440"></span><span class="pl-num">3</span><span class="pl-text"><h3>Privacy Track</h3><span class="pl-go">Join the track &rarr;</span></span></a></li>
+        <li class="pl-step" style="--i:3"><a href="https://discord.gg/6XPJ96sCY4?event=1545332635348246528" target="_blank" rel="noopener"><span class="pl-ring"><img src="/assets/pipeline/step4.webp" alt="Reviewing code with hardware on the table" loading="lazy" width="440" height="440"></span><span class="pl-num">4</span><span class="pl-text"><h3>Code Review Club</h3><span class="pl-go">Join the next club &rarr;</span></span></a></li>
+        <li class="pl-step" style="--i:4"><a href="/fellowships/apply"><span class="pl-ring"><img src="/assets/pipeline/step5.webp" alt="A fellowship session around the long table" loading="lazy" width="440" height="440"></span><span class="pl-num">5</span><span class="pl-text"><h3>Fellowships</h3><span class="pl-go">Apply for a fellowship &rarr;</span></span></a></li>
+        <li class="pl-step pl-last" style="--i:5"><a href="/community"><span class="pl-ring"><img src="/assets/pipeline/step6.webp" alt="A Code Orange laptop and node at a workshop" loading="lazy" width="440" height="440"></span><span class="pl-num">6</span><span class="pl-text"><h3>Full-time Bitcoin OSS</h3><span class="pl-go">Meet the builders &rarr;</span></span></a></li>
+      </ol>
     </div>
     <div class="co-path-cta"><a class="co-button primary co-xl" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord — the next step</a><a class="co-button" href="/calendar">Or pick a workshop first</a><span class="co-note">Free forever · online + in person · beginners welcome</span></div>
   </div></section>
+<script>
+(function(){var el=document.querySelector('[data-pl]');if(!el)return;
+if(!('IntersectionObserver' in window)){el.classList.add('is-in');return;}
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){el.classList.add('is-in');io.disconnect();}});},{threshold:.25});io.observe(el);})();
+</script>
   <section class="co-calendar-section co-dark co-band"><div class="co-wrap"><p class="co-eyebrow">Recurring events</p><h2>Always something happening.</h2><div class="co-event-preview" aria-label="Featured Code Orange community sessions"><a href="https://discord.gg/6XPJ96sCY4?event=1545332635348246528" target="_blank" rel="noopener"><img src="/assets/event-cards/code-review-club.webp" alt="Code Review Club session with hardware wallet and laptop" loading="lazy" width="1100" height="1467"><span>Build &amp; review</span><h3>Code Review Club</h3><p>Discuss real upstream Bitcoin work, test ideas, and practise useful review notes.</p><b>Open Discord event →</b></a><a href="https://discord.gg/6XPJ96sCY4?event=1520663887471710248" target="_blank" rel="noopener"><img src="/assets/event-cards/self-custody.webp" alt="Hardware wallets and Code Orange stickers" loading="lazy" width="1050" height="1400"><span>Hands-on workshop</span><h3>Self-custody</h3><p>Bring practical questions and learn the tools and habits of Bitcoin self-custody.</p><b>Open Discord event →</b></a><a href="https://discord.gg/6XPJ96sCY4?event=1387624917339472053" target="_blank" rel="noopener"><img src="/assets/event-cards/bitcoin-reading-club.jpg" alt="Steel seed backup plates for Bitcoin self-custody" loading="lazy" width="1050" height="1400"><span>Study together</span><h3>Bitcoin Reading Club</h3><p>Work through essential Bitcoin writing alongside people who care about the details.</p><b>Open Discord event →</b></a></div><div class="co-calendar-subscribe"><p><b style="margin:0">Never miss a session.</b></p><a class="co-button primary" href="https://calendar.google.com/calendar/r?cid=466de2be7431d78be2049f96f5fd31f9b06b5a9cd94f909ba3182b18442ed499%40group.calendar.google.com" target="_blank" rel="noopener">Add to Google Calendar ↗</a></div><div class="co-weekly" id="weekly-email"><div><p><b style="margin:0">Get a weekly email of our events.</b></p><p class="co-weekly-msg" role="status" aria-live="polite" hidden></p></div><form action="https://assets.mailerlite.com/jsonp/2133495/forms/201289376620086972/subscribe" method="post" target="_blank" data-co-weekly><input type="email" id="co-weekly-email" aria-label="Email address" name="fields[email]" placeholder="you@example.com" autocomplete="email" required><input type="hidden" name="ml-submit" value="1"><input type="hidden" name="anticsrf" value="true"><button class="co-button primary" type="submit">Subscribe</button></form></div>
 <script>
 (function(){var f=document.querySelector('[data-co-weekly]');if(!f||!window.fetch)return;var m=f.parentNode.querySelector('.co-weekly-msg');
