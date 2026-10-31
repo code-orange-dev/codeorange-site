@@ -54,9 +54,24 @@
     if (robots) robots.content = "noindex, follow";
   }
 
+  // If our server couldn't reach GitHub (and had nothing cached), ask GitHub from the browser.
+  async function ghFromBrowser(qs) {
+    const search = async (q) => {
+      const r = await fetch(`https://api.github.com/search/issues?q=${encodeURIComponent(q)}&sort=created&order=desc&per_page=50`, { headers: { Accept: "application/vnd.github+json" } });
+      if (!r.ok) throw new Error(`GitHub ${r.status}`);
+      const data = await r.json();
+      const items = (data.items || []).map((it) => ({ title: it.title, url: it.html_url, repo: (it.repository_url || "").split("/repos/")[1] || "", state: it.pull_request && it.pull_request.merged_at ? "merged" : it.state, createdAt: it.created_at }));
+      return { items, total: Number(data.total_count) || items.length };
+    };
+    const [prs, reviews, before] = await Promise.all([search(qs.prs), search(qs.reviews), search(qs.before)]);
+    return { prs: prs.items, reviews: reviews.items, before: before.items.slice(0, 15), beforeTotal: before.total, ok: true, queries: qs };
+  }
+  const ghSearchUrl = (q) => `https://github.com/search?type=pullrequests&q=${encodeURIComponent(q)}`;
+
   function render(d) {
     const f = d.fellow;
     const gh = d.github;
+    gh.before = gh.before || [];
     const merged = gh.prs.filter((p) => p.state === "merged").length;
     const projects = new Set([...gh.prs, ...gh.reviews].map((p) => p.repo)).size;
     document.title = `${f.name} · Code Orange developer fellow`;
@@ -73,18 +88,22 @@
         <h2>${esc(f.project)}</h2>
         ${f.bio ? `<p>${esc(f.bio)}</p>` : ""}
         <p class="fw-links"><a href="https://github.com/${encodeURIComponent(f.github)}" target="_blank" rel="noopener">GitHub @${esc(f.github)}</a>${f.projectUrl ? `<a href="${esc(f.projectUrl)}" target="_blank" rel="noopener">Project repo</a>` : ""}${links.map((u) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(u.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "").slice(0, 40))}</a>`).join("")}</p>
-        <div class="me-stats"><span><strong>${gh.prs.length}</strong>PRs opened</span><span><strong>${merged}</strong>merged</span><span><strong>${gh.reviews.length}</strong>PRs reviewed</span><span><strong>${d.standupWeeks}</strong>weekly standups</span></div>
+        <div class="me-stats"><span><strong>${gh.prs.length}</strong>PRs opened</span><span><strong>${merged}</strong>merged</span><span><strong>${gh.reviews.length}</strong>PRs reviewed</span><span><strong>${d.standupWeeks}</strong>weekly check-ins</span>${gh.beforeTotal ? `<span><strong>${gh.beforeTotal}</strong>merged before</span>` : ""}</div>
         <div class="fw-bar" title="Fellowship progress"><i style="width:${Math.round((progress(f) / f.months) * 100)}%"></i></div>
-        <p class="me-small" style="margin-top:8px">${ymLabel(f.startMonth)} to ${ymLabel(f.startMonth, f.months - 1)}${f.mentor ? ` · mentored by ${esc(f.mentor)}` : ""} ${projects ? ` · work since the fellowship started, on ${projects} project${projects === 1 ? "" : "s"}` : ""}</p>
+        <p class="me-small" style="margin-top:8px">${ymLabel(f.startMonth)} to ${ymLabel(f.startMonth, f.months - 1)}${f.mentor ? ` · mentored by ${esc(f.mentor)}${f.mentorConfirmed ? ' <span class="fw-ok" title="Mentor confirmed">✓</span>' : ""}` : ""} ${projects ? ` · work since the fellowship started, on ${projects} project${projects === 1 ? "" : "s"}` : ""}</p>
         <div class="me-row" style="justify-content:flex-start"><a class="ghost small" href="https://x.com/intent/post?text=${share}&url=${encodeURIComponent(url)}" target="_blank" rel="noopener">Share on X</a><button class="ghost small" type="button" id="fw-copy">Copy link</button></div>
       </section>
       <section class="me-card"><p class="me-label">Milestones</p><h2>The ${f.months}-month plan</h2>
         <ol class="fw-plan read">${f.plan.map((p, i) => `<li class="${p.done ? "is-done" : ""}"><span class="fw-m">${i + 1}</span><span>${esc(p.goal)}</span></li>`).join("")}</ol></section>
       <section class="me-card"><p class="me-label">Live from GitHub</p><h2>Pull requests</h2>
-        ${gh.prs.length ? `<ul class="fw-prs">${gh.prs.slice(0, 20).map(prItem).join("")}</ul>` : `<p>${gh.ok ? "No pull requests yet since the fellowship started." : "GitHub didn't answer just now. Try again in a bit."}</p>`}
+        ${gh.prs.length ? `<ul class="fw-prs">${gh.prs.slice(0, 20).map(prItem).join("")}</ul>` : gh.ok ? `<p>${f.month < 1 ? `The fellowship starts in ${ymLabel(f.startMonth)}. New pull requests show up here from then.` : "No pull requests yet since the fellowship started."}</p>` : `<p>GitHub is busy right now, so this list didn't load. <a href="${ghSearchUrl(gh.queries.prs)}" target="_blank" rel="noopener">See them on GitHub</a>.</p>`}
         <h2 style="margin-top:22px">Reviews</h2>
-        ${gh.reviews.length ? `<ul class="fw-prs">${gh.reviews.slice(0, 20).map(prItem).join("")}</ul>` : "<p>No reviews yet since the fellowship started.</p>"}
+        ${gh.reviews.length ? `<ul class="fw-prs">${gh.reviews.slice(0, 20).map(prItem).join("")}</ul>` : gh.ok ? `<p>${f.month < 1 ? "Reviews show up here once the fellowship starts." : "No reviews yet since the fellowship started."}</p>` : `<p><a href="${ghSearchUrl(gh.queries.reviews)}" target="_blank" rel="noopener">See reviews on GitHub</a>.</p>`}
       </section>
+      ${gh.before.length ? `<section class="me-card"><p class="me-label">Before the fellowship</p><h2>${gh.beforeTotal} merged PR${gh.beforeTotal === 1 ? "" : "s"}</h2>
+        <p class="me-small">Merged into other people's projects before ${ymLabel(f.startMonth)}.</p>
+        <ul class="fw-prs">${gh.before.map(prItem).join("")}</ul>
+        ${gh.beforeTotal > gh.before.length ? `<p class="me-small" style="margin-top:10px"><a href="${ghSearchUrl(gh.queries.before)}" target="_blank" rel="noopener">See all ${gh.beforeTotal} on GitHub</a></p>` : ""}</section>` : ""}
       <section class="me-card me-wide"><p class="me-label">Monthly reports</p><h2>Month by month</h2>
         ${d.reports.length ? `<div class="fw-log">${d.reports.map((r, i) => `<details ${i === 0 ? "open" : ""}><summary>Month ${r.month} · ${ymLabel(f.startMonth, r.month - 1)}</summary><p>${linkify(r.summary)}</p>${r.prs ? `<p><strong>PRs:</strong><br>${linkify(r.prs)}</p>` : ""}${r.reviews ? `<p><strong>Reviews:</strong><br>${linkify(r.reviews)}</p>` : ""}${r.other ? `<p><strong>Other work:</strong><br>${linkify(r.other)}</p>` : ""}${r.next ? `<p><strong>Next:</strong> ${linkify(r.next)}</p>` : ""}</details>`).join("")}</div>` : "<p>The first monthly report appears here after month 1.</p>"}
         <p class="me-small" style="margin-top:14px">Code Orange developer fellows build Bitcoin and Nostr open source with a mentor. <a href="/fellowships/guidelines">How the fellowship works</a> · <a href="/fellowships/apply">Apply</a></p>
@@ -103,6 +122,9 @@
     .then(async (r) => {
       const d = await r.json().catch(() => ({}));
       if (!r.ok) throw new Error(d.error || "This page didn't load.");
+      if (d.github && !d.github.ok && d.github.queries) {
+        try { d.github = await ghFromBrowser(d.github.queries); } catch {}
+      }
       render(d);
     })
     .catch((err) => {
