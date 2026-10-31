@@ -296,7 +296,7 @@ function planOf(row) {
   const plan = parseJson(row.plan);
   const n = Number(row.months) || MONTHS;
   return Array.from({ length: n }, (_, i) => ({
-    goal: (plan && plan[i] && plan[i].goal) || DEFAULT_PLAN[i] || "",
+    goal: ((plan && plan[i] && plan[i].goal) || DEFAULT_PLAN[i] || "").replace(/^\s*[•*·-]\s*/, ""),
     done: !!(plan && plan[i] && plan[i].done),
   }));
 }
@@ -922,7 +922,7 @@ async function adminAccept(body) {
   const schedule = SCHEDULES.includes(body.schedule) ? body.schedule : "next";
   const mentor = clean(body.mentor, 120);
   // Milestones typed by the organiser, one line per month (optional; the fellow can edit them).
-  const lines = clean(body.plan, 3000).split("\n").map((l) => l.replace(/^\s*(?:month\s*\d+|[A-Za-z]{3,9}|\d+)\s*[:.)]\s*/i, "").trim()).filter(Boolean);
+  const lines = clean(body.plan, 3000).split("\n").map((l) => l.replace(/^\s*[•*·-]\s*/, "").replace(/^\s*(?:month\s*\d+|[A-Za-z]{3,9}|\d+)\s*[:.)]\s*/i, "").trim()).filter(Boolean);
   const plan = lines.length ? JSON.stringify(Array.from({ length: months }, (_, i) => ({ goal: clean(lines[i] || "", 400), done: false }))) : null;
   const focus = clean(body.focus, 1500) || null;
   const nick = clean(body.nick, 40) || null;
