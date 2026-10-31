@@ -332,6 +332,17 @@
       #static-homepage .pl-fill { transform: none !important; }
       #static-homepage .pl-spark, #static-homepage .pl-last .pl-ring { animation: none !important; }
     }
+    #static-homepage .co-stats { padding-block: 34px; border-top: 1px solid rgba(255,255,255,.08); border-bottom: 1px solid rgba(255,255,255,.08); }
+    #static-homepage .co-stats .co-wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    #static-homepage .co-stats ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, auto)); gap: 18px 56px; }
+    #static-homepage .co-stats li { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+    #static-homepage .co-stats b { font: 800 44px/1 "Plus Jakarta Sans", system-ui, sans-serif; color: #F7931A; letter-spacing: -.02em; }
+    #static-homepage .co-stats span { font-size: 14px; color: #B8B8B8; max-width: 18ch; }
+    #static-homepage .co-stats-link { color: #F7931A; font-weight: 700; font-size: 14px; text-decoration: none; white-space: nowrap; }
+    #static-homepage .co-stats-link:hover { text-decoration: underline; }
+    @media (max-width: 760px) { #static-homepage .co-stats ul { grid-template-columns: 1fr 1fr; gap: 22px 20px; width: 100%; } #static-homepage .co-stats b { font-size: 36px; } }
+    @media (min-width: 1101px) { #static-homepage .co-grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; } }
+    @media (min-width: 561px) and (max-width: 1100px) { #static-homepage .co-grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } }
     #static-homepage .co-path-cta { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 30px; }
     #static-homepage .co-path-cta .co-note { font-size: 13px; color: #858585; }
     @media (max-width: 980px) {
@@ -387,7 +398,7 @@
       #static-homepage .co-bento-item { border-radius: 12px; }
     }
   </style>
-  <div class="co-announce" role="navigation" aria-label="Current enrollment opportunities"><a href="/privacy-track">Bitcoin Privacy Track · open for enrollment</a><a href="https://github.com/code-orange-dev/code-orange-dev/blob/main/privacy-contributor-program/REVIEW_CLUB.md" target="_blank" rel="noopener">Code Review Club · real upstream PRs</a><a href="/apply">Apply →</a></div>
+  <div class="co-announce" role="navigation" aria-label="Current enrollment opportunities"><a href="/decoding-bitcoin">Decoding Bitcoin · free 10-week cohort starts Mon 16 Nov</a><a href="/privacy-track">Bitcoin Privacy Track · open for enrollment</a><a href="/decoding-bitcoin">Sign up →</a></div>
   <header class="co-band"><div class="co-wrap co-nav">
     <a href="#top"><img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School"></a>
     <nav class="co-links" aria-label="Primary"><a href="/start">Start here</a><a href="/programs">Programs</a><a href="/portal">Portal</a><a href="/fellowships">Fellowships</a><a href="/calendar">Calendar</a><a href="/community">Community</a><a href="/about">About</a></nav>
@@ -421,6 +432,12 @@
       </div>
     </div>
   </div></section>
+  <section class="co-stats co-dark" aria-label="Code Orange in numbers"><div class="co-wrap"><ul>
+    <li><b>28</b><span>builders in the community</span></li>
+    <li><b>11</b><span>with merged PRs in Bitcoin open source</span></li>
+    <li><b>6</b><span>steps from first meetup to full-time</span></li>
+    <li><b>100%</b><span>free, online and in Bali</span></li>
+  </ul><a class="co-stats-link" href="/dashboard">See every merged PR &rarr;</a></div></section>
   <section class="co-upnext co-dark" data-upnext hidden aria-label="Upcoming sessions"><div class="co-wrap"><div class="co-upnext-head"><p>Up next</p><a href="/calendar">Full calendar &rarr;</a></div><div class="co-upnext-list" data-upnext-list></div></div></section>
   <section id="pathway" class="co-section co-dark"><div class="co-wrap"><p class="co-eyebrow">How it works</p><h2>The pathway: first meetup to full-time Bitcoin OSS.</h2><p class="co-lead">Six steps. Start wherever you are — every step is free, and every step points at real public work.</p>
     <div class="pl" data-pl aria-label="Code Orange developer pathway, 6 steps">
@@ -449,10 +466,7 @@ fetch(f.action,{method:'POST',body:new FormData(f)}).then(function(r){return r.j
 m.hidden=false;if(d&&d.success){m.textContent='Almost done: check your inbox and click the confirmation link.';f.reset();}else{m.textContent='That did not work. Please check the email address and try again.';}
 }).catch(function(){f.removeAttribute('data-co-weekly');f.submit();}).then(function(){b.disabled=false;});});})();
 </script><div class="co-calendar"><div class="co-calendar-label"><span><b>● Live schedule</b> · updates automatically</span><span>Times in UTC+8</span></div><iframe title="Code Orange public student calendar" src="https://calendar.google.com/calendar/embed?src=466de2be7431d78be2049f96f5fd31f9b06b5a9cd94f909ba3182b18442ed499%40group.calendar.google.com&ctz=Asia%2FMakassar" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><p style="margin-top:28px"><a class="co-button" href="/calendar">Open calendar page →</a></p></div></section>
-  <section class="co-section co-photo-section" style="--co-bg:url('/assets/latest-workshops/workshop-latest-table.webp'); --co-bg-pos:center 52%;"><div class="co-wrap"><p class="co-eyebrow">Programs</p><h2>Pick a practical next step.</h2><div class="co-grid">
-    <a class="co-card co-photo" style="--bg:url(/assets/home-cards/self-custody.webp)" href="https://discord.gg/6XPJ96sCY4?event=1520663887471710248" target="_blank" rel="noopener"><span>🛡️ Discord event</span><h3>Self-custody workshop</h3><p>Build practical confidence with the tools and habits of Bitcoin self-custody.</p></a>
-    <a class="co-card co-photo" style="--bg:url(/assets/home-cards/reading-club.webp)" href="https://discord.gg/6XPJ96sCY4?event=1387624917339472053" target="_blank" rel="noopener"><span>📚 Discord event</span><h3>Bitcoin Reading Club</h3><p>Read the essential Bitcoin canon alongside builders who care about the details.</p></a>
-    <a class="co-card co-photo" style="--bg:url(/assets/home-cards/code-review.webp)" href="https://discord.gg/6XPJ96sCY4?event=1545332635348246528" target="_blank" rel="noopener"><span>🔎 Every two weeks</span><h3>Code Review Club</h3><p>Build, test, explain, and discuss real upstream Bitcoin work before writing useful review notes.</p></a>
+  <section class="co-section co-photo-section" style="--co-bg:url('/assets/latest-workshops/workshop-latest-table.webp'); --co-bg-pos:center 52%;"><div class="co-wrap"><p class="co-eyebrow">Programs</p><h2>Pick a practical next step.</h2><div class="co-grid co-grid-4">
     <a class="co-card co-photo" style="--bg:url(/assets/home-cards/bitcoin-basics.webp)" href="https://discord.gg/6XPJ96sCY4?event=1487290769541955664" target="_blank" rel="noopener"><span>₿ Discord event</span><h3>Bitcoin Basics</h3><p>A practical entry point for curious Bitcoiners who want to understand the system.</p></a>
     <a class="co-card co-photo" style="--bg:url(/assets/home-cards/protocol.webp)" href="https://discord.gg/6XPJ96sCY4?event=1524278951575293992" target="_blank" rel="noopener"><span>⚙️ Discord event</span><h3>Bitcoin Protocol Fundamentals</h3><p>Get closer to transactions, Script, network rules, and the code that runs Bitcoin.</p></a>
     <a class="co-card co-photo" style="--bg:url(/assets/home-cards/sovereign.webp)" href="https://discord.gg/6XPJ96sCY4?event=1524278951575293992" target="_blank" rel="noopener"><span>🛡️ Discord event</span><h3>Sovereign Bitcoiner workshop</h3><p>Hands-on self-custody, nodes, multisig, inheritance, Ecash, and Fedimint.</p></a>
