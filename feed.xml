@@ -7,6 +7,22 @@
     <language>en</language>
     <atom:link href="https://codeorange.dev/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>Why Our AI + Bitcoin Meetups Bring 3x More People</title>
+      <link>https://codeorange.dev/articles/ai-bitcoin-meetups</link>
+      <guid isPermaLink="true">https://codeorange.dev/articles/ai-bitcoin-meetups</guid>
+      <description>People come to our meetups to vibe code with AI and leave with a Lightning wallet, a node and an agent that can earn sats. Here is what we learned running AI + Bitcoin workshops in Bali and on Discord.</description>
+      <dc:creator>Andy</dc:creator>
+      <pubDate>Tue, 03 Nov 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>We Tried to Mine a Bitcoin Block With a BitAxe</title>
+      <link>https://codeorange.dev/articles/bitaxe-mining-workshop</link>
+      <guid isPermaLink="true">https://codeorange.dev/articles/bitaxe-mining-workshop</guid>
+      <description>At our Bitcoin mining workshop we plugged in a BitAxe and agreed to split the 3.125 BTC reward if we found a block. Here is what a tiny home miner teaches you about proof of work, pools, energy and 51% attacks.</description>
+      <dc:creator>Andy</dc:creator>
+      <pubDate>Tue, 03 Nov 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>How to Become a Bitcoin Developer in 2026: A Free Roadmap</title>
       <link>https://codeorange.dev/articles/how-to-become-a-bitcoin-developer</link>
       <guid isPermaLink="true">https://codeorange.dev/articles/how-to-become-a-bitcoin-developer</guid>
