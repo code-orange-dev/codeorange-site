@@ -7,6 +7,14 @@
     <language>en</language>
     <atom:link href="https://codeorange.dev/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>Privacy Isn't About Hiding. It's About Protection.</title>
+      <link>https://codeorange.dev/articles/privacy-is-protection</link>
+      <guid isPermaLink="true">https://codeorange.dev/articles/privacy-is-protection</guid>
+      <description>Bitcoin is pseudonymous, not anonymous. Here is how your balance, spending and IP address can leak, and the simple habits (fresh addresses, your own node, PayJoin, Silent Payments) that protect you.</description>
+      <dc:creator>Andy</dc:creator>
+      <pubDate>Tue, 03 Nov 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>Why Our AI + Bitcoin Meetups Bring 3x More People</title>
       <link>https://codeorange.dev/articles/ai-bitcoin-meetups</link>
       <guid isPermaLink="true">https://codeorange.dev/articles/ai-bitcoin-meetups</guid>
