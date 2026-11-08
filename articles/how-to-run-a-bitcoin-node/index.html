@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to Run a Bitcoin Node: A Beginner Guide (2026)</title>
+<meta name="description" content="How to run a Bitcoin node in plain English: why it matters, what hardware you need, the four easiest setups (laptop, node box, Raspberry Pi, light node), and how to connect your wallet to it.">
+<link rel="canonical" href="https://codeorange.dev/articles/how-to-run-a-bitcoin-node">
+<link rel="alternate" type="application/rss+xml" title="Code Orange Dev School Articles" href="https://codeorange.dev/feed.xml">
+<meta name="theme-color" content="#F7931A">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Code Orange Dev School">
+<meta property="og:url" content="https://codeorange.dev/articles/how-to-run-a-bitcoin-node">
+<meta property="og:title" content="How to Run a Bitcoin Node: A Beginner Guide (2026)">
+<meta property="og:description" content="How to run a Bitcoin node in plain English: why it matters, what hardware you need, the four easiest setups (laptop, node box, Raspberry Pi, light node), and how to connect your wallet to it.">
+<meta property="og:image" content="https://codeorange.dev/assets/programs/workshop-nodes-miners.jpg">
+<meta property="og:image:secure_url" content="https://codeorange.dev/assets/programs/workshop-nodes-miners.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:alt" content="Bitcoin nodes and miners on the table at a Code Orange workshop in Bali">
+<meta property="article:published_time" content="2026-11-08">
+<meta property="article:modified_time" content="2026-11-08">
+<meta property="article:author" content="Andy">
+<meta name="author" content="Andy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@CodeOrangeDevs">
+<meta name="twitter:title" content="How to Run a Bitcoin Node: A Beginner Guide (2026)">
+<meta name="twitter:description" content="How to run a Bitcoin node in plain English: why it matters, what hardware you need, the four easiest setups (laptop, node box, Raspberry Pi, light node), and how to connect your wallet to it.">
+<meta name="twitter:image" content="https://codeorange.dev/assets/programs/workshop-nodes-miners.jpg">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon-co.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "headline": "How to Run a Bitcoin Node: A Beginner Guide (2026)", "description": "How to run a Bitcoin node in plain English: why it matters, what hardware you need, the four easiest setups (laptop, node box, Raspberry Pi, light node), and how to connect your wallet to it.", "image": ["https://codeorange.dev/assets/programs/workshop-nodes-miners.jpg", "https://codeorange.dev/assets/programs/workshop-nodes-miners.jpg"], "datePublished": "2026-11-08", "dateModified": "2026-11-08", "author": {"@type": "Person", "name": "Andy", "image": "https://codeorange.dev/assets/articles/andy.jpg"}, "publisher": {"@type": "EducationalOrganization", "name": "Code Orange Dev School", "url": "https://codeorange.dev", "logo": {"@type": "ImageObject", "url": "https://codeorange.dev/assets/logo-dot-wordmark.svg"}, "email": "hello@codeorange.dev", "sameAs": ["https://github.com/code-orange-dev", "https://x.com/CodeOrangeDevs", "https://www.instagram.com/codeorangedevs", "https://njump.me/npub1gxqyeea3xspkd68mxlxsvvk3gdzdd555u504ynwpdj0ghg503mvq2gydt0"]}, "mainEntityOfPage": "https://codeorange.dev/articles/how-to-run-a-bitcoin-node", "keywords": "how to run a bitcoin node, bitcoin full node, bitcoin node raspberry pi, umbrel bitcoin node, bitcoin core", "wordCount": 1274}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is it legal to run a Bitcoin node?", "acceptedAnswer": {"@type": "Answer", "text": "In most countries, yes. A node is just open-source software that downloads and checks public data. Check your local rules if you are unsure."}}, {"@type": "Question", "name": "Do I earn bitcoin by running a node?", "acceptedAnswer": {"@type": "Answer", "text": "No. Nodes do not earn rewards; miners do. You run a node for verification, privacy and to support the network."}}, {"@type": "Question", "name": "How much does it cost to run a Bitcoin node?", "acceptedAnswer": {"@type": "Answer", "text": "It can be free on a spare laptop. A dedicated box with a 2 TB SSD usually costs a few hundred dollars, and the electricity is about the same as a small light bulb."}}, {"@type": "Question", "name": "What is the difference between a full node and a pruned node?", "acceptedAnswer": {"@type": "Answer", "text": "Both check every rule. A full node keeps every block forever; a pruned node deletes old blocks after checking them to save disk space."}}, {"@type": "Question", "name": "Can I run a Bitcoin node on my phone?", "acceptedAnswer": {"@type": "Answer", "text": "Light nodes such as Floresta are making this possible, but for now a laptop, mini-PC or Raspberry Pi is the easiest choice."}}, {"@type": "Question", "name": "Where can I learn to run a Bitcoin node in Bali?", "acceptedAnswer": {"@type": "Answer", "text": "Code Orange Dev School runs free hands-on workshops in Bali and online. See the calendar."}}]}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://codeorange.dev/"}, {"@type": "ListItem", "position": 2, "name": "Articles", "item": "https://codeorange.dev/articles"}, {"@type": "ListItem", "position": 3, "name": "How to Run a Bitcoin Node", "item": "https://codeorange.dev/articles/how-to-run-a-bitcoin-node"}]}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<script src="/assets/lazy-video.js?v=20260902b" defer></script>
+<style>
+:root { color-scheme: dark; --bg:#0A0A0A; --band:#0F0F0F; --card:#141414; --text:#F5F5F5; --muted:#B8B8B8; --dim:#858585; --orange:#F7931A; --orange2:#FFB347; --line:rgba(255,255,255,.08); }
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; overflow-x: hidden; background: var(--bg); color: var(--text); font-family: "Inter", system-ui, sans-serif; scroll-behavior: smooth; }
+body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+img, video, iframe { max-width: 100%; }
+a { color: inherit; }
+.announce { display: flex; justify-content: center; gap: 10px; padding: 9px 24px; background: var(--orange); color: var(--bg); text-decoration: none; font: 700 13px "Plus Jakarta Sans", monospace; text-align: center; }
+.announce span { text-decoration: underline; text-underline-offset: 3px; }
+.site-header { position: sticky; top: 0; z-index: 50; background: rgba(10,10,10,.74); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.header-inner { max-width: 1240px; height: 78px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; gap: 22px; }
+.brand img { display: block; width: auto; height: 50px; }
+.desktop-nav, .header-actions, .cta-row { display: flex; align-items: center; gap: 12px; }
+  .desktop-nav { gap: 28px; }
+  .desktop-nav a { padding: 8px 4px; }
+.desktop-nav a, .mobile-nav a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 600; padding: 8px 10px; border-radius: 8px; }
+.desktop-nav a:hover, .mobile-nav a:hover { color: var(--orange); }
+.mobile-nav { display: none; gap: 8px; overflow-x: auto; padding: 0 16px 10px; scrollbar-width: none; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; }
+.mobile-nav::-webkit-scrollbar { display: none; }
+.mobile-nav a { flex: 0 0 auto; scroll-snap-align: start; }
+.button, .ghost { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 13px 24px; border-radius: 8px; text-decoration: none; font-weight: 700; transition: border-color .15s ease, color .15s ease, background .15s ease, transform .15s ease; }
+.button { background: var(--orange); color: var(--bg); }
+.button:hover { background: var(--orange2); }
+.ghost { border: 1px solid rgba(255,255,255,.16); color: var(--text); }
+.ghost:hover { border-color: var(--orange); color: var(--orange); }
+.small { min-height: 40px; padding: 9px 18px; font-size: 14px; }
+.hero { position: relative; overflow: hidden; background-image: linear-gradient(rgba(10,10,10,.78), rgba(10,10,10,.92)), linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px), url("/assets/latest-workshops/workshop-latest-builders.webp"); background-size: auto, 48px 48px, 48px 48px, cover; background-position: center, 0 0, 0 0, center 42%; }
+.hero-grid, .section-inner { max-width: 1240px; margin: 0 auto; padding: 96px 32px; }
+.hero-grid { display: grid; grid-template-columns: minmax(0,1.08fr) minmax(320px,.92fr); gap: 64px; align-items: center; }
+.glow { position: absolute; top: -160px; right: -110px; width: 740px; height: 740px; border-radius: 50%; background: radial-gradient(circle, rgba(247,147,26,.14), transparent 66%); pointer-events: none; }
+.eyebrow { margin: 0 0 22px; color: var(--orange); font: 700 12px "Plus Jakarta Sans", monospace; letter-spacing: .16em; text-transform: uppercase; }
+h1, h2, h3 { font-family: "Inter", system-ui, sans-serif; font-weight: 400; color: var(--text); }
+h1 { margin: 0 0 26px; max-width: 780px; font-size: clamp(40px, 4.6vw, 68px); line-height: 1.05; }
+h2 { margin: 0 0 18px; font-size: clamp(32px, 3.3vw, 50px); line-height: 1.08; }
+h3 { margin: 0; font-size: 26px; line-height: 1.15; }
+.lead { max-width: 620px; margin: 0 0 34px; color: var(--muted); font-size: 18px; line-height: 1.65; }
+.terminal-card, .card, .program-card, .stat, .timeline-item { background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.32); }
+.terminal-bar { display: flex; align-items: center; gap: 8px; padding: 14px 18px; background: var(--band); border-bottom: 1px solid var(--line); }
+.terminal-bar span { width: 12px; height: 12px; border-radius: 50%; }
+.terminal-bar span:nth-child(1){ background:#FF5F56; } .terminal-bar span:nth-child(2){ background:#FFBD2E; } .terminal-bar span:nth-child(3){ background:#27C93F; }
+.terminal-bar strong { margin-left: 10px; color: var(--dim); font: 500 12px "Plus Jakarta Sans", monospace; }
+.terminal-body { padding: 24px; font: 14px/1.9 "Plus Jakarta Sans", monospace; }
+.terminal-body p { margin: 0; } .orange { color: var(--orange); } .muted { color: var(--dim); }
+.band { background: var(--band); border-block: 1px solid var(--line); }
+.grid { display: grid; gap: 22px; }
+.grid.two { grid-template-columns: repeat(2, minmax(0,1fr)); } .grid.three { grid-template-columns: repeat(3, minmax(0,1fr)); }
+.program-card { display: grid; grid-template-rows: 210px 1fr; text-decoration: none; transition: transform .18s ease, border-color .18s ease; }
+.program-card:hover { transform: translateY(-4px); border-color: rgba(247,147,26,.55); }
+.program-card img, .card > img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.012); }
+.card-body { padding: 24px; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; }
+.pill { display: inline-flex; padding: 7px 12px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; color: var(--muted); font: 600 12px "Plus Jakarta Sans", monospace; }
+.pill.orange { color: var(--orange); border-color: rgba(247,147,26,.42); }
+.card p, .program-card p, .timeline-item p { color: var(--muted); line-height: 1.65; }
+.repo-card { display: block; text-decoration: none; transition: transform .18s ease, border-color .18s ease; }
+.repo-card:hover { transform: translateY(-4px); border-color: rgba(247,147,26,.55); }
+.repo-card h3 { margin-top: 14px; }
+.stat { padding: 26px; }
+.stat strong { display: block; color: var(--orange); font: 400 40px/1 "Inter", monospace; margin-bottom: 10px; }
+.timeline { display: grid; gap: 14px; counter-reset: step; }
+.timeline-item { display: grid; grid-template-columns: 70px 1fr; gap: 22px; padding: 24px; counter-increment: step; }
+.timeline-item:before { content: counter(step, decimal-leading-zero); color: var(--orange); font: 700 16px "Plus Jakarta Sans", monospace; }
+.split { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 42px; align-items: start; }
+.feature-panel { background: linear-gradient(145deg, rgba(247,147,26,.12), rgba(20,20,20,.86) 42%, rgba(15,15,15,.96)); border: 1px solid rgba(247,147,26,.26); border-radius: 16px; box-shadow: 0 28px 80px rgba(0,0,0,.34); overflow: hidden; }
+.feature-panel-inner { padding: 28px; }
+.photo-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 30px; }
+.photo-card { position: relative; min-height: 300px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--card); box-shadow: 0 20px 60px rgba(0,0,0,.28); }
+.photo-card.tall { min-height: 420px; }
+.photo-card.wide { grid-column: span 2; }
+.photo-card img, .feature-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.012); }
+.photo-card:after, .feature-photo:after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(6,6,6,.78) 100%); pointer-events: none; }
+.photo-caption { position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 1; display: inline-flex; width: max-content; max-width: calc(100% - 28px); padding: 7px 11px; border-radius: 999px; background: rgba(6,6,6,.78); border: 1px solid rgba(255,255,255,.13); color: var(--text); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .08em; text-transform: uppercase; }
+.feature-photo { position: relative; min-height: 430px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--card); box-shadow: 0 24px 70px rgba(0,0,0,.32); }
+.calendar-frame { margin-top: 28px; background: #fff; border: 1px solid rgba(255,255,255,.12); border-radius: 16px; overflow: hidden; box-shadow: 0 24px 70px rgba(0,0,0,.36); }
+.calendar-frame iframe { display: block; width: 100%; height: 680px; border: 0; background: #fff; }
+.booking-panel { display: grid; gap: 16px; padding: 24px; background: rgba(6,6,6,.48); border: 1px solid var(--line); border-radius: 16px; }
+.price-tag { display: inline-flex; width: max-content; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 999px; background: rgba(247,147,26,.14); border: 1px solid rgba(247,147,26,.34); color: var(--orange); font: 700 13px "Plus Jakarta Sans", monospace; }
+.footer { border-top: 1px solid var(--line); background: #060606; }
+.footer-media { position: relative; max-width: 1240px; min-height: 300px; margin: 56px auto 0; border: 1px solid rgba(255,255,255,.1); border-radius: 16px; overflow: hidden; background: var(--band); box-shadow: 0 24px 70px rgba(0,0,0,.34); }
+.footer-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.footer-media:after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6,6,6,.9), rgba(6,6,6,.34) 56%, rgba(6,6,6,.74)); pointer-events: none; }
+.footer-media-copy { position: relative; z-index: 1; max-width: 560px; padding: 42px; }
+.footer-grid { max-width: 1240px; margin: 0 auto; padding: 56px 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.footer a { color: var(--dim); text-decoration: none; } .footer a:hover { color: var(--orange); }
+.link-list { display: grid; gap: 10px; }
+.final-cta { text-align: center; border-top: 1px solid var(--line); }
+@media (max-width: 900px) {
+  .announce { padding: 8px 16px; line-height: 1.42; }
+  .desktop-nav { display: none; } .mobile-nav { display: flex; padding-bottom: 12px; gap: 6px; }
+  .header-inner { height: 62px; padding: 0 16px; gap: 12px; } .brand img { height: 40px; }
+  .hero-grid, .section-inner { padding: 64px 20px; }
+  .hero-grid { gap: 30px; }
+  .hero-grid, .split, .grid.two, .grid.three { grid-template-columns: minmax(0, 1fr); }
+  .glow { right: -260px; width: 520px; height: 520px; }
+  h1 { font-size: clamp(34px, 10.5vw, 48px); line-height: 1.05; }
+  h2 { font-size: clamp(30px, 8.5vw, 40px); line-height: 1.08; }
+  h3 { font-size: clamp(21px, 6vw, 27px); }
+  .lead { font-size: 16px; line-height: 1.62; }
+  .terminal-body { padding: 20px; font-size: 12px; line-height: 1.75; overflow-wrap: anywhere; }
+  .terminal-bar strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .program-card { grid-template-rows: 190px 1fr; border-radius: 14px; }
+  .card-body, .stat, .timeline-item { padding: 20px; }
+  .stat strong { font-size: 34px; overflow-wrap: anywhere; }
+  .pill { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+  .photo-grid { grid-template-columns: 1fr; }
+  .photo-card.wide { grid-column: auto; }
+  .photo-card, .photo-card.tall, .feature-photo { min-height: 320px; }
+  .photo-caption { width: auto; max-width: calc(100% - 28px); white-space: normal; border-radius: 8px; line-height: 1.35; }
+  .feature-panel-inner { padding: 24px; }
+  .booking-panel { padding: 20px; }
+  .header-actions .ghost { display: none; }
+  .cta-row { flex-direction: column; align-items: stretch; }
+  .cta-row .button, .cta-row .ghost { width: 100%; }
+  .footer-grid { grid-template-columns: 1fr; padding: 48px 20px; }
+  .calendar-frame iframe { height: 560px; }
+  .footer-media { min-height: 260px; margin: 42px 20px 0; }
+  .footer-media-copy { padding: 30px 24px; }
+}
+@media (max-width: 560px) {
+  .announce { flex-direction: column; gap: 2px; font-size: 12px; }
+  .header-inner { height: 58px; padding-inline: 14px; }
+  .brand img { height: 36px; }
+  .mobile-nav { padding-inline: 12px; }
+  .mobile-nav a { font-size: 12px; padding: 7px 12px; }
+  .header-actions .button.small { min-height: 36px; padding: 8px 12px; font-size: 13px; }
+  .hero-grid, .section-inner { padding: 54px 18px; }
+  .button, .ghost { width: 100%; min-height: 46px; padding: 12px 18px; }
+  .header-actions .button, .header-actions .ghost { width: auto; }
+  .terminal-card, .card, .program-card, .stat, .timeline-item, .feature-panel, .calendar-frame, .booking-panel { border-radius: 14px; }
+  .program-card { grid-template-rows: 174px 1fr; }
+  .photo-card, .photo-card.tall, .feature-photo { min-height: 260px; }
+  .timeline-item { grid-template-columns: 1fr; gap: 10px; }
+  .timeline-item:before { font-size: 14px; }
+  .calendar-frame iframe { height: 500px; }
+  .footer-media { min-height: 240px; margin-inline: 18px; border-radius: 14px; }
+  .footer-media-copy { padding: 26px 20px; }
+  .feature-panel-inner { padding: 20px; }
+  .footer-grid { padding: 42px 18px; }
+}
+@media (max-width: 380px) {
+  .hero-grid, .section-inner { padding-inline: 16px; }
+  .photo-card, .photo-card.tall, .feature-photo { min-height: 230px; }
+  .calendar-frame iframe { height: 455px; }
+  .mobile-nav a { font-size: 11px; padding-inline: 10px; }
+}
+
+.article-hero .hero-grid { grid-template-columns: minmax(0, 1fr); padding-bottom: 56px; }
+.article-hero h1 { max-width: 900px; }
+.byline { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; }
+.article-wrap { max-width: 760px; margin: 0 auto; padding: 56px 32px 24px; }
+.article-figure { margin: 0 0 40px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--card); box-shadow: 0 24px 70px rgba(0,0,0,.32); }
+.article-figure img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+.article-figure.inline { margin: 8px 0 32px; }
+.article-figure.inline img { aspect-ratio: auto; }
+.article-figure figcaption { padding: 12px 16px; color: var(--dim); font: 500 13px/1.5 "Plus Jakarta Sans", monospace; }
+.byline { align-items: center; }
+.byline-avatar { width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(247,147,26,.5); }
+.author-box { display: flex; align-items: center; gap: 16px; margin: 40px 0 0; padding: 20px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; }
+.author-box img { width: 72px; height: 72px; border-radius: 50%; border: 2px solid var(--orange); flex: 0 0 auto; }
+.author-box strong { font-size: 18px; }
+.author-box p { margin: 2px 0 0; color: var(--dim); }
+.prose { color: var(--muted); font-size: 19px; line-height: 1.78; }
+.prose p, .prose ul, .prose ol { margin: 0 0 24px; }
+.prose h2 { margin: 52px 0 18px; font-size: clamp(28px, 2.8vw, 40px); }
+.prose strong { color: var(--text); }
+.prose a { color: var(--orange); text-underline-offset: 3px; }
+.prose ul, .prose ol { padding-left: 24px; }
+.prose li { margin-bottom: 10px; padding-left: 4px; }
+.prose li::marker { color: var(--orange); font-weight: 700; }
+.prose .pull { margin: 0 0 28px; padding: 18px 22px; border-left: 3px solid var(--orange); background: var(--card); border-radius: 0 12px 12px 0; color: var(--text); font-size: 21px; }
+.prose .closing { color: var(--text); font-size: 21px; }
+.newsletter { max-width: 760px; margin: 24px auto 0; padding: 0 32px; }
+.newsletter-card { padding: 30px; background: linear-gradient(145deg, rgba(247,147,26,.12), rgba(20,20,20,.86) 42%, rgba(15,15,15,.96)); border: 1px solid rgba(247,147,26,.26); border-radius: 16px; }
+.newsletter-card h2 { font-size: clamp(26px, 2.6vw, 34px); margin-bottom: 10px; }
+.newsletter-card p { margin: 0 0 20px; color: var(--muted); line-height: 1.6; }
+.newsletter-form { display: flex; gap: 10px; flex-wrap: wrap; }
+.newsletter-form input[type=email] { flex: 1 1 240px; min-height: 48px; padding: 12px 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,.18); background: rgba(6,6,6,.6); color: var(--text); font: 500 16px "Inter", system-ui, sans-serif; }
+.newsletter-form input[type=email]:focus { outline: 2px solid var(--orange); outline-offset: 1px; }
+.newsletter-form button { border: 0; cursor: pointer; font: inherit; font-weight: 700; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+.article-list { display: grid; gap: 22px; }
+.article-card { display: grid; grid-template-columns: 320px 1fr; text-decoration: none; background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.32); transition: transform .18s ease, border-color .18s ease; }
+.article-card:hover { transform: translateY(-4px); border-color: rgba(247,147,26,.55); }
+.article-card img { width: 100%; height: 100%; min-height: 220px; object-fit: cover; }
+.article-card p { color: var(--muted); line-height: 1.65; }
+@media (max-width: 900px) {
+  .article-wrap { padding: 40px 20px 16px; }
+  .newsletter { padding: 0 20px; }
+  .prose { font-size: 17px; }
+  .prose .pull, .prose .closing { font-size: 19px; }
+  .article-card { grid-template-columns: 1fr; }
+  .article-card img { min-height: 200px; max-height: 240px; }
+}
+@media (max-width: 560px) {
+  .article-wrap { padding: 32px 18px 12px; }
+  .newsletter { padding: 0 18px; }
+  .newsletter-card { padding: 22px; }
+  .newsletter-form button { width: 100%; }
+}
+.table-wrap { overflow-x: auto; margin: 24px 0; }
+.table-wrap table { width: 100%; border-collapse: collapse; font-size: 15px; }
+.table-wrap th, .table-wrap td { padding: 10px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.table-wrap th { color: var(--orange); font-weight: 600; }
+</style>
+<link rel="stylesheet" href="/assets/theme.css?v=20261015d">
+<script src="/assets/site-menu.js?v=20261004b" defer></script>
+</head>
+<body>
+<a class="announce" href="/decoding-bitcoin">Decoding Bitcoin study cohort starts Monday 16 November &middot; free, on Discord <span>Sign up &rarr;</span></a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="Code Orange Dev School home"><img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School"></a>
+    <nav class="desktop-nav" aria-label="Primary">
+      <a href="/start">Start here</a>
+      <a href="/programs">Programs</a>
+      <a href="/portal">Portal</a>
+      <a href="/fellowships">Fellowships</a>
+      <a href="/calendar">Calendar</a>
+      <a href="/community">Community</a>
+      <a href="/about">About</a>
+    </nav>
+    <div class="header-actions">
+      <a class="ghost small" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a>
+      <a class="button small" href="/apply">Apply Now</a>
+    </div>
+  </div>
+  <nav class="mobile-nav" aria-label="Mobile">
+    <a href="/start">Start here</a>
+    <a href="/programs">Programs</a>
+    <a href="/portal">Portal</a>
+    <a href="/calendar">Calendar</a>
+    <a href="/community">Community</a>
+    <a href="/about">About</a>
+  </nav>
+</header>
+<main>
+  <section class="hero article-hero"><div class="co-fx" aria-hidden="true"><i></i><i></i><i></i><svg class="co-fx-glow" viewBox="0 0 1200 400" preserveAspectRatio="none"><defs><filter id="co-glow-blur" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="25"/></filter><radialGradient id="co-glow-fill"><stop offset="0" stop-color="#F7931A" stop-opacity=".55"/><stop offset=".55" stop-color="#C2620A" stop-opacity=".28"/><stop offset="1" stop-color="#4A2600" stop-opacity="0"/></radialGradient></defs><ellipse cx="600" cy="200" rx="520" ry="110" fill="url(#co-glow-fill)" filter="url(#co-glow-blur)"/></svg></div>
+    <div class="glow"></div>
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow"><a href="/articles" style="text-decoration:none">/Articles</a>/how-to-run-a-bitcoin-node_</p>
+        <h1>How to Run a Bitcoin Node <span class="orange">in 2026.</span></h1>
+        <p class="lead">Why it matters, what hardware you need, and the four easiest ways to run your own node.</p>
+        <p class="byline"><img class="byline-avatar" src="/assets/articles/andy.webp" alt="" width="34" height="34"><span class="pill orange">By Andy</span><span class="pill"><time datetime="2026-11-08">November 8, 2026</time></span><span class="pill">6 min read</span></p>
+      </div>
+    </div>
+  </section>
+  <article class="article-wrap">
+    <figure class="article-figure"><img src="/assets/programs/workshop-nodes-miners.jpg" alt="Bitcoin nodes and miners on the table at a Code Orange workshop in Bali" width="1000" height="750" style="max-width:560px;margin-left:auto;margin-right:auto"></figure>
+    <div class="prose">
+      <p>A Bitcoin node is a computer that keeps its own copy of the Bitcoin blockchain and checks every rule by itself. If you want to know how to run a Bitcoin node, this guide walks you through it in plain English: why it is worth doing, what you need, and the easiest setups for a beginner.</p>
+      <p>At Code Orange Dev School in Bali we set up nodes at our workshops all the time. It is one of the first hands-on skills we teach, because it changes how you use Bitcoin.</p>
+
+      <h2>Why run your own Bitcoin node?</h2>
+      <p>When you use a wallet without your own node, the wallet asks someone else&rsquo;s server about your balance and your transactions. That server learns your addresses and your IP address. It also decides what "the truth" is for you.</p>
+      <p>Running your own node fixes three things:</p>
+      <ul>
+        <li><strong>You verify, not trust.</strong> Your node checks every block and transaction against Bitcoin&rsquo;s rules. Nobody can tell you a fake balance or sneak in extra coins.</li>
+        <li><strong>Privacy.</strong> Your wallet talks only to your own node, so no outside server sees which addresses are yours. This is a big topic in our <a href="/privacy-track">Privacy Track</a>.</li>
+        <li><strong>You help the network.</strong> Every node that enforces the rules makes Bitcoin harder to change against its users&rsquo; will.</li>
+      </ul>
+      <p>If you already hold your own keys (see <a href="/articles/why-self-custody-matters">Why Self-Custody Matters</a>), running a node is the natural next step.</p>
+
+      <h2>What do you need to run a Bitcoin node?</h2>
+      <p>Less than most people think:</p>
+      <ul>
+        <li><strong>A computer that can stay on.</strong> An old laptop, a small mini-PC or a Raspberry Pi is fine.</li>
+        <li><strong>Storage.</strong> The full blockchain is well over 600 GB and keeps growing, so plan for a 1 TB or 2 TB SSD. Short on space? "Pruned" mode keeps only recent blocks and needs just a few GB (more on that below).</li>
+        <li><strong>Memory.</strong> 4 GB of RAM works, 8 GB is more comfortable.</li>
+        <li><strong>Internet.</strong> A normal home connection. The first download is several hundred GB, so avoid a capped mobile plan.</li>
+        <li><strong>Patience.</strong> The first sync (called the initial block download) can take from a day to a week, depending on your hardware.</li>
+      </ul>
+
+      <h2>Option 1: Bitcoin Core on your laptop or desktop</h2>
+      <p><a href="https://bitcoincore.org/en/download/" target="_blank" rel="noopener">Bitcoin Core</a> is the reference software that most of the network runs. It is free and open source.</p>
+      <ol>
+        <li>Download Bitcoin Core from bitcoincore.org and verify the download (the site explains how).</li>
+        <li>Install it and open it. Choose where to store the data.</li>
+        <li>If your disk is small, tick <strong>"Limit block chain storage"</strong> (pruning). Your node still checks every block; it just deletes old ones after checking.</li>
+        <li>Leave it running until the sync reaches 100%.</li>
+      </ol>
+      <p>That is it: you are running a full node. Bitcoin Core also includes a basic wallet, but most people connect a friendlier wallet to it (see below).</p>
+      <p><strong>Best for:</strong> learning, developers, anyone with a spare laptop.</p>
+
+      <h2>Option 2: A plug-and-play node box</h2>
+      <p>If you want a node that runs 24/7 at home with a simple web dashboard, use a node operating system such as <strong>Umbrel</strong> or <strong>Start9</strong>. You can buy ready-made boxes or install them on your own mini-PC.</p>
+      <p>They let you add apps with one click: Bitcoin Core, an Electrum server for your wallets, a block explorer like mempool, Lightning, and even a BTCPay Server to accept payments. At Code Orange we use both: an Umbrel box runs our own BTCPay Server, and a Start9 server powers our Fedimint and agent-wallet workshops.</p>
+      <p><strong>Best for:</strong> people who want "set and forget", families, small businesses.</p>
+
+      <h2>Option 3: Raspberry Pi</h2>
+      <p>A Raspberry Pi with an external SSD is the classic low-cost, low-power node. Projects like RaspiBlitz and the Umbrel image make it easy. It is slower to sync than a laptop, but it uses very little electricity and can run quietly in a corner for years.</p>
+      <p><strong>Best for:</strong> tinkerers on a budget.</p>
+
+      <h2>Option 4: A light node with Floresta</h2>
+      <p>New tools are making nodes much lighter. <a href="https://github.com/getfloresta/Floresta" target="_blank" rel="noopener">Floresta</a> is a lightweight node that uses <strong>Utreexo</strong>, a way to verify the chain while storing only a tiny summary instead of the full set of coins. It still checks the rules itself, but can run on far smaller hardware, even a phone.</p>
+      <p>Floresta is open source and young, so it is a great project to learn from and contribute to. Developers in the Code Orange community are working on it right now.</p>
+      <p><strong>Best for:</strong> small devices, and developers who want to contribute.</p>
+
+      <h2>Connect your wallet to your node</h2>
+      <p>A node only protects your privacy if your wallet uses it. Popular wallets that can connect to your own node:</p>
+      <ul>
+        <li><strong>Sparrow Wallet</strong> (desktop): connect it to Bitcoin Core directly, or to an Electrum server on your node box. See the <a href="https://sparrowwallet.com/docs/connect-node.html" target="_blank" rel="noopener">Sparrow docs</a>.</li>
+        <li><strong>Electrum-compatible wallets</strong>: point them at your node&rsquo;s Electrum server.</li>
+        <li><strong>Mobile wallets</strong> that support a custom node or Electrum server, often over Tor.</li>
+      </ul>
+      <p>Once connected, check your wallet&rsquo;s server settings: it should show your node&rsquo;s address, not a public server.</p>
+      <figure class="article-figure inline"><img src="/assets/programs/workshop-hands-on-devices.jpg" alt="Hands-on with laptops and hardware wallets at a Code Orange workshop" width="750" height="1000" loading="lazy"></figure>
+
+      <h2>Common beginner mistakes</h2>
+      <ul>
+        <li><strong>Using a slow hard drive.</strong> An old spinning disk can make the first sync take weeks. Use an SSD.</li>
+        <li><strong>Turning it off too often.</strong> It is fine to shut down, but your node has to catch up each time.</li>
+        <li><strong>Running a node but not using it.</strong> If your wallet still talks to a public server, you get none of the privacy.</li>
+        <li><strong>Skipping the download check.</strong> Always verify Bitcoin Core before installing.</li>
+      </ul>
+
+      <h2>Learn it hands-on with us</h2>
+      <p>The fastest way to learn is to sit next to someone who has done it. At our free workshops we set up nodes, connect wallets and look at real transactions together. Check the <a href="/calendar">calendar</a> for the next session in Bali or online, or browse all our <a href="/programs">programs</a>.</p>
+      <p><strong>Next step: <a href="https://discord.gg/6XPJ96sCY4" target="_blank" rel="noopener">join the Code Orange Discord</a></strong> and ask your node questions. Someone will help you get yours running.</p>
+
+      <h2>Frequently asked questions</h2>
+      <h3>Is it legal to run a Bitcoin node?</h3>
+      <p>In most countries, yes. A node is just open-source software that downloads and checks public data. Check your local rules if you are unsure.</p>
+      <h3>Do I earn bitcoin by running a node?</h3>
+      <p>No. Nodes do not earn rewards; miners do. You run a node for verification, privacy and to support the network.</p>
+      <h3>How much does it cost to run a Bitcoin node?</h3>
+      <p>It can be free on a spare laptop. A dedicated box with a 2 TB SSD usually costs a few hundred dollars, and the electricity is about the same as a small light bulb.</p>
+      <h3>What is the difference between a full node and a pruned node?</h3>
+      <p>Both check every rule. A full node keeps every block forever; a pruned node deletes old blocks after checking them to save disk space.</p>
+      <h3>Can I run a Bitcoin node on my phone?</h3>
+      <p>Light nodes such as Floresta are making this possible, but for now a laptop, mini-PC or Raspberry Pi is the easiest choice.</p>
+      <h3>Where can I learn to run a Bitcoin node in Bali?</h3>
+      <p>Code Orange Dev School runs free hands-on workshops in Bali and online. See the <a href="/calendar">calendar</a>.</p>
+    </div>
+    <aside class="author-box" aria-label="About the author">
+      <img src="/assets/articles/andy.webp" alt="Andy" width="72" height="72" loading="lazy">
+      <div><p class="eyebrow" style="margin:0 0 4px">Written by</p><strong>Andy</strong><p>Code Orange Dev School</p></div>
+    </aside>
+  </article>
+<section class="newsletter" aria-labelledby="newsletter-title">
+  <div class="newsletter-card">
+    <p class="eyebrow">Newsletter</p>
+    <h2 id="newsletter-title">Get new articles by email.</h2>
+    <p>Practical Bitcoin self-custody and developer writing from Code Orange Dev School. No spam, unsubscribe anytime.</p>
+    <form class="newsletter-form" action="https://buttondown.com/api/emails/embed-subscribe/code_orange" method="post" target="_blank">
+      <label class="sr-only" for="newsletter-email">Email address</label>
+      <input type="email" name="email" id="newsletter-email" placeholder="you@example.com" autocomplete="email" required>
+      <input type="hidden" name="embed" value="1">
+      <button class="button" type="submit">Subscribe</button>
+    </form>
+  </div>
+</section>
+  <section class="section-inner final-cta">
+  <p class="eyebrow">Bitcoin Only</p>
+  <h2>Ready to become a Bitcoin builder?</h2>
+  <p class="lead" style="margin-left:auto;margin-right:auto">Join the next cohort, drop into a workshop, or come say hello in Discord. The community is free and open.</p>
+  <div class="cta-row" style="justify-content:center"><a class="button" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord</a><a class="ghost" href="/apply">Apply Now</a></div>
+</section>
+</main>
+<footer class="footer">
+  <div class="footer-media">
+    <video data-lazy-video data-src="/assets/co-footer-720.mp4" poster="/assets/co-footer-poster.webp" autoplay muted loop playsinline preload="none"></video>
+    <div class="footer-media-copy">
+      <p class="eyebrow">Scenes from the school</p>
+      <h2>Real workshops. Real devices. Real Bitcoin builders.</h2>
+    </div>
+  </div>
+  <div class="footer-grid">
+    <div>
+      <img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School" style="height:58px;width:auto;margin-bottom:18px">
+      <p style="color:var(--dim);max-width:420px;line-height:1.7">Code Orange Dev School trains Bitcoin developers, node runners, and technical community leaders through practical education and open-source contribution.</p>
+      <p><a href="mailto:hello@codeorange.dev">hello@codeorange.dev</a></p>
+      <div class="cta-row" style="gap:10px;justify-content:flex-start">
+        <a class="ghost small" href="https://x.com/CodeOrangeDevs" target="_blank" rel="noopener">X</a>
+        <a class="ghost small" href="https://www.instagram.com/codeorangedevs" target="_blank" rel="noopener">Instagram</a>
+        <a class="ghost small" href="https://njump.me/npub1gxqyeea3xspkd68mxlxsvvk3gdzdd555u504ynwpdj0ghg503mvq2gydt0" target="_blank" rel="noopener">Nostr</a>
+        <a class="ghost small" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a>
+      </div>
+    </div>
+    <div>
+      <div class="link-list">
+        <strong>School</strong>
+        <a href="/about">About</a>
+        <a href="/community">Community</a>
+        <a href="/fellowships">Fellowships</a>
+        <a href="/calendar">Calendar</a>
+        <a href="https://geyser.fund/project/codeorangedevschool" target="_blank" rel="noopener">Support on Geyser</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
