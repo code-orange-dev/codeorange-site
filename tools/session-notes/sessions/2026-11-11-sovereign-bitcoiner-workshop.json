@@ -1,0 +1,146 @@
+{
+  "slug": "2026-11-11-sovereign-bitcoiner-workshop",
+  "date": "2026-11-11",
+  "series": "Sovereign Bitcoiner Workshop",
+  "title": "White Noise: private chats on Nostr",
+  "host": "Razor",
+  "tag": "Privacy",
+  "summary": "Razor shows how end-to-end encrypted chat really works, from mixing a shared key to catching a man in the middle. Then we point White Noise at our own Nostr relay and look at what a relay can actually see.",
+  "share_text": "Can your chats be switched off? Notes (and 5 mini-games) from the @CodeOrangeDevs workshop on White Noise and private messaging on Nostr",
+  "minutes": 7,
+  "video": "X-ZQRp74hH4",
+  "duration": "about 90 min",
+  "tldr": [
+    "Every chat app needs something in the middle to hold your messages while you are offline. The question is who runs it and what it can read.",
+    "Encrypting is the easy part. The hard part is two people agreeing on a key over a line anyone can watch, and knowing the key really belongs to your friend.",
+    "White Noise keeps the encryption (MLS) and swaps the company server for Nostr relays that anyone can run, so there is no single off switch.",
+    "Old-style Nostr DMs hide the text but show who messaged whom and when. Gift wrap is the fix, and it is still being finished."
+  ],
+  "next": {
+    "title": "Privacy Track: Silent Payments",
+    "when": "Tuesday 17 November, 07:00 UTC on Discord. Before that: Code Review Club on Thursday 12 November and week 1 of Decoding Bitcoin on Monday 16 November."
+  },
+  "resources": [
+    {
+      "group": "Apps",
+      "topic": "Messaging",
+      "title": "White Noise",
+      "url": "https://whitenoise.chat",
+      "note": "the messaging app we tested: end-to-end encrypted chats and groups that travel over Nostr relays instead of one company's servers"
+    },
+    {
+      "group": "Apps",
+      "topic": "Messaging",
+      "title": "BitChat",
+      "url": "https://bitchat.free",
+      "note": "chat over Bluetooth with people nearby, no internet needed. It can also show an ecash token as a tidy card instead of a long string"
+    },
+    {
+      "group": "Apps",
+      "topic": "Messaging",
+      "title": "Keychat",
+      "url": "https://keychat.io",
+      "note": "another Nostr chat app that mixes messaging and ecash. Mentioned at the end, saved for a later session"
+    },
+    {
+      "group": "Apps",
+      "topic": "Messaging",
+      "title": "Signal: what is a safety number?",
+      "url": "https://support.signal.org/hc/en-us/articles/360007060632-What-is-a-safety-number-and-why-do-I-see-that-it-changed",
+      "note": "the number (or QR code) you compare with a friend to check nobody is sitting in the middle of your chat"
+    },
+    {
+      "group": "Protocols",
+      "topic": "Messaging",
+      "title": "Messaging Layer Security (MLS), RFC 9420",
+      "url": "https://www.rfc-editor.org/rfc/rfc9420.html",
+      "by": "IETF, 2023",
+      "note": "the open standard White Noise uses to agree on keys, including in group chats"
+    },
+    {
+      "group": "Protocols",
+      "topic": "Nostr",
+      "title": "Marmot protocol",
+      "url": "https://github.com/marmot-protocol/marmot",
+      "note": "the glue between MLS and Nostr: how keys and group messages are stored and passed around on relays"
+    },
+    {
+      "group": "Protocols",
+      "topic": "Nostr",
+      "title": "NIP-59: Gift wrap",
+      "url": "https://github.com/nostr-protocol/nips/blob/master/59.md",
+      "note": "wraps a message so relays can't tell who sent it or exactly when. The kind 1059 events we saw on the relay"
+    },
+    {
+      "group": "Protocols",
+      "topic": "Nostr",
+      "title": "NIP-44: Encrypted payloads",
+      "url": "https://github.com/nostr-protocol/nips/blob/master/44.md",
+      "note": "the encryption used inside the gift wrap"
+    },
+    {
+      "group": "Protocols",
+      "topic": "Messaging",
+      "title": "Noise Protocol Framework",
+      "url": "https://noiseprotocol.org",
+      "note": "the key exchange building blocks BitChat uses, built on Diffie-Hellman"
+    },
+    {
+      "group": "Tools",
+      "topic": "Nostr",
+      "title": "strfry",
+      "url": "https://github.com/hoytech/strfry",
+      "note": "the Nostr relay software Razor ran for the experiment. It supports small plugins, which he used to log every event that arrived"
+    },
+    {
+      "group": "Tools",
+      "topic": "Nostr",
+      "title": "Blossom",
+      "url": "https://github.com/hzrd149/blossom",
+      "note": "simple media servers for Nostr. Photos and files go here, short messages go to relays"
+    },
+    {
+      "group": "Tools",
+      "topic": "Nostr",
+      "title": "Primal",
+      "url": "https://primal.net",
+      "note": "Nostr client used for the demo: log in read-only with anyone's public key and see who sent them old-style DMs"
+    },
+    {
+      "group": "Watching",
+      "topic": "Messaging",
+      "title": "Computerphile",
+      "url": "https://www.youtube.com/@Computerphile",
+      "note": "Razor's pick for going deeper: look for their videos on Diffie-Hellman, end-to-end encryption, the Signal protocol and group messaging"
+    },
+    {
+      "group": "Ecash",
+      "topic": "Ecash",
+      "title": "Cashu",
+      "url": "https://cashu.space",
+      "note": "ecash for Bitcoin. A token is just a string of text, so any chat app can carry it"
+    },
+    {
+      "group": "Ecash",
+      "topic": "Ecash",
+      "title": "Fedimint",
+      "url": "https://fedimint.org",
+      "note": "community-run ecash mints. On the Privacy Track list after Silent Payments"
+    },
+    {
+      "group": "Code Orange",
+      "topic": "Code Orange",
+      "title": "Privacy Track",
+      "url": "/privacy-track",
+      "note": "next up: Silent Payments on Tuesday 17 November, then ecash and Fedimint"
+    },
+    {
+      "group": "Code Orange",
+      "topic": "Code Orange",
+      "title": "Decoding Bitcoin cohort",
+      "url": "/decoding-bitcoin",
+      "note": "10 weeks, every Monday, starting 16 November. Nothing to prepare for week 1"
+    }
+  ],
+  "ideas": "Also mentioned without a link: White Noise has had a security audit, an ecash hackathon is running this November, and people are experimenting with ecash inside Signal-style and Marmot-based chat apps. Saved for later sessions: BitChat, ecash and Keychat."
+}

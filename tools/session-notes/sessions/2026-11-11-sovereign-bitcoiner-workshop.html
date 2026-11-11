@@ -1,0 +1,448 @@
+      <style>
+      .wn-card{margin:8px 0 36px;border:1px solid rgba(247,147,26,.35);border-radius:18px;background:radial-gradient(120% 90% at 0 0,rgba(247,147,26,.13),transparent 60%) #141414;padding:22px;position:relative}
+      .wn-eye{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 6px;font:700 12px/1.3 "Plus Jakarta Sans",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--orange)}
+      .wn-eye span:last-child{color:var(--dim);letter-spacing:.06em}
+      .wn-card h3{margin:0 0 8px;font-size:22px;line-height:1.25;color:var(--text)}
+      .wn-card>p{margin:0 0 14px;font-size:15.5px;line-height:1.55}
+      .wn-btn{all:unset;box-sizing:border-box;cursor:pointer;display:inline-block;padding:11px 20px;border-radius:99px;background:var(--orange);color:#0A0A0A;font:800 14px/1.2 "Inter",system-ui,sans-serif;text-align:center}
+      .prose a.wn-btn{color:#0A0A0A;text-decoration:none}
+      .wn-btn:hover{filter:brightness(1.1)}
+      .wn-btn.ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.2)}
+      .wn-btn[disabled]{opacity:.4;cursor:default}
+      .wn-btn:focus-visible,.wn-seg button:focus-visible,.wn-node:focus-visible,.wn-sw button:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+      .wn-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+      .wn-seg{display:inline-flex;flex-wrap:wrap;gap:4px;padding:4px;border-radius:14px;background:rgba(0,0,0,.4);border:1px solid var(--line);margin:0 0 16px}
+      .wn-seg button{all:unset;box-sizing:border-box;cursor:pointer;padding:8px 14px;border-radius:10px;color:var(--muted);font:700 13px/1.2 "Inter",system-ui,sans-serif}
+      .wn-seg button.on{background:var(--orange);color:#0A0A0A}
+      .wn-out{margin:14px 0 0;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.04);color:var(--muted);font-size:15px;line-height:1.5;min-height:22px}
+      .wn-out b{color:var(--orange)}
+      .wn-card [hidden],.wn-toast[hidden]{display:none!important}
+      /* mission board */
+      .wn-board{margin:0 0 40px}
+      .wn-badges{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:14px 0 14px}
+      .wn-badge{display:block;padding:12px 6px;border-radius:14px;border:1px dashed rgba(255,255,255,.18);text-align:center;text-decoration:none;color:var(--dim);font:700 11px/1.3 "Plus Jakarta Sans",monospace;letter-spacing:.04em;transition:all .3s}
+      .wn-badge i{display:block;font-style:normal;font-size:26px;line-height:1;margin-bottom:8px;filter:grayscale(1);opacity:.45;transition:all .3s}
+      .wn-badge.got{border:1px solid var(--orange);background:rgba(247,147,26,.14);color:var(--text);box-shadow:0 0 24px rgba(247,147,26,.18)}
+      .wn-badge.got i{filter:none;opacity:1;transform:scale(1.12)}
+      .wn-bar{height:8px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+      .wn-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--orange),var(--orange2));transition:width .6s ease}
+      .wn-toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,30px);z-index:60;padding:12px 20px;border-radius:99px;background:var(--orange);color:#0A0A0A;font:800 14px/1.2 "Inter",system-ui,sans-serif;box-shadow:0 12px 40px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:all .35s ease;white-space:nowrap;max-width:92vw;overflow:hidden;text-overflow:ellipsis}
+      .wn-toast.go{opacity:1;transform:translate(-50%,0)}
+      .wn-done{display:none;margin:0 0 0 8px;color:var(--orange)}
+      .wn-card.won .wn-done{display:inline}
+      /* who can read it */
+      .wn-wire{display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:8px;align-items:stretch}
+      .wn-wire div{padding:14px 10px;border-radius:12px;background:var(--card);border:1px solid rgba(255,255,255,.1);text-align:center;font-size:13px;color:var(--dim);min-width:0}
+      .wn-wire div b{display:block;color:var(--text);font-size:14px;margin-bottom:8px}
+      .wn-wire code{display:block;padding:8px;border-radius:8px;background:#0d0d0d;font:600 12.5px/1.4 ui-monospace,Menlo,Consolas,monospace;color:#7bd88f;word-break:break-all}
+      .wn-wire code.x{color:var(--dim)}
+      .wn-wire .mid.bad{border-color:#a04a4a;background:rgba(160,60,60,.14)}
+      .wn-wire .mid.good{border-color:rgba(247,147,26,.5)}
+      /* paint lab */
+      .wn-pick{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 14px}
+      .wn-pick p{margin:0 0 6px;font:700 12px/1.2 "Plus Jakarta Sans",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+      .wn-sw{display:flex;gap:6px;flex-wrap:wrap}
+      .wn-sw button{all:unset;cursor:pointer;width:30px;height:30px;border-radius:50%;border:2px solid transparent;box-shadow:inset 0 0 0 2px #141414}
+      .wn-sw button.on{border-color:#fff}
+      .wn-lab{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:8px;margin:0 0 14px}
+      .wn-col{padding:12px 6px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid var(--line);text-align:center;min-width:0}
+      .wn-col.mid{border-style:dashed}
+      .wn-col.mid.evil{border-color:#a04a4a;background:rgba(160,60,60,.12)}
+      .wn-col h4{margin:0 0 10px;font:800 13px/1.2 "Inter",system-ui,sans-serif;color:var(--text)}
+      .wn-col h4 small{display:block;margin-top:3px;font:600 10.5px/1.2 "Plus Jakarta Sans",monospace;color:var(--dim);letter-spacing:.06em;text-transform:uppercase}
+      .wn-slot{min-height:86px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:5px;margin-bottom:8px}
+      .wn-jars{display:flex;gap:6px;justify-content:center}
+      .wn-jar{width:40px;height:48px;border-radius:6px 6px 14px 14px;border:2px solid rgba(255,255,255,.55);border-top-width:5px;position:relative;animation:wnpour .5s ease}
+      .wn-jar.empty{background:transparent!important;border-style:dashed;border-color:rgba(255,255,255,.15);animation:none}
+      .wn-jar.lock:after{content:"\1F512";position:absolute;inset:0;display:grid;place-items:center;font-size:15px}
+      .wn-slot small{font:600 11px/1.3 "Inter",system-ui,sans-serif;color:var(--dim)}
+      .wn-slot small b{color:var(--orange)}
+      @keyframes wnpour{from{opacity:0;transform:translateY(-8px) scale(.9)}}
+      .wn-sn{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0 0}
+      .wn-sn div{padding:10px;border-radius:12px;background:#0d0d0d;border:1px solid var(--line);text-align:center;font:700 15px/1.5 ui-monospace,Menlo,Consolas,monospace;color:var(--text);letter-spacing:.06em}
+      .wn-sn div small{display:block;font:600 11px/1.2 "Inter",system-ui,sans-serif;color:var(--dim);letter-spacing:0;margin-bottom:4px}
+      .wn-sn.match div{border-color:#3d8b55;color:#7bd88f}
+      .wn-sn.diff div{border-color:#a04a4a;color:#ff8f8f}
+      /* relay game */
+      .wn-net{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;margin:0 0 14px}
+      .wn-who{width:64px;padding:10px 4px;border-radius:14px;background:var(--card);border:1px solid rgba(255,255,255,.12);text-align:center;font:700 12px/1.3 "Inter",system-ui,sans-serif;color:var(--text)}
+      .wn-who i{display:block;font-style:normal;font-size:24px;margin-bottom:4px}
+      .wn-who small{display:block;color:var(--dim);font-weight:600;font-size:10.5px}
+      .wn-nodes{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+      .wn-node{all:unset;box-sizing:border-box;cursor:pointer;flex:1 1 58px;max-width:120px;min-height:74px;padding:10px 4px;border-radius:14px;border:1px solid rgba(247,147,26,.5);background:rgba(247,147,26,.1);text-align:center;font:700 11.5px/1.3 "Inter",system-ui,sans-serif;color:var(--text);transition:all .2s}
+      .wn-node i{display:block;font-style:normal;font-size:22px;margin-bottom:4px}
+      .wn-node small{display:block;font:600 10px/1.2 "Plus Jakarta Sans",monospace;color:var(--orange);text-transform:uppercase;letter-spacing:.06em;margin-top:3px}
+      .wn-node.down{border-color:#5a3030;background:rgba(160,60,60,.12);color:var(--dim)}
+      .wn-node.down i{filter:grayscale(1);opacity:.4}
+      .wn-node.down small{color:#ff8f8f}
+      .wn-node.hold{box-shadow:0 0 0 3px rgba(247,147,26,.35),0 0 26px rgba(247,147,26,.5)}
+      .wn-node.big{max-width:none;flex-basis:100%;min-height:92px}
+      .wn-node.mine{border-color:#3d8b55;background:rgba(61,139,85,.16)}
+      .wn-node.mine small{color:#7bd88f}
+      /* spy */
+      .wn-in{width:100%;box-sizing:border-box;min-height:46px;padding:10px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:#0d0d0d;color:var(--text);font:500 16px "Inter",system-ui,sans-serif;margin:0 0 12px}
+      .wn-in:focus{outline:2px solid var(--orange);outline-offset:1px}
+      .wn-card .term{margin:0 0 12px;box-shadow:none}
+      .wn-card .term pre{white-space:pre-wrap;word-break:break-all;font-size:12.5px;line-height:1.7}
+      .wn-leak{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+      .wn-leak div{padding:10px 6px;border-radius:12px;text-align:center;font:700 12px/1.3 "Inter",system-ui,sans-serif;border:1px solid #3d8b55;background:rgba(61,139,85,.12);color:#7bd88f}
+      .wn-leak div.leak{border-color:#a04a4a;background:rgba(160,60,60,.14);color:#ff8f8f}
+      .wn-leak div small{display:block;margin-bottom:4px;color:var(--dim);font:600 10.5px/1.2 "Plus Jakarta Sans",monospace;text-transform:uppercase;letter-spacing:.06em}
+      /* compare table */
+      .wn-tbl{overflow-x:auto;margin:0 0 30px;border:1px solid var(--line);border-radius:14px}
+      .wn-tbl table{width:100%;min-width:560px;border-collapse:collapse;font-size:14.5px;line-height:1.4}
+      .wn-tbl th,.wn-tbl td{padding:12px 14px;text-align:left;border-bottom:1px solid rgba(255,255,255,.07);vertical-align:top}
+      .wn-tbl thead th{font:700 11px/1.3 "Plus Jakarta Sans",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);background:var(--band)}
+      .wn-tbl tbody th{color:var(--text);white-space:nowrap}
+      .wn-tbl tr:last-child td,.wn-tbl tr:last-child th{border-bottom:0}
+      .wn-tbl .y{color:#7bd88f}.wn-tbl .n{color:#ff8f8f}
+      .wn-tbl tr.hl{background:rgba(247,147,26,.08)}
+      /* quiz */
+      .wn-map{display:flex;gap:6px;margin:12px 0 16px}
+      .wn-map span{flex:1;text-align:center;padding:6px 0;border-radius:8px;border:1px solid var(--line);font:700 12px/1 monospace;color:var(--dim)}
+      .wn-map span.on{border-color:var(--orange);color:var(--orange)}
+      .wn-map span.ok{background:var(--orange);border-color:var(--orange);color:#0A0A0A}
+      .wn-map span.miss{background:rgba(255,255,255,.08);color:var(--muted)}
+      .wn-q{margin:0 0 12px!important;color:var(--text);font-weight:600;font-size:17px!important}
+      .wn-opts{display:grid;gap:8px}
+      .wn-opts button{all:unset;box-sizing:border-box;cursor:pointer;padding:13px 16px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.03);color:var(--text);font-size:15px;line-height:1.4;transition:border-color .15s,background .15s}
+      .wn-opts button:hover:not([disabled]){border-color:var(--orange)}
+      .wn-opts button.right{border-color:var(--orange);background:rgba(247,147,26,.18)}
+      .wn-opts button.wrong{border-color:#7a3b3b;background:rgba(160,60,60,.18);color:var(--muted)}
+      .wn-opts button[disabled]{cursor:default}
+      .wn-end{text-align:center;padding:6px 0}
+      .wn-medal{width:110px;height:110px;margin:4px auto 14px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,var(--orange2),var(--orange) 55%,#a85c00);box-shadow:0 0 0 6px rgba(247,147,26,.18),0 0 60px rgba(247,147,26,.45);font-size:46px}
+      .wn-end p{color:var(--muted);margin:6px auto 16px;max-width:460px}
+      /* word bank */
+      .wb{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin:0 0 32px}
+      .wb-card{position:relative;min-height:140px;padding:0;border:0;background:none;cursor:pointer;perspective:800px;text-align:left;color:var(--text)}
+      .wb-f,.wb-b{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:14px;border-radius:14px;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:transform .45s ease}
+      .wb-f{border:1px solid var(--line);background:linear-gradient(160deg,rgba(247,147,26,.16),#141414 60%) #141414;font-weight:800;font-size:17px;line-height:1.2}
+      .wb-f small{display:block;margin-top:8px;font:600 11px/1 monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--orange)}
+      .wb-b{border:1px solid var(--orange);background:#141414;color:var(--muted);font-size:13.5px;line-height:1.45;transform:rotateY(180deg)}
+      .wb-card.on .wb-f{transform:rotateY(180deg)}.wb-card.on .wb-b{transform:rotateY(360deg)}
+      @media (max-width:560px){
+        .wn-card{padding:16px}
+        .wn-badges{gap:5px}.wn-badge{padding:10px 2px;font-size:9.5px}.wn-badge i{font-size:22px}
+        .wn-wire{grid-template-columns:1fr}
+        .wn-jar{width:30px;height:38px}.wn-col{padding:10px 3px}.wn-col h4{font-size:12px}.wn-slot small{font-size:10px}
+        .wn-lab{gap:5px}
+        .wn-net{grid-template-columns:1fr;justify-items:center}
+        .wn-who{width:100%;display:flex;gap:8px;align-items:center;justify-content:center}.wn-who i{margin:0;font-size:18px}
+        .wn-leak{grid-template-columns:repeat(2,minmax(0,1fr))}
+        .wn-sn div{font-size:13px}
+      }
+      @media (prefers-reduced-motion:reduce){.wn-jar,.wb-f,.wb-b{animation:none;transition:none}}
+      </style>
+
+      <div class="wn-card wn-board" id="wn-board">
+        <p class="wn-eye"><span>Mission board</span><span><span id="wn-xp">0</span> XP</span></p>
+        <h3>Don&rsquo;t just read it. Play it.</h3>
+        <p>Five mini-games on this page, one for each big idea from the workshop. Finish one and its badge lights up. Your progress is saved on this device.</p>
+        <div class="wn-badges">
+          <a class="wn-badge" href="#g-mix" data-b="mix"><i>&#127912;</i>Key Mixer</a>
+          <a class="wn-badge" href="#g-mix" data-b="spy"><i>&#128373;</i>Spy Catcher</a>
+          <a class="wn-badge" href="#g-relay" data-b="relay"><i>&#128225;</i>Unstoppable</a>
+          <a class="wn-badge" href="#g-wrap" data-b="wrap"><i>&#127873;</i>Gift Wrapper</a>
+          <a class="wn-badge" href="#g-boss" data-b="boss"><i>&#128081;</i>Boss Level</a>
+        </div>
+        <div class="wn-bar"><i id="wn-prog"></i></div>
+      </div>
+      <div class="wn-toast" id="wn-toast" role="status" aria-live="polite"></div>
+
+      <h2>Highlights</h2>
+
+      <p class="part"><b>1</b>Why is there always a server in the middle?</p>
+      <p>Razor started from zero. You might think two phones with the same app just talk to each other. They can&rsquo;t, because one of them is often asleep, offline or out of battery. So <strong>something in the middle has to hold the message</strong> until the other phone wakes up. For most apps, that something is a company&rsquo;s server.</p>
+      <p>Then comes the real question: what can that server read? Flip the switch and watch the middle box.</p>
+      <div class="wn-card">
+        <p class="wn-eye"><span>Try it</span><span>Who can read your message?</span></p>
+        <div class="wn-seg" id="wn-e2e" role="group" aria-label="Encryption mode">
+          <button type="button" data-m="0" class="on">No encryption</button><button type="button" data-m="1">Server encrypts</button><button type="button" data-m="2">End-to-end</button>
+        </div>
+        <div class="wn-wire">
+          <div><b>&#128241; You</b><code>gm, coffee at 7?</code></div>
+          <div class="mid bad" id="wn-mid"><b>&#128421; The server</b><code id="wn-midc">gm, coffee at 7?</code></div>
+          <div><b>&#128241; Your friend</b><code>gm, coffee at 7?</code></div>
+        </div>
+        <p class="wn-out" id="wn-e2eout"></p>
+      </div>
+
+      <p class="part"><b>2</b>The hard part: agreeing on a key</p>
+      <p>&ldquo;Encrypting is very easy. The hard part is the key exchange.&rdquo; You and your friend need the same secret key, but the only line between you is one that anyone can watch. The classic answer is the <strong>Diffie-Hellman key exchange</strong>, and every modern chat protocol is built from it. Razor explained it with paint, so here is the paint.</p>
+
+      <div class="wn-card" id="g-mix">
+        <p class="wn-eye"><span>Game 1 and 2</span><span>The paint lab</span></p>
+        <h3>Mix a secret in public <span class="wn-done">&#10003;</span></h3>
+        <p>Pick a secret colour for Alice and for Bob, then mix. Everything in the middle column is public: the spy sees all of it.</p>
+        <div class="wn-pick">
+          <div><p>Alice&rsquo;s secret</p><div class="wn-sw" id="wn-swa"></div></div>
+          <div><p>Bob&rsquo;s secret</p><div class="wn-sw" id="wn-swb"></div></div>
+        </div>
+        <div class="wn-seg" id="wn-mitm" role="group" aria-label="Who is on the line">
+          <button type="button" data-m="0" class="on">&#128064; Spy only watches</button><button type="button" data-m="1">&#128520; Spy swaps the jars</button>
+        </div>
+        <div class="wn-lab">
+          <div class="wn-col"><h4>Alice<small>her phone</small></h4><div class="wn-slot" id="wn-a1"></div><div class="wn-slot" id="wn-a2"></div><div class="wn-slot" id="wn-a3"></div></div>
+          <div class="wn-col mid" id="wn-midcol"><h4 id="wn-midh">The open line<small>everyone can see this</small></h4><div class="wn-slot" id="wn-m1"></div><div class="wn-slot" id="wn-m2"></div><div class="wn-slot" id="wn-m3"></div></div>
+          <div class="wn-col"><h4>Bob<small>his phone</small></h4><div class="wn-slot" id="wn-b1"></div><div class="wn-slot" id="wn-b2"></div><div class="wn-slot" id="wn-b3"></div></div>
+        </div>
+        <div class="wn-row"><button type="button" class="wn-btn" id="wn-step">Step 1: mix with the public colour</button><button type="button" class="wn-btn ghost" id="wn-reset">Start over</button></div>
+        <div class="wn-sn" id="wn-sn" hidden><div><small>Alice&rsquo;s safety number</small><span id="wn-sna"></span></div><div><small>Bob&rsquo;s safety number</small><span id="wn-snb"></span></div></div>
+        <p class="wn-out" id="wn-mixout"></p>
+      </div>
+
+      <p>Where the picture breaks: with real paint, a clever spy could work out what was added. The real thing uses maths that only goes one way, so seeing both mixed jars gets the spy nowhere.</p>
+
+      <div class="viz" role="figure" aria-label="A question from the room about public key encryption">
+        <p class="eyebrow">Good question from the room</p>
+        <p class="viz-title">&ldquo;Why not just encrypt with my friend&rsquo;s public key?&rdquo;</p>
+        <p style="margin:0 0 14px">You can. Lock a message with Bob&rsquo;s public key and only Bob&rsquo;s private key opens it. (Not the other way round: lock it with your <em>own</em> private key and everyone can open it. We untangled that one live.) But this kind of encryption is slow, and easy to get wrong for photos and long chats.</p>
+        <div class="flow">
+          <div class="flow-step">Key exchange<small>once, slow maths</small></div><div class="flow-hop"><i>&rarr;</i></div>
+          <div class="flow-step">One shared key<small>per friend or group</small></div><div class="flow-hop"><i>&rarr;</i></div>
+          <div class="flow-step">Fast encryption<small>AES or ChaCha</small></div>
+        </div>
+        <p class="viz-fix"><b>So in practice:</b> use the slow maths once to agree on a shared key, then use fast encryption for everything after. Good protocols also keep changing that key, so one leaked key doesn&rsquo;t open your old messages.</p>
+      </div>
+
+      <p class="part"><b>3</b>Trust on first use, and how to catch a spy</p>
+      <p>Did you try &ldquo;Spy swaps the jars&rdquo; above? That is a <strong>man-in-the-middle attack</strong>. Alice and Bob both end up with a key, they just don&rsquo;t share it with each other. They share it with the spy, who reads everything and passes it along.</p>
+      <p>The first time you message someone, you simply trust that the key you got is theirs. It even has a name: <strong>TOFU, trust on first use</strong>. The fix in Signal and WhatsApp is the <strong>safety number</strong> (or QR code): a short fingerprint of your shared key. Meet in person, compare, and if the numbers match, nobody is in the middle. Nostr has the same problem in a different shape: you need to be sure the npub you are messaging is really your friend&rsquo;s.</p>
+
+      <p class="part"><b>4</b>Now take the company away</p>
+      <p>Signal&rsquo;s encryption is great. But Signal, WhatsApp and Telegram each run on one company&rsquo;s servers. A government can lean on that company, block it, or the company can decide your country is no longer welcome. Razor&rsquo;s example was his own: imagine Romania turning authoritarian in ten years and ordering the apps off.</p>
+      <p><strong>White Noise</strong> keeps the good part (the encryption) and replaces the company server with <strong>Nostr relays</strong>. Your app sends each message to several relays. They hold it until your friend comes online. Anyone can run a relay, so there is no single door to close. Try closing it.</p>
+
+      <div class="wn-card" id="g-relay">
+        <p class="wn-eye"><span>Game 3</span><span>Switch it off</span></p>
+        <h3>You are the censor. Stop this message. <span class="wn-done">&#10003;</span></h3>
+        <p>Bob is asleep. Alice wants to send him a message and then go to sleep herself. Tap servers to shut them down, then press send.</p>
+        <div class="wn-seg" id="wn-netmode" role="group" aria-label="Network type">
+          <button type="button" data-m="co" class="on">One company server</button><button type="button" data-m="nostr">Nostr relays</button>
+        </div>
+        <div class="wn-net">
+          <div class="wn-who"><i>&#128105;</i><span>Alice<small>sending</small></span></div>
+          <div class="wn-nodes" id="wn-nodes"></div>
+          <div class="wn-who"><i id="wn-bobi">&#128564;</i><span>Bob<small id="wn-bobs">asleep</small></span></div>
+        </div>
+        <div class="wn-row"><button type="button" class="wn-btn" id="wn-send">Send message</button><button type="button" class="wn-btn ghost" id="wn-own" hidden>Run your own relay</button></div>
+        <p class="wn-out" id="wn-netout"></p>
+      </div>
+
+      <p>Under the hood, White Noise is a stack of open pieces. Nothing in it belongs to one company.</p>
+      <div class="viz" role="figure" aria-label="The layers that make up White Noise">
+        <p class="eyebrow">What White Noise is made of</p>
+        <div class="layer-scale"><b>What you see</b><span></span></div>
+        <div class="layers">
+          <div class="layer top"><strong>White Noise</strong><p>The app on your phone or desktop. Chats and groups.</p><span>The app</span></div>
+          <div class="layer"><strong>Marmot</strong><p>The glue. Says how keys and group messages are stored and passed around on Nostr.</p><span>Protocol</span></div>
+          <div class="layer"><strong>MLS (Messaging Layer Security)</strong><p>The key exchange and encryption, built for groups. An open internet standard, RFC 9420.</p><span>Encryption</span></div>
+          <div class="layer"><strong>Nostr relays + Blossom</strong><p>Relays hold the small encrypted messages. Blossom servers hold big things like photos and files.</p><span>Delivery and storage</span></div>
+        </div>
+        <div class="layer-scale" style="margin:8px 0 0"><span>What carries it</span><span></span></div>
+        <p class="viz-fix" style="margin-top:16px"><b>Worth knowing:</b> relays are run by volunteers and nothing forces them to keep your messages forever. That is why apps send to several at once.</p>
+      </div>
+
+      <p class="part"><b>5</b>The experiment: our own relay</p>
+      <p>Razor wanted to see what White Noise really sends. So he put his own relay on the internet (strfry, set up with help from an AI assistant, plus a tiny plugin that logs every event) and told White Noise on his phone and desktop to use <em>only</em> that relay.</p>
+      <div class="term"><div class="term-bar"><i></i><i></i><i></i><span>relay log (simplified)</span></div><pre><span class="c"># set both apps to use only wss://my-relay.example</span>
+<span class="p">event</span> kind <span class="ok">10002</span>  <span class="c">"here are the relays I use"</span>
+<span class="p">event</span> kind <span class="ok">10050</span>  <span class="c">"send my private messages here"</span>
+<span class="p">event</span> kind <span class="ok">1059</span>   <span class="c">gift wrap: sealed, unreadable</span>
+
+<span class="c"># now send "hi" from desktop to phone...</span>
+<span class="bad">(nothing new arrives)</span></pre></div>
+      <p>The relay was alive and the apps announced it, but the test chat never showed up on either side. Razor&rsquo;s best guess: White Noise fixes the relay list <strong>when a chat or group is created</strong>, so changing relays later only affects new chats. It is a guess, not a confirmed answer. As he put it about the app&rsquo;s security audit, finding issues is a good thing. It means someone looked.</p>
+
+      <p class="part"><b>6</b>What can a relay see?</p>
+      <p>Alex then showed something that surprised half the room. He logged into Primal using only someone else&rsquo;s <strong>public</strong> key. Read-only, nothing hacked. He could see every account that had sent that person an old-style Nostr DM, and when. He could not read the text. But <strong>who talks to whom, and when, is often the sensitive part</strong>.</p>
+      <p><strong>Gift wrap</strong> (the kind 1059 events from Razor&rsquo;s log) is the fix: the real message is sealed inside an envelope signed by a throwaway key with a fuzzed date. Write a message and look at it the way a relay does.</p>
+
+      <div class="wn-card" id="g-wrap">
+        <p class="wn-eye"><span>Game 4</span><span>Be the relay</span></p>
+        <h3>What leaks? <span class="wn-done">&#10003;</span></h3>
+        <label for="wn-msg" style="display:block;margin:0 0 6px;color:var(--dim);font-size:13px">Alice&rsquo;s message to Bob</label>
+        <input class="wn-in" id="wn-msg" type="text" maxlength="60" value="meet me at the Bitcoin house at 7" autocomplete="off">
+        <div class="wn-seg" id="wn-wrapmode" role="group" aria-label="Message type">
+          <button type="button" data-m="old" class="on">Old-style Nostr DM</button><button type="button" data-m="gift">&#127873; Gift wrapped</button>
+        </div>
+        <div class="term"><div class="term-bar"><i></i><i></i><i></i><span>what the relay stores</span></div><pre id="wn-ev"></pre></div>
+        <div class="wn-leak" id="wn-leak"></div>
+        <p class="wn-out" id="wn-wrapout"></p>
+      </div>
+
+      <p>Honest status from the call: private messaging on Nostr has been rebuilt more than once and is still work in progress. Gift wrap is the newest design, not the final word.</p>
+
+      <p class="part"><b>7</b>And then: money in the chat</p>
+      <p>The question that kept coming back: <strong>when can we send sats inside the chat?</strong> Ecash is a natural fit, because an ecash token is just a string of text. Any chat app can carry it.</p>
+      <ul>
+        <li><strong>BitChat</strong> already does this nicely. It works over Bluetooth with people nearby, no internet at all, and shows a pasted ecash token as a tidy card instead of a wall of characters. Good for places where the internet is censored or simply down.</li>
+        <li><strong>White Noise</strong> has no wallet built in today. Nobody on the call knew the roadmap, so we want to invite someone from the project to tell us.</li>
+        <li>Others are experimenting with ecash on top of Signal-style and Marmot-based chats. Keychat came up too. BitChat and ecash each get their own session.</li>
+      </ul>
+      <div class="wn-tbl" role="region" aria-label="Messaging apps compared" tabindex="0">
+        <table>
+          <thead><tr><th>App</th><th>End-to-end by default</th><th>What sits in the middle</th><th>One off switch?</th></tr></thead>
+          <tbody>
+            <tr><th>Telegram</th><td class="n">No, only &ldquo;secret chats&rdquo;</td><td>Telegram&rsquo;s servers</td><td class="n">Yes</td></tr>
+            <tr><th>WhatsApp</th><td class="y">Yes (Signal protocol)</td><td>Meta&rsquo;s servers</td><td class="n">Yes</td></tr>
+            <tr><th>Signal</th><td class="y">Yes</td><td>Signal&rsquo;s servers</td><td class="n">Yes</td></tr>
+            <tr class="hl"><th>White Noise</th><td class="y">Yes (MLS)</td><td>Nostr relays, pick your own</td><td class="y">No</td></tr>
+            <tr><th>BitChat</th><td class="y">Yes (Noise)</td><td>Nothing: Bluetooth, phone to phone</td><td class="y">No</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="swipe">Swipe the table sideways to see every column.</p>
+
+      <div class="quote"><p>&ldquo;I just want to send the messages, send the ecash, and sleep well at night knowing my messaging app cannot be switched off.&rdquo;</p><cite>From the call</cite></div>
+
+      <h2>Key takeaways</h2>
+      <p><strong>1. Encryption is solved. Trust and control are not.</strong> The lock on your messages is strong in every serious app. What differs is who holds the door: one company, or a network anyone can join.</p>
+      <p><strong>2. Check the key, not just the name.</strong> A chat can be perfectly encrypted to the wrong person. Compare safety numbers in Signal, and double-check an npub through a second channel before you trust it.</p>
+      <p><strong>3. Metadata talks.</strong> Hiding the text is not enough if the world can see who you message and when. Ask that question of every app you use.</p>
+      <p><strong>4. These tools need users, not only builders.</strong> White Noise, BitChat and friends are young. Trying them, breaking them and reporting what you find, like Razor&rsquo;s relay test, is a real contribution.</p>
+
+      <h2 id="g-boss">Boss level</h2>
+      <p>Six questions, straight from the workshop. Beat it to earn the last badge.</p>
+      <div class="wn-card" id="wn-quiz" aria-live="polite">
+        <p class="wn-eye"><span id="wn-qlvl">Question 1 of 6</span><span>Boss level</span></p>
+        <div class="wn-map" id="wn-qmap"></div>
+        <div id="wn-qplay">
+          <p class="wn-q" id="wn-qq"></p>
+          <div class="wn-opts" id="wn-qopts"></div>
+          <p class="wn-out" id="wn-qwhy" hidden></p>
+          <p style="margin:14px 0 0"><button type="button" class="wn-btn" id="wn-qnext" hidden>Next &rarr;</button></p>
+        </div>
+        <div class="wn-end" id="wn-qend" hidden>
+          <div class="wn-medal" id="wn-medal">&#128081;</div>
+          <h3 id="wn-rank"></h3>
+          <p id="wn-rmsg"></p>
+          <div class="wn-row" style="justify-content:center"><a class="wn-btn" id="wn-qshare" target="_blank" rel="noopener">Post my rank on X</a><button type="button" class="wn-btn ghost" id="wn-qagain">Play again</button></div>
+        </div>
+      </div>
+
+      <h2>Word bank</h2>
+      <p>The words from the call, in plain English. Tap a card to flip it.</p>
+      <div class="wb"><button type="button" class="wb-card"><span class="wb-f">End-to-end encryption<small>tap to flip</small></span><span class="wb-b">Only the two ends of a chat can read it. Whatever sits in the middle just carries scrambled text.</span></button><button type="button" class="wb-card"><span class="wb-f">Diffie-Hellman<small>tap to flip</small></span><span class="wb-b">A way for two people to agree on a secret key over a line everyone can watch. The paint trick.</span></button><button type="button" class="wb-card"><span class="wb-f">Man in the middle<small>tap to flip</small></span><span class="wb-b">Someone who secretly sits between you and your friend and swaps the keys, so both of you are really talking to them.</span></button><button type="button" class="wb-card"><span class="wb-f">TOFU<small>tap to flip</small></span><span class="wb-b">Trust on first use. The first time you chat, you just trust the key you were given.</span></button><button type="button" class="wb-card"><span class="wb-f">Safety number<small>tap to flip</small></span><span class="wb-b">A short fingerprint of your shared key. If yours matches your friend&rsquo;s, nobody is in the middle.</span></button><button type="button" class="wb-card"><span class="wb-f">Relay<small>tap to flip</small></span><span class="wb-b">A simple Nostr server that stores and forwards messages. Anyone can run one.</span></button><button type="button" class="wb-card"><span class="wb-f">MLS<small>tap to flip</small></span><span class="wb-b">Messaging Layer Security. An open standard for encrypted chats that also works well for groups.</span></button><button type="button" class="wb-card"><span class="wb-f">Marmot<small>tap to flip</small></span><span class="wb-b">The protocol that makes MLS work on Nostr relays. White Noise is built on it.</span></button><button type="button" class="wb-card"><span class="wb-f">Gift wrap<small>tap to flip</small></span><span class="wb-b">A sealed Nostr envelope signed by a throwaway key, so relays can&rsquo;t tell who sent it or exactly when.</span></button><button type="button" class="wb-card"><span class="wb-f">Blossom<small>tap to flip</small></span><span class="wb-b">Media servers for Nostr. Photos and files live here, not on relays.</span></button><button type="button" class="wb-card"><span class="wb-f">Metadata<small>tap to flip</small></span><span class="wb-b">Everything about a message except its text: who, to whom, when, how often.</span></button><button type="button" class="wb-card"><span class="wb-f">Ecash<small>tap to flip</small></span><span class="wb-b">Private digital cash backed by bitcoin. A token is just text, so it can travel inside any chat.</span></button></div>
+
+      <script>
+      (function(){
+      var $=function(i){return document.getElementById(i)},KEY='co-wn-2026-11-11',S={b:{},best:0};
+      try{var sv=JSON.parse(localStorage.getItem(KEY));if(sv&&sv.b)S=sv;}catch(e){}
+      function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+      var NAMES={mix:'Key Mixer',spy:'Spy Catcher',relay:'Unstoppable',wrap:'Gift Wrapper',boss:'Boss Level'};
+      function board(){var n=0;document.querySelectorAll('.wn-badge').forEach(function(a){var g=!!S.b[a.dataset.b];a.classList.toggle('got',g);if(g)n++;});
+        $('wn-xp').textContent=n*100+(S.best||0)*50;$('wn-prog').style.width=(n/5*100)+'%';
+        if(S.b.mix&&S.b.spy)$('g-mix').classList.add('won');if(S.b.relay)$('g-relay').classList.add('won');if(S.b.wrap)$('g-wrap').classList.add('won');}
+      var tt;function award(k){if(S.b[k])return;S.b[k]=1;save();board();var t=$('wn-toast');t.textContent='🏅 Badge unlocked: '+NAMES[k]+'  +100 XP';t.classList.add('go');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('go')},2800);}
+      function seg(id,fn){var box=$(id);box.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){box.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b)});fn(b.dataset.m);});});}
+      function scr(n){var c='abcdef0123456789',s='';for(var i=0;i<n;i++)s+=c[Math.floor(Math.random()*16)];return s;}
+
+      /* who can read it */
+      var E=[['gm, coffee at 7?','bad','<b>Everyone on the way can read it.</b> The server, anyone who hacks the server, anyone who can order the server to hand it over.'],
+             ['gm, coffee at 7?','bad','<b>Still readable in the middle.</b> The server gets your plain text and locks it with <em>its own</em> key. So it protects you from outsiders, but not from the server itself or whoever takes its key.'],
+             ['8f3a91c0e7b44d02ff19','good','<b>Only the two ends can read it.</b> The server just carries scrambled text. This is end-to-end encryption. Telegram does not do this by default. Signal and WhatsApp do.']];
+      function e2e(m){var e=E[m];$('wn-midc').textContent=e[0];$('wn-midc').className=m==2?'x':'';$('wn-mid').className='mid '+e[1];$('wn-e2eout').innerHTML=e[2];}
+      seg('wn-e2e',e2e);e2e(0);
+
+      /* paint lab */
+      var PUB=[247,210,26],COL=[[232,71,43],[31,182,201],[194,54,155],[63,163,77],[53,88,214]],EVIL=[122,75,214],a=0,b=1,mitm=0,step=0;
+      function mix(){var r=[0,0,0],n=arguments.length;for(var i=0;i<n;i++)for(var k=0;k<3;k++)r[k]+=arguments[i][k]/n;return r.map(Math.round);}
+      function css(c){return 'rgb('+c.join(',')+')';}
+      function jar(c,lock){return c?'<span class="wn-jar'+(lock?' lock':'')+'" style="background:'+css(c)+'"></span>':'<span class="wn-jar empty"></span>';}
+      function slot(id,jars,label){$(id).innerHTML='<span class="wn-jars">'+jars+'</span><small>'+label+'</small>';}
+      function num(c){var h=2166136261,s=c.join('-');for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)>>>0;}var d=('0000000000'+h).slice(-10)+('00'+(h%97)).slice(-2);return d.slice(0,4)+' '+d.slice(4,8)+' '+d.slice(8,12);}
+      function sw(id,sel,fn){$(id).innerHTML=COL.map(function(c,i){return '<button type="button" aria-label="Colour '+(i+1)+'" class="'+(i==sel?'on':'')+'" style="background:'+css(c)+'" data-i="'+i+'"></button>'}).join('');
+        $(id).querySelectorAll('button').forEach(function(x){x.onclick=function(){fn(+x.dataset.i);step=0;lab();};});}
+      var STEPS=['Step 1: mix with the public colour','Step 2: send the mix across','Step 3: add your secret again','Compare safety numbers'];
+      function lab(){var A=COL[a],B=COL[b],am=mix(PUB,A),bm=mix(PUB,B),em=mix(PUB,EVIL);
+        sw('wn-swa',a,function(i){a=i});sw('wn-swb',b,function(i){b=i});
+        $('wn-midcol').className='wn-col mid'+(mitm?' evil':'');$('wn-midh').innerHTML=mitm?'The spy<small>swaps what passes</small>':'The open line<small>everyone can see this</small>';
+        slot('wn-a1',jar(A,1),'Secret. Never leaves.');slot('wn-b1',jar(B,1),'Secret. Never leaves.');slot('wn-m1',jar(PUB),'Public colour');
+        slot('wn-a2',jar(step>0?am:0),step>0?'Public + secret':'&nbsp;');slot('wn-b2',jar(step>0?bm:0),step>0?'Public + secret':'&nbsp;');
+        if(step<2)slot('wn-m2',jar(0)+jar(0),'&nbsp;');
+        else if(!mitm)slot('wn-m2',jar(am)+jar(bm),'Spy sees both mixes');
+        else slot('wn-m2',jar(em)+jar(em),'Keeps theirs, sends <b>fakes</b>');
+        var fa=mitm?mix(PUB,EVIL,A):mix(PUB,B,A),fb=mitm?mix(PUB,EVIL,B):mix(PUB,A,B);
+        slot('wn-a3',jar(step>2?fa:0),step>2?'<b>Alice&rsquo;s key</b>':'&nbsp;');slot('wn-b3',jar(step>2?fb:0),step>2?'<b>Bob&rsquo;s key</b>':'&nbsp;');
+        if(step<3)slot('wn-m3',jar(0),'&nbsp;');
+        else if(!mitm)slot('wn-m3',jar(mix(am,bm)),'Spy&rsquo;s best try: <b>wrong</b>');
+        else slot('wn-m3',jar(fa)+jar(fb),'Spy holds <b>both</b> keys');
+        $('wn-step').textContent=STEPS[Math.min(step,3)];$('wn-step').disabled=step>3;$('wn-sn').hidden=step<4;
+        var o=$('wn-mixout');
+        if(step==0)o.innerHTML=mitm?'Same game, but now the spy can change what passes through. Mix again and see what happens.':'Alice and Bob have never met. All they share is the yellow, and the spy knows it too.';
+        if(step==1)o.innerHTML='Each of them stirs their secret into the public yellow. The secret itself stays at home.';
+        if(step==2)o.innerHTML=mitm?'<b>The swap.</b> The spy keeps the real jars and passes on jars mixed with the spy&rsquo;s own colour. Alice and Bob can&rsquo;t tell.':'They swap mixes over the open line. The spy now has the yellow and both mixes, but neither secret.';
+        if(step==3){o.innerHTML=mitm?'Both got a key and both think it worked. Look closely: <b>the two keys are different.</b> Each one matches a key the spy holds. How would they ever find out?':'<b>Same colour on both sides.</b> Yellow + Alice + Bob gives the same result in any order. That colour is their shared key, and it never crossed the line.';if(!mitm)award('mix');}
+        if(step==4){$('wn-sna').textContent=num(fa);$('wn-snb').textContent=num(fb);$('wn-sn').className='wn-sn '+(mitm?'diff':'match');
+          if(mitm){o.innerHTML='<b>Caught!</b> The numbers don&rsquo;t match, so someone is in the middle. This is why Signal and WhatsApp let you compare safety numbers in person.';award('spy');}
+          else o.innerHTML='<b>They match.</b> Nobody is in the middle. Now flip to &ldquo;Spy swaps the jars&rdquo; and try to catch one.';}
+      }
+      $('wn-step').onclick=function(){if(step<4){step++;lab();}};$('wn-reset').onclick=function(){step=0;lab();};
+      seg('wn-mitm',function(m){mitm=+m;step=0;lab();});lab();
+
+      /* relay game */
+      var mode='co',nodes=[],busy=0,RN=['relay.one','relay.two','relay.three','relay.four','relay.five'];
+      function netReset(){busy=0;nodes=mode=='co'?[{n:'BigChat Inc.',up:1,big:1}]:RN.map(function(n){return{n:n,up:1}});$('wn-own').hidden=true;bob(0);
+        $('wn-netout').innerHTML=mode=='co'?'One company runs the only server. Tap it to shut it down (court order, ban, outage, pick your reason), then press send.':'Five relays, run by five different people. Shut down as many as you like, then press send.';net();}
+      function bob(awake){$('wn-bobi').innerHTML=awake?'&#128241;':'&#128564;';$('wn-bobs').textContent=awake?'got it!':'asleep';}
+      function net(){$('wn-nodes').innerHTML=nodes.map(function(n,i){return '<button type="button" class="wn-node'+(n.up?'':' down')+(n.big?' big':'')+(n.mine?' mine':'')+(n.hold?' hold':'')+'" data-i="'+i+'" aria-pressed="'+(!n.up)+'"><i>'+(n.big?'&#127970;':n.mine?'&#127968;':'&#128225;')+'</i>'+n.n+'<small>'+(n.up?(n.hold?'holding it':n.mine?'yours':'online'):'shut down')+'</small></button>'}).join('');
+        $('wn-nodes').querySelectorAll('button').forEach(function(x){x.onclick=function(){if(busy)return;var n=nodes[+x.dataset.i];if(n.mine){$('wn-netout').innerHTML='That one is in your living room. Nobody can shut it down but you.';return;}n.up=!n.up;nodes.forEach(function(q){q.hold=0});bob(0);net();};});}
+      $('wn-send').onclick=function(){if(busy)return;var up=nodes.filter(function(n){return n.up}),down=nodes.length-up.length,o=$('wn-netout');bob(0);
+        if(!up.length){nodes.forEach(function(q){q.hold=0});net();
+          if(mode=='co')o.innerHTML='<b>Message lost.</b> One company, one off switch. It does not matter how good the encryption was. Now try the same thing with Nostr relays.';
+          else{o.innerHTML='<b>You got them all.</b> That took '+nodes.length+' separate shutdowns. And Alice has one more move&hellip;';$('wn-own').hidden=false;}
+          return;}
+        busy=1;up.forEach(function(n){n.hold=1});net();
+        o.innerHTML=mode=='co'?'The server is holding the message. Alice goes to sleep&hellip;':'Stored on <b>'+up.length+' of '+nodes.length+'</b> relays. Alice goes to sleep&hellip;';
+        setTimeout(function(){busy=0;bob(1);
+          if(mode=='co')o.innerHTML='Bob wakes up and gets it. Works fine, as long as that one server stays up and stays friendly. Now shut it down and send again.';
+          else{o.innerHTML='<b>Delivered.</b> Bob wakes up and picks it up from '+up[0].n+'. '+(down?down+' relay'+(down>1?'s':'')+' down and it still got through.':'Now shut some relays down and try again.');if(down>=3||up[0].mine)award('relay');}
+        },1500);};
+      $('wn-own').onclick=function(){nodes.push({n:'your own relay',up:1,mine:1});$('wn-own').hidden=true;net();$('wn-netout').innerHTML='Alice starts her own relay, the same thing Razor did for this workshop. Press send.';};
+      seg('wn-netmode',function(m){mode=m;netReset();});netReset();
+
+      /* gift wrap */
+      var wm='old',seen={};
+      function wrap(){var t=$('wn-msg').value||'hello',len=Math.max(24,t.length*2),now=new Date(),g=wm=='gift';
+        var when=g?new Date(now-Math.random()*1728e5):now,fmt=function(d){return d.toISOString().slice(0,16).replace('T',' ')+' UTC'};
+        $('wn-ev').innerHTML='<span class="p">kind</span>     '+(g?'1059 <span class="c">(gift wrap)</span>':'4 <span class="c">(old direct message)</span>')+'\n'+
+          '<span class="p">from</span>     '+(g?'<span class="ok">npub1'+scr(10)+'&hellip;</span> <span class="c">throwaway key, new every time</span>':'<span class="bad">npub1alice&hellip;</span> <span class="c">Alice&rsquo;s real key</span>')+'\n'+
+          '<span class="p">to</span>       <span class="bad">npub1bob&hellip;</span> <span class="c">so the relay knows whose inbox</span>\n'+
+          '<span class="p">time</span>     '+(g?'<span class="ok">'+fmt(when)+'</span> <span class="c">shuffled on purpose</span>':'<span class="bad">'+fmt(when)+'</span> <span class="c">the real time</span>')+'\n'+
+          '<span class="p">content</span>  <span class="ok">'+scr(g?len+28:len)+'</span>';
+        var L=[['Who sent it',!g],['Who gets it',1],['When',!g],['What it says',0]];
+        $('wn-leak').innerHTML=L.map(function(x){return '<div class="'+(x[1]?'leak':'')+'"><small>'+x[0]+'</small>'+(x[1]?'Visible':'Hidden')+'</div>'}).join('');
+        $('wn-wrapout').innerHTML=g?'<b>Much quieter.</b> The relay still knows Bob received <em>something</em>, but not from whom or exactly when. The real sender and time are sealed inside, where only Bob can open them. Press the button again: the &ldquo;from&rdquo; key changes every time.':'<b>The text is safe, the story is not.</b> Anyone who knows Bob&rsquo;s public key can list who messages him and when. That is exactly what Alex showed live in Primal.';
+        seen[wm]=1;if(seen.old&&seen.gift)award('wrap');}
+      seg('wn-wrapmode',function(m){wm=m;wrap();});$('wn-msg').addEventListener('input',wrap);
+      document.querySelector('#wn-wrapmode [data-m=gift]').addEventListener('click',function(){if(wm=='gift')wrap();});wrap();
+
+      /* quiz */
+      var Q=[
+       {q:'Why does almost every chat app need something in the middle?',o:['To make messages faster','Because phones are not always online, so something has to hold the message','Because encryption only works on servers'],a:1,w:'Your friend&rsquo;s phone may be off. A server (or a relay) keeps the message until they are back.'},
+       {q:'What did Razor call the hard part of end-to-end encryption?',o:['Scrambling the message','The key exchange: agreeing on a key over a line anyone can watch','Making the app look nice'],a:1,w:'&ldquo;Encrypting is very easy. The hard part is the key exchange.&rdquo; Diffie-Hellman is the classic answer.'},
+       {q:'You and a friend compare safety numbers and they are different. What does that mean?',o:['Nothing, they are always different','Someone may be sitting in the middle of your chat','Your phone is out of date'],a:1,w:'The safety number is a fingerprint of your shared key. Different numbers mean you do not share a key with each other.'},
+       {q:'In White Noise, which piece does the key exchange and encryption?',o:['Blossom','MLS (Messaging Layer Security)','Bluetooth'],a:1,w:'MLS does the encryption. Marmot connects it to Nostr. Relays carry messages and Blossom stores media.'},
+       {q:'With old-style Nostr DMs, what can anyone see if they know your public key?',o:['The full text of your messages','Who messaged you and when, but not the text','Nothing at all'],a:1,w:'The text is encrypted, the metadata is not. Gift wrap hides the sender and the real time.'},
+       {q:'Why is White Noise harder to switch off than Signal or WhatsApp?',o:['It uses stronger passwords','Messages go through many relays that anyone can run, not one company&rsquo;s servers','It only works offline'],a:1,w:'No single company, no single off switch. If relays go down, you can pick others or run your own.'}
+      ];
+      var R=[[0,'Plaintext Pleb','&#128196;','Everyone starts somewhere. The notes above have every answer.'],[3,'Key Exchanger','&#128273;','Good start. Play the mini-games above to fill the gaps.'],[5,'Relay Runner','&#128225;','Solid. One more look at the notes and you have it.'],[6,'Cypherpunk','&#128081;','Perfect score. See you at the Privacy Track.']];
+      var qi=0,res=[];
+      function qmap(){$('wn-qmap').innerHTML=Q.map(function(_,k){var c=k<res.length?(res[k]?'ok':'miss'):(k==qi?'on':'');return '<span class="'+c+'">'+(k+1)+'</span>'}).join('');}
+      function qshow(){var l=Q[qi];$('wn-qplay').hidden=false;$('wn-qend').hidden=true;$('wn-qlvl').textContent='Question '+(qi+1)+' of '+Q.length;$('wn-qq').innerHTML=l.q;$('wn-qwhy').hidden=true;$('wn-qnext').hidden=true;
+        $('wn-qopts').innerHTML=l.o.map(function(t,k){return '<button type="button" data-k="'+k+'">'+t+'</button>'}).join('');
+        $('wn-qopts').querySelectorAll('button').forEach(function(x){x.onclick=function(){var k=+x.dataset.k,ok=k==l.a;res.push(ok);
+          $('wn-qopts').querySelectorAll('button').forEach(function(y,j){y.disabled=true;if(j==l.a)y.classList.add('right');else if(j==k)y.classList.add('wrong');});
+          $('wn-qwhy').innerHTML=(ok?'<b>Correct.</b> ':'<b>Not quite.</b> ')+l.w;$('wn-qwhy').hidden=false;$('wn-qnext').hidden=false;$('wn-qnext').textContent=qi==Q.length-1?'See my rank →':'Next →';qmap();};});qmap();}
+      function qend(){var n=res.filter(Boolean).length,r=R[0];R.forEach(function(x){if(n>=x[0])r=x});if(n>(S.best||0)){S.best=n;save();}if(n>=5)award('boss');board();
+        var bn=Object.keys(S.b).length;$('wn-qplay').hidden=true;$('wn-qend').hidden=false;$('wn-qlvl').textContent=n+' of '+Q.length+' correct';$('wn-medal').innerHTML=r[2];$('wn-rank').textContent='Rank: '+r[1];
+        $('wn-rmsg').innerHTML=r[3]+' You have <b style="color:var(--orange)">'+bn+' of 5</b> badges'+(n<5?' (5 correct unlocks Boss Level).':'.');
+        $('wn-qshare').href='https://x.com/intent/post?text='+encodeURIComponent('I ranked "'+r[1]+'" ('+n+'/6, '+bn+'/5 badges) on the @CodeOrangeDevs White Noise workshop notes. Can your chats be switched off?')+'&url='+encodeURIComponent('https://codeorange.dev/session-notes/2026-11-11-sovereign-bitcoiner-workshop');}
+      $('wn-qnext').onclick=function(){qi++;if(qi<Q.length)qshow();else qend();};$('wn-qagain').onclick=function(){qi=0;res=[];qshow();};qshow();
+
+      document.querySelectorAll('.wb-card').forEach(function(c){c.onclick=function(){c.classList.toggle('on')}});
+      board();
+      })();
+      </script>
