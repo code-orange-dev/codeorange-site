@@ -25,7 +25,7 @@
       '.pp-stamps a{display:flex;flex-direction:column;align-items:center;justify-content:center;width:76px;height:76px;border-radius:50%;border:2px dashed rgba(255,255,255,.18);color:#858585;text-decoration:none;font:700 10px/1.2 "Plus Jakarta Sans",sans-serif;text-align:center;letter-spacing:.04em;text-transform:uppercase;transition:transform .15s ease,border-color .15s ease}' +
       '.pp-stamps a:hover{transform:translateY(-2px);border-color:#F7931A;color:#F7931A}.pp-stamps a small{font-size:9px;opacity:.8;margin-top:2px}' +
       '.pp-stamps a.got{border:2px solid #F7931A;color:#F7931A;background:rgba(247,147,26,.12);transform:rotate(-6deg)}.pp-stamps a.got:hover{transform:rotate(-6deg) translateY(-2px)}' +
-      '.pp-reset{margin-top:12px;background:none;border:0;padding:0;color:#858585;font:500 12px Inter,sans-serif;text-decoration:underline;cursor:pointer}' +
+      '.pp-share{display:flex;gap:16px;align-items:center;margin:12px 0 0;font-size:13px}.pp-share a{color:#F7931A;font-weight:700}.pp-reset{background:none;border:0;padding:0;color:#858585;font:500 12px Inter,sans-serif;text-decoration:underline;cursor:pointer}' +
       '.pp-got{border-color:#F7931A!important;color:#F7931A!important}' +
       '.pp-toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,140%);z-index:60;max-width:calc(100vw - 32px);padding:14px 18px;border-radius:12px;background:#141414;border:1px solid #F7931A;color:#F5F5F5;font:600 14px Inter,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,.6);transition:transform .35s ease;text-decoration:none;display:block}.pp-toast.go{transform:translate(-50%,0)}.pp-toast b{color:#F7931A}' +
       '@media (max-width:560px){.pp{padding:18px}.pp-stamps a{width:64px;height:64px;font-size:9px}}';
@@ -65,7 +65,7 @@
     box.innerHTML = '<div class="pp-top"><div><h2>Your builder passport</h2><p>' +
       (n ? (n >= list.length ? 'Every recap stamped. Come to the next session and collect a new one.' : 'Read a recap to the end to collect its stamp. Play the games for extra XP.') : 'Read a recap to the end to collect your first stamp. Play the games for extra XP.') +
       '</p></div><div class="pp-nums"><span><b>' + n + '/' + list.length + '</b>stamps</span><span><b>' + xp + '</b>XP</span><span><b>' + rank(n, list.length) + '</b>rank</span></div></div>' +
-      '<div class="pp-bar"><i></i></div><ol class="pp-stamps">' + stamps + '</ol>' + (n ? '<button type="button" class="pp-reset">Start over</button>' : '');
+      '<div class="pp-bar"><i></i></div><ol class="pp-stamps">' + stamps + '</ol>' + (n ? '<p class="pp-share"><a target="_blank" rel="noopener" href="https://x.com/intent/post?text=' + encodeURIComponent('My Bitcoin builder passport: ' + n + '/' + list.length + ' stamps, ' + xp + ' XP, rank ' + rank(n, list.length) + '. Free workshop notes and games from @CodeOrangeDevs') + '&url=' + encodeURIComponent('https://codeorange.dev/session-notes') + '">Share my rank on X</a><button type="button" class="pp-reset">Start over</button></p>' : '');
     setTimeout(function () { var b = box.querySelector('.pp-bar i'); if (b) b.style.width = (n / list.length * 100) + '%'; }, 60);
     var r = box.querySelector('.pp-reset'); if (r) r.addEventListener('click', function () { if (confirm('Clear your stamps on this device?')) { save({ s: {} }); draw(); } });
     list.forEach(function (s) {

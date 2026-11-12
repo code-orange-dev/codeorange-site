@@ -330,7 +330,7 @@ def recap_page(n, sessions=()):
     share = urllib.parse.quote(n.get('share_text') or f"{n['series']}: {n['title']} - notes from @CodeOrangeDevs", safe='')
     page += f'''    <div class="share-row"><strong>Share these notes:</strong><a href="https://x.com/intent/post?text={share}&amp;url={urllib.parse.quote('https://codeorange.dev' + url, safe='')}" target="_blank" rel="noopener">Post on X</a><button type="button" data-copy="https://codeorange.dev{url}">Copy link</button></div>
     {SCRIPT}
-    <script src="/assets/session-notes/passport.js?v=20261112b" data-slug="{n['slug']}" data-total="{len(sessions)}"></script>
+    <script src="/assets/session-notes/passport.js?v=20261112c" data-slug="{n['slug']}" data-total="{len(sessions)}"></script>
     {more_notes(n, sessions)}
     <p class="source-box">These notes are also on GitHub: {a(f"{REPO}/blob/main/{n['date'][:4]}/{n['slug']}.md", "code-orange-dev/session-notes")}. Free to share and reuse (CC0).</p>
   </article>
@@ -346,9 +346,9 @@ def quiz_html(n):
         <script type="application/json">{data}</script>
         <div class="qz-head"><p class="eyebrow">Test yourself</p><span class="qz-best"></span></div>
         <div class="qz-play"><div class="qz-bar"><i></i></div><p class="qz-n"></p><h3 class="qz-q"></h3><div class="qz-opts"></div><p class="qz-why" hidden></p><button type="button" class="button small qz-next" hidden>Next question</button></div>
-        <div class="qz-done" hidden><p class="qz-score"></p><p class="qz-msg"></p><div class="cta-row"><button type="button" class="ghost small qz-again">Play again</button><a class="ghost small" href="/session-notes#passport">See my passport</a></div></div>
+        <div class="qz-done" hidden><p class="qz-score"></p><p class="qz-msg"></p><div class="cta-row"><button type="button" class="ghost small qz-again">Play again</button><a class="ghost small qz-x" href="#" target="_blank" rel="noopener">Post my score on X</a><a class="ghost small" href="/session-notes#passport">See my passport</a></div></div>
       </section>
-      <script src="/assets/session-notes/quiz.js?v=20261112a" defer></script>
+      <script src="/assets/session-notes/quiz.js?v=20261112b" defer></script>
 '''
 
 def more_notes(n, sessions):
@@ -384,7 +384,7 @@ def list_page(sessions):
              '    <style>.article-card{grid-template-columns:minmax(0,420px) 1fr}.article-card img{height:auto;min-height:0;max-height:none;aspect-ratio:1200/630;align-self:center;object-fit:cover}.article-card [data-stamp][hidden]{display:none}@media (max-width:760px){.article-card{grid-template-columns:1fr}}</style>\n'
              '    <div id="passport" style="scroll-margin-top:96px"></div>\n'
              f'    <div class="article-list">\n{cards}    </div>\n  </section>\n'
-             f'  <script>window.SN_SESSIONS={data};</script>\n  <script src="/assets/session-notes/passport.js?v=20261112b"></script>\n' + final_cta)
+             f'  <script>window.SN_SESSIONS={data};</script>\n  <script src="/assets/session-notes/passport.js?v=20261112c"></script>\n' + final_cta)
     return page
 
 def resources_page(sessions):

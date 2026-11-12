@@ -29,6 +29,8 @@
     $('.qz-bar i').style.width = '100%';
     $('.qz-play').hidden = true; $('.qz-done').hidden = false;
     $('.qz-score').textContent = score + ' / ' + QS.length;
+    var t = document.title.split(' - ')[0], msg = 'I scored ' + score + '/' + QS.length + ' on the "' + t + '" quiz from @CodeOrangeDevs. Can you beat me?';
+    $('.qz-x').href = 'https://x.com/intent/post?text=' + encodeURIComponent(msg) + '&url=' + encodeURIComponent(location.origin + location.pathname);
     $('.qz-msg').textContent = score === QS.length ? 'Perfect. +' + score * 50 + ' XP in your builder passport.' : (score ? 'Nice. +' + score * 50 + ' XP in your builder passport. Go again for a perfect score?' : 'Have another look at the takeaways above and try again.');
   }
   $('.qz-next').addEventListener('click', function () { qi++; if (qi < QS.length) ask(); else end(); });
