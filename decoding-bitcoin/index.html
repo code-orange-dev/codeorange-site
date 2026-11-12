@@ -550,7 +550,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
         </div>
         <div class="cta-row">
           <a class="button mb-cta" href="#signup"><span>Sign up free</span><svg class="mb-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <a class="ghost mb-cta" href="#curriculum"><span>See the 10 weeks</span></a>
+          <a class="ghost mb-cta" href="#try"><span>Try week 1 in 2 min</span></a>
         </div>
         <p class="mb-cal" data-mb-cal>Add all 10 sessions to your calendar: <a data-mb-gcal href="#" target="_blank" rel="noopener">Google</a> · <a href="/assets/mastering-bitcoin/sessions.ics?v=20261010a" download="decoding-bitcoin-sessions.ics">Apple / Outlook</a></p>
       </div>
@@ -597,6 +597,117 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
       </div></div>
     </div>
   </div></section>
+
+  <section id="try" class="section-inner tw1" style="scroll-margin-top:96px">
+    <style>
+    .tw1-box{border:1px solid rgba(247,147,26,.35);border-radius:16px;background:linear-gradient(180deg,rgba(247,147,26,.07),rgba(20,20,20,.9));padding:28px;margin-top:28px}
+    .tw1-steps{display:flex;gap:8px;margin:0 0 20px;padding:0;list-style:none;flex-wrap:wrap}
+    .tw1-steps li{font:700 12px "Plus Jakarta Sans",sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.14);color:var(--dim)}
+    .tw1-steps li.on{border-color:var(--orange);color:var(--orange)}
+    .tw1-steps li.done{background:var(--orange);border-color:var(--orange);color:#0A0A0A}
+    .tw1-pane[hidden]{display:none}
+    .tw1-pane h3{margin:0 0 8px;font-size:22px}
+    .tw1-pane p{color:var(--muted);line-height:1.6;margin:0 0 14px}
+    .tw1-in{width:100%;min-height:52px;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.16);background:rgba(0,0,0,.5);color:var(--text);font:18px "Inter",sans-serif}
+    .tw1-in:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px rgba(247,147,26,.2)}
+    .tw1-hash{margin:14px 0 6px;padding:14px;border-radius:10px;background:#050505;border:1px solid rgba(255,255,255,.08);font:15px/1.5 ui-monospace,Menlo,Consolas,monospace;word-break:break-all;color:#8a8a8a;min-height:74px}
+    .tw1-hash b{color:var(--orange);font-weight:700}
+    .tw1-hash.win{border-color:var(--orange);box-shadow:0 0 0 3px rgba(247,147,26,.18)}
+    .tw1-meta{display:flex;gap:10px;flex-wrap:wrap;font:600 13px "Plus Jakarta Sans",sans-serif;color:var(--dim);margin-bottom:16px}
+    .tw1-meta span{padding:5px 10px;border-radius:8px;background:rgba(255,255,255,.05)}
+    .tw1-meta strong{color:var(--text)}
+    .tw1-goal{padding:12px 14px;border-radius:10px;border:1px dashed rgba(247,147,26,.5);color:var(--text);margin:0 0 16px;line-height:1.5}
+    .tw1-goal.ok{border-style:solid;background:rgba(247,147,26,.12)}
+    .tw1-opts{display:grid;gap:10px;margin:0 0 14px}
+    .tw1-opts button{text-align:left;min-height:48px;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.16);background:rgba(0,0,0,.4);color:var(--text);font:15px "Inter",sans-serif;cursor:pointer}
+    .tw1-opts button:hover:not(:disabled){border-color:var(--orange)}
+    .tw1-opts button.right{border-color:#4ade80;background:rgba(74,222,128,.12)}
+    .tw1-opts button.wrong{border-color:#f87171;background:rgba(248,113,113,.1)}
+    .tw1-why{padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.05);color:var(--text)!important}
+    .tw1-score{font:800 44px "Plus Jakarta Sans",sans-serif;color:var(--orange);margin:0 0 6px}
+    .tw1-row{display:flex;gap:10px;flex-wrap:wrap}
+    @media (max-width:760px){.tw1-box{padding:20px}.tw1-pane h3{font-size:19px}}
+    </style>
+    <div class="split"><div><p class="eyebrow">Try it first</p><h2>Week 1 in 2 minutes.</h2></div><p class="lead">Not sure it's for you? Mine a tiny hash and answer three questions. No sign-up needed.</p></div>
+    <div class="tw1-box" id="tw1">
+      <ol class="tw1-steps" aria-hidden="true"><li class="on">1 · Hash lab</li><li>2 · Quick quiz</li><li>3 · Your result</li></ol>
+      <div class="tw1-pane" data-pane="0">
+        <h3>Type anything. Watch the fingerprint.</h3>
+        <p>This is SHA-256, the hash function inside Bitcoin. Change one letter and the whole fingerprint changes.</p>
+        <input class="tw1-in" id="tw1-in" type="text" maxlength="80" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Type a word, then change one letter" aria-label="Text to hash">
+        <div class="tw1-hash" id="tw1-hash" aria-live="off">Your hash appears here.</div>
+        <div class="tw1-meta"><span>Changed since last: <strong id="tw1-diff">–</strong> of 64</span><span>Tries: <strong id="tw1-tries">0</strong></span></div>
+        <p class="tw1-goal" id="tw1-goal"><strong>Your mission:</strong> keep changing the text until the hash starts with <b>0</b>. That hunt is what miners do, just much harder.</p>
+        <div class="tw1-row"><button type="button" class="button" id="tw1-next0" disabled>Find a 0 to continue</button><button type="button" class="ghost" id="tw1-skip">Skip to the quiz</button></div>
+      </div>
+      <div class="tw1-pane" data-pane="1" hidden>
+        <h3 id="tw1-q"></h3>
+        <div class="tw1-opts" id="tw1-opts"></div>
+        <p class="tw1-why" id="tw1-why" hidden></p>
+        <button type="button" class="button" id="tw1-next1" hidden>Next</button>
+      </div>
+      <div class="tw1-pane" data-pane="2" hidden>
+        <p class="tw1-score" id="tw1-score"></p>
+        <h3 id="tw1-verdict"></h3>
+        <p>That was a taste of week 1. Nine more weeks take you through transactions, Script and Taproot, with a group to ask when you're stuck.</p>
+        <div class="tw1-row"><a class="button mb-cta" href="#signup" id="tw1-join">Sign me up, it's free</a><button type="button" class="ghost" id="tw1-again">Play again</button></div>
+      </div>
+    </div>
+    <script>
+    (function(){
+      var root=document.getElementById('tw1');if(!root)return;
+      var $=function(id){return document.getElementById(id);};
+      var panes=root.querySelectorAll('.tw1-pane'),steps=root.querySelectorAll('.tw1-steps li');
+      function show(i){for(var k=0;k<panes.length;k++){panes[k].hidden=k!==i;steps[k].className=k<i?'done':(k===i?'on':'');}}
+      var QS=[
+        {q:"You changed one letter. What happened to the hash?",o:["Only the last few characters changed","Almost all of it changed, in a way you can't predict","Nothing, the hash only depends on length"],a:1,w:"That's the avalanche effect. A tiny change scrambles the whole output, which is why a hash works as a fingerprint."},
+        {q:"You hunted for a hash starting with 0. Why do miners do the same hunt?",o:["To prove they spent real work, so history is costly to rewrite","To encrypt the transactions in a block","To make blocks smaller"],a:0,w:"That's proof of work. Nobody can shortcut the hunt, so a valid hash proves energy was spent. Bitcoin just asks for many more zeros."},
+        {q:"What does \"don't trust, verify\" mean in practice?",o:["Only use exchanges with good reviews","Ask several friends before sending bitcoin","Run your own node so you check every rule yourself"],a:2,w:"A full node checks every block and transaction against the rules, so you don't rely on anyone else's word."}
+      ];
+      var qi=0,score=0,tries=0,prev='',won=false,seq=0;
+      function hex(buf){var b=new Uint8Array(buf),s='';for(var i=0;i<b.length;i++)s+=(b[i]<16?'0':'')+b[i].toString(16);return s;}
+      function render(h){
+        var out='',d=0;
+        for(var i=0;i<64;i++){var ch=h.charAt(i);if(prev&&prev.charAt(i)!==ch){d++;out+='<b>'+ch+'</b>';}else out+=ch;}
+        $('tw1-hash').innerHTML=out;$('tw1-diff').textContent=prev?d:'–';prev=h;
+        tries++;$('tw1-tries').textContent=tries;
+        if(h.charAt(0)==='0'&&!won){won=true;$('tw1-hash').className='tw1-hash win';
+          $('tw1-goal').className='tw1-goal ok';$('tw1-goal').innerHTML='<strong>Found one in '+tries+(tries===1?' try':' tries')+'.</strong> You just did a tiny proof of work. A real block needs about 19 zeros in a row.';
+          $('tw1-next0').disabled=false;$('tw1-next0').textContent='Nice. On to the quiz';}
+      }
+      $('tw1-in').addEventListener('input',function(){
+        var v=this.value,me=++seq;
+        if(!v){$('tw1-hash').textContent='Your hash appears here.';prev='';$('tw1-diff').textContent='–';return;}
+        if(!(window.crypto&&crypto.subtle)){$('tw1-hash').textContent='Your browser blocks hashing here. Skip to the quiz.';return;}
+        crypto.subtle.digest('SHA-256',new TextEncoder().encode(v)).then(function(buf){if(me===seq)render(hex(buf));});
+      });
+      function ask(){
+        var c=QS[qi];$('tw1-q').textContent=(qi+1)+' of '+QS.length+'. '+c.q;
+        var box=$('tw1-opts');box.innerHTML='';$('tw1-why').hidden=true;$('tw1-next1').hidden=true;
+        c.o.forEach(function(t,i){var b=document.createElement('button');b.type='button';b.textContent=t;
+          b.addEventListener('click',function(){
+            var all=box.querySelectorAll('button');for(var k=0;k<all.length;k++){all[k].disabled=true;if(k===c.a)all[k].className='right';}
+            if(i===c.a)score++;else b.className='wrong';
+            $('tw1-why').textContent=(i===c.a?'Correct. ':'Not quite. ')+c.w;$('tw1-why').hidden=false;
+            $('tw1-next1').textContent=qi===QS.length-1?'See my result':'Next';$('tw1-next1').hidden=false;$('tw1-next1').focus();
+          });box.appendChild(b);});
+      }
+      function quiz(){qi=0;score=0;show(1);ask();}
+      $('tw1-next0').addEventListener('click',quiz);$('tw1-skip').addEventListener('click',quiz);
+      $('tw1-next1').addEventListener('click',function(){
+        qi++;if(qi<QS.length){ask();return;}
+        $('tw1-score').textContent=score+' / '+QS.length;
+        $('tw1-verdict').textContent=score===QS.length?'Perfect. You already think like a builder.':(score>0?'Good start. The cohort fills in the rest.':'Everyone starts here. That is what the cohort is for.');
+        show(2);
+      });
+      $('tw1-again').addEventListener('click',function(){tries=0;prev='';won=false;$('tw1-in').value='';$('tw1-tries').textContent='0';$('tw1-diff').textContent='–';
+        $('tw1-hash').className='tw1-hash';$('tw1-hash').textContent='Your hash appears here.';
+        $('tw1-goal').className='tw1-goal';$('tw1-goal').innerHTML='<strong>Your mission:</strong> keep changing the text until the hash starts with <b>0</b>. That hunt is what miners do, just much harder.';
+        $('tw1-next0').disabled=true;$('tw1-next0').textContent='Find a 0 to continue';show(0);});
+      $('tw1-join').addEventListener('click',function(){setTimeout(function(){var f=document.querySelector('#mb-signup input[name=email]');if(f)try{f.focus({preventScroll:true});}catch(e){}},600);});
+    })();
+    </script>
+  </section>
 
   <section class="section-inner">
     <div class="split"><div><p class="eyebrow">How it works</p><h2>Four steps a week.</h2></div><p class="lead">No accounts. Signing up gives you a personal link to tick things off.</p></div>
