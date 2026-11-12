@@ -608,6 +608,105 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
     </div>
   </section>
 
+  <section id="warmup" class="section-inner sp" style="scroll-margin-top:96px">
+    <style>
+    .sp-box{margin-top:28px;border:1px solid rgba(247,147,26,.35);border-radius:16px;background:linear-gradient(180deg,rgba(247,147,26,.07),rgba(20,20,20,.92));padding:28px}
+    .sp-steps{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px;padding:0;list-style:none}
+    .sp-steps li{font:700 12px "Plus Jakarta Sans",sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.14);color:var(--dim)}
+    .sp-steps li.on{border-color:var(--orange);color:var(--orange)}.sp-steps li.done{background:var(--orange);border-color:var(--orange);color:#0A0A0A}
+    .sp-pane[hidden]{display:none}.sp-pane h3{margin:0 0 8px;font-size:22px}.sp-pane>p{color:var(--muted);line-height:1.6;margin:0 0 16px}
+    .sp-toggle{display:inline-flex;border:1px solid rgba(255,255,255,.16);border-radius:10px;overflow:hidden;margin:0 0 16px}
+    .sp-toggle button{border:0;background:transparent;color:var(--muted);font:700 13px "Plus Jakarta Sans",sans-serif;padding:10px 14px;cursor:pointer}
+    .sp-toggle button.on{background:var(--orange);color:#0A0A0A}
+    .sp-chain{display:grid;gap:8px;margin:0 0 14px}
+    .sp-tx{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:10px 12px;border-radius:10px;background:#050505;border:1px solid rgba(255,255,255,.08);font:13px/1.4 ui-monospace,Menlo,Consolas,monospace}
+    .sp-tx .who{font:700 12px "Plus Jakarta Sans",sans-serif;color:var(--dim);min-width:52px}
+    .sp-tx .addr{color:#8a8a8a;overflow-wrap:anywhere}.sp-tx .amt{color:var(--text);white-space:nowrap}
+    .sp-tx.same .addr{color:#f87171}.sp-tx.found{border-color:#4ade80}.sp-tx.found .addr{color:#4ade80}
+    .sp-verdict{padding:12px 14px;border-radius:10px;line-height:1.55;margin:0 0 16px;color:var(--text)}
+    .sp-verdict.bad{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.4)}.sp-verdict.good{background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.4)}
+    .sp-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .sp-opts{display:grid;gap:10px;margin:0 0 14px}
+    .sp-opts button{text-align:left;min-height:48px;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.16);background:rgba(0,0,0,.4);color:var(--text);font:15px "Inter",sans-serif;cursor:pointer}
+    .sp-opts button:hover:not(:disabled){border-color:var(--orange)}.sp-opts button.right{border-color:#4ade80;background:rgba(74,222,128,.12)}.sp-opts button.wrong{border-color:#f87171;background:rgba(248,113,113,.1)}
+    .sp-why{padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.05);color:var(--text)!important}
+    .sp-pane .sp-score{font:800 44px "Plus Jakarta Sans",sans-serif;color:var(--orange);margin:0 0 6px}
+    .sp-scan{font:600 13px "Plus Jakarta Sans",sans-serif;color:var(--dim);margin:0 0 12px}
+    @media (max-width:760px){.sp-box{padding:20px}.sp-tx{grid-template-columns:auto 1fr auto;gap:8px;padding:9px 10px;font-size:12px}.sp-tx .who{min-width:0}}
+    </style>
+    <div class="split"><div><p class="eyebrow">Warm-up for Tuesday</p><h2>Silent Payments in 3 minutes.</h2></div><p class="lead">Play this before the next session and you'll walk in knowing why one reusable address can stay private. No sign-up, nothing to install.</p></div>
+    <div class="sp-box" id="sp">
+      <ol class="sp-steps" aria-hidden="true"><li class="on">1 · The leak</li><li>2 · The fix</li><li>3 · Quick quiz</li></ol>
+      <div class="sp-pane" data-p="0">
+        <h3>You post one donation address. Four people pay you.</h3>
+        <p>This is what anyone sees on a block explorer. Flip the switch and compare.</p>
+        <div class="sp-toggle" role="group" aria-label="Address type"><button type="button" class="on" data-m="old">Normal address</button><button type="button" data-m="sp">Silent Payments</button></div>
+        <div class="sp-chain" id="sp-chain"></div>
+        <p class="sp-verdict" id="sp-verdict"></p>
+        <div class="sp-row"><button type="button" class="button" id="sp-n0">How does that work?</button></div>
+      </div>
+      <div class="sp-pane" data-p="1" hidden>
+        <h3>Only you can find your payments.</h3>
+        <p>Each payer mixes their own key with your published address to make a fresh, one-time address. You use your secret scan key to check new transactions and spot the ones that are yours. Nobody else can link them.</p>
+        <p class="sp-scan" id="sp-scanmsg">New transactions in the latest block: 0 of 8 checked</p>
+        <div class="sp-chain" id="sp-block"></div>
+        <div class="sp-row"><button type="button" class="button" id="sp-scan">Scan with my key</button><button type="button" class="ghost" id="sp-n1" hidden>On to the quiz</button></div>
+      </div>
+      <div class="sp-pane" data-p="2" hidden>
+        <h3 id="sp-q"></h3>
+        <div class="sp-opts" id="sp-opts"></div>
+        <p class="sp-why" id="sp-why" hidden></p>
+        <button type="button" class="button" id="sp-n2" hidden>Next</button>
+      </div>
+      <div class="sp-pane" data-p="3" hidden>
+        <p class="sp-score" id="sp-score"></p>
+        <h3 id="sp-verd2"></h3>
+        <p>On Tuesday we build it for real: make a Silent Payment address, send to it, and find the payment with the scan key.</p>
+        <div class="sp-row"><a class="button" id="sp-cal" href="/calendar" target="_blank" rel="noopener">Add Tuesday's session to my calendar</a><a class="ghost" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord</a><button type="button" class="ghost" id="sp-again">Play again</button></div>
+      </div>
+    </div>
+    <script>
+    (function(){
+      var root=document.getElementById('sp');if(!root)return;
+      var $=function(i){return document.getElementById(i);},panes=root.querySelectorAll('.sp-pane'),steps=root.querySelectorAll('.sp-steps li');
+      function show(i){for(var k=0;k<panes.length;k++)panes[k].hidden=k!==i;for(k=0;k<steps.length;k++)steps[k].className=k<Math.min(i,2)?'done':(k===Math.min(i,2)?'on':'');if(i===3)steps[2].className='done';}
+      function sh(a){return a.slice(0,18)+'…'+a.slice(-8);}function rnd(n){var c='023456789acdefghjklmnpqrstuvwxyz',s='';for(var i=0;i<n;i++)s+=c[Math.floor(Math.random()*c.length)];return s;}
+      var PAY=[['Alice','50,000 sats'],['Bob','120,000 sats'],['Carol','21,000 sats'],['Dan','250,000 sats']],ME='bc1q'+rnd(34),fresh=PAY.map(function(){return 'bc1p'+rnd(54);});
+      function chain(m){
+        $('sp-chain').innerHTML=PAY.map(function(p,i){return '<div class="sp-tx'+(m==='old'?' same':'')+'"><span class="who">Payment '+(i+1)+'</span><span class="addr">'+sh(m==='old'?ME:fresh[i])+'</span><span class="amt">'+p[1]+'</span></div>';}).join('');
+        var v=$('sp-verdict');
+        if(m==='old'){v.className='sp-verdict bad';v.innerHTML='<strong>Same address four times.</strong> Anyone can add it up: 441,000 sats, when each payment arrived, and where you spend it next. Your payers can see each other too.';}
+        else{v.className='sp-verdict good';v.innerHTML='<strong>Four different addresses.</strong> They look like ordinary unrelated payments. You still published just one address, and there is no extra notification transaction.';}
+      }
+      root.querySelectorAll('.sp-toggle button').forEach(function(b){b.addEventListener('click',function(){root.querySelectorAll('.sp-toggle button').forEach(function(x){x.classList.toggle('on',x===b);});chain(b.dataset.m);});});
+      chain('old');
+      var mine=[1,4,6];
+      function block(){$('sp-block').innerHTML=[0,1,2,3,4,5,6,7].map(function(i){return '<div class="sp-tx" data-i="'+i+'"><span class="who">tx '+(i+1)+'</span><span class="addr">'+sh('bc1p'+rnd(54))+'</span><span class="amt">?</span></div>';}).join('');$('sp-scanmsg').textContent='New transactions in the latest block: 0 of 8 checked';$('sp-scan').disabled=false;$('sp-scan').style.display='';$('sp-n1').hidden=true;}
+      $('sp-n0').addEventListener('click',function(){block();show(1);});
+      $('sp-scan').addEventListener('click',function(){
+        var btn=this;btn.disabled=true;var rows=$('sp-block').children,i=0,found=0;
+        (function next(){if(i>=rows.length){$('sp-scanmsg').textContent='Done: 8 of 8 checked, '+found+' payments are yours. Scanning every new block is the trade-off.';$('sp-n1').hidden=false;$('sp-n1').className='button';btn.style.display='none';return;}
+          var r=rows[i];if(mine.indexOf(i)>=0){found++;r.className='sp-tx found';r.querySelector('.amt').textContent='yours';}else{r.querySelector('.amt').textContent='not yours';}
+          i++;$('sp-scanmsg').textContent='Scanning: '+i+' of 8 checked, '+found+' found';setTimeout(next,260);})();
+      });
+      var QS=[
+        {q:'With Silent Payments, what does the receiver publish?',o:['One reusable address, used for every payment','A new address for every payer','Their whole wallet history'],a:0,w:'One sp1 address works forever, yet every payment lands on a fresh address only the receiver can link.'},
+        {q:'On the blockchain, what does a silent payment look like?',o:['A specially marked transaction','A normal taproot output, not linked to the published address','A Lightning invoice'],a:1,w:'Outputs look like any other taproot payment, so chain analysis has nothing special to spot.'},
+        {q:'What is the trade-off?',o:['The sender pays double fees','Payments take a day to confirm','The receiver has to scan new transactions to find their payments'],a:2,w:'Scanning costs work, which is why light wallets and indexers for Silent Payments are an active area to contribute to.'}];
+      var qi=0,score=0;
+      function ask(){var c=QS[qi];$('sp-q').textContent=(qi+1)+' of 3. '+c.q;var box=$('sp-opts');box.innerHTML='';$('sp-why').hidden=true;$('sp-n2').hidden=true;
+        c.o.forEach(function(t,i){var b=document.createElement('button');b.type='button';b.textContent=t;b.addEventListener('click',function(){var all=box.querySelectorAll('button');for(var k=0;k<all.length;k++){all[k].disabled=true;if(k===c.a)all[k].className='right';}if(i===c.a)score++;else b.className='wrong';$('sp-why').textContent=(i===c.a?'Correct. ':'Not quite. ')+c.w;$('sp-why').hidden=false;$('sp-n2').textContent=qi===2?'See my result':'Next';$('sp-n2').hidden=false;});box.appendChild(b);});}
+      $('sp-n1').addEventListener('click',function(){qi=0;score=0;show(2);ask();});
+      $('sp-n2').addEventListener('click',function(){qi++;if(qi<3){ask();return;}$('sp-score').textContent=score+' / 3';$('sp-verd2').textContent=score===3?'Perfect. You are ready for Tuesday.':'Good start. Tuesday fills in the rest.';show(3);});
+      $('sp-again').addEventListener('click',function(){root.querySelectorAll('.sp-toggle button').forEach(function(x){x.classList.toggle('on',x.dataset.m==='old');});chain('old');show(0);});
+      try{fetch('/api/calendar').then(function(r){return r.ok?r.json():null;}).then(function(d){if(!d||!d.events)return;var now=Date.now(),e=d.events.filter(function(x){return /privacy track/i.test(x.title)&&Date.parse(x.end)>now;}).sort(function(a,b){return Date.parse(a.start)-Date.parse(b.start);})[0];if(!e)return;
+        var f=function(t){return new Date(t).toISOString().replace(/[-:]/g,'').replace(/\.\d+/,'');};
+        $('sp-cal').href='https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(e.title+' (Code Orange)')+'&dates='+f(e.start)+'/'+f(e.end)+'&details='+encodeURIComponent('Free session. Join on Discord: '+(e.url||'https://codeorange.dev/privacy-track'));
+        $('sp-cal').textContent='Add '+new Intl.DateTimeFormat('en-GB',{weekday:'long',day:'numeric',month:'short',timeZone:'UTC'}).format(new Date(e.start))+' to my calendar';}).catch(function(){});}catch(e){}
+    })();
+    </script>
+  </section>
+
   <section id="sessions" class="section-inner mb-bg mb-bg-right" style="--mb-bg:url(/assets/programs/privacy-workshop-roundtable.webp);scroll-margin-top:96px">
     <div class="split"><div><p class="eyebrow">Season one</p><h2>12 sessions, one at a time.</h2></div><p class="lead">Each session stands alone, so you can drop in anywhere. Tap one to learn the idea, try it yourself, and see what we do live.</p></div>
     <div class="mb-weeks">
