@@ -308,7 +308,7 @@ def recap_page(n, sessions=()):
         <p class="nx-msg" role="status" aria-live="polite" hidden></p>
       </div>
     </aside>
-    <script src="/assets/session-notes/next.js?v=20261112a" defer></script>
+    <script src="/assets/session-notes/next.js?v=20261112b" defer></script>
 '''
     share = urllib.parse.quote(n.get('share_text') or f"{n['series']}: {n['title']} - notes from @CodeOrangeDevs", safe='')
     page += f'''    <div class="share-row"><strong>Share these notes:</strong><a href="https://x.com/intent/post?text={share}&amp;url={urllib.parse.quote('https://codeorange.dev' + url, safe='')}" target="_blank" rel="noopener">Post on X</a><button type="button" data-copy="https://codeorange.dev{url}">Copy link</button></div>
