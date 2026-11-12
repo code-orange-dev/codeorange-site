@@ -7,6 +7,30 @@
     <language>en</language>
     <atom:link href="https://codeorange.dev/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>Why Bitcoin Needs Educators</title>
+      <link>https://codeorange.dev/articles/why-bitcoin-needs-educators</link>
+      <guid isPermaLink="true">https://codeorange.dev/articles/why-bitcoin-needs-educators</guid>
+      <description>Code on GitHub changes nothing until people know how to use it safely. Why teaching, writing guides and running study groups are real open-source contributions to Bitcoin.</description>
+      <dc:creator>Andy</dc:creator>
+      <pubDate>Thu, 12 Nov 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Silent Payments Explained Simply: One Bitcoin Address, No Trail</title>
+      <link>https://codeorange.dev/articles/silent-payments-bitcoin</link>
+      <guid isPermaLink="true">https://codeorange.dev/articles/silent-payments-bitcoin</guid>
+      <description>Silent payments in Bitcoin, explained simply: how one reusable address can receive many payments that nobody can link together, what the catch is, and how to try it.</description>
+      <dc:creator>Andy</dc:creator>
+      <pubDate>Thu, 12 Nov 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>How to Make Your First Contribution to Bitcoin Core</title>
+      <link>https://codeorange.dev/articles/contribute-to-bitcoin-core</link>
+      <guid isPermaLink="true">https://codeorange.dev/articles/contribute-to-bitcoin-core</guid>
+      <description>How to contribute to Bitcoin Core for the first time: build it, run the tests, review and test pull requests, and open your first small PR, step by step and in plain English.</description>
+      <dc:creator>Andy</dc:creator>
+      <pubDate>Thu, 12 Nov 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>Multisig vs Hardware Wallet: Choosing Your Bitcoin Self-Custody Setup</title>
       <link>https://codeorange.dev/articles/multisig-vs-hardware-wallet</link>
       <guid isPermaLink="true">https://codeorange.dev/articles/multisig-vs-hardware-wallet</guid>
