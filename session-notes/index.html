@@ -346,6 +346,23 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 .nx-msg { margin: 0; color: var(--orange); font-size: 13px; }
 @media (max-width: 860px) { .next-card.nx { grid-template-columns: 1fr; } }
 @media (max-width: 420px) { .nx-list li { grid-template-columns: 46px 1fr; } .nx-add { grid-column: 2; justify-self: start; } }
+.qz { margin: 40px 0; padding: 24px; border: 1px solid rgba(247,147,26,.4); border-radius: 16px; background: linear-gradient(145deg, rgba(247,147,26,.1), rgba(20,20,20,.92)); }
+.qz-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.qz-head .eyebrow { margin: 0; }
+.qz-best { color: var(--dim); font: 600 12px "Plus Jakarta Sans", sans-serif; }
+.qz-bar { height: 6px; border-radius: 99px; background: rgba(255,255,255,.08); margin: 14px 0; overflow: hidden; }
+.qz-bar i { display: block; height: 100%; width: 0; background: var(--orange); transition: width .4s ease; }
+.qz-n { margin: 0 0 4px; color: var(--dim); font: 600 12px "Plus Jakarta Sans", sans-serif; }
+.prose .qz-q { margin: 0 0 14px; font-size: 20px; line-height: 1.35; }
+.qz-opts { display: grid; gap: 10px; margin-bottom: 14px; }
+.qz-opts button { text-align: left; min-height: 48px; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,.16); background: rgba(0,0,0,.4); color: var(--text); font: 15px/1.45 "Inter", sans-serif; cursor: pointer; }
+.qz-opts button:hover:not(:disabled) { border-color: var(--orange); }
+.qz-opts button.right { border-color: #4ade80; background: rgba(74,222,128,.12); }
+.qz-opts button.wrong { border-color: #f87171; background: rgba(248,113,113,.1); }
+.prose .qz-why { padding: 12px 14px; border-radius: 10px; background: rgba(255,255,255,.05); font-size: 15px; margin: 0 0 14px; }
+.qz button.button, .qz button.ghost { border: 0; cursor: pointer; font: inherit; font-weight: 700; }
+.qz button.ghost { border: 1px solid rgba(255,255,255,.16); background: transparent; }
+.prose .qz-score { margin: 10px 0 4px; font: 800 44px "Plus Jakarta Sans", sans-serif; color: var(--orange); }
 @media (max-width: 700px) { .chapters ol { grid-template-columns: 1fr; } .next-card { grid-template-columns: 1fr; } .quote p { font-size: 19px; } }
 
 @media (max-width: 560px) { .viz { padding: 18px; font-size: 15px; } .q-grid { grid-template-columns: 1fr; } .flow-hop { flex: 0 0 100%; text-align: center; } .flow-step { flex-basis: 100%; } .flow-hop i { display: inline-block; font-style: normal; transform: rotate(90deg); } }
@@ -437,7 +454,7 @@ a.res:hover { border-color: rgba(247,147,26,.55); transform: translateY(-2px); }
           <span class="pill orange">AI agents</span>
           <h3 style="margin-top:16px">Agentic Engineering & Coding Workshop: Agentic engineering and vibe coding</h3>
           <p>Four builders showed what they made with AI agents this month: a self-custody simulator, mempool visualizers that rain lightning tips, a Bitcoin open-source issue finder and a voice-driven orchestrator for coding agents.</p>
-          <div class="meta"><span class="pill"><time datetime="2026-10-21">October 21, 2026</time></span><span class="pill">Hosted by Andy</span><span class="pill">&#9654; Recording</span><span class="pill" data-stamp="2026-10-21-agentic-engineering" hidden></span></div>
+          <div class="meta"><span class="pill"><time datetime="2026-10-21">October 21, 2026</time></span><span class="pill">Hosted by Andy</span><span class="pill">&#9654; Recording</span><span class="pill orange">&#127918; Playable</span><span class="pill" data-stamp="2026-10-21-agentic-engineering" hidden></span></div>
         </div>
       </a>
       <a class="article-card" href="/session-notes/2026-10-20-privacy-track">
@@ -446,7 +463,7 @@ a.res:hover { border-color: rgba(247,147,26,.55); transform: translateY(-2px); }
           <span class="pill orange">Privacy</span>
           <h3 style="margin-top:16px">Privacy Track: PayJoin v2, tested live</h3>
           <p>PayJoin part 2: how v2 hides your payment and your IP from the servers that pass the messages, what broke when we tried it live, and where you can help fix it.</p>
-          <div class="meta"><span class="pill"><time datetime="2026-10-20">October 20, 2026</time></span><span class="pill">Hosted by Razor</span><span class="pill">&#9654; Recording</span><span class="pill" data-stamp="2026-10-20-privacy-track" hidden></span></div>
+          <div class="meta"><span class="pill"><time datetime="2026-10-20">October 20, 2026</time></span><span class="pill">Hosted by Razor</span><span class="pill">&#9654; Recording</span><span class="pill orange">&#127918; Playable</span><span class="pill" data-stamp="2026-10-20-privacy-track" hidden></span></div>
         </div>
       </a>
       <a class="article-card" href="/session-notes/2026-10-16-self-custody-workshop">
@@ -455,7 +472,7 @@ a.res:hover { border-color: rgba(247,147,26,.55); transform: translateY(-2px); }
           <span class="pill orange">Self-custody</span>
           <h3 style="margin-top:16px">Self-Custody Workshop: Build a multi-vendor multisig</h3>
           <p>A live 2-of-3 multisig with Trezor, Ledger and Coldcard in Sparrow, a restore in Nunchuk, and every link shared on the call.</p>
-          <div class="meta"><span class="pill"><time datetime="2026-10-16">October 16, 2026</time></span><span class="pill">Hosted by Andy</span><span class="pill">&#9654; Recording</span><span class="pill" data-stamp="2026-10-16-self-custody-workshop" hidden></span></div>
+          <div class="meta"><span class="pill"><time datetime="2026-10-16">October 16, 2026</time></span><span class="pill">Hosted by Andy</span><span class="pill">&#9654; Recording</span><span class="pill orange">&#127918; Playable</span><span class="pill" data-stamp="2026-10-16-self-custody-workshop" hidden></span></div>
         </div>
       </a>
       <a class="article-card" href="/session-notes/2026-10-14-sovereign-bitcoiner-workshop">
@@ -464,7 +481,7 @@ a.res:hover { border-color: rgba(247,147,26,.55); transform: translateY(-2px); }
           <span class="pill orange">Privacy</span>
           <h3 style="margin-top:16px">Sovereign Bitcoiner Workshop: Why Privacy Matters</h3>
           <p>Why “nothing to hide” is the wrong question, a live Lightning privacy test, and every link shared on the call.</p>
-          <div class="meta"><span class="pill"><time datetime="2026-10-14">October 14, 2026</time></span><span class="pill">Hosted by Razor</span><span class="pill">&#9654; Recording</span><span class="pill" data-stamp="2026-10-14-sovereign-bitcoiner-workshop" hidden></span></div>
+          <div class="meta"><span class="pill"><time datetime="2026-10-14">October 14, 2026</time></span><span class="pill">Hosted by Razor</span><span class="pill">&#9654; Recording</span><span class="pill orange">&#127918; Playable</span><span class="pill" data-stamp="2026-10-14-sovereign-bitcoiner-workshop" hidden></span></div>
         </div>
       </a>
       <a class="article-card" href="/session-notes/2026-10-08-code-review-club">
@@ -473,7 +490,7 @@ a.res:hover { border-color: rgba(247,147,26,.55); transform: translateY(-2px); }
           <span class="pill orange">Code review</span>
           <h3 style="margin-top:16px">Code Review Club: Your First Code Review</h3>
           <p>Our first Code Review Club: a Nostr identity in one command, then a real Bitcoin pull request reviewed live, step by step.</p>
-          <div class="meta"><span class="pill"><time datetime="2026-10-08">October 8, 2026</time></span><span class="pill">Hosted by Alex and Razor</span><span class="pill">&#9654; Recording</span><span class="pill" data-stamp="2026-10-08-code-review-club" hidden></span></div>
+          <div class="meta"><span class="pill"><time datetime="2026-10-08">October 8, 2026</time></span><span class="pill">Hosted by Alex and Razor</span><span class="pill">&#9654; Recording</span><span class="pill orange">&#127918; Playable</span><span class="pill" data-stamp="2026-10-08-code-review-club" hidden></span></div>
         </div>
       </a>
       <a class="article-card" href="/session-notes/2026-10-06-privacy-track">
@@ -482,13 +499,13 @@ a.res:hover { border-color: rgba(247,147,26,.55); transform: translateY(-2px); }
           <span class="pill orange">Privacy</span>
           <h3 style="margin-top:16px">Privacy Track: How PayJoin Works</h3>
           <p>The first Privacy Track: why Bitcoin needs privacy, how PayJoin fools chain analysis, and a real PayJoin sent live on the call.</p>
-          <div class="meta"><span class="pill"><time datetime="2026-10-06">October 6, 2026</time></span><span class="pill">Hosted by Razor</span><span class="pill">&#9654; Recording</span><span class="pill" data-stamp="2026-10-06-privacy-track" hidden></span></div>
+          <div class="meta"><span class="pill"><time datetime="2026-10-06">October 6, 2026</time></span><span class="pill">Hosted by Razor</span><span class="pill">&#9654; Recording</span><span class="pill orange">&#127918; Playable</span><span class="pill" data-stamp="2026-10-06-privacy-track" hidden></span></div>
         </div>
       </a>
     </div>
   </section>
   <script>window.SN_SESSIONS=[{"slug": "2026-11-11-sovereign-bitcoiner-workshop", "short": "Sovereign", "day": "11 Nov", "title": "Sovereign Bitcoiner Workshop: White Noise: private chats on Nostr"}, {"slug": "2026-10-28-bitcoin-reading-club", "short": "Reading Club", "day": "28 Oct", "title": "Bitcoin Reading Club: The whitepaper abstract, line by line"}, {"slug": "2026-10-21-agentic-engineering", "short": "Agentic", "day": "21 Oct", "title": "Agentic Engineering & Coding Workshop: Agentic engineering and vibe coding"}, {"slug": "2026-10-20-privacy-track", "short": "Privacy Track", "day": "20 Oct", "title": "Privacy Track: PayJoin v2, tested live"}, {"slug": "2026-10-16-self-custody-workshop", "short": "Self-custody", "day": "16 Oct", "title": "Self-Custody Workshop: Build a multi-vendor multisig"}, {"slug": "2026-10-14-sovereign-bitcoiner-workshop", "short": "Sovereign", "day": "14 Oct", "title": "Sovereign Bitcoiner Workshop: Why Privacy Matters"}, {"slug": "2026-10-08-code-review-club", "short": "Review Club", "day": "8 Oct", "title": "Code Review Club: Your First Code Review"}, {"slug": "2026-10-06-privacy-track", "short": "Privacy Track", "day": "6 Oct", "title": "Privacy Track: How PayJoin Works"}];</script>
-  <script src="/assets/session-notes/passport.js?v=20261112a"></script>
+  <script src="/assets/session-notes/passport.js?v=20261112b"></script>
   <section class="section-inner final-cta">
   <p class="eyebrow">Bitcoin Only</p>
   <h2>Ready to become a Bitcoin builder?</h2>

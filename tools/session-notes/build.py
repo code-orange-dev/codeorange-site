@@ -130,6 +130,23 @@ style = src[src.index('<style>'):head_end] + """
 .nx-msg { margin: 0; color: var(--orange); font-size: 13px; }
 @media (max-width: 860px) { .next-card.nx { grid-template-columns: 1fr; } }
 @media (max-width: 420px) { .nx-list li { grid-template-columns: 46px 1fr; } .nx-add { grid-column: 2; justify-self: start; } }
+.qz { margin: 40px 0; padding: 24px; border: 1px solid rgba(247,147,26,.4); border-radius: 16px; background: linear-gradient(145deg, rgba(247,147,26,.1), rgba(20,20,20,.92)); }
+.qz-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.qz-head .eyebrow { margin: 0; }
+.qz-best { color: var(--dim); font: 600 12px "Plus Jakarta Sans", sans-serif; }
+.qz-bar { height: 6px; border-radius: 99px; background: rgba(255,255,255,.08); margin: 14px 0; overflow: hidden; }
+.qz-bar i { display: block; height: 100%; width: 0; background: var(--orange); transition: width .4s ease; }
+.qz-n { margin: 0 0 4px; color: var(--dim); font: 600 12px "Plus Jakarta Sans", sans-serif; }
+.prose .qz-q { margin: 0 0 14px; font-size: 20px; line-height: 1.35; }
+.qz-opts { display: grid; gap: 10px; margin-bottom: 14px; }
+.qz-opts button { text-align: left; min-height: 48px; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,.16); background: rgba(0,0,0,.4); color: var(--text); font: 15px/1.45 "Inter", sans-serif; cursor: pointer; }
+.qz-opts button:hover:not(:disabled) { border-color: var(--orange); }
+.qz-opts button.right { border-color: #4ade80; background: rgba(74,222,128,.12); }
+.qz-opts button.wrong { border-color: #f87171; background: rgba(248,113,113,.1); }
+.prose .qz-why { padding: 12px 14px; border-radius: 10px; background: rgba(255,255,255,.05); font-size: 15px; margin: 0 0 14px; }
+.qz button.button, .qz button.ghost { border: 0; cursor: pointer; font: inherit; font-weight: 700; }
+.qz button.ghost { border: 1px solid rgba(255,255,255,.16); background: transparent; }
+.prose .qz-score { margin: 10px 0 4px; font: 800 44px "Plus Jakarta Sans", sans-serif; color: var(--orange); }
 @media (max-width: 700px) { .chapters ol { grid-template-columns: 1fr; } .next-card { grid-template-columns: 1fr; } .quote p { font-size: 19px; } }
 
 @media (max-width: 560px) { .viz { padding: 18px; font-size: 15px; } .q-grid { grid-template-columns: 1fr; } .flow-hop { flex: 0 0 100%; text-align: center; } .flow-step { flex-basis: 100%; } .flow-hop i { display: inline-block; font-style: normal; transform: rotate(90deg); } }
@@ -296,7 +313,7 @@ def recap_page(n, sessions=()):
     page += '    <div class="prose">\n'
     if n.get('tldr'):
         page += '      <div class="tldr">\n        <p class="eyebrow">TL;DR</p>\n        <ul>\n' + ''.join(f'          <li>{x}</li>\n' for x in n['tldr']) + '        </ul>\n      </div>\n\n'
-    page += n['body'] + '\n' + resources_html(n) + '    </div>\n'
+    page += n['body'] + '\n' + quiz_html(n) + resources_html(n) + '    </div>\n'
     static = f"<h3>{n['next']['title']}</h3><p>{n['next']['when']}</p>" if n.get('next') else '<h3>See what is coming up</h3><p>Every session is free and on Discord.</p>'
     key = next((k for k in ('privacy track', 'code review club', 'reading club', 'sovereign bitcoiner', 'self-custody', 'agentic', 'decoding bitcoin', 'bitcoin basics') if k in strip_tags(n['series']).lower()), '')
     page += f'''    <aside class="next-card nx" data-next data-match="{key}">
@@ -313,7 +330,7 @@ def recap_page(n, sessions=()):
     share = urllib.parse.quote(n.get('share_text') or f"{n['series']}: {n['title']} - notes from @CodeOrangeDevs", safe='')
     page += f'''    <div class="share-row"><strong>Share these notes:</strong><a href="https://x.com/intent/post?text={share}&amp;url={urllib.parse.quote('https://codeorange.dev' + url, safe='')}" target="_blank" rel="noopener">Post on X</a><button type="button" data-copy="https://codeorange.dev{url}">Copy link</button></div>
     {SCRIPT}
-    <script src="/assets/session-notes/passport.js?v=20261112a" data-slug="{n['slug']}" data-total="{len(sessions)}"></script>
+    <script src="/assets/session-notes/passport.js?v=20261112b" data-slug="{n['slug']}" data-total="{len(sessions)}"></script>
     {more_notes(n, sessions)}
     <p class="source-box">These notes are also on GitHub: {a(f"{REPO}/blob/main/{n['date'][:4]}/{n['slug']}.md", "code-orange-dev/session-notes")}. Free to share and reuse (CC0).</p>
   </article>
@@ -321,6 +338,18 @@ def recap_page(n, sessions=()):
     return page
 
 import urllib.parse
+
+def quiz_html(n):
+    if not n.get('quiz'): return ''
+    data = json.dumps(n['quiz'], ensure_ascii=False).replace('</', '<\\/')
+    return f'''      <section class="qz" data-quiz="{n['slug']}" aria-label="Test yourself">
+        <script type="application/json">{data}</script>
+        <div class="qz-head"><p class="eyebrow">Test yourself</p><span class="qz-best"></span></div>
+        <div class="qz-play"><div class="qz-bar"><i></i></div><p class="qz-n"></p><h3 class="qz-q"></h3><div class="qz-opts"></div><p class="qz-why" hidden></p><button type="button" class="button small qz-next" hidden>Next question</button></div>
+        <div class="qz-done" hidden><p class="qz-score"></p><p class="qz-msg"></p><div class="cta-row"><button type="button" class="ghost small qz-again">Play again</button><a class="ghost small" href="/session-notes#passport">See my passport</a></div></div>
+      </section>
+      <script src="/assets/session-notes/quiz.js?v=20261112a" defer></script>
+'''
 
 def more_notes(n, sessions):
     # sessions are sorted newest first
@@ -355,7 +384,7 @@ def list_page(sessions):
              '    <style>.article-card{grid-template-columns:minmax(0,420px) 1fr}.article-card img{height:auto;min-height:0;max-height:none;aspect-ratio:1200/630;align-self:center;object-fit:cover}.article-card [data-stamp][hidden]{display:none}@media (max-width:760px){.article-card{grid-template-columns:1fr}}</style>\n'
              '    <div id="passport" style="scroll-margin-top:96px"></div>\n'
              f'    <div class="article-list">\n{cards}    </div>\n  </section>\n'
-             f'  <script>window.SN_SESSIONS={data};</script>\n  <script src="/assets/session-notes/passport.js?v=20261112a"></script>\n' + final_cta)
+             f'  <script>window.SN_SESSIONS={data};</script>\n  <script src="/assets/session-notes/passport.js?v=20261112b"></script>\n' + final_cta)
     return page
 
 def resources_page(sessions):

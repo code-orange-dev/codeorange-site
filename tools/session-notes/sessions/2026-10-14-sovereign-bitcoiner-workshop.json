@@ -273,5 +273,38 @@
       "note": "every 1st and 3rd Tuesday, covering PayJoin, Silent Payments, Lightning and ecash"
     }
   ],
-  "ideas": "Ideas for future sessions: a White Noise vs Keychat comparison, and a Fedimint deep dive."
+  "ideas": "Ideas for future sessions: a White Noise vs Keychat comparison, and a Fedimint deep dive.",
+  "quiz": [
+    {
+      "q": "What leaked when the carpet seller was paid on-chain?",
+      "o": [
+        "Nothing, Bitcoin is anonymous",
+        "The seller's private key",
+        "That the seller's wallet held a full bitcoin"
+      ],
+      "a": 2,
+      "w": "The buyer looked the payment up on a block explorer and saw the seller's whole balance."
+    },
+    {
+      "q": "Custodial Lightning wallets are fairly private from...",
+      "o": [
+        "Other people, but not from the custodian itself",
+        "Everyone, including the custodian",
+        "Nobody at all"
+      ],
+      "a": 0,
+      "w": "The company running the wallet can see, and may have to hand over, node IDs, emails and maybe IP addresses."
+    },
+    {
+      "q": "Which of these is NOT one of the four threat-model questions?",
+      "o": [
+        "Who am I protecting against?",
+        "Which wallet is the most popular?",
+        "How bad is failure?"
+      ],
+      "a": 1,
+      "w": "The four: who, how likely, how bad, and how much effort you'll spend."
+    }
+  ],
+  "game": true
 }

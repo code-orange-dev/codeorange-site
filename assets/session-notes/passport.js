@@ -8,6 +8,7 @@
     var xp = 0;
     try { var wn = JSON.parse(localStorage.getItem('co-wn-2026-11-11')); if (wn && wn.b) { for (var k in wn.b) if (wn.b[k]) xp += 100; xp += (wn.best || 0) * 50; } } catch (e) {}
     try { xp += (+localStorage.getItem('rc1-best') || 0) * 50; } catch (e) {}
+    try { for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i); if (k && k.indexOf('co-quiz-') === 0) xp += (+localStorage.getItem(k) || 0) * 50; } } catch (e) {}
     return xp;
   }
   var RANKS = [[0, 'Visitor'], [1, 'Pleb'], [3, 'Builder'], [5, 'Reviewer'], [7, 'Cypherpunk']];

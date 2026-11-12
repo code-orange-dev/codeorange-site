@@ -346,6 +346,23 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 .nx-msg { margin: 0; color: var(--orange); font-size: 13px; }
 @media (max-width: 860px) { .next-card.nx { grid-template-columns: 1fr; } }
 @media (max-width: 420px) { .nx-list li { grid-template-columns: 46px 1fr; } .nx-add { grid-column: 2; justify-self: start; } }
+.qz { margin: 40px 0; padding: 24px; border: 1px solid rgba(247,147,26,.4); border-radius: 16px; background: linear-gradient(145deg, rgba(247,147,26,.1), rgba(20,20,20,.92)); }
+.qz-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.qz-head .eyebrow { margin: 0; }
+.qz-best { color: var(--dim); font: 600 12px "Plus Jakarta Sans", sans-serif; }
+.qz-bar { height: 6px; border-radius: 99px; background: rgba(255,255,255,.08); margin: 14px 0; overflow: hidden; }
+.qz-bar i { display: block; height: 100%; width: 0; background: var(--orange); transition: width .4s ease; }
+.qz-n { margin: 0 0 4px; color: var(--dim); font: 600 12px "Plus Jakarta Sans", sans-serif; }
+.prose .qz-q { margin: 0 0 14px; font-size: 20px; line-height: 1.35; }
+.qz-opts { display: grid; gap: 10px; margin-bottom: 14px; }
+.qz-opts button { text-align: left; min-height: 48px; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,.16); background: rgba(0,0,0,.4); color: var(--text); font: 15px/1.45 "Inter", sans-serif; cursor: pointer; }
+.qz-opts button:hover:not(:disabled) { border-color: var(--orange); }
+.qz-opts button.right { border-color: #4ade80; background: rgba(74,222,128,.12); }
+.qz-opts button.wrong { border-color: #f87171; background: rgba(248,113,113,.1); }
+.prose .qz-why { padding: 12px 14px; border-radius: 10px; background: rgba(255,255,255,.05); font-size: 15px; margin: 0 0 14px; }
+.qz button.button, .qz button.ghost { border: 0; cursor: pointer; font: inherit; font-weight: 700; }
+.qz button.ghost { border: 1px solid rgba(255,255,255,.16); background: transparent; }
+.prose .qz-score { margin: 10px 0 4px; font: 800 44px "Plus Jakarta Sans", sans-serif; color: var(--orange); }
 @media (max-width: 700px) { .chapters ol { grid-template-columns: 1fr; } .next-card { grid-template-columns: 1fr; } .quote p { font-size: 19px; } }
 
 @media (max-width: 560px) { .viz { padding: 18px; font-size: 15px; } .q-grid { grid-template-columns: 1fr; } .flow-hop { flex: 0 0 100%; text-align: center; } .flow-step { flex-basis: 100%; } .flow-hop i { display: inline-block; font-style: normal; transform: rotate(90deg); } }

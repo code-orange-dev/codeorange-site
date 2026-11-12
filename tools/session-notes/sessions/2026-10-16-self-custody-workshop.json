@@ -112,5 +112,38 @@
       "note": "every 1st and 3rd Tuesday, next one 20 October"
     }
   ],
-  "ideas": "Ideas for future sessions: a Nunchuk deep dive (miniscript, group wallets, inheritance), planned for December, and a passphrase wallet demo."
+  "ideas": "Ideas for future sessions: a Nunchuk deep dive (miniscript, group wallets, inheritance), planned for December, and a passphrase wallet demo.",
+  "quiz": [
+    {
+      "q": "Why spread multisig keys across different hardware wallet brands?",
+      "o": [
+        "It's cheaper",
+        "One bad or attacked device can't take your coins",
+        "Sparrow requires it"
+      ],
+      "a": 1,
+      "w": "If one brand has a supply chain attack or exploit, the other keys still protect you."
+    },
+    {
+      "q": "In a multisig, what is the output descriptor?",
+      "o": [
+        "The blueprint of the wallet, needed to rebuild it",
+        "A backup of one seed phrase",
+        "A setting for transaction fees"
+      ],
+      "a": 0,
+      "w": "Without it, rebuilding is very hard. Anyone who finds it sees your balance but can't spend, so keep many copies."
+    },
+    {
+      "q": "Where should you buy a hardware wallet?",
+      "o": [
+        "The cheapest reseller online",
+        "A second-hand marketplace",
+        "Straight from the maker"
+      ],
+      "a": 2,
+      "w": "Resellers are where supply chain attacks happen."
+    }
+  ],
+  "game": true
 }
