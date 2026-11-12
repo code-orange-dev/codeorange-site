@@ -7,6 +7,46 @@
     <language>en</language>
     <atom:link href="https://codeorange.dev/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>Multisig vs Hardware Wallet: Choosing Your Bitcoin Self-Custody Setup</title>
+      <link>https://codeorange.dev/articles/multisig-vs-hardware-wallet</link>
+      <guid isPermaLink="true">https://codeorange.dev/articles/multisig-vs-hardware-wallet</guid>
+      <description>Multisig vs hardware wallet: what each one protects you from, what can go wrong, and a simple step-by-step path to the right Bitcoin self-custody setup for you.</description>
+      <dc:creator>Andy</dc:creator>
+      <pubDate>Sun, 08 Nov 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Free Bitcoin Courses You Can Start Today (2026 Guide)</title>
+      <link>https://codeorange.dev/articles/free-bitcoin-courses</link>
+      <guid isPermaLink="true">https://codeorange.dev/articles/free-bitcoin-courses</guid>
+      <description>The best free Bitcoin courses in 2026, from complete beginner to developer: what each one teaches, how long it takes, and how to actually finish one.</description>
+      <dc:creator>Andy</dc:creator>
+      <pubDate>Sun, 08 Nov 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>How to Run a Bitcoin Node: A Beginner Guide (2026)</title>
+      <link>https://codeorange.dev/articles/how-to-run-a-bitcoin-node</link>
+      <guid isPermaLink="true">https://codeorange.dev/articles/how-to-run-a-bitcoin-node</guid>
+      <description>How to run a Bitcoin node in plain English: why it matters, what hardware you need, the four easiest setups (laptop, node box, Raspberry Pi, light node), and how to connect your wallet to it.</description>
+      <dc:creator>Andy</dc:creator>
+      <pubDate>Sun, 08 Nov 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Bitcoin in Bali: Where to Learn Bitcoin in Person</title>
+      <link>https://codeorange.dev/articles/bitcoin-in-bali</link>
+      <guid isPermaLink="true">https://codeorange.dev/articles/bitcoin-in-bali</guid>
+      <description>Looking for Bitcoin in Bali? Free monthly workshops, meetups and builder sessions at Bitcoin House Bali in Canggu, plus what you can learn there and how to join.</description>
+      <dc:creator>Andy</dc:creator>
+      <pubDate>Sun, 08 Nov 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>What Is PayJoin? A Plain-English Guide (We Tested It Live)</title>
+      <link>https://codeorange.dev/articles/what-is-payjoin</link>
+      <guid isPermaLink="true">https://codeorange.dev/articles/what-is-payjoin</guid>
+      <description>What is PayJoin? A plain-English guide to the Bitcoin privacy trick that hides your payment amount, how PayJoin v2 works, which wallets support it, and what broke when we tested it live.</description>
+      <dc:creator>Andy</dc:creator>
+      <pubDate>Sun, 08 Nov 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>Privacy Isn't About Hiding. It's About Protection.</title>
       <link>https://codeorange.dev/articles/privacy-is-protection</link>
       <guid isPermaLink="true">https://codeorange.dev/articles/privacy-is-protection</guid>
