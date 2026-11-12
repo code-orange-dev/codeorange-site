@@ -61,6 +61,24 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://codeorange.dev/articles/contribute-to-bitcoin-core</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://codeorange.dev/articles/silent-payments-bitcoin</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://codeorange.dev/articles/why-bitcoin-needs-educators</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://codeorange.dev/articles/privacy-is-protection</loc>
     <lastmod>2026-11-03</lastmod>
     <changefreq>monthly</changefreq>
