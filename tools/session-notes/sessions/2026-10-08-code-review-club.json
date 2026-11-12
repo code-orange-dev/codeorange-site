@@ -252,5 +252,38 @@
       "note": "10-week study cohort starting Monday 16 November (announced on the call as Mastering Bitcoin)"
     }
   ],
-  "ideas": "Ideas from the call: a monthly Nostr workshop (several people asked for it), and one topic per Code Review Club instead of two."
+  "ideas": "Ideas from the call: a monthly Nostr workshop (several people asked for it), and one topic per Code Review Club instead of two.",
+  "quiz": [
+    {
+      "q": "What does Nostr give you that X doesn't?",
+      "o": [
+        "Free blue checkmarks",
+        "You hold the key, so nobody can take your identity",
+        "One company keeps your posts safe"
+      ],
+      "a": 1,
+      "w": "Relays can drop your posts, but your key, followers and reputation move with you to any app."
+    },
+    {
+      "q": "Which of these counts as a real code review?",
+      "o": [
+        "Only an approval from a maintainer",
+        "Starring the repo on GitHub",
+        "Running the tests and saying they pass on your machine"
+      ],
+      "a": 2,
+      "w": "You don't need to be a maintainer. Testing and asking good questions are valid reviews."
+    },
+    {
+      "q": "You want to make a bigger change to a project. What do you do first?",
+      "o": [
+        "Open an issue to discuss it",
+        "Open a huge pull request straight away",
+        "Email the maintainer your code"
+      ],
+      "a": 0,
+      "w": "For a small fix, just open the PR. For a bigger change, talk about it in an issue first."
+    }
+  ],
+  "game": true
 }

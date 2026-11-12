@@ -266,5 +266,38 @@
     }
   ],
   "ideas": "Ideas for future sessions: a TollGate session (routers that sell Wi-Fi, and even AI access, for ecash and lightning), a hands-on Omarchy workshop, and a screen-shared demo of the orchestrator app and Herdr. Feedback for the simulator: warn clearly never to type seed words into a website or software wallet, and add translations (Chinese was asked for first).",
-  "video": "dQVF4HuU-_I"
+  "video": "dQVF4HuU-_I",
+  "quiz": [
+    {
+      "q": "Best tip from the call for giving an agent context?",
+      "o": [
+        "Speak instead of typing: two minutes of talking gives far more context",
+        "Keep prompts under ten words",
+        "Only ever use the most expensive model"
+      ],
+      "a": 0,
+      "w": "Dictation tools like Superwhisper make it fast, and the agent gets the whole picture."
+    },
+    {
+      "q": "What did the mempool visualizer start as?",
+      "o": [
+        "A big React app",
+        "A single HTML file using the mempool.space API",
+        "A paid SaaS tool"
+      ],
+      "a": 1,
+      "w": "Small and cheap went a long way. Cheap models did most of the work."
+    },
+    {
+      "q": "What was the main feedback on the self-custody simulator?",
+      "o": [
+        "Make it 3D",
+        "Remove the mentor character",
+        "Make it impossible to miss that seed words go only into the hardware wallet"
+      ],
+      "a": 2,
+      "w": "Translations were the other ask, Chinese first."
+    }
+  ],
+  "game": true
 }

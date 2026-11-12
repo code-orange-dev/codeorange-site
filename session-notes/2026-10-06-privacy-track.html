@@ -347,6 +347,23 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 .nx-msg { margin: 0; color: var(--orange); font-size: 13px; }
 @media (max-width: 860px) { .next-card.nx { grid-template-columns: 1fr; } }
 @media (max-width: 420px) { .nx-list li { grid-template-columns: 46px 1fr; } .nx-add { grid-column: 2; justify-self: start; } }
+.qz { margin: 40px 0; padding: 24px; border: 1px solid rgba(247,147,26,.4); border-radius: 16px; background: linear-gradient(145deg, rgba(247,147,26,.1), rgba(20,20,20,.92)); }
+.qz-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.qz-head .eyebrow { margin: 0; }
+.qz-best { color: var(--dim); font: 600 12px "Plus Jakarta Sans", sans-serif; }
+.qz-bar { height: 6px; border-radius: 99px; background: rgba(255,255,255,.08); margin: 14px 0; overflow: hidden; }
+.qz-bar i { display: block; height: 100%; width: 0; background: var(--orange); transition: width .4s ease; }
+.qz-n { margin: 0 0 4px; color: var(--dim); font: 600 12px "Plus Jakarta Sans", sans-serif; }
+.prose .qz-q { margin: 0 0 14px; font-size: 20px; line-height: 1.35; }
+.qz-opts { display: grid; gap: 10px; margin-bottom: 14px; }
+.qz-opts button { text-align: left; min-height: 48px; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,.16); background: rgba(0,0,0,.4); color: var(--text); font: 15px/1.45 "Inter", sans-serif; cursor: pointer; }
+.qz-opts button:hover:not(:disabled) { border-color: var(--orange); }
+.qz-opts button.right { border-color: #4ade80; background: rgba(74,222,128,.12); }
+.qz-opts button.wrong { border-color: #f87171; background: rgba(248,113,113,.1); }
+.prose .qz-why { padding: 12px 14px; border-radius: 10px; background: rgba(255,255,255,.05); font-size: 15px; margin: 0 0 14px; }
+.qz button.button, .qz button.ghost { border: 0; cursor: pointer; font: inherit; font-weight: 700; }
+.qz button.ghost { border: 1px solid rgba(255,255,255,.16); background: transparent; }
+.prose .qz-score { margin: 10px 0 4px; font: 800 44px "Plus Jakarta Sans", sans-serif; color: var(--orange); }
 @media (max-width: 700px) { .chapters ol { grid-template-columns: 1fr; } .next-card { grid-template-columns: 1fr; } .quote p { font-size: 19px; } }
 
 @media (max-width: 560px) { .viz { padding: 18px; font-size: 15px; } .q-grid { grid-template-columns: 1fr; } .flow-hop { flex: 0 0 100%; text-align: center; } .flow-step { flex-basis: 100%; } .flow-hop i { display: inline-block; font-style: normal; transform: rotate(90deg); } }
@@ -511,6 +528,13 @@ a.res:hover { border-color: rgba(247,147,26,.55); transform: translateY(-2px); }
         </div>
       </div>
 
+      <section class="qz" data-quiz="2026-10-06-privacy-track" aria-label="Test yourself">
+        <script type="application/json">[{"q": "In the PayJoin from the call, why couldn't chain analysis find the 12,000 sat payment?", "o": ["The amount was encrypted", "The receiver added a coin of their own, so no output said 12,000", "It was sent over Lightning"], "a": 1, "w": "The receiver added a ~10,000 sat coin and got ~22,000 back. Two stories fit the transaction equally well."}, {"q": "Which two guesses does PayJoin break?", "o": ["All inputs belong to one person, and the big leftover is change", "The sender pays the fee, and outputs are round numbers", "Old coins are spent first, and addresses are reused"], "a": 0, "w": "Chain analysis leans on both. Once the receiver adds a coin, both guesses can be wrong."}, {"q": "How does the protocol stop a sender from snooping on all the receiver's coins?", "o": ["The receiver asks for ID", "Payments are capped at 10,000 sats", "The sender first sends a fully signed payment, which the receiver can just broadcast"], "a": 2, "w": "If the sender misbehaves, the receiver broadcasts that payment and still gets paid."}]</script>
+        <div class="qz-head"><p class="eyebrow">Test yourself</p><span class="qz-best"></span></div>
+        <div class="qz-play"><div class="qz-bar"><i></i></div><p class="qz-n"></p><h3 class="qz-q"></h3><div class="qz-opts"></div><p class="qz-why" hidden></p><button type="button" class="button small qz-next" hidden>Next question</button></div>
+        <div class="qz-done" hidden><p class="qz-score"></p><p class="qz-msg"></p><div class="cta-row"><button type="button" class="ghost small qz-again">Play again</button><a class="ghost small" href="/session-notes#passport">See my passport</a></div></div>
+      </section>
+      <script src="/assets/session-notes/quiz.js?v=20261112a" defer></script>
       <h2>Resources shared</h2>
       <h3>Reading</h3>
       <ul>
@@ -555,7 +579,7 @@ a.res:hover { border-color: rgba(247,147,26,.55); transform: translateY(-2px); }
     <div class="share-row"><strong>Share these notes:</strong><a href="https://x.com/intent/post?text=How%20PayJoin%20works%3A%20notes%20%2B%20every%20resource%20from%20the%20first%20%40CodeOrangeDevs%20Privacy%20Track&amp;url=https%3A%2F%2Fcodeorange.dev%2Fsession-notes%2F2026-10-06-privacy-track" target="_blank" rel="noopener">Post on X</a><button type="button" data-copy="https://codeorange.dev/session-notes/2026-10-06-privacy-track">Copy link</button></div>
     <script>document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){navigator.clipboard&&navigator.clipboard.writeText(b.dataset.copy).then(function(){b.textContent='Link copied';});});});
 (function(){var v=document.getElementById('video');if(!v)return;function play(t){v.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+v.dataset.yt+'?autoplay=1&rel=0&start='+(t||0)+'" title="Session recording" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';}v.querySelector('button').addEventListener('click',function(){play(0);});document.querySelectorAll('.chapters a[data-t]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();play(a.dataset.t);v.scrollIntoView({behavior:'smooth',block:'center'});});});})();</script>
-    <script src="/assets/session-notes/passport.js?v=20261112a" data-slug="2026-10-06-privacy-track" data-total="8"></script>
+    <script src="/assets/session-notes/passport.js?v=20261112b" data-slug="2026-10-06-privacy-track" data-total="8"></script>
     <nav class="more-notes" aria-label="More session notes"><a class="newer" href="/session-notes/2026-10-08-code-review-club"><small>Later session &rarr;</small>Code Review Club: Your First Code Review</a></nav>
     <p class="source-box">These notes are also on GitHub: <a href="https://github.com/code-orange-dev/session-notes/blob/main/2026/2026-10-06-privacy-track.md" target="_blank" rel="noopener">code-orange-dev/session-notes</a>. Free to share and reuse (CC0).</p>
   </article>

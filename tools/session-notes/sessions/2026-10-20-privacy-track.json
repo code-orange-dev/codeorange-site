@@ -133,5 +133,38 @@
       "note": "every 1st and 3rd Tuesday, 07:00 UTC · 15:00 UTC+8"
     }
   ],
-  "ideas": "Coming next: Razor is building hands-on PayJoin labs (make a PayJoin, talk to the relay, talk to the directory, find and fix a bug) and a quiz leaderboard on GitHub that will also count code reviews and pull requests. Ideas from the call: invite someone from the PayJoin team as a guest speaker."
+  "ideas": "Coming next: Razor is building hands-on PayJoin labs (make a PayJoin, talk to the relay, talk to the directory, find and fix a bug) and a quiz leaderboard on GitHub that will also count code reviews and pull requests. Ideas from the call: invite someone from the PayJoin team as a guest speaker.",
+  "quiz": [
+    {
+      "q": "What lets the receiver be offline in PayJoin v2?",
+      "o": [
+        "A mailbox (the directory) holds the encrypted PSBT until they pick it up",
+        "The sender waits on the line",
+        "Payments go over Lightning"
+      ],
+      "a": 0,
+      "w": "In v1 the receiver had to run an always-online server. v2 replaces it with a mailbox."
+    },
+    {
+      "q": "Why should the relay and the directory be run by different people?",
+      "o": [
+        "To split the fees",
+        "One party running both could link IP addresses again",
+        "The spec says it's faster"
+      ],
+      "a": 1,
+      "w": "The relay hides your IP from the directory. If one party ran both, that protection is gone."
+    },
+    {
+      "q": "Why does using PayJoin every time help everyone?",
+      "o": [
+        "It lowers fees",
+        "It confirms faster",
+        "If enough payments are PayJoins, chain analysis can't trust its 'all inputs are one person' guess"
+      ],
+      "a": 2,
+      "w": "The idea from the call: even 5 to 10% of payments as PayJoins would break that guess."
+    }
+  ],
+  "game": true
 }

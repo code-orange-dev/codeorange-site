@@ -128,5 +128,38 @@
       "note": "the follow-up session two days later"
     }
   ],
-  "ideas": "Ideas from the call: a guide to choosing the right privacy tool for each risk profile, a quiz leaderboard (opt out any time), and a capture-the-flag privacy challenge in about six months."
+  "ideas": "Ideas from the call: a guide to choosing the right privacy tool for each risk profile, a quiz leaderboard (opt out any time), and a capture-the-flag privacy challenge in about six months.",
+  "quiz": [
+    {
+      "q": "In the PayJoin from the call, why couldn't chain analysis find the 12,000 sat payment?",
+      "o": [
+        "The amount was encrypted",
+        "The receiver added a coin of their own, so no output said 12,000",
+        "It was sent over Lightning"
+      ],
+      "a": 1,
+      "w": "The receiver added a ~10,000 sat coin and got ~22,000 back. Two stories fit the transaction equally well."
+    },
+    {
+      "q": "Which two guesses does PayJoin break?",
+      "o": [
+        "All inputs belong to one person, and the big leftover is change",
+        "The sender pays the fee, and outputs are round numbers",
+        "Old coins are spent first, and addresses are reused"
+      ],
+      "a": 0,
+      "w": "Chain analysis leans on both. Once the receiver adds a coin, both guesses can be wrong."
+    },
+    {
+      "q": "How does the protocol stop a sender from snooping on all the receiver's coins?",
+      "o": [
+        "The receiver asks for ID",
+        "Payments are capped at 10,000 sats",
+        "The sender first sends a fully signed payment, which the receiver can just broadcast"
+      ],
+      "a": 2,
+      "w": "If the sender misbehaves, the receiver broadcasts that payment and still gets paid."
+    }
+  ],
+  "game": true
 }
