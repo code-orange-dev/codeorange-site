@@ -13,7 +13,7 @@
     }).catch(function () { form.target = '_blank'; form.submit(); }).then(function () { b.disabled = false; });
   });
   if (!window.fetch) return;
-  var TZ = 'Asia/Makassar', match = (box.getAttribute('data-match') || '').toLowerCase();
+  var TZ = 'Asia/Makassar', norm = function (t) { return String(t || '').toLowerCase().replace(/[-\s]+/g, ' '); }, match = norm(box.getAttribute('data-match'));
   var esc = function (s) { return String(s || '').replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   var fmt = function (d, o) { return new Intl.DateTimeFormat('en-GB', Object.assign({ timeZone: TZ }, o)).format(d); };
   var utc = function (d) { return d.toISOString().replace(/[-:]/g, '').replace(/\.\d+/, ''); };
@@ -26,7 +26,7 @@
         .sort(function (a, b) { return Date.parse(a.start) - Date.parse(b.start); })
         .forEach(function (e) { var k = e.title.toLowerCase(); if (!seen[k]) { seen[k] = 1; all.push(e); } });
       if (!all.length) return;
-      var same = match ? all.filter(function (e) { return e.title.toLowerCase().indexOf(match) >= 0; })[0] : null;
+      var same = match ? all.filter(function (e) { return norm(e.title).indexOf(match) >= 0; })[0] : null;
       var picks = same ? [same] : [];
       all.forEach(function (e) { if (picks.length < 3 && e !== same) picks.push(e); });
       picks.sort(function (a, b) { return Date.parse(a.start) - Date.parse(b.start); });
