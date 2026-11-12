@@ -107,6 +107,29 @@ style = src[src.index('<style>'):head_end] + """
 .next-card h3 { font-size: 24px; }
 .next-card p { margin: 6px 0 0; color: var(--muted); }
 .next-card .cta-row { flex-wrap: wrap; }
+.next-card.nx { grid-template-columns: minmax(0,1.2fr) minmax(0,1fr); align-items: start; }
+.nx-list { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 10px; }
+.nx-list li { display: grid; grid-template-columns: 54px 1fr auto; gap: 12px; align-items: center; padding: 10px 12px; border-radius: 12px; background: rgba(0,0,0,.35); border: 1px solid var(--line); }
+.nx-list li.same { border-color: rgba(247,147,26,.6); }
+.nx-date { display: grid; justify-items: center; font: 800 20px/1.05 "Plus Jakarta Sans", sans-serif; color: var(--text); }
+.nx-date b { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); }
+.nx-date i { font: 600 11px "Plus Jakarta Sans", sans-serif; color: var(--dim); font-style: normal; text-transform: uppercase; }
+.nx-text { display: grid; gap: 2px; min-width: 0; }
+.nx-text strong { color: var(--text); font-size: 15px; line-height: 1.3; }
+.nx-text span { color: var(--muted); font-size: 12.5px; }
+.nx-text em { font: 700 10px "Plus Jakarta Sans", sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-style: normal; }
+.nx-add { padding: 7px 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,.16); color: var(--text); text-decoration: none; font: 700 12px "Plus Jakarta Sans", sans-serif; white-space: nowrap; }
+.nx-add:hover { border-color: var(--orange); color: var(--orange); }
+.nx-head, .nx-side { min-width: 0; }
+.nx-side { display: grid; gap: 14px; }
+.nx-form label { display: block; margin-bottom: 8px; color: var(--muted); font: 600 13px "Plus Jakarta Sans", sans-serif; }
+.nx-form div { display: flex; gap: 8px; flex-wrap: wrap; }
+.nx-form input[type=email] { flex: 1 1 160px; min-width: 0; min-height: 40px; padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,.16); background: rgba(0,0,0,.45); color: var(--text); font: 15px "Inter", sans-serif; }
+.nx-form input[type=email]:focus { outline: none; border-color: var(--orange); }
+.nx-form button { flex: none; min-height: 40px; width: auto; cursor: pointer; background: transparent; font: inherit; font-weight: 700; }
+.nx-msg { margin: 0; color: var(--orange); font-size: 13px; }
+@media (max-width: 860px) { .next-card.nx { grid-template-columns: 1fr; } }
+@media (max-width: 420px) { .nx-list li { grid-template-columns: 46px 1fr; } .nx-add { grid-column: 2; justify-self: start; } }
 @media (max-width: 700px) { .chapters ol { grid-template-columns: 1fr; } .next-card { grid-template-columns: 1fr; } .quote p { font-size: 19px; } }
 
 @media (max-width: 560px) { .viz { padding: 18px; font-size: 15px; } .q-grid { grid-template-columns: 1fr; } .flow-hop { flex: 0 0 100%; text-align: center; } .flow-step { flex-basis: 100%; } .flow-hop i { display: inline-block; font-style: normal; transform: rotate(90deg); } }
@@ -187,6 +210,7 @@ a.res:hover { border-color: rgba(247,147,26,.55); transform: translateY(-2px); }
 
 REPO = 'https://github.com/code-orange-dev/session-notes'
 DISCORD = 'https://discord.gg/ZtvA79paWa'
+CAL_SUB = 'https://calendar.google.com/calendar/r?cid=466de2be7431d78be2049f96f5fd31f9b06b5a9cd94f909ba3182b18442ed499%40group.calendar.google.com'
 HERE = pathlib.Path(__file__).resolve().parent
 TOPIC_ORDER = ['Bitcoin basics', 'Self-custody', 'Hardware wallets', 'Privacy', 'PayJoin', 'Cypherpunk history', 'History', 'Bitcoin network', 'Code review', 'Nostr', 'Lightning', 'Ecash', 'Wallets', 'Security', 'Explorers', 'Messaging', 'AI agents', 'Vibe coding', 'Self-hosting', 'Productivity', 'Code Orange']
 
@@ -273,8 +297,19 @@ def recap_page(n, sessions=()):
     if n.get('tldr'):
         page += '      <div class="tldr">\n        <p class="eyebrow">TL;DR</p>\n        <ul>\n' + ''.join(f'          <li>{x}</li>\n' for x in n['tldr']) + '        </ul>\n      </div>\n\n'
     page += n['body'] + '\n' + resources_html(n) + '    </div>\n'
-    if n.get('next'):
-        page += f'''    <aside class="next-card"><div><p class="eyebrow">Next session</p><h3>{n['next']['title']}</h3><p>{n['next']['when']}</p></div><div class="cta-row"><a class="button small" href="/calendar">See the calendar</a><a class="ghost small" href="{DISCORD}" target="_blank" rel="noopener">Join Discord</a></div></aside>\n'''
+    static = f"<h3>{n['next']['title']}</h3><p>{n['next']['when']}</p>" if n.get('next') else '<h3>See what is coming up</h3><p>Every session is free and on Discord.</p>'
+    key = next((k for k in ('privacy track', 'code review club', 'reading club', 'sovereign bitcoiner', 'self-custody', 'agentic', 'decoding bitcoin', 'bitcoin basics') if k in strip_tags(n['series']).lower()), '')
+    page += f'''    <aside class="next-card nx" data-next data-match="{key}">
+      <div class="nx-head"><p class="eyebrow">Come to the next one</p><div data-next-static>{static}</div>
+        <div data-next-live hidden><h3>Up next at Code Orange</h3><ol class="nx-list" data-next-list></ol></div></div>
+      <div class="nx-side">
+        <div class="cta-row"><a class="button small" href="{CAL_SUB}" target="_blank" rel="noopener">Add all sessions to my calendar</a><a class="ghost small" href="{DISCORD}" target="_blank" rel="noopener">Join Discord</a></div>
+        <form class="nx-form" action="https://assets.mailerlite.com/jsonp/2133495/forms/201289376620086972/subscribe" method="post"><label for="nx-email">Or get the week's sessions by email</label><div><input type="email" id="nx-email" name="fields[email]" placeholder="you@example.com" autocomplete="email" required><input type="hidden" name="ml-submit" value="1"><input type="hidden" name="anticsrf" value="true"><button class="ghost small" type="submit">Subscribe</button></div></form>
+        <p class="nx-msg" role="status" aria-live="polite" hidden></p>
+      </div>
+    </aside>
+    <script src="/assets/session-notes/next.js?v=20261112a" defer></script>
+'''
     share = urllib.parse.quote(n.get('share_text') or f"{n['series']}: {n['title']} - notes from @CodeOrangeDevs", safe='')
     page += f'''    <div class="share-row"><strong>Share these notes:</strong><a href="https://x.com/intent/post?text={share}&amp;url={urllib.parse.quote('https://codeorange.dev' + url, safe='')}" target="_blank" rel="noopener">Post on X</a><button type="button" data-copy="https://codeorange.dev{url}">Copy link</button></div>
     {SCRIPT}
