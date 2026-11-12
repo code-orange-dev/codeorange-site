@@ -278,6 +278,7 @@ def recap_page(n, sessions=()):
     share = urllib.parse.quote(n.get('share_text') or f"{n['series']}: {n['title']} - notes from @CodeOrangeDevs", safe='')
     page += f'''    <div class="share-row"><strong>Share these notes:</strong><a href="https://x.com/intent/post?text={share}&amp;url={urllib.parse.quote('https://codeorange.dev' + url, safe='')}" target="_blank" rel="noopener">Post on X</a><button type="button" data-copy="https://codeorange.dev{url}">Copy link</button></div>
     {SCRIPT}
+    <script src="/assets/session-notes/passport.js?v=20261112a" data-slug="{n['slug']}" data-total="{len(sessions)}"></script>
     {more_notes(n, sessions)}
     <p class="source-box">These notes are also on GitHub: {a(f"{REPO}/blob/main/{n['date'][:4]}/{n['slug']}.md", "code-orange-dev/session-notes")}. Free to share and reuse (CC0).</p>
   </article>
@@ -297,12 +298,12 @@ def more_notes(n, sessions):
 
 def list_page(sessions):
     cards = ''.join(f'''      <a class="article-card" href="{n['url']}">
-        <img src="{n['img']}" alt="" loading="lazy" style="object-position:left center">
+        <img src="{n['img']}" alt="" loading="lazy" width="1200" height="630">
         <div class="card-body">
           <span class="pill orange">{n['tag']}</span>
           <h3 style="margin-top:16px">{n['series']}: {n['title']}</h3>
           <p>{n['summary']}</p>
-          <div class="meta"><span class="pill"><time datetime="{n['date']}">{human_date(n['date'])}</time></span>{f'<span class="pill">Hosted by {n["host"]}</span>' if n.get('host') else ''}{'<span class="pill">&#9654; Recording</span>' if n.get('video') else ''}</div>
+          <div class="meta"><span class="pill"><time datetime="{n['date']}">{human_date(n['date'])}</time></span>{f'<span class="pill">Hosted by {n["host"]}</span>' if n.get('host') else ''}{'<span class="pill">&#9654; Recording</span>' if n.get('video') else ''}{'<span class="pill orange">&#127918; Playable</span>' if n.get('game') else ''}<span class="pill" data-stamp="{n['slug']}" hidden></span></div>
         </div>
       </a>
 ''' for n in sessions)
@@ -312,7 +313,14 @@ def list_page(sessions):
     page += hero('/Session-notes_', 'Session <span class="orange">notes.</span>',
                  'Short recaps of our sessions: one or two highlights, the key takeaways, and every resource shared on the call.',
                  f'\n        <p class="note-meta"><a class="pill orange" href="/resources" style="text-decoration:none">Resource library &rarr;</a><a class="pill" href="{REPO}" target="_blank" rel="noopener" style="text-decoration:none">Also on GitHub &rarr;</a></p>')
-    page += f'  <section class="section-inner" style="padding-top:56px">\n    <div class="article-list">\n{cards}    </div>\n  </section>\n' + final_cta
+    short = lambda n: {'Sovereign Bitcoiner Workshop': 'Sovereign', 'Bitcoin Reading Club': 'Reading Club', 'Agentic Engineering & Coding Workshop': 'Agentic', 'Agentic Engineering &amp; Coding Workshop': 'Agentic', 'Self-Custody Workshop': 'Self-custody', 'Code Review Club': 'Review Club'}.get(n['series'], n['series'])
+    day = lambda n: f"{int(n['date'][8:10])} {['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][int(n['date'][5:7]) - 1]}"
+    data = json.dumps([{'slug': n['slug'], 'short': short(n), 'day': day(n), 'title': strip_tags(f"{n['series']}: {n['title']}")} for n in sessions]).replace('</', '<\\/')
+    page += ('  <section class="section-inner" style="padding-top:56px">\n'
+             '    <style>.article-card{grid-template-columns:minmax(0,420px) 1fr}.article-card img{height:auto;min-height:0;max-height:none;aspect-ratio:1200/630;align-self:center;object-fit:cover}.article-card [data-stamp][hidden]{display:none}@media (max-width:760px){.article-card{grid-template-columns:1fr}}</style>\n'
+             '    <div id="passport" style="scroll-margin-top:96px"></div>\n'
+             f'    <div class="article-list">\n{cards}    </div>\n  </section>\n'
+             f'  <script>window.SN_SESSIONS={data};</script>\n  <script src="/assets/session-notes/passport.js?v=20261112a"></script>\n' + final_cta)
     return page
 
 def resources_page(sessions):
