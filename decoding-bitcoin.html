@@ -624,8 +624,9 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
     .tw1-opts button.right{border-color:#4ade80;background:rgba(74,222,128,.12)}
     .tw1-opts button.wrong{border-color:#f87171;background:rgba(248,113,113,.1)}
     .tw1-why{padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.05);color:var(--text)!important}
-    .tw1-score{font:800 44px "Plus Jakarta Sans",sans-serif;color:var(--orange);margin:0 0 6px}
+    .tw1-pane .tw1-score{font:800 44px "Plus Jakarta Sans",sans-serif;color:var(--orange);margin:0 0 6px}
     .tw1-row{display:flex;gap:10px;flex-wrap:wrap}
+    .tw1-share{margin:16px 0 0!important;font-size:14px}.tw1-share a,.tw1-share button{color:var(--orange);font:inherit;font-weight:700;background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
     @media (max-width:760px){.tw1-box{padding:20px}.tw1-pane h3{font-size:19px}}
     </style>
     <div class="split"><div><p class="eyebrow">Try it first</p><h2>Week 1 in 2 minutes.</h2></div><p class="lead">Not sure it's for you? Mine a tiny hash and answer three questions. No sign-up needed.</p></div>
@@ -651,6 +652,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
         <h3 id="tw1-verdict"></h3>
         <p>That was a taste of week 1. Nine more weeks take you through transactions, Script and Taproot, with a group to ask when you're stuck.</p>
         <div class="tw1-row"><a class="button mb-cta" href="#signup" id="tw1-join">Sign me up, it's free</a><button type="button" class="ghost" id="tw1-again">Play again</button></div>
+        <p class="tw1-share">Challenge a friend: <a id="tw1-x" href="#" target="_blank" rel="noopener">Post my score on X</a> · <button type="button" id="tw1-copy">Copy for Nostr</button></p>
       </div>
     </div>
     <script>
@@ -698,6 +700,9 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
         qi++;if(qi<QS.length){ask();return;}
         $('tw1-score').textContent=score+' / '+QS.length;
         $('tw1-verdict').textContent=score===QS.length?'Perfect. You already think like a builder.':(score>0?'Good start. The cohort fills in the rest.':'Everyone starts here. That is what the cohort is for.');
+        var msg='I scored '+score+'/'+QS.length+' on week 1 of Decoding Bitcoin, a free 10-week study cohort on Discord. Starts 16 Nov. Can you beat me?',url='https://codeorange.dev/decoding-bitcoin#try';
+        $('tw1-x').href='https://x.com/intent/post?text='+encodeURIComponent(msg)+'&url='+encodeURIComponent(url);
+        $('tw1-copy').onclick=function(){var b=this,t=msg+' '+url;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){b.textContent='Copied';},function(){prompt('Copy this:',t);});};
         show(2);
       });
       $('tw1-again').addEventListener('click',function(){tries=0;prev='';won=false;$('tw1-in').value='';$('tw1-tries').textContent='0';$('tw1-diff').textContent='–';
