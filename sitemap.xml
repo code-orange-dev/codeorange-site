@@ -128,9 +128,15 @@
   </url>
   <url>
     <loc>https://codeorange.dev/decoding-bitcoin</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://codeorange.dev/decoding-bitcoin/curriculum</loc>
+    <lastmod>2026-11-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://codeorange.dev/fellowships</loc>

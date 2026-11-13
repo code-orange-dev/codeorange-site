@@ -6,21 +6,21 @@ window.MB_QUIZ = {
   weeks: [
     [
       { q: "You hash a word with SHA-256, then change one letter and hash it again. What happens to the output?", options: ["Only the last few characters change", "Roughly half the bits change, in a way you can't predict", "Nothing changes, the hash only depends on length", "The output gets one character longer"], answer: 1, why: "That's the avalanche effect: a tiny change in the input scrambles the whole output. It's why a hash works as a fingerprint." },
-      { q: "How long is a SHA-256 hash?", options: ["160 bits (20 bytes)", "256 bits (32 bytes)", "512 bits (64 bytes)", "It depends on the input"], answer: 1, why: "SHA-256 always outputs 256 bits, 64 hex characters, whatever the size of the input." },
       { q: "When was the Bitcoin whitepaper published?", options: ["2006", "2008", "2009", "2011"], answer: 1, why: "Satoshi published it on 31 October 2008. The genesis block followed on 3 January 2009." },
-      { q: "What does \"don't trust, verify\" mean in practice?", options: ["Only use exchanges with good reviews", "Run your own node so you check every rule yourself", "Ask several friends before sending bitcoin", "Read the whitepaper once a year"], answer: 1, why: "A full node checks every block and transaction against the rules, so you don't have to trust anyone else's word about your coins." },
-    ],
-    [
       { q: "What is a UTXO?", options: ["An account balance stored by the network", "An unspent transaction output that has to be spent in full", "A block that hasn't been mined yet", "A type of Bitcoin address"], answer: 1, why: "Your \"balance\" is the sum of UTXOs your keys can spend. Each one is consumed whole when it's used as an input." },
       { q: "You have a single 0.5 BTC UTXO and want to pay someone 0.2 BTC. What does your wallet do?", options: ["Sends 0.2 BTC and the network keeps the rest", "Creates a 0.2 BTC output to them and a change output of about 0.3 BTC (minus the fee) back to you", "Splits the UTXO on-chain before paying", "Waits until you have a UTXO of exactly 0.2 BTC"], answer: 1, why: "UTXOs can't be partly spent, so the leftover comes back as change. Anything not assigned to an output becomes the fee." },
-      { q: "Where does a valid transaction wait before it's mined?", options: ["In the blockchain", "In the mempool of each node", "In the sender's wallet only", "On a central Bitcoin server"], answer: 1, why: "Nodes keep unconfirmed transactions in their mempool, and miners pick from it (usually highest fee rate first)." },
-      { q: "Why do people wait for several confirmations on big payments?", options: ["Each new block makes reversing the payment much harder", "The receiver can't see the coins until then", "Fees are refunded after 6 confirmations", "The transaction is encrypted until then"], answer: 0, why: "To reverse a payment, an attacker must out-mine everyone else from that block onwards. The odds of that drop fast with every block on top." },
     ],
     [
+      { q: "Where does a valid transaction wait before it's mined?", options: ["In the blockchain", "In the mempool of each node", "In the sender's wallet only", "On a central Bitcoin server"], answer: 1, why: "Nodes keep unconfirmed transactions in their mempool, and miners pick from it (usually highest fee rate first)." },
+      { q: "Why do people wait for several confirmations on big payments?", options: ["Each new block makes reversing the payment much harder", "The receiver can't see the coins until then", "Fees are refunded after 6 confirmations", "The transaction is encrypted until then"], answer: 0, why: "To reverse a payment, an attacker must out-mine everyone else from that block onwards. The odds of that drop fast with every block on top." },
       { q: "What is the first field of a serialized transaction?", options: ["The inputs", "The version", "The locktime", "The txid"], answer: 1, why: "A transaction starts with a 4-byte version, then (for segwit) a marker and flag, the inputs, the outputs, the witness and finally the locktime." },
+      { q: "What does a transaction input point to?", options: ["An address", "A previous transaction's output, by its txid and output number", "A block height", "The sender's account"], answer: 1, why: "An input names an outpoint: the txid of an earlier transaction plus which output it was. Nodes look that output up in their UTXO set to check it exists and hasn't been spent." },
+    ],
+    [
       { q: "Why does a txid on a block explorer look different from the bytes you hash?", options: ["Explorers encrypt it", "It's shown in reversed byte order", "Explorers use a different hash function", "It includes the block height"], answer: 1, why: "The double-SHA256 is displayed byte-reversed by convention. That's why exercise 2 has you flip the bytes." },
       { q: "Is the witness data part of what's hashed to make the txid?", options: ["Yes, always", "No, and that's what fixed transaction malleability", "Only for legacy transactions", "Only the signatures, not the public keys"], answer: 1, why: "SegWit moved signatures into the witness and left them out of the txid, so nobody can change a txid by tweaking a signature." },
       { q: "What is a CompactSize (varint) used for in a transaction?", options: ["Storing amounts in satoshis", "Lengths and counts, like how many inputs there are", "The version number", "The signature itself"], answer: 1, why: "Counts and script lengths use a variable-length integer so small numbers take just one byte." },
+      { q: "When parsing raw bytes, how do you tell a segwit transaction from a legacy one?", options: ["The version is 2", "A 0x00 marker and 0x01 flag come right after the version", "It is longer than 250 bytes", "The locktime is set"], answer: 1, why: "In the segwit format a 0x00 marker and 0x01 flag follow the version. A legacy transaction goes straight to the input count, which can never be zero." },
     ],
     [
       { q: "How do you work out a transaction's fee?", options: ["It's written in a fee field", "Total inputs minus total outputs", "Size in bytes times 1 sat", "The miner picks it after mining"], answer: 1, why: "There's no fee field. Whatever input value isn't assigned to an output goes to the miner." },
@@ -66,5 +66,5 @@ window.MB_QUIZ = {
     ],
   ],
   // The knowledge check: [week index, question index], one per week. Taken before week 1 and again from week 9.
-  check: [[0, 0], [1, 1], [2, 2], [3, 2], [4, 0], [5, 2], [6, 0], [7, 3], [8, 3], [9, 0]],
+  check: [[0, 0], [0, 3], [2, 1], [3, 2], [4, 0], [5, 2], [6, 0], [7, 3], [8, 3], [9, 0]],
 };

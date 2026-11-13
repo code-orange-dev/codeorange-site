@@ -221,6 +221,15 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
 .mb-now { background: var(--orange); color: var(--bg); }
 .mb-mine { border: 1px solid rgba(247,147,26,.45); color: var(--orange); }
 .mb-week-body { padding: 22px 24px 28px; }
+.mb-week.mb-locked { display: grid; grid-template-columns: 96px minmax(0,1fr) auto; gap: 18px; align-items: center; padding: 20px 24px; border-style: dashed; opacity: .8; }
+.mb-week.mb-locked .mb-title { color: var(--dim); font-size: 16px; }
+.mb-rail .is-locked { position: relative; display: grid; gap: 6px; padding: 10px 0 0; color: var(--dim); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .06em; opacity: .45; cursor: default; }
+.mb-rail .is-locked i { display: block; height: 6px; border-radius: 99px; background: rgba(255,255,255,.08); }
+.mb-rail .is-locked em { font-style: normal; }
+.mb-rail .is-locked span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mb-plan-cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 28px; }
+.mb-plan-cta p { margin: 0; color: var(--dim); }
+@media (max-width: 760px) { .mb-week.mb-locked { grid-template-columns: minmax(0,1fr) auto; gap: 4px 12px; padding: 16px 18px; } .mb-week.mb-locked .mb-title { grid-column: 1 / span 2; grid-row: 2; } .mb-rail .is-locked em { display: none; } }
 .mb-summary { margin: 0 0 16px; color: var(--muted); line-height: 1.65; max-width: 760px; }
 .mb-chapters { display: flex; flex-wrap: wrap; gap: 8px; }
 .mb-chapters a { padding: 8px 13px; border-radius: 999px; border: 1px solid rgba(247,147,26,.42); color: var(--orange); text-decoration: none; font: 600 13px "Plus Jakarta Sans", monospace; }
@@ -497,8 +506,9 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
 </style>
 <link rel="stylesheet" href="/assets/theme.css?v=20261015d">
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
-<script src="/assets/mastering-bitcoin/cohort.js?v=20261010a" defer></script>
-<script src="/assets/mastering-bitcoin/app.js?v=20261016a" defer></script>
+<script>if(/^#(week-\d+|curriculum)$/.test(location.hash))location.replace("/decoding-bitcoin/curriculum"+location.search+(location.hash==="#curriculum"?"":location.hash));</script>
+<script src="/assets/mastering-bitcoin/cohort.js?v=20261113a" defer></script>
+<script src="/assets/mastering-bitcoin/app.js?v=20261113a" defer></script>
 </head>
 <body>
 <a class="announce" href="#signup">Decoding Bitcoin study cohort starts Monday 16 November &middot; sign-ups are open <span>Sign up &rarr;</span></a>
@@ -728,19 +738,15 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
     <div class="split"><div><p class="eyebrow">The course</p><h2>Built on Decoding Bitcoin.</h2></div><p class="lead">A free, interactive course by <a href="https://bitcoindevs.xyz" target="_blank" rel="noopener">The Bitcoin Dev Project</a>. You learn by decoding real transactions and writing code, not by reading a PDF.</p></div>
     <a class="mb-shot " href="https://bitcoindevs.xyz/decoding" target="_blank" rel="noopener"><figure style="margin:0"><div class="mb-shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>bitcoindevs.xyz/decoding</span></div><img src="https://bitcoindevs.xyz/images/pages-thumbnails/decoding-bitcoin.webp" alt="Decoding Bitcoin, a free interactive course by The Bitcoin Dev Project" width="1200" height="630" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.mb-shot').classList.add('is-broken')"><figcaption><b>Decoding Bitcoin</b> by The Bitcoin Dev Project. Click to open the course ↗</figcaption></figure></a>
     <div class="grid three mb-modules">
-      <a class="card mb-module" href="https://bitcoindevs.xyz/decoding/transaction-lifecycle" target="_blank" rel="noopener"><span class="pill orange">Weeks 2–5</span><h3>Transactions</h3><p>How a transaction is built, paid for and signed.</p><b>Start the module ↗</b></a>
+      <a class="card mb-module" href="https://bitcoindevs.xyz/decoding/transaction-lifecycle" target="_blank" rel="noopener"><span class="pill orange">Weeks 1–5</span><h3>Transactions</h3><p>How a transaction is built, paid for and signed.</p><b>Start the module ↗</b></a>
       <a class="card mb-module" href="https://bitcoindevs.xyz/decoding/overview" target="_blank" rel="noopener"><span class="pill orange">Weeks 6–8</span><h3>Scripts</h3><p>How coins are locked and unlocked, up to multisig.</p><b>Start the module ↗</b></a>
       <a class="card mb-module" href="https://bitcoindevs.xyz/decoding/introduction-taproot" target="_blank" rel="noopener"><span class="pill orange">Weeks 9–10</span><h3>Taproot</h3><p>Schnorr signatures and Bitcoin’s newest outputs.</p><b>Start the module ↗</b></a>
     </div>
+    <div class="mb-plan-cta"><a class="button mb-cta" href="/decoding-bitcoin/curriculum"><span>See the weekly plan</span><svg class="mb-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a><p>Lessons, questions and exercises unlock one week at a time.</p></div>
     <p class="mb-tools">Free tools to play with:</p>
     <div class="mb-toolgrid"><a class="card mb-tool" href="https://bitcoindevs.xyz/decoding/transaction-decoder" target="_blank" rel="noopener"><h3>Transaction Decoder</h3><p>See every field of a transaction.</p><b>Open ↗</b></a><a class="card mb-tool" href="https://bitcoindevs.xyz/decoding/hash-functions" target="_blank" rel="noopener"><h3>Hash Functions</h3><p>Try SHA-256 yourself.</p><b>Open ↗</b></a><a class="card mb-tool" href="https://bitcoindevs.xyz/decoding/reorg-calculator" target="_blank" rel="noopener"><h3>Reorg Calculator</h3><p>Why we wait for confirmations.</p><b>Open ↗</b></a><a class="card mb-tool" href="https://bitcoindevs.xyz/decoding/interactive-roadmap" target="_blank" rel="noopener"><h3>Developer Roadmap</h3><p>What to learn next.</p><b>Open ↗</b></a><a class="card mb-tool" href="https://bitcoindevs.xyz/decoding/transaction_exercises" target="_blank" rel="noopener"><h3>Coding Exercises</h3><p>Code that gets checked for you.</p><b>Open ↗</b></a></div>
   </div></section>
 
-  <section id="curriculum" class="section-inner mb-bg mb-bg-right" style="--mb-bg:url(/assets/mastering-bitcoin/bg-workshop-table.webp?v=3);scroll-margin-top:96px">
-    <div class="split"><div><p class="eyebrow">Curriculum</p><h2>A few lessons a week.</h2></div><p class="lead">Tap a week to see its lessons, questions and exercises.</p></div>
-    <nav id="mb-rail" class="mb-rail" aria-label="Jump to a week"></nav>
-    <div id="mb-weeks" class="mb-weeks"></div>
-  </section>
 
 
   <section id="seminar" class="section-inner" style="scroll-margin-top:96px">
