@@ -1,0 +1,312 @@
+      <style>
+      .cr-card{margin:8px 0 36px;border:1px solid rgba(247,147,26,.35);border-radius:18px;background:radial-gradient(120% 90% at 0 0,rgba(247,147,26,.13),transparent 60%) #141414;padding:22px;position:relative}
+      .cr-eye{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 6px;font:700 12px/1.3 "Plus Jakarta Sans",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--orange)}
+      .cr-eye span:last-child{color:var(--dim);letter-spacing:.06em}
+      .cr-card h3{margin:0 0 8px;font-size:22px;line-height:1.25;color:var(--text)}
+      .cr-card>p{margin:0 0 14px;font-size:15.5px;line-height:1.55}
+      .cr-btn{all:unset;box-sizing:border-box;cursor:pointer;display:inline-block;padding:10px 18px;border-radius:99px;background:var(--orange);color:#0A0A0A;font:800 14px/1.2 "Inter",system-ui,sans-serif;text-align:center}
+      .cr-btn:hover{filter:brightness(1.1)}
+      .cr-btn.ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.2)}
+      .cr-btn.sm{padding:7px 12px;font-size:12.5px}
+      .cr-btn[disabled]{opacity:.35;cursor:default;filter:none}
+      .cr-btn:focus-visible,.cr-seg button:focus-visible,.cr-net circle:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+      .cr-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+      .cr-seg{display:inline-flex;flex-wrap:wrap;gap:4px;padding:4px;border-radius:14px;background:rgba(0,0,0,.4);border:1px solid var(--line);margin:0 0 14px}
+      .cr-seg button{all:unset;box-sizing:border-box;cursor:pointer;padding:8px 14px;border-radius:10px;color:var(--muted);font:700 13px/1.2 "Inter",system-ui,sans-serif}
+      .cr-seg button.on{background:var(--orange);color:#0A0A0A}
+      .cr-out{margin:14px 0 0;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.04);color:var(--muted);font-size:15px;line-height:1.5;min-height:22px}
+      .cr-out b{color:var(--orange)}
+      .cr-done{display:none;margin-left:8px;color:var(--orange)}
+      .cr-card.won .cr-done{display:inline}
+      .cr-badges{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:14px 0}
+      .cr-badge{display:block;padding:12px 6px;border-radius:14px;border:1px dashed rgba(255,255,255,.18);text-align:center;text-decoration:none;color:var(--dim);font:700 11px/1.3 "Plus Jakarta Sans",monospace;letter-spacing:.04em;transition:all .3s}
+      .prose a.cr-badge{color:var(--dim);text-decoration:none}
+      .cr-badge i{display:block;font-style:normal;font-size:26px;line-height:1;margin-bottom:8px;filter:grayscale(1);opacity:.45;transition:all .3s}
+      .prose a.cr-badge.got,.cr-badge.got{border:1px solid var(--orange);background:rgba(247,147,26,.14);color:var(--text);box-shadow:0 0 24px rgba(247,147,26,.18)}
+      .cr-badge.got i{filter:none;opacity:1;transform:scale(1.12)}
+      .cr-bar{height:8px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+      .cr-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--orange),var(--orange2));transition:width .6s ease}
+      .cr-toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,30px);z-index:60;padding:12px 20px;border-radius:99px;background:var(--orange);color:#0A0A0A;font:800 14px/1.2 "Inter",system-ui,sans-serif;box-shadow:0 12px 40px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:all .35s ease;white-space:nowrap;max-width:92vw;overflow:hidden;text-overflow:ellipsis}
+      .cr-toast.go{opacity:1;transform:translate(-50%,0)}
+      /* network game */
+      .cr-net{display:block;width:100%;max-width:460px;margin:0 auto;height:auto}
+      .cr-net line{stroke:#F7931A;stroke-opacity:.55;stroke-width:3;transition:all .3s}
+      .cr-net line.dead{stroke:#666;stroke-opacity:.25;stroke-dasharray:4 5}
+      .cr-net circle{fill:#F7931A;cursor:pointer;transition:all .3s;stroke:#0A0A0A;stroke-width:3}
+      .cr-net circle.hub{fill:#FFB347}
+      .cr-net circle.off{fill:#333;stroke:#a04a4a}
+      .cr-net circle.cut{fill:#5a2a2a}
+      .cr-net text{fill:#0A0A0A;font:800 12px "Inter",sans-serif;pointer-events:none}
+      /* stack */
+      .cr-stack{display:grid;grid-template-columns:auto 1fr 1fr;gap:6px;font-size:14px;line-height:1.35}
+      .cr-stack>*{padding:10px 12px;border-radius:10px;background:var(--card);border:1px solid rgba(255,255,255,.08);min-width:0}
+      .cr-stack .h{background:transparent;border:0;font:700 11px/1.2 "Plus Jakarta Sans",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);padding:4px 12px}
+      .cr-stack .l{font-weight:700;color:var(--text);background:transparent;border:0;padding-left:0}
+      .cr-stack .x{border-color:rgba(247,147,26,.6);background:rgba(247,147,26,.1);color:var(--text)}
+      .cr-stack .same{color:var(--dim)}
+      /* gossip */
+      .cr-chain{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;position:relative;margin:6px 0 4px}
+      .cr-node{border-radius:14px;background:rgba(0,0,0,.35);border:1px solid var(--line);padding:10px 8px;text-align:center;min-width:0;transition:all .3s}
+      .cr-node.hot{border-color:var(--orange);box-shadow:0 0 22px rgba(247,147,26,.3)}
+      .cr-node b{display:flex;margin:0 auto 8px;width:38px;height:38px;border-radius:50%;background:#262626;color:var(--text);align-items:center;justify-content:center;font:800 16px "Inter",sans-serif}
+      .cr-node.me b{background:var(--orange);color:#0A0A0A}
+      .cr-node small{display:block;font:700 10px/1.2 "Plus Jakarta Sans",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:5px}
+      .cr-book{min-height:46px;display:flex;flex-direction:column;gap:4px;align-items:center}
+      .cr-book code{font:600 11.5px/1.3 ui-monospace,Menlo,Consolas,monospace;padding:3px 7px;border-radius:6px;background:#0d0d0d;color:#7bd88f;animation:crpop .4s ease}
+      .cr-pkt{display:inline-block;padding:3px 9px;border-radius:7px;background:#2c8a4a;color:#fff;font:800 11px/1.3 ui-monospace,Menlo,monospace}
+      @keyframes crpop{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
+      /* anatomy */
+      .cr-tbl{width:100%;border-collapse:collapse;font:600 13px/1.4 ui-monospace,Menlo,Consolas,monospace}
+      .cr-tbl th{font:700 11px/1.2 "Plus Jakarta Sans",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}
+      .cr-tbl td{padding:7px 8px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--muted);white-space:nowrap}
+      .cr-tbl td:first-child{color:var(--text)}.cr-tbl td:last-child{color:var(--orange)}
+      /* bouncer */
+      .cr-in{display:flex;flex-direction:column;gap:8px}
+      .cr-addr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:10px 12px;border-radius:12px;background:rgba(0,0,0,.35);border:1px solid var(--line)}
+      .cr-addr code{font:600 13px/1.3 ui-monospace,Menlo,Consolas,monospace;color:var(--text);word-break:break-all}
+      .cr-addr .r{display:block;font:600 12px/1.3 "Inter",sans-serif;color:var(--dim);margin-top:3px}
+      .cr-addr .r.ok{color:#7bd88f}.cr-addr .r.no{color:#ff8a8a}
+      .cr-addr.right{border-color:rgba(123,216,143,.5)}.cr-addr.wrong{border-color:#a04a4a}
+      .cr-tables{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 0}
+      .cr-tables div{border-radius:12px;border:1px dashed rgba(255,255,255,.18);padding:10px;min-height:70px}
+      .cr-tables h4{margin:0 0 6px;font:800 13px/1.2 "Inter",sans-serif;color:var(--text)}
+      .cr-tables h4 small{display:block;font:600 11px/1.3 "Inter",sans-serif;color:var(--dim);margin-top:2px}
+      .cr-tables code{display:inline-block;margin:3px 4px 0 0;font:600 11.5px/1.3 ui-monospace,Menlo,monospace;padding:3px 7px;border-radius:6px;background:#0d0d0d;color:#7bd88f}
+      .cr-tables .new code{color:#c9c9c9}
+      /* puzzle charts */
+      .cr-charts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+      .cr-charts figure{margin:0;padding:12px;border-radius:12px;background:var(--card);border:1px solid rgba(255,255,255,.08)}
+      .cr-charts figcaption{font:700 13px/1.3 "Inter",sans-serif;color:var(--text);margin:0 0 6px}
+      .cr-charts svg{width:100%;height:auto;display:block}
+      .cr-spoil{margin:14px 0 0;border-radius:12px;border:1px solid var(--line);padding:0 14px}
+      .cr-spoil summary{cursor:pointer;padding:12px 0;font-weight:700;color:var(--orange)}
+      .cr-spoil p{margin:0 0 12px;font-size:15px;line-height:1.55}
+      /* floresta flow */
+      .cr-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 10px}
+      .cr-flow div{padding:12px 8px;border-radius:12px;background:var(--card);border:1px solid rgba(255,255,255,.08);text-align:center;font-size:13.5px;line-height:1.35;color:var(--muted);min-width:0}
+      .cr-flow div b{display:block;color:var(--text);margin-bottom:4px;font-size:14px}
+      .cr-flow .bad{border-color:#a04a4a;background:rgba(160,60,60,.12)}
+      .cr-flow .good{border-color:rgba(247,147,26,.6);background:rgba(247,147,26,.1)}
+      .cr-lbl{margin:10px 0 6px;font:700 11px/1.2 "Plus Jakarta Sans",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+      .cr-locks{display:flex;flex-direction:column;gap:6px}
+      .cr-locks div{display:flex;gap:12px;align-items:center;padding:10px 14px;border-radius:12px;background:var(--card);border:1px solid rgba(255,255,255,.08);font-size:14.5px;line-height:1.4;color:var(--muted)}
+      .cr-locks div b{color:var(--text)}
+      .cr-locks i{flex:none;font-style:normal;width:30px;height:30px;border-radius:50%;background:rgba(247,147,26,.15);color:var(--orange);display:flex;align-items:center;justify-content:center;font:800 13px "Inter",sans-serif}
+      @media (max-width:560px){
+        .cr-card{padding:16px}
+        .cr-badges{gap:5px}.cr-badge{padding:10px 2px;font-size:9.5px}.cr-badge i{font-size:22px}
+        .cr-stack{font-size:12.5px}.cr-stack>*{padding:8px}
+        .cr-chain{gap:5px}.cr-node{padding:8px 3px}.cr-book code{font-size:10px;padding:2px 4px}
+        .cr-tbl{font-size:11.5px}
+        .cr-charts{grid-template-columns:1fr}
+        .cr-flow{grid-template-columns:1fr 1fr}
+      }
+      @media (prefers-reduced-motion:reduce){.cr-book code{animation:none}.cr-net *{transition:none}}
+      </style>
+
+      <div class="cr-card" id="cr-board">
+        <p class="cr-eye"><span>Mission board</span><span><span id="cr-xp">0</span> XP</span></p>
+        <h3>Three talks. Three mini-games. One quiz.</h3>
+        <p>Each game below is one big idea from the call. Finish it and its badge lights up. Pass the quiz at the end for the last one. Progress stays on this device and adds XP to your <a href="/session-notes#passport">builder passport</a>.</p>
+        <div class="cr-badges">
+          <a class="cr-badge" href="#g-mesh" data-b="mesh"><i>&#128376;</i>Mesh Maker</a>
+          <a class="cr-badge" href="#g-gossip" data-b="gossip"><i>&#128483;</i>Gossip</a>
+          <a class="cr-badge" href="#g-bouncer" data-b="bouncer"><i>&#128682;</i>Bouncer</a>
+          <a class="cr-badge" href="#cr-quiz" data-b="quiz"><i>&#127793;</i>Reviewer</a>
+        </div>
+        <div class="cr-bar"><i id="cr-prog"></i></div>
+      </div>
+      <div class="cr-toast" id="cr-toast" role="status" aria-live="polite"></div>
+
+      <h2>Highlights</h2>
+      <p class="part"><b>1</b>FIPS with Alex</p>
+      <p><strong>An internet where your address is a key you make yourself.</strong> Today, to reach anyone online you need an IP address from your internet provider and a domain from a registry. Both are handed out from the top down, both can tell where you are, and both can be switched off. FIPS, the <em>Free Internetworking Peering System</em>, swaps them for something Bitcoiners already know: every node makes its own key pair, and its Nostr <em>npub</em> is its address. Nodes find each other and route messages through a self-organizing mesh, with no central server in the middle.</p>
+      <p>Alex met the creator, Jonathan, in Madeira, where Nostr developers had FIPS apps talking over Bluetooth.</p>
+
+      <div class="cr-card" id="g-mesh">
+        <p class="cr-eye"><span>Mini-game 1 &middot; Mesh Maker</span><span class="cr-done">&#10003; badge earned</span></p>
+        <h3>Knock out a node. Who gets cut off?</h3>
+        <p>A question from the call: what is the difference between decentralized and distributed? Pick a shape, then tap any node to take it offline. Try all three shapes to earn the badge.</p>
+        <div class="cr-seg" id="cr-shape"><button type="button" class="on" data-m="c">Centralized</button><button type="button" data-m="d">Decentralized</button><button type="button" data-m="m">Distributed (mesh)</button></div>
+        <svg class="cr-net" id="cr-net" viewBox="0 0 320 230" role="img" aria-label="Network diagram: tap a node to knock it out"></svg>
+        <div class="cr-row" style="justify-content:center;margin-top:6px"><button type="button" class="cr-btn ghost sm" id="cr-reset">Bring every node back</button></div>
+        <p class="cr-out" id="cr-netout">Tap the big node in the middle first.</p>
+      </div>
+
+      <p>The answer the group landed on: in a <strong>decentralized</strong> network there are clusters, and each cluster hangs off a head node, so between two nodes there is often only one route. Lose a cluster head and a whole branch goes dark. In a <strong>distributed</strong> network every node has several ways to reach every other node, so one crash barely matters. FIPS is the distributed kind. It has no hierarchy at all: nodes compare addresses to build a spanning tree and pick a good path.</p>
+
+      <div class="viz" role="figure" aria-label="Where FIPS fits in the network stack">
+        <p class="eyebrow">Does FIPS still use IP?</p>
+        <p class="viz-title">Swap one layer, keep the rest</p>
+        <div class="cr-stack">
+          <span class="h"></span><span class="h">Internet today</span><span class="h">With FIPS</span>
+          <span class="l">Apps</span><span>Browser, chat, your server</span><span class="same">Same apps, unchanged</span>
+          <span class="l">Transport</span><span>TCP / UDP</span><span class="same">Same</span>
+          <span class="l">Addresses</span><span>IP address from your ISP + DNS name from a registry</span><span class="x">Your npub, made by you. Mesh routing finds the path</span>
+          <span class="l">Links</span><span>Wi-Fi, Ethernet</span><span class="x">Wi-Fi, Ethernet, Bluetooth, radio, LoRa</span>
+        </div>
+        <p class="viz-fix"><b>The clever part:</b> FIPS only replaces the addressing layer, so apps that speak IP can run on the mesh without changing anything. Moving a server onto FIPS should not need a rewrite.</p>
+      </div>
+
+      <p>Why not just use a VPN? A VPN only hops your traffic through another company&rsquo;s servers. Those servers sit on a known family of IP addresses, so they are easy to spot and easy to block, and the company is one more middleman. Tor helps but has its own problems. As Alex put it, both are workarounds on an internet that was never private by design. FIPS tries to fix the root: a permissionless internet, the same idea Bitcoin brought to money.</p>
+      <blockquote class="quote"><p>&ldquo;You generate your identity yourself, instead of an IP address you have to request from your ISP.&rdquo;</p><cite>Alex, on why FIPS matters</cite></blockquote>
+      <p><strong>Homework from Alex:</strong> spin up a FIPS node before the next session. Next time he will demo sending messages between nodes from the terminal.</p>
+
+      <p class="part"><b>2</b>A peer-observer case study with Razor</p>
+      <p><strong>Learn Bitcoin Core by studying a real attack.</strong> peer-observer is a set of tools that watches the Bitcoin peer-to-peer network for attacks. There is no single starting point, so Razor&rsquo;s advice is to start from real incidents and ask &ldquo;how would we have spotted this?&rdquo; This time: the 2026 address spam, written up on the Bitcoin Network Operations Collective forum (bnoc) as <em>Address relay under stress</em>.</p>
+      <p>First the basics. If nobody knows your node exists, nobody can connect to it. So nodes gossip about each other: you tell your peers &ldquo;here I am&rdquo; in an <code>ADDR</code> message, and they pass it on to their peers, and so on.</p>
+
+      <div class="cr-card" id="g-gossip">
+        <p class="cr-eye"><span>Mini-game 2 &middot; Gossip</span><span class="cr-done">&#10003; badge earned</span></p>
+        <h3>Get D&rsquo;s address all the way to A</h3>
+        <p>Razor&rsquo;s whiteboard: A, B, C and D sit in a line. D is new and only connected to C. Press the button to pass D&rsquo;s <span class="cr-pkt">ADDR</span> message along.</p>
+        <div class="cr-chain" id="cr-chain"></div>
+        <div class="cr-row" style="margin-top:12px"><button type="button" class="cr-btn" id="cr-hop">D says hello</button><button type="button" class="cr-btn ghost sm" id="cr-hopreset" hidden>Start over</button></div>
+        <p class="cr-out" id="cr-hopout">Each node keeps a phone book of addresses (the boxes under each letter).</p>
+      </div>
+
+      <p>That phone book is <strong>addrman</strong>, the address manager in Bitcoin Core (<code>src/addrman.h</code>). It is simpler than a routing table: no paths, just a list of addresses you can try to connect to directly, plus who told you about each one. Here is what a few rows of a real dump look like:</p>
+      <div class="viz" role="figure" aria-label="A few rows from an addrman dump">
+        <p class="eyebrow">Inside addrman</p>
+        <p class="viz-title">A phone book of peers</p>
+        <div class="svg-scroll"><table class="cr-tbl"><thead><tr><th>Address</th><th>Port</th><th>Network</th><th>Learned from</th></tr></thead><tbody>
+          <tr><td>203.0.113.42</td><td>8333</td><td>IPv4</td><td>89.21.7.x</td></tr>
+          <tr><td>2001:db8::5</td><td>8333</td><td>IPv6</td><td>89.21.7.x</td></tr>
+          <tr><td>exampl3abc&hellip;.onion</td><td>8333</td><td>Tor</td><td>198.51.100.9</td></tr>
+        </tbody></table></div>
+        <p class="swipe">Swipe to see the whole table &rarr;</p>
+        <p class="viz-fix"><b>Why peer-observer helps:</b> Bitcoin Core only keeps today&rsquo;s phone book. peer-observer dumps it every day, so you can see how it changed over months.</p>
+      </div>
+
+      <p>An <code>ADDR</code> (or the newer <code>ADDRv2</code>, which also fits Tor and other address types) can carry up to 10 addresses at once. Normally the average was about 2 per message. From around April 2026 it climbed to about 3.5. Small, but clearly not normal. Someone was spamming the network with <strong>bogus addresses</strong> that do not exist.</p>
+      <p>So why not test every address before you save it? Because honest nodes go offline. If your node crashes for an hour and everyone deletes you, you have to start gossiping from zero, and that is slow. Bitcoin Core needs forgiveness, so it keeps two tables.</p>
+
+      <div class="cr-card" id="g-bouncer">
+        <p class="cr-eye"><span>Mini-game 3 &middot; Bouncer</span><span class="cr-done">&#10003; badge earned</span></p>
+        <h3>You are addrman. Sort the guest list.</h3>
+        <p>Six addresses just arrived in ADDR messages. Try to connect to each one, then file it: <b>Tried</b> (it answered, trust it more), <b>New</b> (no answer yet, try again later) or <b>Delete</b>. Get all six right for the badge.</p>
+        <div class="cr-in" id="cr-in"></div>
+        <div class="cr-tables"><div class="tried"><h4>Tried table<small>answered when we called</small></h4><span id="cr-tried"></span></div><div class="new"><h4>New table<small>not reached yet, retry later</small></h4><span id="cr-new"></span></div></div>
+        <p class="cr-out" id="cr-binout">Hint: a node that does not answer might just be rebooting.</p>
+      </div>
+
+      <div class="viz" role="figure" aria-label="The puzzle Razor left us with">
+        <p class="eyebrow">Razor&rsquo;s puzzle</p>
+        <p class="viz-title">More spam, but fewer new addresses?</p>
+        <div class="cr-charts">
+          <figure><figcaption>Addresses per ADDR message</figcaption>
+            <svg viewBox="0 0 300 150" aria-hidden="true"><rect x="96" y="10" width="138" height="112" fill="#a04a4a" fill-opacity=".18"/><g stroke="#fff" stroke-opacity=".12"><line x1="20" y1="122" x2="290" y2="122"/><line x1="20" y1="66" x2="290" y2="66"/></g><polyline fill="none" stroke="#F7931A" stroke-width="3" stroke-linejoin="round" points="20,96 50,94 80,97 110,86 140,70 170,56 200,50 230,48 250,84 270,95 290,96"/><g font-size="11" fill="#8A8A8A" font-family="Inter,sans-serif"><text x="20" y="140">Jan</text><text x="96" y="140">Apr</text><text x="200" y="140">Jul</text><text x="262" y="140">Sep</text><text x="100" y="24" fill="#ff8a8a">spam</text><text x="2" y="99">2</text><text x="0" y="52">3.5</text></g></svg>
+          </figure>
+          <figure><figcaption>New addresses added per day</figcaption>
+            <svg viewBox="0 0 300 150" aria-hidden="true"><rect x="96" y="10" width="138" height="112" fill="#a04a4a" fill-opacity=".18"/><g stroke="#fff" stroke-opacity=".12"><line x1="20" y1="122" x2="290" y2="122"/></g><polyline fill="none" stroke="#F7931A" stroke-width="3" stroke-linejoin="round" points="20,40 50,44 80,38 110,60 140,88 170,98 200,102 230,100 250,70 270,48 290,44"/><g font-size="11" fill="#8A8A8A" font-family="Inter,sans-serif"><text x="20" y="140">Jan</text><text x="96" y="140">Apr</text><text x="200" y="140">Jul</text><text x="262" y="140">Sep</text><text x="100" y="24" fill="#ff8a8a">spam</text><text x="150" y="80" fill="#F7931A">goes DOWN?!</text></g></svg>
+          </figure>
+        </div>
+        <p class="viz-fix">Simplified sketch of the shapes from the bnoc post, not real numbers. You would expect a flood of fake addresses to push the second line <em>up</em>. Razor ended his talk right here: &ldquo;I hope by the end of my talk you will also be confused.&rdquo;</p>
+        <details class="cr-spoil"><summary>Spoiler: what the bnoc authors think is going on</summary><p>The spam filled up the <em>new</em> table with fake entries that nodes could not easily throw away. With the table clogged, there was little room left for real new addresses, so fewer got added each day. A follow-up post discusses relaxing the rules for evicting old entries, and the tricky part: address gossip, unlike blocks or transactions, costs nothing to send, so spam is hard to price out.</p></details>
+      </div>
+
+      <p class="part"><b>3</b>Floresta with stonepillar</p>
+      <p><strong>Meet our newest fellow.</strong> stonepillar is a contributor to <a href="https://github.com/vinteumorg/Floresta" target="_blank" rel="noopener">Floresta</a>, a lightweight Bitcoin node written in Rust. It uses <em>Utreexo</em> to keep the data a node needs tiny, so you can validate your own transactions on a Raspberry Pi or even a phone instead of trusting someone else&rsquo;s node. He will spend his three-month Code Orange fellowship on Floresta, and Floresta developers we met in Korea already speak highly of his work.</p>
+      <p>Working on Floresta is a great way to learn Bitcoin Core, because Floresta copies many of its parts. It even has its own address manager crate, the same idea Razor just explained. One recent fix stonepillar reviewed:</p>
+      <div class="viz" role="figure" aria-label="The anchors.json fix in Floresta">
+        <p class="eyebrow">A recent Floresta fix</p>
+        <p class="viz-title">Remember your best peers across a restart</p>
+        <p class="cr-lbl">Before</p>
+        <div class="cr-flow"><div><b>Running</b>Node knows good peers</div><div><b>Shut down</b>anchors.json saved empty</div><div class="bad"><b>Restart</b>No peers to call</div><div class="bad"><b>Slow start</b>Discover everyone again</div></div>
+        <p class="cr-lbl">After</p>
+        <div class="cr-flow"><div><b>Running</b>Node knows good peers</div><div><b>Shut down</b>Good peers written to anchors.json</div><div class="good"><b>Restart</b>Reconnect to them straight away</div><div class="good"><b>Fast start</b>Back in the network quickly</div></div>
+      </div>
+      <p>His main fellowship work: making Floresta&rsquo;s RPCs (the commands apps use to talk to a node) behave like Bitcoin Core&rsquo;s. There is a tracking issue full of RPCs still to build, and it is a good place for first-time contributors. His biggest piece so far is <strong>RPC authentication</strong>, which looks like &ldquo;just check a password&rdquo; until you read how Bitcoin Core does it:</p>
+      <div class="viz" role="figure" aria-label="Why RPC authentication is harder than it looks">
+        <p class="eyebrow">Why it takes so many reviews</p>
+        <p class="viz-title">&ldquo;Just a password check&rdquo;, in layers</p>
+        <div class="cr-locks">
+          <div><i>1</i><span><b>Who can call at all:</b> user and password, or a cookie file only the node&rsquo;s own machine can read.</span></div>
+          <div><i>2</i><span><b>What they can run:</b> some commands move money or change settings, so access must be checked every time.</span></div>
+          <div><i>3</i><span><b>What comes back:</b> a sloppy answer can leak information or feed an app wrong data.</span></div>
+          <div><i>4</i><span><b>Why it matters:</b> a mistake here can end in lost funds, so security code gets extra eyes.</span></div>
+        </div>
+      </div>
+
+      <h2>Key takeaways</h2>
+      <ul>
+        <li><strong>Distributed beats decentralized for resilience.</strong> If one node going down can cut off a branch, there is still a choke point. FIPS aims for a true mesh where your npub is your address.</li>
+        <li><strong>Learn Bitcoin Core through incidents.</strong> Address relay is just nodes gossiping &ldquo;here I am&rdquo; into a phone book. The 2026 spam shows why that phone book needs a forgiving &ldquo;new&rdquo; table, and why it can get clogged.</li>
+        <li><strong>There is real work waiting for you.</strong> Floresta has a list of RPCs to build and PRs to review. Reviewing is how you start, and the people presenting on these calls are the ones learning the most.</li>
+      </ul>
+
+      <h2 id="cr-quiz">Final level: the quiz</h2>
+      <p>Three questions from the call. Get all three right and the <b>Reviewer</b> badge lights up on the mission board.</p>
+
+      <script>
+      (function(){
+      var $=function(i){return document.getElementById(i)},KEY='co-badges-2026-11-12-code-review-club',S={b:{}};
+      try{var sv=JSON.parse(localStorage.getItem(KEY));if(sv&&sv.b)S=sv;}catch(e){}
+      function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+      var NAMES={mesh:'Mesh Maker',gossip:'Gossip',bouncer:'Bouncer',quiz:'Reviewer'};
+      function board(){var n=0;document.querySelectorAll('.cr-badge').forEach(function(a){var g=!!S.b[a.dataset.b];a.classList.toggle('got',g);if(g)n++;});
+        $('cr-xp').textContent=n*100;$('cr-prog').style.width=(n/4*100)+'%';
+        if(S.b.mesh)$('g-mesh').classList.add('won');if(S.b.gossip)$('g-gossip').classList.add('won');if(S.b.bouncer)$('g-bouncer').classList.add('won');}
+      var tt;function award(k){if(S.b[k])return;S.b[k]=1;save();board();var t=$('cr-toast');t.textContent='🏅 Badge unlocked: '+NAMES[k]+'  +100 XP';t.classList.add('go');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('go')},2800);}
+      board();
+      document.querySelectorAll('.cr-badge').forEach(function(a){a.addEventListener('click',function(e){var t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}});});
+
+      /* 1. mesh */
+      var P=[[160,115],[60,45],[260,45],[34,150],[286,150],[100,205],[220,205]];
+      var E={c:[[0,1],[0,2],[0,3],[0,4],[0,5],[0,6]],d:[[0,1],[0,2],[0,3],[0,4],[3,5],[4,6]],m:[[0,1],[0,2],[1,2],[1,3],[3,5],[5,6],[6,4],[4,2],[0,5],[0,6],[0,3],[0,4]]};
+      var HUB={c:[0],d:[0,3,4],m:[]};
+      var shape='c',off={},tried={};
+      var NS='http://www.w3.org/2000/svg';
+      function el(n,a){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);return e;}
+      function groups(){var seen={},best=[];for(var i=0;i<7;i++){if(off[i]||seen[i])continue;var st=[i],g=[];seen[i]=1;while(st.length){var x=st.pop();g.push(x);E[shape].forEach(function(e){var y=e[0]==x?e[1]:e[1]==x?e[0]:-1;if(y>=0&&!off[y]&&!seen[y]){seen[y]=1;st.push(y);}});}if(g.length>best.length)best=g;}return best;}
+      function draw(){var s=$('cr-net');s.innerHTML='';var big=groups(),inBig={};big.forEach(function(i){inBig[i]=1});
+        E[shape].forEach(function(e){s.appendChild(el('line',{x1:P[e[0]][0],y1:P[e[0]][1],x2:P[e[1]][0],y2:P[e[1]][1],'class':(off[e[0]]||off[e[1]])?'dead':''}));});
+        P.forEach(function(p,i){var hub=HUB[shape].indexOf(i)>=0;var c=el('circle',{cx:p[0],cy:p[1],r:hub?20:15,tabindex:0,role:'button','aria-label':'Node '+'ABCDEFG'[i],'class':(off[i]?'off':(!inBig[i]?'cut':(hub?'hub':'')))});
+          c.addEventListener('click',function(){hit(i)});c.addEventListener('keydown',function(ev){if(ev.key=='Enter'||ev.key==' '){ev.preventDefault();hit(i);}});s.appendChild(c);
+          var t=el('text',{x:p[0],y:p[1]+4,'text-anchor':'middle'});t.textContent=off[i]?'×':'ABCDEFG'[i];s.appendChild(t);});}
+      function hit(i){off[i]=1;draw();var alive=0;for(var k=0;k<7;k++)if(!off[k])alive++;var big=groups().length,cut=alive-big;
+        var msg=cut===0?'<b>Nobody cut off.</b> Every node that is still up can reach every other one.':'<b>'+cut+' node'+(cut>1?'s':'')+' cut off</b> from the biggest group (shown dark red).';
+        if(shape=='c'&&i===0)msg+=' One server down, everyone is alone. That is the old internet: one ISP, one DNS.';
+        if(shape=='d'&&i===0)msg+=' The hub held the clusters together. Lose it and branches go dark.';
+        if(shape=='m')msg+=' In a mesh, messages just take another path. This is what FIPS is aiming for.';
+        $('cr-netout').innerHTML=msg;tried[shape]=1;if(tried.c&&tried.d&&tried.m)award('mesh');}
+      function setShape(m){shape=m;off={};draw();$('cr-netout').innerHTML={c:'Centralized: everything goes through one server. Tap it.',d:'Decentralized: clusters with head nodes (lighter orange). Try knocking out a head.',m:'Distributed: every node has several paths. Knock out any node, or two.'}[m];}
+      $('cr-shape').querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){$('cr-shape').querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b)});setShape(b.dataset.m);});});
+      $('cr-reset').addEventListener('click',function(){setShape(shape)});
+      draw();
+
+      /* 2. gossip */
+      var step=0,books={A:[],B:[],C:['D'],D:[]};
+      var LINES=['D connects to C and sends <span class="cr-pkt">ADDR: I am D</span>. C saves D in its phone book.',
+        'C knows the rule: pass self-announcements on to your peers. It sends the message to B, but <b>not back to D</b>.',
+        'B follows the same rule and passes it to A.',
+        'A saves D and remembers <b>who told it</b>: B. Now A knows a node it has never talked to.',
+        'A can now connect to D directly. <b>If you don&rsquo;t know a node exists, you can&rsquo;t talk to it.</b> That is all address relay is.'];
+      function chain(hot){var h='';['A','B','C','D'].forEach(function(n){h+='<div class="cr-node'+(n=='A'?' me':'')+(hot==n?' hot':'')+'"><b>'+n+'</b><small>phone book</small><div class="cr-book">'+books[n].map(function(x){return '<code>'+x+(n=='A'&&x=='D'?' (via B)':'')+'</code>'}).join('')+'</div></div>';});$('cr-chain').innerHTML=h;}
+      books.C=[];chain();
+      $('cr-hop').addEventListener('click',function(){
+        if(step===0){books.C=['D'];chain('C');$('cr-hop').textContent='C passes it on';}
+        else if(step===1){chain('B');books.B=['D'];chain('B');$('cr-hop').textContent='B passes it on';}
+        else if(step===2){books.A=['D'];chain('A');$('cr-hop').textContent='A connects to D';}
+        else if(step===3){chain('D');$('cr-hop').disabled=true;$('cr-hopreset').hidden=false;award('gossip');}
+        $('cr-hopout').innerHTML=LINES[Math.min(step,4)]+(step===3?' '+LINES[4]:'');step++;});
+      $('cr-hopreset').addEventListener('click',function(){step=0;books={A:[],B:[],C:[],D:[]};chain();$('cr-hop').disabled=false;$('cr-hop').textContent='D says hello';$('cr-hopreset').hidden=true;$('cr-hopout').innerHTML='Each node keeps a phone book of addresses (the boxes under each letter).';});
+
+      /* 3. bouncer */
+      var A=[['203.0.113.42:8333',1],['198.51.100.7:8333',0],['2001:db8::5 :8333',1],['192.0.2.200:8333',0],['198.51.100.66:8333',0],['onion: exampl3abc…',1]];
+      var state=A.map(function(){return {t:0,f:''}});
+      function why(a,c){if(a[1]&&c=='tried')return 'Right: it answered, so it goes in Tried.';if(a[1])return 'It answered, so you can trust it more: Tried.';if(c=='new')return 'Right: keep it in New and try again later.';if(c=='del')return 'Careful: what if that node just crashed for an hour? Deleting honest nodes makes them start gossiping from zero. New is safer.';return 'It never answered, so it has not earned a place in Tried yet.';}
+      function bin(){var h='';A.forEach(function(a,i){var s=state[i];h+='<div class="cr-addr'+(s.f?(s.ok?' right':' wrong'):'')+'"><div><code>'+a[0]+'</code><span class="r'+(s.t?(a[1]?' ok':' no'):'')+'">'+(s.t?(a[1]?'&#10003; answered':'&#10007; no answer'):'not tried yet')+(s.f?' &middot; '+why(a,s.f):'')+'</span></div><div class="cr-row">'+(!s.t?'<button type="button" class="cr-btn ghost sm" data-try="'+i+'">Try</button>':(s.ok?'':'<button type="button" class="cr-btn sm" data-f="'+i+':tried">Tried</button><button type="button" class="cr-btn ghost sm" data-f="'+i+':new">New</button><button type="button" class="cr-btn ghost sm" data-f="'+i+':del">Delete</button>'))+'</div></div>';});
+        $('cr-in').innerHTML=h;
+        $('cr-tried').innerHTML=A.map(function(a,i){return state[i].ok&&a[1]?'<code>'+a[0].split(':')[0]+'</code>':''}).join('');
+        $('cr-new').innerHTML=A.map(function(a,i){return state[i].ok&&!a[1]?'<code>'+a[0].split(':')[0]+'</code>':''}).join('');
+        $('cr-in').querySelectorAll('[data-try]').forEach(function(b){b.addEventListener('click',function(){state[+b.dataset.try].t=1;bin();});});
+        $('cr-in').querySelectorAll('[data-f]').forEach(function(b){b.addEventListener('click',function(){var p=b.dataset.f.split(':'),i=+p[0],a=A[i];var ok=(a[1]&&p[1]=='tried')||(!a[1]&&p[1]=='new');state[i].f=p[1];state[i].ok=ok;bin();
+          var n=state.filter(function(s){return s.ok}).length;$('cr-binout').innerHTML=n<6?n+' of 6 filed correctly.':'<b>All six filed.</b> That is roughly what Bitcoin Core does: trust what answered, keep the rest for later. The catch? A spammer can stuff the New table with fakes.';if(n==6)award('bouncer');});});}
+      bin();
+
+      /* quiz badge: quiz.js stores the best score in co-quiz-<slug> */
+      function checkQuiz(){try{if((+localStorage.getItem('co-quiz-2026-11-12-code-review-club')||0)>=3)award('quiz');}catch(e){}}
+      checkQuiz();setInterval(checkQuiz,1500);
+      })();
+      </script>

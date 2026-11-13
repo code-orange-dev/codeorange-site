@@ -229,7 +229,7 @@ REPO = 'https://github.com/code-orange-dev/session-notes'
 DISCORD = 'https://discord.gg/ZtvA79paWa'
 CAL_SUB = 'https://calendar.google.com/calendar/r?cid=466de2be7431d78be2049f96f5fd31f9b06b5a9cd94f909ba3182b18442ed499%40group.calendar.google.com'
 HERE = pathlib.Path(__file__).resolve().parent
-TOPIC_ORDER = ['Bitcoin basics', 'Self-custody', 'Hardware wallets', 'Privacy', 'PayJoin', 'Cypherpunk history', 'History', 'Bitcoin network', 'Code review', 'Nostr', 'Lightning', 'Ecash', 'Wallets', 'Security', 'Explorers', 'Messaging', 'AI agents', 'Vibe coding', 'Self-hosting', 'Productivity', 'Code Orange']
+TOPIC_ORDER = ['Bitcoin basics', 'Self-custody', 'Hardware wallets', 'Privacy', 'PayJoin', 'Cypherpunk history', 'History', 'Bitcoin network', 'Bitcoin Core', 'Code review', 'Nostr', 'Mesh networking', 'Lightning', 'Ecash', 'Wallets', 'Security', 'Explorers', 'Messaging', 'AI agents', 'Vibe coding', 'Self-hosting', 'Productivity', 'Code Orange']
 
 def esc(s): return _html.escape(s, quote=True)
 def strip_tags(s): return re.sub(r'<[^>]+>', '', s)
@@ -330,7 +330,7 @@ def recap_page(n, sessions=()):
     share = urllib.parse.quote(n.get('share_text') or f"{n['series']}: {n['title']} - notes from @CodeOrangeDevs", safe='')
     page += f'''    <div class="share-row"><strong>Share these notes:</strong><a href="https://x.com/intent/post?text={share}&amp;url={urllib.parse.quote('https://codeorange.dev' + url, safe='')}" target="_blank" rel="noopener">Post on X</a><button type="button" data-copy="https://codeorange.dev{url}">Copy link</button></div>
     {SCRIPT}
-    <script src="/assets/session-notes/passport.js?v=20261112c" data-slug="{n['slug']}" data-total="{len(sessions)}"></script>
+    <script src="/assets/session-notes/passport.js?v=20261113a" data-slug="{n['slug']}" data-total="{len(sessions)}"></script>
     {more_notes(n, sessions)}
     <p class="source-box">These notes are also on GitHub: {a(f"{REPO}/blob/main/{n['date'][:4]}/{n['slug']}.md", "code-orange-dev/session-notes")}. Free to share and reuse (CC0).</p>
   </article>
@@ -384,7 +384,7 @@ def list_page(sessions):
              '    <style>.article-card{grid-template-columns:minmax(0,420px) 1fr}.article-card img{height:auto;min-height:0;max-height:none;aspect-ratio:1200/630;align-self:center;object-fit:cover}.article-card [data-stamp][hidden]{display:none}@media (max-width:760px){.article-card{grid-template-columns:1fr}}</style>\n'
              '    <div id="passport" style="scroll-margin-top:96px"></div>\n'
              f'    <div class="article-list">\n{cards}    </div>\n  </section>\n'
-             f'  <script>window.SN_SESSIONS={data};</script>\n  <script src="/assets/session-notes/passport.js?v=20261112c"></script>\n' + final_cta)
+             f'  <script>window.SN_SESSIONS={data};</script>\n  <script src="/assets/session-notes/passport.js?v=20261113a"></script>\n' + final_cta)
     return page
 
 def resources_page(sessions):
