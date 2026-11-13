@@ -204,7 +204,7 @@
     return C.weeks.map((w, i) => {
       const n = i + 1;
       const cls = [s.weeksActive.has(n) ? "is-done" : "", i === currentWeek ? "is-now" : "", i > currentWeek ? "is-later" : ""].join(" ");
-      return `<li class="${cls}" title="Week ${n}: ${esc(w.title)}"><span>${n}</span></li>`;
+      return `<li class="${cls}" title="${i > currentWeek ? `Week ${n} unlocks later` : `Week ${n}: ${esc(w.title)}`}"><span>${n}</span></li>`;
     }).join("");
   }
 
@@ -240,7 +240,7 @@
 
   function thisWeekCard() {
     if (finished) {
-      return `<div class="me-card"><p class="me-label">The cohort</p><h2>You made it to the end 🎉</h2><p>All 10 weeks are done. Fill in your end-of-cohort skill map below, then pick a next step.</p><a class="ghost small" href="/decoding-bitcoin#curriculum">Look back at the weeks</a></div>`;
+      return `<div class="me-card"><p class="me-label">The cohort</p><h2>You made it to the end 🎉</h2><p>All 10 weeks are done. Fill in your end-of-cohort skill map below, then pick a next step.</p><a class="ghost small" href="/decoding-bitcoin/curriculum">Look back at the weeks</a></div>`;
     }
     const wi = Math.max(0, currentWeek);
     const wk = wi + 1;
@@ -261,7 +261,7 @@
       ${roles.length ? `<p class="me-role">On Monday you're the <strong>${roles.map((r) => esc(r.name)).join("</strong> and <strong>")}</strong>. ${esc(roles[0].job)}</p>` : ""}
       <p class="me-open">Opening question: <em>${esc(w.opening)}</em></p>
       <ul class="me-check">${items}</ul>
-      <p class="me-jumps"><a class="me-jump" href="/decoding-bitcoin#week-${wk}">Open week ${wk} on the cohort page →</a> <a class="me-jump" href="/assets/mastering-bitcoin/sessions.ics?v=20261010a" download="decoding-bitcoin-sessions.ics">Add sessions to my calendar</a></p>
+      <p class="me-jumps"><a class="me-jump" href="/decoding-bitcoin/curriculum#week-${wk}">Open week ${wk} in the weekly plan →</a> <a class="me-jump" href="/assets/mastering-bitcoin/sessions.ics?v=20261010a" download="decoding-bitcoin-sessions.ics">Add sessions to my calendar</a></p>
     </div>`;
   }
 

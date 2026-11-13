@@ -49,12 +49,25 @@
     return w;
   })();
   if (currentWeek >= 0) state.open.add(currentWeek); else state.open.add(0);
+  // A link to a week (#week-3) opens that week.
+  const hashWeek = /^#week-(\d+)$/.exec(location.hash);
+  if (hashWeek) state.open.add(Number(hashWeek[1]) - 1);
+  // The weekly plan lives on its own page; the landing page links to it.
+  const PLAN = "/decoding-bitcoin/curriculum";
+  const onPlan = () => !!$("#mb-weeks");
+  const weekHref = (wk) => (onPlan() ? `#week-${wk}` : `${PLAN}#week-${wk}`);
 
   // ── Assignments: questions go round-robin through the roster (in sign-up order),
   // carrying on from week to week so everyone gets an even share. A week's owners
   // are fixed once that week opens (the previous Monday's session): people who join
   // later only pick up questions from weeks that haven't opened yet. ──
   const weekOpens = (wi) => (sessionDates[wi] ? sessionDates[wi].getTime() - 7 * 864e5 : Infinity);
+  // Weeks unlock one at a time, by date: a week's lessons, questions and exercises appear
+  // right after the previous Monday's session (week 1 is always visible). Organisers can
+  // see everything with ?preview=all.
+  const previewAll = new URLSearchParams(location.search).get("preview") === "all";
+  const isUnlocked = (wi) => previewAll || wi === 0 || Date.now() >= weekOpens(wi);
+  const fmtUnlock = (wi) => (sessionDates[wi - 1] ? fmtDay(sessionDates[wi - 1]) : "soon");
   // Seminar roles rotate the same way, on their own counter, one person per role.
   const roles = C.roles || [];
   // Visitors who aren't signed in don't see who has which question.
@@ -92,10 +105,19 @@
   }
 
   function renderWeeks() {
+    if (!onPlan()) return;
     const assigned = assignments();
     const me = meStudent();
+    const nextLocked = C.weeks.findIndex((_, wi) => !isUnlocked(wi));
+    const lockedCount = nextLocked < 0 ? 0 : C.weeks.length - nextLocked;
+    const lockedCard = nextLocked < 0 ? "" : `<div id="week-${nextLocked + 1}" class="mb-week mb-locked" aria-label="Week ${nextLocked + 1} is locked">
+          <span class="mb-wk">Week ${pad(nextLocked + 1)}</span>
+          <span class="mb-title"><span aria-hidden="true">🔒</span> Unlocks after the session on ${fmtUnlock(nextLocked)}</span>
+          <span class="mb-date">${lockedCount > 1 ? `${lockedCount} weeks to go` : "Last week"}</span>
+        </div>`;
     $("#mb-weeks").innerHTML = C.weeks
       .map((w, wi) => {
+        if (!isUnlocked(wi)) return "";
         const wk = wi + 1;
         const date = sessionDates[wi];
         const read = readCount(wk);
@@ -155,17 +177,20 @@
           </div>
         </details>`;
       })
-      .join("");
+      .join("") + lockedCard;
   }
 
   // The 10-week rail above the accordion: your progress per week (or the cohort's
   // reading progress for visitors), with the current week highlighted.
   function renderRail() {
+    if (!$("#mb-rail")) return;
     const me = meStudent();
     const assigned = assignments();
     $("#mb-rail").innerHTML = C.weeks
       .map((w, wi) => {
         const wk = wi + 1;
+        const dateTag = sessionDates[wi] ? `<em> · ${sessionDates[wi].toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "Asia/Singapore" })}</em>` : "";
+        if (!isUnlocked(wi)) return `<span class="is-locked" title="Week ${wk} unlocks after the session on ${fmtUnlock(wi)}"><i><b style="--p:0%"></b></i><span>W${pad(wk)}${dateTag}</span></span>`;
         let pct;
         if (me) {
           const items = [`w${wk}-r1`, ...w.exercises.map((_, ei) => `w${wk}-e${ei + 1}`), ...w.questions.map((_, qi) => `w${wk}-q${qi + 1}`).filter((k) => assigned[k]?.id === me.id)];
@@ -204,6 +229,7 @@
   function renderMe() {
     const me = meStudent();
     const box = $("#mb-me");
+    if (!box) return;
     if (!me) {
       box.hidden = true;
       return;
@@ -221,7 +247,7 @@
       <div class="mb-me-stats"><span><strong>${me.done.filter((k) => k.endsWith("-r1")).length}/${C.weeks.length}</strong> weeks of lessons</span>${state.rosterVisible ? `<span><strong>${qDone}/${mine.length}</strong> questions</span>` : ""}<span><strong>${exDone}/${exTotal}</strong> exercises</span></div></div>
       ${weekChecklist(me, assigned, focus, thisWeek)}
       <div class="mb-link"><span>Your personal link (open it on any device to tick things off):</span><code>${esc(link)}</code><button type="button" class="ghost small" data-copy="${esc(link)}">Copy link</button><button type="button" class="mb-signout" data-signout>Not you? Sign out</button></div>
-      <div class="cta-row mb-me-cta"><a class="button small" href="/decoding-bitcoin/me">Open my full dashboard →</a><a class="ghost small" href="${C.discord}" target="_blank" rel="noopener">Join the Discord</a>${first ? `<a class="ghost small" href="${esc(gcalHref())}" target="_blank" rel="noopener">Add to Google Calendar</a>` : ""}</div>`;
+      <div class="cta-row mb-me-cta"><a class="button small" href="/decoding-bitcoin/me">Open my full dashboard →</a>${onPlan() ? "" : `<a class="ghost small" href="${PLAN}">See the weekly plan</a>`}<a class="ghost small" href="${C.discord}" target="_blank" rel="noopener">Join the Discord</a>${first ? `<a class="ghost small" href="${esc(gcalHref())}" target="_blank" rel="noopener">Add to Google Calendar</a>` : ""}</div>`;
   }
 
   // "Before Monday" list for the student's current week: read, own questions, role, exercises.
@@ -241,7 +267,7 @@
       rolesNow.length ? line(false, `On Monday you're the <strong>${rolesNow.map((r) => esc(r.name)).join("</strong> and <strong>")}</strong>: ${esc(rolesNow[0].job.charAt(0).toLowerCase() + rolesNow[0].job.slice(1))}`) : "",
       line(false, `Think about the opening question: <em>${esc(w.opening)}</em>`),
     ].join("");
-    return `<div class="mb-me-week"><p class="mb-label">Week ${wk} · before ${sessionDates[focus] ? fmtDay(sessionDates[focus]) : "the session"}</p><ul class="mb-check">${items}</ul><a class="mb-jump" href="#week-${wk}">Open week ${wk} →</a></div>`;
+    return `<div class="mb-me-week"><p class="mb-label">Week ${wk} · before ${sessionDates[focus] ? fmtDay(sessionDates[focus]) : "the session"}</p><ul class="mb-check">${items}</ul><a class="mb-jump" href="${weekHref(wk)}">Open week ${wk} →</a></div>`;
   }
 
   // Other students' names are blurred for privacy; the real name never reaches the page,
@@ -262,7 +288,7 @@
     // The class list stays off the page until the organisers make it public.
     const section = $("#progress");
     if (section) section.hidden = !state.rosterVisible;
-    if (!state.rosterVisible) return;
+    if (!state.rosterVisible || !$("#mb-roster")) return;
     if (!state.students.length) {
       $("#mb-roster").innerHTML = `<p class="mb-empty">${state.online || !state.loaded ? "No one has signed up yet. Be the first." : "The roster appears here once sign-ups open."}</p>`;
       return;
@@ -283,6 +309,7 @@
   function renderSignup() {
     const form = $("#mb-signup");
     const note = $("#mb-signup-note");
+    if (!form || !note) return;
     const me = meStudent();
     if (me) {
       form.hidden = true;
@@ -305,6 +332,7 @@
       : "";
   }
 
+  let scrolled = false;
   function render() {
     renderWeeks();
     renderRail();
@@ -314,6 +342,12 @@
     if (state.popped) {
       document.querySelectorAll(`.mb-tick[data-item="${state.popped}"].is-done`).forEach((el) => el.classList.add("is-pop"));
       state.popped = "";
+    }
+    // Scroll to a linked week once it's on the page.
+    if (hashWeek && !scrolled && state.loaded) {
+      scrolled = true;
+      const d = document.getElementById(`week-${hashWeek[1]}`);
+      if (d) requestAnimationFrame(() => d.scrollIntoView({ block: "start" }));
     }
   }
 
@@ -445,7 +479,7 @@
       return;
     }
     const jump = ev.target.closest(".mb-jump");
-    if (jump) {
+    if (jump && jump.getAttribute("href").startsWith("#")) {
       const d = document.querySelector(jump.getAttribute("href"));
       if (d) { d.open = true; state.open.add(Number(d.dataset.week)); }
       return;
@@ -494,7 +528,7 @@
     d.open ? state.open.add(wi) : state.open.delete(wi);
   }, true);
 
-  $("#mb-signup").addEventListener("submit", async (ev) => {
+  if ($("#mb-signup")) $("#mb-signup").addEventListener("submit", async (ev) => {
     ev.preventDefault();
     const form = ev.target;
     const button = form.querySelector("button[type=submit]");
@@ -566,7 +600,7 @@
   // Rail links open the week they point to.
   document.addEventListener("click", (ev) => {
     const a = ev.target.closest(".mb-rail a");
-    if (!a) return;
+    if (!a || !a.getAttribute("href").startsWith("#")) return;
     const d = document.querySelector(a.getAttribute("href"));
     if (d) { d.open = true; state.open.add(Number(d.dataset.week)); }
   });
@@ -625,7 +659,7 @@
       text: "Decoding Bitcoin study cohort",
       dates: `${stamp(first)}/${stamp(end)}`,
       recur: `RRULE:FREQ=WEEKLY;COUNT=${C.weeks.length}`,
-      details: `Weekly session on Discord: ${C.discord}\nThis week's lessons, questions and exercises: ${location.origin}/decoding-bitcoin`,
+      details: `Weekly session on Discord: ${C.discord}\nThis week's lessons, questions and exercises: ${location.origin}${PLAN}`,
       location: "Discord",
     });
   }
