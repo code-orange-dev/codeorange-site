@@ -7,10 +7,26 @@
     <language>en</language>
     <atom:link href="https://codeorange.dev/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
-      <title>Why Bitcoin Needs Educators</title>
-      <link>https://codeorange.dev/articles/why-bitcoin-needs-educators</link>
-      <guid isPermaLink="true">https://codeorange.dev/articles/why-bitcoin-needs-educators</guid>
-      <description>Code on GitHub changes nothing until people know how to use it safely. Why teaching, writing guides and running study groups are real open-source contributions to Bitcoin.</description>
+      <title>Bitchat: Messaging Without the Internet, Tested at Our Workshops</title>
+      <link>https://codeorange.dev/articles/bitchat-workshops</link>
+      <guid isPermaLink="true">https://codeorange.dev/articles/bitchat-workshops</guid>
+      <description>We put Bitchat on everyone's phone at a Bitcoin House Bali meetup and messaged each other with no internet at all. Here is what Bitchat is, why it matters for censorship resistance, and what it felt like to try it.</description>
+      <dc:creator>Andy</dc:creator>
+      <pubDate>Sat, 14 Nov 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>How to Defend Against a $5 Wrench Attack</title>
+      <link>https://codeorange.dev/articles/five-dollar-wrench-attack</link>
+      <guid isPermaLink="true">https://codeorange.dev/articles/five-dollar-wrench-attack</guid>
+      <description>Physical attacks on bitcoiners are rising, including in Bali. Here is the layered defence we teach at our self-custody workshops: good opsec, decoy wallets, passphrases, multisig and timelocks.</description>
+      <dc:creator>Andy</dc:creator>
+      <pubDate>Sat, 14 Nov 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>How to Make Your First Contribution to Bitcoin Core</title>
+      <link>https://codeorange.dev/articles/contribute-to-bitcoin-core</link>
+      <guid isPermaLink="true">https://codeorange.dev/articles/contribute-to-bitcoin-core</guid>
+      <description>How to contribute to Bitcoin Core for the first time: build it, run the tests, review and test pull requests, and open your first small PR, step by step and in plain English.</description>
       <dc:creator>Andy</dc:creator>
       <pubDate>Thu, 12 Nov 2026 00:00:00 GMT</pubDate>
     </item>
@@ -23,18 +39,18 @@
       <pubDate>Thu, 12 Nov 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>How to Make Your First Contribution to Bitcoin Core</title>
-      <link>https://codeorange.dev/articles/contribute-to-bitcoin-core</link>
-      <guid isPermaLink="true">https://codeorange.dev/articles/contribute-to-bitcoin-core</guid>
-      <description>How to contribute to Bitcoin Core for the first time: build it, run the tests, review and test pull requests, and open your first small PR, step by step and in plain English.</description>
+      <title>Why Bitcoin Needs Educators</title>
+      <link>https://codeorange.dev/articles/why-bitcoin-needs-educators</link>
+      <guid isPermaLink="true">https://codeorange.dev/articles/why-bitcoin-needs-educators</guid>
+      <description>Code on GitHub changes nothing until people know how to use it safely. Why teaching, writing guides and running study groups are real open-source contributions to Bitcoin.</description>
       <dc:creator>Andy</dc:creator>
       <pubDate>Thu, 12 Nov 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>Multisig vs Hardware Wallet: Choosing Your Bitcoin Self-Custody Setup</title>
-      <link>https://codeorange.dev/articles/multisig-vs-hardware-wallet</link>
-      <guid isPermaLink="true">https://codeorange.dev/articles/multisig-vs-hardware-wallet</guid>
-      <description>Multisig vs hardware wallet: what each one protects you from, what can go wrong, and a simple step-by-step path to the right Bitcoin self-custody setup for you.</description>
+      <title>Bitcoin in Bali: Where to Learn Bitcoin in Person</title>
+      <link>https://codeorange.dev/articles/bitcoin-in-bali</link>
+      <guid isPermaLink="true">https://codeorange.dev/articles/bitcoin-in-bali</guid>
+      <description>Looking for Bitcoin in Bali? Free monthly workshops, meetups and builder sessions at Bitcoin House Bali in Canggu, plus what you can learn there and how to join.</description>
       <dc:creator>Andy</dc:creator>
       <pubDate>Sun, 08 Nov 2026 00:00:00 GMT</pubDate>
     </item>
@@ -55,10 +71,10 @@
       <pubDate>Sun, 08 Nov 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>Bitcoin in Bali: Where to Learn Bitcoin in Person</title>
-      <link>https://codeorange.dev/articles/bitcoin-in-bali</link>
-      <guid isPermaLink="true">https://codeorange.dev/articles/bitcoin-in-bali</guid>
-      <description>Looking for Bitcoin in Bali? Free monthly workshops, meetups and builder sessions at Bitcoin House Bali in Canggu, plus what you can learn there and how to join.</description>
+      <title>Multisig vs Hardware Wallet: Choosing Your Bitcoin Self-Custody Setup</title>
+      <link>https://codeorange.dev/articles/multisig-vs-hardware-wallet</link>
+      <guid isPermaLink="true">https://codeorange.dev/articles/multisig-vs-hardware-wallet</guid>
+      <description>Multisig vs hardware wallet: what each one protects you from, what can go wrong, and a simple step-by-step path to the right Bitcoin self-custody setup for you.</description>
       <dc:creator>Andy</dc:creator>
       <pubDate>Sun, 08 Nov 2026 00:00:00 GMT</pubDate>
     </item>
@@ -69,14 +85,6 @@
       <description>What is PayJoin? A plain-English guide to the Bitcoin privacy trick that hides your payment amount, how PayJoin v2 works, which wallets support it, and what broke when we tested it live.</description>
       <dc:creator>Andy</dc:creator>
       <pubDate>Sun, 08 Nov 2026 00:00:00 GMT</pubDate>
-    </item>
-    <item>
-      <title>Privacy Isn't About Hiding. It's About Protection.</title>
-      <link>https://codeorange.dev/articles/privacy-is-protection</link>
-      <guid isPermaLink="true">https://codeorange.dev/articles/privacy-is-protection</guid>
-      <description>Bitcoin is pseudonymous, not anonymous. Here is how your balance, spending and IP address can leak, and the simple habits (fresh addresses, your own node, PayJoin, Silent Payments) that protect you.</description>
-      <dc:creator>Andy</dc:creator>
-      <pubDate>Tue, 03 Nov 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
       <title>Why Our AI + Bitcoin Meetups Bring 3x More People</title>
@@ -91,6 +99,14 @@
       <link>https://codeorange.dev/articles/bitaxe-mining-workshop</link>
       <guid isPermaLink="true">https://codeorange.dev/articles/bitaxe-mining-workshop</guid>
       <description>At our Bitcoin mining workshop we plugged in a BitAxe and agreed to split the 3.125 BTC reward if we found a block. Here is what a tiny home miner teaches you about proof of work, pools, energy and 51% attacks.</description>
+      <dc:creator>Andy</dc:creator>
+      <pubDate>Tue, 03 Nov 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Privacy Isn't About Hiding. It's About Protection.</title>
+      <link>https://codeorange.dev/articles/privacy-is-protection</link>
+      <guid isPermaLink="true">https://codeorange.dev/articles/privacy-is-protection</guid>
+      <description>Bitcoin is pseudonymous, not anonymous. Here is how your balance, spending and IP address can leak, and the simple habits (fresh addresses, your own node, PayJoin, Silent Payments) that protect you.</description>
       <dc:creator>Andy</dc:creator>
       <pubDate>Tue, 03 Nov 2026 00:00:00 GMT</pubDate>
     </item>
