@@ -132,9 +132,10 @@
         const questions = w.questions
           .map((q, qi) => {
             const item = `w${wk}-q${qi + 1}`;
-            const who = assigned[item];
+            const who = w.intro ? null : assigned[item];
             const mine = me && who && who.id === me.id;
             const done = isDone(who, item);
+            if (w.intro) return `<li><span class="mb-num">Q${qi + 1}</span><div><p>${esc(q)}</p></div></li>`;
             const whoLabel = who
               ? `<span class="mb-who${mine ? " is-me" : ""}${done ? " is-done" : ""}">${done ? "✓ " : ""}${mine ? "You" : esc(who.name)}</span>`
               : `<span class="mb-who is-empty">${pending}</span>`;
@@ -148,7 +149,7 @@
             return `<li><span class="mb-num">E${ei + 1}</span><div><p>${esc(e)}</p><div class="mb-row">${total ? `<span class="mb-count">${count} of ${total} done</span>` : ""}${me ? tickButton(item, isDone(me, item), `Mark exercise ${ei + 1} of week ${wk} done`) : ""}</div></div></li>`;
           })
           .join("");
-        const myQs = me ? w.questions.filter((_, qi) => assigned[`w${wk}-q${qi + 1}`]?.id === me.id).length : 0;
+        const myQs = me && !w.intro ? w.questions.filter((_, qi) => assigned[`w${wk}-q${qi + 1}`]?.id === me.id).length : 0;
         const roleChips = roles
           .map((role, ri) => {
             const who = assigned[`w${wk}-role${ri}`];
@@ -167,12 +168,13 @@
             <p class="mb-summary">${esc(w.summary)}</p>
             <div class="mb-chapters">${chapters}${extra}</div>
             ${date ? `<p class="mb-when">Session: ${fmtDay(date)}, 7–8:30pm UTC+8 · your time: ${fmtLocal(date)} · on Discord</p>` : ""}
-            <div class="mb-read"><span class="mb-count">${total ? `${read} of ${total} have done the lessons` : "Do the lessons before Monday"}</span>${me ? tickButton(`w${wk}-r1`, isDone(me, `w${wk}-r1`), `I've done the week ${wk} lessons`).replace(/>Mark done</, ">I've done the lessons<").replace(/>Done</, ">Lessons done<") : ""}</div>
+            ${w.intro ? `<div class="mb-intro"><strong>Intro week: no homework.</strong> ${esc(w.introNote || "")}</div>` : ""}
+            <div class="mb-read"><span class="mb-count">${w.intro ? "Optional: read these after the session, any time this week" : total ? `${read} of ${total} have done the lessons` : "Do the lessons before Monday"}</span>${me ? tickButton(`w${wk}-r1`, isDone(me, `w${wk}-r1`), `I've done the week ${wk} lessons`).replace(/>Mark done</, ">I've done the lessons<").replace(/>Done</, ">Lessons done<") : ""}</div>
             <div class="mb-opening"><p class="mb-label">Opening question · everyone</p><p>${esc(w.opening)}</p></div>
-            <div class="mb-roles-wrap"><p class="mb-label">Seminar roles this week</p><ul class="mb-roles">${roleChips}</ul></div>
+            ${w.intro ? "" : `<div class="mb-roles-wrap"><p class="mb-label">Seminar roles this week</p><ul class="mb-roles">${roleChips}</ul></div>`}
             <div class="mb-cols">
-              <div><h3>Discussion questions</h3><p class="mb-hint">Each question has one owner. Post your answer in the cohort channel on Discord before the session, then tick it done.</p><ol class="mb-list">${questions}</ol></div>
-              <div><h3>Exercises</h3><p class="mb-hint">Everyone does these. Share what you got on Discord and tick each one off.</p><ol class="mb-list">${exercises}</ol></div>
+              <div><h3>Discussion questions</h3><p class="mb-hint">${w.intro ? "Nothing to prepare. We'll talk these through together in the session." : "Each question has one owner. Post your answer in the cohort channel on Discord before the session, then tick it done."}</p><ol class="mb-list">${questions}</ol></div>
+              <div><h3>Exercises</h3><p class="mb-hint">${w.intro ? "Optional. Try them during or after the session, and tick them off if you do." : "Everyone does these. Share what you got on Discord and tick each one off."}</p><ol class="mb-list">${exercises}</ol></div>
             </div>
           </div>
         </details>`;
@@ -258,6 +260,9 @@
     const exDone = exItems.filter((k) => me.done.includes(k)).length;
     const rolesNow = myRoles(assigned, me, wk);
     const line = (done, text) => `<li class="${done ? "is-done" : ""}"><span class="mb-box" aria-hidden="true">${done ? "✓" : ""}</span><span>${text}</span></li>`;
+    if (w.intro) {
+      return `<div class="mb-me-week"><p class="mb-label">Week ${wk} · ${sessionDates[focus] ? fmtDay(sessionDates[focus]) : "the first session"}</p><ul class="mb-check">${line(false, `<strong>Intro week: no homework.</strong> ${esc(w.introNote || "")}`)}${line(false, `Think about the opening question: <em>${esc(w.opening)}</em>`)}</ul><a class="mb-jump" href="${weekHref(wk)}">Open week ${wk} →</a></div>`;
+    }
     const items = [
       line(me.done.includes(`w${wk}-r1`), `Do the lesson${w.lessons.length > 1 ? "s" : ""} on Decoding Bitcoin: ${esc(w.lessons.map((c) => c.title).join(", "))}`),
       thisWeek.length

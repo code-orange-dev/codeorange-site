@@ -29,6 +29,10 @@ window.MB_COHORT = {
   weeks: [
     {
       title: "Orientation and foundations",
+      // Intro week: no homework before the first session. Questions have no owners and
+      // there are no seminar roles; everything is done together on the day.
+      intro: true,
+      introNote: "Just come to the first session. We'll meet each other, show you how the cohort and your dashboard work, and go through this week's topics together. Homework starts in week 2: lessons, your own question and exercises before Monday 23 November.",
       lessons: [
         { title: "Welcome!", slug: "welcome" },
         { title: "Bitcoin History", slug: "bitcoin-history" },
@@ -39,7 +43,7 @@ window.MB_COHORT = {
         { title: "Optional: Interactive Developer Roadmap", slug: "interactive-roadmap" },
       ],
       opening: "If you had to explain Bitcoin to a friend in two sentences, what would you say, and what would you leave out?",
-      summary: "Meet the cohort, learn how the dashboard works and get comfortable on Decoding Bitcoin. Read the welcome and history lessons, then see how Bitcoin keeps track of who owns what: coins (UTXOs), not account balances.",
+      summary: "Intro week. Meet the cohort, learn how the dashboard works and get comfortable on Decoding Bitcoin. The lessons below are a gentle start: the welcome, Bitcoin's history, and how Bitcoin keeps track of who owns what (coins, called UTXOs, not account balances). Read them after the session if you like.",
       questions: [
         "What problem did Bitcoin solve that earlier digital cash attempts (DigiCash, b-money, Bit Gold) could not?",
         "Pick one moment from the Bitcoin History lesson and explain why it mattered for how Bitcoin works today.",

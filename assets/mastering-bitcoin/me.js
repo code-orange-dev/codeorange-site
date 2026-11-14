@@ -226,6 +226,7 @@
     if (!d.quizzes?.pre && !finished && currentWeek < 2) return ["Take the 2-minute knowledge check.", "10 quick questions, not graded. You'll take it again at the end to see what you've learned.", go("#check", "Start the check")];
     if (currentWeek >= C.weeks.length - 2 && d.quizzes?.pre && !d.quizzes?.post) return ["Take the knowledge check again.", "Same 10 questions as at the start. See how far you've come.", go("#check", "Take it again")];
     if (currentWeek < 0) return ["You're all set for week 1.", `Lessons go up the week before. First session: ${sessionLine(sessionDates[0])}.`, go(`/assets/mastering-bitcoin/sessions.ics?v=20261010a`, "Add the sessions to my calendar")];
+    if (C.weeks[currentWeek].intro && !d.checkins.some((c) => c.week === wk)) return ["Week 1 is the intro week: no homework.", "Just come to Monday's session. Homework starts in week 2.", go("#week", "See week 1")];
     if (!state.done.has(`w${wk}-r1`)) return [`Do this week's lessons before Monday.`, esc(C.weeks[currentWeek].lessons.map((l) => l.title).join(", ")), go("#week", "See this week")];
     if (!d.checkins.some((c) => c.week === wk)) return ["Do your 2-minute check-in.", "It's how we spot who's stuck and what to cover on Monday.", go("#checkin", "Check in")];
     if (currentWeek >= C.weeks.length - 2 && !p.skillsEnd) return ["Rate your skills again.", "See how far you've come since the start.", go("#skills", "Rate again")];
@@ -246,19 +247,20 @@
     const wk = wi + 1;
     const w = C.weeks[wi];
     const assigned = assignments();
-    const myQs = w.questions.map((_, qi) => `w${wk}-q${qi + 1}`).filter((k) => assigned[k]?.id === state.me.id);
-    const roles = (C.roles || []).filter((_, ri) => assigned[`w${wk}-role${ri}`]?.id === state.me.id);
+    const myQs = w.intro ? [] : w.questions.map((_, qi) => `w${wk}-q${qi + 1}`).filter((k) => assigned[k]?.id === state.me.id);
+    const roles = w.intro ? [] : (C.roles || []).filter((_, ri) => assigned[`w${wk}-role${ri}`]?.id === state.me.id);
     const before = currentWeek < 0;
     const items = [
-      tick(`w${wk}-r1`, `Do the lesson${w.lessons.length > 1 ? "s" : ""}: ${w.lessons.map((l) => `<a href="${lessonUrl(l.slug)}" target="_blank" rel="noopener">${esc(l.title)}</a>`).join(", ")}`),
+      tick(`w${wk}-r1`, `${w.intro ? "Optional, after the session: read the lesson" : "Do the lesson"}${w.lessons.length > 1 ? "s" : ""}: ${w.lessons.map((l) => `<a href="${lessonUrl(l.slug)}" target="_blank" rel="noopener">${esc(l.title)}</a>`).join(", ")}`),
       ...myQs.map((k) => tick(k, `Answer your question Q${k.split("-q")[1]} on Discord: <em>${esc(w.questions[Number(k.split("-q")[1]) - 1])}</em>`)),
-      ...w.exercises.map((ex, ei) => tick(`w${wk}-e${ei + 1}`, `Exercise ${ei + 1}: ${esc(ex)}`)),
+      ...w.exercises.map((ex, ei) => tick(`w${wk}-e${ei + 1}`, `${w.intro ? "Optional exercise" : "Exercise"} ${ei + 1}: ${esc(ex)}`)),
     ].join("");
     return `<div class="me-card me-week" id="week">
       <p class="me-label">${before ? "Coming up · week 1" : `This week · week ${wk} of ${C.weeks.length}`}</p>
       <h2>${esc(w.title)}</h2>
       <p class="me-when">Next session: <strong>${esc(sessionLine(sessionDates[wi]))}</strong> on <a href="${C.discord}" target="_blank" rel="noopener">Discord</a></p>
       ${roles.length ? `<p class="me-role">On Monday you're the <strong>${roles.map((r) => esc(r.name)).join("</strong> and <strong>")}</strong>. ${esc(roles[0].job)}</p>` : ""}
+      ${w.intro ? `<p class="me-role"><strong>Intro week: no homework.</strong> ${esc(w.introNote || "")}</p>` : ""}
       <p class="me-open">Opening question: <em>${esc(w.opening)}</em></p>
       <ul class="me-check">${items}</ul>
       <p class="me-jumps"><a class="me-jump" href="/decoding-bitcoin/curriculum#week-${wk}">Open week ${wk} in the weekly plan →</a> <a class="me-jump" href="/assets/mastering-bitcoin/sessions.ics?v=20261010a" download="decoding-bitcoin-sessions.ics">Add sessions to my calendar</a></p>
