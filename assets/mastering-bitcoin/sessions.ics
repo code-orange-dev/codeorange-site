@@ -6,13 +6,19 @@ METHOD:PUBLISH
 X-WR-CALNAME:Decoding Bitcoin study cohort
 BEGIN:VEVENT
 UID:mastering-bitcoin-2026@codeorange.dev
-DTSTAMP:20261010T120000Z
+SEQUENCE:1
+DTSTAMP:20261114T040000Z
 DTSTART:20261116T110000Z
 DTEND:20261116T123000Z
 RRULE:FREQ=WEEKLY;COUNT=10
 SUMMARY:Decoding Bitcoin study cohort
 LOCATION:Discord
-DESCRIPTION:Weekly session on Discord: https://discord.gg/ZtvA79paWa\nThis week's lessons\, questions and exercises: https://codeorange.dev/decoding-bitcoin
+DESCRIPTION:Live on Discord\, every Monday for 10 weeks. Join here: https://discord.gg/6XPJ96sCY4?event=1559048812654366771\nThis week's lessons and questions: https://codeorange.dev/decoding-bitcoin/curriculum
 URL:https://codeorange.dev/decoding-bitcoin
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Decoding Bitcoin starts in 30 minutes on Discord
+TRIGGER:-PT30M
+END:VALARM
 END:VEVENT
 END:VCALENDAR

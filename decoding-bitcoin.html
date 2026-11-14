@@ -203,6 +203,14 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 .mb-book-tag { position: absolute; left: 50%; bottom: -18px; transform: translateX(-50%) rotate(3deg); white-space: nowrap; padding: 9px 16px; border-radius: 999px; background: var(--orange); color: var(--bg); font: 700 13px "Plus Jakarta Sans", monospace; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
 @media (max-width: 900px) { .mb-book { width: min(78%, 300px); margin: 10px auto 24px; } }
 .mb-me-cta { margin-top: 18px; justify-content: flex-start; flex-wrap: wrap; }
+.mb-time{margin:22px 0 0;max-width:560px;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:rgba(10,10,10,.55)}
+.mb-time p{margin:0}.mb-time-main{color:#fff;font-weight:600;font-size:15px}.mb-time-main b{color:var(--orange)}
+.mb-yourtime{margin-top:4px!important;color:#e6e6e6;font-size:14px}.mb-yourtime b{color:#fff}.mb-yourtime[hidden]{display:none}
+.mb-fine{margin-top:8px!important;color:var(--dim);font-size:11.5px;line-height:1.55}
+.mb-fine-c{max-width:560px;margin:14px auto 0!important;text-align:center}
+.mb-where .mb-yourtime{margin:-12px 0 20px!important}
+.mb-cal-btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.mb-cal-btns a{flex:1 1 0;width:auto!important;min-width:0;white-space:nowrap;justify-content:center;padding-left:10px!important;padding-right:10px!important}
 .mb-cal { margin: 22px 0 0; color: var(--dim); font: 600 13px "Plus Jakarta Sans", monospace; }
 .mb-cal[hidden] { display: none; }
 .mb-cal a { color: var(--orange); text-decoration: underline; text-underline-offset: 3px; }
@@ -513,8 +521,8 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
 <link rel="stylesheet" href="/assets/theme.css?v=20261015d">
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
 <script>if(/^#(week-\d+|curriculum)$/.test(location.hash))location.replace("/decoding-bitcoin/curriculum"+location.search+(location.hash==="#curriculum"?"":location.hash));</script>
-<script src="/assets/mastering-bitcoin/cohort.js?v=20261114a" defer></script>
-<script src="/assets/mastering-bitcoin/app.js?v=20261114a" defer></script>
+<script src="/assets/mastering-bitcoin/cohort.js?v=20261114c" defer></script>
+<script src="/assets/mastering-bitcoin/app.js?v=20261114c" defer></script>
 </head>
 <body>
 <a class="announce" href="#signup">Decoding Bitcoin study cohort starts Monday 16 November &middot; sign-ups are open <span>Sign up &rarr;</span></a>
@@ -569,7 +577,12 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
           <a class="button mb-cta" href="#signup"><span>Sign up free</span><svg class="mb-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           <a class="ghost mb-cta" href="#try"><span>Try week 1 in 2 min</span></a>
         </div>
-        <p class="mb-cal" data-mb-cal>Add all 10 sessions to your calendar: <a data-mb-gcal href="#" target="_blank" rel="noopener">Google</a> · <a href="/assets/mastering-bitcoin/sessions.ics?v=20261010a" download="decoding-bitcoin-sessions.ics">Apple / Outlook</a></p>
+        <div class="mb-time" data-mb-cal>
+          <p class="mb-time-main">Every Monday, <b>7–8:30pm in Bali</b> (UTC+8) · 11:00 UTC</p>
+          <p class="mb-yourtime" data-mb-yourtime hidden></p>
+          <p class="mb-fine">Same time around the world: San Francisco 3am · New York 6am · London 11am · Berlin, Lagos 12pm · Nairobi 2pm · Dubai 3pm · Delhi 4:30pm · Jakarta 6pm · Bali, Manila, Singapore 7pm · Tokyo 8pm · Sydney 10pm</p>
+          <div class="mb-cal-btns"><a class="ghost small" data-mb-gcal href="#" target="_blank" rel="noopener">+ Google Calendar</a><a class="ghost small" href="/assets/mastering-bitcoin/sessions.ics?v=20261114b" download="decoding-bitcoin-sessions.ics">+ Apple / Outlook</a></div>
+        </div>
       </div>
       <a class="mb-book mb-course" href="https://bitcoindevs.xyz/decoding" target="_blank" rel="noopener" aria-label="Open Decoding Bitcoin by The Bitcoin Dev Project">
         <div class="mb-course-card">
@@ -737,7 +750,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
       <div class="timeline-item"><div><h3>Do the lessons</h3><p>Two to four short interactive lessons.</p></div></div>
       <div class="timeline-item"><div><h3>Answer your questions</h3><p>Each question has an owner. Post yours on Discord.</p></div></div>
       <div class="timeline-item"><div><h3>Do the exercises</h3><p>Hands-on, the same for everyone.</p></div></div>
-      <div class="timeline-item"><div><h3>Meet on Monday</h3><p>90 minutes on Discord, 7pm UTC+8.</p></div></div>
+      <div class="timeline-item"><div><h3>Meet on Monday</h3><p>90 minutes on Discord, 7pm UTC+8 (11:00 UTC).</p></div></div>
     </div>
   </section>
 
@@ -804,7 +817,9 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
       <p class="eyebrow">Where we meet</p>
       <h2>Every session is live on Discord.</h2>
       <p class="mb-when">First session: <b>Mon 16 Nov, 7pm WITA</b> · 11:00 UTC</p>
-      <div class="cta-row" style="justify-content:center"><a class="button mb-cta" href="https://discord.gg/6XPJ96sCY4?event=1559048812654366771" target="_blank" rel="noopener"><span>Join the Discord event</span><svg class="mb-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+      <p class="mb-yourtime" data-mb-yourtime hidden></p>
+      <div class="cta-row" style="justify-content:center"><a class="button mb-cta" href="https://discord.gg/6XPJ96sCY4?event=1559048812654366771" target="_blank" rel="noopener"><span>Join the Discord event</span><svg class="mb-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="ghost" data-mb-gcal href="#" target="_blank" rel="noopener">+ Google Calendar</a><a class="ghost" href="/assets/mastering-bitcoin/sessions.ics?v=20261114b" download="decoding-bitcoin-sessions.ics">+ Apple / Outlook</a></div>
+      <p class="mb-fine mb-fine-c">Same time around the world: San Francisco 3am · New York 6am · London 11am · Berlin, Lagos 12pm · Nairobi 2pm · Dubai 3pm · Delhi 4:30pm · Jakarta 6pm · Bali, Manila, Singapore 7pm · Tokyo 8pm · Sydney 10pm</p>
       <p class="mb-small">Tap <b>Interested</b> on the event and Discord will remind you when we start. No account yet? <a href="https://discord.com/register" target="_blank" rel="noopener">Make one free</a>.</p>
     </div>
   </section>
