@@ -664,11 +664,23 @@
       text: "Decoding Bitcoin study cohort",
       dates: `${stamp(first)}/${stamp(end)}`,
       recur: `RRULE:FREQ=WEEKLY;COUNT=${C.weeks.length}`,
-      details: `Weekly session on Discord: ${C.discord}\nThis week's lessons, questions and exercises: ${location.origin}${PLAN}`,
+      details: `Live on Discord, every Monday for 10 weeks. Join here: ${C.discordEvent || C.discord}\nThis week's lessons and questions: ${location.origin}${PLAN}`,
       location: "Discord",
     });
   }
   document.querySelectorAll("[data-mb-gcal]").forEach((a) => (a.href = gcalHref()));
+  // Show the Monday session in the visitor's own time zone.
+  if (first) {
+    let tz = "";
+    try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone.replace(/_/g, " ").split("/").pop(); } catch (e) {}
+    const t = (d) => d.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" });
+    const end = new Date(first.getTime() + (C.sessionMinutes || 90) * 6e4);
+    const day = first.toLocaleDateString(undefined, { weekday: "long" });
+    document.querySelectorAll("[data-mb-yourtime]").forEach((el) => {
+      el.innerHTML = `Your time${tz ? ` (${esc(tz)})` : ""}: <b>${esc(day)}s, ${esc(t(first))}–${esc(t(end))}</b>`;
+      el.hidden = false;
+    });
+  }
   if (!first) document.querySelectorAll("[data-mb-cal]").forEach((el) => (el.hidden = true));
   document.addEventListener("click", async (ev) => {
     if (!ev.target.closest("[data-mb-share]")) return;

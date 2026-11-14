@@ -225,7 +225,7 @@
     if (finished) return p.skillsEnd ? null : ["Rate your skills one last time.", "See how far you've come since the start.", go("#skills", "Rate again")];
     if (!d.quizzes?.pre && !finished && currentWeek < 2) return ["Take the 2-minute knowledge check.", "10 quick questions, not graded. You'll take it again at the end to see what you've learned.", go("#check", "Start the check")];
     if (currentWeek >= C.weeks.length - 2 && d.quizzes?.pre && !d.quizzes?.post) return ["Take the knowledge check again.", "Same 10 questions as at the start. See how far you've come.", go("#check", "Take it again")];
-    if (currentWeek < 0) return ["You're all set for week 1.", `Lessons go up the week before. First session: ${sessionLine(sessionDates[0])}.`, go(`/assets/mastering-bitcoin/sessions.ics?v=20261010a`, "Add the sessions to my calendar")];
+    if (currentWeek < 0) return ["You're all set for week 1.", `Lessons go up the week before. First session: ${sessionLine(sessionDates[0])}.`, go(`/assets/mastering-bitcoin/sessions.ics?v=20261114b`, "Add the sessions to my calendar")];
     if (C.weeks[currentWeek].intro && !d.checkins.some((c) => c.week === wk)) return ["Week 1 is the intro week: no homework.", "Just come to Monday's session. Homework starts in week 2.", go("#week", "See week 1")];
     if (!state.done.has(`w${wk}-r1`)) return [`Do this week's lessons before Monday.`, esc(C.weeks[currentWeek].lessons.map((l) => l.title).join(", ")), go("#week", "See this week")];
     if (!d.checkins.some((c) => c.week === wk)) return ["Do your 2-minute check-in.", "It's how we spot who's stuck and what to cover on Monday.", go("#checkin", "Check in")];
@@ -263,7 +263,7 @@
       ${w.intro ? `<p class="me-role"><strong>Intro week: no homework.</strong> ${esc(w.introNote || "")}</p>` : ""}
       <p class="me-open">Opening question: <em>${esc(w.opening)}</em></p>
       <ul class="me-check">${items}</ul>
-      <p class="me-jumps"><a class="me-jump" href="/decoding-bitcoin/curriculum#week-${wk}">Open week ${wk} in the weekly plan →</a> <a class="me-jump" href="/assets/mastering-bitcoin/sessions.ics?v=20261010a" download="decoding-bitcoin-sessions.ics">Add sessions to my calendar</a></p>
+      <p class="me-jumps"><a class="me-jump" href="/decoding-bitcoin/curriculum#week-${wk}">Open week ${wk} in the weekly plan →</a> <a class="me-jump" href="/assets/mastering-bitcoin/sessions.ics?v=20261114b" download="decoding-bitcoin-sessions.ics">Add sessions to my calendar</a></p>
     </div>`;
   }
 

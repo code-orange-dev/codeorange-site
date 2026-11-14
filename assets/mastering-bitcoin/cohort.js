@@ -13,6 +13,7 @@ window.MB_COHORT = {
   sessionLabel: "Mondays, 7pm UTC+8",
   signupsOpen: true,
   discord: "https://discord.gg/ZtvA79paWa",
+  discordEvent: "https://discord.gg/6XPJ96sCY4?event=1559048812654366771",
   courseUrl: "https://bitcoindevs.xyz/decoding",
 
   // Socratic seminar roles, rotated through the roster each week (shown in this order).
