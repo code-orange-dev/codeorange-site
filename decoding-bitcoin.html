@@ -285,6 +285,8 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
 .mb-toast[hidden] { display: none; }
 .mb-label { margin: 0 0 8px; color: var(--orange); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .1em; text-transform: uppercase; }
 .mb-read { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 16px; }
+.mb-intro { margin-top: 16px; padding: 14px 18px; border: 1px solid rgba(39,201,63,.45); border-radius: 12px; background: rgba(39,201,63,.08); color: var(--text); line-height: 1.55; }
+.mb-intro strong { color: #5BE37A; }
 .mb-opening { margin-top: 20px; padding: 16px 18px; border-left: 3px solid var(--orange); border-radius: 0 12px 12px 0; background: rgba(247,147,26,.06); }
 .mb-opening p:last-child { margin: 0; color: var(--text); font-size: 17px; line-height: 1.55; }
 .mb-roles-wrap { margin-top: 20px; }
@@ -507,8 +509,8 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
 <link rel="stylesheet" href="/assets/theme.css?v=20261015d">
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
 <script>if(/^#(week-\d+|curriculum)$/.test(location.hash))location.replace("/decoding-bitcoin/curriculum"+location.search+(location.hash==="#curriculum"?"":location.hash));</script>
-<script src="/assets/mastering-bitcoin/cohort.js?v=20261113a" defer></script>
-<script src="/assets/mastering-bitcoin/app.js?v=20261113a" defer></script>
+<script src="/assets/mastering-bitcoin/cohort.js?v=20261114a" defer></script>
+<script src="/assets/mastering-bitcoin/app.js?v=20261114a" defer></script>
 </head>
 <body>
 <a class="announce" href="#signup">Decoding Bitcoin study cohort starts Monday 16 November &middot; sign-ups are open <span>Sign up &rarr;</span></a>
@@ -552,6 +554,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
           <span class="pill">Mondays 7pm UTC+8 · Discord</span>
           <span class="pill">Free</span>
         </div>
+        <p class="mb-intro" style="margin:0 0 24px;max-width:560px"><strong>Week 1 (Mon 16 Nov) is the intro session: no homework.</strong> Just come along. Homework starts in week 2.</p>
         <div class="mb-countdown" data-mb-countdown hidden aria-label="Time until the first session">
           <div><strong data-cd="d">00</strong><span>days</span></div>
           <div><strong data-cd="h">00</strong><span>hours</span></div>
@@ -725,7 +728,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
   </section>
 
   <section class="section-inner">
-    <div class="split"><div><p class="eyebrow">How it works</p><h2>Four steps a week.</h2></div><p class="lead">No accounts. Signing up gives you a personal link to tick things off.</p></div>
+    <div class="split"><div><p class="eyebrow">How it works</p><h2>Four steps a week.</h2></div><p class="lead">No accounts. Signing up gives you a personal link to tick things off. Week 1 is an intro session with no homework; the four steps start in week 2.</p></div>
     <div class="timeline mb-steps">
       <div class="timeline-item"><div><h3>Do the lessons</h3><p>Two to four short interactive lessons.</p></div></div>
       <div class="timeline-item"><div><h3>Answer your questions</h3><p>Each question has an owner. Post yours on Discord.</p></div></div>
