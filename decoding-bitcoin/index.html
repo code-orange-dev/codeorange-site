@@ -526,7 +526,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
 <script src="/assets/mastering-bitcoin/app.js?v=20261115a" defer></script>
 </head>
 <body>
-<a class="announce" href="#signup">Decoding Bitcoin study cohort starts Monday 16 November &middot; sign-ups are open <span>Sign up &rarr;</span></a>
+<a class="announce" href="#signup">Decoding Bitcoin study cohort &middot; Mondays on Discord &middot; join anytime <span>Sign up &rarr;</span></a>
 <header class="site-header">
   <div class="header-inner">
     <a class="brand" href="/" aria-label="Code Orange Dev School home"><img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School"></a>
@@ -605,6 +605,44 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
     <div id="mb-me" class="feature-panel mb-me" hidden></div>
   </section>
 
+  <section id="catch-up" class="section-inner cu" style="scroll-margin-top:96px" hidden>
+    <style>
+      .cu[hidden]{display:none}
+      .cu-card{border:1px solid rgba(247,147,26,.45);border-radius:20px;padding:28px;background:linear-gradient(180deg,rgba(247,147,26,.08),rgba(255,255,255,.015))}
+      .cu-card h2{margin:6px 0 8px}
+      .cu-steps{list-style:none;margin:20px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+      .cu-steps li{min-width:0;border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:16px;background:rgba(255,255,255,.02)}
+      .cu-steps b{display:block;color:var(--orange,#F7931A);font:700 12px "Plus Jakarta Sans",monospace;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px}
+      .cu-steps a{color:inherit}
+      .cu-steps small{display:block;color:var(--dim,#9a9a9a);margin-top:4px}
+      @media (max-width:760px){.cu-card{padding:20px}.cu-steps{grid-template-columns:1fr}}
+    </style>
+    <div class="cu-card">
+      <p class="eyebrow">Just found us?</p>
+      <h2>Missed week 1? You're not late.</h2>
+      <p class="lead" style="margin:0">Week 1 was the intro, with no homework. Catch up in about 15 minutes, then join us live on <span data-cu-next>Monday</span>.</p>
+      <ol class="cu-steps">
+        <li><b>1 · Watch</b><a data-cu-rec href="/session-notes">The week 1 recording</a><small data-cu-rec-note>Goes up within a day of the session.</small></li>
+        <li><b>2 · Play</b><a href="#try">Week 1 in 2 minutes</a><small>Mine a tiny hash, answer 3 questions.</small></li>
+        <li><b>3 · Join</b><a href="#signup">Sign up free</a><small>Your weekly plan unlocks the same day.</small></li>
+      </ol>
+    </div>
+    <script>
+    (function(){
+      // Week 1 recording: paste the YouTube link here once it is up.
+      var REC = "";
+      var first = Date.UTC(2026,10,16,12,30), last = Date.UTC(2027,0,18,12,30), now = Date.now();
+      if (now < first || now > last) return;
+      var s = document.getElementById("catch-up"); s.hidden = false;
+      var next = new Date(first); while (next.getTime() < now) next = new Date(next.getTime() + 7*864e5);
+      var wk = Math.round((next.getTime() - first)/(7*864e5)) + 1;
+      s.querySelector("[data-cu-next]").textContent = "Monday " + next.toLocaleDateString("en-GB",{day:"numeric",month:"short",timeZone:"Asia/Singapore"}) + " (week " + wk + ")";
+      if (REC) { var a = s.querySelector("[data-cu-rec]"); a.href = REC; a.target = "_blank"; a.rel = "noopener"; s.querySelector("[data-cu-rec-note]").textContent = "The intro session, recorded."; }
+      var intro = document.querySelector(".mb-intro");
+      if (intro) intro.innerHTML = "<strong>The cohort is on, and you can still join.</strong> <a href=\"#catch-up\">Catch up on week 1</a> in 15 minutes.";
+    })();
+    </script>
+  </section>
   <section id="signup" class="band mb-bg mb-bg-right" style="--mb-bg:url(/assets/mastering-bitcoin/bg-workshop-table.webp?v=3);scroll-margin-top:96px"><div class="section-inner">
     <div class="split">
       <div><p class="eyebrow">Sign up</p><h2>Join in 30 seconds.</h2><p class="lead">Free. All you need is your email and Discord.</p><p class="mb-joined" hidden><strong id="mb-count">–</strong> people have joined so far.</p><p class="mb-small">No Discord yet? <a href="https://discord.com/register" target="_blank" rel="noopener">Make a free account</a>, then come back.</p><button type="button" class="ghost small" data-mb-share>Invite a friend</button></div>
