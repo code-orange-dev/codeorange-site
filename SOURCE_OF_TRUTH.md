@@ -52,3 +52,7 @@ The production homepage is maintained directly in `index.html`. `tools/prerender
 - Keep the homepage hero video lazy/non-preloaded and retain the lightweight mobile image fallback.
 - Do not invent event dates, testimonials, outcomes, partners, or claims. Use the public calendar and GitHub sources.
 - The Google Calendar subscription URL is intentionally used in the homepage and calendar CTAs; preserve it when editing calendar UI.
+
+## Visitor counts
+
+Cookie-free Vercel Web Analytics, loaded by `assets/site-menu.js` (every page that includes it). No npm package needed: the site is plain HTML, so the script tag `/_vercel/insights/script.js` is the whole setup. View counts in Vercel, under the codeorange project, Analytics tab.
