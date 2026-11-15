@@ -406,7 +406,7 @@
       const b = state.data.quizzes?.[`w${i + 1}`];
       return `<option value="${i + 1}"${i + 1 === wk ? " selected" : ""}>Week ${i + 1}${b ? ` · ${b.best}/${b.total}` : ""}</option>`;
     }).join("");
-    return `<div class="me-card me-wide me-quizcard" id="quiz"><div class="me-row"><div><p class="me-label">Practice quiz · 4 questions</p><h2>Test yourself on week ${wk}</h2></div><select aria-label="Quiz week" data-quiz-week>${options}</select></div>
+    return `<div class="me-card me-wide me-quizcard" id="quiz"><div class="me-row"><div><p class="me-label">Weekly check · 5 questions · answers explained</p><h2>Test yourself on week ${wk}</h2></div><select aria-label="Quiz week" data-quiz-week>${options}</select></div>
       <p class="me-small">Recalling something is how it sticks. ${best ? `Your best: ${best.best}/${best.total} (${best.attempts} ${best.attempts === 1 ? "try" : "tries"}).` : "Only you see your score."}</p>
       ${quizForm(`w${wk}`, Q.weeks[wk - 1] || [])}</div>`;
   }

@@ -176,6 +176,7 @@
               <div><h3>Discussion questions</h3><p class="mb-hint">${w.intro ? "Nothing to prepare. We'll talk these through together in the session." : "Each question has one owner. Post your answer in the cohort channel on Discord before the session, then tick it done."}</p><ol class="mb-list">${questions}</ol></div>
               <div><h3>Exercises</h3><p class="mb-hint">${w.intro ? "Optional. Try them during or after the session, and tick them off if you do." : "Everyone does these. Share what you got on Discord and tick each one off."}</p><ol class="mb-list">${exercises}</ol></div>
             </div>
+            <a class="mb-checklink" href="/decoding-bitcoin/check#week-${wk}"><b>Weekly check</b> · 5 questions on this week, answers explained →</a>
           </div>
         </details>`;
       })

@@ -151,6 +151,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://codeorange.dev/decoding-bitcoin/check</loc>
+    <lastmod>2026-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://codeorange.dev/fellowships</loc>
     <lastmod>2026-10-21</lastmod>
     <changefreq>monthly</changefreq>
