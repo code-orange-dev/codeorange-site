@@ -80,3 +80,11 @@
   sync();
   window.addEventListener("resize", sync);
 })();
+
+/* Cookie-free visitor counts (Vercel Web Analytics): no cookies, no personal data, skipped on localhost. */
+(function () {
+  if (/^(localhost|127\.)/.test(location.hostname) || document.querySelector('script[src*="/_vercel/insights/"]')) return;
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  var s = document.createElement("script"); s.defer = true; s.src = "/_vercel/insights/script.js";
+  document.head.appendChild(s);
+})();
