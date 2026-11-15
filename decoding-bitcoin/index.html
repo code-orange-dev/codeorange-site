@@ -697,10 +697,14 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
     .tw1-row{display:flex;gap:10px;flex-wrap:wrap}
     .tw1-share{margin:16px 0 0!important;font-size:14px}.tw1-share a,.tw1-share button{color:var(--orange);font:inherit;font-weight:700;background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
     @media (max-width:760px){.tw1-box{padding:20px}.tw1-pane h3{font-size:19px}}
+      .tw1-diffs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}
+      .tw1-diffs button{padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:transparent;color:inherit;font:600 13px "Plus Jakarta Sans",sans-serif;cursor:pointer}
+      .tw1-diffs button.on{border-color:#F7931A;color:#F7931A;background:rgba(247,147,26,.1)}
+      .tw1-pane .tw1-rank{margin:0 0 6px;color:#F7931A;font:700 12px "Plus Jakarta Sans",monospace;letter-spacing:.14em;text-transform:uppercase}
     </style>
-    <div class="split"><div><p class="eyebrow">Try it first</p><h2>Week 1 in 2 minutes.</h2></div><p class="lead">Not sure it's for you? Mine a tiny hash and answer three questions. No sign-up needed.</p></div>
+    <div class="split"><div><p class="eyebrow">Try it first</p><h2>Week 1 in 2 minutes.</h2></div><p class="lead">Not sure it's for you? Find a hash by hand, mine a block, then answer three questions. No sign-up needed.</p></div>
     <div class="tw1-box" id="tw1">
-      <ol class="tw1-steps" aria-hidden="true"><li class="on">1 · Hash lab</li><li>2 · Quick quiz</li><li>3 · Your result</li></ol>
+      <ol class="tw1-steps" aria-hidden="true"><li class="on">1 · Hash lab</li><li>2 · Mine a block</li><li>3 · Quick quiz</li><li>4 · Your result</li></ol>
       <div class="tw1-pane" data-pane="0">
         <h3>Type anything. Watch the fingerprint.</h3>
         <p>This is SHA-256, the hash function inside Bitcoin. Change one letter and the whole fingerprint changes.</p>
@@ -711,12 +715,22 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
         <div class="tw1-row"><button type="button" class="button" id="tw1-next0" disabled>Find a 0 to continue</button><button type="button" class="ghost" id="tw1-skip">Skip to the quiz</button></div>
       </div>
       <div class="tw1-pane" data-pane="1" hidden>
+        <h3>Now let a machine do the hunt.</h3>
+        <p>You found one zero by hand. Miners add a counter (the <em>nonce</em>) to the block and try again, millions of times a second. Pick a difficulty and mine.</p>
+        <div class="tw1-diffs" id="tw1-diffs" role="group" aria-label="Difficulty"><button type="button" data-z="2" class="on">2 zeros</button><button type="button" data-z="3">3 zeros</button><button type="button" data-z="4">4 zeros</button></div>
+        <div class="tw1-hash" id="tw1-mhash" aria-live="off">Press Start mining.</div>
+        <div class="tw1-meta"><span>Nonce: <strong id="tw1-nonce">0</strong></span><span>Speed: <strong id="tw1-rate">–</strong></span><span>Blocks found: <strong id="tw1-blocks">0</strong></span></div>
+        <p class="tw1-goal" id="tw1-mgoal"><strong>Level 2:</strong> each extra zero makes the hunt 16 times harder. Try it and feel the difference.</p>
+        <div class="tw1-row"><button type="button" class="button" id="tw1-mine">Start mining</button><button type="button" class="ghost" id="tw1-toquiz">On to the quiz</button></div>
+      </div>
+      <div class="tw1-pane" data-pane="2" hidden>
         <h3 id="tw1-q"></h3>
         <div class="tw1-opts" id="tw1-opts"></div>
         <p class="tw1-why" id="tw1-why" hidden></p>
         <button type="button" class="button" id="tw1-next1" hidden>Next</button>
       </div>
-      <div class="tw1-pane" data-pane="2" hidden>
+      <div class="tw1-pane" data-pane="3" hidden>
+        <p class="tw1-rank" id="tw1-rank"></p>
         <p class="tw1-score" id="tw1-score"></p>
         <h3 id="tw1-verdict"></h3>
         <p>That was a taste of week 1. Nine more weeks take you through transactions, Script and Taproot, with a group to ask when you're stuck.</p>
@@ -744,7 +758,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
         tries++;$('tw1-tries').textContent=tries;
         if(h.charAt(0)==='0'&&!won){won=true;$('tw1-hash').className='tw1-hash win';
           $('tw1-goal').className='tw1-goal ok';$('tw1-goal').innerHTML='<strong>Found one in '+tries+(tries===1?' try':' tries')+'.</strong> You just did a tiny proof of work. A real block needs about 19 zeros in a row.';
-          $('tw1-next0').disabled=false;$('tw1-next0').textContent='Nice. On to the quiz';}
+          $('tw1-next0').disabled=false;$('tw1-next0').textContent='Nice. Now mine a block';}
       }
       $('tw1-in').addEventListener('input',function(){
         var v=this.value,me=++seq;
@@ -763,18 +777,50 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
             $('tw1-next1').textContent=qi===QS.length-1?'See my result':'Next';$('tw1-next1').hidden=false;$('tw1-next1').focus();
           });box.appendChild(b);});
       }
-      function quiz(){qi=0;score=0;show(1);ask();}
-      $('tw1-next0').addEventListener('click',quiz);$('tw1-skip').addEventListener('click',quiz);
+      function quiz(){qi=0;score=0;show(2);ask();}
+      $('tw1-next0').addEventListener('click',function(){show(1);});
+      var mining=false,best=0,blocks=0,zsel=2;
+      var dbtn=$('tw1-diffs').querySelectorAll('button');
+      for(var di=0;di<dbtn.length;di++)dbtn[di].addEventListener('click',function(){if(mining)return;zsel=+this.getAttribute('data-z');for(var k=0;k<dbtn.length;k++)dbtn[k].className=dbtn[k]===this?'on':'';});
+      function years(rate){var y=Math.pow(16,19)/rate/31557600;return y>=1e9?Math.round(y/1e9).toLocaleString('en-US')+' billion years':Math.round(y).toLocaleString('en-US')+' years';}
+      function mine(){
+        if(mining){mining=false;return;}
+        if(!(window.crypto&&crypto.subtle)){$('tw1-mhash').textContent='Your browser blocks hashing here. Go on to the quiz.';return;}
+        mining=true;$('tw1-mine').textContent='Stop';$('tw1-mhash').className='tw1-hash';
+        var base=($('tw1-in').value||'code orange')+':',enc=new TextEncoder(),target=new Array(zsel+1).join('0'),z=zsel,n=0,t0=performance.now();
+        function batch(){
+          var ps=[],start=n;for(var i=0;i<400;i++)ps.push(crypto.subtle.digest('SHA-256',enc.encode(base+(n++))));
+          Promise.all(ps).then(function(res){
+            var rate=n/((performance.now()-t0)/1000||.001),hit=-1,h='';
+            for(var i=0;i<res.length;i++){h=hex(res[i]);if(h.substr(0,z)===target){hit=start+i;break;}}
+            $('tw1-nonce').textContent=(hit<0?n:hit).toLocaleString('en-US');$('tw1-rate').textContent=Math.round(rate).toLocaleString('en-US')+' /s';
+            if(hit>=0){mining=false;blocks++;if(z>best)best=z;$('tw1-blocks').textContent=blocks;
+              $('tw1-mhash').className='tw1-hash win';$('tw1-mhash').innerHTML='<b>'+h.substr(0,z)+'</b>'+h.substr(z);
+              $('tw1-mgoal').className='tw1-goal ok';$('tw1-mgoal').innerHTML='<strong>Block found after '+(hit+1).toLocaleString('en-US')+' tries.</strong> A real Bitcoin block needs about 19 zeros. At your speed that would take roughly '+years(rate)+'. That is why nobody can fake the chain.';
+              $('tw1-mine').textContent=z<4?'Mine a harder one':'Mine again';
+              if(z<4){zsel=z+1;for(var k=0;k<dbtn.length;k++)dbtn[k].className=+dbtn[k].getAttribute('data-z')===zsel?'on':'';}
+              return;}
+            if(!mining){$('tw1-mine').textContent='Start mining';$('tw1-mhash').textContent=h;return;}
+            $('tw1-mhash').textContent=h;setTimeout(batch,0);
+          });
+        }
+        batch();
+      }
+      $('tw1-mine').addEventListener('click',mine);
+      $('tw1-toquiz').addEventListener('click',function(){mining=false;quiz();});
+$('tw1-skip').addEventListener('click',quiz);
       $('tw1-next1').addEventListener('click',function(){
         qi++;if(qi<QS.length){ask();return;}
         $('tw1-score').textContent=score+' / '+QS.length;
         $('tw1-verdict').textContent=score===QS.length?'Perfect. You already think like a builder.':(score>0?'Good start. The cohort fills in the rest.':'Everyone starts here. That is what the cohort is for.');
-        var msg='I scored '+score+'/'+QS.length+' on week 1 of Decoding Bitcoin, a free 10-week study cohort on Discord. Starts 16 Nov. Can you beat me?',url='https://codeorange.dev/decoding-bitcoin#try';
+        var pts=score+(best>=4?2:best>=2?1:0),rank=pts>=5?'Proof-of-Work Pro':pts>=4?'Block Finder':pts>=2?'Apprentice Miner':'Hash Tourist';
+        $('tw1-rank').textContent='Your rank: '+rank;
+        var msg='I ranked "'+rank+'" ('+score+'/'+QS.length+(best?', mined a '+best+'-zero block':'')+') on week 1 of Decoding Bitcoin, a free study cohort on Discord. Can you beat me?',url='https://codeorange.dev/decoding-bitcoin#try';
         $('tw1-x').href='https://x.com/intent/post?text='+encodeURIComponent(msg)+'&url='+encodeURIComponent(url);
         $('tw1-copy').onclick=function(){var b=this,t=msg+' '+url;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){b.textContent='Copied';},function(){prompt('Copy this:',t);});};
-        show(2);
+        show(3);
       });
-      $('tw1-again').addEventListener('click',function(){tries=0;prev='';won=false;$('tw1-in').value='';$('tw1-tries').textContent='0';$('tw1-diff').textContent='–';
+      $('tw1-again').addEventListener('click',function(){mining=false;$('tw1-mine').textContent='Start mining';tries=0;prev='';won=false;$('tw1-in').value='';$('tw1-tries').textContent='0';$('tw1-diff').textContent='–';
         $('tw1-hash').className='tw1-hash';$('tw1-hash').textContent='Your hash appears here.';
         $('tw1-goal').className='tw1-goal';$('tw1-goal').innerHTML='<strong>Your mission:</strong> keep changing the text until the hash starts with <b>0</b>. That hunt is what miners do, just much harder.';
         $('tw1-next0').disabled=true;$('tw1-next0').textContent='Find a 0 to continue';show(0);});

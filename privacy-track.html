@@ -630,6 +630,8 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
     .sp-opts button{text-align:left;min-height:48px;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.16);background:rgba(0,0,0,.4);color:var(--text);font:15px "Inter",sans-serif;cursor:pointer}
     .sp-opts button:hover:not(:disabled){border-color:var(--orange)}.sp-opts button.right{border-color:#4ade80;background:rgba(74,222,128,.12)}.sp-opts button.wrong{border-color:#f87171;background:rgba(248,113,113,.1)}
     .sp-why{padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.05);color:var(--text)!important}
+    .sp-pane .sp-rank{margin:0 0 6px;color:var(--orange);font:700 12px "Plus Jakarta Sans",monospace;letter-spacing:.14em;text-transform:uppercase}
+    .sp-share{margin:16px 0 0;font-size:14px;color:var(--dim)}.sp-share a,.sp-share button{color:var(--orange);background:none;border:0;padding:0;font:inherit;cursor:pointer;text-decoration:underline}
     .sp-pane .sp-score{font:800 44px "Plus Jakarta Sans",sans-serif;color:var(--orange);margin:0 0 6px}
     .sp-scan{font:600 13px "Plus Jakarta Sans",sans-serif;color:var(--dim);margin:0 0 12px}
     @media (max-width:760px){.sp-box{padding:20px}.sp-tx{grid-template-columns:auto 1fr auto;gap:8px;padding:9px 10px;font-size:12px}.sp-tx .who{min-width:0}}
@@ -659,10 +661,12 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
         <button type="button" class="button" id="sp-n2" hidden>Next</button>
       </div>
       <div class="sp-pane" data-p="3" hidden>
+        <p class="sp-rank" id="sp-rank"></p>
         <p class="sp-score" id="sp-score"></p>
         <h3 id="sp-verd2"></h3>
         <p>On Tuesday we build it for real: make a Silent Payment address, send to it, and find the payment with the scan key.</p>
         <div class="sp-row"><a class="button" id="sp-cal" href="/calendar" target="_blank" rel="noopener">Add Tuesday's session to my calendar</a><a class="ghost" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord</a><button type="button" class="ghost" id="sp-again">Play again</button></div>
+        <p class="sp-share">Challenge a friend: <a id="sp-x" href="#" target="_blank" rel="noopener">Post my score on X</a> · <button type="button" id="sp-copy">Copy for Nostr</button></p>
       </div>
     </div>
     <script>
@@ -697,7 +701,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
       function ask(){var c=QS[qi];$('sp-q').textContent=(qi+1)+' of 3. '+c.q;var box=$('sp-opts');box.innerHTML='';$('sp-why').hidden=true;$('sp-n2').hidden=true;
         c.o.forEach(function(t,i){var b=document.createElement('button');b.type='button';b.textContent=t;b.addEventListener('click',function(){var all=box.querySelectorAll('button');for(var k=0;k<all.length;k++){all[k].disabled=true;if(k===c.a)all[k].className='right';}if(i===c.a)score++;else b.className='wrong';$('sp-why').textContent=(i===c.a?'Correct. ':'Not quite. ')+c.w;$('sp-why').hidden=false;$('sp-n2').textContent=qi===2?'See my result':'Next';$('sp-n2').hidden=false;});box.appendChild(b);});}
       $('sp-n1').addEventListener('click',function(){qi=0;score=0;show(2);ask();});
-      $('sp-n2').addEventListener('click',function(){qi++;if(qi<3){ask();return;}$('sp-score').textContent=score+' / 3';$('sp-verd2').textContent=score===3?'Perfect. You are ready for Tuesday.':'Good start. Tuesday fills in the rest.';show(3);});
+      $('sp-n2').addEventListener('click',function(){qi++;if(qi<3){ask();return;}$('sp-score').textContent=score+' / 3';var rank=score===3?'Silent Receiver':score===2?'Address Hider':score===1?'Chain Watcher':'Open Book';$('sp-rank').textContent='Your rank: '+rank;var msg='I ranked "'+rank+'" ('+score+'/3) on the Silent Payments warm-up from @CodeOrangeDevs. 3 minutes, no sign-up. Can you beat me?',url='https://codeorange.dev/privacy-track#warmup';$('sp-x').href='https://x.com/intent/post?text='+encodeURIComponent(msg)+'&url='+encodeURIComponent(url);$('sp-copy').onclick=function(){var b=this,s=msg.replace('@CodeOrangeDevs','Code Orange')+' '+url;(navigator.clipboard?navigator.clipboard.writeText(s):Promise.reject()).then(function(){b.textContent='Copied';},function(){prompt('Copy this:',s);});};$('sp-verd2').textContent=score===3?'Perfect. You are ready for Tuesday.':'Good start. Tuesday fills in the rest.';show(3);});
       $('sp-again').addEventListener('click',function(){root.querySelectorAll('.sp-toggle button').forEach(function(x){x.classList.toggle('on',x.dataset.m==='old');});chain('old');show(0);});
       try{fetch('/api/calendar').then(function(r){return r.ok?r.json():null;}).then(function(d){if(!d||!d.events)return;var now=Date.now(),e=d.events.filter(function(x){return /privacy track/i.test(x.title)&&Date.parse(x.end)>now;}).sort(function(a,b){return Date.parse(a.start)-Date.parse(b.start);})[0];if(!e)return;
         var f=function(t){return new Date(t).toISOString().replace(/[-:]/g,'').replace(/\.\d+/,'');};
