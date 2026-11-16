@@ -242,6 +242,32 @@
     return `<div class="me-card me-wide me-nextstep"><div><p class="me-label">Your next step</p><h2>${n[0]}</h2><p>${n[1]}</p></div>${n[2]}</div>`;
   }
 
+  // First visit: a 3-step "how this works", dismissed for good with one tap.
+  const seen = { get() { try { return localStorage.getItem("mb-welcomed") === "1"; } catch { return true; } }, set() { try { localStorage.setItem("mb-welcomed", "1"); } catch {} } };
+  function welcomeCard() {
+    if (finished || followupMonths || seen.get()) return "";
+    return `<div class="me-card me-wide me-welcome" id="welcome">
+      <p class="me-label">Welcome · how this works</p>
+      <h2>Three things a week. That's it.</h2>
+      <ol class="me-steps">
+        <li><b>1</b><span><strong>Come to Monday's session</strong> on Discord, ${esc(utcLabel(sessionDates[0]))} / ${pad(plus8(sessionDates[0]).getUTCHours())}:00 UTC+8. Cameras off is fine.</span></li>
+        <li><b>2</b><span><strong>Do the week's lesson</strong> and tick it off below. Try the 5-question weekly check.</span></li>
+        <li><b>3</b><span><strong>Check in after the session.</strong> Two minutes: how it went and where you got stuck.</span></li>
+      </ol>
+      <p class="me-small">This page is your personal link, no password. Bookmark it, or open it from any weekly email.</p>
+      <button class="button small" type="button" data-welcome-ok>Got it</button>
+    </div>`;
+  }
+  // Recordings and recaps: fill C.recordings[week] = { video, recap } in cohort.js after each session.
+  function recordingBox(wi) {
+    const r = (C.recordings || {})[wi + 1];
+    if (!r || !(r.video || r.recap)) return "";
+    const links = [r.video && `<a class="button small" href="${esc(r.video)}" target="_blank" rel="noopener">▶ Watch the recording</a>`, r.recap && `<a class="ghost small" href="${esc(r.recap)}" target="_blank" rel="noopener">Read the recap</a>`].filter(Boolean).join(" ");
+    return `<div class="me-rec"><p class="me-label">Week ${wi + 1} session · missed it or want a rewatch?</p><div class="me-rec-links">${links}</div></div>`;
+  }
+  // The latest session that has finished (index), or -1.
+  const lastHeld = () => { let i = -1; sessionDates.forEach((t, k) => { if (now > t.getTime() + 90 * 6e4) i = k; }); return i; };
+
   function thisWeekCard() {
     if (finished) {
       return `<div class="me-card"><p class="me-label">The cohort</p><h2>You made it to the end 🎉</h2><p>All 10 weeks are done. Fill in your end-of-cohort skill map below, then pick a next step.</p><a class="ghost small" href="/decoding-bitcoin/curriculum">Look back at the weeks</a></div>`;
@@ -261,9 +287,10 @@
     return `<div class="me-card me-week" id="week">
       <p class="me-label">${before ? "Coming up · week 1" : `This week · week ${wk} of ${C.weeks.length}`}</p>
       <h2>${esc(w.title)}</h2>
-      <p class="me-when">Next session: <strong>${esc(sessionLine(sessionDates[wi]))}</strong> on <a href="${C.discord}" target="_blank" rel="noopener">Discord</a></p>
+      <p class="me-when">${now > sessionDates[wi].getTime() + 90 * 6e4 ? "Session held" : "Next session"}: <strong>${esc(sessionLine(sessionDates[wi]))}</strong> on <a href="${C.discord}" target="_blank" rel="noopener">Discord</a></p>
       ${roles.length ? `<p class="me-role">On Monday you're the <strong>${roles.map((r) => esc(r.name)).join("</strong> and <strong>")}</strong>. ${esc(roles[0].job)}</p>` : ""}
       ${w.intro ? `<p class="me-role"><strong>Intro week: no homework.</strong> ${esc(w.introNote || "")}</p>` : ""}
+      ${lastHeld() >= 0 ? recordingBox(lastHeld()) : ""}
       <p class="me-open">Opening question: <em>${esc(w.opening)}</em></p>
       <ul class="me-check">${items}</ul>
       <p class="me-jumps"><a class="me-jump" href="/decoding-bitcoin/curriculum#week-${wk}">Open week ${wk} in the weekly plan →</a> <a class="me-jump" href="/assets/mastering-bitcoin/sessions.ics?v=20261114b" download="decoding-bitcoin-sessions.ics">Add sessions to my calendar</a></p>
@@ -513,14 +540,16 @@
         ? `We start ${dayLabel(plus8(sessionDates[0]))}. Set your goals and rate your skills so you can see how far you come.`
         : `Week ${currentWeek + 1} of ${C.weeks.length}. ${s.streak >= 2 ? `${s.streak}-week streak, keep it going!` : "One step at a time."}`;
     const cards = currentWeek < 0
-      ? [followupCard(), nextCardTop(s), goalsCard(), skillsCard(), checkCard(), thisWeekCard(), progressCard(s), buddyCard(), checkinCard(), askCard(), nextCard(), linkCard()]
-      : [followupCard(), nextCardTop(s), thisWeekCard(), checkinCard(), quizCard(),
+      ? [followupCard(), welcomeCard(), nextCardTop(s), goalsCard(), skillsCard(), checkCard(), thisWeekCard(), progressCard(s), buddyCard(), checkinCard(), askCard(), nextCard(), linkCard()]
+      : [followupCard(), welcomeCard(), nextCardTop(s), thisWeekCard(), checkinCard(), quizCard(),
         `<details class="me-more me-wide" id="more"><summary>More: progress, class, study buddy, goals, skills</summary><div class="me-more-grid">`,
         progressCard(s), classCard() || askCard(), buddyCard(), classCard() ? askCard() : "", projectCard(), checkCard(), goalsCard(), skillsCard(), nextCard(), linkCard(),
         `</div></details>`];
     $("#me-app").innerHTML = cards.join("");
     // Links like #goals may point inside the collapsed "More" section: open it first.
     if (!state.moreBound) $("#me-app").addEventListener("click", (e) => {
+      const ok = e.target.closest("[data-welcome-ok]");
+      if (ok) { seen.set(); ok.closest(".me-welcome")?.remove(); return; }
       const a = e.target.closest('a[href^="#"]');
       const t = a && document.getElementById(a.getAttribute("href").slice(1));
       const box = t && t.closest("details.me-more");

@@ -522,7 +522,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
 <link rel="stylesheet" href="/assets/theme.css?v=20261015d">
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
 <script>if(/^#(week-\d+|curriculum)$/.test(location.hash))location.replace("/decoding-bitcoin/curriculum"+location.search+(location.hash==="#curriculum"?"":location.hash));</script>
-<script src="/assets/mastering-bitcoin/cohort.js?v=20261114c" defer></script>
+<script src="/assets/mastering-bitcoin/cohort.js?v=20261116a" defer></script>
 <script src="/assets/mastering-bitcoin/app.js?v=20261115a" defer></script>
 </head>
 <body>
@@ -628,9 +628,9 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
       </ol>
     </div>
     <script>
-    (function(){
-      // Week 1 recording: paste the YouTube link here once it is up.
-      var REC = "";
+    document.addEventListener("DOMContentLoaded", function(){
+      // Week 1 recording: comes from recordings[1].video in assets/mastering-bitcoin/cohort.js.
+      var REC = (((window.MB_COHORT || {}).recordings || {})[1] || {}).video || "";
       var first = Date.UTC(2026,10,16,12,30), last = Date.UTC(2027,0,18,12,30), now = Date.now();
       if (now < first || now > last) return;
       var s = document.getElementById("catch-up"); s.hidden = false;
@@ -640,7 +640,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
       if (REC) { var a = s.querySelector("[data-cu-rec]"); a.href = REC; a.target = "_blank"; a.rel = "noopener"; s.querySelector("[data-cu-rec-note]").textContent = "The intro session, recorded."; }
       var intro = document.querySelector(".mb-intro");
       if (intro) intro.innerHTML = "<strong>The cohort is on, and you can still join.</strong> <a href=\"#catch-up\">Catch up on week 1</a> in 15 minutes.";
-    })();
+    });
     </script>
   </section>
   <section id="signup" class="band mb-bg mb-bg-right" style="--mb-bg:url(/assets/mastering-bitcoin/bg-workshop-table.webp?v=3);scroll-margin-top:96px"><div class="section-inner">

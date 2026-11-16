@@ -148,3 +148,15 @@ legend { color: var(--text); font-weight: 600; font-size: 14px; margin-bottom: 8
 .me-project-form button { justify-self: start; }
 input[type=url] { width: 100%; min-height: 44px; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,.16); background: rgba(0,0,0,.55); color: var(--text); font: 15px/1.5 "Inter", system-ui, sans-serif; }
 @media (max-width: 700px) { .me-project-form { grid-template-columns: 1fr; } }
+
+/* First-visit welcome */
+.me-welcome { border-color: rgba(247,147,26,.55); }
+.me-steps { list-style: none; margin: 4px 0 14px; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.me-steps li { display: flex; gap: 12px; padding: 14px; border-radius: 12px; background: rgba(6,6,6,.45); border: 1px solid var(--line); color: var(--muted); line-height: 1.5; font-size: 15px; }
+.me-steps li b { flex: 0 0 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: var(--orange); color: var(--bg); font-size: 14px; }
+.me-steps strong { color: var(--text); }
+@media (max-width: 900px) { .me-steps { grid-template-columns: 1fr; } }
+/* Recording + recap */
+.me-rec { margin: 14px 0; padding: 14px 16px; border-radius: 12px; border: 1px solid rgba(247,147,26,.35); background: rgba(247,147,26,.06); }
+.me-rec .me-label { margin-bottom: 10px; }
+.me-rec-links { display: flex; flex-wrap: wrap; gap: 10px; }
