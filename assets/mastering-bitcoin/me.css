@@ -5,6 +5,13 @@
 #me-app { max-width: 1240px; margin: 0 auto; padding: 8px 32px 96px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; align-items: start; }
 .me-card { padding: 26px; border: 1px solid var(--line); border-radius: 18px; background: rgba(20,20,20,.86); backdrop-filter: blur(10px); min-width: 0; }
 .me-wide { grid-column: 1 / -1; }
+.me-more { border: 1px solid rgba(255,255,255,.1); border-radius: 16px; padding: 0; }
+.me-more > summary { cursor: pointer; padding: 16px 20px; font-weight: 600; color: #F7931A; list-style: none; }
+.me-more > summary::-webkit-details-marker { display: none; }
+.me-more > summary::before { content: "+ "; }
+.me-more[open] > summary::before { content: "− "; }
+.me-more-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; padding: 0 0 4px; align-items: start; }
+@media (max-width: 900px) { .me-more-grid { grid-template-columns: 1fr; } }
 .me-card h2 { margin: 4px 0 12px; font: 700 24px/1.2 "Plus Jakarta Sans", sans-serif; }
 .me-card p { color: var(--muted); line-height: 1.6; margin: 0 0 12px; }
 .me-card a { color: var(--orange); }

@@ -220,6 +220,9 @@
     const wk = currentWeek + 1;
     const go = (href, label) => `<a class="button small" href="${href}">${label}</a>`;
     if (followupMonths) return null;
+    // Session day: within 14h before a session until it ends, joining it is the one thing to do.
+    const live = !finished && sessionDates.find((t) => now > t.getTime() - 14 * 36e5 && now < t.getTime() + 90 * 6e4);
+    if (live) return [now >= live.getTime() ? "The session is on now. Join us!" : "Session today. See you there!", `${sessionLine(live)} · live on Discord, cameras off is fine.`, `<a class="button small" href="${C.discordEvent || C.discord}" target="_blank" rel="noopener">Join the Discord event</a>`];
     if (!p.why && !p.build) return ["Start by writing down why you joined.", "People who name a goal are far more likely to finish.", go("#goals", "Set my goals")];
     if (!p.skillsStart) return ["Rate your starting skills.", "Thirty seconds now, and in week 9 you'll see exactly how far you've come.", go("#skills", "Rate my skills")];
     if (finished) return p.skillsEnd ? null : ["Rate your skills one last time.", "See how far you've come since the start.", go("#skills", "Rate again")];
@@ -511,8 +514,19 @@
         : `Week ${currentWeek + 1} of ${C.weeks.length}. ${s.streak >= 2 ? `${s.streak}-week streak, keep it going!` : "One step at a time."}`;
     const cards = currentWeek < 0
       ? [followupCard(), nextCardTop(s), goalsCard(), skillsCard(), checkCard(), thisWeekCard(), progressCard(s), buddyCard(), checkinCard(), askCard(), nextCard(), linkCard()]
-      : [followupCard(), nextCardTop(s), thisWeekCard(), checkinCard(), quizCard(), progressCard(s), classCard() || askCard(), buddyCard(), classCard() ? askCard() : "", projectCard(), checkCard(), goalsCard(), skillsCard(), nextCard(), linkCard()];
+      : [followupCard(), nextCardTop(s), thisWeekCard(), checkinCard(), quizCard(),
+        `<details class="me-more me-wide" id="more"><summary>More: progress, class, study buddy, goals, skills</summary><div class="me-more-grid">`,
+        progressCard(s), classCard() || askCard(), buddyCard(), classCard() ? askCard() : "", projectCard(), checkCard(), goalsCard(), skillsCard(), nextCard(), linkCard(),
+        `</div></details>`];
     $("#me-app").innerHTML = cards.join("");
+    // Links like #goals may point inside the collapsed "More" section: open it first.
+    if (!state.moreBound) $("#me-app").addEventListener("click", (e) => {
+      const a = e.target.closest('a[href^="#"]');
+      const t = a && document.getElementById(a.getAttribute("href").slice(1));
+      const box = t && t.closest("details.me-more");
+      if (box && !box.open) { box.open = true; e.preventDefault(); t.scrollIntoView({ block: "start", behavior: "smooth" }); }
+    });
+    state.moreBound = true;
     bind();
     if (followupMonths) $("#followup")?.scrollIntoView({ block: "start" });
   }
