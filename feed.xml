@@ -7,6 +7,14 @@
     <language>en</language>
     <atom:link href="https://codeorange.dev/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>Bitcoin Developer Grants and Fellowships in 2026: Who Funds Open-Source Work</title>
+      <link>https://codeorange.dev/articles/bitcoin-developer-grants</link>
+      <guid isPermaLink="true">https://codeorange.dev/articles/bitcoin-developer-grants</guid>
+      <description>A plain-English guide to Bitcoin developer grants and fellowships in 2026: who funds open-source Bitcoin work, who each program is for, and how to build an application that gets accepted.</description>
+      <dc:creator>Andy</dc:creator>
+      <pubDate>Mon, 16 Nov 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>Bitchat: Messaging Without the Internet, Tested at Our Workshops</title>
       <link>https://codeorange.dev/articles/bitchat-workshops</link>
       <guid isPermaLink="true">https://codeorange.dev/articles/bitchat-workshops</guid>
