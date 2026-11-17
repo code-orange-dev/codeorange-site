@@ -164,7 +164,7 @@ input[type=text],input[type=number],input[type=password],select{width:100%;backg
 # → WWW-Authenticate: L402 macaroon="…", invoice="lnbc100n1…"
 # pay the invoice, keep the preimage, then:
 curl -H 'Authorization: L402 &lt;macaroon&gt;:&lt;preimage&gt;' 'https://codeorange.dev/api/l402?tool=price'</code>
-    <p class="foot">The same pattern powers Lightning Labs' <a href="https://github.com/lightninglabs/aperture" target="_blank" rel="noopener">Aperture</a> and <a href="https://www.npmjs.com/package/@lightninglabs/pi-402" target="_blank" rel="noopener">pi-402</a>, which let a coding agent pay for its own AI model calls. Data from mempool.space. Payments go to Code Orange's own BTCPay Server.</p>
+    <p class="foot">The same pattern powers Lightning Labs' <a href="https://github.com/lightninglabs/aperture" target="_blank" rel="noopener">Aperture</a> and <a href="https://www.npmjs.com/package/@lightninglabs/pi-402" target="_blank" rel="noopener">pi-402</a>, which let a coding agent pay for its own AI model calls. Data from mempool.space. Payments go to Code Orange's Lightning wallet.</p>
   </div>
 </div>
 
@@ -334,7 +334,7 @@ curl -H 'Authorization: L402 &lt;macaroon&gt;:&lt;preimage&gt;' 'https://codeora
         if (c.invoice) showQR(c.invoice, sats, c.demo); else showPractice(sats);
         var w = await waitForQR(token, c.demo);
         hideQR(); token = w.token;
-        line("s200", "✓ payment received" + (w.simulated ? " (practice)" : " · seller confirmed on its Lightning node"));
+        line("s200", "✓ payment received" + (w.simulated ? " (practice)" : " · seller confirmed it"));
       }
     } else {
       line("pay", "⚡ paying " + sats + " sats from my wallet…");

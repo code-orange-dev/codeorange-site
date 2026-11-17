@@ -21,6 +21,8 @@ const crypto = require("node:crypto");
 
 const BTCPAY = (process.env.BTCPAY_URL || "https://pay.codeorange.app").replace(/\/+$/, "");
 const STORE_ID = process.env.BTCPAY_STORE_ID || "6JFFeBchc5GpbuN7C5xZPADhmJjQ4EeoVEeh7A8hHiNw";
+// Optional: receive into a Lightning Address (LNURL-pay with LUD-21 "verify"), no node needed.
+const LN_ADDRESS = process.env.LN_ADDRESS || "";
 const SECRET = process.env.L402_SECRET || "code-orange-l402-workshop-demo-2026";
 const SATS_PER_CALL = 10;
 const MAX_CALLS = 5;
@@ -96,7 +98,23 @@ async function withTimeout(url, opts = {}, ms = 9000) {
   }
 }
 
+async function createInvoiceLnurl(sats, calls) {
+  const [user, domain] = LN_ADDRESS.split("@");
+  const r = await withTimeout(`https://${domain}/.well-known/lnurlp/${user}`, { headers: { Accept: "application/json" } });
+  const meta = await r.json();
+  if (!meta.callback) throw new Error("Lightning address lookup failed");
+  const cb = new URL(meta.callback);
+  cb.searchParams.set("amount", String(sats * 1000));
+  if (meta.commentAllowed) cb.searchParams.set("comment", `Agent demo: ${calls} API call${calls > 1 ? "s" : ""} (L402)`.slice(0, meta.commentAllowed));
+  const r2 = await withTimeout(cb.toString(), { headers: { Accept: "application/json" } });
+  const inv = await r2.json();
+  if (!inv.pr) throw new Error(inv.reason || "No invoice from Lightning address");
+  if (!inv.verify) throw new Error("This Lightning address can't confirm payments (no LUD-21 verify)");
+  return { id: inv.verify, bolt11: inv.pr.toLowerCase(), checkout: null };
+}
+
 async function createInvoice(sats, calls) {
+  if (LN_ADDRESS) return createInvoiceLnurl(sats, calls);
   const form = new URLSearchParams({
     storeId: STORE_ID,
     price: String(sats),
@@ -150,6 +168,13 @@ async function getBolt11(id) {
 }
 
 async function isPaid(id) {
+  if (/^https:\/\//.test(id)) {
+    try {
+      const r = await withTimeout(id, { headers: { Accept: "application/json" } });
+      const j = await r.json();
+      return !!(j && j.settled);
+    } catch { return false; }
+  }
   for (const pm of ["BTC-LN", ""]) {
     try {
       const t = await checkoutStatus(id, pm);
