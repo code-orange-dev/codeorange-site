@@ -1,0 +1,179 @@
+{
+  "game": true,
+  "slug": "2026-11-16-decoding-bitcoin-week-1",
+  "date": "2026-11-16",
+  "series": "Decoding Bitcoin",
+  "title": "Week 1: how the cohort works",
+  "image_title": "Week 1: how the|cohort works",
+  "host": "keypleb and Alex",
+  "tag": "Bitcoin basics",
+  "summary": "Day one of our 10-week Decoding Bitcoin cohort. How the weeks work, how to earn the certificate, a tour of your personal dashboard, a live quiz where one changed letter scrambled half a hash, and Razor on what the BOSS Challenge is really like.",
+  "share_text": "Week 1 of Decoding Bitcoin: 10 Mondays, one question each, a hash that changes half its bits when you change one letter, and what comes after. Notes (and 4 mini-games) from @CodeOrangeDevs",
+  "minutes": 7,
+  "video_pending": true,
+  "duration": "about 50 min",
+  "journey": {
+    "label": "Decoding Bitcoin",
+    "unit": "Week",
+    "current": 1,
+    "steps": ["Orientation and foundations", "How a transaction lives", "Inside a transaction, byte by byte", "Building a transaction and paying the fee", "Signing and the transaction exercises", "Script basics", "P2SH and multisig", "Project: build your own Bitcoin stack", "Taproot: keys and Schnorr", "Taproot scripts and graduation"],
+    "link": "/decoding-bitcoin/curriculum",
+    "link_text": "Weekly plan",
+    "next": "How a transaction lives, Monday 23 November"
+  },
+  "todo": {
+    "title": "Before next Monday",
+    "items": [
+      "Save your personal dashboard link somewhere safe. There is no login: the link <em>is</em> your key. <a href=\"/decoding-bitcoin/me\">Open my dashboard</a>",
+      "Watch Discord and your email for your assigned discussion question, then prepare to explain it in your own words.",
+      "Read the week 1 lessons on Decoding Bitcoin: <a href=\"https://bitcoindevs.xyz/decoding/welcome\" target=\"_blank\" rel=\"noopener\">Welcome</a>, <a href=\"https://bitcoindevs.xyz/decoding/bitcoin-history\" target=\"_blank\" rel=\"noopener\">Bitcoin History</a> and <a href=\"https://bitcoindevs.xyz/decoding/utxo\" target=\"_blank\" rel=\"noopener\">UTXO vs Account Models</a>.",
+      "Try the exercises: say hi in the cohort channel, play with the <a href=\"https://bitcoindevs.xyz/decoding/hash-functions\" target=\"_blank\" rel=\"noopener\">Hash Functions tool</a>, and pick apart one transaction on <a href=\"https://mempool.space\" target=\"_blank\" rel=\"noopener\">mempool.space</a>.",
+      "Do the <a href=\"/decoding-bitcoin/check\">weekly check</a>: five questions, two minutes.",
+      "DM one classmate on Discord. Find your study buddy."
+    ]
+  },
+  "tldr": [
+    "Decoding Bitcoin is 10 Mondays, 90 minutes each, cameras off for privacy. Transactions first, then script and multisig, your own project, Taproot, and a graduation.",
+    "The certificate is for showing up and doing the work: attend, do the exercises (they count, the slide saying optional was a mistake) and the weekly check. Can't make it live? Post your homework on Discord and it still counts.",
+    "Everyone gets one discussion question for next Monday, by Discord tag and email. You explain it to the group, because the teacher learns the most.",
+    "Decoding Bitcoin by The Bitcoin Dev Project is the source of truth for lessons and exercises. Your dashboard is a personal link with no login, so save it."
+  ],
+  "chapters": [
+    [0, "Welcome, cameras off, the 10-week plan"],
+    [90, "Exercises, weekly check-ins and the certificate"],
+    [150, "Attendance, study buddies and getting help"],
+    [240, "Q&A: can you join without coming live?"],
+    [329, "Tour of the cohort dashboard"],
+    [509, "Discussion questions: one each for next Monday"],
+    [629, "Screen share: the Decoding Bitcoin quiz"],
+    [749, "After Decoding Bitcoin: the BOSS Challenge"],
+    [800, "Razor on what BOSS is really like"],
+    [981, "Alex on BOSS: hours, workload, dropouts"],
+    [1190, "Back to the quiz: change one letter, change half the hash"],
+    [1310, "Where the exercises live and how questions get assigned"],
+    [1599, "How the weekly discussion works"],
+    [1670, "Plan: Decoding Bitcoin site for exercises, our dashboard for questions"],
+    [2043, "How to prepare for next Monday"],
+    [2343, "Why your dashboard has no login"],
+    [2563, "The Decoding Bitcoin site is the source of truth"],
+    [2623, "Remember why you are here"],
+    [2683, "Homework and wrap-up"],
+    [2891, "Tomorrow: Privacy Track on Silent Payments"]
+  ],
+  "next": {
+    "title": "Week 2: How a transaction lives",
+    "when": "Monday 23 November, 7pm UTC+8 on Discord. Bring your answer to your assigned question. Before that: Privacy Track on Silent Payments, Tuesday 17 November, 07:00 UTC."
+  },
+  "resources": [
+    {
+      "group": "The course",
+      "topic": "Bitcoin basics",
+      "title": "Decoding Bitcoin",
+      "url": "https://bitcoindevs.xyz/decoding",
+      "by": "The Bitcoin Dev Project",
+      "note": "the interactive course we follow for 10 weeks. Lessons, quizzes, tools and exercises. Our source of truth"
+    },
+    {
+      "group": "The course",
+      "topic": "Bitcoin basics",
+      "title": "Week 1 lesson: Bitcoin History",
+      "url": "https://bitcoindevs.xyz/decoding/bitcoin-history",
+      "by": "The Bitcoin Dev Project",
+      "note": "from DigiCash, b-money and Bit Gold to the whitepaper. Read with discussion question 1 in mind"
+    },
+    {
+      "group": "The course",
+      "topic": "Bitcoin basics",
+      "title": "Week 1 lesson: UTXO vs Account Models",
+      "url": "https://bitcoindevs.xyz/decoding/utxo",
+      "by": "The Bitcoin Dev Project",
+      "note": "why Bitcoin tracks coins, not balances. Whoever gets question 4 explains this one to the group"
+    },
+    {
+      "group": "The course",
+      "topic": "Bitcoin basics",
+      "title": "Tool: Hash Functions",
+      "url": "https://bitcoindevs.xyz/decoding/hash-functions",
+      "by": "The Bitcoin Dev Project",
+      "note": "hash your name, change one letter and watch about half the output change. The quiz moment from the call"
+    },
+    {
+      "group": "Reading",
+      "topic": "Bitcoin basics",
+      "title": "Mastering Bitcoin",
+      "url": "https://github.com/bitcoinbook/bitcoinbook",
+      "by": "Andreas M. Antonopoulos and David A. Harding",
+      "note": "the classic technical book, free on GitHub. Many Decoding Bitcoin topics and discussion questions overlap with it"
+    },
+    {
+      "group": "Tools",
+      "topic": "Explorers",
+      "title": "mempool.space",
+      "url": "https://mempool.space",
+      "note": "block explorer for this week's exercise: open a recent block, pick a transaction, find its inputs, outputs, fee and change"
+    },
+    {
+      "group": "What comes next",
+      "topic": "Learning paths",
+      "title": "BOSS Challenge (Bitcoin Open Source Software)",
+      "url": "https://bosschallenge.xyz",
+      "by": "Chaincode Labs",
+      "note": "a three-month bootcamp to become a Bitcoin open source contributor: challenges, then a portfolio project, then real contributions. Another round is coming next year. Expect 5 to 10 hours a day in month one"
+    },
+    {
+      "group": "Code Orange",
+      "topic": "Code Orange",
+      "title": "Decoding Bitcoin cohort",
+      "url": "/decoding-bitcoin",
+      "note": "sign up (late joiners welcome), times in your time zone, and the catch-up box with every recording"
+    },
+    {
+      "group": "Code Orange",
+      "topic": "Code Orange",
+      "title": "Weekly plan",
+      "url": "/decoding-bitcoin/curriculum",
+      "note": "all 10 weeks: lessons, discussion questions and exercises. Each week unlocks after the Monday before it"
+    },
+    {
+      "group": "Code Orange",
+      "topic": "Code Orange",
+      "title": "Weekly check",
+      "url": "/decoding-bitcoin/check",
+      "note": "five questions a week. Your results land on your dashboard"
+    },
+    {
+      "group": "Code Orange",
+      "topic": "Code Orange",
+      "title": "Privacy Track",
+      "url": "/privacy-track",
+      "note": "Silent Payments on Tuesday 17 November with Razor and two silent payment wallet builders"
+    }
+  ],
+  "ideas": "Also mentioned: the last cohort we ran, rawBit, had 20 sign-ups and 2 finishers, so do not worry about keeping up with everyone. Just keep showing up. A Code Orange meetup next year came up as an idea, and the dashboard first used a Nostr login before switching to a personal link to cut friction.",
+  "quiz": [
+    {
+      "q": "You can't make it to the live call on Monday. Can you still earn the certificate?",
+      "o": ["No, attendance is the only thing that counts", "Yes, if you do the work and post your homework on Discord", "Only if you watch the recording twice"],
+      "a": 1,
+      "w": "Asked on the call, answered yes: do the lessons and exercises on your own, post them on Discord and ask questions there."
+    },
+    {
+      "q": "You hash a word with SHA-256, then change one letter and hash it again. How much of the output changes?",
+      "o": ["Only the last character or two", "About half of the 256 bits", "Nothing, hashes ignore small changes"],
+      "a": 1,
+      "w": "The avalanche effect. One tiny change flips roughly half the bits, so a hash tells you nothing about how close two inputs are."
+    },
+    {
+      "q": "How do you log in to your Decoding Bitcoin dashboard?",
+      "o": ["With your email and a password", "With a Nostr login", "You don't: you open your personal link, so save it"],
+      "a": 2,
+      "w": "No accounts, no passwords. A Nostr login was tried first but added friction, so your dashboard link is your key."
+    },
+    {
+      "q": "Where do the lessons and exercises live?",
+      "o": ["On Decoding Bitcoin by The Bitcoin Dev Project", "In a private Code Orange course", "Only in the Mastering Bitcoin book"],
+      "a": 0,
+      "w": "bitcoindevs.xyz/decoding is the source of truth. The Code Orange pages add the weekly plan, your questions and your dashboard."
+    }
+  ]
+}

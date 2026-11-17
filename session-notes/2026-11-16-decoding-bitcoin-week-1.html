@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Decoding Bitcoin: Week 1: how the cohort works - Session Notes</title>
+<meta name="description" content="Day one of our 10-week Decoding Bitcoin cohort. How the weeks work, how to earn the certificate, a tour of your personal dashboard, a live quiz where one changed letter scrambled half a hash, and Razor on what the BOSS Challenge is really like.">
+<link rel="canonical" href="https://codeorange.dev/session-notes/2026-11-16-decoding-bitcoin-week-1">
+<meta name="theme-color" content="#F7931A">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Code Orange Dev School">
+<meta property="og:url" content="https://codeorange.dev/session-notes/2026-11-16-decoding-bitcoin-week-1">
+<meta property="og:title" content="Decoding Bitcoin: Week 1: how the cohort works - Session Notes">
+<meta property="og:description" content="Day one of our 10-week Decoding Bitcoin cohort. How the weeks work, how to earn the certificate, a tour of your personal dashboard, a live quiz where one changed letter scrambled half a hash, and Razor on what the BOSS Challenge is really like.">
+<meta property="og:image" content="https://codeorange.dev/assets/session-notes/2026-11-16-decoding-bitcoin-week-1.jpg">
+<meta property="og:image:secure_url" content="https://codeorange.dev/assets/session-notes/2026-11-16-decoding-bitcoin-week-1.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Decoding Bitcoin: Week 1: how the cohort works">
+<meta property="article:published_time" content="2026-11-16">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Decoding Bitcoin: Week 1: how the cohort works", "description": "Day one of our 10-week Decoding Bitcoin cohort. How the weeks work, how to earn the certificate, a tour of your personal dashboard, a live quiz where one changed letter scrambled half a hash, and Razor on what the BOSS Challenge is really like.", "datePublished": "2026-11-16", "url": "https://codeorange.dev/session-notes/2026-11-16-decoding-bitcoin-week-1", "image": "https://codeorange.dev/assets/session-notes/2026-11-16-decoding-bitcoin-week-1.jpg", "author": {"@type": "Organization", "name": "Code Orange Dev School", "url": "https://codeorange.dev"}, "publisher": {"@type": "EducationalOrganization", "name": "Code Orange Dev School", "url": "https://codeorange.dev"}}</script>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@CodeOrangeDevs">
+<meta name="twitter:title" content="Decoding Bitcoin: Week 1: how the cohort works - Session Notes">
+<meta name="twitter:description" content="Day one of our 10-week Decoding Bitcoin cohort. How the weeks work, how to earn the certificate, a tour of your personal dashboard, a live quiz where one changed letter scrambled half a hash, and Razor on what the BOSS Challenge is really like.">
+<meta name="twitter:image" content="https://codeorange.dev/assets/session-notes/2026-11-16-decoding-bitcoin-week-1.jpg">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon-co.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<script src="/assets/lazy-video.js?v=20260902b" defer></script>
+<style>
+:root { color-scheme: dark; --bg:#0A0A0A; --band:#0F0F0F; --card:#141414; --text:#F5F5F5; --muted:#B8B8B8; --dim:#858585; --orange:#F7931A; --orange2:#FFB347; --line:rgba(255,255,255,.08); }
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; overflow-x: hidden; background: var(--bg); color: var(--text); font-family: "Inter", system-ui, sans-serif; scroll-behavior: smooth; }
+body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+img, video, iframe { max-width: 100%; }
+a { color: inherit; }
+.announce { display: flex; justify-content: center; gap: 10px; padding: 9px 24px; background: var(--orange); color: var(--bg); text-decoration: none; font: 700 13px "Plus Jakarta Sans", monospace; text-align: center; }
+.announce span { text-decoration: underline; text-underline-offset: 3px; }
+.site-header { position: sticky; top: 0; z-index: 50; background: rgba(10,10,10,.74); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.header-inner { max-width: 1240px; height: 78px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; gap: 22px; }
+.brand img { display: block; width: auto; height: 50px; }
+.desktop-nav, .header-actions, .cta-row { display: flex; align-items: center; gap: 12px; }
+  .desktop-nav { gap: 28px; }
+  .desktop-nav a { padding: 8px 4px; }
+.desktop-nav a, .mobile-nav a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 600; padding: 8px 10px; border-radius: 8px; }
+.desktop-nav a:hover, .mobile-nav a:hover { color: var(--orange); }
+.mobile-nav { display: none; gap: 8px; overflow-x: auto; padding: 0 16px 10px; scrollbar-width: none; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; }
+.mobile-nav::-webkit-scrollbar { display: none; }
+.mobile-nav a { flex: 0 0 auto; scroll-snap-align: start; }
+.button, .ghost { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 13px 24px; border-radius: 8px; text-decoration: none; font-weight: 700; transition: border-color .15s ease, color .15s ease, background .15s ease, transform .15s ease; }
+.button { background: var(--orange); color: var(--bg); }
+.button:hover { background: var(--orange2); }
+.ghost { border: 1px solid rgba(255,255,255,.16); color: var(--text); }
+.ghost:hover { border-color: var(--orange); color: var(--orange); }
+.small { min-height: 40px; padding: 9px 18px; font-size: 14px; }
+.hero { position: relative; overflow: hidden; background-image: linear-gradient(rgba(10,10,10,.78), rgba(10,10,10,.92)), linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px), url("/assets/latest-workshops/workshop-latest-builders.webp"); background-size: auto, 48px 48px, 48px 48px, cover; background-position: center, 0 0, 0 0, center 42%; }
+.hero-grid, .section-inner { max-width: 1240px; margin: 0 auto; padding: 96px 32px; }
+.hero-grid { display: grid; grid-template-columns: minmax(0,1.08fr) minmax(320px,.92fr); gap: 64px; align-items: center; }
+.glow { position: absolute; top: -160px; right: -110px; width: 740px; height: 740px; border-radius: 50%; background: radial-gradient(circle, rgba(247,147,26,.14), transparent 66%); pointer-events: none; }
+.eyebrow { margin: 0 0 22px; color: var(--orange); font: 700 12px "Plus Jakarta Sans", monospace; letter-spacing: .16em; text-transform: uppercase; }
+h1, h2, h3 { font-family: "Inter", system-ui, sans-serif; font-weight: 400; color: var(--text); }
+h1 { margin: 0 0 26px; max-width: 780px; font-size: clamp(40px, 4.6vw, 68px); line-height: 1.05; }
+h2 { margin: 0 0 18px; font-size: clamp(32px, 3.3vw, 50px); line-height: 1.08; }
+h3 { margin: 0; font-size: 26px; line-height: 1.15; }
+.lead { max-width: 620px; margin: 0 0 34px; color: var(--muted); font-size: 18px; line-height: 1.65; }
+.terminal-card, .card, .program-card, .stat, .timeline-item { background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.32); }
+.terminal-bar { display: flex; align-items: center; gap: 8px; padding: 14px 18px; background: var(--band); border-bottom: 1px solid var(--line); }
+.terminal-bar span { width: 12px; height: 12px; border-radius: 50%; }
+.terminal-bar span:nth-child(1){ background:#FF5F56; } .terminal-bar span:nth-child(2){ background:#FFBD2E; } .terminal-bar span:nth-child(3){ background:#27C93F; }
+.terminal-bar strong { margin-left: 10px; color: var(--dim); font: 500 12px "Plus Jakarta Sans", monospace; }
+.terminal-body { padding: 24px; font: 14px/1.9 "Plus Jakarta Sans", monospace; }
+.terminal-body p { margin: 0; } .orange { color: var(--orange); } .muted { color: var(--dim); }
+.band { background: var(--band); border-block: 1px solid var(--line); }
+.grid { display: grid; gap: 22px; }
+.grid.two { grid-template-columns: repeat(2, minmax(0,1fr)); } .grid.three { grid-template-columns: repeat(3, minmax(0,1fr)); }
+.program-card { display: grid; grid-template-rows: 210px 1fr; text-decoration: none; transition: transform .18s ease, border-color .18s ease; }
+.program-card:hover { transform: translateY(-4px); border-color: rgba(247,147,26,.55); }
+.program-card img, .card > img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.012); }
+.card-body { padding: 24px; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; }
+.pill { display: inline-flex; padding: 7px 12px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; color: var(--muted); font: 600 12px "Plus Jakarta Sans", monospace; }
+.pill.orange { color: var(--orange); border-color: rgba(247,147,26,.42); }
+.card p, .program-card p, .timeline-item p { color: var(--muted); line-height: 1.65; }
+.repo-card { display: block; text-decoration: none; transition: transform .18s ease, border-color .18s ease; }
+.repo-card:hover { transform: translateY(-4px); border-color: rgba(247,147,26,.55); }
+.repo-card h3 { margin-top: 14px; }
+.stat { padding: 26px; }
+.stat strong { display: block; color: var(--orange); font: 400 40px/1 "Inter", monospace; margin-bottom: 10px; }
+.timeline { display: grid; gap: 14px; counter-reset: step; }
+.timeline-item { display: grid; grid-template-columns: 70px 1fr; gap: 22px; padding: 24px; counter-increment: step; }
+.timeline-item:before { content: counter(step, decimal-leading-zero); color: var(--orange); font: 700 16px "Plus Jakarta Sans", monospace; }
+.split { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 42px; align-items: start; }
+.feature-panel { background: linear-gradient(145deg, rgba(247,147,26,.12), rgba(20,20,20,.86) 42%, rgba(15,15,15,.96)); border: 1px solid rgba(247,147,26,.26); border-radius: 16px; box-shadow: 0 28px 80px rgba(0,0,0,.34); overflow: hidden; }
+.feature-panel-inner { padding: 28px; }
+.photo-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 30px; }
+.photo-card { position: relative; min-height: 300px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--card); box-shadow: 0 20px 60px rgba(0,0,0,.28); }
+.photo-card.tall { min-height: 420px; }
+.photo-card.wide { grid-column: span 2; }
+.photo-card img, .feature-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.012); }
+.photo-card:after, .feature-photo:after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(6,6,6,.78) 100%); pointer-events: none; }
+.photo-caption { position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 1; display: inline-flex; width: max-content; max-width: calc(100% - 28px); padding: 7px 11px; border-radius: 999px; background: rgba(6,6,6,.78); border: 1px solid rgba(255,255,255,.13); color: var(--text); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .08em; text-transform: uppercase; }
+.feature-photo { position: relative; min-height: 430px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--card); box-shadow: 0 24px 70px rgba(0,0,0,.32); }
+.calendar-frame { margin-top: 28px; background: #fff; border: 1px solid rgba(255,255,255,.12); border-radius: 16px; overflow: hidden; box-shadow: 0 24px 70px rgba(0,0,0,.36); }
+.calendar-frame iframe { display: block; width: 100%; height: 680px; border: 0; background: #fff; }
+.booking-panel { display: grid; gap: 16px; padding: 24px; background: rgba(6,6,6,.48); border: 1px solid var(--line); border-radius: 16px; }
+.price-tag { display: inline-flex; width: max-content; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 999px; background: rgba(247,147,26,.14); border: 1px solid rgba(247,147,26,.34); color: var(--orange); font: 700 13px "Plus Jakarta Sans", monospace; }
+.footer { border-top: 1px solid var(--line); background: #060606; }
+.footer-media { position: relative; max-width: 1240px; min-height: 300px; margin: 56px auto 0; border: 1px solid rgba(255,255,255,.1); border-radius: 16px; overflow: hidden; background: var(--band); box-shadow: 0 24px 70px rgba(0,0,0,.34); }
+.footer-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.footer-media:after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6,6,6,.9), rgba(6,6,6,.34) 56%, rgba(6,6,6,.74)); pointer-events: none; }
+.footer-media-copy { position: relative; z-index: 1; max-width: 560px; padding: 42px; }
+.footer-grid { max-width: 1240px; margin: 0 auto; padding: 56px 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.footer a { color: var(--dim); text-decoration: none; } .footer a:hover { color: var(--orange); }
+.link-list { display: grid; gap: 10px; }
+.final-cta { text-align: center; border-top: 1px solid var(--line); }
+@media (max-width: 900px) {
+  .announce { padding: 8px 16px; line-height: 1.42; }
+  .desktop-nav { display: none; } .mobile-nav { display: flex; padding-bottom: 12px; gap: 6px; }
+  .header-inner { height: 62px; padding: 0 16px; gap: 12px; } .brand img { height: 40px; }
+  .hero-grid, .section-inner { padding: 64px 20px; }
+  .hero-grid { gap: 30px; }
+  .hero-grid, .split, .grid.two, .grid.three { grid-template-columns: minmax(0, 1fr); }
+  .glow { right: -260px; width: 520px; height: 520px; }
+  h1 { font-size: clamp(34px, 10.5vw, 48px); line-height: 1.05; }
+  h2 { font-size: clamp(30px, 8.5vw, 40px); line-height: 1.08; }
+  h3 { font-size: clamp(21px, 6vw, 27px); }
+  .lead { font-size: 16px; line-height: 1.62; }
+  .terminal-body { padding: 20px; font-size: 12px; line-height: 1.75; overflow-wrap: anywhere; }
+  .terminal-bar strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .program-card { grid-template-rows: 190px 1fr; border-radius: 14px; }
+  .card-body, .stat, .timeline-item { padding: 20px; }
+  .stat strong { font-size: 34px; overflow-wrap: anywhere; }
+  .pill { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+  .photo-grid { grid-template-columns: 1fr; }
+  .photo-card.wide { grid-column: auto; }
+  .photo-card, .photo-card.tall, .feature-photo { min-height: 320px; }
+  .photo-caption { width: auto; max-width: calc(100% - 28px); white-space: normal; border-radius: 8px; line-height: 1.35; }
+  .feature-panel-inner { padding: 24px; }
+  .booking-panel { padding: 20px; }
+  .header-actions .ghost { display: none; }
+  .cta-row { flex-direction: column; align-items: stretch; }
+  .cta-row .button, .cta-row .ghost { width: 100%; }
+  .footer-grid { grid-template-columns: 1fr; padding: 48px 20px; }
+  .calendar-frame iframe { height: 560px; }
+  .footer-media { min-height: 260px; margin: 42px 20px 0; }
+  .footer-media-copy { padding: 30px 24px; }
+}
+@media (max-width: 560px) {
+  .announce { flex-direction: column; gap: 2px; font-size: 12px; }
+  .header-inner { height: 58px; padding-inline: 14px; }
+  .brand img { height: 36px; }
+  .mobile-nav { padding-inline: 12px; }
+  .mobile-nav a { font-size: 12px; padding: 7px 12px; }
+  .header-actions .button.small { min-height: 36px; padding: 8px 12px; font-size: 13px; }
+  .hero-grid, .section-inner { padding: 54px 18px; }
+  .button, .ghost { width: 100%; min-height: 46px; padding: 12px 18px; }
+  .header-actions .button, .header-actions .ghost { width: auto; }
+  .terminal-card, .card, .program-card, .stat, .timeline-item, .feature-panel, .calendar-frame, .booking-panel { border-radius: 14px; }
+  .program-card { grid-template-rows: 174px 1fr; }
+  .photo-card, .photo-card.tall, .feature-photo { min-height: 260px; }
+  .timeline-item { grid-template-columns: 1fr; gap: 10px; }
+  .timeline-item:before { font-size: 14px; }
+  .calendar-frame iframe { height: 500px; }
+  .footer-media { min-height: 240px; margin-inline: 18px; border-radius: 14px; }
+  .footer-media-copy { padding: 26px 20px; }
+  .feature-panel-inner { padding: 20px; }
+  .footer-grid { padding: 42px 18px; }
+}
+@media (max-width: 380px) {
+  .hero-grid, .section-inner { padding-inline: 16px; }
+  .photo-card, .photo-card.tall, .feature-photo { min-height: 230px; }
+  .calendar-frame iframe { height: 455px; }
+  .mobile-nav a { font-size: 11px; padding-inline: 10px; }
+}
+
+.article-hero .hero-grid { grid-template-columns: minmax(0, 1fr); padding-bottom: 56px; }
+.article-hero h1 { max-width: 900px; }
+.byline { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; }
+.article-wrap { max-width: 760px; margin: 0 auto; padding: 56px 32px 24px; }
+.article-figure { margin: 0 0 40px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--card); box-shadow: 0 24px 70px rgba(0,0,0,.32); }
+.article-figure img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+.article-figure.inline { margin: 8px 0 32px; }
+.article-figure.inline img { aspect-ratio: auto; }
+.article-figure figcaption { padding: 12px 16px; color: var(--dim); font: 500 13px/1.5 "Plus Jakarta Sans", monospace; }
+.byline { align-items: center; }
+.byline-avatar { width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(247,147,26,.5); }
+.author-box { display: flex; align-items: center; gap: 16px; margin: 40px 0 0; padding: 20px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; }
+.author-box img { width: 72px; height: 72px; border-radius: 50%; border: 2px solid var(--orange); flex: 0 0 auto; }
+.author-box strong { font-size: 18px; }
+.author-box p { margin: 2px 0 0; color: var(--dim); }
+.prose { color: var(--muted); font-size: 19px; line-height: 1.78; }
+.prose p, .prose ul, .prose ol { margin: 0 0 24px; }
+.prose h2 { margin: 52px 0 18px; font-size: clamp(28px, 2.8vw, 40px); }
+.prose strong { color: var(--text); }
+.prose a { color: var(--orange); text-underline-offset: 3px; }
+.prose ul, .prose ol { padding-left: 24px; }
+.prose li { margin-bottom: 10px; padding-left: 4px; }
+.prose li::marker { color: var(--orange); font-weight: 700; }
+.prose .pull { margin: 0 0 28px; padding: 18px 22px; border-left: 3px solid var(--orange); background: var(--card); border-radius: 0 12px 12px 0; color: var(--text); font-size: 21px; }
+.prose .closing { color: var(--text); font-size: 21px; }
+.newsletter { max-width: 760px; margin: 24px auto 0; padding: 0 32px; }
+.newsletter-card { padding: 30px; background: linear-gradient(145deg, rgba(247,147,26,.12), rgba(20,20,20,.86) 42%, rgba(15,15,15,.96)); border: 1px solid rgba(247,147,26,.26); border-radius: 16px; }
+.newsletter-card h2 { font-size: clamp(26px, 2.6vw, 34px); margin-bottom: 10px; }
+.newsletter-card p { margin: 0 0 20px; color: var(--muted); line-height: 1.6; }
+.newsletter-form { display: flex; gap: 10px; flex-wrap: wrap; }
+.newsletter-form input[type=email] { flex: 1 1 240px; min-height: 48px; padding: 12px 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,.18); background: rgba(6,6,6,.6); color: var(--text); font: 500 16px "Inter", system-ui, sans-serif; }
+.newsletter-form input[type=email]:focus { outline: 2px solid var(--orange); outline-offset: 1px; }
+.newsletter-form button { border: 0; cursor: pointer; font: inherit; font-weight: 700; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+.article-list { display: grid; gap: 22px; }
+.article-card { display: grid; grid-template-columns: 320px 1fr; text-decoration: none; background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.32); transition: transform .18s ease, border-color .18s ease; }
+.article-card:hover { transform: translateY(-4px); border-color: rgba(247,147,26,.55); }
+.article-card img { width: 100%; height: 100%; min-height: 220px; object-fit: cover; }
+.article-card p { color: var(--muted); line-height: 1.65; }
+@media (max-width: 900px) {
+  .article-wrap { padding: 40px 20px 16px; }
+  .newsletter { padding: 0 20px; }
+  .prose { font-size: 17px; }
+  .prose .pull, .prose .closing { font-size: 19px; }
+  .article-card { grid-template-columns: 1fr; }
+  .article-card img { min-height: 200px; max-height: 240px; }
+}
+@media (max-width: 560px) {
+  .article-wrap { padding: 32px 18px 12px; }
+  .newsletter { padding: 0 18px; }
+  .newsletter-card { padding: 22px; }
+  .newsletter-form button { width: 100%; }
+}
+
+.notes-link { display:inline-flex; align-items:center; gap:8px; margin-top:4px; color: var(--dim); font: 600 13px "Plus Jakarta Sans", monospace; text-decoration:none; }
+.notes-link:hover { color: var(--orange); }
+.note-meta { display:flex; flex-wrap:wrap; gap:8px; margin:0; }
+.prose h3 { margin: 30px 0 12px; font-size: 21px; color: var(--text); }
+.prose ol li strong:first-child { color: var(--text); }
+.source-box { margin: 40px 0 0; padding: 20px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; color: var(--dim); font-size: 15px; line-height: 1.6; }
+.source-box a { color: var(--orange); }
+.tldr { margin: 0 0 40px; padding: 22px 24px; background: linear-gradient(145deg, rgba(247,147,26,.12), rgba(20,20,20,.9) 55%); border: 1px solid rgba(247,147,26,.3); border-radius: 16px; }
+.tldr .eyebrow { margin: 0 0 10px; }
+.tldr ul { margin: 0; padding-left: 20px; }
+.tldr li { margin: 0 0 6px; color: var(--text); }
+.viz { margin: 8px 0 36px; padding: 24px; background: var(--band); border: 1px solid var(--line); border-radius: 16px; font-size: 16px; line-height: 1.55; }
+.viz .eyebrow { margin: 0 0 6px; }
+.viz-title { margin: 0 0 18px; color: var(--text); font-size: 21px; font-weight: 600; }
+.flow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
+.flow-step { flex: 1 1 0; min-width: 92px; padding: 14px 12px; text-align: center; background: var(--card); border: 1px solid rgba(255,255,255,.12); border-radius: 12px; color: var(--text); font-weight: 600; }
+.flow-step small { display: block; margin-top: 4px; color: var(--dim); font: 600 11px "Plus Jakarta Sans", monospace; letter-spacing: .12em; text-transform: uppercase; }
+.flow-hop { color: var(--orange); font: 700 15px "Plus Jakarta Sans", monospace; white-space: nowrap; }
+.viz ul { margin: 0 0 16px; padding-left: 20px; }
+.viz li { margin: 0 0 4px; }
+.viz-fix { margin: 0; padding: 14px 16px; border-radius: 12px; background: rgba(247,147,26,.12); border: 1px solid rgba(247,147,26,.4); color: var(--text); }
+.viz-fix b { color: var(--orange); }
+.layers { display: grid; gap: 10px; }
+.layer { padding: 16px 18px; background: var(--card); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; }
+.layer.top { background: rgba(247,147,26,.12); border-color: rgba(247,147,26,.5); }
+.layer strong { display: block; color: var(--text); font-size: 18px; }
+.layer p { margin: 4px 0 6px; }
+.layer span { color: var(--orange); font: 600 13px "Plus Jakarta Sans", monospace; }
+.layer-scale { display: flex; justify-content: space-between; margin: 0 0 8px; color: var(--dim); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .12em; text-transform: uppercase; }
+.layer-scale b { color: var(--orange); }
+.q-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
+.q { padding: 16px; background: var(--card); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; }
+.q b { display: block; color: var(--orange); font: 700 13px "Plus Jakarta Sans", monospace; margin-bottom: 4px; }
+.q span { color: var(--text); }
+.share-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 32px 0 0; }
+.share-row strong { color: var(--text); margin-right: 4px; }
+.share-row a, .share-row button { min-height: 38px; padding: 8px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,.16); background: transparent; color: var(--text); font: 600 14px "Inter", system-ui, sans-serif; text-decoration: none; cursor: pointer; }
+.share-row a:hover, .share-row button:hover { border-color: var(--orange); color: var(--orange); }
+.note-figure img { aspect-ratio: 1200 / 630; }
+.video { position: relative; margin: 0 0 14px; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: #000; box-shadow: 0 24px 70px rgba(0,0,0,.32); }
+.video img, .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; object-fit: cover; }
+.video button { position: absolute; inset: 0; width: 100%; border: 0; padding: 0; background: transparent; cursor: pointer; }
+.video .play { position: absolute; left: 72%; top: 50%; width: 84px; height: 84px; margin: -42px 0 0 -42px; border-radius: 50%; background: var(--orange); box-shadow: 0 10px 40px rgba(0,0,0,.5); transition: transform .15s ease; }
+.video .play:after { content: ""; position: absolute; left: 33px; top: 26px; border-style: solid; border-width: 16px 0 16px 26px; border-color: transparent transparent transparent #0A0A0A; }
+.video button:hover .play { transform: scale(1.08); }
+.video-note { margin: 0 0 32px; color: var(--dim); font: 500 13px/1.5 "Plus Jakarta Sans", monospace; }
+.video-note a { color: var(--orange); }
+.chapters { margin: 0 0 40px; border: 1px solid var(--line); border-radius: 16px; background: var(--band); }
+.chapters summary { padding: 16px 20px; cursor: pointer; color: var(--text); font-weight: 600; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+.chapters summary::-webkit-details-marker { display: none; }
+.chapters summary:after { content: "+"; color: var(--orange); font-size: 22px; line-height: 1; }
+.chapters[open] summary:after { content: "−"; }
+.chapters ol { list-style: none; margin: 0; padding: 0 8px 12px; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 2px 12px; }
+.chapters li { margin: 0; }
+.chapters a { display: flex; gap: 12px; padding: 8px 12px; border-radius: 8px; color: var(--muted); text-decoration: none; font-size: 15px; line-height: 1.4; }
+.chapters a:hover { background: var(--card); color: var(--text); }
+.chapters time { flex: 0 0 auto; min-width: 56px; color: var(--orange); font: 600 13px/1.6 "Plus Jakarta Sans", monospace; }
+.quote { margin: 8px 0 32px; padding: 24px 26px; border-left: 3px solid var(--orange); background: var(--card); border-radius: 0 16px 16px 0; }
+.quote p { margin: 0 0 10px; color: var(--text); font-size: 22px; line-height: 1.45; }
+.quote cite { color: var(--dim); font: 600 13px "Plus Jakarta Sans", monospace; font-style: normal; }
+.part { display: flex; align-items: center; gap: 12px; margin: 44px 0 14px; color: var(--orange); font: 700 12px "Plus Jakarta Sans", monospace; letter-spacing: .14em; text-transform: uppercase; }
+.part::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(247,147,26,.5), transparent); }
+.part b { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--orange); color: #0A0A0A; font-size: 13px; letter-spacing: 0; }
+.term { margin: 8px 0 30px; border-radius: 14px; overflow: hidden; background: #0d0d0d; border: 1px solid rgba(255,255,255,.12); box-shadow: 0 24px 60px rgba(0,0,0,.45); }
+.term-bar { display: flex; align-items: center; gap: 7px; padding: 11px 14px; background: #1a1a1a; border-bottom: 1px solid rgba(255,255,255,.08); }
+.term-bar i { width: 11px; height: 11px; border-radius: 50%; background: #3a3a3a; }
+.term-bar i:first-child { background: #F7931A; }
+.term-bar span { margin-left: 8px; color: var(--dim); font: 600 12px "Plus Jakarta Sans", monospace; }
+.term pre { margin: 0; padding: 18px 20px; overflow-x: auto; color: #d8d8d8; font: 500 13.5px/1.75 ui-monospace, "SF Mono", Menlo, Consolas, monospace; white-space: pre; }
+.term .p { color: #F7931A; } .term .ok { color: #7bd88f; } .term .bad { color: #ff6b6b; } .term .c { color: #7a7a7a; }
+.term-note { margin: -22px 0 30px; color: var(--dim); font-size: 13px; }
+.svg-viz svg { display: block; width: 100%; height: auto; }
+.svg-scroll { overflow-x: auto; margin: 0 -6px 16px; padding: 0 6px; }
+@media (max-width: 560px) { .svg-scroll svg { min-width: 540px; } .prose .term pre { font-size: 12px; } }
+.prose .term-note { margin-top: -20px; }
+.swipe { display: none; margin: -8px 0 14px; color: var(--dim); font-size: 13px; }
+@media (max-width: 560px) { .swipe { display: block; } }
+.svg-viz text { font-family: "Inter", system-ui, sans-serif; }
+.anatomy { display: grid; grid-template-columns: auto 1fr; gap: 0; margin: 0; border: 1px solid rgba(255,255,255,.1); border-radius: 12px; overflow: hidden; font-size: 15px; }
+.anatomy code { padding: 10px 14px; background: #0d0d0d; color: #F7931A; font: 600 13.5px ui-monospace, Menlo, Consolas, monospace; border-bottom: 1px solid rgba(255,255,255,.06); }
+.anatomy span { padding: 10px 14px; color: var(--text); background: var(--card); border-bottom: 1px solid rgba(255,255,255,.06); }
+.anatomy span em { color: var(--dim); font-style: normal; }
+.more-notes { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; margin: 28px 0 0; }
+.more-notes a { display: block; padding: 18px 20px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; text-decoration: none; color: var(--text); }
+.more-notes a:hover { border-color: rgba(247,147,26,.5); }
+.more-notes small { display: block; margin-bottom: 6px; color: var(--orange); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .12em; text-transform: uppercase; }
+.more-notes a.newer { text-align: right; grid-column: 2; }
+@media (max-width: 560px) { .more-notes { grid-template-columns: 1fr; } .more-notes a.newer { grid-column: 1; text-align: left; } }
+.next-card { display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center; margin: 40px 0 0; padding: 24px; background: linear-gradient(145deg, rgba(247,147,26,.14), rgba(20,20,20,.9) 55%); border: 1px solid rgba(247,147,26,.35); border-radius: 16px; }
+.next-card .eyebrow { margin: 0 0 8px; }
+.next-card h3 { font-size: 24px; }
+.next-card p { margin: 6px 0 0; color: var(--muted); }
+.next-card .cta-row { flex-wrap: wrap; }
+.next-card.nx { grid-template-columns: minmax(0,1.2fr) minmax(0,1fr); align-items: start; }
+.nx-list { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 10px; }
+.nx-list li { display: grid; grid-template-columns: 54px 1fr auto; gap: 12px; align-items: center; padding: 10px 12px; border-radius: 12px; background: rgba(0,0,0,.35); border: 1px solid var(--line); }
+.nx-list li.same { border-color: rgba(247,147,26,.6); }
+.nx-date { display: grid; justify-items: center; font: 800 20px/1.05 "Plus Jakarta Sans", sans-serif; color: var(--text); }
+.nx-date b { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); }
+.nx-date i { font: 600 11px "Plus Jakarta Sans", sans-serif; color: var(--dim); font-style: normal; text-transform: uppercase; }
+.nx-text { display: grid; gap: 2px; min-width: 0; }
+.nx-text strong { color: var(--text); font-size: 15px; line-height: 1.3; }
+.nx-text span { color: var(--muted); font-size: 12.5px; }
+.nx-text em { font: 700 10px "Plus Jakarta Sans", sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-style: normal; }
+.nx-add { padding: 7px 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,.16); color: var(--text); text-decoration: none; font: 700 12px "Plus Jakarta Sans", sans-serif; white-space: nowrap; }
+.nx-add:hover { border-color: var(--orange); color: var(--orange); }
+.nx-head, .nx-side { min-width: 0; }
+.nx-side { display: grid; gap: 14px; }
+.nx-form label { display: block; margin-bottom: 8px; color: var(--muted); font: 600 13px "Plus Jakarta Sans", sans-serif; }
+.nx-form div { display: flex; gap: 8px; flex-wrap: wrap; }
+.nx-form input[type=email] { flex: 1 1 160px; min-width: 0; min-height: 40px; padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,.16); background: rgba(0,0,0,.45); color: var(--text); font: 15px "Inter", sans-serif; }
+.nx-form input[type=email]:focus { outline: none; border-color: var(--orange); }
+.nx-form button { flex: none; min-height: 40px; width: auto; cursor: pointer; background: transparent; font: inherit; font-weight: 700; }
+.nx-msg { margin: 0; color: var(--orange); font-size: 13px; }
+@media (max-width: 860px) { .next-card.nx { grid-template-columns: 1fr; } }
+@media (max-width: 420px) { .nx-list li { grid-template-columns: 46px 1fr; } .nx-add { grid-column: 2; justify-self: start; } }
+.qz { margin: 40px 0; padding: 24px; border: 1px solid rgba(247,147,26,.4); border-radius: 16px; background: linear-gradient(145deg, rgba(247,147,26,.1), rgba(20,20,20,.92)); }
+.qz-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.qz-head .eyebrow { margin: 0; }
+.qz-best { color: var(--dim); font: 600 12px "Plus Jakarta Sans", sans-serif; }
+.qz-bar { height: 6px; border-radius: 99px; background: rgba(255,255,255,.08); margin: 14px 0; overflow: hidden; }
+.qz-bar i { display: block; height: 100%; width: 0; background: var(--orange); transition: width .4s ease; }
+.qz-n { margin: 0 0 4px; color: var(--dim); font: 600 12px "Plus Jakarta Sans", sans-serif; }
+.prose .qz-q { margin: 0 0 14px; font-size: 20px; line-height: 1.35; }
+.qz-opts { display: grid; gap: 10px; margin-bottom: 14px; }
+.qz-opts button { text-align: left; min-height: 48px; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,.16); background: rgba(0,0,0,.4); color: var(--text); font: 15px/1.45 "Inter", sans-serif; cursor: pointer; }
+.qz-opts button:hover:not(:disabled) { border-color: var(--orange); }
+.qz-opts button.right { border-color: #4ade80; background: rgba(74,222,128,.12); }
+.qz-opts button.wrong { border-color: #f87171; background: rgba(248,113,113,.1); }
+.prose .qz-why { padding: 12px 14px; border-radius: 10px; background: rgba(255,255,255,.05); font-size: 15px; margin: 0 0 14px; }
+.qz button.button, .qz button.ghost { border: 0; cursor: pointer; font: inherit; font-weight: 700; }
+.qz button.ghost { border: 1px solid rgba(255,255,255,.16); background: transparent; }
+.prose .qz-score { margin: 10px 0 4px; font: 800 44px "Plus Jakarta Sans", sans-serif; color: var(--orange); }
+/* v6 template pieces: reading progress, recording-coming-soon slot, series journey, homework checklist */
+.rp { position: fixed; left: 0; top: 0; height: 3px; width: 0; background: linear-gradient(90deg, var(--orange), #FFB347); z-index: 200; pointer-events: none; }
+.soon { position: relative; margin: 0 0 14px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: #000; }
+.soon img { display: block; width: 100%; height: auto; filter: brightness(.5) saturate(.8); }
+.soon-tag { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); display: flex; align-items: center; gap: 10px; padding: 12px 20px; border-radius: 99px; background: rgba(10,10,10,.82); border: 1px solid rgba(247,147,26,.55); color: var(--text); font: 700 14px/1.2 "Inter", system-ui, sans-serif; white-space: nowrap; }
+.soon-tag i { width: 10px; height: 10px; border-radius: 50%; background: var(--orange); animation: soonp 1.6s ease-in-out infinite; }
+@keyframes soonp { 50% { opacity: .2; } }
+.chapters li > span { display: flex; gap: 12px; padding: 8px 12px; color: var(--muted); font-size: 15px; line-height: 1.4; }
+.jr { margin: 0 0 30px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--band); }
+.jr-top { display: flex; justify-content: space-between; gap: 6px 14px; align-items: baseline; flex-wrap: wrap; margin: 0 0 12px; }
+.jr-top b { font: 700 12px "Plus Jakarta Sans", monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--orange); }
+.jr-top a { color: var(--dim); font-size: 13px; }
+.jr ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(var(--n), minmax(0,1fr)); gap: 5px; }
+.jr li { margin: 0; height: 9px; border-radius: 99px; background: rgba(255,255,255,.1); }
+.jr li.done { background: rgba(247,147,26,.55); }
+.jr li.now { background: var(--orange); box-shadow: 0 0 0 3px rgba(247,147,26,.22), 0 0 18px rgba(247,147,26,.45); }
+.jr-now { margin: 12px 0 0; color: var(--muted); font-size: 14.5px; line-height: 1.5; }
+.jr-now strong { color: var(--text); }
+.todo { margin: 0 0 40px; padding: 20px 22px 14px; border: 1px solid rgba(247,147,26,.3); border-radius: 16px; background: var(--card); }
+.todo .eyebrow { margin: 0 0 4px; display: flex; justify-content: space-between; gap: 10px; }
+.todo .eyebrow span { color: var(--dim); letter-spacing: .06em; }
+.todo label { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-top: 1px solid rgba(255,255,255,.06); cursor: pointer; color: var(--muted); font-size: 15.5px; line-height: 1.45; }
+.todo label:first-of-type { border-top: 0; }
+.todo input { accent-color: #F7931A; width: 18px; height: 18px; margin: 2px 0 0; flex: none; cursor: pointer; }
+.todo label.on > span { color: var(--dim); text-decoration: line-through; }
+.todo label a { color: var(--orange); }
+.todo-msg { margin: 6px 0 0; color: var(--orange); font: 600 13px/1.5 "Plus Jakarta Sans", monospace; min-height: 1em; }
+@media (max-width: 700px) { .chapters ol { grid-template-columns: 1fr; } .next-card { grid-template-columns: 1fr; } .quote p { font-size: 19px; } }
+
+@media (max-width: 560px) { .viz { padding: 18px; font-size: 15px; } .q-grid { grid-template-columns: 1fr; } .flow-hop { flex: 0 0 100%; text-align: center; } .flow-step { flex-basis: 100%; } .flow-hop i { display: inline-block; font-style: normal; transform: rotate(90deg); } }
+.res-tools { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 0 0 28px; }
+.res-tools input { flex: 1 1 260px; min-height: 46px; padding: 10px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,.18); background: var(--card); color: var(--text); font: 500 16px "Inter", system-ui, sans-serif; }
+.res-tools input:focus { outline: 2px solid var(--orange); outline-offset: 1px; }
+.chip { min-height: 38px; padding: 8px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.16); background: transparent; color: var(--muted); font: 600 13px "Plus Jakarta Sans", monospace; cursor: pointer; }
+.chip:hover, .chip[aria-pressed="true"] { border-color: var(--orange); color: var(--orange); }
+.res-group { margin: 0 0 36px; }
+.res-group h2 { font-size: clamp(24px, 2.4vw, 32px); margin: 0 0 14px; }
+.res-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+.res { display: block; padding: 18px 20px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; text-decoration: none; transition: border-color .15s ease, transform .15s ease; }
+a.res:hover { border-color: rgba(247,147,26,.55); transform: translateY(-2px); }
+.res strong { display: block; color: var(--text); font-size: 17px; line-height: 1.35; }
+.res p { margin: 6px 0 10px; color: var(--muted); font-size: 15px; line-height: 1.5; }
+.res small { color: var(--dim); font: 600 12px "Plus Jakarta Sans", monospace; }
+.res small a { color: var(--orange); text-decoration: none; position: relative; z-index: 1; }
+.res-empty { color: var(--dim); }
+@media (max-width: 700px) { .res-grid { grid-template-columns: 1fr; } }
+</style>
+<link rel="stylesheet" href="/assets/theme.css?v=20261015d">
+<script src="/assets/site-menu.js?v=20261004b" defer></script>
+</head>
+<body>
+<a class="announce" href="/decoding-bitcoin">Decoding Bitcoin study cohort &middot; free, Mondays on Discord &middot; join anytime <span>Sign up &rarr;</span></a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="Code Orange Dev School home"><img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School"></a>
+    <nav class="desktop-nav" aria-label="Primary">
+      <a href="/start">Start here</a>
+      <a href="/programs">Programs</a>
+      <a href="/portal">Portal</a>
+      <a href="/fellowships">Fellowships</a>
+      <a href="/calendar">Calendar</a>
+      <a href="/community">Community</a>
+      <a href="/about">About</a>
+    </nav>
+    <div class="header-actions">
+      <a class="ghost small" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a>
+      <a class="button small" href="/apply">Apply Now</a>
+    </div>
+  </div>
+  <nav class="mobile-nav" aria-label="Mobile">
+    <a href="/start">Start here</a>
+    <a href="/programs">Programs</a>
+    <a href="/portal">Portal</a>
+    <a href="/calendar">Calendar</a>
+    <a href="/community">Community</a>
+    <a href="/about">About</a>
+  </nav>
+</header>
+<main>
+  <section class="hero article-hero"><div class="co-fx" aria-hidden="true"><i></i><i></i><i></i><svg class="co-fx-glow" viewBox="0 0 1200 400" preserveAspectRatio="none"><defs><filter id="co-glow-blur" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="25"/></filter><radialGradient id="co-glow-fill"><stop offset="0" stop-color="#F7931A" stop-opacity=".55"/><stop offset=".55" stop-color="#C2620A" stop-opacity=".28"/><stop offset="1" stop-color="#4A2600" stop-opacity="0"/></radialGradient></defs><ellipse cx="600" cy="200" rx="520" ry="110" fill="url(#co-glow-fill)" filter="url(#co-glow-blur)"/></svg></div>
+    <div class="glow"></div>
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow"><a href="/session-notes" style="text-decoration:none">/Session-notes</a>/2026-11-16_</p>
+        <h1>Week 1: how the cohort <span class="orange">works.</span></h1>
+        <p class="lead">Day one of our 10-week Decoding Bitcoin cohort. How the weeks work, how to earn the certificate, a tour of your personal dashboard, a live quiz where one changed letter scrambled half a hash, and Razor on what the BOSS Challenge is really like.</p>
+        <p class="note-meta"><span class="pill orange">Decoding Bitcoin</span><span class="pill"><time datetime="2026-11-16">November 16, 2026</time></span><span class="pill">Hosted by keypleb and Alex</span><span class="pill">7 min read</span></p>
+      </div>
+    </div>
+  </section>
+  <article class="article-wrap">
+    <div class="soon" id="recording"><img src="/assets/session-notes/2026-11-16-decoding-bitcoin-week-1.jpg" alt="Decoding Bitcoin: Week 1: how the cohort works" width="1200" height="630"><span class="soon-tag"><i></i>Recording coming soon</span></div>
+    <p class="video-note">The recording goes up on YouTube shortly and will play right here.</p>
+    <details class="chapters"><summary>What we covered, minute by minute <span style="color:var(--dim);font-weight:500">(20 moments)</span></summary><ol><li><span><time>00:00</time><span>Welcome, cameras off, the 10-week plan</span></span></li><li><span><time>01:30</time><span>Exercises, weekly check-ins and the certificate</span></span></li><li><span><time>02:30</time><span>Attendance, study buddies and getting help</span></span></li><li><span><time>04:00</time><span>Q&A: can you join without coming live?</span></span></li><li><span><time>05:29</time><span>Tour of the cohort dashboard</span></span></li><li><span><time>08:29</time><span>Discussion questions: one each for next Monday</span></span></li><li><span><time>10:29</time><span>Screen share: the Decoding Bitcoin quiz</span></span></li><li><span><time>12:29</time><span>After Decoding Bitcoin: the BOSS Challenge</span></span></li><li><span><time>13:20</time><span>Razor on what BOSS is really like</span></span></li><li><span><time>16:21</time><span>Alex on BOSS: hours, workload, dropouts</span></span></li><li><span><time>19:50</time><span>Back to the quiz: change one letter, change half the hash</span></span></li><li><span><time>21:50</time><span>Where the exercises live and how questions get assigned</span></span></li><li><span><time>26:39</time><span>How the weekly discussion works</span></span></li><li><span><time>27:50</time><span>Plan: Decoding Bitcoin site for exercises, our dashboard for questions</span></span></li><li><span><time>34:03</time><span>How to prepare for next Monday</span></span></li><li><span><time>39:03</time><span>Why your dashboard has no login</span></span></li><li><span><time>42:43</time><span>The Decoding Bitcoin site is the source of truth</span></span></li><li><span><time>43:43</time><span>Remember why you are here</span></span></li><li><span><time>44:43</time><span>Homework and wrap-up</span></span></li><li><span><time>48:11</time><span>Tomorrow: Privacy Track on Silent Payments</span></span></li></ol></details>
+    <div class="prose">
+      <div class="jr" aria-label="Decoding Bitcoin"><div class="jr-top"><b>Decoding Bitcoin: Week 1 of 10</b><a href="/decoding-bitcoin/curriculum">Weekly plan &rarr;</a></div><ol style="--n:10"><li class="now" title="Week 1: Orientation and foundations"></li><li class="" title="Week 2: How a transaction lives"></li><li class="" title="Week 3: Inside a transaction, byte by byte"></li><li class="" title="Week 4: Building a transaction and paying the fee"></li><li class="" title="Week 5: Signing and the transaction exercises"></li><li class="" title="Week 6: Script basics"></li><li class="" title="Week 7: P2SH and multisig"></li><li class="" title="Week 8: Project: build your own Bitcoin stack"></li><li class="" title="Week 9: Taproot: keys and Schnorr"></li><li class="" title="Week 10: Taproot scripts and graduation"></li></ol><p class="jr-now">You are here: <strong>Orientation and foundations</strong>. Next: <strong>How a transaction lives, Monday 23 November</strong>.</p></div>
+
+      <div class="tldr">
+        <p class="eyebrow">TL;DR</p>
+        <ul>
+          <li>Decoding Bitcoin is 10 Mondays, 90 minutes each, cameras off for privacy. Transactions first, then script and multisig, your own project, Taproot, and a graduation.</li>
+          <li>The certificate is for showing up and doing the work: attend, do the exercises (they count, the slide saying optional was a mistake) and the weekly check. Can't make it live? Post your homework on Discord and it still counts.</li>
+          <li>Everyone gets one discussion question for next Monday, by Discord tag and email. You explain it to the group, because the teacher learns the most.</li>
+          <li>Decoding Bitcoin by The Bitcoin Dev Project is the source of truth for lessons and exercises. Your dashboard is a personal link with no login, so save it.</li>
+        </ul>
+      </div>
+
+      <section class="todo" id="todo" data-todo="2026-11-16-decoding-bitcoin-week-1"><p class="eyebrow">Before next Monday<span data-todo-count>0 / 6</span></p><label><input type="checkbox" data-i="0"><span>Save your personal dashboard link somewhere safe. There is no login: the link <em>is</em> your key. <a href="/decoding-bitcoin/me">Open my dashboard</a></span></label><label><input type="checkbox" data-i="1"><span>Watch Discord and your email for your assigned discussion question, then prepare to explain it in your own words.</span></label><label><input type="checkbox" data-i="2"><span>Read the week 1 lessons on Decoding Bitcoin: <a href="https://bitcoindevs.xyz/decoding/welcome" target="_blank" rel="noopener">Welcome</a>, <a href="https://bitcoindevs.xyz/decoding/bitcoin-history" target="_blank" rel="noopener">Bitcoin History</a> and <a href="https://bitcoindevs.xyz/decoding/utxo" target="_blank" rel="noopener">UTXO vs Account Models</a>.</span></label><label><input type="checkbox" data-i="3"><span>Try the exercises: say hi in the cohort channel, play with the <a href="https://bitcoindevs.xyz/decoding/hash-functions" target="_blank" rel="noopener">Hash Functions tool</a>, and pick apart one transaction on <a href="https://mempool.space" target="_blank" rel="noopener">mempool.space</a>.</span></label><label><input type="checkbox" data-i="4"><span>Do the <a href="/decoding-bitcoin/check">weekly check</a>: five questions, two minutes.</span></label><label><input type="checkbox" data-i="5"><span>DM one classmate on Discord. Find your study buddy.</span></label><p class="todo-msg" role="status" aria-live="polite"></p></section>
+      <script>(function(){var r=document.getElementById('todo'),K='co-todo-'+r.dataset.todo,S={};try{S=JSON.parse(localStorage.getItem(K))||{};}catch(e){}
+      var bs=r.querySelectorAll('input'),c=r.querySelector('[data-todo-count]'),m=r.querySelector('.todo-msg');
+      function draw(){var n=0;bs.forEach(function(b){b.checked=!!S[b.dataset.i];b.parentNode.classList.toggle('on',b.checked);if(b.checked)n++;});c.textContent=n+' / '+bs.length;m.textContent=n==bs.length?'All done. See you next time.':'';document.dispatchEvent(new CustomEvent('co-todo',{detail:{done:n,total:bs.length}}));}
+      bs.forEach(function(b){b.addEventListener('change',function(){S[b.dataset.i]=b.checked?1:0;try{localStorage.setItem(K,JSON.stringify(S));}catch(e){}draw();});});draw();})();</script>
+
+      <style>
+      .db-card{margin:8px 0 36px;border:1px solid rgba(247,147,26,.35);border-radius:18px;background:radial-gradient(120% 90% at 0 0,rgba(247,147,26,.13),transparent 60%) #141414;padding:22px;position:relative}
+      .db-eye{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 6px;font:700 12px/1.3 "Plus Jakarta Sans",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--orange)}
+      .db-eye span:last-child{color:var(--dim);letter-spacing:.06em}
+      .db-card h3{margin:0 0 8px;font-size:22px;line-height:1.25;color:var(--text)}
+      .db-card>p{margin:0 0 14px;font-size:15.5px;line-height:1.55}
+      .db-btn{all:unset;box-sizing:border-box;cursor:pointer;display:inline-block;padding:10px 18px;border-radius:99px;background:var(--orange);color:#0A0A0A;font:800 14px/1.2 "Inter",system-ui,sans-serif;text-align:center}
+      .db-btn:hover{filter:brightness(1.1)}
+      .db-btn.ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.2)}
+      .db-btn.sm{padding:7px 12px;font-size:12.5px}
+      .db-btn[disabled]{opacity:.35;cursor:default;filter:none}
+      .db-btn:focus-visible,.db-seg button:focus-visible,.db-era:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+      .db-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+      .db-seg{display:inline-flex;flex-wrap:wrap;gap:4px;padding:4px;border-radius:14px;background:rgba(0,0,0,.4);border:1px solid var(--line);margin:0 0 14px}
+      .db-seg button{all:unset;box-sizing:border-box;cursor:pointer;padding:8px 14px;border-radius:10px;color:var(--muted);font:700 13px/1.2 "Inter",system-ui,sans-serif}
+      .db-seg button.on{background:var(--orange);color:#0A0A0A}
+      .db-seg button.right{background:#2f6b3a;color:#fff}
+      .db-out{margin:14px 0 0;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.04);color:var(--muted);font-size:15px;line-height:1.5;min-height:22px}
+      .db-out b{color:var(--orange)}
+      .db-done{display:none;margin-left:8px;color:var(--orange)}
+      .db-card.won .db-done{display:inline}
+      .db-badges{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:14px 0}
+      .prose a.db-badge,.db-badge{display:block;padding:12px 4px;border-radius:14px;border:1px dashed rgba(255,255,255,.18);text-align:center;text-decoration:none;color:var(--dim);font:700 11px/1.3 "Plus Jakarta Sans",monospace;letter-spacing:.03em;transition:all .3s}
+      .db-badge i{display:block;font-style:normal;font-size:26px;line-height:1;margin-bottom:8px;filter:grayscale(1);opacity:.45;transition:all .3s}
+      .prose a.db-badge.got,.db-badge.got{border:1px solid var(--orange);background:rgba(247,147,26,.14);color:var(--text);box-shadow:0 0 24px rgba(247,147,26,.18)}
+      .db-badge.got i{filter:none;opacity:1;transform:scale(1.12)}
+      .db-bar{height:8px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+      .db-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--orange),#FFB347);transition:width .6s ease}
+      .db-toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,30px);z-index:60;padding:12px 20px;border-radius:99px;background:var(--orange);color:#0A0A0A;font:800 14px/1.2 "Inter",system-ui,sans-serif;box-shadow:0 12px 40px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:all .35s ease;white-space:nowrap;max-width:92vw;overflow:hidden;text-overflow:ellipsis}
+      .db-toast.go{opacity:1;transform:translate(-50%,0)}
+      /* roadmap */
+      .db-road{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:6px;margin:6px 0 10px}
+      .db-wk{position:relative;padding:10px 4px 8px;border-radius:10px;background:var(--card);border:1px solid rgba(255,255,255,.1);text-align:center;color:var(--dim);font:700 12px/1.2 "Plus Jakarta Sans",monospace}
+      .db-wk.now{border-color:var(--orange);background:rgba(247,147,26,.16);color:var(--text);box-shadow:0 0 22px rgba(247,147,26,.25)}
+      .db-wk.grad{background:linear-gradient(160deg,rgba(247,147,26,.35),rgba(20,20,20,.9))}
+      .db-phase{display:grid;grid-template-columns:5fr 2fr 1fr 2fr;gap:6px}
+      .db-phase span{padding:8px 6px;border-radius:8px;text-align:center;font:600 12.5px/1.3 "Inter",system-ui,sans-serif;color:var(--text);background:rgba(247,147,26,.1);border-top:2px solid var(--orange)}
+      .db-phase span:nth-child(2){background:rgba(255,179,71,.1);border-color:#FFB347}
+      .db-phase span:nth-child(3){background:rgba(255,255,255,.06);border-color:#bbb}
+      .db-phase span:nth-child(4){background:rgba(247,147,26,.18)}
+      .db-loop{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+      .db-loop div{padding:16px;border-radius:12px;background:var(--card);border:1px solid rgba(255,255,255,.1)}
+      .db-loop b{display:block;margin:0 0 4px;color:var(--orange);font:700 12px/1.3 "Plus Jakarta Sans",monospace;letter-spacing:.1em;text-transform:uppercase}
+      .db-loop strong{display:block;color:var(--text);margin:0 0 4px}
+      .db-loop span{color:var(--muted);font-size:14.5px;line-height:1.45}
+      /* avalanche */
+      .db-in{display:grid;grid-template-columns:auto 1fr;gap:8px 10px;align-items:center;margin:0 0 12px}
+      .db-in label{font:700 12px "Plus Jakarta Sans",monospace;color:var(--dim);letter-spacing:.08em}
+      .db-in input{width:100%;box-sizing:border-box;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.16);background:#0d0d0d;color:var(--text);font:600 15px "JetBrains Mono",ui-monospace,monospace}
+      .db-in input:focus{outline:none;border-color:var(--orange)}
+      .db-hex{font:500 12px/1.5 "JetBrains Mono",ui-monospace,monospace;color:var(--dim);word-break:break-all;margin:2px 0}
+      .db-hex em{font-style:normal;color:var(--orange)}
+      .db-grid{display:grid;grid-template-columns:repeat(32,minmax(0,1fr));gap:2px;margin:12px 0 6px}
+      .db-grid i{display:block;aspect-ratio:1;border-radius:2px;background:rgba(255,255,255,.08);transition:background .25s}
+      .db-grid i.f{background:var(--orange)}
+      .db-meter{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:6px 0 0}
+      .db-meter strong{font:800 34px/1 "Inter",system-ui,sans-serif;color:var(--orange)}
+      .db-meter span{color:var(--muted);font-size:14.5px}
+      /* history */
+      .db-eras{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+      .db-era{all:unset;box-sizing:border-box;cursor:pointer;display:block;padding:14px 12px;border-radius:12px;background:var(--card);border:1px solid rgba(255,255,255,.12);color:var(--text);font:700 15px/1.3 "Inter",system-ui,sans-serif;text-align:center;transition:all .25s}
+      .db-era:hover{border-color:rgba(247,147,26,.6)}
+      .db-era small{display:block;margin-top:6px;color:var(--dim);font:600 11px/1.4 "Plus Jakarta Sans",monospace}
+      .db-era.placed{border-color:var(--orange);background:rgba(247,147,26,.12);cursor:default}
+      .db-era.placed small{color:var(--orange)}
+      .db-era.bad{animation:dbshake .35s}
+      @keyframes dbshake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+      .db-line{list-style:none;margin:14px 0 0;padding:0 0 0 18px;border-left:2px solid rgba(247,147,26,.4)}
+      .db-line li{position:relative;margin:0 0 12px;color:var(--muted);font-size:15px;line-height:1.5}
+      .db-line li:before{content:"";position:absolute;left:-25px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--orange)}
+      .db-line li b{color:var(--text)}
+      /* path */
+      .db-range{width:100%;accent-color:#F7931A;margin:6px 0 4px}
+      .db-hours{display:flex;justify-content:space-between;color:var(--dim);font:600 12px "Plus Jakarta Sans",monospace}
+      .db-lane{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0 0}
+      .db-lane div{padding:14px;border-radius:12px;background:var(--card);border:1px solid rgba(255,255,255,.1);opacity:.45;transition:all .3s}
+      .db-lane div.on{opacity:1;border-color:var(--orange);background:rgba(247,147,26,.12);box-shadow:0 0 22px rgba(247,147,26,.15)}
+      .db-lane b{display:block;color:var(--text);font-size:15px;margin:0 0 4px}
+      .db-lane span{color:var(--muted);font-size:13.5px;line-height:1.4}
+      .db-bars{display:grid;gap:10px;margin:4px 0 0}
+      .db-bars div{display:grid;grid-template-columns:150px 1fr;gap:10px;align-items:center;font-size:14px;color:var(--muted)}
+      .db-bars i{display:block;height:22px;border-radius:6px;background:var(--orange);position:relative}
+      .db-bars i em{position:absolute;left:8px;top:2px;font:700 12px/18px "Plus Jakarta Sans",monospace;color:#0A0A0A;font-style:normal;white-space:nowrap}
+      .db-bars i.lo em{left:calc(100% + 8px);color:var(--text)}
+      /* spinner */
+      .db-wheel{position:relative;min-height:96px;padding:18px;border-radius:14px;background:#0d0d0d;border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;gap:14px}
+      .db-wheel b{flex:none;display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--orange);color:#0A0A0A;font:800 18px "Inter",sans-serif}
+      .db-wheel span{color:var(--text);font-size:16px;line-height:1.45}
+      .db-wheel.spin b{animation:dbspin .5s linear infinite}
+      @keyframes dbspin{to{transform:rotate(360deg)}}
+      .db-ta{width:100%;box-sizing:border-box;min-height:96px;margin:12px 0 0;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:#0d0d0d;color:var(--text);font:500 15px/1.5 "Inter",system-ui,sans-serif;resize:vertical}
+      .db-ta:focus{outline:none;border-color:var(--orange)}
+      .db-small{color:var(--dim);font-size:13px;margin:6px 0 0}
+      @media (max-width:700px){.db-badges{grid-template-columns:repeat(3,minmax(0,1fr))}.db-eras{grid-template-columns:repeat(2,minmax(0,1fr))}.db-lane,.db-loop{grid-template-columns:1fr}.db-road{grid-template-columns:repeat(5,minmax(0,1fr))}.db-phase{grid-template-columns:1fr 1fr}.db-bars div{grid-template-columns:1fr}.db-grid{grid-template-columns:repeat(16,minmax(0,1fr))}}
+      </style>
+
+      <div class="db-card" id="db-board">
+        <p class="db-eye"><span>Mission board</span><span><span id="db-xp">0</span> XP</span></p>
+        <h3>Week 1: six badges to collect</h3>
+        <p>Four mini-games from the call, your homework checklist, and a final quiz. Each one lights up a badge. Progress stays on this device and adds XP to your <a href="/session-notes#passport">builder passport</a>.</p>
+        <div class="db-badges">
+          <a class="db-badge" href="#g-hash" data-b="hash"><i>&#9889;</i>Avalanche</a>
+          <a class="db-badge" href="#g-history" data-b="history"><i>&#128220;</i>Historian</a>
+          <a class="db-badge" href="#g-path" data-b="path"><i>&#129517;</i>Pathfinder</a>
+          <a class="db-badge" href="#g-teach" data-b="teach"><i>&#127908;</i>Teacher</a>
+          <a class="db-badge" href="#todo" data-b="todo"><i>&#9989;</i>On track</a>
+          <a class="db-badge" href="#db-quiz" data-b="quiz"><i>&#128273;</i>Decoder</a>
+        </div>
+        <div class="db-bar"><i id="db-prog"></i></div>
+      </div>
+      <div class="db-toast" id="db-toast" role="status" aria-live="polite"></div>
+
+      <h2>Highlights</h2>
+      <p class="part"><b>1</b>Ten Mondays, one plan</p>
+      <p><strong>We are here to understand how Bitcoin actually works.</strong> So the cohort spends its first five weeks on transactions: how one lives, what it looks like byte by byte, how it gets built, signed and paid for. Then script and multisig, a week to build (or vibe code) your own project, and Taproot to finish, followed by a graduation and certificates.</p>
+
+      <div class="viz" role="figure" aria-label="The 10-week Decoding Bitcoin roadmap">
+        <p class="eyebrow">The roadmap</p>
+        <p class="viz-title">Week 1 of 10. Every Monday, 7pm UTC+8, 90 minutes sharp.</p>
+        <div class="db-road">
+          <div class="db-wk now">W1</div><div class="db-wk">W2</div><div class="db-wk">W3</div><div class="db-wk">W4</div><div class="db-wk">W5</div><div class="db-wk">W6</div><div class="db-wk">W7</div><div class="db-wk">W8</div><div class="db-wk">W9</div><div class="db-wk grad">W10 &#127891;</div>
+        </div>
+        <div class="db-phase"><span>Transactions</span><span>Script + multisig</span><span>Your project</span><span>Taproot + graduation</span></div>
+      </div>
+
+      <p><strong>Every week runs the same loop.</strong> Keep it simple, the hosts kept saying. The structure is light even when the topics get deep:</p>
+      <div class="viz" role="figure" aria-label="How a week works">
+        <p class="eyebrow">How a week works</p>
+        <div class="db-loop">
+          <div><b>Before Monday</b><strong>Read and prepare</strong><span>Lessons on Decoding Bitcoin, plus the one discussion question assigned to you.</span></div>
+          <div><b>Monday</b><strong>Explain and discuss</strong><span>You get called on to explain your question in your own words. Everyone chips in.</span></div>
+          <div><b>After</b><strong>Practise</strong><span>Exercises on Decoding Bitcoin and the five-question weekly check on our site.</span></div>
+        </div>
+      </div>
+
+      <p><strong>The certificate is for doing the work.</strong> Attendance matters, because we keep each other accountable, so book Mondays in your calendar and say so if you have to miss one. The exercises count too. A slide called them optional; that was a mistake, they are part of the certificate. They can get advanced, so take your time.</p>
+      <p><strong>Can't come live? You can still earn it.</strong> One of the first questions: what about people with other obligations who do the homework and post it on Discord, but can't join the call? The answer was yes, that counts. Go through the course on your own, post your work on Discord and ask your questions there. You can exceed expectations without ever being on the call.</p>
+      <p><strong>And if you just want to hang out, that's fine too.</strong> No certificate without the exercises, but you are welcome every Monday for the discussion. Cameras stay off for privacy.</p>
+
+      <p class="part"><b>2</b>Your dashboard, no login</p>
+      <p><strong>Sign up once, get a personal link.</strong> Twenty-five people signed up before the first call. Signing up drops you straight into your own dashboard: this week&rsquo;s lessons, your assigned question, the exercises to tick off, and the weekly check, five quick questions whose results land back on your dashboard.</p>
+      <p><strong>Why there is no password.</strong> The first version used a Nostr login, and it added friction. So now your dashboard is a personal URL. Save it somewhere, like your email or notes, because that link <em>is</em> your key. No accounts to manage, minimal friction.</p>
+      <p><strong>Built with AI, shaped by you.</strong> The whole dashboard was vibe coded with Claude, and it is brand new, so things will change. Every bit of feedback goes straight back into the next version.</p>
+      <div class="quote"><p>&ldquo;Help me help you build an even better dashboard.&rdquo;</p><span>keypleb, asking for feedback on the check-ins</span></div>
+
+      <p class="part"><b>3</b>One letter, half the hash</p>
+      <p><strong>The best moment of the call came from the Decoding Bitcoin quiz.</strong> Alex shared his screen and worked through the quiz live: everything green until one question about what happens to a hash when you change a single letter. The intuitive answer is &ldquo;only the last few characters change&rdquo;. The real answer: roughly <strong>half of all the bits flip</strong>. That is the avalanche effect, and it is why a hash gives away nothing about how close two inputs are. Try it yourself:</p>
+
+      <div class="db-card" id="g-hash">
+        <p class="db-eye"><span>Mini-game 1 &middot; Avalanche</span><span class="db-done">&#10003; badge earned</span></p>
+        <h3>Change one letter. Watch SHA-256 explode.</h3>
+        <p>First, guess: if you change one letter, how many of the 256 output bits flip?</p>
+        <div class="db-seg" id="db-guess"><button type="button" data-g="1">About 1</button><button type="button" data-g="20">About 20</button><button type="button" data-g="128">About 128</button></div>
+        <div id="db-hashlab" hidden>
+          <div class="db-in"><label for="db-a">INPUT A</label><input id="db-a" value="satoshi" maxlength="60" autocomplete="off" spellcheck="false"><label for="db-b">INPUT B</label><input id="db-b" value="satoshI" maxlength="60" autocomplete="off" spellcheck="false"></div>
+          <p class="db-hex">A &rarr; <span id="db-ha"></span></p>
+          <p class="db-hex">B &rarr; <span id="db-hb"></span></p>
+          <div class="db-grid" id="db-grid" aria-label="256 output bits, flipped bits in orange"></div>
+          <div class="db-meter"><strong id="db-flip">0</strong><span>of 256 bits flipped (<span id="db-pct">0</span>%). Orange squares are the bits that changed.</span></div>
+          <p class="db-out" id="db-hashout">Edit input B: change one letter at a time. Try three different changes to earn the badge.</p>
+        </div>
+        <p class="db-small">Hashes are computed in your browser with the real SHA-256. Nothing is sent anywhere.</p>
+      </div>
+
+      <p class="part"><b>4</b>Why Bitcoin, why now</p>
+      <p><strong>Week 1&rsquo;s questions start with history.</strong> Before transactions and bytes, the cohort asks what problem Bitcoin solved that earlier attempts at digital cash could not. The questions mention DigiCash, b-money and Bit Gold, and the Bitcoin History lesson on Decoding Bitcoin tells the story. Put them in order and see what each one was missing:</p>
+
+      <div class="db-card" id="g-history">
+        <p class="db-eye"><span>Mini-game 2 &middot; Historian</span><span class="db-done">&#10003; badge earned</span></p>
+        <h3>Tap them from oldest to newest</h3>
+        <p>Four attempts at money for the internet. Get the order right to build the timeline.</p>
+        <div class="db-eras" id="db-eras"></div>
+        <ol class="db-line" id="db-line" aria-live="polite"></ol>
+        <p class="db-out" id="db-histout">Which came first?</p>
+      </div>
+
+      <p class="part"><b>5</b>What comes after: the BOSS Challenge</p>
+      <p><strong>Decoding Bitcoin is a gentle start. BOSS is the deep end.</strong> The <em>Bitcoin Open Source Software</em> Challenge from Chaincode Labs is a bootcamp that wants to turn you into a Bitcoin open source contributor as fast as possible, and another round is coming next year. Razor went through it, and described it like this:</p>
+      <div class="viz" role="figure" aria-label="The three months of the BOSS Challenge">
+        <p class="eyebrow">BOSS in three months</p>
+        <div class="flow">
+          <div class="flow-step">Challenges<small>Month 1</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Your own project<small>Month 2</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Contribute to a real project<small>Month 3</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Keep going<small>No end</small></div>
+        </div>
+        <p style="margin:0;color:var(--muted);font-size:15px">Month one is build-a-transaction, build-Taproot, spend-it style challenges. &ldquo;There&rsquo;s no end to the challenge, actually.&rdquo; (Razor)</p>
+      </div>
+      <p><strong>It is a lot of work.</strong> Alex joined BOSS in January and did not finish: it was like a full-time job, five to ten hours a day in the first month, next to other obligations. Razor finished, and less than a year after first getting curious about Bitcoin he is now a full-time developer and a Code Orange educator fellow. Dropout rates are high everywhere: our last study cohort, rawBit, had 20 sign-ups and two finishers. That is fine. A handful of graduates is a success.</p>
+      <div class="viz" role="figure" aria-label="Hours per week: Decoding Bitcoin vs BOSS">
+        <p class="eyebrow">Hours per week, roughly</p>
+        <div class="db-bars">
+          <div>Decoding Bitcoin<i class="lo" style="width:12%"><em>2&ndash;5 h</em></i></div>
+          <div>BOSS, month 1<i style="width:100%"><em>30&ndash;40+ h</em></i></div>
+        </div>
+      </div>
+
+      <div class="db-card" id="g-path">
+        <p class="db-eye"><span>Mini-game 3 &middot; Pathfinder</span><span class="db-done">&#10003; badge earned</span></p>
+        <h3>How much time can you give each week?</h3>
+        <p>Slide to your honest number and see which lane fits. Visit all three lanes to earn the badge.</p>
+        <input type="range" class="db-range" id="db-hrs" min="0" max="40" value="3" aria-label="Hours per week">
+        <div class="db-hours"><span>0 h</span><span id="db-hrsv">3 hours a week</span><span>40 h</span></div>
+        <div class="db-lane" id="db-lane">
+          <div data-l="hang"><b>Hang out</b><span>Come on Mondays and join the discussion. No certificate, still very welcome.</span></div>
+          <div data-l="cert"><b>Certificate</b><span>Decoding Bitcoin properly: lessons, your question, exercises, weekly check.</span></div>
+          <div data-l="boss"><b>Certificate + BOSS prep</b><span>Do it all, push through every exercise, and get ready for the next BOSS Challenge.</span></div>
+        </div>
+      </div>
+
+      <p class="part"><b>6</b>Next Monday: you teach</p>
+      <p><strong>Everyone on the call gets a question.</strong> Week 1 has six discussion questions. Each person gets one, tagged on Discord and, new idea from the call, by email too (as long as you signed up on the site). Next Monday you get called on and have a few minutes to explain it. If you get question 4, you will have to really understand the UTXO model and put it in your own words.</p>
+      <div class="quote"><p>&ldquo;The teacher learns the most.&rdquo;</p><span>The idea behind the weekly discussion</span></div>
+      <div class="viz" role="figure" aria-label="The six week 1 discussion questions">
+        <p class="eyebrow">Week 1 discussion questions</p>
+        <div class="q-grid">
+          <div class="q"><b>Q1</b><span>What problem did Bitcoin solve that DigiCash, b-money and Bit Gold could not?</span></div>
+          <div class="q"><b>Q2</b><span>Pick one moment from the Bitcoin History lesson. Why does it matter today?</span></div>
+          <div class="q"><b>Q3</b><span>What is a hash function? Three properties Bitcoin relies on, and where each shows up.</span></div>
+          <div class="q"><b>Q4</b><span>Explain the UTXO model in your own words. Why is no balance stored anywhere?</span></div>
+          <div class="q"><b>Q5</b><span>One advantage and one disadvantage of UTXOs compared with accounts.</span></div>
+          <div class="q"><b>Q6</b><span>Why &ldquo;don&rsquo;t trust, verify&rdquo;? What can you verify yourself?</span></div>
+        </div>
+      </div>
+
+      <div class="db-card" id="g-teach">
+        <p class="db-eye"><span>Mini-game 4 &middot; Teacher</span><span class="db-done">&#10003; badge earned</span></p>
+        <h3>Spin for a practice question</h3>
+        <p>Your real question comes from the hosts. Warm up with a random one: spin, then explain it in three sentences as if to a friend.</p>
+        <div class="db-wheel" id="db-wheel"><b>?</b><span>Press spin.</span></div>
+        <div class="db-row" style="margin-top:12px"><button type="button" class="db-btn" id="db-spin">Spin</button></div>
+        <div id="db-teachbox" hidden>
+          <textarea class="db-ta" id="db-ta" placeholder="Explain it in your own words. Three sentences is plenty."></textarea>
+          <p class="db-small"><span id="db-tacount">0</span> characters. Saved only in this browser, never sent anywhere.</p>
+          <p class="db-out" id="db-teachout">Write at least a couple of sentences to earn the badge.</p>
+        </div>
+      </div>
+
+      <p><strong>Where the exercises live.</strong> Alex and keypleb agreed the plan on the call: the discussion questions and assignments run on the Code Orange site and Discord, and for exercises the cohort uses Decoding Bitcoin, built by The Bitcoin Dev Project. &ldquo;The Decoding Bitcoin website is the truth&rdquo;: tested, solid, and if you are already confident with the questions, push through all its exercises.</p>
+
+      <h2>Key takeaways</h2>
+      <ul>
+        <li><strong>Keep it simple.</strong> One question, one Monday, one set of exercises at a time. The topics get deep, the structure stays light.</li>
+        <li><strong>Showing up is the skill.</strong> Dropout is normal in every cohort. Live or async through Discord, the people who keep coming are the ones who finish.</li>
+        <li><strong>Remember why you are here.</strong> A Bitcoin job, a fellowship, your own project, a co-founder on the call, or just understanding how it works. All valid. Meet people, DM each other, make friends.</li>
+      </ul>
+
+      <h2 id="db-quiz">Final level: the quiz</h2>
+      <p>Four questions from the call. Get all four right and the <b>Decoder</b> badge lights up on the mission board.</p>
+
+      <script>
+      (function(){
+      var $=function(i){return document.getElementById(i)},SLUG='2026-11-16-decoding-bitcoin-week-1',KEY='co-badges-'+SLUG,S={b:{}};
+      try{var sv=JSON.parse(localStorage.getItem(KEY));if(sv&&sv.b)S=sv;}catch(e){}
+      function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+      var NAMES={hash:'Avalanche',history:'Historian',path:'Pathfinder',teach:'Teacher',todo:'On track',quiz:'Decoder'},GAMES={hash:'g-hash',history:'g-history',path:'g-path',teach:'g-teach'};
+      function board(){var n=0;document.querySelectorAll('.db-badge').forEach(function(a){var g=!!S.b[a.dataset.b];a.classList.toggle('got',g);if(g)n++;});
+        $('db-xp').textContent=n*100;$('db-prog').style.width=(n/6*100)+'%';
+        for(var k in GAMES)if(S.b[k])$(GAMES[k]).classList.add('won');}
+      var tt;function award(k){if(S.b[k])return;S.b[k]=1;save();board();var t=$('db-toast');t.textContent='🏅 Badge unlocked: '+NAMES[k]+'  +100 XP';t.classList.add('go');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('go')},2800);}
+      board();
+      document.querySelectorAll('.db-badge').forEach(function(a){a.addEventListener('click',function(e){var t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}});});
+
+      /* 1. avalanche */
+      var cells='';for(var i=0;i<256;i++)cells+='<i></i>';$('db-grid').innerHTML=cells;var bits=$('db-grid').children;
+      var seen={},lastB='';
+      function sha(t){if(!(window.crypto&&crypto.subtle))return Promise.reject();return crypto.subtle.digest('SHA-256',new TextEncoder().encode(t)).then(function(b){return new Uint8Array(b);});}
+      function hex(u){return Array.prototype.map.call(u,function(x){return('0'+x.toString(16)).slice(-2)}).join('');}
+      function run(){var a=$('db-a').value,b=$('db-b').value;Promise.all([sha(a),sha(b)]).then(function(r){var x=r[0],y=r[1],n=0,ha='',hb='';
+        for(var i=0;i<32;i++){var d=x[i]^y[i];for(var j=0;j<8;j++){var f=(d>>(7-j))&1;bits[i*8+j].className=f?'f':'';n+=f;}
+          var p=('0'+x[i].toString(16)).slice(-2),q=('0'+y[i].toString(16)).slice(-2);ha+=p;hb+=(p===q?q:'<em>'+q+'</em>');}
+        $('db-ha').textContent=ha;$('db-hb').innerHTML=hb;$('db-flip').textContent=n;$('db-pct').textContent=Math.round(n/2.56);
+        if(a!==b&&b!==lastB){lastB=b;seen[b]=1;}var k=Object.keys(seen).length;
+        $('db-hashout').innerHTML=a===b?'Same input, same hash, every time. Now change one letter in B.':(k<3?'<b>'+n+' bits</b> flipped. Try '+(3-k)+' more change'+(3-k==1?'':'s')+'.':'<b>Every small change scrambles about half the bits.</b> That is why a hash can fingerprint a whole block, and why you cannot guess an input from its hash.');
+        if(k>=3)award('hash');}).catch(function(){$('db-hashout').textContent='Your browser blocked the hash function here. Try the Hash Functions tool on Decoding Bitcoin instead.';});}
+      $('db-guess').querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){$('db-guess').querySelectorAll('button').forEach(function(x){x.className=x.dataset.g=='128'?'right':(x===b?'on':'')});$('db-hashlab').hidden=false;
+        $('db-hashout').innerHTML=(b.dataset.g=='128'?'<b>Right.</b> ':'<b>Most people guess that.</b> ')+'The answer is about half: roughly 128 of 256. Now edit input B and see it happen.';run();});});
+      $('db-a').addEventListener('input',run);$('db-b').addEventListener('input',run);
+
+      /* 2. history */
+      var ERA=[['DigiCash','1989','David Chaum','<b>DigiCash (1989, David Chaum).</b> Private digital cash with clever blind signatures, but run by one company. When the company went bankrupt in 1998, the money went with it.'],
+               ['b-money','1998','Wei Dai','<b>b-money (1998, Wei Dai).</b> A proposal for money run by anonymous peers who all keep the books. Never built: it had no clear way for everyone to agree on one history.'],
+               ['Bit Gold','2005','Nick Szabo','<b>Bit Gold (described in 1998, posted in 2005, Nick Szabo).</b> Proof-of-work puzzles chained together as scarce digital gold. Never launched: preventing double spends still leaned on a quorum of people you trust.'],
+               ['Bitcoin','2008','Satoshi Nakamoto','<b>Bitcoin (whitepaper 2008, Satoshi Nakamoto).</b> Put the pieces together: proof of work plus everyone following the chain with the most work. Nobody to trust, nobody to shut down. Live since January 2009.']];
+      var order=[2,0,3,1],placed=0,miss=0;
+      function eras(){$('db-eras').innerHTML=order.map(function(i){var e=ERA[i],p=i<placed;return '<button type="button" class="db-era'+(p?' placed':'')+'" data-i="'+i+'"'+(p?' disabled':'')+'>'+e[0]+'<small>'+(p?e[1]:'?')+'</small></button>';}).join('');
+        $('db-eras').querySelectorAll('.db-era').forEach(function(b){b.addEventListener('click',function(){var i=+b.dataset.i;if(i<placed)return;
+          if(i===placed){$('db-line').insertAdjacentHTML('beforeend','<li>'+ERA[i][3]+'</li>');placed++;eras();
+            $('db-histout').innerHTML=placed<4?'Right. What came next?':'<b>Timeline complete'+(miss?'':' with no mistakes')+'.</b> Each attempt solved part of the puzzle. Bitcoin was the first that needed no trusted company or committee. That is discussion question 1.';
+            if(placed===4)award('history');}
+          else{miss++;b.classList.remove('bad');void b.offsetWidth;b.classList.add('bad');$('db-histout').textContent='Not yet. Something else came before '+ERA[i][0]+'.';}});});}
+      eras();
+
+      /* 3. path */
+      var lanesSeen={};
+      function lane(){var h=+$('db-hrs').value,l=h<2?'hang':(h<=8?'cert':'boss');$('db-hrsv').textContent=h+' hour'+(h==1?'':'s')+' a week';
+        $('db-lane').querySelectorAll('div').forEach(function(d){d.classList.toggle('on',d.dataset.l===l)});lanesSeen[l]=1;if(Object.keys(lanesSeen).length===3)award('path');}
+      $('db-hrs').addEventListener('input',lane);lane();
+
+      /* 4. teach */
+      var QS=['What problem did Bitcoin solve that earlier digital cash attempts (DigiCash, b-money, Bit Gold) could not?','Pick one moment from the Bitcoin History lesson and explain why it mattered for how Bitcoin works today.','What is a hash function? Name three properties Bitcoin relies on and where each one shows up.','Explain the UTXO model in your own words. Why is there no account balance stored anywhere?','Give one advantage and one disadvantage of UTXOs compared with an account model.','Why do people say "don’t trust, verify"? What can you verify yourself, and what do you usually take on trust?'];
+      var TK='co-teach-'+SLUG,draft={};try{draft=JSON.parse(localStorage.getItem(TK))||{};}catch(e){}
+      function showQ(i){var w=$('db-wheel');w.querySelector('b').textContent='Q'+(i+1);w.querySelector('span').textContent=QS[i];$('db-teachbox').hidden=false;$('db-ta').value=draft.q===i?(draft.t||''):'';count();}
+      function count(){var n=$('db-ta').value.trim().length;$('db-tacount').textContent=n;if(n>=80){$('db-teachout').innerHTML='<b>Nice.</b> Saying it out loud next Monday will lock it in. Bring this to the call if you get this question.';award('teach');}}
+      $('db-spin').addEventListener('click',function(){var w=$('db-wheel'),k=0,i=Math.floor(Math.random()*6);w.classList.add('spin');$('db-spin').disabled=true;
+        var iv=setInterval(function(){w.querySelector('b').textContent='Q'+(k%6+1);w.querySelector('span').textContent=QS[k%6];k++;},90);
+        setTimeout(function(){clearInterval(iv);w.classList.remove('spin');$('db-spin').disabled=false;$('db-spin').textContent='Spin again';draft={q:i,t:''};showQ(i);},1200);});
+      $('db-ta').addEventListener('input',function(){draft.t=$('db-ta').value;try{localStorage.setItem(TK,JSON.stringify(draft));}catch(e){}count();});
+      if(typeof draft.q==='number')showQ(draft.q);
+
+      /* 5. homework checklist (template todo block fires co-todo) */
+      document.addEventListener('co-todo',function(e){if(e.detail&&e.detail.total&&e.detail.done===e.detail.total)award('todo');});
+      try{var td=JSON.parse(localStorage.getItem('co-todo-'+SLUG))||{},tn=0;for(var q in td)if(td[q])tn++;if(tn>=6)award('todo');}catch(e){}
+
+      /* 6. quiz badge: quiz.js stores the best score in co-quiz-<slug> */
+      function checkQuiz(){try{if((+localStorage.getItem('co-quiz-'+SLUG)||0)>=4)award('quiz');}catch(e){}}
+      checkQuiz();setInterval(checkQuiz,1500);
+      })();
+      </script>
+
+      <section class="qz" data-quiz="2026-11-16-decoding-bitcoin-week-1" aria-label="Test yourself">
+        <script type="application/json">[{"q": "You can't make it to the live call on Monday. Can you still earn the certificate?", "o": ["No, attendance is the only thing that counts", "Yes, if you do the work and post your homework on Discord", "Only if you watch the recording twice"], "a": 1, "w": "Asked on the call, answered yes: do the lessons and exercises on your own, post them on Discord and ask questions there."}, {"q": "You hash a word with SHA-256, then change one letter and hash it again. How much of the output changes?", "o": ["Only the last character or two", "About half of the 256 bits", "Nothing, hashes ignore small changes"], "a": 1, "w": "The avalanche effect. One tiny change flips roughly half the bits, so a hash tells you nothing about how close two inputs are."}, {"q": "How do you log in to your Decoding Bitcoin dashboard?", "o": ["With your email and a password", "With a Nostr login", "You don't: you open your personal link, so save it"], "a": 2, "w": "No accounts, no passwords. A Nostr login was tried first but added friction, so your dashboard link is your key."}, {"q": "Where do the lessons and exercises live?", "o": ["On Decoding Bitcoin by The Bitcoin Dev Project", "In a private Code Orange course", "Only in the Mastering Bitcoin book"], "a": 0, "w": "bitcoindevs.xyz/decoding is the source of truth. The Code Orange pages add the weekly plan, your questions and your dashboard."}]</script>
+        <div class="qz-head"><p class="eyebrow">Test yourself</p><span class="qz-best"></span></div>
+        <div class="qz-play"><div class="qz-bar"><i></i></div><p class="qz-n"></p><h3 class="qz-q"></h3><div class="qz-opts"></div><p class="qz-why" hidden></p><button type="button" class="button small qz-next" hidden>Next question</button></div>
+        <div class="qz-done" hidden><p class="qz-score"></p><p class="qz-msg"></p><div class="cta-row"><button type="button" class="ghost small qz-again">Play again</button><a class="ghost small qz-x" href="#" target="_blank" rel="noopener">Post my score on X</a><a class="ghost small" href="/session-notes#passport">See my passport</a></div></div>
+      </section>
+      <script src="/assets/session-notes/quiz.js?v=20261112b" defer></script>
+      <h2>Resources shared</h2>
+      <h3>The course</h3>
+      <ul>
+        <li><a href="https://bitcoindevs.xyz/decoding" target="_blank" rel="noopener">Decoding Bitcoin</a>, The Bitcoin Dev Project: the interactive course we follow for 10 weeks. Lessons, quizzes, tools and exercises. Our source of truth</li>
+        <li><a href="https://bitcoindevs.xyz/decoding/bitcoin-history" target="_blank" rel="noopener">Week 1 lesson: Bitcoin History</a>, The Bitcoin Dev Project: from DigiCash, b-money and Bit Gold to the whitepaper. Read with discussion question 1 in mind</li>
+        <li><a href="https://bitcoindevs.xyz/decoding/utxo" target="_blank" rel="noopener">Week 1 lesson: UTXO vs Account Models</a>, The Bitcoin Dev Project: why Bitcoin tracks coins, not balances. Whoever gets question 4 explains this one to the group</li>
+        <li><a href="https://bitcoindevs.xyz/decoding/hash-functions" target="_blank" rel="noopener">Tool: Hash Functions</a>, The Bitcoin Dev Project: hash your name, change one letter and watch about half the output change. The quiz moment from the call</li>
+      </ul>
+      <h3>Reading</h3>
+      <ul>
+        <li><a href="https://github.com/bitcoinbook/bitcoinbook" target="_blank" rel="noopener">Mastering Bitcoin</a>, Andreas M. Antonopoulos and David A. Harding: the classic technical book, free on GitHub. Many Decoding Bitcoin topics and discussion questions overlap with it</li>
+      </ul>
+      <h3>Tools</h3>
+      <ul>
+        <li><a href="https://mempool.space" target="_blank" rel="noopener">mempool.space</a>: block explorer for this week's exercise: open a recent block, pick a transaction, find its inputs, outputs, fee and change</li>
+      </ul>
+      <h3>What comes next</h3>
+      <ul>
+        <li><a href="https://bosschallenge.xyz" target="_blank" rel="noopener">BOSS Challenge (Bitcoin Open Source Software)</a>, Chaincode Labs: a three-month bootcamp to become a Bitcoin open source contributor: challenges, then a portfolio project, then real contributions. Another round is coming next year. Expect 5 to 10 hours a day in month one</li>
+      </ul>
+      <h3>Code Orange</h3>
+      <ul>
+        <li><a href="/decoding-bitcoin">Decoding Bitcoin cohort</a>: sign up (late joiners welcome), times in your time zone, and the catch-up box with every recording</li>
+        <li><a href="/decoding-bitcoin/curriculum">Weekly plan</a>: all 10 weeks: lessons, discussion questions and exercises. Each week unlocks after the Monday before it</li>
+        <li><a href="/decoding-bitcoin/check">Weekly check</a>: five questions a week. Your results land on your dashboard</li>
+        <li><a href="/privacy-track">Privacy Track</a>: Silent Payments on Tuesday 17 November with Razor and two silent payment wallet builders</li>
+      </ul>
+      <p>Also mentioned: the last cohort we ran, rawBit, had 20 sign-ups and 2 finishers, so do not worry about keeping up with everyone. Just keep showing up. A Code Orange meetup next year came up as an idea, and the dashboard first used a Nostr login before switching to a personal link to cut friction.</p>
+      <p><a href="/resources">Browse every resource from every session &rarr;</a></p>
+    </div>
+    <aside class="next-card nx" data-next data-match="decoding bitcoin">
+      <div class="nx-head"><p class="eyebrow">Come to the next one</p><div data-next-static><h3>Week 2: How a transaction lives</h3><p>Monday 23 November, 7pm UTC+8 on Discord. Bring your answer to your assigned question. Before that: Privacy Track on Silent Payments, Tuesday 17 November, 07:00 UTC.</p></div>
+        <div data-next-live hidden><h3>Up next at Code Orange</h3><ol class="nx-list" data-next-list></ol></div></div>
+      <div class="nx-side">
+        <div class="cta-row"><a class="button small" href="https://calendar.google.com/calendar/r?cid=466de2be7431d78be2049f96f5fd31f9b06b5a9cd94f909ba3182b18442ed499%40group.calendar.google.com" target="_blank" rel="noopener">Add all sessions to my calendar</a><a class="ghost small" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord</a></div>
+        <form class="nx-form" action="https://assets.mailerlite.com/jsonp/2133495/forms/201289376620086972/subscribe" method="post"><label for="nx-email">Or get the week's sessions by email</label><div><input type="email" id="nx-email" name="fields[email]" placeholder="you@example.com" autocomplete="email" required><input type="hidden" name="ml-submit" value="1"><input type="hidden" name="anticsrf" value="true"><button class="ghost small" type="submit">Subscribe</button></div></form>
+        <p class="nx-msg" role="status" aria-live="polite" hidden></p>
+      </div>
+    </aside>
+    <script src="/assets/session-notes/next.js?v=20261112b" defer></script>
+    <div class="share-row"><strong>Share these notes:</strong><a href="https://x.com/intent/post?text=Week%201%20of%20Decoding%20Bitcoin%3A%2010%20Mondays%2C%20one%20question%20each%2C%20a%20hash%20that%20changes%20half%20its%20bits%20when%20you%20change%20one%20letter%2C%20and%20what%20comes%20after.%20Notes%20%28and%204%20mini-games%29%20from%20%40CodeOrangeDevs&amp;url=https%3A%2F%2Fcodeorange.dev%2Fsession-notes%2F2026-11-16-decoding-bitcoin-week-1" target="_blank" rel="noopener">Post on X</a><button type="button" data-copy="https://codeorange.dev/session-notes/2026-11-16-decoding-bitcoin-week-1">Copy link</button></div>
+    <div class="rp" aria-hidden="true"></div><script>(function(){var b=document.querySelector('.rp');if(!b)return;function u(){var h=document.documentElement,m=h.scrollHeight-h.clientHeight;b.style.width=(m>0?Math.min(100,h.scrollTop/m*100):0)+'%';}addEventListener('scroll',u,{passive:true});u();})();
+document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){navigator.clipboard&&navigator.clipboard.writeText(b.dataset.copy).then(function(){b.textContent='Link copied';});});});
+(function(){var v=document.getElementById('video');if(!v)return;function play(t){v.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+v.dataset.yt+'?autoplay=1&rel=0&start='+(t||0)+'" title="Session recording" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';}v.querySelector('button').addEventListener('click',function(){play(0);});document.querySelectorAll('.chapters a[data-t]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();play(a.dataset.t);v.scrollIntoView({behavior:'smooth',block:'center'});});});})();</script>
+    <script src="/assets/session-notes/passport.js?v=20261113a" data-slug="2026-11-16-decoding-bitcoin-week-1" data-total="10"></script>
+    <nav class="more-notes" aria-label="More session notes"><a class="older" href="/session-notes/2026-11-12-code-review-club"><small>&larr; Earlier session</small>Code Review Club: Mesh networks, address spam and Floresta</a></nav>
+    <p class="source-box">These notes are also on GitHub: <a href="https://github.com/code-orange-dev/session-notes/blob/main/2026/2026-11-16-decoding-bitcoin-week-1.md" target="_blank" rel="noopener">code-orange-dev/session-notes</a>. Free to share and reuse (CC0).</p>
+  </article>
+  <section class="section-inner final-cta">
+  <p class="eyebrow">Bitcoin Only</p>
+  <h2>Ready to become a Bitcoin builder?</h2>
+  <p class="lead" style="margin-left:auto;margin-right:auto">Join the next cohort, drop into a workshop, or come say hello in Discord. The community is free and open.</p>
+  <div class="cta-row" style="justify-content:center"><a class="button" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord</a><a class="ghost" href="/apply">Apply Now</a></div>
+</section>
+</main>
+<footer class="footer">
+  <div class="footer-media">
+    <video data-lazy-video data-src="/assets/co-footer-720.mp4" poster="/assets/co-footer-poster.webp" autoplay muted loop playsinline preload="none"></video>
+    <div class="footer-media-copy">
+      <p class="eyebrow">Scenes from the school</p>
+      <h2>Real workshops. Real devices. Real Bitcoin builders.</h2>
+    </div>
+  </div>
+  <div class="footer-grid">
+    <div>
+      <img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School" style="height:58px;width:auto;margin-bottom:18px">
+      <p style="color:var(--dim);max-width:420px;line-height:1.7">Code Orange Dev School trains Bitcoin developers, node runners, and technical community leaders through practical education and open-source contribution.</p>
+      <p><a href="mailto:hello@codeorange.dev">hello@codeorange.dev</a></p>
+      <div class="cta-row" style="gap:10px;justify-content:flex-start">
+        <a class="ghost small" href="https://x.com/CodeOrangeDevs" target="_blank" rel="noopener">X</a>
+        <a class="ghost small" href="https://www.instagram.com/codeorangedevs" target="_blank" rel="noopener">Instagram</a>
+        <a class="ghost small" href="https://njump.me/npub1gxqyeea3xspkd68mxlxsvvk3gdzdd555u504ynwpdj0ghg503mvq2gydt0" target="_blank" rel="noopener">Nostr</a>
+        <a class="ghost small" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a>
+      </div>
+    </div>
+    <div>
+      <div class="link-list">
+        <strong>School</strong>
+        <a href="/about">About</a>
+        <a href="/community">Community</a>
+        <a href="/fellowships">Fellowships</a>
+        <a href="/calendar">Calendar</a>
+        <a href="https://geyser.fund/project/codeorangedevschool" target="_blank" rel="noopener">Support on Geyser</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

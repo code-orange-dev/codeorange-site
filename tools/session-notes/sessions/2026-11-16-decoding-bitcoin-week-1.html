@@ -1,0 +1,319 @@
+      <style>
+      .db-card{margin:8px 0 36px;border:1px solid rgba(247,147,26,.35);border-radius:18px;background:radial-gradient(120% 90% at 0 0,rgba(247,147,26,.13),transparent 60%) #141414;padding:22px;position:relative}
+      .db-eye{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 6px;font:700 12px/1.3 "Plus Jakarta Sans",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--orange)}
+      .db-eye span:last-child{color:var(--dim);letter-spacing:.06em}
+      .db-card h3{margin:0 0 8px;font-size:22px;line-height:1.25;color:var(--text)}
+      .db-card>p{margin:0 0 14px;font-size:15.5px;line-height:1.55}
+      .db-btn{all:unset;box-sizing:border-box;cursor:pointer;display:inline-block;padding:10px 18px;border-radius:99px;background:var(--orange);color:#0A0A0A;font:800 14px/1.2 "Inter",system-ui,sans-serif;text-align:center}
+      .db-btn:hover{filter:brightness(1.1)}
+      .db-btn.ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.2)}
+      .db-btn.sm{padding:7px 12px;font-size:12.5px}
+      .db-btn[disabled]{opacity:.35;cursor:default;filter:none}
+      .db-btn:focus-visible,.db-seg button:focus-visible,.db-era:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+      .db-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+      .db-seg{display:inline-flex;flex-wrap:wrap;gap:4px;padding:4px;border-radius:14px;background:rgba(0,0,0,.4);border:1px solid var(--line);margin:0 0 14px}
+      .db-seg button{all:unset;box-sizing:border-box;cursor:pointer;padding:8px 14px;border-radius:10px;color:var(--muted);font:700 13px/1.2 "Inter",system-ui,sans-serif}
+      .db-seg button.on{background:var(--orange);color:#0A0A0A}
+      .db-seg button.right{background:#2f6b3a;color:#fff}
+      .db-out{margin:14px 0 0;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.04);color:var(--muted);font-size:15px;line-height:1.5;min-height:22px}
+      .db-out b{color:var(--orange)}
+      .db-done{display:none;margin-left:8px;color:var(--orange)}
+      .db-card.won .db-done{display:inline}
+      .db-badges{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:14px 0}
+      .prose a.db-badge,.db-badge{display:block;padding:12px 4px;border-radius:14px;border:1px dashed rgba(255,255,255,.18);text-align:center;text-decoration:none;color:var(--dim);font:700 11px/1.3 "Plus Jakarta Sans",monospace;letter-spacing:.03em;transition:all .3s}
+      .db-badge i{display:block;font-style:normal;font-size:26px;line-height:1;margin-bottom:8px;filter:grayscale(1);opacity:.45;transition:all .3s}
+      .prose a.db-badge.got,.db-badge.got{border:1px solid var(--orange);background:rgba(247,147,26,.14);color:var(--text);box-shadow:0 0 24px rgba(247,147,26,.18)}
+      .db-badge.got i{filter:none;opacity:1;transform:scale(1.12)}
+      .db-bar{height:8px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+      .db-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--orange),#FFB347);transition:width .6s ease}
+      .db-toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,30px);z-index:60;padding:12px 20px;border-radius:99px;background:var(--orange);color:#0A0A0A;font:800 14px/1.2 "Inter",system-ui,sans-serif;box-shadow:0 12px 40px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:all .35s ease;white-space:nowrap;max-width:92vw;overflow:hidden;text-overflow:ellipsis}
+      .db-toast.go{opacity:1;transform:translate(-50%,0)}
+      /* roadmap */
+      .db-road{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:6px;margin:6px 0 10px}
+      .db-wk{position:relative;padding:10px 4px 8px;border-radius:10px;background:var(--card);border:1px solid rgba(255,255,255,.1);text-align:center;color:var(--dim);font:700 12px/1.2 "Plus Jakarta Sans",monospace}
+      .db-wk.now{border-color:var(--orange);background:rgba(247,147,26,.16);color:var(--text);box-shadow:0 0 22px rgba(247,147,26,.25)}
+      .db-wk.grad{background:linear-gradient(160deg,rgba(247,147,26,.35),rgba(20,20,20,.9))}
+      .db-phase{display:grid;grid-template-columns:5fr 2fr 1fr 2fr;gap:6px}
+      .db-phase span{padding:8px 6px;border-radius:8px;text-align:center;font:600 12.5px/1.3 "Inter",system-ui,sans-serif;color:var(--text);background:rgba(247,147,26,.1);border-top:2px solid var(--orange)}
+      .db-phase span:nth-child(2){background:rgba(255,179,71,.1);border-color:#FFB347}
+      .db-phase span:nth-child(3){background:rgba(255,255,255,.06);border-color:#bbb}
+      .db-phase span:nth-child(4){background:rgba(247,147,26,.18)}
+      .db-loop{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+      .db-loop div{padding:16px;border-radius:12px;background:var(--card);border:1px solid rgba(255,255,255,.1)}
+      .db-loop b{display:block;margin:0 0 4px;color:var(--orange);font:700 12px/1.3 "Plus Jakarta Sans",monospace;letter-spacing:.1em;text-transform:uppercase}
+      .db-loop strong{display:block;color:var(--text);margin:0 0 4px}
+      .db-loop span{color:var(--muted);font-size:14.5px;line-height:1.45}
+      /* avalanche */
+      .db-in{display:grid;grid-template-columns:auto 1fr;gap:8px 10px;align-items:center;margin:0 0 12px}
+      .db-in label{font:700 12px "Plus Jakarta Sans",monospace;color:var(--dim);letter-spacing:.08em}
+      .db-in input{width:100%;box-sizing:border-box;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.16);background:#0d0d0d;color:var(--text);font:600 15px "JetBrains Mono",ui-monospace,monospace}
+      .db-in input:focus{outline:none;border-color:var(--orange)}
+      .db-hex{font:500 12px/1.5 "JetBrains Mono",ui-monospace,monospace;color:var(--dim);word-break:break-all;margin:2px 0}
+      .db-hex em{font-style:normal;color:var(--orange)}
+      .db-grid{display:grid;grid-template-columns:repeat(32,minmax(0,1fr));gap:2px;margin:12px 0 6px}
+      .db-grid i{display:block;aspect-ratio:1;border-radius:2px;background:rgba(255,255,255,.08);transition:background .25s}
+      .db-grid i.f{background:var(--orange)}
+      .db-meter{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:6px 0 0}
+      .db-meter strong{font:800 34px/1 "Inter",system-ui,sans-serif;color:var(--orange)}
+      .db-meter span{color:var(--muted);font-size:14.5px}
+      /* history */
+      .db-eras{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+      .db-era{all:unset;box-sizing:border-box;cursor:pointer;display:block;padding:14px 12px;border-radius:12px;background:var(--card);border:1px solid rgba(255,255,255,.12);color:var(--text);font:700 15px/1.3 "Inter",system-ui,sans-serif;text-align:center;transition:all .25s}
+      .db-era:hover{border-color:rgba(247,147,26,.6)}
+      .db-era small{display:block;margin-top:6px;color:var(--dim);font:600 11px/1.4 "Plus Jakarta Sans",monospace}
+      .db-era.placed{border-color:var(--orange);background:rgba(247,147,26,.12);cursor:default}
+      .db-era.placed small{color:var(--orange)}
+      .db-era.bad{animation:dbshake .35s}
+      @keyframes dbshake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+      .db-line{list-style:none;margin:14px 0 0;padding:0 0 0 18px;border-left:2px solid rgba(247,147,26,.4)}
+      .db-line li{position:relative;margin:0 0 12px;color:var(--muted);font-size:15px;line-height:1.5}
+      .db-line li:before{content:"";position:absolute;left:-25px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--orange)}
+      .db-line li b{color:var(--text)}
+      /* path */
+      .db-range{width:100%;accent-color:#F7931A;margin:6px 0 4px}
+      .db-hours{display:flex;justify-content:space-between;color:var(--dim);font:600 12px "Plus Jakarta Sans",monospace}
+      .db-lane{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0 0}
+      .db-lane div{padding:14px;border-radius:12px;background:var(--card);border:1px solid rgba(255,255,255,.1);opacity:.45;transition:all .3s}
+      .db-lane div.on{opacity:1;border-color:var(--orange);background:rgba(247,147,26,.12);box-shadow:0 0 22px rgba(247,147,26,.15)}
+      .db-lane b{display:block;color:var(--text);font-size:15px;margin:0 0 4px}
+      .db-lane span{color:var(--muted);font-size:13.5px;line-height:1.4}
+      .db-bars{display:grid;gap:10px;margin:4px 0 0}
+      .db-bars div{display:grid;grid-template-columns:150px 1fr;gap:10px;align-items:center;font-size:14px;color:var(--muted)}
+      .db-bars i{display:block;height:22px;border-radius:6px;background:var(--orange);position:relative}
+      .db-bars i em{position:absolute;left:8px;top:2px;font:700 12px/18px "Plus Jakarta Sans",monospace;color:#0A0A0A;font-style:normal;white-space:nowrap}
+      .db-bars i.lo em{left:calc(100% + 8px);color:var(--text)}
+      /* spinner */
+      .db-wheel{position:relative;min-height:96px;padding:18px;border-radius:14px;background:#0d0d0d;border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;gap:14px}
+      .db-wheel b{flex:none;display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--orange);color:#0A0A0A;font:800 18px "Inter",sans-serif}
+      .db-wheel span{color:var(--text);font-size:16px;line-height:1.45}
+      .db-wheel.spin b{animation:dbspin .5s linear infinite}
+      @keyframes dbspin{to{transform:rotate(360deg)}}
+      .db-ta{width:100%;box-sizing:border-box;min-height:96px;margin:12px 0 0;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:#0d0d0d;color:var(--text);font:500 15px/1.5 "Inter",system-ui,sans-serif;resize:vertical}
+      .db-ta:focus{outline:none;border-color:var(--orange)}
+      .db-small{color:var(--dim);font-size:13px;margin:6px 0 0}
+      @media (max-width:700px){.db-badges{grid-template-columns:repeat(3,minmax(0,1fr))}.db-eras{grid-template-columns:repeat(2,minmax(0,1fr))}.db-lane,.db-loop{grid-template-columns:1fr}.db-road{grid-template-columns:repeat(5,minmax(0,1fr))}.db-phase{grid-template-columns:1fr 1fr}.db-bars div{grid-template-columns:1fr}.db-grid{grid-template-columns:repeat(16,minmax(0,1fr))}}
+      </style>
+
+      <div class="db-card" id="db-board">
+        <p class="db-eye"><span>Mission board</span><span><span id="db-xp">0</span> XP</span></p>
+        <h3>Week 1: six badges to collect</h3>
+        <p>Four mini-games from the call, your homework checklist, and a final quiz. Each one lights up a badge. Progress stays on this device and adds XP to your <a href="/session-notes#passport">builder passport</a>.</p>
+        <div class="db-badges">
+          <a class="db-badge" href="#g-hash" data-b="hash"><i>&#9889;</i>Avalanche</a>
+          <a class="db-badge" href="#g-history" data-b="history"><i>&#128220;</i>Historian</a>
+          <a class="db-badge" href="#g-path" data-b="path"><i>&#129517;</i>Pathfinder</a>
+          <a class="db-badge" href="#g-teach" data-b="teach"><i>&#127908;</i>Teacher</a>
+          <a class="db-badge" href="#todo" data-b="todo"><i>&#9989;</i>On track</a>
+          <a class="db-badge" href="#db-quiz" data-b="quiz"><i>&#128273;</i>Decoder</a>
+        </div>
+        <div class="db-bar"><i id="db-prog"></i></div>
+      </div>
+      <div class="db-toast" id="db-toast" role="status" aria-live="polite"></div>
+
+      <h2>Highlights</h2>
+      <p class="part"><b>1</b>Ten Mondays, one plan</p>
+      <p><strong>We are here to understand how Bitcoin actually works.</strong> So the cohort spends its first five weeks on transactions: how one lives, what it looks like byte by byte, how it gets built, signed and paid for. Then script and multisig, a week to build (or vibe code) your own project, and Taproot to finish, followed by a graduation and certificates.</p>
+
+      <div class="viz" role="figure" aria-label="The 10-week Decoding Bitcoin roadmap">
+        <p class="eyebrow">The roadmap</p>
+        <p class="viz-title">Week 1 of 10. Every Monday, 7pm UTC+8, 90 minutes sharp.</p>
+        <div class="db-road">
+          <div class="db-wk now">W1</div><div class="db-wk">W2</div><div class="db-wk">W3</div><div class="db-wk">W4</div><div class="db-wk">W5</div><div class="db-wk">W6</div><div class="db-wk">W7</div><div class="db-wk">W8</div><div class="db-wk">W9</div><div class="db-wk grad">W10 &#127891;</div>
+        </div>
+        <div class="db-phase"><span>Transactions</span><span>Script + multisig</span><span>Your project</span><span>Taproot + graduation</span></div>
+      </div>
+
+      <p><strong>Every week runs the same loop.</strong> Keep it simple, the hosts kept saying. The structure is light even when the topics get deep:</p>
+      <div class="viz" role="figure" aria-label="How a week works">
+        <p class="eyebrow">How a week works</p>
+        <div class="db-loop">
+          <div><b>Before Monday</b><strong>Read and prepare</strong><span>Lessons on Decoding Bitcoin, plus the one discussion question assigned to you.</span></div>
+          <div><b>Monday</b><strong>Explain and discuss</strong><span>You get called on to explain your question in your own words. Everyone chips in.</span></div>
+          <div><b>After</b><strong>Practise</strong><span>Exercises on Decoding Bitcoin and the five-question weekly check on our site.</span></div>
+        </div>
+      </div>
+
+      <p><strong>The certificate is for doing the work.</strong> Attendance matters, because we keep each other accountable, so book Mondays in your calendar and say so if you have to miss one. The exercises count too. A slide called them optional; that was a mistake, they are part of the certificate. They can get advanced, so take your time.</p>
+      <p><strong>Can't come live? You can still earn it.</strong> One of the first questions: what about people with other obligations who do the homework and post it on Discord, but can't join the call? The answer was yes, that counts. Go through the course on your own, post your work on Discord and ask your questions there. You can exceed expectations without ever being on the call.</p>
+      <p><strong>And if you just want to hang out, that's fine too.</strong> No certificate without the exercises, but you are welcome every Monday for the discussion. Cameras stay off for privacy.</p>
+
+      <p class="part"><b>2</b>Your dashboard, no login</p>
+      <p><strong>Sign up once, get a personal link.</strong> Twenty-five people signed up before the first call. Signing up drops you straight into your own dashboard: this week&rsquo;s lessons, your assigned question, the exercises to tick off, and the weekly check, five quick questions whose results land back on your dashboard.</p>
+      <p><strong>Why there is no password.</strong> The first version used a Nostr login, and it added friction. So now your dashboard is a personal URL. Save it somewhere, like your email or notes, because that link <em>is</em> your key. No accounts to manage, minimal friction.</p>
+      <p><strong>Built with AI, shaped by you.</strong> The whole dashboard was vibe coded with Claude, and it is brand new, so things will change. Every bit of feedback goes straight back into the next version.</p>
+      <div class="quote"><p>&ldquo;Help me help you build an even better dashboard.&rdquo;</p><span>keypleb, asking for feedback on the check-ins</span></div>
+
+      <p class="part"><b>3</b>One letter, half the hash</p>
+      <p><strong>The best moment of the call came from the Decoding Bitcoin quiz.</strong> Alex shared his screen and worked through the quiz live: everything green until one question about what happens to a hash when you change a single letter. The intuitive answer is &ldquo;only the last few characters change&rdquo;. The real answer: roughly <strong>half of all the bits flip</strong>. That is the avalanche effect, and it is why a hash gives away nothing about how close two inputs are. Try it yourself:</p>
+
+      <div class="db-card" id="g-hash">
+        <p class="db-eye"><span>Mini-game 1 &middot; Avalanche</span><span class="db-done">&#10003; badge earned</span></p>
+        <h3>Change one letter. Watch SHA-256 explode.</h3>
+        <p>First, guess: if you change one letter, how many of the 256 output bits flip?</p>
+        <div class="db-seg" id="db-guess"><button type="button" data-g="1">About 1</button><button type="button" data-g="20">About 20</button><button type="button" data-g="128">About 128</button></div>
+        <div id="db-hashlab" hidden>
+          <div class="db-in"><label for="db-a">INPUT A</label><input id="db-a" value="satoshi" maxlength="60" autocomplete="off" spellcheck="false"><label for="db-b">INPUT B</label><input id="db-b" value="satoshI" maxlength="60" autocomplete="off" spellcheck="false"></div>
+          <p class="db-hex">A &rarr; <span id="db-ha"></span></p>
+          <p class="db-hex">B &rarr; <span id="db-hb"></span></p>
+          <div class="db-grid" id="db-grid" aria-label="256 output bits, flipped bits in orange"></div>
+          <div class="db-meter"><strong id="db-flip">0</strong><span>of 256 bits flipped (<span id="db-pct">0</span>%). Orange squares are the bits that changed.</span></div>
+          <p class="db-out" id="db-hashout">Edit input B: change one letter at a time. Try three different changes to earn the badge.</p>
+        </div>
+        <p class="db-small">Hashes are computed in your browser with the real SHA-256. Nothing is sent anywhere.</p>
+      </div>
+
+      <p class="part"><b>4</b>Why Bitcoin, why now</p>
+      <p><strong>Week 1&rsquo;s questions start with history.</strong> Before transactions and bytes, the cohort asks what problem Bitcoin solved that earlier attempts at digital cash could not. The questions mention DigiCash, b-money and Bit Gold, and the Bitcoin History lesson on Decoding Bitcoin tells the story. Put them in order and see what each one was missing:</p>
+
+      <div class="db-card" id="g-history">
+        <p class="db-eye"><span>Mini-game 2 &middot; Historian</span><span class="db-done">&#10003; badge earned</span></p>
+        <h3>Tap them from oldest to newest</h3>
+        <p>Four attempts at money for the internet. Get the order right to build the timeline.</p>
+        <div class="db-eras" id="db-eras"></div>
+        <ol class="db-line" id="db-line" aria-live="polite"></ol>
+        <p class="db-out" id="db-histout">Which came first?</p>
+      </div>
+
+      <p class="part"><b>5</b>What comes after: the BOSS Challenge</p>
+      <p><strong>Decoding Bitcoin is a gentle start. BOSS is the deep end.</strong> The <em>Bitcoin Open Source Software</em> Challenge from Chaincode Labs is a bootcamp that wants to turn you into a Bitcoin open source contributor as fast as possible, and another round is coming next year. Razor went through it, and described it like this:</p>
+      <div class="viz" role="figure" aria-label="The three months of the BOSS Challenge">
+        <p class="eyebrow">BOSS in three months</p>
+        <div class="flow">
+          <div class="flow-step">Challenges<small>Month 1</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Your own project<small>Month 2</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Contribute to a real project<small>Month 3</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Keep going<small>No end</small></div>
+        </div>
+        <p style="margin:0;color:var(--muted);font-size:15px">Month one is build-a-transaction, build-Taproot, spend-it style challenges. &ldquo;There&rsquo;s no end to the challenge, actually.&rdquo; (Razor)</p>
+      </div>
+      <p><strong>It is a lot of work.</strong> Alex joined BOSS in January and did not finish: it was like a full-time job, five to ten hours a day in the first month, next to other obligations. Razor finished, and less than a year after first getting curious about Bitcoin he is now a full-time developer and a Code Orange educator fellow. Dropout rates are high everywhere: our last study cohort, rawBit, had 20 sign-ups and two finishers. That is fine. A handful of graduates is a success.</p>
+      <div class="viz" role="figure" aria-label="Hours per week: Decoding Bitcoin vs BOSS">
+        <p class="eyebrow">Hours per week, roughly</p>
+        <div class="db-bars">
+          <div>Decoding Bitcoin<i class="lo" style="width:12%"><em>2&ndash;5 h</em></i></div>
+          <div>BOSS, month 1<i style="width:100%"><em>30&ndash;40+ h</em></i></div>
+        </div>
+      </div>
+
+      <div class="db-card" id="g-path">
+        <p class="db-eye"><span>Mini-game 3 &middot; Pathfinder</span><span class="db-done">&#10003; badge earned</span></p>
+        <h3>How much time can you give each week?</h3>
+        <p>Slide to your honest number and see which lane fits. Visit all three lanes to earn the badge.</p>
+        <input type="range" class="db-range" id="db-hrs" min="0" max="40" value="3" aria-label="Hours per week">
+        <div class="db-hours"><span>0 h</span><span id="db-hrsv">3 hours a week</span><span>40 h</span></div>
+        <div class="db-lane" id="db-lane">
+          <div data-l="hang"><b>Hang out</b><span>Come on Mondays and join the discussion. No certificate, still very welcome.</span></div>
+          <div data-l="cert"><b>Certificate</b><span>Decoding Bitcoin properly: lessons, your question, exercises, weekly check.</span></div>
+          <div data-l="boss"><b>Certificate + BOSS prep</b><span>Do it all, push through every exercise, and get ready for the next BOSS Challenge.</span></div>
+        </div>
+      </div>
+
+      <p class="part"><b>6</b>Next Monday: you teach</p>
+      <p><strong>Everyone on the call gets a question.</strong> Week 1 has six discussion questions. Each person gets one, tagged on Discord and, new idea from the call, by email too (as long as you signed up on the site). Next Monday you get called on and have a few minutes to explain it. If you get question 4, you will have to really understand the UTXO model and put it in your own words.</p>
+      <div class="quote"><p>&ldquo;The teacher learns the most.&rdquo;</p><span>The idea behind the weekly discussion</span></div>
+      <div class="viz" role="figure" aria-label="The six week 1 discussion questions">
+        <p class="eyebrow">Week 1 discussion questions</p>
+        <div class="q-grid">
+          <div class="q"><b>Q1</b><span>What problem did Bitcoin solve that DigiCash, b-money and Bit Gold could not?</span></div>
+          <div class="q"><b>Q2</b><span>Pick one moment from the Bitcoin History lesson. Why does it matter today?</span></div>
+          <div class="q"><b>Q3</b><span>What is a hash function? Three properties Bitcoin relies on, and where each shows up.</span></div>
+          <div class="q"><b>Q4</b><span>Explain the UTXO model in your own words. Why is no balance stored anywhere?</span></div>
+          <div class="q"><b>Q5</b><span>One advantage and one disadvantage of UTXOs compared with accounts.</span></div>
+          <div class="q"><b>Q6</b><span>Why &ldquo;don&rsquo;t trust, verify&rdquo;? What can you verify yourself?</span></div>
+        </div>
+      </div>
+
+      <div class="db-card" id="g-teach">
+        <p class="db-eye"><span>Mini-game 4 &middot; Teacher</span><span class="db-done">&#10003; badge earned</span></p>
+        <h3>Spin for a practice question</h3>
+        <p>Your real question comes from the hosts. Warm up with a random one: spin, then explain it in three sentences as if to a friend.</p>
+        <div class="db-wheel" id="db-wheel"><b>?</b><span>Press spin.</span></div>
+        <div class="db-row" style="margin-top:12px"><button type="button" class="db-btn" id="db-spin">Spin</button></div>
+        <div id="db-teachbox" hidden>
+          <textarea class="db-ta" id="db-ta" placeholder="Explain it in your own words. Three sentences is plenty."></textarea>
+          <p class="db-small"><span id="db-tacount">0</span> characters. Saved only in this browser, never sent anywhere.</p>
+          <p class="db-out" id="db-teachout">Write at least a couple of sentences to earn the badge.</p>
+        </div>
+      </div>
+
+      <p><strong>Where the exercises live.</strong> Alex and keypleb agreed the plan on the call: the discussion questions and assignments run on the Code Orange site and Discord, and for exercises the cohort uses Decoding Bitcoin, built by The Bitcoin Dev Project. &ldquo;The Decoding Bitcoin website is the truth&rdquo;: tested, solid, and if you are already confident with the questions, push through all its exercises.</p>
+
+      <h2>Key takeaways</h2>
+      <ul>
+        <li><strong>Keep it simple.</strong> One question, one Monday, one set of exercises at a time. The topics get deep, the structure stays light.</li>
+        <li><strong>Showing up is the skill.</strong> Dropout is normal in every cohort. Live or async through Discord, the people who keep coming are the ones who finish.</li>
+        <li><strong>Remember why you are here.</strong> A Bitcoin job, a fellowship, your own project, a co-founder on the call, or just understanding how it works. All valid. Meet people, DM each other, make friends.</li>
+      </ul>
+
+      <h2 id="db-quiz">Final level: the quiz</h2>
+      <p>Four questions from the call. Get all four right and the <b>Decoder</b> badge lights up on the mission board.</p>
+
+      <script>
+      (function(){
+      var $=function(i){return document.getElementById(i)},SLUG='2026-11-16-decoding-bitcoin-week-1',KEY='co-badges-'+SLUG,S={b:{}};
+      try{var sv=JSON.parse(localStorage.getItem(KEY));if(sv&&sv.b)S=sv;}catch(e){}
+      function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+      var NAMES={hash:'Avalanche',history:'Historian',path:'Pathfinder',teach:'Teacher',todo:'On track',quiz:'Decoder'},GAMES={hash:'g-hash',history:'g-history',path:'g-path',teach:'g-teach'};
+      function board(){var n=0;document.querySelectorAll('.db-badge').forEach(function(a){var g=!!S.b[a.dataset.b];a.classList.toggle('got',g);if(g)n++;});
+        $('db-xp').textContent=n*100;$('db-prog').style.width=(n/6*100)+'%';
+        for(var k in GAMES)if(S.b[k])$(GAMES[k]).classList.add('won');}
+      var tt;function award(k){if(S.b[k])return;S.b[k]=1;save();board();var t=$('db-toast');t.textContent='🏅 Badge unlocked: '+NAMES[k]+'  +100 XP';t.classList.add('go');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('go')},2800);}
+      board();
+      document.querySelectorAll('.db-badge').forEach(function(a){a.addEventListener('click',function(e){var t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}});});
+
+      /* 1. avalanche */
+      var cells='';for(var i=0;i<256;i++)cells+='<i></i>';$('db-grid').innerHTML=cells;var bits=$('db-grid').children;
+      var seen={},lastB='';
+      function sha(t){if(!(window.crypto&&crypto.subtle))return Promise.reject();return crypto.subtle.digest('SHA-256',new TextEncoder().encode(t)).then(function(b){return new Uint8Array(b);});}
+      function hex(u){return Array.prototype.map.call(u,function(x){return('0'+x.toString(16)).slice(-2)}).join('');}
+      function run(){var a=$('db-a').value,b=$('db-b').value;Promise.all([sha(a),sha(b)]).then(function(r){var x=r[0],y=r[1],n=0,ha='',hb='';
+        for(var i=0;i<32;i++){var d=x[i]^y[i];for(var j=0;j<8;j++){var f=(d>>(7-j))&1;bits[i*8+j].className=f?'f':'';n+=f;}
+          var p=('0'+x[i].toString(16)).slice(-2),q=('0'+y[i].toString(16)).slice(-2);ha+=p;hb+=(p===q?q:'<em>'+q+'</em>');}
+        $('db-ha').textContent=ha;$('db-hb').innerHTML=hb;$('db-flip').textContent=n;$('db-pct').textContent=Math.round(n/2.56);
+        if(a!==b&&b!==lastB){lastB=b;seen[b]=1;}var k=Object.keys(seen).length;
+        $('db-hashout').innerHTML=a===b?'Same input, same hash, every time. Now change one letter in B.':(k<3?'<b>'+n+' bits</b> flipped. Try '+(3-k)+' more change'+(3-k==1?'':'s')+'.':'<b>Every small change scrambles about half the bits.</b> That is why a hash can fingerprint a whole block, and why you cannot guess an input from its hash.');
+        if(k>=3)award('hash');}).catch(function(){$('db-hashout').textContent='Your browser blocked the hash function here. Try the Hash Functions tool on Decoding Bitcoin instead.';});}
+      $('db-guess').querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){$('db-guess').querySelectorAll('button').forEach(function(x){x.className=x.dataset.g=='128'?'right':(x===b?'on':'')});$('db-hashlab').hidden=false;
+        $('db-hashout').innerHTML=(b.dataset.g=='128'?'<b>Right.</b> ':'<b>Most people guess that.</b> ')+'The answer is about half: roughly 128 of 256. Now edit input B and see it happen.';run();});});
+      $('db-a').addEventListener('input',run);$('db-b').addEventListener('input',run);
+
+      /* 2. history */
+      var ERA=[['DigiCash','1989','David Chaum','<b>DigiCash (1989, David Chaum).</b> Private digital cash with clever blind signatures, but run by one company. When the company went bankrupt in 1998, the money went with it.'],
+               ['b-money','1998','Wei Dai','<b>b-money (1998, Wei Dai).</b> A proposal for money run by anonymous peers who all keep the books. Never built: it had no clear way for everyone to agree on one history.'],
+               ['Bit Gold','2005','Nick Szabo','<b>Bit Gold (described in 1998, posted in 2005, Nick Szabo).</b> Proof-of-work puzzles chained together as scarce digital gold. Never launched: preventing double spends still leaned on a quorum of people you trust.'],
+               ['Bitcoin','2008','Satoshi Nakamoto','<b>Bitcoin (whitepaper 2008, Satoshi Nakamoto).</b> Put the pieces together: proof of work plus everyone following the chain with the most work. Nobody to trust, nobody to shut down. Live since January 2009.']];
+      var order=[2,0,3,1],placed=0,miss=0;
+      function eras(){$('db-eras').innerHTML=order.map(function(i){var e=ERA[i],p=i<placed;return '<button type="button" class="db-era'+(p?' placed':'')+'" data-i="'+i+'"'+(p?' disabled':'')+'>'+e[0]+'<small>'+(p?e[1]:'?')+'</small></button>';}).join('');
+        $('db-eras').querySelectorAll('.db-era').forEach(function(b){b.addEventListener('click',function(){var i=+b.dataset.i;if(i<placed)return;
+          if(i===placed){$('db-line').insertAdjacentHTML('beforeend','<li>'+ERA[i][3]+'</li>');placed++;eras();
+            $('db-histout').innerHTML=placed<4?'Right. What came next?':'<b>Timeline complete'+(miss?'':' with no mistakes')+'.</b> Each attempt solved part of the puzzle. Bitcoin was the first that needed no trusted company or committee. That is discussion question 1.';
+            if(placed===4)award('history');}
+          else{miss++;b.classList.remove('bad');void b.offsetWidth;b.classList.add('bad');$('db-histout').textContent='Not yet. Something else came before '+ERA[i][0]+'.';}});});}
+      eras();
+
+      /* 3. path */
+      var lanesSeen={};
+      function lane(){var h=+$('db-hrs').value,l=h<2?'hang':(h<=8?'cert':'boss');$('db-hrsv').textContent=h+' hour'+(h==1?'':'s')+' a week';
+        $('db-lane').querySelectorAll('div').forEach(function(d){d.classList.toggle('on',d.dataset.l===l)});lanesSeen[l]=1;if(Object.keys(lanesSeen).length===3)award('path');}
+      $('db-hrs').addEventListener('input',lane);lane();
+
+      /* 4. teach */
+      var QS=['What problem did Bitcoin solve that earlier digital cash attempts (DigiCash, b-money, Bit Gold) could not?','Pick one moment from the Bitcoin History lesson and explain why it mattered for how Bitcoin works today.','What is a hash function? Name three properties Bitcoin relies on and where each one shows up.','Explain the UTXO model in your own words. Why is there no account balance stored anywhere?','Give one advantage and one disadvantage of UTXOs compared with an account model.','Why do people say "don’t trust, verify"? What can you verify yourself, and what do you usually take on trust?'];
+      var TK='co-teach-'+SLUG,draft={};try{draft=JSON.parse(localStorage.getItem(TK))||{};}catch(e){}
+      function showQ(i){var w=$('db-wheel');w.querySelector('b').textContent='Q'+(i+1);w.querySelector('span').textContent=QS[i];$('db-teachbox').hidden=false;$('db-ta').value=draft.q===i?(draft.t||''):'';count();}
+      function count(){var n=$('db-ta').value.trim().length;$('db-tacount').textContent=n;if(n>=80){$('db-teachout').innerHTML='<b>Nice.</b> Saying it out loud next Monday will lock it in. Bring this to the call if you get this question.';award('teach');}}
+      $('db-spin').addEventListener('click',function(){var w=$('db-wheel'),k=0,i=Math.floor(Math.random()*6);w.classList.add('spin');$('db-spin').disabled=true;
+        var iv=setInterval(function(){w.querySelector('b').textContent='Q'+(k%6+1);w.querySelector('span').textContent=QS[k%6];k++;},90);
+        setTimeout(function(){clearInterval(iv);w.classList.remove('spin');$('db-spin').disabled=false;$('db-spin').textContent='Spin again';draft={q:i,t:''};showQ(i);},1200);});
+      $('db-ta').addEventListener('input',function(){draft.t=$('db-ta').value;try{localStorage.setItem(TK,JSON.stringify(draft));}catch(e){}count();});
+      if(typeof draft.q==='number')showQ(draft.q);
+
+      /* 5. homework checklist (template todo block fires co-todo) */
+      document.addEventListener('co-todo',function(e){if(e.detail&&e.detail.total&&e.detail.done===e.detail.total)award('todo');});
+      try{var td=JSON.parse(localStorage.getItem('co-todo-'+SLUG))||{},tn=0;for(var q in td)if(td[q])tn++;if(tn>=6)award('todo');}catch(e){}
+
+      /* 6. quiz badge: quiz.js stores the best score in co-quiz-<slug> */
+      function checkQuiz(){try{if((+localStorage.getItem('co-quiz-'+SLUG)||0)>=4)award('quiz');}catch(e){}}
+      checkQuiz();setInterval(checkQuiz,1500);
+      })();
+      </script>

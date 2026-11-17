@@ -522,7 +522,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
 <link rel="stylesheet" href="/assets/theme.css?v=20261015d">
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
 <script>if(/^#(week-\d+|curriculum)$/.test(location.hash))location.replace("/decoding-bitcoin/curriculum"+location.search+(location.hash==="#curriculum"?"":location.hash));</script>
-<script src="/assets/mastering-bitcoin/cohort.js?v=20261116a" defer></script>
+<script src="/assets/mastering-bitcoin/cohort.js?v=20261117a" defer></script>
 <script src="/assets/mastering-bitcoin/app.js?v=20261115a" defer></script>
 </head>
 <body>
@@ -630,7 +630,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
     <script>
     document.addEventListener("DOMContentLoaded", function(){
       // Week 1 recording: comes from recordings[1].video in assets/mastering-bitcoin/cohort.js.
-      var REC = (((window.MB_COHORT || {}).recordings || {})[1] || {}).video || "";
+      var R1 = (((window.MB_COHORT || {}).recordings || {})[1] || {}), REC = R1.video || "";
       var first = Date.UTC(2026,10,16,12,30), last = Date.UTC(2027,0,18,12,30), now = Date.now();
       if (now < first || now > last) return;
       var s = document.getElementById("catch-up"); s.hidden = false;
@@ -638,6 +638,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
       var wk = Math.round((next.getTime() - first)/(7*864e5)) + 1;
       s.querySelector("[data-cu-next]").textContent = "Monday " + next.toLocaleDateString("en-GB",{day:"numeric",month:"short",timeZone:"Asia/Singapore"}) + " (week " + wk + ")";
       if (REC) { var a = s.querySelector("[data-cu-rec]"); a.href = REC; a.target = "_blank"; a.rel = "noopener"; s.querySelector("[data-cu-rec-note]").textContent = "The intro session, recorded."; }
+      else if (R1.recap) { var r = s.querySelector("[data-cu-rec]"); r.href = R1.recap; r.textContent = "The week 1 recap"; s.querySelector("[data-cu-rec-note]").textContent = "Notes and mini-games now. Recording coming soon."; }
       var intro = document.querySelector(".mb-intro");
       if (intro) intro.innerHTML = "<strong>The cohort is on, and you can still join.</strong> <a href=\"#catch-up\">Catch up on week 1</a> in 15 minutes.";
     });

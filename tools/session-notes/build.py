@@ -147,6 +147,33 @@ style = src[src.index('<style>'):head_end] + """
 .qz button.button, .qz button.ghost { border: 0; cursor: pointer; font: inherit; font-weight: 700; }
 .qz button.ghost { border: 1px solid rgba(255,255,255,.16); background: transparent; }
 .prose .qz-score { margin: 10px 0 4px; font: 800 44px "Plus Jakarta Sans", sans-serif; color: var(--orange); }
+/* v6 template pieces: reading progress, recording-coming-soon slot, series journey, homework checklist */
+.rp { position: fixed; left: 0; top: 0; height: 3px; width: 0; background: linear-gradient(90deg, var(--orange), #FFB347); z-index: 200; pointer-events: none; }
+.soon { position: relative; margin: 0 0 14px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: #000; }
+.soon img { display: block; width: 100%; height: auto; filter: brightness(.5) saturate(.8); }
+.soon-tag { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); display: flex; align-items: center; gap: 10px; padding: 12px 20px; border-radius: 99px; background: rgba(10,10,10,.82); border: 1px solid rgba(247,147,26,.55); color: var(--text); font: 700 14px/1.2 "Inter", system-ui, sans-serif; white-space: nowrap; }
+.soon-tag i { width: 10px; height: 10px; border-radius: 50%; background: var(--orange); animation: soonp 1.6s ease-in-out infinite; }
+@keyframes soonp { 50% { opacity: .2; } }
+.chapters li > span { display: flex; gap: 12px; padding: 8px 12px; color: var(--muted); font-size: 15px; line-height: 1.4; }
+.jr { margin: 0 0 30px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--band); }
+.jr-top { display: flex; justify-content: space-between; gap: 6px 14px; align-items: baseline; flex-wrap: wrap; margin: 0 0 12px; }
+.jr-top b { font: 700 12px "Plus Jakarta Sans", monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--orange); }
+.jr-top a { color: var(--dim); font-size: 13px; }
+.jr ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(var(--n), minmax(0,1fr)); gap: 5px; }
+.jr li { margin: 0; height: 9px; border-radius: 99px; background: rgba(255,255,255,.1); }
+.jr li.done { background: rgba(247,147,26,.55); }
+.jr li.now { background: var(--orange); box-shadow: 0 0 0 3px rgba(247,147,26,.22), 0 0 18px rgba(247,147,26,.45); }
+.jr-now { margin: 12px 0 0; color: var(--muted); font-size: 14.5px; line-height: 1.5; }
+.jr-now strong { color: var(--text); }
+.todo { margin: 0 0 40px; padding: 20px 22px 14px; border: 1px solid rgba(247,147,26,.3); border-radius: 16px; background: var(--card); }
+.todo .eyebrow { margin: 0 0 4px; display: flex; justify-content: space-between; gap: 10px; }
+.todo .eyebrow span { color: var(--dim); letter-spacing: .06em; }
+.todo label { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-top: 1px solid rgba(255,255,255,.06); cursor: pointer; color: var(--muted); font-size: 15.5px; line-height: 1.45; }
+.todo label:first-of-type { border-top: 0; }
+.todo input { accent-color: #F7931A; width: 18px; height: 18px; margin: 2px 0 0; flex: none; cursor: pointer; }
+.todo label.on > span { color: var(--dim); text-decoration: line-through; }
+.todo label a { color: var(--orange); }
+.todo-msg { margin: 6px 0 0; color: var(--orange); font: 600 13px/1.5 "Plus Jakarta Sans", monospace; min-height: 1em; }
 @media (max-width: 700px) { .chapters ol { grid-template-columns: 1fr; } .next-card { grid-template-columns: 1fr; } .quote p { font-size: 19px; } }
 
 @media (max-width: 560px) { .viz { padding: 18px; font-size: 15px; } .q-grid { grid-template-columns: 1fr; } .flow-hop { flex: 0 0 100%; text-align: center; } .flow-step { flex-basis: 100%; } .flow-hop i { display: inline-block; font-style: normal; transform: rotate(90deg); } }
@@ -229,7 +256,7 @@ REPO = 'https://github.com/code-orange-dev/session-notes'
 DISCORD = 'https://discord.gg/ZtvA79paWa'
 CAL_SUB = 'https://calendar.google.com/calendar/r?cid=466de2be7431d78be2049f96f5fd31f9b06b5a9cd94f909ba3182b18442ed499%40group.calendar.google.com'
 HERE = pathlib.Path(__file__).resolve().parent
-TOPIC_ORDER = ['Bitcoin basics', 'Self-custody', 'Hardware wallets', 'Privacy', 'PayJoin', 'Cypherpunk history', 'History', 'Bitcoin network', 'Bitcoin Core', 'Code review', 'Nostr', 'Mesh networking', 'Lightning', 'Ecash', 'Wallets', 'Security', 'Explorers', 'Messaging', 'AI agents', 'Vibe coding', 'Self-hosting', 'Productivity', 'Code Orange']
+TOPIC_ORDER = ['Bitcoin basics', 'Self-custody', 'Hardware wallets', 'Privacy', 'PayJoin', 'Cypherpunk history', 'History', 'Bitcoin network', 'Bitcoin Core', 'Code review', 'Nostr', 'Mesh networking', 'Lightning', 'Ecash', 'Wallets', 'Security', 'Explorers', 'Messaging', 'AI agents', 'Vibe coding', 'Learning paths', 'Self-hosting', 'Productivity', 'Code Orange']
 
 def esc(s): return _html.escape(s, quote=True)
 def strip_tags(s): return re.sub(r'<[^>]+>', '', s)
@@ -285,7 +312,8 @@ def resources_html(n):
     out += '      <p><a href="/resources">Browse every resource from every session &rarr;</a></p>\n'
     return out
 
-SCRIPT = '''<script>document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){navigator.clipboard&&navigator.clipboard.writeText(b.dataset.copy).then(function(){b.textContent='Link copied';});});});
+SCRIPT = '''<div class="rp" aria-hidden="true"></div><script>(function(){var b=document.querySelector('.rp');if(!b)return;function u(){var h=document.documentElement,m=h.scrollHeight-h.clientHeight;b.style.width=(m>0?Math.min(100,h.scrollTop/m*100):0)+'%';}addEventListener('scroll',u,{passive:true});u();})();
+document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){navigator.clipboard&&navigator.clipboard.writeText(b.dataset.copy).then(function(){b.textContent='Link copied';});});});
 (function(){var v=document.getElementById('video');if(!v)return;function play(t){v.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+v.dataset.yt+'?autoplay=1&rel=0&start='+(t||0)+'" title="Session recording" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';}v.querySelector('button').addEventListener('click',function(){play(0);});document.querySelectorAll('.chapters a[data-t]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();play(a.dataset.t);v.scrollIntoView({behavior:'smooth',block:'center'});});});})();</script>'''
 
 def recap_page(n, sessions=()):
@@ -308,11 +336,18 @@ def recap_page(n, sessions=()):
         if n.get('chapters'):
             lis = ''.join(f'<li><a href="https://www.youtube.com/watch?v={n["video"]}&amp;t={t}s" data-t="{t}"><time>{ts(t)}</time><span>{label}</span></a></li>' for t, label in n['chapters'])
             page += f'    <details class="chapters"><summary>Jump to a chapter <span style="color:var(--dim);font-weight:500">({len(n["chapters"])} chapters)</span></summary><ol>{lis}</ol></details>\n'
+    elif n.get('video_pending'):
+        page += f'    <div class="soon" id="recording"><img src="{n["img"]}" alt="{esc(n["series"] + ": " + n["title"])}" width="1200" height="630"><span class="soon-tag"><i></i>Recording coming soon</span></div>\n'
+        page += '    <p class="video-note">The recording goes up on YouTube shortly and will play right here.</p>\n'
+        if n.get('chapters'):
+            lis = ''.join(f'<li><span><time>{ts(t)}</time><span>{label}</span></span></li>' for t, label in n['chapters'])
+            page += f'    <details class="chapters"><summary>What we covered, minute by minute <span style="color:var(--dim);font-weight:500">({len(n["chapters"])} moments)</span></summary><ol>{lis}</ol></details>\n'
     else:
         page += f'    <figure class="article-figure note-figure"><img src="{n["img"]}" alt="{esc(n["series"] + ": " + n["title"])}" width="1200" height="630"></figure>\n'
-    page += '    <div class="prose">\n'
+    page += '    <div class="prose">\n' + journey_html(n)
     if n.get('tldr'):
         page += '      <div class="tldr">\n        <p class="eyebrow">TL;DR</p>\n        <ul>\n' + ''.join(f'          <li>{x}</li>\n' for x in n['tldr']) + '        </ul>\n      </div>\n\n'
+    page += todo_html(n)
     page += n['body'] + '\n' + quiz_html(n) + resources_html(n) + '    </div>\n'
     static = f"<h3>{n['next']['title']}</h3><p>{n['next']['when']}</p>" if n.get('next') else '<h3>See what is coming up</h3><p>Every session is free and on Discord.</p>'
     key = next((k for k in ('privacy track', 'code review club', 'reading club', 'sovereign bitcoiner', 'self-custody', 'agentic', 'decoding bitcoin', 'bitcoin basics') if k in strip_tags(n['series']).lower()), '')
@@ -338,6 +373,33 @@ def recap_page(n, sessions=()):
     return page
 
 import urllib.parse
+
+def journey_html(n):
+    """Optional series tracker, e.g. "Week 1 of 10" for a cohort. JSON: journey {label, unit, current, steps[], link, link_text, next}."""
+    j = n.get('journey')
+    if not j: return ''
+    steps, cur, unit = j['steps'], j['current'], j.get('unit', 'Week')
+    lis = ''
+    for i, t in enumerate(steps):
+        cls = 'now' if i + 1 == cur else ('done' if i + 1 < cur else '')
+        lis += f'<li class="{cls}" title="{esc(unit + " " + str(i + 1) + ": " + t)}"></li>'
+    link = f'<a href="{j["link"]}">{j.get("link_text", "See all weeks")} &rarr;</a>' if j.get('link') else ''
+    nxt = f' Next: <strong>{j["next"]}</strong>.' if j.get('next') else ''
+    return (f'      <div class="jr" aria-label="{esc(j["label"])}"><div class="jr-top"><b>{j["label"]}: {unit} {cur} of {len(steps)}</b>{link}</div>'
+            f'<ol style="--n:{len(steps)}">{lis}</ol><p class="jr-now">You are here: <strong>{steps[cur - 1]}</strong>.{nxt}</p></div>\n\n')
+
+TODO_JS = """<script>(function(){var r=document.getElementById('todo'),K='co-todo-'+r.dataset.todo,S={};try{S=JSON.parse(localStorage.getItem(K))||{};}catch(e){}
+      var bs=r.querySelectorAll('input'),c=r.querySelector('[data-todo-count]'),m=r.querySelector('.todo-msg');
+      function draw(){var n=0;bs.forEach(function(b){b.checked=!!S[b.dataset.i];b.parentNode.classList.toggle('on',b.checked);if(b.checked)n++;});c.textContent=n+' / '+bs.length;m.textContent=n==bs.length?'All done. See you next time.':'';document.dispatchEvent(new CustomEvent('co-todo',{detail:{done:n,total:bs.length}}));}
+      bs.forEach(function(b){b.addEventListener('change',function(){S[b.dataset.i]=b.checked?1:0;try{localStorage.setItem(K,JSON.stringify(S));}catch(e){}draw();});});draw();})();</script>"""
+
+def todo_html(n):
+    """Optional "before next time" checklist. JSON: todo {title, items[] (HTML allowed)}. Ticks stay in this browser (co-todo-<slug>) and fire a co-todo event."""
+    t = n.get('todo')
+    if not t: return ''
+    items = ''.join(f'<label><input type="checkbox" data-i="{i}"><span>{x}</span></label>' for i, x in enumerate(t['items']))
+    return (f'      <section class="todo" id="todo" data-todo="{n["slug"]}"><p class="eyebrow">{t.get("title", "Before next time")}<span data-todo-count>0 / {len(t["items"])}</span></p>{items}<p class="todo-msg" role="status" aria-live="polite"></p></section>\n'
+            f'      {TODO_JS}\n\n')
 
 def quiz_html(n):
     if not n.get('quiz'): return ''

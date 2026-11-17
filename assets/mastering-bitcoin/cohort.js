@@ -16,7 +16,8 @@ window.MB_COHORT = {
   discordEvent: "https://discord.gg/6XPJ96sCY4?event=1559048812654366771",
   // After each session, paste the YouTube link and the recap page here: they show on every student's dashboard.
   recordings: {
-    // 1: { video: "https://youtu.be/...", recap: "/session-notes/2026/2026-11-16-decoding-bitcoin-week-1" },
+    // 1: { video: "https://youtu.be/...", recap: "/session-notes/2026-11-16-decoding-bitcoin-week-1" },
+    1: { recap: "/session-notes/2026-11-16-decoding-bitcoin-week-1" },
   },
   courseUrl: "https://bitcoindevs.xyz/decoding",
 

@@ -364,6 +364,33 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 .qz button.button, .qz button.ghost { border: 0; cursor: pointer; font: inherit; font-weight: 700; }
 .qz button.ghost { border: 1px solid rgba(255,255,255,.16); background: transparent; }
 .prose .qz-score { margin: 10px 0 4px; font: 800 44px "Plus Jakarta Sans", sans-serif; color: var(--orange); }
+/* v6 template pieces: reading progress, recording-coming-soon slot, series journey, homework checklist */
+.rp { position: fixed; left: 0; top: 0; height: 3px; width: 0; background: linear-gradient(90deg, var(--orange), #FFB347); z-index: 200; pointer-events: none; }
+.soon { position: relative; margin: 0 0 14px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: #000; }
+.soon img { display: block; width: 100%; height: auto; filter: brightness(.5) saturate(.8); }
+.soon-tag { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); display: flex; align-items: center; gap: 10px; padding: 12px 20px; border-radius: 99px; background: rgba(10,10,10,.82); border: 1px solid rgba(247,147,26,.55); color: var(--text); font: 700 14px/1.2 "Inter", system-ui, sans-serif; white-space: nowrap; }
+.soon-tag i { width: 10px; height: 10px; border-radius: 50%; background: var(--orange); animation: soonp 1.6s ease-in-out infinite; }
+@keyframes soonp { 50% { opacity: .2; } }
+.chapters li > span { display: flex; gap: 12px; padding: 8px 12px; color: var(--muted); font-size: 15px; line-height: 1.4; }
+.jr { margin: 0 0 30px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--band); }
+.jr-top { display: flex; justify-content: space-between; gap: 6px 14px; align-items: baseline; flex-wrap: wrap; margin: 0 0 12px; }
+.jr-top b { font: 700 12px "Plus Jakarta Sans", monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--orange); }
+.jr-top a { color: var(--dim); font-size: 13px; }
+.jr ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(var(--n), minmax(0,1fr)); gap: 5px; }
+.jr li { margin: 0; height: 9px; border-radius: 99px; background: rgba(255,255,255,.1); }
+.jr li.done { background: rgba(247,147,26,.55); }
+.jr li.now { background: var(--orange); box-shadow: 0 0 0 3px rgba(247,147,26,.22), 0 0 18px rgba(247,147,26,.45); }
+.jr-now { margin: 12px 0 0; color: var(--muted); font-size: 14.5px; line-height: 1.5; }
+.jr-now strong { color: var(--text); }
+.todo { margin: 0 0 40px; padding: 20px 22px 14px; border: 1px solid rgba(247,147,26,.3); border-radius: 16px; background: var(--card); }
+.todo .eyebrow { margin: 0 0 4px; display: flex; justify-content: space-between; gap: 10px; }
+.todo .eyebrow span { color: var(--dim); letter-spacing: .06em; }
+.todo label { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-top: 1px solid rgba(255,255,255,.06); cursor: pointer; color: var(--muted); font-size: 15.5px; line-height: 1.45; }
+.todo label:first-of-type { border-top: 0; }
+.todo input { accent-color: #F7931A; width: 18px; height: 18px; margin: 2px 0 0; flex: none; cursor: pointer; }
+.todo label.on > span { color: var(--dim); text-decoration: line-through; }
+.todo label a { color: var(--orange); }
+.todo-msg { margin: 6px 0 0; color: var(--orange); font: 600 13px/1.5 "Plus Jakarta Sans", monospace; min-height: 1em; }
 @media (max-width: 700px) { .chapters ol { grid-template-columns: 1fr; } .next-card { grid-template-columns: 1fr; } .quote p { font-size: 19px; } }
 
 @media (max-width: 560px) { .viz { padding: 18px; font-size: 15px; } .q-grid { grid-template-columns: 1fr; } .flow-hop { flex: 0 0 100%; text-align: center; } .flow-step { flex-basis: 100%; } .flow-hop i { display: inline-block; font-style: normal; transform: rotate(90deg); } }
@@ -940,9 +967,10 @@ a.res:hover { border-color: rgba(247,147,26,.55); transform: translateY(-2px); }
     </aside>
     <script src="/assets/session-notes/next.js?v=20261112b" defer></script>
     <div class="share-row"><strong>Share these notes:</strong><a href="https://x.com/intent/post?text=Can%20your%20chats%20be%20switched%20off%3F%20Notes%20%28and%205%20mini-games%29%20from%20the%20%40CodeOrangeDevs%20workshop%20on%20White%20Noise%20and%20private%20messaging%20on%20Nostr&amp;url=https%3A%2F%2Fcodeorange.dev%2Fsession-notes%2F2026-11-11-sovereign-bitcoiner-workshop" target="_blank" rel="noopener">Post on X</a><button type="button" data-copy="https://codeorange.dev/session-notes/2026-11-11-sovereign-bitcoiner-workshop">Copy link</button></div>
-    <script>document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){navigator.clipboard&&navigator.clipboard.writeText(b.dataset.copy).then(function(){b.textContent='Link copied';});});});
+    <div class="rp" aria-hidden="true"></div><script>(function(){var b=document.querySelector('.rp');if(!b)return;function u(){var h=document.documentElement,m=h.scrollHeight-h.clientHeight;b.style.width=(m>0?Math.min(100,h.scrollTop/m*100):0)+'%';}addEventListener('scroll',u,{passive:true});u();})();
+document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){navigator.clipboard&&navigator.clipboard.writeText(b.dataset.copy).then(function(){b.textContent='Link copied';});});});
 (function(){var v=document.getElementById('video');if(!v)return;function play(t){v.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+v.dataset.yt+'?autoplay=1&rel=0&start='+(t||0)+'" title="Session recording" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';}v.querySelector('button').addEventListener('click',function(){play(0);});document.querySelectorAll('.chapters a[data-t]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();play(a.dataset.t);v.scrollIntoView({behavior:'smooth',block:'center'});});});})();</script>
-    <script src="/assets/session-notes/passport.js?v=20261113a" data-slug="2026-11-11-sovereign-bitcoiner-workshop" data-total="9"></script>
+    <script src="/assets/session-notes/passport.js?v=20261113a" data-slug="2026-11-11-sovereign-bitcoiner-workshop" data-total="10"></script>
     <nav class="more-notes" aria-label="More session notes"><a class="older" href="/session-notes/2026-10-28-bitcoin-reading-club"><small>&larr; Earlier session</small>Bitcoin Reading Club: The whitepaper abstract, line by line</a><a class="newer" href="/session-notes/2026-11-12-code-review-club"><small>Later session &rarr;</small>Code Review Club: Mesh networks, address spam and Floresta</a></nav>
     <p class="source-box">These notes are also on GitHub: <a href="https://github.com/code-orange-dev/session-notes/blob/main/2026/2026-11-11-sovereign-bitcoiner-workshop.md" target="_blank" rel="noopener">code-orange-dev/session-notes</a>. Free to share and reuse (CC0).</p>
   </article>
