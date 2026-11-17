@@ -24,9 +24,9 @@ window.MB_COHORT = {
   autoAssign: false,
   assigned: {
     // Week 1 questions, given out after the 16 Nov call, discussed on Mon 23 Nov.
-    "w1-q1": ["andywong31"],
+    "w1-q1": ["andywong31", "Alex Xie"],
     "w1-q2": ["ankitajana21"],
-    "w1-q3": ["Aroso Emmanuel"],
+    "w1-q3": ["Aroso Emmanuel", "Razor"],
     "w1-q4": ["Chaitika"],
     "w1-q5": ["Matthew", "Maxima Freiman"],
     "w1-q6": ["Ngineks", "rfxx666"],
