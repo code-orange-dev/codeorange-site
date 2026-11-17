@@ -96,6 +96,8 @@ function ensureTables() {
       { query: "ALTER TABLE mb_students ADD COLUMN IF NOT EXISTS nostr text", params: [] },
       { query: "CREATE UNIQUE INDEX IF NOT EXISTS mb_students_nostr ON mb_students (cohort, nostr) WHERE nostr IS NOT NULL", params: [] },
       { query: "ALTER TABLE mb_students ADD COLUMN IF NOT EXISTS link_sent_at timestamptz", params: [] },
+      // Where the sign-up came from, e.g. "week2" from a student's shared image (November 2026).
+      { query: "ALTER TABLE mb_students ADD COLUMN IF NOT EXISTS ref text", params: [] },
       {
         query: `CREATE TABLE IF NOT EXISTS mb_done (
           student_id integer NOT NULL REFERENCES mb_students(id) ON DELETE CASCADE,
@@ -190,6 +192,7 @@ async function signup(body, req) {
   const name = clean(body.name, 60);
   const discord = clean(body.discord, 40).replace(/^@/, "").toLowerCase();
   const email = clean(body.email, 120).toLowerCase();
+  const ref = /^[a-z0-9_-]{1,40}$/i.test(String(body.ref || "")) ? String(body.ref).toLowerCase() : null;
   let nostr = "";
   if (body.nostr) {
     nostr = verifyAuthEvent(body.nostr, apiUrl(req));
@@ -216,11 +219,11 @@ async function signup(body, req) {
         { query: "SELECT pg_advisory_xact_lock(hashtext('mb_students_signup'))::text AS locked", params: [] },
         { query: limits, params: [COHORT, ip] },
         {
-          query: `INSERT INTO mb_students (cohort, name, discord, email, token, ip_hash, nostr)
-                  SELECT $1, $2, $3, $4, $5, $6, $7 FROM (${limits.replace("$2", "$6")}) c
+          query: `INSERT INTO mb_students (cohort, name, discord, email, token, ip_hash, nostr, ref)
+                  SELECT $1, $2, $3, $4, $5, $6, $7, $8 FROM (${limits.replace("$2", "$6")}) c
                    WHERE c.total < ${MAX_STUDENTS} AND c.mine < ${SIGNUPS_PER_IP_HOUR} AND c.recent < ${SIGNUPS_PER_10_MIN}
                   RETURNING id`,
-          params: [COHORT, shown, discord, email, token, ip, nostr || null],
+          params: [COHORT, shown, discord, email, token, ip, nostr || null, ref],
         },
       ],
     }));
@@ -291,7 +294,7 @@ async function adminList() {
   const { results } = await neon({
     queries: [
       {
-        query: `SELECT id, name, email, discord, nostr, hidden, created_at FROM mb_students WHERE cohort = $1 ORDER BY created_at, id`,
+        query: `SELECT id, name, email, discord, nostr, hidden, created_at, ref FROM mb_students WHERE cohort = $1 ORDER BY created_at, id`,
         params: [COHORT],
       },
       { query: "SELECT d.student_id, count(*) AS n FROM mb_done d JOIN mb_students s ON s.id = d.student_id WHERE s.cohort = $1 GROUP BY 1", params: [COHORT] },
@@ -308,6 +311,7 @@ async function adminList() {
       id: Number(s.id),
       name: s.name,
       email: s.email,
+      ref: s.ref || "",
       discord: s.discord,
       nostr: s.nostr,
       hidden: s.hidden === "t" || s.hidden === true || s.hidden === "true",

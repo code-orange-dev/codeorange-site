@@ -562,6 +562,17 @@
     d.open ? state.open.add(wi) : state.open.delete(wi);
   }, true);
 
+  // Remember ?ref=… (e.g. from a student's shared "I finished week N" image) so the sign-up can be credited.
+  try { const r = new URLSearchParams(location.search).get("ref"); if (r && /^[a-z0-9_-]{1,40}$/i.test(r)) sessionStorage.setItem("mb-ref", r); } catch (e) {}
+  // Came from a friend's shared image: greet them on the cohort page.
+  (() => {
+    const m = /^week(10|[1-9])$/i.exec(new URLSearchParams(location.search).get("ref") || "");
+    const intro = document.querySelector(".mb-intro");
+    if (!m || !intro) return;
+    const put = () => { intro.innerHTML = `<strong>A friend just finished week ${m[1]}. You can still join, free.</strong> <a href="#catch-up">Catch up</a> in 15 minutes, then <a href="#signup">sign up</a>.`; };
+    put();
+    document.addEventListener("DOMContentLoaded", () => setTimeout(put, 0));
+  })();
   if ($("#mb-signup")) $("#mb-signup").addEventListener("submit", async (ev) => {
     ev.preventDefault();
     const form = ev.target;
@@ -576,6 +587,7 @@
         discord: f.get("discord"),
         email: f.get("email"),
         website: f.get("website"),
+        ref: (() => { try { return sessionStorage.getItem("mb-ref") || undefined; } catch (e) { return undefined; } })(),
         // A fresh signature ties the Nostr key to this sign-up.
         nostr: state.nostr ? await nostrEvent() : undefined,
       });

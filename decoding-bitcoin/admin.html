@@ -169,6 +169,7 @@ details.st dd { margin: 0; white-space: pre-wrap; }
       [active.filter((s) => s.discord).length, "gave a Discord name"],
       [active.filter((s) => s.nostr).length, "use Nostr"],
       [all.length - active.length, "hidden"],
+      [active.filter((s) => s.ref).length, "came from a shared link (?ref=)"],
     ].map(([n, label]) => `<div><strong>${n}</strong><span>${label}</span></div>`).join("");
     const q = $("#filter").value.trim().toLowerCase();
     const rows = all.filter((s) => !q || [s.name, s.email, s.discord].some((v) => (v || "").toLowerCase().includes(q)));
