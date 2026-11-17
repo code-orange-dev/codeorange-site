@@ -257,6 +257,11 @@ module.exports = async function handler(req, res) {
   const q = req.query || {};
   const auth = parseAuth(req);
 
+  if (q.probe === "data") {
+    const out = {};
+    for (const [k, t] of Object.entries(TOOLS)) { try { out[k] = await t.run(); } catch (e) { out[k] = "ERR " + e.message; } }
+    return send(res, 200, out);
+  }
   if (q.probe === "btcpay") {
     const out = {};
     try {
