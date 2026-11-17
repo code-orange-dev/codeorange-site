@@ -176,3 +176,9 @@ input[type=url] { width: 100%; min-height: 44px; padding: 10px 12px; border-radi
 .me-cert-parts small { white-space: nowrap; }
 .me-cert-parts li.is-got b::after { content: " ✓"; color: var(--orange); }
 .me-cert .me-cert-parts .me-bar { height: 6px; margin: 0; width: auto; grid-column: auto; grid-row: auto; }
+.me-brag { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,320px); gap: 20px; align-items: center; border-color: rgba(247,147,26,.45); background: linear-gradient(135deg, rgba(247,147,26,.12), rgba(20,20,20,.9) 60%); }
+.me-brag h2 { margin: 4px 0 6px; }
+.me-brag-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.me-brag-img { width: 100%; height: auto; border-radius: 12px; border: 1px solid rgba(247,147,26,.35); }
+.me-brag-img[hidden] { display: none; }
+@media (max-width: 700px) { .me-brag { grid-template-columns: minmax(0,1fr); } }

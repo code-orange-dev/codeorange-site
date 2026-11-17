@@ -239,6 +239,51 @@
       <small>${got ? "We'll send it after graduation. Add your GitHub username in your goals so it shows on it." : `To earn it: lessons for ${need.lessons} of 10 weeks, ${need.exercises} of the 27 exercises (weeks 2–10) and ${need.checkins} session check-ins. Attending live or posting your work on Discord both count. <a href="/certificates/sample">See a sample</a>`}</small></div>`;
   }
 
+  // "I finished week N": a shareable image for X / Nostr (drawn by share-card.js), linking back to sign-up.
+  function finishedWeek() {
+    let f = 0;
+    C.weeks.forEach((_, i) => { if (state.done.has(`w${i + 1}-r1`)) f = i + 1; });
+    return f;
+  }
+  const SHARE_URL = (n) => `https://codeorange.dev/decoding-bitcoin?ref=week${n}`;
+  const shareText = (n) => `I just finished week ${n} of 10 of Decoding Bitcoin: ${C.weeks[n - 1].title}. Free study cohort, Mondays on Discord, join anytime.`;
+  function shareCard() {
+    const n = finishedWeek();
+    if (!n || !window.MBShareCard) return "";
+    return `<div class="me-card me-wide me-brag" id="share-week">
+      <div class="me-brag-text"><p class="me-label">Week ${n} done · share it</p>
+      <h2>Tell people you finished week ${n}.</h2>
+      <p class="me-small">One tap makes your image. Post it on X or Nostr: it keeps you going, and brings friends into the cohort.</p>
+      <div class="me-brag-btns"><button class="button small" type="button" data-brag="share">Share my week ${n} image</button><a class="ghost small" target="_blank" rel="noopener" href="https://x.com/intent/post?${new URLSearchParams({ text: shareText(n), url: SHARE_URL(n) })}">Post on X</a><button class="ghost small" type="button" data-brag="nostr">Copy for Nostr</button></div></div>
+      <img class="me-brag-img" alt="Your week ${n} share image" hidden>
+    </div>`;
+  }
+  async function bragImage() {
+    const n = finishedWeek(), w = C.weeks[n - 1];
+    const blob = await window.MBShareCard.make({ week: n, weeks: C.weeks.length, title: w.title, name: (state.me && state.me.name) || "", topics: (w.lessons || []).map((l) => l.title.replace(/^Optional:\s*/, "")) });
+    return { n, blob, file: new File([blob], `decoding-bitcoin-week-${n}.png`, { type: "image/png" }) };
+  }
+  async function brag(kind, btn) {
+    if (kind === "nostr") {
+      const n = finishedWeek();
+      try { await navigator.clipboard.writeText(`${shareText(n)} ${SHARE_URL(n)} #bitcoin #DecodingBitcoin`); toast("Copied. Paste it into your Nostr app, and attach your image."); } catch (e) { toast("Couldn't copy on this device."); }
+      return;
+    }
+    btn.disabled = true;
+    try {
+      const { n, blob, file } = await bragImage();
+      const img = document.querySelector(".me-brag-img");
+      if (img) { img.src = URL.createObjectURL(blob); img.hidden = false; }
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try { await navigator.share({ files: [file], text: `${shareText(n)} ${SHARE_URL(n)}` }); return; } catch (e) { if (e && e.name === "AbortError") return; }
+      }
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob); a.download = file.name; a.click();
+      toast("Image saved. Attach it to your post on X or Nostr.");
+    } catch (e) { toast("Couldn't make the image on this device."); }
+    finally { btn.disabled = false; }
+  }
+
   function weekStrip(s) {
     return C.weeks.map((w, i) => {
       const n = i + 1;
@@ -584,7 +629,7 @@
         : `Week ${currentWeek + 1} of ${C.weeks.length}. ${s.streak >= 2 ? `${s.streak}-week streak, keep it going!` : "One step at a time."}`;
     const cards = currentWeek < 0
       ? [followupCard(), welcomeCard(), nextCardTop(s), goalsCard(), skillsCard(), checkCard(), thisWeekCard(), progressCard(s), buddyCard(), checkinCard(), askCard(), nextCard(), linkCard()]
-      : [followupCard(), welcomeCard(), nextCardTop(s), thisWeekCard(), certBox(s, true), checkinCard(), quizCard(),
+      : [followupCard(), welcomeCard(), nextCardTop(s), thisWeekCard(), shareCard(), certBox(s, true), checkinCard(), quizCard(),
         `<details class="me-more me-wide" id="more"><summary>More: progress, class, study buddy, goals, skills</summary><div class="me-more-grid">`,
         progressCard(s), classCard() || askCard(), buddyCard(), classCard() ? askCard() : "", projectCard(), checkCard(), goalsCard(), skillsCard(), nextCard(), linkCard(),
         `</div></details>`];
@@ -593,6 +638,8 @@
     if (!state.moreBound) $("#me-app").addEventListener("click", (e) => {
       const ok = e.target.closest("[data-welcome-ok]");
       if (ok) { seen.set(); ok.closest(".me-welcome")?.remove(); return; }
+      const bb = e.target.closest("[data-brag]");
+      if (bb) { brag(bb.dataset.brag, bb); return; }
       const a = e.target.closest('a[href^="#"]');
       const t = a && document.getElementById(a.getAttribute("href").slice(1));
       const box = t && t.closest("details.me-more");
@@ -600,6 +647,8 @@
     });
     state.moreBound = true;
     bind();
+    const bimg = document.querySelector(".me-brag-img");
+    if (bimg) bragImage().then(({ blob }) => { bimg.src = URL.createObjectURL(blob); bimg.hidden = false; }).catch(() => {});
     if (followupMonths) $("#followup")?.scrollIntoView({ block: "start" });
   }
 
