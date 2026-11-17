@@ -220,7 +220,7 @@ function parseAuth(req) {
 async function challenge(res, calls, practice) {
   const sats = calls * SATS_PER_CALL;
   const base = { v: 1, sats, calls, used: 0, exp: Date.now() + TOKEN_TTL, n: crypto.randomBytes(6).toString("hex") };
-  let token, invoice, checkout = null, demo = false;
+  let token, invoice, checkout = null, demo = false, reason = null;
   try {
     if (practice) throw new Error("practice mode");
     const inv = await createInvoice(sats, calls);
@@ -231,6 +231,7 @@ async function challenge(res, calls, practice) {
     demo = true;
     token = sign({ ...base, demo: true });
     invoice = null;
+    reason = String((e && e.message) || e).slice(0, 200);
   }
   if (invoice) res.setHeader("WWW-Authenticate", `L402 macaroon="${token}", invoice="${invoice}"`);
   return send(res, 402, {
@@ -240,6 +241,7 @@ async function challenge(res, calls, practice) {
     invoice,
     checkout,
     demo,
+    reason,
     note: demo
       ? "Practice mode (Lightning node offline or practice requested): no real sats."
       : "Pay the invoice, then retry with  Authorization: L402 <macaroon>:<preimage>",
@@ -254,6 +256,23 @@ module.exports = async function handler(req, res) {
 
   const q = req.query || {};
   const auth = parseAuth(req);
+
+  if (q.probe === "btcpay") {
+    const out = {};
+    try {
+      const form = new URLSearchParams({ storeId: STORE_ID, price: "10", currency: "SATS", checkoutDesc: "Agent demo probe", jsonResponse: "true" });
+      const r = await withTimeout(`${BTCPAY}/api/v1/invoices`, { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded", Accept: "application/json" }, body: form.toString(), redirect: "manual" });
+      out.create = { status: r.status, location: r.headers.get("location"), body: (await r.text()).slice(0, 400) };
+      const m = (out.create.body + " " + (out.create.location || "")).match(/(?:"invoiceId"\s*:\s*"|\/i\/)([A-Za-z0-9]{10,})/i);
+      if (m) {
+        for (const pm of ["BTC-LN", "BTC_LightningLike", ""]) {
+          const t = await checkoutStatus(m[1], pm).catch((e) => "ERR " + e.message);
+          out["status_" + (pm || "default")] = String(t).slice(0, 700);
+        }
+      }
+    } catch (e) { out.error = String(e.message || e); }
+    return send(res, 200, out);
+  }
 
   // Payment status, for the page while it waits for a QR payment.
   if (q.check) {
