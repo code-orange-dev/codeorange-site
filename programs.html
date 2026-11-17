@@ -174,6 +174,10 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
   .calendar-frame iframe { height: 455px; }
   .mobile-nav a { font-size: 11px; padding-inline: 10px; }
 }
+.card-go { display: inline-block; margin-top: 16px; padding: 9px 16px; border-radius: 999px; background: #F7931A; color: #0A0A0A; font-weight: 700; font-size: 14px; }
+.program-card:hover .card-go { background: #FFB347; }
+.hero-sub { margin: 14px 0 0; color: var(--muted, #B8B8B8); font-size: 14px; }
+.hero-sub a { color: var(--orange, #F7931A); }
 </style>
 <link rel="stylesheet" href="/assets/theme.css?v=20261015d">
 <script src="/assets/site-menu.js?v=20261117a" defer></script>
@@ -215,9 +219,9 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
         <h1>Pick your path into <span class="orange">Bitcoin.</span></h1>
         <p class="lead">From zero to sovereign. From curious to contributor. Every program is hands-on, practical, and Bitcoin-only.</p>
         <div class="cta-row">
-          <a class="button" href="/apply">Apply to a Program</a>
-          <a class="ghost" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Ask in Discord</a>
+          <a class="button" href="#all">Find your program</a>
         </div>
+        <p class="hero-sub">Not sure? <a href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Ask in Discord</a> or <a href="/apply">apply</a> and we'll point you.</p>
       </div>
       <div class="terminal-card" aria-label="Code Orange terminal card">
         <div class="terminal-bar"><span></span><span></span><span></span><strong>student@codeorange</strong></div>
@@ -227,87 +231,97 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
       </div>
     </div>
   </section>
-  <section class="section-inner">
-  <div class="split"><div><p class="eyebrow">All Programs</p><h2>Developer cohorts, sovereignty workshops, and community sessions.</h2></div><p class="lead">Use this page as the front desk for the school: choose a technical cohort if you write code, a sovereignty workshop if you want practical self-custody, or a recurring meetup if you want a gentle first step.</p></div>
+  <section id="all" class="section-inner" style="scroll-margin-top:96px">
+  <div class="split"><div><p class="eyebrow">All Programs</p><h2>Cohorts, workshops and meetups.</h2></div><p class="lead">Write code? Pick a cohort. Want self-custody? Pick a workshop. Just curious? Start with a meetup.</p></div>
   <div class="grid three"><a class="program-card" href="/privacy-track">
   <img src="/assets/programs/privacy-workshop-roundtable.webp" alt="Bitcoin Privacy Track workshop at Code Orange" loading="lazy" width="750" height="1000">
   <div class="card-body">
     <span class="pill orange">For Developers</span>
     <h3 style="margin-top:16px">Bitcoin Privacy Track</h3>
-    <p>A contribution-first curriculum covering Silent Payments, Payjoin, Floresta, Fedimint, and Lightning privacy.</p>
+    <p>Contribute to Silent Payments, Payjoin, Floresta, Fedimint and Lightning privacy.</p>
     <div class="meta"><span class="pill">12 sessions</span><span class="pill">Drop-in</span></div>
+    <span class="card-go">Join the track →</span>
   </div>
 </a><a class="program-card" href="/decoding-bitcoin">
   <img src="/assets/programs/community-session-screen.webp" alt="Decoding Bitcoin study cohort at Code Orange" loading="lazy" width="750" height="1000">
   <div class="card-body">
     <span class="pill orange">Study Cohort</span>
     <h3 style="margin-top:16px">Decoding Bitcoin</h3>
-    <p>Work through Decoding Bitcoin, the interactive course by The Bitcoin Dev Project, together: transactions, Script and Taproot, with shared discussion questions, hands-on exercises and Monday sessions on Discord.</p>
-    <div class="meta"><span class="pill orange">Starts Nov 16</span><span class="pill">10 weeks</span><span class="pill">Beginner to intermediate</span></div>
+    <p>Learn transactions, Script and Taproot together, with Monday sessions on Discord.</p>
+    <div class="meta"><span class="pill orange">Join anytime</span><span class="pill">10 weeks</span><span class="pill">Beginner+</span></div>
+    <span class="card-go">Join the cohort →</span>
   </div>
 </a><a class="program-card" href="/rawbit">
   <img src="/assets/programs/node-laptop-workshop.webp" alt="rawBit workshop at Code Orange" loading="lazy" width="750" height="1000">
   <div class="card-body">
     <span class="pill orange">For Developers</span>
     <h3 style="margin-top:16px">rawBit</h3>
-    <p>A protocol deep-dive turning developers into Bitcoin builders through transactions, Script, Taproot, PSBTs, and P2P networking.</p>
+    <p>A protocol deep-dive: transactions, Script, Taproot, PSBTs and P2P.</p>
     <div class="meta"><span class="pill">10 weeks</span><span class="pill">Intermediate</span></div>
+    <span class="card-go">See the course →</span>
   </div>
 </a><a class="program-card" href="/programs/sovereign-bitcoiner">
   <img src="/assets/programs/workshop-coldcard-table.webp" alt="Sovereign Bitcoiner workshop at Code Orange" loading="lazy" width="750" height="1000">
   <div class="card-body">
     <span class="pill orange">For Bitcoiners</span>
     <h3 style="margin-top:16px">Sovereign Bitcoiner</h3>
-    <p>Deep technical training for bitcoiners who want real sovereignty: full nodes, multisig, self-custody, inheritance, Ecash, and Fedimint.</p>
+    <p>Nodes, multisig, inheritance, ecash and Fedimint for real self-custody.</p>
     <div class="meta"><span class="pill">Monthly</span><span class="pill">Intermediate</span></div>
+    <span class="card-go">See the workshop →</span>
   </div>
 </a><a class="program-card" href="/programs/agentic-engineering">
   <img src="/assets/programs/workshop-mining-laptop.webp" alt="Agentic Engineering workshop at Code Orange" loading="lazy" width="753" height="1000">
   <div class="card-body">
     <span class="pill orange">For Bitcoiners</span>
     <h3 style="margin-top:16px">Agentic Engineering</h3>
-    <p>A hands-on workshop for Bitcoiners using AI tools, Nostr, and open protocols to build useful tools.</p>
+    <p>Build useful tools with AI, Nostr and open protocols.</p>
     <div class="meta"><span class="pill">Monthly</span><span class="pill">All levels</span></div>
+    <span class="card-go">See the workshop →</span>
   </div>
 </a><a class="program-card" href="/programs/vibe-coding">
   <img src="/assets/programs/builder-roundtable-wide.webp" alt="Vibe Coding on Nostr workshop at Code Orange" loading="lazy" width="750" height="1000">
   <div class="card-body">
     <span class="pill orange">No Code Required</span>
     <h3 style="margin-top:16px">Vibe Coding on Nostr</h3>
-    <p>Build censorship-resistant apps on the p2p internet using AI tools, Nostr, and Shakespeare.DIY.</p>
+    <p>Build censorship-resistant apps on Nostr with AI tools. No code needed.</p>
     <div class="meta"><span class="pill">Monthly</span><span class="pill">Beginner</span></div>
+    <span class="card-go">See the workshop →</span>
   </div>
 </a><a class="program-card" href="/programs/bitcoin-basics">
   <img src="/assets/programs/workshop-bitcoin-toolkit.webp" alt="Bitcoin Basics workshop at Code Orange" loading="lazy" width="750" height="1000">
   <div class="card-body">
     <span class="pill orange">For Everyone</span>
     <h3 style="margin-top:16px">Bitcoin Basics</h3>
-    <p>A welcoming intro to technical Bitcoin fundamentals: keys, wallets, transactions, the mempool, and how self-custody actually works.</p>
+    <p>Keys, wallets, transactions and the mempool, explained hands-on.</p>
     <div class="meta"><span class="pill">Monthly</span><span class="pill">Beginner</span></div>
+    <span class="card-go">See the workshop →</span>
   </div>
 </a><a class="program-card" href="/programs/bitcoin-reading-club">
   <img src="/assets/programs/signing-devices-table.webp" alt="Bitcoin Reading Club workshop at Code Orange" loading="lazy" width="750" height="1000">
   <div class="card-body">
     <span class="pill orange">For Everyone</span>
     <h3 style="margin-top:16px">Bitcoin Reading Club</h3>
-    <p>Monthly deep-reads of the essential Bitcoin canon, from monetary history to protocol design and cypherpunk culture.</p>
+    <p>Monthly deep-reads of the Bitcoin canon, from money to protocol design.</p>
     <div class="meta"><span class="pill">Monthly</span><span class="pill">All levels</span></div>
+    <span class="card-go">See the club →</span>
   </div>
 </a><a class="program-card" href="/programs/talk-a-bit">
   <img src="/assets/programs/workshop-september-0514.webp" alt="Talk-a-Bit workshop at Code Orange" loading="lazy" width="750" height="1000">
   <div class="card-body">
     <span class="pill orange">For Everyone</span>
     <h3 style="margin-top:16px">Talk-a-Bit</h3>
-    <p>A free-flowing Bahasa and English meetup where bitcoiners connect, debate, and share what they are building.</p>
+    <p>A Bahasa and English meetup to connect, debate and share what you build.</p>
     <div class="meta"><span class="pill">Monthly</span><span class="pill">All levels</span></div>
+    <span class="card-go">See the meetup →</span>
   </div>
 </a><a class="program-card" href="/programs/accountability-sessions">
   <img src="/assets/programs/workshop-hands-on-devices.webp" alt="Accountability Sessions workshop at Code Orange" loading="lazy" width="750" height="1000">
   <div class="card-body">
     <span class="pill orange">For Builders</span>
     <h3 style="margin-top:16px">Accountability Sessions</h3>
-    <p>A lightweight rhythm for builders using Actions, Intentions, and Reflections to stay honest after the cohort ends.</p>
+    <p>Actions, Intentions and Reflections to keep building after a cohort.</p>
     <div class="meta"><span class="pill">Monthly</span><span class="pill">All levels</span></div>
+    <span class="card-go">See the sessions →</span>
   </div>
 </a></div>
   <div class="photo-grid"><div class="photo-card wide">
