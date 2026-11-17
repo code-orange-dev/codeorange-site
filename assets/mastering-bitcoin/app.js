@@ -205,6 +205,7 @@
               <div><h3>Exercises</h3><p class="mb-hint">${w.intro ? "Week 1 warm-ups, not counted. From week 2, exercises are required for the certificate." : "<strong>Required for the certificate.</strong> Do them on Decoding Bitcoin, share what you got on Discord, then tick each one off. Can't make Monday live? Posting your work on Discord counts as attending."}</p>${w.practice ? `<a class="button small mb-practice" href="${esc(w.practice)}" target="_blank" rel="noopener">Do this week's exercises on Decoding Bitcoin ↗</a>` : ""}<ol class="mb-list">${exercises}</ol></div>
             </div>
             <a class="mb-checklink" href="/decoding-bitcoin/check#week-${wk}"><b>Weekly check</b> · 5 questions on this week, answers explained →</a>
+            <a class="mb-guidelink" href="https://github.com/code-orange-dev/curriculum/tree/main/decoding-bitcoin/week-${pad(wk)}" target="_blank" rel="noopener"><b>Study guide</b> · slides, notes and model answers on GitHub ↗</a>
           </div>
         </details>`;
       })
