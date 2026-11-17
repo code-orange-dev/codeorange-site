@@ -1,3 +1,50 @@
+// "Session notes" lives in the menu without adding a top-level button:
+// on desktop it sits in a small drop-down under Programs, on phones it is its own row.
+const CO_EXTRA = [["/session-notes", "Session notes"], ["/articles", "Articles"]];
+(() => {
+  const nav = document.querySelector('.co-links, .desktop-nav, .nav-links, [data-mq="nav-links"]');
+  if (!nav) return;
+  const host = [...nav.querySelectorAll("a[href]")].find((a) => /^\/programs\/?$/.test(a.getAttribute("href")));
+  if (!host) return;
+  const css = document.createElement("style");
+  css.textContent =
+    ".co-dd-host::after{content:'';display:inline-block;width:5px;height:5px;margin:0 0 3px 7px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);opacity:.7}" +
+    ".co-dd{position:fixed;z-index:1000;min-width:190px;padding:8px;border-radius:14px;background:#141414;border:1px solid rgba(255,255,255,.14);box-shadow:0 18px 50px rgba(0,0,0,.55);display:none}" +
+    ".co-dd.open{display:block}" +
+    ".co-dd a{display:block;padding:10px 14px;border-radius:9px;color:#F5F5F5;font:600 14px/1.2 Inter,system-ui,sans-serif;text-decoration:none;white-space:nowrap}" +
+    ".co-dd a:hover,.co-dd a:focus-visible{background:rgba(247,147,26,.14);color:#F7931A;outline:none}";
+  document.head.appendChild(css);
+  host.classList.add("co-dd-host");
+  host.setAttribute("aria-haspopup", "true");
+  const dd = document.createElement("div");
+  dd.className = "co-dd";
+  dd.setAttribute("role", "menu");
+  dd.innerHTML = `<a role="menuitem" href="/programs">All programs</a>` + CO_EXTRA.map(([h, t]) => `<a role="menuitem" href="${h}">${t}</a>`).join("");
+  document.body.appendChild(dd);
+  let timer;
+  const show = () => {
+    clearTimeout(timer);
+    if (getComputedStyle(nav).display === "none") return;
+    const r = host.getBoundingClientRect();
+    dd.style.left = Math.max(8, Math.min(r.left - 14, innerWidth - 210)) + "px";
+    dd.style.top = r.bottom + 6 + "px";
+    dd.classList.add("open");
+  };
+  const hide = (now) => { clearTimeout(timer); timer = setTimeout(() => dd.classList.remove("open"), now ? 0 : 180); };
+  host.addEventListener("mouseenter", show);
+  host.addEventListener("mouseleave", () => hide());
+  host.addEventListener("focus", show);
+  host.addEventListener("blur", () => hide());
+  dd.addEventListener("mouseenter", show);
+  dd.addEventListener("mouseleave", () => hide());
+  dd.addEventListener("focusin", show);
+  dd.addEventListener("focusout", () => hide());
+  host.addEventListener("keydown", (e) => { if (e.key === "ArrowDown") { e.preventDefault(); show(); dd.querySelector("a").focus(); } });
+  dd.addEventListener("keydown", (e) => { if (e.key === "Escape") { hide(true); host.focus(); } });
+  window.addEventListener("scroll", () => hide(true), { passive: true });
+  window.addEventListener("resize", () => hide(true));
+})();
+
 // Full-screen mobile menu, shared by every page. It reuses the page's own
 // primary nav links, so menus stay in sync with each page's header.
 (() => {
@@ -46,6 +93,14 @@
     if (a.target) { copy.target = a.target; copy.rel = a.rel || "noopener"; }
     list.appendChild(copy);
   });
+  // Phone menu only: one extra row for Session notes (not a desktop top-level button).
+  if (!links.some((a) => /^\/session-notes\/?$/.test(a.getAttribute("href")))) {
+    const extra = document.createElement("a");
+    extra.href = "/session-notes";
+    extra.textContent = "Session notes";
+    const before = [...list.children].find((a) => /^\/(community|about)\/?$/.test(a.getAttribute("href")));
+    list.insertBefore(extra, before || null);
+  }
   if (actions) {
     const box = menu.querySelector(".co-menu-actions");
     actions.querySelectorAll("a[href]").forEach((a) => {
