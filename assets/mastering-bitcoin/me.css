@@ -182,3 +182,5 @@ input[type=url] { width: 100%; min-height: 44px; padding: 10px 12px; border-radi
 .me-brag-img { width: 100%; height: auto; border-radius: 12px; border: 1px solid rgba(247,147,26,.35); }
 .me-brag-img[hidden] { display: none; }
 @media (max-width: 700px) { .me-brag { grid-template-columns: minmax(0,1fr); } }
+.me-buddy-steps { margin: 10px 0 12px; padding-left: 20px; color: var(--muted); line-height: 1.6; }
+.me-buddy-steps b { color: var(--text); }

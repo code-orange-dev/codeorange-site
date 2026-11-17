@@ -484,20 +484,23 @@
   function buddyCard() {
     const d = state.data;
     const from = new Date(d.buddyFrom);
+    const wk = Math.max(1, Math.min(C.weeks.length, currentWeek + 1));
     let body;
     if (d.buddy) {
-      const wk = currentWeek + 1;
-      const status = wk >= 1 ? (d.buddy.lastWeek >= wk ? `checked in for week ${wk} ✓` : d.buddy.lastWeek ? `last checked in for week ${d.buddy.lastWeek}` : "hasn't checked in yet") : "";
+      const handle = d.buddy.discord ? `@${d.buddy.discord}` : d.buddy.name;
+      const status = d.buddy.lastWeek >= wk ? `checked in for week ${wk} ✓` : d.buddy.lastWeek ? `last checked in for week ${d.buddy.lastWeek}` : "hasn't checked in yet";
       body = `<h2>${esc(d.buddy.name)}</h2>
-        <p>Discord: <strong>${esc(d.buddy.discord || "ask in the cohort channel")}</strong>${status ? ` · ${esc(status)}` : ""}</p>
-        <p class="me-small">Say hi this week. Try a 15-minute call before Monday: compare answers, unstick each other, and nudge each other to check in.</p>
-        <a class="ghost small" href="${C.discord}" target="_blank" rel="noopener">Message on Discord</a>`;
+        <p>Discord: <strong>${esc(d.buddy.discord || "ask in the cohort channel")}</strong> · ${esc(status)}</p>
+        <ol class="me-buddy-steps"><li><b>Say hi</b> on Discord this week.</li><li><b>15 minutes before Monday:</b> compare answers, unstick each other.</li><li><b>Nudge</b> each other to tick off the week.</li></ol>
+        <ul class="me-check">${tick(`w${wk}-b1`, `We checked in this week (week ${wk})`)}</ul>
+        <div class="me-brag-btns"><button class="button small" type="button" data-buddy-hi="${esc(handle)}">Copy a hello message</button><a class="ghost small" href="${C.discord}" target="_blank" rel="noopener">Open Discord</a></div>
+        <p class="me-small">A quick weekly check-in keeps you both going. Only your names and Discord usernames are shared with each other.</p>`;
     } else if (Date.now() < from.getTime()) {
       body = `<h2>Coming ${esc(dayLabel(plus8(from)))}</h2><p>A week before the first session we'll pair you with another student. You'll keep each other going for the 10 weeks.</p>`;
     } else {
       body = `<h2>Finding your buddy…</h2><p>You'll be paired with the next classmate who opens their dashboard. Check back soon.</p>`;
     }
-    return `<div class="me-card me-buddy"><p class="me-label">Study buddy</p>${body}</div>`;
+    return `<div class="me-card me-wide me-buddy" id="buddy"><p class="me-label">Your study buddy</p>${body}</div>`;
   }
 
   // ── Quizzes ──
@@ -629,15 +632,22 @@
         : `Week ${currentWeek + 1} of ${C.weeks.length}. ${s.streak >= 2 ? `${s.streak}-week streak, keep it going!` : "One step at a time."}`;
     const cards = currentWeek < 0
       ? [followupCard(), welcomeCard(), nextCardTop(s), goalsCard(), skillsCard(), checkCard(), thisWeekCard(), progressCard(s), buddyCard(), checkinCard(), askCard(), nextCard(), linkCard()]
-      : [followupCard(), welcomeCard(), nextCardTop(s), thisWeekCard(), shareCard(), certBox(s, true), checkinCard(), quizCard(),
-        `<details class="me-more me-wide" id="more"><summary>More: progress, class, study buddy, goals, skills</summary><div class="me-more-grid">`,
-        progressCard(s), classCard() || askCard(), buddyCard(), classCard() ? askCard() : "", projectCard(), checkCard(), goalsCard(), skillsCard(), nextCard(), linkCard(),
+      : [followupCard(), welcomeCard(), nextCardTop(s), thisWeekCard(), buddyCard(), shareCard(), certBox(s, true), checkinCard(), quizCard(),
+        `<details class="me-more me-wide" id="more"><summary>More: progress, class, goals, skills</summary><div class="me-more-grid">`,
+        progressCard(s), classCard() || askCard(), classCard() ? askCard() : "", projectCard(), checkCard(), goalsCard(), skillsCard(), nextCard(), linkCard(),
         `</div></details>`];
     $("#me-app").innerHTML = cards.join("");
     // Links like #goals may point inside the collapsed "More" section: open it first.
     if (!state.moreBound) $("#me-app").addEventListener("click", (e) => {
       const ok = e.target.closest("[data-welcome-ok]");
       if (ok) { seen.set(); ok.closest(".me-welcome")?.remove(); return; }
+      const hi = e.target.closest("[data-buddy-hi]");
+      if (hi) {
+        const wk = Math.max(1, Math.min(C.weeks.length, currentWeek + 1));
+        const msg = `Hey ${hi.dataset.buddyHi}! I'm your Decoding Bitcoin study buddy. Want to do a quick 15-minute call before Monday to go over week ${wk} and our questions?`;
+        navigator.clipboard.writeText(msg).then(() => toast("Copied. Paste it in a Discord message to your buddy."), () => toast(msg));
+        return;
+      }
       const bb = e.target.closest("[data-brag]");
       if (bb) { brag(bb.dataset.brag, bb); return; }
       const a = e.target.closest('a[href^="#"]');

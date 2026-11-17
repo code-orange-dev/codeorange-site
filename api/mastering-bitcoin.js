@@ -33,7 +33,7 @@ const ROSTER_PUBLIC = false;
 // SHA-256 of the organisers' admin key (MB_ADMIN_KEY in Vercel's environment overrides it).
 const ADMIN_KEY_SHA256 = "72309790bc2a39b6f7cf37ca3d2dd89bfa87ed8fd6061a4fad74e331969bc48d";
 const MAX_STUDENTS = 400;
-const ITEM_RE = /^w(10|[1-9])-(q|e|r)([1-9]|1[0-9])$/;
+const ITEM_RE = /^w(10|[1-9])-(q|e|r|b)([1-9]|1[0-9])$/; // b1 = "checked in with my study buddy"
 const TOKEN_RE = /^[A-Za-z0-9_-]{24}$/;
 // Discord usernames: 2-32 lowercase letters, digits, "_" or "." (old-style name#1234 also accepted).
 const DISCORD_RE = /^(?:[a-z0-9_.]{2,32}|[^@#:`]{2,32}#\d{4})$/;

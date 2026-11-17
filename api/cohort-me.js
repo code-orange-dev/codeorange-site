@@ -217,10 +217,40 @@ async function student(token) {
   return row ? { ...row, id: Number(row.id) } : null;
 }
 
+// Fixed study-buddy pairs chosen by the organisers (Discord name or sign-up name, "a|b" for either).
+// Everyone else is paired automatically below. Pairs only form once both people have signed up.
+const FIXED_BUDDIES = [
+  ["andywong31", "ankitajana21"],
+  ["Aroso Emmanuel", "Chaitika"],
+  ["Matthew", "Maxima Freiman"],
+  ["Ngineks", "rfxx666"],
+];
+async function fixedPairs() {
+  const rows = await sql("SELECT id, name, discord FROM mb_students WHERE cohort = $1 AND NOT hidden ORDER BY id", [COHORT]);
+  const find = (n) => { const keys = n.split("|").map(normName).filter(Boolean); return rows.filter((r) => keys.includes(normName(r.discord)) || keys.includes(normName(r.name))).pop(); };
+  return FIXED_BUDDIES.map(([x, y]) => [find(x), find(y)]).filter(([a, b]) => a && b && a.id !== b.id).map(([a, b]) => [Number(a.id), Number(b.id)]);
+}
+
 // Pairs the student with the longest-waiting unpaired classmate. Only people who open their
 // dashboard get paired, so buddies are both active. Pairs with someone who's since been hidden are undone.
 async function pairBuddy(me) {
   if (Date.now() < PAIR_FROM) return;
+  const fixed = await fixedPairs();
+  const mine = fixed.find((p) => p.includes(Number(me.id)));
+  if (mine) {
+    const [a, b] = mine;
+    const [cur] = await sql("SELECT buddy_id FROM mb_buddies WHERE student_id = $1", [a]);
+    if (cur && Number(cur.buddy_id) === b) return;
+    await neon({
+      queries: [
+        q("SELECT pg_advisory_xact_lock(hashtext('mb_buddies_pair'))::text AS locked"),
+        q("DELETE FROM mb_buddies WHERE student_id IN ($1, $2) OR buddy_id IN ($1, $2)", [a, b]),
+        q("INSERT INTO mb_buddies (student_id, buddy_id) VALUES ($1, $2), ($2, $1) ON CONFLICT DO NOTHING", [a, b]),
+      ],
+    });
+    return;
+  }
+  const taken = fixed.flat().filter(Number.isInteger);
   await neon({
     queries: [
       q("SELECT pg_advisory_xact_lock(hashtext('mb_buddies_pair'))::text AS locked"),
@@ -229,7 +259,7 @@ async function pairBuddy(me) {
       q(`DELETE FROM mb_buddies b WHERE b.student_id = $1 AND NOT EXISTS (SELECT 1 FROM mb_buddies r WHERE r.student_id = b.buddy_id)`, [me.id]),
       q(`WITH mine AS (SELECT $1::int AS id WHERE NOT EXISTS (SELECT 1 FROM mb_buddies WHERE student_id = $1)),
               mate AS (SELECT s.id FROM mb_students s, mine
-                        WHERE s.cohort = $2 AND NOT s.hidden AND s.id <> mine.id
+                        WHERE s.cohort = $2 AND NOT s.hidden AND s.id <> mine.id${taken.length ? ` AND s.id NOT IN (${taken.join(",")})` : ""}
                           AND NOT EXISTS (SELECT 1 FROM mb_buddies b WHERE b.student_id = s.id)
                           AND (EXISTS (SELECT 1 FROM mb_checkins c WHERE c.student_id = s.id)
                                OR EXISTS (SELECT 1 FROM mb_profile p WHERE p.student_id = s.id)
