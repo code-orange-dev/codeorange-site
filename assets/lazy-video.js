@@ -25,14 +25,19 @@
     }
   };
 
+  // Data saver on: keep the poster image, skip background videos.
+  const saveData = !!(navigator.connection && navigator.connection.saveData);
   const load = (video) => {
     if (!video) return;
+    if (saveData && video.hasAttribute("data-lazy-video")) return;
     prepare(video);
     if (loaded.has(video)) {
       play(video);
       return;
     }
-    const src = video.getAttribute("data-src");
+    let src = video.getAttribute("data-src");
+    // Phones get the lighter footer video (540p, about a quarter of the size).
+    if (src && window.innerWidth < 760) src = src.replace("/co-footer-720.mp4", "/co-footer-540.mp4");
     loaded.add(video);
     if (src && !src.includes("{{")) {
       video.src = src;
@@ -97,9 +102,7 @@
     }).observe(document.documentElement, { childList: true, subtree: true });
     window.addEventListener("scroll", loadNearby, { passive: true });
     window.addEventListener("resize", loadNearby, { passive: true });
-    window.setTimeout(() => {
-      document.querySelectorAll("video[data-lazy-video]").forEach(load);
-    }, 3500);
+    // Off-screen videos load only when scrolled near (saves ~1.5 MB per page view for people who never reach the footer).
   };
 
   if (document.readyState === "loading") {
