@@ -391,6 +391,12 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 .todo label.on > span { color: var(--dim); text-decoration: line-through; }
 .todo label a { color: var(--orange); }
 .todo-msg { margin: 6px 0 0; color: var(--orange); font: 600 13px/1.5 "Plus Jakarta Sans", monospace; min-height: 1em; }
+.join-cta { margin: 44px 0 0; padding: 28px; border-radius: 18px; border: 1px solid var(--orange); background: radial-gradient(120% 120% at 0 0, rgba(247,147,26,.22), transparent 60%) #141414; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px 28px; }
+.join-cta > div { flex: 1 1 320px; }
+.join-cta .eyebrow { margin: 0 0 8px; }
+.join-cta h3 { margin: 0 0 8px; font-size: 26px; line-height: 1.2; color: var(--text); }
+.join-cta p { margin: 0; color: var(--muted); font-size: 16px; line-height: 1.55; }
+.join-cta .button { flex: none; }
 @media (max-width: 700px) { .chapters ol { grid-template-columns: 1fr; } .next-card { grid-template-columns: 1fr; } .quote p { font-size: 19px; } }
 
 @media (max-width: 560px) { .viz { padding: 18px; font-size: 15px; } .q-grid { grid-template-columns: 1fr; } .flow-hop { flex: 0 0 100%; text-align: center; } .flow-step { flex-basis: 100%; } .flow-hop i { display: inline-block; font-style: normal; transform: rotate(90deg); } }
@@ -834,6 +840,7 @@ a.res:hover { border-color: rgba(247,147,26,.55); transform: translateY(-2px); }
       <p>Also mentioned: the last cohort we ran, rawBit, had 20 sign-ups and 2 finishers, so do not worry about keeping up with everyone. Just keep showing up. A Code Orange meetup next year came up as an idea, and the dashboard first used a Nostr login before switching to a personal link to cut friction.</p>
       <p><a href="/resources">Browse every resource from every session &rarr;</a></p>
     </div>
+    <aside class="join-cta" id="join"><div><p class="eyebrow">Not too late</p><h3>Join the Decoding Bitcoin study cohort</h3><p>Free, every Monday on Discord, and you can join at any time. Sign up in 30 seconds, catch up with the recaps and come to the next session.</p></div><a class="button" href="/decoding-bitcoin#signup">Register free &rarr;</a></aside>
     <aside class="next-card nx" data-next data-match="decoding bitcoin">
       <div class="nx-head"><p class="eyebrow">Come to the next one</p><div data-next-static><h3>Week 2: How a transaction lives</h3><p>Monday 23 November, 7pm UTC+8 on Discord. Bring your answer to your assigned question. Before that: Privacy Track on Silent Payments, Tuesday 17 November, 07:00 UTC.</p></div>
         <div data-next-live hidden><h3>Up next at Code Orange</h3><ol class="nx-list" data-next-list></ol></div></div>

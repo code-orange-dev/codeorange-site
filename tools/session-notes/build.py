@@ -174,6 +174,12 @@ style = src[src.index('<style>'):head_end] + """
 .todo label.on > span { color: var(--dim); text-decoration: line-through; }
 .todo label a { color: var(--orange); }
 .todo-msg { margin: 6px 0 0; color: var(--orange); font: 600 13px/1.5 "Plus Jakarta Sans", monospace; min-height: 1em; }
+.join-cta { margin: 44px 0 0; padding: 28px; border-radius: 18px; border: 1px solid var(--orange); background: radial-gradient(120% 120% at 0 0, rgba(247,147,26,.22), transparent 60%) #141414; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px 28px; }
+.join-cta > div { flex: 1 1 320px; }
+.join-cta .eyebrow { margin: 0 0 8px; }
+.join-cta h3 { margin: 0 0 8px; font-size: 26px; line-height: 1.2; color: var(--text); }
+.join-cta p { margin: 0; color: var(--muted); font-size: 16px; line-height: 1.55; }
+.join-cta .button { flex: none; }
 @media (max-width: 700px) { .chapters ol { grid-template-columns: 1fr; } .next-card { grid-template-columns: 1fr; } .quote p { font-size: 19px; } }
 
 @media (max-width: 560px) { .viz { padding: 18px; font-size: 15px; } .q-grid { grid-template-columns: 1fr; } .flow-hop { flex: 0 0 100%; text-align: center; } .flow-step { flex-basis: 100%; } .flow-hop i { display: inline-block; font-style: normal; transform: rotate(90deg); } }
@@ -349,6 +355,7 @@ def recap_page(n, sessions=()):
         page += '      <div class="tldr">\n        <p class="eyebrow">TL;DR</p>\n        <ul>\n' + ''.join(f'          <li>{x}</li>\n' for x in n['tldr']) + '        </ul>\n      </div>\n\n'
     page += todo_html(n)
     page += n['body'] + '\n' + quiz_html(n) + resources_html(n) + '    </div>\n'
+    page += join_html(n)
     static = f"<h3>{n['next']['title']}</h3><p>{n['next']['when']}</p>" if n.get('next') else '<h3>See what is coming up</h3><p>Every session is free and on Discord.</p>'
     key = next((k for k in ('privacy track', 'code review club', 'reading club', 'sovereign bitcoiner', 'self-custody', 'agentic', 'decoding bitcoin', 'bitcoin basics') if k in strip_tags(n['series']).lower()), '')
     page += f'''    <aside class="next-card nx" data-next data-match="{key}">
@@ -400,6 +407,17 @@ def todo_html(n):
     items = ''.join(f'<label><input type="checkbox" data-i="{i}"><span>{x}</span></label>' for i, x in enumerate(t['items']))
     return (f'      <section class="todo" id="todo" data-todo="{n["slug"]}"><p class="eyebrow">{t.get("title", "Before next time")}<span data-todo-count>0 / {len(t["items"])}</span></p>{items}<p class="todo-msg" role="status" aria-live="polite"></p></section>\n'
             f'      {TODO_JS}\n\n')
+
+def join_html(n):
+    """Sign-up call to action at the bottom of every Decoding Bitcoin recap (or any recap with a "cta" {eyebrow, title, text, button, url})."""
+    c = n.get('cta')
+    if not c and 'decoding bitcoin' in n['series'].lower():
+        c = {'eyebrow': 'Not too late', 'title': 'Join the Decoding Bitcoin study cohort',
+             'text': 'Free, every Monday on Discord, and you can join at any time. Sign up in 30 seconds, catch up with the recaps and come to the next session.',
+             'button': 'Register free', 'url': '/decoding-bitcoin#signup'}
+    if not c: return ''
+    return (f'    <aside class="join-cta" id="join"><div><p class="eyebrow">{c["eyebrow"]}</p><h3>{c["title"]}</h3><p>{c["text"]}</p></div>'
+            f'<a class="button" href="{c["url"]}">{c["button"]} &rarr;</a></aside>\n')
 
 def quiz_html(n):
     if not n.get('quiz'): return ''
