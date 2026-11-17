@@ -280,11 +280,12 @@
     if (finished || followupMonths || seen.get()) return "";
     return `<div class="me-card me-wide me-welcome" id="welcome">
       <p class="me-label">Welcome · how this works</p>
-      <h2>Three things a week. That's it.</h2>
+      <h2>Four things a week.</h2>
       <ol class="me-steps">
-        <li><b>1</b><span><strong>Come to Monday's session</strong> on Discord, ${esc(utcLabel(sessionDates[0]))} / ${pad(plus8(sessionDates[0]).getUTCHours())}:00 UTC+8. Cameras off is fine.</span></li>
-        <li><b>2</b><span><strong>Do the week's lesson</strong> and tick it off below. Try the 5-question weekly check.</span></li>
-        <li><b>3</b><span><strong>Check in after the session.</strong> Two minutes: how it went and where you got stuck.</span></li>
+        <li><b>1</b><span><strong>Do the lessons</strong> on Decoding Bitcoin and tick them off below.</span></li>
+        <li><b>2</b><span><strong>Do the exercises.</strong> They are required for the certificate.</span></li>
+        <li><b>3</b><span><strong>Prepare your question</strong> and explain it in about 3 minutes on Monday.</span></li>
+        <li><b>4</b><span><strong>Join Monday's session</strong> on Discord, ${esc(utcLabel(sessionDates[0]))} / ${pad(plus8(sessionDates[0]).getUTCHours())}:00 UTC+8. Can't make it? Post on Discord and it counts.</span></li>
       </ol>
       <p class="me-small">This page is your personal link, no password. Bookmark it, or open it from any weekly email.</p>
       <button class="button small" type="button" data-welcome-ok>Got it</button>
@@ -321,7 +322,7 @@
       <p class="me-when">${now > sessionDates[wi].getTime() + 90 * 6e4 ? "Session held" : "Next session"}: <strong>${esc(sessionLine(sessionDates[wi]))}</strong> on <a href="${C.discord}" target="_blank" rel="noopener">Discord</a></p>
       ${roles.length ? `<p class="me-role">On Monday you're the <strong>${roles.map((r) => esc(r.name)).join("</strong> and <strong>")}</strong>. ${esc(roles[0].job)}</p>` : ""}
       ${myQs.length ? `<div class="me-myq" id="my-question"><p class="me-label">Your question${myQs.length > 1 ? "s" : ""} for Monday</p>${myQs.map((q) => `<p class="me-myq-text">Q${q.n}${q.week !== wk ? ` (week ${q.week})` : ""}: ${esc(q.text)}</p>${q.with ? `<p class="me-small">Shared by ${esc(q.with)}: prepare it together.</p>` : ""}`).join("")}<p class="me-small">Be ready to explain it in a few minutes on Monday. Post your answer in the cohort channel on Discord before the session.</p><ul class="me-check">${myQs.map((q) => tick(q.key, `Q${q.n}: I've prepared my answer and posted it on Discord`)).join("")}</ul></div>` : ""}
-      ${w.intro ? `<p class="me-role"><strong>Intro week: no homework.</strong> ${esc(w.introNote || "")}</p>` : `<p class="me-role"><strong>Exercises are required for the certificate.</strong> Can't make Monday live? Post your work on Discord and it counts as attending.</p>`}
+      ${w.intro ? `<p class="me-role"><strong>Intro week: no homework.</strong> ${esc(w.introNote || "")}</p>` : `<p class="me-role"><strong>Exercises are required for the certificate.</strong> Missed Monday? Post your work on Discord and it counts.</p>`}
       ${lastHeld() >= 0 ? recordingBox(lastHeld()) : ""}
       <p class="me-open">Opening question: <em>${esc(w.opening)}</em></p>
       <ul class="me-check">${items}</ul>

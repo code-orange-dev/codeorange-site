@@ -523,7 +523,7 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
 <script src="/assets/site-menu.js?v=20261004b" defer></script>
 <script>if(/^#(week-\d+|curriculum)$/.test(location.hash))location.replace("/decoding-bitcoin/curriculum"+location.search+(location.hash==="#curriculum"?"":location.hash));</script>
 <script src="/assets/mastering-bitcoin/cohort.js?v=20261117c" defer></script>
-<script src="/assets/mastering-bitcoin/app.js?v=20261117a" defer></script>
+<script src="/assets/mastering-bitcoin/app.js?v=20261117b" defer></script>
 </head>
 <body>
 <a class="announce" href="#signup">Decoding Bitcoin study cohort &middot; Mondays on Discord &middot; join anytime <span>Sign up &rarr;</span></a>
@@ -562,13 +562,12 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
         <h1>Decoding Bitcoin. <span class="orange">Study cohort.</span></h1>
         <p class="lead">Learn how Bitcoin really works with the free <a href="https://bitcoindevs.xyz/decoding" target="_blank" rel="noopener"><em>Decoding Bitcoin</em></a> course, together. A few lessons a week, then we talk it through on Discord every Monday.</p>
         <div class="meta" style="margin:0 0 30px">
-          <span class="pill orange" data-mb-start>Start date TBA</span>
-          <span class="pill">10 weeks</span>
-          <span class="pill">Mondays 7pm UTC+8 · Discord</span>
+          <span class="pill orange" data-mb-start>10 weeks</span>
+          <span class="pill">Mondays 7pm WITA · Discord</span>
           <span class="pill">Free</span>
         </div>
-        <p class="mb-intro" style="margin:0 0 24px;max-width:560px"><strong>Week 1 (Mon 16 Nov) is the intro session: no homework.</strong> Just come along. Homework starts in week 2.</p>
-        <div class="mb-countdown" data-mb-countdown hidden aria-label="Time until the first session">
+        <p class="mb-intro" style="margin:0 0 24px;max-width:560px"><strong>The cohort is on, and you can still join.</strong> <a href="#catch-up">Catch up on week 1</a> in 15 minutes.</p>
+        <div class="mb-countdown" data-mb-countdown hidden aria-label="Time until the next session">
           <div><strong data-cd="d">00</strong><span>days</span></div>
           <div><strong data-cd="h">00</strong><span>hours</span></div>
           <div><strong data-cd="m">00</strong><span>mins</span></div>
@@ -579,10 +578,8 @@ button.ghost { background: transparent; cursor: pointer; font: inherit; font-wei
           <a class="ghost mb-cta" href="#try"><span>Try week 1 in 2 min</span></a>
         </div>
         <div class="mb-time" data-mb-cal>
-          <p class="mb-time-main">Every Monday, <b>7–8:30pm in Bali</b> (UTC+8) · 11:00 UTC</p>
+          <p class="mb-time-main">Every Monday, <b>7–8:30pm WITA</b> (UTC+8) · 11:00 UTC · <a href="#discord">add to calendar</a></p>
           <p class="mb-yourtime" data-mb-yourtime hidden></p>
-          <p class="mb-fine">Same time around the world: San Francisco 3am · New York 6am · London 11am · Berlin, Lagos 12pm · Nairobi 2pm · Dubai 3pm · Delhi 4:30pm · Jakarta 6pm · Bali, Manila, Singapore 7pm · Tokyo 8pm · Sydney 10pm</p>
-          <div class="mb-cal-btns"><a class="ghost small" data-mb-gcal href="#" target="_blank" rel="noopener">+ Google Calendar</a><a class="ghost small" href="/assets/mastering-bitcoin/sessions.ics?v=20261114b" download="decoding-bitcoin-sessions.ics">+ Apple / Outlook</a></div>
         </div>
       </div>
       <a class="mb-book mb-course" href="https://bitcoindevs.xyz/decoding" target="_blank" rel="noopener" aria-label="Open Decoding Bitcoin by The Bitcoin Dev Project">
@@ -831,58 +828,53 @@ $('tw1-skip').addEventListener('click',quiz);
   </section>
 
   <section class="section-inner">
-    <div class="split"><div><p class="eyebrow">How it works</p><h2>Four steps a week.</h2></div><p class="lead">No accounts. Signing up gives you a personal link to tick things off. Week 1 is an intro session with no homework; the four steps start in week 2.</p></div>
+    <div class="split"><div><p class="eyebrow">How it works</p><h2>Four steps a week.</h2></div><p class="lead">No accounts or passwords. Signing up emails you a personal link to your dashboard: bookmark it.</p></div>
     <div class="timeline mb-steps">
-      <div class="timeline-item"><div><h3>Do the lessons</h3><p>Two to four short interactive lessons.</p></div></div>
-      <div class="timeline-item"><div><h3>Answer your questions</h3><p>Each question has an owner. Post yours on Discord.</p></div></div>
-      <div class="timeline-item"><div><h3>Do the exercises</h3><p>Hands-on, the same for everyone.</p></div></div>
-      <div class="timeline-item"><div><h3>Meet on Monday</h3><p>90 minutes on Discord, 7pm UTC+8 (11:00 UTC).</p></div></div>
+      <div class="timeline-item"><div><h3>Do the lessons</h3><p>2 to 4 short interactive lessons on Decoding Bitcoin.</p></div></div>
+      <div class="timeline-item"><div><h3>Do the exercises</h3><p>Also on Decoding Bitcoin. Required for the certificate.</p></div></div>
+      <div class="timeline-item"><div><h3>Prepare your question</h3><p>Given out after each session. Explain it in about 3 minutes.</p></div></div>
+      <div class="timeline-item"><div><h3>Meet on Monday</h3><p>90 minutes on Discord. Can't make it? Post your answers there and it counts.</p></div></div>
     </div>
   </section>
 
   <section id="course" class="band" style="scroll-margin-top:96px"><div class="section-inner">
-    <div class="split"><div><p class="eyebrow">The course</p><h2>Built on Decoding Bitcoin.</h2></div><p class="lead">A free, interactive course by <a href="https://bitcoindevs.xyz" target="_blank" rel="noopener">The Bitcoin Dev Project</a>. You learn by decoding real transactions and writing code, not by reading a PDF.</p></div>
-    <a class="mb-shot " href="https://bitcoindevs.xyz/decoding" target="_blank" rel="noopener"><figure style="margin:0"><div class="mb-shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>bitcoindevs.xyz/decoding</span></div><img src="https://bitcoindevs.xyz/images/pages-thumbnails/decoding-bitcoin.webp" alt="Decoding Bitcoin, a free interactive course by The Bitcoin Dev Project" width="1200" height="630" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.mb-shot').classList.add('is-broken')"><figcaption><b>Decoding Bitcoin</b> by The Bitcoin Dev Project. Click to open the course ↗</figcaption></figure></a>
+    <div class="split"><div><p class="eyebrow">The course</p><h2>Built on Decoding Bitcoin.</h2></div><p class="lead">A free, interactive course by <a href="https://bitcoindevs.xyz" target="_blank" rel="noopener">The Bitcoin Dev Project</a> (<a href="https://github.com/bitcoin-dev-project/decoding-bitcoin" target="_blank" rel="noopener">source</a>): their lessons, tools and exercises; our weekly plan and questions. You learn by decoding real transactions and writing code.</p></div>
     <div class="grid three mb-modules">
       <a class="card mb-module" href="https://bitcoindevs.xyz/decoding/transaction-lifecycle" target="_blank" rel="noopener"><span class="pill orange">Weeks 1–5</span><h3>Transactions</h3><p>How a transaction is built, paid for and signed.</p><b>Start the module ↗</b></a>
       <a class="card mb-module" href="https://bitcoindevs.xyz/decoding/overview" target="_blank" rel="noopener"><span class="pill orange">Weeks 6–8</span><h3>Scripts</h3><p>How coins are locked and unlocked, up to multisig.</p><b>Start the module ↗</b></a>
       <a class="card mb-module" href="https://bitcoindevs.xyz/decoding/introduction-taproot" target="_blank" rel="noopener"><span class="pill orange">Weeks 9–10</span><h3>Taproot</h3><p>Schnorr signatures and Bitcoin’s newest outputs.</p><b>Start the module ↗</b></a>
     </div>
     <div class="mb-plan-cta"><a class="button mb-cta" href="/decoding-bitcoin/curriculum"><span>See the weekly plan</span><svg class="mb-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="ghost mb-cta" href="/decoding-bitcoin/check"><span>Take the weekly check</span></a><p>Lessons, questions and exercises unlock one week at a time. Each week ends with a 5-question check, answers explained.</p></div>
-    <p class="mb-tools">Free tools to play with:</p>
+    <details class="mb-more"><summary>5 free tools to play with</summary>
     <div class="mb-toolgrid"><a class="card mb-tool" href="https://bitcoindevs.xyz/decoding/transaction-decoder" target="_blank" rel="noopener"><h3>Transaction Decoder</h3><p>See every field of a transaction.</p><b>Open ↗</b></a><a class="card mb-tool" href="https://bitcoindevs.xyz/decoding/hash-functions" target="_blank" rel="noopener"><h3>Hash Functions</h3><p>Try SHA-256 yourself.</p><b>Open ↗</b></a><a class="card mb-tool" href="https://bitcoindevs.xyz/decoding/reorg-calculator" target="_blank" rel="noopener"><h3>Reorg Calculator</h3><p>Why we wait for confirmations.</p><b>Open ↗</b></a><a class="card mb-tool" href="https://bitcoindevs.xyz/decoding/interactive-roadmap" target="_blank" rel="noopener"><h3>Developer Roadmap</h3><p>What to learn next.</p><b>Open ↗</b></a><a class="card mb-tool" href="https://bitcoindevs.xyz/decoding/transaction_exercises" target="_blank" rel="noopener"><h3>Coding Exercises</h3><p>Code that gets checked for you.</p><b>Open ↗</b></a></div>
+    </details>
   </div></section>
 
-
-
   <section id="seminar" class="section-inner" style="scroll-margin-top:96px">
-    <div class="split"><div><p class="eyebrow">The Monday session</p><h2>A Socratic seminar, not a lecture.</h2></div><p class="lead">No slides, no lecture. We ask questions, explain our thinking and check it together. Nobody has to be an expert.</p></div>
-    <details class="mb-more"><summary>How the 90 minutes run, ground rules and roles</summary>
+    <div class="split"><div><p class="eyebrow">The Monday session</p><h2>We talk it through.</h2></div><p class="lead">Each question owner explains their answer in about 3 minutes, then we discuss it together. Cameras off is fine, and nobody has to be an expert.</p></div>
+    <details class="mb-more"><summary>How the 90 minutes run, and ground rules</summary>
     <div class="mb-agenda">
       <div>
         <h3>How the 90 minutes run</h3>
         <ol>
-          <li><b>0–10 min</b><span><strong>Check-in.</strong> One line each: the thing in this week's lessons that surprised you most. The facilitator asks the opening question.</span></li>
-          <li><b>10–50 min</b><span><strong>Small groups.</strong> Breakout rooms of 3–5. Each question owner explains their answer in a few minutes, then the group probes it: why, what if, where does the lesson say that?</span></li>
-          <li><b>50–75 min</b><span><strong>Hands-on.</strong> The exercise driver shares their screen and we work through an exercise together, live.</span></li>
-          <li><b>75–85 min</b><span><strong>Bring it together.</strong> The summariser reads back the key takeaways and the questions we couldn't answer yet.</span></li>
-          <li><b>85–90 min</b><span><strong>Wrap up.</strong> How did the discussion go? Next week's lessons, roles and questions.</span></li>
+          <li><b>0–10 min</b><span><strong>Check-in</strong> and the week's opening question.</span></li>
+          <li><b>10–70 min</b><span><strong>The questions,</strong> one by one: the owner explains, then we probe it. Why? What if? Where does the lesson say that?</span></li>
+          <li><b>70–85 min</b><span><strong>Exercises.</strong> Stuck on one? Share your screen and we work through it together.</span></li>
+          <li><b>85–90 min</b><span><strong>Wrap up</strong> and next week's questions.</span></li>
         </ol>
       </div>
       <div>
         <h3>Ground rules</h3>
         <ul class="mb-norms">
-          <li><strong>Talk to each other</strong>, not to the facilitator.</li>
-          <li><strong>Point to the text.</strong> Say which lesson backs your claim, or check it on a real transaction.</li>
-          <li><strong>Steelman before you disagree.</strong> Repeat the other view in your own words first.</li>
-          <li><strong>Mind your airtime.</strong> Spoken a lot? Invite someone quieter in.</li>
-          <li><strong>"I don't know" is a great answer.</strong> It goes on the list of open questions.</li>
+          <li><strong>Talk to each other</strong>, not just the host.</li>
+          <li><strong>Point to the lesson,</strong> or check it on a real transaction.</li>
+          <li><strong>Steelman before you disagree.</strong></li>
+          <li><strong>Mind your airtime.</strong> Invite someone quieter in.</li>
+          <li><strong>"I don't know" is a great answer.</strong></li>
         </ul>
-        <h3>Roles rotate every week</h3>
-        <div class="mb-role-list" id="mb-role-list"></div>
       </div>
-    </details>
     </div>
+    </details>
   </section>
 
   <section id="progress" class="section-inner" style="scroll-margin-top:96px" hidden>
@@ -891,18 +883,11 @@ $('tw1-skip').addEventListener('click',quiz);
   </section>
 
 
-  <section class="section-inner final-cta">
-    <p class="eyebrow">Credits</p>
-    <h2>Learn it free, online.</h2>
-    <p class="lead" style="margin-left:auto;margin-right:auto">Lessons and tools by <a href="https://bitcoindevs.xyz" target="_blank" rel="noopener">The Bitcoin Dev Project</a> (<a href="https://github.com/bitcoin-dev-project/decoding-bitcoin" target="_blank" rel="noopener">source</a>). Weekly plan and questions by Code Orange.</p>
-    <a class="mb-shot mb-credit-shot" href="https://bitcoindevs.xyz/decoding" target="_blank" rel="noopener"><figure style="margin:0"><div class="mb-shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>bitcoindevs.xyz/decoding</span></div><img src="https://bitcoindevs.xyz/images/pages-thumbnails/decoding-bitcoin.webp" alt="Decoding Bitcoin, a free interactive course by The Bitcoin Dev Project" width="1200" height="630" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.mb-shot').classList.add('is-broken')"><figcaption>The course we follow: <b>bitcoindevs.xyz/decoding</b>. Click to open ↗</figcaption></figure></a>
-    <div class="cta-row" style="justify-content:center"><a class="button mb-cta" href="https://bitcoindevs.xyz/decoding/welcome" target="_blank" rel="noopener"><span>Open Decoding Bitcoin</span><svg class="mb-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="ghost" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord</a></div>
-  </section>
   <section id="discord" class="section-inner" style="scroll-margin-top:96px">
     <div class="mb-where">
       <p class="eyebrow">Where we meet</p>
       <h2>Every session is live on Discord.</h2>
-      <p class="mb-when">First session: <b>Mon 16 Nov, 7pm WITA</b> · 11:00 UTC</p>
+      <p class="mb-when">Next session: <b data-mb-next>Monday, 7pm WITA</b> · 11:00 UTC</p>
       <p class="mb-yourtime" data-mb-yourtime hidden></p>
       <div class="cta-row" style="justify-content:center"><a class="button mb-cta" href="https://discord.gg/6XPJ96sCY4?event=1559048812654366771" target="_blank" rel="noopener"><span>Join the Discord event</span><svg class="mb-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="ghost" data-mb-gcal href="#" target="_blank" rel="noopener">+ Google Calendar</a><a class="ghost" href="/assets/mastering-bitcoin/sessions.ics?v=20261114b" download="decoding-bitcoin-sessions.ics">+ Apple / Outlook</a></div>
       <p class="mb-fine mb-fine-c">Same time around the world: San Francisco 3am · New York 6am · London 11am · Berlin, Lagos 12pm · Nairobi 2pm · Dubai 3pm · Delhi 4:30pm · Jakarta 6pm · Bali, Manila, Singapore 7pm · Tokyo 8pm · Sydney 10pm</p>

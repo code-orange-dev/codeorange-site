@@ -669,14 +669,21 @@
   const daysToGo = first ? Math.ceil((first - Date.now()) / 864e5) : null;
   if ($("#mb-start")) $("#mb-start").textContent = first ? fmtDay(first) : "TBA";
   if ($("#mb-start-label")) $("#mb-start-label").textContent = first ? "Week 1 · 7pm UTC+8" : "Start date";
+  // The next session that hasn't finished yet (drives the pill, countdown and "Next session" line).
+  const sessLen = (C.sessionMinutes || 90) * 6e4;
+  const nextIdx = sessionDates.findIndex((d) => d.getTime() + sessLen > Date.now());
+  const nextS = nextIdx >= 0 ? sessionDates[nextIdx] : null;
   document.querySelectorAll("[data-mb-start]").forEach((el) => {
-    el.textContent = !first ? "Start date TBA" : daysToGo > 1 ? `Starts ${fmtDay(first)} · in ${daysToGo} days` : daysToGo === 1 ? `Starts tomorrow, ${fmtDay(first)}` : daysToGo === 0 ? "Starts today" : `Started ${fmtDay(first)}`;
+    el.textContent = !first ? "Start date TBA" : nextIdx > 0 ? `Week ${nextIdx + 1} of ${sessionDates.length}: ${fmtDay(nextS)}` : nextIdx < 0 ? "Cohort finished" : daysToGo > 1 ? `Starts ${fmtDay(first)} · in ${daysToGo} days` : daysToGo === 1 ? `Starts tomorrow, ${fmtDay(first)}` : daysToGo === 0 ? "Starts today" : nextS ? `Week ${nextIdx + 1} of ${sessionDates.length}: ${fmtDay(nextS)}` : "Cohort finished";
+  });
+  document.querySelectorAll("[data-mb-next]").forEach((el) => {
+    if (nextS) el.textContent = `Week ${nextIdx + 1}, ${fmtDay(nextS)}, 7pm WITA`;
   });
   const cd = document.querySelector("[data-mb-countdown]");
-  if (cd && first && first > Date.now()) {
+  if (cd && nextS && nextS > Date.now()) {
     cd.hidden = false;
     const tick = () => {
-      const left = Math.max(0, first - Date.now());
+      const left = Math.max(0, nextS - Date.now());
       const parts = { d: Math.floor(left / 864e5), h: Math.floor(left / 36e5) % 24, m: Math.floor(left / 6e4) % 60, s: Math.floor(left / 1e3) % 60 };
       for (const k in parts) cd.querySelector(`[data-cd="${k}"]`).textContent = pad(parts[k]);
       if (!left) { clearInterval(timer); cd.hidden = true; }
