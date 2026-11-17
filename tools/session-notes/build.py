@@ -262,7 +262,7 @@ REPO = 'https://github.com/code-orange-dev/session-notes'
 DISCORD = 'https://discord.gg/ZtvA79paWa'
 CAL_SUB = 'https://calendar.google.com/calendar/r?cid=466de2be7431d78be2049f96f5fd31f9b06b5a9cd94f909ba3182b18442ed499%40group.calendar.google.com'
 HERE = pathlib.Path(__file__).resolve().parent
-TOPIC_ORDER = ['Bitcoin basics', 'Self-custody', 'Hardware wallets', 'Privacy', 'PayJoin', 'Cypherpunk history', 'History', 'Bitcoin network', 'Bitcoin Core', 'Code review', 'Nostr', 'Mesh networking', 'Lightning', 'Ecash', 'Wallets', 'Security', 'Explorers', 'Messaging', 'AI agents', 'Vibe coding', 'Learning paths', 'Self-hosting', 'Productivity', 'Code Orange']
+TOPIC_ORDER = ['Bitcoin basics', 'Self-custody', 'Hardware wallets', 'Privacy', 'PayJoin', 'Silent Payments', 'Cypherpunk history', 'History', 'Bitcoin network', 'Bitcoin Core', 'Code review', 'Nostr', 'Mesh networking', 'Lightning', 'Ecash', 'Wallets', 'Security', 'Explorers', 'Messaging', 'AI agents', 'Vibe coding', 'Learning paths', 'Self-hosting', 'Productivity', 'Code Orange']
 
 def esc(s): return _html.escape(s, quote=True)
 def strip_tags(s): return re.sub(r'<[^>]+>', '', s)

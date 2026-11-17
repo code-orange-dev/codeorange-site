@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Track: Silent Payments: one address, no reuse - Session Notes</title>
+<meta name="description" content="A live silent payment from Cake Wallet to Shroud, a guest who builds the Dana wallet on what silent payments fix (and what they don&#x27;t), and Razor rebuilding the protocol from scratch: tweaked keys, Diffie-Hellman, Taproot. Plus where you can help.">
+<link rel="canonical" href="https://codeorange.dev/session-notes/2026-11-17-privacy-track-silent-payments">
+<meta name="theme-color" content="#F7931A">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Code Orange Dev School">
+<meta property="og:url" content="https://codeorange.dev/session-notes/2026-11-17-privacy-track-silent-payments">
+<meta property="og:title" content="Privacy Track: Silent Payments: one address, no reuse - Session Notes">
+<meta property="og:description" content="A live silent payment from Cake Wallet to Shroud, a guest who builds the Dana wallet on what silent payments fix (and what they don&#x27;t), and Razor rebuilding the protocol from scratch: tweaked keys, Diffie-Hellman, Taproot. Plus where you can help.">
+<meta property="og:image" content="https://codeorange.dev/assets/session-notes/2026-11-17-privacy-track-silent-payments.jpg">
+<meta property="og:image:secure_url" content="https://codeorange.dev/assets/session-notes/2026-11-17-privacy-track-silent-payments.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Privacy Track: Silent Payments: one address, no reuse">
+<meta property="article:published_time" content="2026-11-17">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Privacy Track: Silent Payments: one address, no reuse", "description": "A live silent payment from Cake Wallet to Shroud, a guest who builds the Dana wallet on what silent payments fix (and what they don't), and Razor rebuilding the protocol from scratch: tweaked keys, Diffie-Hellman, Taproot. Plus where you can help.", "datePublished": "2026-11-17", "url": "https://codeorange.dev/session-notes/2026-11-17-privacy-track-silent-payments", "image": "https://codeorange.dev/assets/session-notes/2026-11-17-privacy-track-silent-payments.jpg", "author": {"@type": "Organization", "name": "Code Orange Dev School", "url": "https://codeorange.dev"}, "publisher": {"@type": "EducationalOrganization", "name": "Code Orange Dev School", "url": "https://codeorange.dev"}}</script>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@CodeOrangeDevs">
+<meta name="twitter:title" content="Privacy Track: Silent Payments: one address, no reuse - Session Notes">
+<meta name="twitter:description" content="A live silent payment from Cake Wallet to Shroud, a guest who builds the Dana wallet on what silent payments fix (and what they don&#x27;t), and Razor rebuilding the protocol from scratch: tweaked keys, Diffie-Hellman, Taproot. Plus where you can help.">
+<meta name="twitter:image" content="https://codeorange.dev/assets/session-notes/2026-11-17-privacy-track-silent-payments.jpg">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon-co.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<script src="/assets/lazy-video.js?v=20261117a" defer></script>
+<style>
+:root { color-scheme: dark; --bg:#0A0A0A; --band:#0F0F0F; --card:#141414; --text:#F5F5F5; --muted:#B8B8B8; --dim:#858585; --orange:#F7931A; --orange2:#FFB347; --line:rgba(255,255,255,.08); }
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; overflow-x: hidden; background: var(--bg); color: var(--text); font-family: "Inter", system-ui, sans-serif; scroll-behavior: smooth; }
+body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+img, video, iframe { max-width: 100%; }
+a { color: inherit; }
+.announce { display: flex; justify-content: center; gap: 10px; padding: 9px 24px; background: var(--orange); color: var(--bg); text-decoration: none; font: 700 13px "Plus Jakarta Sans", monospace; text-align: center; }
+.announce span { text-decoration: underline; text-underline-offset: 3px; }
+.site-header { position: sticky; top: 0; z-index: 50; background: rgba(10,10,10,.74); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.header-inner { max-width: 1240px; height: 78px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; gap: 22px; }
+.brand img { display: block; width: auto; height: 50px; }
+.desktop-nav, .header-actions, .cta-row { display: flex; align-items: center; gap: 12px; }
+  .desktop-nav { gap: 28px; }
+  .desktop-nav a { padding: 8px 4px; }
+.desktop-nav a, .mobile-nav a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 600; padding: 8px 10px; border-radius: 8px; }
+.desktop-nav a:hover, .mobile-nav a:hover { color: var(--orange); }
+.mobile-nav { display: none; gap: 8px; overflow-x: auto; padding: 0 16px 10px; scrollbar-width: none; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; }
+.mobile-nav::-webkit-scrollbar { display: none; }
+.mobile-nav a { flex: 0 0 auto; scroll-snap-align: start; }
+.button, .ghost { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 13px 24px; border-radius: 8px; text-decoration: none; font-weight: 700; transition: border-color .15s ease, color .15s ease, background .15s ease, transform .15s ease; }
+.button { background: var(--orange); color: var(--bg); }
+.button:hover { background: var(--orange2); }
+.ghost { border: 1px solid rgba(255,255,255,.16); color: var(--text); }
+.ghost:hover { border-color: var(--orange); color: var(--orange); }
+.small { min-height: 40px; padding: 9px 18px; font-size: 14px; }
+.hero { position: relative; overflow: hidden; background-image: linear-gradient(rgba(10,10,10,.78), rgba(10,10,10,.92)), linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px), url("/assets/latest-workshops/workshop-latest-builders.webp"); background-size: auto, 48px 48px, 48px 48px, cover; background-position: center, 0 0, 0 0, center 42%; }
+.hero-grid, .section-inner { max-width: 1240px; margin: 0 auto; padding: 96px 32px; }
+.hero-grid { display: grid; grid-template-columns: minmax(0,1.08fr) minmax(320px,.92fr); gap: 64px; align-items: center; }
+.glow { position: absolute; top: -160px; right: -110px; width: 740px; height: 740px; border-radius: 50%; background: radial-gradient(circle, rgba(247,147,26,.14), transparent 66%); pointer-events: none; }
+.eyebrow { margin: 0 0 22px; color: var(--orange); font: 700 12px "Plus Jakarta Sans", monospace; letter-spacing: .16em; text-transform: uppercase; }
+h1, h2, h3 { font-family: "Inter", system-ui, sans-serif; font-weight: 400; color: var(--text); }
+h1 { margin: 0 0 26px; max-width: 780px; font-size: clamp(40px, 4.6vw, 68px); line-height: 1.05; }
+h2 { margin: 0 0 18px; font-size: clamp(32px, 3.3vw, 50px); line-height: 1.08; }
+h3 { margin: 0; font-size: 26px; line-height: 1.15; }
+.lead { max-width: 620px; margin: 0 0 34px; color: var(--muted); font-size: 18px; line-height: 1.65; }
+.terminal-card, .card, .program-card, .stat, .timeline-item { background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.32); }
+.terminal-bar { display: flex; align-items: center; gap: 8px; padding: 14px 18px; background: var(--band); border-bottom: 1px solid var(--line); }
+.terminal-bar span { width: 12px; height: 12px; border-radius: 50%; }
+.terminal-bar span:nth-child(1){ background:#FF5F56; } .terminal-bar span:nth-child(2){ background:#FFBD2E; } .terminal-bar span:nth-child(3){ background:#27C93F; }
+.terminal-bar strong { margin-left: 10px; color: var(--dim); font: 500 12px "Plus Jakarta Sans", monospace; }
+.terminal-body { padding: 24px; font: 14px/1.9 "Plus Jakarta Sans", monospace; }
+.terminal-body p { margin: 0; } .orange { color: var(--orange); } .muted { color: var(--dim); }
+.band { background: var(--band); border-block: 1px solid var(--line); }
+.grid { display: grid; gap: 22px; }
+.grid.two { grid-template-columns: repeat(2, minmax(0,1fr)); } .grid.three { grid-template-columns: repeat(3, minmax(0,1fr)); }
+.program-card { display: grid; grid-template-rows: 210px 1fr; text-decoration: none; transition: transform .18s ease, border-color .18s ease; }
+.program-card:hover { transform: translateY(-4px); border-color: rgba(247,147,26,.55); }
+.program-card img, .card > img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.012); }
+.card-body { padding: 24px; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; }
+.pill { display: inline-flex; padding: 7px 12px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; color: var(--muted); font: 600 12px "Plus Jakarta Sans", monospace; }
+.pill.orange { color: var(--orange); border-color: rgba(247,147,26,.42); }
+.card p, .program-card p, .timeline-item p { color: var(--muted); line-height: 1.65; }
+.repo-card { display: block; text-decoration: none; transition: transform .18s ease, border-color .18s ease; }
+.repo-card:hover { transform: translateY(-4px); border-color: rgba(247,147,26,.55); }
+.repo-card h3 { margin-top: 14px; }
+.stat { padding: 26px; }
+.stat strong { display: block; color: var(--orange); font: 400 40px/1 "Inter", monospace; margin-bottom: 10px; }
+.timeline { display: grid; gap: 14px; counter-reset: step; }
+.timeline-item { display: grid; grid-template-columns: 70px 1fr; gap: 22px; padding: 24px; counter-increment: step; }
+.timeline-item:before { content: counter(step, decimal-leading-zero); color: var(--orange); font: 700 16px "Plus Jakarta Sans", monospace; }
+.split { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 42px; align-items: start; }
+.feature-panel { background: linear-gradient(145deg, rgba(247,147,26,.12), rgba(20,20,20,.86) 42%, rgba(15,15,15,.96)); border: 1px solid rgba(247,147,26,.26); border-radius: 16px; box-shadow: 0 28px 80px rgba(0,0,0,.34); overflow: hidden; }
+.feature-panel-inner { padding: 28px; }
+.photo-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 30px; }
+.photo-card { position: relative; min-height: 300px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--card); box-shadow: 0 20px 60px rgba(0,0,0,.28); }
+.photo-card.tall { min-height: 420px; }
+.photo-card.wide { grid-column: span 2; }
+.photo-card img, .feature-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.012); }
+.photo-card:after, .feature-photo:after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(6,6,6,.78) 100%); pointer-events: none; }
+.photo-caption { position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 1; display: inline-flex; width: max-content; max-width: calc(100% - 28px); padding: 7px 11px; border-radius: 999px; background: rgba(6,6,6,.78); border: 1px solid rgba(255,255,255,.13); color: var(--text); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .08em; text-transform: uppercase; }
+.feature-photo { position: relative; min-height: 430px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--card); box-shadow: 0 24px 70px rgba(0,0,0,.32); }
+.calendar-frame { margin-top: 28px; background: #fff; border: 1px solid rgba(255,255,255,.12); border-radius: 16px; overflow: hidden; box-shadow: 0 24px 70px rgba(0,0,0,.36); }
+.calendar-frame iframe { display: block; width: 100%; height: 680px; border: 0; background: #fff; }
+.booking-panel { display: grid; gap: 16px; padding: 24px; background: rgba(6,6,6,.48); border: 1px solid var(--line); border-radius: 16px; }
+.price-tag { display: inline-flex; width: max-content; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 999px; background: rgba(247,147,26,.14); border: 1px solid rgba(247,147,26,.34); color: var(--orange); font: 700 13px "Plus Jakarta Sans", monospace; }
+.footer { border-top: 1px solid var(--line); background: #060606; }
+.footer-media { position: relative; max-width: 1240px; min-height: 300px; margin: 56px auto 0; border: 1px solid rgba(255,255,255,.1); border-radius: 16px; overflow: hidden; background: var(--band); box-shadow: 0 24px 70px rgba(0,0,0,.34); }
+.footer-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.footer-media:after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6,6,6,.9), rgba(6,6,6,.34) 56%, rgba(6,6,6,.74)); pointer-events: none; }
+.footer-media-copy { position: relative; z-index: 1; max-width: 560px; padding: 42px; }
+.footer-grid { max-width: 1240px; margin: 0 auto; padding: 56px 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.footer a { color: var(--dim); text-decoration: none; } .footer a:hover { color: var(--orange); }
+.link-list { display: grid; gap: 10px; }
+.final-cta { text-align: center; border-top: 1px solid var(--line); }
+@media (max-width: 900px) {
+  .announce { padding: 8px 16px; line-height: 1.42; }
+  .desktop-nav { display: none; } .mobile-nav { display: flex; padding-bottom: 12px; gap: 6px; }
+  .header-inner { height: 62px; padding: 0 16px; gap: 12px; } .brand img { height: 40px; }
+  .hero-grid, .section-inner { padding: 64px 20px; }
+  .hero-grid { gap: 30px; }
+  .hero-grid, .split, .grid.two, .grid.three { grid-template-columns: minmax(0, 1fr); }
+  .glow { right: -260px; width: 520px; height: 520px; }
+  h1 { font-size: clamp(34px, 10.5vw, 48px); line-height: 1.05; }
+  h2 { font-size: clamp(30px, 8.5vw, 40px); line-height: 1.08; }
+  h3 { font-size: clamp(21px, 6vw, 27px); }
+  .lead { font-size: 16px; line-height: 1.62; }
+  .terminal-body { padding: 20px; font-size: 12px; line-height: 1.75; overflow-wrap: anywhere; }
+  .terminal-bar strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .program-card { grid-template-rows: 190px 1fr; border-radius: 14px; }
+  .card-body, .stat, .timeline-item { padding: 20px; }
+  .stat strong { font-size: 34px; overflow-wrap: anywhere; }
+  .pill { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+  .photo-grid { grid-template-columns: 1fr; }
+  .photo-card.wide { grid-column: auto; }
+  .photo-card, .photo-card.tall, .feature-photo { min-height: 320px; }
+  .photo-caption { width: auto; max-width: calc(100% - 28px); white-space: normal; border-radius: 8px; line-height: 1.35; }
+  .feature-panel-inner { padding: 24px; }
+  .booking-panel { padding: 20px; }
+  .header-actions .ghost { display: none; }
+  .cta-row { flex-direction: column; align-items: stretch; }
+  .cta-row .button, .cta-row .ghost { width: 100%; }
+  .footer-grid { grid-template-columns: 1fr; padding: 48px 20px; }
+  .calendar-frame iframe { height: 560px; }
+  .footer-media { min-height: 260px; margin: 42px 20px 0; }
+  .footer-media-copy { padding: 30px 24px; }
+}
+@media (max-width: 560px) {
+  .announce { flex-direction: column; gap: 2px; font-size: 12px; }
+  .header-inner { height: 58px; padding-inline: 14px; }
+  .brand img { height: 36px; }
+  .mobile-nav { padding-inline: 12px; }
+  .mobile-nav a { font-size: 12px; padding: 7px 12px; }
+  .header-actions .button.small { min-height: 36px; padding: 8px 12px; font-size: 13px; }
+  .hero-grid, .section-inner { padding: 54px 18px; }
+  .button, .ghost { width: 100%; min-height: 46px; padding: 12px 18px; }
+  .header-actions .button, .header-actions .ghost { width: auto; }
+  .terminal-card, .card, .program-card, .stat, .timeline-item, .feature-panel, .calendar-frame, .booking-panel { border-radius: 14px; }
+  .program-card { grid-template-rows: 174px 1fr; }
+  .photo-card, .photo-card.tall, .feature-photo { min-height: 260px; }
+  .timeline-item { grid-template-columns: 1fr; gap: 10px; }
+  .timeline-item:before { font-size: 14px; }
+  .calendar-frame iframe { height: 500px; }
+  .footer-media { min-height: 240px; margin-inline: 18px; border-radius: 14px; }
+  .footer-media-copy { padding: 26px 20px; }
+  .feature-panel-inner { padding: 20px; }
+  .footer-grid { padding: 42px 18px; }
+}
+@media (max-width: 380px) {
+  .hero-grid, .section-inner { padding-inline: 16px; }
+  .photo-card, .photo-card.tall, .feature-photo { min-height: 230px; }
+  .calendar-frame iframe { height: 455px; }
+  .mobile-nav a { font-size: 11px; padding-inline: 10px; }
+}
+
+.article-hero .hero-grid { grid-template-columns: minmax(0, 1fr); padding-bottom: 56px; }
+.article-hero h1 { max-width: 900px; }
+.byline { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; }
+.article-wrap { max-width: 760px; margin: 0 auto; padding: 56px 32px 24px; }
+.article-figure { margin: 0 0 40px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--card); box-shadow: 0 24px 70px rgba(0,0,0,.32); }
+.article-figure img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+.article-figure.inline { margin: 8px 0 32px; }
+.article-figure.inline img { aspect-ratio: auto; }
+.article-figure figcaption { padding: 12px 16px; color: var(--dim); font: 500 13px/1.5 "Plus Jakarta Sans", monospace; }
+.byline { align-items: center; }
+.byline-avatar { width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(247,147,26,.5); }
+.author-box { display: flex; align-items: center; gap: 16px; margin: 40px 0 0; padding: 20px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; }
+.author-box img { width: 72px; height: 72px; border-radius: 50%; border: 2px solid var(--orange); flex: 0 0 auto; }
+.author-box strong { font-size: 18px; }
+.author-box p { margin: 2px 0 0; color: var(--dim); }
+.prose { color: var(--muted); font-size: 19px; line-height: 1.78; }
+.prose p, .prose ul, .prose ol { margin: 0 0 24px; }
+.prose h2 { margin: 52px 0 18px; font-size: clamp(28px, 2.8vw, 40px); }
+.prose strong { color: var(--text); }
+.prose a { color: var(--orange); text-underline-offset: 3px; }
+.prose ul, .prose ol { padding-left: 24px; }
+.prose li { margin-bottom: 10px; padding-left: 4px; }
+.prose li::marker { color: var(--orange); font-weight: 700; }
+.prose .pull { margin: 0 0 28px; padding: 18px 22px; border-left: 3px solid var(--orange); background: var(--card); border-radius: 0 12px 12px 0; color: var(--text); font-size: 21px; }
+.prose .closing { color: var(--text); font-size: 21px; }
+.newsletter { max-width: 760px; margin: 24px auto 0; padding: 0 32px; }
+.newsletter-card { padding: 30px; background: linear-gradient(145deg, rgba(247,147,26,.12), rgba(20,20,20,.86) 42%, rgba(15,15,15,.96)); border: 1px solid rgba(247,147,26,.26); border-radius: 16px; }
+.newsletter-card h2 { font-size: clamp(26px, 2.6vw, 34px); margin-bottom: 10px; }
+.newsletter-card p { margin: 0 0 20px; color: var(--muted); line-height: 1.6; }
+.newsletter-form { display: flex; gap: 10px; flex-wrap: wrap; }
+.newsletter-form input[type=email] { flex: 1 1 240px; min-height: 48px; padding: 12px 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,.18); background: rgba(6,6,6,.6); color: var(--text); font: 500 16px "Inter", system-ui, sans-serif; }
+.newsletter-form input[type=email]:focus { outline: 2px solid var(--orange); outline-offset: 1px; }
+.newsletter-form button { border: 0; cursor: pointer; font: inherit; font-weight: 700; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+.article-list { display: grid; gap: 22px; }
+.article-card { display: grid; grid-template-columns: 320px 1fr; text-decoration: none; background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.32); transition: transform .18s ease, border-color .18s ease; }
+.article-card:hover { transform: translateY(-4px); border-color: rgba(247,147,26,.55); }
+.article-card img { width: 100%; height: 100%; min-height: 220px; object-fit: cover; }
+.article-card p { color: var(--muted); line-height: 1.65; }
+@media (max-width: 900px) {
+  .article-wrap { padding: 40px 20px 16px; }
+  .newsletter { padding: 0 20px; }
+  .prose { font-size: 17px; }
+  .prose .pull, .prose .closing { font-size: 19px; }
+  .article-card { grid-template-columns: 1fr; }
+  .article-card img { min-height: 200px; max-height: 240px; }
+}
+@media (max-width: 560px) {
+  .article-wrap { padding: 32px 18px 12px; }
+  .newsletter { padding: 0 18px; }
+  .newsletter-card { padding: 22px; }
+  .newsletter-form button { width: 100%; }
+}
+
+.notes-link { display:inline-flex; align-items:center; gap:8px; margin-top:4px; color: var(--dim); font: 600 13px "Plus Jakarta Sans", monospace; text-decoration:none; }
+.notes-link:hover { color: var(--orange); }
+.note-meta { display:flex; flex-wrap:wrap; gap:8px; margin:0; }
+.prose h3 { margin: 30px 0 12px; font-size: 21px; color: var(--text); }
+.prose ol li strong:first-child { color: var(--text); }
+.source-box { margin: 40px 0 0; padding: 20px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; color: var(--dim); font-size: 15px; line-height: 1.6; }
+.source-box a { color: var(--orange); }
+.tldr { margin: 0 0 40px; padding: 22px 24px; background: linear-gradient(145deg, rgba(247,147,26,.12), rgba(20,20,20,.9) 55%); border: 1px solid rgba(247,147,26,.3); border-radius: 16px; }
+.tldr .eyebrow { margin: 0 0 10px; }
+.tldr ul { margin: 0; padding-left: 20px; }
+.tldr li { margin: 0 0 6px; color: var(--text); }
+.viz { margin: 8px 0 36px; padding: 24px; background: var(--band); border: 1px solid var(--line); border-radius: 16px; font-size: 16px; line-height: 1.55; }
+.viz .eyebrow { margin: 0 0 6px; }
+.viz-title { margin: 0 0 18px; color: var(--text); font-size: 21px; font-weight: 600; }
+.flow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
+.flow-step { flex: 1 1 0; min-width: 92px; padding: 14px 12px; text-align: center; background: var(--card); border: 1px solid rgba(255,255,255,.12); border-radius: 12px; color: var(--text); font-weight: 600; }
+.flow-step small { display: block; margin-top: 4px; color: var(--dim); font: 600 11px "Plus Jakarta Sans", monospace; letter-spacing: .12em; text-transform: uppercase; }
+.flow-hop { color: var(--orange); font: 700 15px "Plus Jakarta Sans", monospace; white-space: nowrap; }
+.viz ul { margin: 0 0 16px; padding-left: 20px; }
+.viz li { margin: 0 0 4px; }
+.viz-fix { margin: 0; padding: 14px 16px; border-radius: 12px; background: rgba(247,147,26,.12); border: 1px solid rgba(247,147,26,.4); color: var(--text); }
+.viz-fix b { color: var(--orange); }
+.layers { display: grid; gap: 10px; }
+.layer { padding: 16px 18px; background: var(--card); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; }
+.layer.top { background: rgba(247,147,26,.12); border-color: rgba(247,147,26,.5); }
+.layer strong { display: block; color: var(--text); font-size: 18px; }
+.layer p { margin: 4px 0 6px; }
+.layer span { color: var(--orange); font: 600 13px "Plus Jakarta Sans", monospace; }
+.layer-scale { display: flex; justify-content: space-between; margin: 0 0 8px; color: var(--dim); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .12em; text-transform: uppercase; }
+.layer-scale b { color: var(--orange); }
+.q-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
+.q { padding: 16px; background: var(--card); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; }
+.q b { display: block; color: var(--orange); font: 700 13px "Plus Jakarta Sans", monospace; margin-bottom: 4px; }
+.q span { color: var(--text); }
+.share-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 32px 0 0; }
+.share-row strong { color: var(--text); margin-right: 4px; }
+.share-row a, .share-row button { min-height: 38px; padding: 8px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,.16); background: transparent; color: var(--text); font: 600 14px "Inter", system-ui, sans-serif; text-decoration: none; cursor: pointer; }
+.share-row a:hover, .share-row button:hover { border-color: var(--orange); color: var(--orange); }
+.note-figure img { aspect-ratio: 1200 / 630; }
+.video { position: relative; margin: 0 0 14px; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: #000; box-shadow: 0 24px 70px rgba(0,0,0,.32); }
+.video img, .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; object-fit: cover; }
+.video button { position: absolute; inset: 0; width: 100%; border: 0; padding: 0; background: transparent; cursor: pointer; }
+.video .play { position: absolute; left: 72%; top: 50%; width: 84px; height: 84px; margin: -42px 0 0 -42px; border-radius: 50%; background: var(--orange); box-shadow: 0 10px 40px rgba(0,0,0,.5); transition: transform .15s ease; }
+.video .play:after { content: ""; position: absolute; left: 33px; top: 26px; border-style: solid; border-width: 16px 0 16px 26px; border-color: transparent transparent transparent #0A0A0A; }
+.video button:hover .play { transform: scale(1.08); }
+.video-note { margin: 0 0 32px; color: var(--dim); font: 500 13px/1.5 "Plus Jakarta Sans", monospace; }
+.video-note a { color: var(--orange); }
+.chapters { margin: 0 0 40px; border: 1px solid var(--line); border-radius: 16px; background: var(--band); }
+.chapters summary { padding: 16px 20px; cursor: pointer; color: var(--text); font-weight: 600; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+.chapters summary::-webkit-details-marker { display: none; }
+.chapters summary:after { content: "+"; color: var(--orange); font-size: 22px; line-height: 1; }
+.chapters[open] summary:after { content: "−"; }
+.chapters ol { list-style: none; margin: 0; padding: 0 8px 12px; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 2px 12px; }
+.chapters li { margin: 0; }
+.chapters a { display: flex; gap: 12px; padding: 8px 12px; border-radius: 8px; color: var(--muted); text-decoration: none; font-size: 15px; line-height: 1.4; }
+.chapters a:hover { background: var(--card); color: var(--text); }
+.chapters time { flex: 0 0 auto; min-width: 56px; color: var(--orange); font: 600 13px/1.6 "Plus Jakarta Sans", monospace; }
+.quote { margin: 8px 0 32px; padding: 24px 26px; border-left: 3px solid var(--orange); background: var(--card); border-radius: 0 16px 16px 0; }
+.quote p { margin: 0 0 10px; color: var(--text); font-size: 22px; line-height: 1.45; }
+.quote cite { color: var(--dim); font: 600 13px "Plus Jakarta Sans", monospace; font-style: normal; }
+.part { display: flex; align-items: center; gap: 12px; margin: 44px 0 14px; color: var(--orange); font: 700 12px "Plus Jakarta Sans", monospace; letter-spacing: .14em; text-transform: uppercase; }
+.part::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(247,147,26,.5), transparent); }
+.part b { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--orange); color: #0A0A0A; font-size: 13px; letter-spacing: 0; }
+.term { margin: 8px 0 30px; border-radius: 14px; overflow: hidden; background: #0d0d0d; border: 1px solid rgba(255,255,255,.12); box-shadow: 0 24px 60px rgba(0,0,0,.45); }
+.term-bar { display: flex; align-items: center; gap: 7px; padding: 11px 14px; background: #1a1a1a; border-bottom: 1px solid rgba(255,255,255,.08); }
+.term-bar i { width: 11px; height: 11px; border-radius: 50%; background: #3a3a3a; }
+.term-bar i:first-child { background: #F7931A; }
+.term-bar span { margin-left: 8px; color: var(--dim); font: 600 12px "Plus Jakarta Sans", monospace; }
+.term pre { margin: 0; padding: 18px 20px; overflow-x: auto; color: #d8d8d8; font: 500 13.5px/1.75 ui-monospace, "SF Mono", Menlo, Consolas, monospace; white-space: pre; }
+.term .p { color: #F7931A; } .term .ok { color: #7bd88f; } .term .bad { color: #ff6b6b; } .term .c { color: #7a7a7a; }
+.term-note { margin: -22px 0 30px; color: var(--dim); font-size: 13px; }
+.svg-viz svg { display: block; width: 100%; height: auto; }
+.svg-scroll { overflow-x: auto; margin: 0 -6px 16px; padding: 0 6px; }
+@media (max-width: 560px) { .svg-scroll svg { min-width: 540px; } .prose .term pre { font-size: 12px; } }
+.prose .term-note { margin-top: -20px; }
+.swipe { display: none; margin: -8px 0 14px; color: var(--dim); font-size: 13px; }
+@media (max-width: 560px) { .swipe { display: block; } }
+.svg-viz text { font-family: "Inter", system-ui, sans-serif; }
+.anatomy { display: grid; grid-template-columns: auto 1fr; gap: 0; margin: 0; border: 1px solid rgba(255,255,255,.1); border-radius: 12px; overflow: hidden; font-size: 15px; }
+.anatomy code { padding: 10px 14px; background: #0d0d0d; color: #F7931A; font: 600 13.5px ui-monospace, Menlo, Consolas, monospace; border-bottom: 1px solid rgba(255,255,255,.06); }
+.anatomy span { padding: 10px 14px; color: var(--text); background: var(--card); border-bottom: 1px solid rgba(255,255,255,.06); }
+.anatomy span em { color: var(--dim); font-style: normal; }
+.more-notes { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; margin: 28px 0 0; }
+.more-notes a { display: block; padding: 18px 20px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; text-decoration: none; color: var(--text); }
+.more-notes a:hover { border-color: rgba(247,147,26,.5); }
+.more-notes small { display: block; margin-bottom: 6px; color: var(--orange); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .12em; text-transform: uppercase; }
+.more-notes a.newer { text-align: right; grid-column: 2; }
+@media (max-width: 560px) { .more-notes { grid-template-columns: 1fr; } .more-notes a.newer { grid-column: 1; text-align: left; } }
+.next-card { display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center; margin: 40px 0 0; padding: 24px; background: linear-gradient(145deg, rgba(247,147,26,.14), rgba(20,20,20,.9) 55%); border: 1px solid rgba(247,147,26,.35); border-radius: 16px; }
+.next-card .eyebrow { margin: 0 0 8px; }
+.next-card h3 { font-size: 24px; }
+.next-card p { margin: 6px 0 0; color: var(--muted); }
+.next-card .cta-row { flex-wrap: wrap; }
+.next-card.nx { grid-template-columns: minmax(0,1.2fr) minmax(0,1fr); align-items: start; }
+.nx-list { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 10px; }
+.nx-list li { display: grid; grid-template-columns: 54px 1fr auto; gap: 12px; align-items: center; padding: 10px 12px; border-radius: 12px; background: rgba(0,0,0,.35); border: 1px solid var(--line); }
+.nx-list li.same { border-color: rgba(247,147,26,.6); }
+.nx-date { display: grid; justify-items: center; font: 800 20px/1.05 "Plus Jakarta Sans", sans-serif; color: var(--text); }
+.nx-date b { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); }
+.nx-date i { font: 600 11px "Plus Jakarta Sans", sans-serif; color: var(--dim); font-style: normal; text-transform: uppercase; }
+.nx-text { display: grid; gap: 2px; min-width: 0; }
+.nx-text strong { color: var(--text); font-size: 15px; line-height: 1.3; }
+.nx-text span { color: var(--muted); font-size: 12.5px; }
+.nx-text em { font: 700 10px "Plus Jakarta Sans", sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-style: normal; }
+.nx-add { padding: 7px 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,.16); color: var(--text); text-decoration: none; font: 700 12px "Plus Jakarta Sans", sans-serif; white-space: nowrap; }
+.nx-add:hover { border-color: var(--orange); color: var(--orange); }
+.nx-head, .nx-side { min-width: 0; }
+.nx-side { display: grid; gap: 14px; }
+.nx-form label { display: block; margin-bottom: 8px; color: var(--muted); font: 600 13px "Plus Jakarta Sans", sans-serif; }
+.nx-form div { display: flex; gap: 8px; flex-wrap: wrap; }
+.nx-form input[type=email] { flex: 1 1 160px; min-width: 0; min-height: 40px; padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,.16); background: rgba(0,0,0,.45); color: var(--text); font: 15px "Inter", sans-serif; }
+.nx-form input[type=email]:focus { outline: none; border-color: var(--orange); }
+.nx-form button { flex: none; min-height: 40px; width: auto; cursor: pointer; background: transparent; font: inherit; font-weight: 700; }
+.nx-msg { margin: 0; color: var(--orange); font-size: 13px; }
+@media (max-width: 860px) { .next-card.nx { grid-template-columns: 1fr; } }
+@media (max-width: 420px) { .nx-list li { grid-template-columns: 46px 1fr; } .nx-add { grid-column: 2; justify-self: start; } }
+.qz { margin: 40px 0; padding: 24px; border: 1px solid rgba(247,147,26,.4); border-radius: 16px; background: linear-gradient(145deg, rgba(247,147,26,.1), rgba(20,20,20,.92)); }
+.qz-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.qz-head .eyebrow { margin: 0; }
+.qz-best { color: var(--dim); font: 600 12px "Plus Jakarta Sans", sans-serif; }
+.qz-bar { height: 6px; border-radius: 99px; background: rgba(255,255,255,.08); margin: 14px 0; overflow: hidden; }
+.qz-bar i { display: block; height: 100%; width: 0; background: var(--orange); transition: width .4s ease; }
+.qz-n { margin: 0 0 4px; color: var(--dim); font: 600 12px "Plus Jakarta Sans", sans-serif; }
+.prose .qz-q { margin: 0 0 14px; font-size: 20px; line-height: 1.35; }
+.qz-opts { display: grid; gap: 10px; margin-bottom: 14px; }
+.qz-opts button { text-align: left; min-height: 48px; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,.16); background: rgba(0,0,0,.4); color: var(--text); font: 15px/1.45 "Inter", sans-serif; cursor: pointer; }
+.qz-opts button:hover:not(:disabled) { border-color: var(--orange); }
+.qz-opts button.right { border-color: #4ade80; background: rgba(74,222,128,.12); }
+.qz-opts button.wrong { border-color: #f87171; background: rgba(248,113,113,.1); }
+.prose .qz-why { padding: 12px 14px; border-radius: 10px; background: rgba(255,255,255,.05); font-size: 15px; margin: 0 0 14px; }
+.qz button.button, .qz button.ghost { border: 0; cursor: pointer; font: inherit; font-weight: 700; }
+.qz button.ghost { border: 1px solid rgba(255,255,255,.16); background: transparent; }
+.prose .qz-score { margin: 10px 0 4px; font: 800 44px "Plus Jakarta Sans", sans-serif; color: var(--orange); }
+/* v6 template pieces: reading progress, recording-coming-soon slot, series journey, homework checklist */
+.rp { position: fixed; left: 0; top: 0; height: 3px; width: 0; background: linear-gradient(90deg, var(--orange), #FFB347); z-index: 200; pointer-events: none; }
+.soon { position: relative; margin: 0 0 14px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: #000; }
+.soon img { display: block; width: 100%; height: auto; filter: brightness(.5) saturate(.8); }
+.soon-tag { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); display: flex; align-items: center; gap: 10px; padding: 12px 20px; border-radius: 99px; background: rgba(10,10,10,.82); border: 1px solid rgba(247,147,26,.55); color: var(--text); font: 700 14px/1.2 "Inter", system-ui, sans-serif; white-space: nowrap; }
+.soon-tag i { width: 10px; height: 10px; border-radius: 50%; background: var(--orange); animation: soonp 1.6s ease-in-out infinite; }
+@keyframes soonp { 50% { opacity: .2; } }
+.chapters li > span { display: flex; gap: 12px; padding: 8px 12px; color: var(--muted); font-size: 15px; line-height: 1.4; }
+.jr { margin: 0 0 30px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--band); }
+.jr-top { display: flex; justify-content: space-between; gap: 6px 14px; align-items: baseline; flex-wrap: wrap; margin: 0 0 12px; }
+.jr-top b { font: 700 12px "Plus Jakarta Sans", monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--orange); }
+.jr-top a { color: var(--dim); font-size: 13px; }
+.jr ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(var(--n), minmax(0,1fr)); gap: 5px; }
+.jr li { margin: 0; height: 9px; border-radius: 99px; background: rgba(255,255,255,.1); }
+.jr li.done { background: rgba(247,147,26,.55); }
+.jr li.now { background: var(--orange); box-shadow: 0 0 0 3px rgba(247,147,26,.22), 0 0 18px rgba(247,147,26,.45); }
+.jr-now { margin: 12px 0 0; color: var(--muted); font-size: 14.5px; line-height: 1.5; }
+.jr-now strong { color: var(--text); }
+.todo { margin: 0 0 40px; padding: 20px 22px 14px; border: 1px solid rgba(247,147,26,.3); border-radius: 16px; background: var(--card); }
+.todo .eyebrow { margin: 0 0 4px; display: flex; justify-content: space-between; gap: 10px; }
+.todo .eyebrow span { color: var(--dim); letter-spacing: .06em; }
+.todo label { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-top: 1px solid rgba(255,255,255,.06); cursor: pointer; color: var(--muted); font-size: 15.5px; line-height: 1.45; }
+.todo label:first-of-type { border-top: 0; }
+.todo input { accent-color: #F7931A; width: 18px; height: 18px; margin: 2px 0 0; flex: none; cursor: pointer; }
+.todo label.on > span { color: var(--dim); text-decoration: line-through; }
+.todo label a { color: var(--orange); }
+.todo-msg { margin: 6px 0 0; color: var(--orange); font: 600 13px/1.5 "Plus Jakarta Sans", monospace; min-height: 1em; }
+.join-cta { margin: 44px 0 0; padding: 28px; border-radius: 18px; border: 1px solid var(--orange); background: radial-gradient(120% 120% at 0 0, rgba(247,147,26,.22), transparent 60%) #141414; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px 28px; }
+.join-cta > div { flex: 1 1 320px; }
+.join-cta .eyebrow { margin: 0 0 8px; }
+.join-cta h3 { margin: 0 0 8px; font-size: 26px; line-height: 1.2; color: var(--text); }
+.join-cta p { margin: 0; color: var(--muted); font-size: 16px; line-height: 1.55; }
+.join-cta .button { flex: none; }
+@media (max-width: 700px) { .chapters ol { grid-template-columns: 1fr; } .next-card { grid-template-columns: 1fr; } .quote p { font-size: 19px; } }
+
+@media (max-width: 560px) { .viz { padding: 18px; font-size: 15px; } .q-grid { grid-template-columns: 1fr; } .flow-hop { flex: 0 0 100%; text-align: center; } .flow-step { flex-basis: 100%; } .flow-hop i { display: inline-block; font-style: normal; transform: rotate(90deg); } }
+.res-tools { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 0 0 28px; }
+.res-tools input { flex: 1 1 260px; min-height: 46px; padding: 10px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,.18); background: var(--card); color: var(--text); font: 500 16px "Inter", system-ui, sans-serif; }
+.res-tools input:focus { outline: 2px solid var(--orange); outline-offset: 1px; }
+.chip { min-height: 38px; padding: 8px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.16); background: transparent; color: var(--muted); font: 600 13px "Plus Jakarta Sans", monospace; cursor: pointer; }
+.chip:hover, .chip[aria-pressed="true"] { border-color: var(--orange); color: var(--orange); }
+.res-group { margin: 0 0 36px; }
+.res-group h2 { font-size: clamp(24px, 2.4vw, 32px); margin: 0 0 14px; }
+.res-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+.res { display: block; padding: 18px 20px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; text-decoration: none; transition: border-color .15s ease, transform .15s ease; }
+a.res:hover { border-color: rgba(247,147,26,.55); transform: translateY(-2px); }
+.res strong { display: block; color: var(--text); font-size: 17px; line-height: 1.35; }
+.res p { margin: 6px 0 10px; color: var(--muted); font-size: 15px; line-height: 1.5; }
+.res small { color: var(--dim); font: 600 12px "Plus Jakarta Sans", monospace; }
+.res small a { color: var(--orange); text-decoration: none; position: relative; z-index: 1; }
+.res-empty { color: var(--dim); }
+@media (max-width: 700px) { .res-grid { grid-template-columns: 1fr; } }
+</style>
+<link rel="stylesheet" href="/assets/theme.css?v=20261117b">
+<script src="/assets/site-menu.js?v=20261117a" defer></script>
+</head>
+<body>
+<a class="announce" href="/decoding-bitcoin">Decoding Bitcoin study cohort &middot; free, Mondays on Discord &middot; join anytime <span>Sign up &rarr;</span></a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="Code Orange Dev School home"><img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School"></a>
+    <nav class="desktop-nav" aria-label="Primary">
+      <a href="/start">Start here</a>
+      <a href="/programs">Programs</a>
+      <a href="/portal">Portal</a>
+      <a href="/fellowships">Fellowships</a>
+      <a href="/calendar">Calendar</a>
+      <a href="/community">Community</a>
+      <a href="/about">About</a>
+    </nav>
+    <div class="header-actions">
+      <a class="ghost small" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a>
+      <a class="button small" href="/apply">Apply Now</a>
+    </div>
+  </div>
+  <nav class="mobile-nav" aria-label="Mobile">
+    <a href="/start">Start here</a>
+    <a href="/programs">Programs</a>
+    <a href="/portal">Portal</a>
+    <a href="/calendar">Calendar</a>
+    <a href="/community">Community</a>
+    <a href="/about">About</a>
+  </nav>
+</header>
+<main>
+  <section class="hero article-hero"><div class="co-fx" aria-hidden="true"><i></i><i></i><i></i><svg class="co-fx-glow" viewBox="0 0 1200 400" preserveAspectRatio="none"><defs><filter id="co-glow-blur" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="25"/></filter><radialGradient id="co-glow-fill"><stop offset="0" stop-color="#F7931A" stop-opacity=".55"/><stop offset=".55" stop-color="#C2620A" stop-opacity=".28"/><stop offset="1" stop-color="#4A2600" stop-opacity="0"/></radialGradient></defs><ellipse cx="600" cy="200" rx="520" ry="110" fill="url(#co-glow-fill)" filter="url(#co-glow-blur)"/></svg></div>
+    <div class="glow"></div>
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow"><a href="/session-notes" style="text-decoration:none">/Session-notes</a>/2026-11-17_</p>
+        <h1>Silent Payments: one address, no <span class="orange">reuse.</span></h1>
+        <p class="lead">A live silent payment from Cake Wallet to Shroud, a guest who builds the Dana wallet on what silent payments fix (and what they don't), and Razor rebuilding the protocol from scratch: tweaked keys, Diffie-Hellman, Taproot. Plus where you can help.</p>
+        <p class="note-meta"><span class="pill orange">Privacy Track</span><span class="pill"><time datetime="2026-11-17">November 17, 2026</time></span><span class="pill">Hosted by Razor and keypleb, with guest Sosthène (Dana wallet)</span><span class="pill">7 min read</span></p>
+      </div>
+    </div>
+  </section>
+  <article class="article-wrap">
+    <div class="soon" id="recording"><img src="/assets/session-notes/2026-11-17-privacy-track-silent-payments.jpg" alt="Privacy Track: Silent Payments: one address, no reuse" width="1200" height="630"><span class="soon-tag"><i></i>Recording coming soon</span></div>
+    <p class="video-note">The recording goes up on YouTube shortly and will play right here.</p>
+    <details class="chapters"><summary>What we covered, minute by minute <span style="color:var(--dim);font-weight:500">(13 moments)</span></summary><ol><li><span><time>00:00</time><span>Welcome and the plan for today</span></span></li><li><span><time>04:47</time><span>Live demo: Cake Wallet to Shroud, then mempool.space</span></span></li><li><span><time>09:00</time><span>Why some wallets see a payment sooner: scanning</span></span></li><li><span><time>11:47</time><span>Address reuse, and what silent payments don't fix</span></span></li><li><span><time>20:33</time><span>Spot the silent payment: Taproot outputs and round amounts</span></span></li><li><span><time>30:38</time><span>Backends: Electrum servers vs BlindBit</span></span></li><li><span><time>41:52</time><span>Gap limits, with a real wallet recovery story</span></span></li><li><span><time>45:57</time><span>Razor's deep dive: history and the interactivity scale</span></span></li><li><span><time>52:16</time><span>Sender vs receiver: why scanning is the hard part</span></span></li><li><span><time>54:12</time><span>Building silent payments from scratch</span></span></li><li><span><time>1:10:06</time><span>Quiz</span></span></li><li><span><time>1:19:12</time><span>How to contribute: Dana, BlindBit, Frigate, Shroud</span></span></li><li><span><time>1:23:00</time><span>Wrap-up and what's next</span></span></li></ol></details>
+    <div class="prose">
+      <div class="tldr">
+        <p class="eyebrow">TL;DR</p>
+        <ul>
+          <li>A silent payment address starts with sp1 and can be posted anywhere. Every payment to it lands on a different, normal-looking Taproot output, so nobody can list your payments.</li>
+          <li>It fixes address reuse, the baseline privacy leak. It does not stop chain analysis if you later merge those coins, so pair it with coin control, PayJoin and other tools.</li>
+          <li>Sending is easy and needs no node. Receiving is the hard part: your wallet has to scan every transaction, and how it scans (full node, Electrum server, BlindBit) decides what you leak and how fast you see payments.</li>
+          <li>The projects are run by very few people: Dana, BlindBit Oracle, Frigate and Shroud all welcome new contributors.</li>
+        </ul>
+      </div>
+
+      <section class="todo" id="todo" data-todo="2026-11-17-privacy-track-silent-payments"><p class="eyebrow">Try it before next time<span data-todo-count>0 / 4</span></p><label><input type="checkbox" data-i="0"><span>Get a silent payment address (it starts with <code>sp1</code>) in Cake Wallet, Sparrow, Dana or Shroud.</span></label><label><input type="checkbox" data-i="1"><span>Send a few thousand sats to it, then look the transaction up on <a href="https://mempool.space" target="_blank" rel="noopener">mempool.space</a>. Can you tell it apart from a normal Taproot payment?</span></label><label><input type="checkbox" data-i="2"><span>Read the overview on <a href="https://silentpayments.xyz" target="_blank" rel="noopener">silentpayments.xyz</a>. Brave? Open BIP 352.</span></label><label><input type="checkbox" data-i="3"><span>Pick one project (Dana, BlindBit Oracle, Frigate or the Shroud indexer), build it and run it. That is how contributing starts.</span></label><p class="todo-msg" role="status" aria-live="polite"></p></section>
+      <script>(function(){var r=document.getElementById('todo'),K='co-todo-'+r.dataset.todo,S={};try{S=JSON.parse(localStorage.getItem(K))||{};}catch(e){}
+      var bs=r.querySelectorAll('input'),c=r.querySelector('[data-todo-count]'),m=r.querySelector('.todo-msg');
+      function draw(){var n=0;bs.forEach(function(b){b.checked=!!S[b.dataset.i];b.parentNode.classList.toggle('on',b.checked);if(b.checked)n++;});c.textContent=n+' / '+bs.length;m.textContent=n==bs.length?'All done. See you next time.':'';document.dispatchEvent(new CustomEvent('co-todo',{detail:{done:n,total:bs.length}}));}
+      bs.forEach(function(b){b.addEventListener('change',function(){S[b.dataset.i]=b.checked?1:0;try{localStorage.setItem(K,JSON.stringify(S));}catch(e){}draw();});});draw();})();</script>
+
+      <style>
+      .sx-card{margin:8px 0 36px;border:1px solid rgba(247,147,26,.35);border-radius:18px;background:radial-gradient(120% 90% at 0 0,rgba(247,147,26,.13),transparent 60%) #141414;padding:22px;position:relative}
+      .sx-eye{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 6px;font:700 12px/1.3 "Plus Jakarta Sans",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--orange)}
+      .sx-eye span:last-child{color:var(--dim);letter-spacing:.06em}
+      .sx-card h3{margin:0 0 8px;font-size:22px;line-height:1.25;color:var(--text)}
+      .sx-card>p{margin:0 0 14px;font-size:15.5px;line-height:1.55}
+      .sx-btn{all:unset;box-sizing:border-box;cursor:pointer;display:inline-block;padding:10px 18px;border-radius:99px;background:var(--orange);color:#0A0A0A;font:800 14px/1.2 "Inter",system-ui,sans-serif;text-align:center}
+      .sx-btn:hover{filter:brightness(1.1)}
+      .sx-btn.ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.2)}
+      .sx-btn[disabled]{opacity:.35;cursor:default;filter:none}
+      .sx-btn:focus-visible,.sx-seg button:focus-visible,.sx-pick:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+      .sx-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+      .sx-seg{display:inline-flex;flex-wrap:wrap;gap:4px;padding:4px;border-radius:14px;background:rgba(0,0,0,.4);border:1px solid var(--line);margin:0 0 14px}
+      .sx-seg button{all:unset;box-sizing:border-box;cursor:pointer;padding:8px 14px;border-radius:10px;color:var(--muted);font:700 13px/1.2 "Inter",system-ui,sans-serif}
+      .sx-seg button.on{background:var(--orange);color:#0A0A0A}
+      .sx-seg button.right{background:#2f6b3a;color:#fff}
+      .sx-seg button.wrong{background:#6b2f2f;color:#fff}
+      .sx-out{margin:14px 0 0;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.04);color:var(--muted);font-size:15px;line-height:1.5;min-height:22px}
+      .sx-out b{color:var(--orange)}
+      .sx-done{display:none;margin-left:8px;color:var(--orange)}
+      .sx-card.won .sx-done{display:inline}
+      .sx-badges{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:14px 0}
+      .prose a.sx-badge,.sx-badge{display:block;padding:12px 4px;border-radius:14px;border:1px dashed rgba(255,255,255,.18);text-align:center;text-decoration:none;color:var(--dim);font:700 11px/1.3 "Plus Jakarta Sans",monospace;letter-spacing:.03em;transition:all .3s}
+      .sx-badge i{display:block;font-style:normal;font-size:26px;line-height:1;margin-bottom:8px;filter:grayscale(1);opacity:.45;transition:all .3s}
+      .prose a.sx-badge.got,.sx-badge.got{border:1px solid var(--orange);background:rgba(247,147,26,.14);color:var(--text);box-shadow:0 0 24px rgba(247,147,26,.18)}
+      .sx-badge.got i{filter:none;opacity:1;transform:scale(1.12)}
+      .sx-bar{height:8px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+      .sx-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--orange),#FFB347);transition:width .6s ease}
+      .sx-toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,30px);z-index:60;padding:12px 20px;border-radius:99px;background:var(--orange);color:#0A0A0A;font:800 14px/1.2 "Inter",system-ui,sans-serif;box-shadow:0 12px 40px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:all .35s ease;white-space:nowrap;max-width:92vw;overflow:hidden;text-overflow:ellipsis}
+      .sx-toast.go{opacity:1;transform:translate(-50%,0)}
+      .sx-mono{font:500 13px/1.5 "JetBrains Mono",ui-monospace,monospace;word-break:break-all}
+      /* interactivity scale */
+      .sx-scale{position:relative;margin:18px 0 6px;padding-top:6px}
+      .sx-track{height:10px;border-radius:99px;background:linear-gradient(90deg,#2f6b3a,#c9a227,#b4492f)}
+      .sx-stops{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+      .sx-stops div{padding:14px;border-radius:12px;background:var(--card);border:1px solid rgba(255,255,255,.1)}
+      .sx-stops div.me{border-color:var(--orange);background:rgba(247,147,26,.1)}
+      .sx-stops b{display:block;color:var(--text);margin:0 0 4px}
+      .sx-stops span{color:var(--muted);font-size:14px;line-height:1.45}
+      .sx-ends{display:flex;justify-content:space-between;margin-top:6px;font:700 11px "Plus Jakarta Sans",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+      /* how it works flow */
+      .sx-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:10px;align-items:stretch;margin-top:10px}
+      .sx-flow>div{padding:14px;border-radius:12px;background:var(--card);border:1px solid rgba(255,255,255,.1);font-size:14px;line-height:1.45;color:var(--muted)}
+      .sx-flow>div b{display:block;color:var(--text);margin:0 0 4px;font-size:15px}
+      .sx-flow>div.key{border-color:var(--orange)}
+      .sx-flow>i{align-self:center;font-style:normal;color:var(--orange);font-size:22px}
+      .sx-math{margin:12px 0 0;padding:12px 14px;border-radius:12px;background:#0d0d0d;border:1px solid var(--line);font:500 13.5px/1.7 "JetBrains Mono",ui-monospace,monospace;color:var(--muted)}
+      .sx-math em{font-style:normal;color:var(--orange)}
+      /* game 1: donation box */
+      .sx-split{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+      .sx-pane{padding:14px;border-radius:12px;background:#0d0d0d;border:1px solid var(--line);min-height:150px}
+      .sx-pane h4{margin:0 0 8px;font:700 12px/1.3 "Plus Jakarta Sans",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+      .sx-addr{padding:8px 10px;border-radius:8px;background:rgba(247,147,26,.1);color:var(--orange);margin:0 0 10px}
+      .sx-txs{list-style:none;margin:0;padding:0;max-height:190px;overflow:auto}
+      .sx-txs li{display:flex;justify-content:space-between;gap:8px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.06);font:500 12.5px/1.4 "JetBrains Mono",ui-monospace,monospace;color:var(--muted);animation:sxin .4s ease}
+      .sx-txs li b{color:var(--text);font-weight:600;white-space:nowrap}
+      .sx-txs li.leak{color:#ff9b8a}
+      @keyframes sxin{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+      .sx-total{margin:8px 0 0;font:700 13px "Plus Jakarta Sans",monospace;color:var(--text)}
+      /* game 2: analyst */
+      .sx-tx{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin:4px 0 14px}
+      .sx-io{display:flex;flex-direction:column;gap:6px}
+      .sx-io span,.sx-pick{display:block;padding:10px 12px;border-radius:10px;background:var(--card);border:1px solid rgba(255,255,255,.12);font:600 13.5px/1.35 "JetBrains Mono",ui-monospace,monospace;color:var(--text)}
+      .sx-io small,.sx-pick small{display:block;color:var(--dim);font:600 11.5px/1.3 "Inter",system-ui,sans-serif;margin-top:2px}
+      .sx-pick{all:unset;box-sizing:border-box;cursor:pointer;display:block;padding:10px 12px;border-radius:10px;background:var(--card);border:1px solid rgba(255,255,255,.12);font:600 13.5px/1.35 "JetBrains Mono",ui-monospace,monospace;color:var(--text);transition:all .2s}
+      .sx-pick:hover{border-color:var(--orange)}
+      .sx-pick.right{border-color:#4caf50;background:rgba(76,175,80,.14)}
+      .sx-pick.wrong{border-color:#e05a47;background:rgba(224,90,71,.12)}
+      .sx-arrow{color:var(--orange);font-size:22px}
+      .sx-dots{display:flex;gap:6px;margin:0 0 10px}
+      .sx-dots i{width:28px;height:6px;border-radius:99px;background:rgba(255,255,255,.12)}
+      .sx-dots i.ok{background:var(--orange)}
+      /* game 3: builder */
+      .sx-steps{display:flex;gap:6px;margin:0 0 14px}
+      .sx-steps i{flex:1;height:6px;border-radius:99px;background:rgba(255,255,255,.12);transition:background .3s}
+      .sx-steps i.ok{background:var(--orange)}
+      .sx-scene{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 12px}
+      .sx-chain{padding:12px;border-radius:12px;background:#0d0d0d;border:1px solid var(--line)}
+      .sx-chain h4{margin:0 0 8px;font:700 11px/1.3 "Plus Jakarta Sans",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+      .sx-chip{display:inline-block;margin:2px 4px 2px 0;padding:4px 8px;border-radius:7px;background:rgba(255,255,255,.07);font:600 12.5px/1.3 "JetBrains Mono",ui-monospace,monospace;color:var(--text)}
+      .sx-chip.hot{background:rgba(224,90,71,.2);color:#ffb3a7}
+      .sx-chip.ok{background:rgba(76,175,80,.18);color:#b6e3b8}
+      .sx-chip.or{background:rgba(247,147,26,.18);color:var(--orange)}
+      .sx-q{margin:4px 0 10px;color:var(--text);font-weight:600}
+      /* game 4: scanner */
+      .sx-scans{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 12px}
+      .sx-meter{display:grid;grid-template-columns:150px 1fr;gap:6px 10px;align-items:center;font-size:14px;color:var(--muted)}
+      .sx-meter div{height:10px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+      .sx-meter div i{display:block;height:100%;background:var(--orange);transition:width .5s ease}
+      .sx-mission{margin:16px 0 8px;padding:12px 14px;border-radius:12px;border:1px dashed rgba(247,147,26,.45);color:var(--text);font-size:15px;line-height:1.5}
+      .sx-mission small{display:block;color:var(--orange);font:700 11px "Plus Jakarta Sans",monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+      @media (max-width:700px){.sx-badges{grid-template-columns:repeat(3,minmax(0,1fr))}.sx-split,.sx-scene,.sx-stops{grid-template-columns:1fr}.sx-flow{grid-template-columns:1fr}.sx-flow>i{transform:rotate(90deg);justify-self:center}.sx-scans{grid-template-columns:1fr 1fr}.sx-meter{grid-template-columns:1fr}.sx-tx{grid-template-columns:1fr}.sx-arrow{transform:rotate(90deg);justify-self:center}}
+      </style>
+
+      <div class="sx-card" id="sx-board">
+        <p class="sx-eye"><span>Mission board</span><span><span id="sx-xp">0</span> XP</span></p>
+        <h3>Six badges to go silent</h3>
+        <p>Four mini-games from the call, a try-it-yourself checklist and a final quiz. Each one lights up a badge. Progress stays on this device and adds XP to your <a href="/session-notes#passport">builder passport</a>.</p>
+        <div class="sx-badges">
+          <a class="sx-badge" href="#g-reuse" data-b="reuse"><i>&#128230;</i>Unlinked</a>
+          <a class="sx-badge" href="#g-analyst" data-b="analyst"><i>&#128269;</i>Analyst</a>
+          <a class="sx-badge" href="#g-build" data-b="build"><i>&#128295;</i>Builder</a>
+          <a class="sx-badge" href="#g-scan" data-b="scan"><i>&#128225;</i>Scanner</a>
+          <a class="sx-badge" href="#todo" data-b="todo"><i>&#9989;</i>Tried it</a>
+          <a class="sx-badge" href="#sx-quiz" data-b="quiz"><i>&#129323;</i>Silent</a>
+        </div>
+        <div class="sx-bar"><i id="sx-prog"></i></div>
+      </div>
+      <div class="sx-toast" id="sx-toast" role="status" aria-live="polite"></div>
+
+      <h2>Highlights</h2>
+      <p class="part"><b>1</b>One address, nothing to link</p>
+      <p><strong>The session opened with a real payment.</strong> keypleb tapped <em>Request</em> in the Shroud wallet and got an address starting with <code>sp1</code>. keypleb pasted it into Cake Wallet and sent 20,000 sats. Then we looked the transaction up on mempool.space, and there was nothing special to see: two inputs, two outputs, one of them a plain Taproot (<code>v1_p2tr</code>) output. No <code>sp</code> anywhere. That is the trick: you can publish one address forever, and every payment lands somewhere new.</p>
+
+      <p><strong>Why that matters.</strong> Our guest Sosthène, who builds the Dana wallet, pointed at donation pages that show a plain Bitcoin address. Razor did it live with a well-known privacy project&rsquo;s page: paste its address into mempool.space and you see every donation since 2020, more than 17 BTC in total, and where the coins went next. Address reuse doesn&rsquo;t only hurt the receiver. It hurts everyone who pays them, because now their coins are tied to a public address too.</p>
+      <div class="quote"><p>&ldquo;If you reuse addresses, you&rsquo;re done. No matter what you do after that, there&rsquo;s no way to have good privacy.&rdquo;</p><span>Sosthène, Dana wallet</span></div>
+
+      <div class="sx-card" id="g-reuse">
+        <p class="sx-eye"><span>Mini-game 1 &middot; Donation box</span><span class="sx-done">&#10003; badge earned</span></p>
+        <h3>Run a donation page, then play the spy</h3>
+        <p>Pick an address type, send a few donations, and watch what a stranger with a block explorer can see. Try both modes.</p>
+        <div class="sx-seg" id="sx-mode" role="group" aria-label="Address type"><button type="button" class="on" data-m="old">Normal address</button><button type="button" data-m="sp">Silent payment address</button></div>
+        <div class="sx-split">
+          <div class="sx-pane"><h4>Your donation page</h4><div class="sx-addr sx-mono" id="sx-paddr"></div><button type="button" class="sx-btn" id="sx-donate">Someone donates</button></div>
+          <div class="sx-pane"><h4>Spy pastes your address into an explorer</h4><ul class="sx-txs" id="sx-spy"></ul><p class="sx-total" id="sx-tot"></p></div>
+        </div>
+        <p class="sx-out" id="sx-reuseout">Send three donations in each mode.</p>
+      </div>
+
+      <p><strong>What silent payments don&rsquo;t fix.</strong> Sosthène was clear: they solve address reuse, the baseline, and nothing more. Collect many donations on separate outputs and then spend them together in one transaction, and you have just told chain analysis they all belong to the same person. Privacy is layered: silent payments, then coin control, PayJoin, CoinJoin, Lightning and ecash on top. And off-chain: cameras off, don&rsquo;t talk about your stack, maybe skip the Bitcoin t-shirt at the airport. In France this year, home invasions targeting crypto holders made it painfully real.</p>
+
+      <p class="part"><b>2</b>Spot the payment</p>
+      <p><strong>keypleb asked the right question:</strong> how would chain analysis tell this apart from a PayJoin, which also has two inputs and two outputs? The Taproot output is a hint, not proof. The bigger giveaway was the <strong>amount</strong>. The payment was exactly 20,000 sats, a number a human typed. The change was 3,026 sats. Analysts also convert every output to dollars or euros at the time of the transaction and look for round numbers there. Sosthène&rsquo;s tip: when you ask to be paid, add a few random sats.</p>
+
+      <div class="sx-card" id="g-analyst">
+        <p class="sx-eye"><span>Mini-game 2 &middot; Be the chain analyst</span><span class="sx-done">&#10003; badge earned</span></p>
+        <h3>Which output is the payment?</h3>
+        <p>Three transactions. Tap the output you think is the payment, or say you can&rsquo;t tell. Get all three right.</p>
+        <div class="sx-dots" id="sx-adots"><i></i><i></i><i></i></div>
+        <div id="sx-around"></div>
+        <p class="sx-out" id="sx-aout">Look at the amounts.</p>
+      </div>
+
+      <p class="part"><b>3</b>Scanning is the hard part</p>
+      <p><strong>Sending a silent payment is easy:</strong> no full node, just follow the protocol. <strong>Receiving is the work.</strong> The receiver&rsquo;s wallet has to check every transaction to see if one is for them, and different wallets do that differently. That is why some wallets see your payment while it is still in the mempool and others only after it is mined.</p>
+      <ul>
+        <li><strong>Full node.</strong> Scan the whole chain and the mempool yourself. Best privacy, most effort.</li>
+        <li><strong>Electrum-style server</strong> (Cake Wallet, and Frigate behind Sparrow). Fast, sees mempool payments, but the server learns which outputs are yours, so you trust it.</li>
+        <li><strong>BlindBit Oracle</strong> (Dana). Serves the same public data to everyone, so it learns little more than your IP and that you use silent payments. Today it can&rsquo;t see mempool payments: you wait for a block.</li>
+      </ul>
+      <p>Along the way Sosthène explained the <strong>gap limit</strong>: a normal wallet only checks so many unused addresses ahead. keypleb told the story of a client whose two wallets showed different balances from the same seed. Two days of troubleshooting later, raising the gap limit made the &ldquo;missing&rdquo; bitcoin appear. Silent payments don&rsquo;t have that problem, but they trade it for scanning.</p>
+
+      <div class="sx-card" id="g-scan">
+        <p class="sx-eye"><span>Mini-game 3 &middot; Pick your scanner</span><span class="sx-done">&#10003; badge earned</span></p>
+        <h3>Three people, three setups</h3>
+        <p>Tap a backend to see its trade-offs, then pick the right one for each person.</p>
+        <div class="sx-scans sx-seg" id="sx-scans" role="group" aria-label="Scanning backend" style="display:grid">
+          <button type="button" data-s="node">Your full node</button><button type="button" data-s="electrum">Electrum server</button><button type="button" data-s="blindbit">BlindBit</button><button type="button" data-s="frigate">Frigate</button>
+        </div>
+        <div class="sx-meter" id="sx-meter">
+          <span>Privacy from the server</span><div><i data-k="p"></i></div>
+          <span>Sees mempool payments</span><div><i data-k="m"></i></div>
+          <span>Easy on a phone</span><div><i data-k="e"></i></div>
+        </div>
+        <p class="sx-out" id="sx-sdesc">Tap a backend.</p>
+        <div class="sx-mission" id="sx-mission"></div>
+      </div>
+
+      <p class="part"><b>4</b>Razor builds it from scratch</p>
+      <p><strong>Razor started with history.</strong> Silent payments are BIP 352, by Ruben Somsen and Josie Baker. Before them came stealth addresses, BIP 47 reusable payment codes (Samourai), which need a notification transaction, and BIP 351, which uses OP_RETURN. Then his favourite slide, the interactivity scale:</p>
+
+      <div class="viz" role="figure" aria-label="The interactivity scale: silent payments, a fresh address per payer, PayJoin">
+        <p class="eyebrow">The interactivity scale</p>
+        <p class="viz-title">How much do sender and receiver have to talk before a payment?</p>
+        <div class="sx-scale"><div class="sx-track"></div>
+          <div class="sx-stops">
+            <div class="me"><b>Silent payments</b><span>Post one address. Everyone just pays it. No back and forth.</span></div>
+            <div><b>A fresh address per payer</b><span>An HD wallet or BTCPay Server makes a new address for each person you give it to.</span></div>
+            <div><b>PayJoin</b><span>New address, a PSBT sent back and forth, a relay and a mailbox directory.</span></div>
+          </div>
+          <div class="sx-ends"><span>Least interactive</span><span>Most interactive</span></div>
+        </div>
+      </div>
+
+      <p><strong>Then the deep dive:</strong> how would you invent silent payments yourself? Mini (the receiver) wants to be paid by Miki, without anyone else being able to tell. Razor walked through five versions, each fixing the last one&rsquo;s problem. Play through them:</p>
+
+      <div class="sx-card" id="g-build">
+        <p class="sx-eye"><span>Mini-game 4 &middot; Build it from scratch</span><span class="sx-done">&#10003; badge earned</span></p>
+        <h3>Five versions, five fixes</h3>
+        <div class="sx-steps" id="sx-bsteps"><i></i><i></i><i></i><i></i><i></i></div>
+        <div id="sx-bstage"></div>
+        <p class="sx-out" id="sx-bout"></p>
+      </div>
+
+      <p>Here is where that lands, in one picture:</p>
+      <div class="viz" role="figure" aria-label="How a silent payment works">
+        <p class="eyebrow">How a silent payment works</p>
+        <p class="viz-title">Shared secret from the sender&rsquo;s input key and the receiver&rsquo;s address. Only the receiver can redo it.</p>
+        <div class="sx-flow">
+          <div><b>Sender</b>Spends a coin as usual. Its input already reveals a public key <span class="sx-mono">B</span>, and only the sender knows <span class="sx-mono">b</span>.</div><i>&rarr;</i>
+          <div class="key"><b>Shared secret</b>Sender computes <span class="sx-mono">b&middot;A</span> from the <span class="sx-mono">sp1</span> address. Receiver computes <span class="sx-mono">a&middot;B</span>. Same number (Diffie-Hellman).</div><i>&rarr;</i>
+          <div><b>Fresh Taproot output</b>The secret tweaks the receiver&rsquo;s key into a brand new output. It looks like any other Taproot payment.</div>
+        </div>
+        <div class="sx-math">tweak <em>t</em> = hash( shared secret )<br>output key = <em>A</em> + <em>t</em>&middot;G &nbsp;&nbsp;&rarr;&nbsp; spend with <em>a</em> + <em>t</em><br>receiver scans: for every transaction, a&middot;(input keys) &rarr; does any output match?</div>
+      </div>
+      <p>The real BIP adds more: what happens with many inputs, and a counter so two payments from the same key still give different outputs. If you follow the five steps above, the BIP reads easily. Razor&rsquo;s tip: start at <a href="https://silentpayments.xyz" target="_blank" rel="noopener">silentpayments.xyz</a>.</p>
+
+      <p class="part"><b>5</b>Where you can help</p>
+      <p>Sosthène dropped the projects in the chat, and was blunt: they are built by very few people and could definitely use help. <strong>Dana</strong> (donations wallet), <strong>BlindBit Oracle</strong> (privacy-friendly scanning server), <strong>Frigate</strong> (silent payments Electrum server behind Sparrow) and <strong>Shroud</strong> with its indexer. Razor&rsquo;s way in: build and run the project, break the tests, do reviews. Want a recommendation to a grant giver later? Show proof of work first.</p>
+
+      <h2>Key takeaways</h2>
+      <ul>
+        <li><strong>Never reuse an address.</strong> It leaks your history and everyone else&rsquo;s. A silent payment address is the one you can safely post on a website.</li>
+        <li><strong>One layer, not the whole stack.</strong> Silent payments fix the baseline. Don&rsquo;t merge those coins carelessly, avoid round amounts, and add PayJoin and coin control.</li>
+        <li><strong>Scanning is the frontier.</strong> How a wallet finds its payments decides speed and privacy, and it is exactly where the projects need developers.</li>
+      </ul>
+
+      <h2 id="sx-quiz">Final level: the quiz</h2>
+      <p>Razor ran a live quiz on the call (one question tripped up everyone). Here are five. Get them all right and the <b>Silent</b> badge lights up.</p>
+
+      <script>
+      (function(){
+      var $=function(i){return document.getElementById(i)},SLUG='2026-11-17-privacy-track-silent-payments',KEY='co-badges-'+SLUG,S={b:{}};
+      try{var sv=JSON.parse(localStorage.getItem(KEY));if(sv&&sv.b)S=sv;}catch(e){}
+      function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+      var NAMES={reuse:'Unlinked',analyst:'Analyst',build:'Builder',scan:'Scanner',todo:'Tried it',quiz:'Silent'},GAMES={reuse:'g-reuse',analyst:'g-analyst',build:'g-build',scan:'g-scan'};
+      function board(){var n=0;document.querySelectorAll('.sx-badge').forEach(function(a){var g=!!S.b[a.dataset.b];a.classList.toggle('got',g);if(g)n++;});
+        $('sx-xp').textContent=n*100;$('sx-prog').style.width=(n/6*100)+'%';for(var k in GAMES)if(S.b[k])$(GAMES[k]).classList.add('won');}
+      var tt;function award(k){if(S.b[k])return;S.b[k]=1;save();board();var t=$('sx-toast');t.textContent='🏅 Badge unlocked: '+NAMES[k]+'  +100 XP';t.classList.add('go');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('go')},2800);}
+      board();
+      document.querySelectorAll('.sx-badge').forEach(function(a){a.addEventListener('click',function(e){var t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}});});
+      function rh(n){var c='023456789acdefghjklmnpqrstuvwxyz',s='';for(var i=0;i<n;i++)s+=c[Math.floor(Math.random()*c.length)];return s;}
+
+      /* 1. donation box */
+      var mode='old',SP='sp1qq'+rh(10)+'…'+rh(6),OLD='bc1q'+rh(10)+'…'+rh(5),cnt={old:0,sp:0},sent={old:[],sp:[]};
+      function drawReuse(){$('sx-paddr').textContent=mode=='old'?OLD:SP;var L=sent[mode],h='',tot=0;
+        if(mode=='old'){L.forEach(function(d){tot+=d.v;h+='<li class="leak"><span>'+OLD.slice(0,10)+'… &larr; '+d.from+'</span><b>'+d.v.toLocaleString('en')+' sats</b></li>';});
+          $('sx-spy').innerHTML=h||'<li><span>Search: '+OLD.slice(0,12)+'…</span><b>0 txs</b></li>';$('sx-tot').textContent=L.length?'Total received, visible to anyone: '+tot.toLocaleString('en')+' sats from '+L.length+' donors':'';}
+        else{$('sx-spy').innerHTML='<li><span>Search: '+SP.slice(0,12)+'…</span><b>not found</b></li>'+L.map(function(d){return '<li><span>somewhere in a block: bc1p'+d.a+'…</span><b>?</b></li>';}).join('');
+          $('sx-tot').textContent=L.length?'Each donation sits on its own Taproot output. Only your wallet can find them.':'';}}
+      $('sx-mode').querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){mode=b.dataset.m;$('sx-mode').querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b)});drawReuse();});});
+      var DON=['Alice','Bob','a journalist','a student','an activist','your aunt','a stranger'];
+      $('sx-donate').addEventListener('click',function(){var d={v:(Math.floor(Math.random()*40)+1)*1000+Math.floor(Math.random()*900),from:DON[Math.floor(Math.random()*DON.length)],a:rh(10)};sent[mode].unshift(d);cnt[mode]++;drawReuse();
+        var o=cnt.old,s=cnt.sp;$('sx-reuseout').innerHTML=(mode=='old'?'<b>Every donation is public</b>, with the total, and the spy can follow each coin onward. ':'<b>The spy finds nothing.</b> The sp1 address never appears on chain. ')+(o>=3&&s>=3?'That is the whole difference.':'Mode progress: normal '+Math.min(o,3)+'/3, silent '+Math.min(s,3)+'/3.');
+        if(o>=3&&s>=3)award('reuse');});
+      drawReuse();
+
+      /* 2. analyst */
+      var AR=[{ins:['18,105 sats','5,412 sats'],outs:[['20,000 sats','Taproot (bc1p…)'],['3,026 sats','bc1q…']],a:0,why:'<b>Right.</b> 20,000 is a number a human typed. 3,026 is what was left over. This is the demo payment from the call.',no:'Look again: which number looks typed by a person?'},
+        {ins:['241,377 sats'],outs:[['88,920 sats','≈ $87.31 at the time'],['152,315 sats','≈ $150.00 at the time']],a:1,why:'<b>Right.</b> Neither is round in sats, but 152,315 sats was exactly $150 that day. Analysts convert to fiat too.',no:'Neither is round in sats. Check the dollar value.'},
+        {ins:['61,880 sats','38,447 sats'],outs:[['48,213 sats','Taproot (bc1p…)'],['51,762 sats','Taproot (bc1p…)']],a:2,why:'<b>Right, you can&rsquo;t tell.</b> No round amounts, same output types. This is what a careful payment looks like: add a few random sats.',no:'Is either amount really round, in sats or in dollars? Both outputs are Taproot too.'}],ai=0,amiss=0;
+      function aRound(){var r=AR[ai];if(!r){return;}
+        $('sx-around').innerHTML='<div class="sx-tx"><div class="sx-io">'+r.ins.map(function(x){return '<span>'+x+'<small>input</small></span>';}).join('')+'</div><div class="sx-arrow">&rarr;</div><div class="sx-io">'+r.outs.map(function(o,i){return '<button type="button" class="sx-pick" data-i="'+i+'">'+o[0]+'<small>'+o[1]+'</small></button>';}).join('')+'</div></div><div class="sx-row"><button type="button" class="sx-btn ghost" data-i="2">Can&rsquo;t tell</button></div>';
+        $('sx-around').querySelectorAll('[data-i]').forEach(function(b){b.addEventListener('click',function(){var i=+b.dataset.i;
+          if(i===r.a){if(b.classList.contains('sx-pick'))b.classList.add('right');$('sx-adots').children[ai].classList.add('ok');$('sx-aout').innerHTML=r.why;ai++;
+            if(ai<AR.length)setTimeout(aRound,1700);else{$('sx-aout').innerHTML=r.why+' <b>Case closed'+(amiss?'':', no mistakes')+'.</b>';award('analyst');}}
+          else{amiss++;if(b.classList.contains('sx-pick'))b.classList.add('wrong');$('sx-aout').textContent=r.no;}});});}
+      aRound();
+
+      /* 3. scanner */
+      var SC={node:{p:100,m:100,e:15,d:'<b>Your own full node.</b> You download and scan everything yourself, mempool included. Nothing leaks, but it is heavy, and hard to do from a phone.'},
+        electrum:{p:25,m:95,e:95,d:'<b>Electrum-style server</b> (how Cake Wallet works). Fast and sees mempool payments, but the server learns which outputs are yours. You trust whoever runs it.'},
+        blindbit:{p:80,m:10,e:85,d:'<b>BlindBit Oracle</b> (Dana). Everyone gets the same public data and your phone does the matching. The server learns little beyond your IP. For now you only see a payment once it is in a block.'},
+        frigate:{p:35,m:90,e:90,d:'<b>Frigate</b> (Sparrow). An Electrum server that scans for silent payments on your behalf. Quick and easy, but you hand the server enough to find your payments.'}};
+      var MIS=[['You run a node at home and want zero leaks, plus seeing payments in the mempool.',['node']],['You only have a phone. Leak as little as possible; waiting for the next block is fine.',['blindbit']],['You only have a phone, want to see a payment the second it is sent, and you trust the server operator.',['electrum','frigate']]],mi=0;
+      function mis(){$('sx-mission').innerHTML=mi<MIS.length?'<small>Person '+(mi+1)+' of 3</small>'+MIS[mi][0]:'<small>All set</small>Three people, three right answers. There is no perfect backend yet, which is exactly why these projects need help.';}
+      $('sx-scans').querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){var s=SC[b.dataset.s];$('sx-scans').querySelectorAll('button').forEach(function(x){x.className=x===b?'on':''});
+        $('sx-meter').querySelectorAll('i').forEach(function(i){i.style.width=s[i.dataset.k]+'%'});
+        if(mi<MIS.length){if(MIS[mi][1].indexOf(b.dataset.s)>=0){b.className='right';$('sx-sdesc').innerHTML=s.d+' <b>Good pick.</b>';mi++;mis();if(mi===MIS.length)award('scan');}
+          else $('sx-sdesc').innerHTML=s.d+' Not the best fit for person '+(mi+1)+'.';}else $('sx-sdesc').innerHTML=s.d;});});
+      mis();
+
+      /* 4. builder */
+      var BS=[
+        {t:'Version 1: send the tweak privately',tx:['<span class="sx-chip">Mini &rarr; Miki: A</span>','<span class="sx-chip or">Miki &rarr; Mini: t (private message)</span>'],ch:['<span class="sx-chip">output: A + t&middot;G</span>'],
+         x:'Mini gives Miki her public key <b>A</b>. Miki picks a secret tweak <b>t</b>, messages it to Mini, and pays to <b>A + t&middot;G</b>. Only someone who knows <b>a + t</b> can spend it, and that is Mini.',
+         q:'It works. What is wrong with it?',o:['Anyone can spend it','Miki has to message Mini first, every time','It costs more fees'],a:1,ok:'Right: it is interactive. Silent payments must work with no messages at all.'},
+        {t:'Version 2: put the tweak on the chain',tx:['<span class="sx-chip">Mini &rarr; everyone: A</span>'],ch:['<span class="sx-chip">output: A + t&middot;G</span>','<span class="sx-chip hot">t (stored on chain)</span>'],
+         x:'No messages: use the blockchain as the channel. Miki writes <b>t</b> into the transaction itself. Mini reads it from the chain.',
+         q:'Pluto also knows Mini&rsquo;s address A. Can Pluto tell this payment went to Mini?',o:['No, t is random','Yes: Pluto reads t and computes A + t&middot;G himself'],a:1,ok:'Right. The chain is public, so the tweak is public. Pluto links the payment. We need a secret both can compute but nobody else can.'},
+        {t:'Version 3: Diffie-Hellman',tx:['<span class="sx-chip">Mini &rarr; everyone: A</span>'],ch:['<span class="sx-chip">output: A + hash(b&middot;A)&middot;G</span>','<span class="sx-chip or">B (Miki&rsquo;s key, on chain)</span>'],
+         x:'Miki makes his own key pair <b>b</b>, <b>B</b> and puts <b>B</b> on chain. Diffie-Hellman: <b>b&middot;A</b> = <b>a&middot;B</b>. Miki and Mini get the same secret; Pluto, with only A and B, can&rsquo;t.',
+         q:'Private now. What is still not great?',o:['Pluto can still compute the secret','The extra B makes the output odd-looking and costs extra bytes'],a:1,ok:'Right. A weird, bigger output is an outlier and costs fees. Can we get B for free?'},
+        {t:'Version 4: borrow B from the input',tx:['<span class="sx-chip ok">input: signed with b, reveals B</span>'],ch:['<span class="sx-chip ok">output: A + hash(b&middot;A)&middot;G</span>'],
+         x:'Miki has to spend a coin to pay anyway, and spending reveals his public key <b>B</b> in the input. So the key is already there. Nothing extra to store, and the output looks normal.',
+         q:'What does Mini have to do now to find her payments?',o:['Nothing, her wallet is notified','Take the input keys of every transaction and check if any output matches'],a:1,ok:'Right. That is scanning, the price of zero interaction.'},
+        {t:'Version 5: make it Taproot',tx:['<span class="sx-chip ok">input: reveals B</span>'],ch:['<span class="sx-chip ok">Taproot output (key path)</span>'],
+         x:'The output so far was an old-style pay-to-public-key. Taproot&rsquo;s key path holds a public key too, so put the tweaked key there. Now a silent payment looks like every other Taproot payment.',
+         q:'What does the real BIP 352 still have to handle?',o:['Nothing, this is the final design','Many inputs, and making every output unique even if B repeats'],a:1,ok:'Right. The BIP sums the input keys and adds a counter. But you just rebuilt the core idea.'}],bi=0;
+      function bStage(){var s=BS[bi];$('sx-bsteps').querySelectorAll('i').forEach(function(x,i){x.classList.toggle('ok',i<bi)});
+        $('sx-bstage').innerHTML='<p class="sx-q" style="color:var(--orange)">'+s.t+'</p><div class="sx-scene"><div class="sx-chain"><h4>Talk between them</h4>'+(s.tx.join('')||'none')+'</div><div class="sx-chain"><h4>What goes on chain</h4>'+s.ch.join('')+'</div></div><p>'+s.x+'</p><p class="sx-q">'+s.q+'</p><div class="sx-seg" id="sx-bopts">'+s.o.map(function(o,i){return '<button type="button" data-i="'+i+'">'+o+'</button>';}).join('')+'</div>';
+        $('sx-bout').textContent='Answer to unlock the next version.';
+        $('sx-bopts').querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){var i=+b.dataset.i;
+          if(i===s.a){b.className='right';$('sx-bout').innerHTML='<b>'+s.ok+'</b>';bi++;$('sx-bsteps').querySelectorAll('i').forEach(function(x,j){x.classList.toggle('ok',j<bi)});
+            if(bi<BS.length){var n=document.createElement('button');n.type='button';n.className='sx-btn';n.style.marginTop='10px';n.textContent='Next version →';n.onclick=bStage;$('sx-bout').appendChild(document.createElement('br'));$('sx-bout').appendChild(n);}
+            else{$('sx-bout').innerHTML+=' You rebuilt silent payments from scratch.';award('build');}}
+          else{b.className='wrong';$('sx-bout').textContent='Not quite. Read the step again.';}});});}
+      bStage();
+
+      /* 5. try-it checklist */
+      document.addEventListener('co-todo',function(e){if(e.detail&&e.detail.total&&e.detail.done===e.detail.total)award('todo');});
+      try{var td=JSON.parse(localStorage.getItem('co-todo-'+SLUG))||{},tn=0;for(var q in td)if(td[q])tn++;if(tn>=4)award('todo');}catch(e){}
+
+      /* 6. quiz badge: quiz.js stores the best score in co-quiz-<slug> */
+      function checkQuiz(){try{if((+localStorage.getItem('co-quiz-'+SLUG)||0)>=5)award('quiz');}catch(e){}}
+      checkQuiz();setInterval(checkQuiz,1500);
+      })();
+      </script>
+
+      <section class="qz" data-quiz="2026-11-17-privacy-track-silent-payments" aria-label="Test yourself">
+        <script type="application/json">[{"q": "In silent payments, does the sender have to notify the receiver before paying?", "o": ["Yes, with a notification transaction", "No, the receiver finds the payment by scanning", "Only for the first payment"], "a": 1, "w": "That is the whole point: almost no interaction. BIP 47 needed a notification transaction; silent payments don't."}, {"q": "Which leak do silent payments protect you from?", "o": ["The common input heuristic", "Change address detection", "Destination address reuse"], "a": 2, "w": "Silent payments stop address reuse. Breaking the common input heuristic is what PayJoin does."}, {"q": "What output type does a silent payment create?", "o": ["Pay to Taproot (P2TR)", "Pay to public key (P2PK)", "P2WPKH"], "a": 0, "w": "Taproot. Razor's slides used P2PK to explain the idea, but real silent payments always land on a Taproot output."}, {"q": "What is the biggest trade-off?", "o": ["Senders must run a full node", "The receiver has to do much more work to scan for payments", "Addresses can only be used once"], "a": 1, "w": "Senders need no node. Receivers must check every transaction, which is why scanning backends matter so much."}, {"q": "Your friend pays 20,000 sats and gets 3,026 sats change. What gives the payment away?", "o": ["The round amount", "The Taproot output", "The fee"], "a": 0, "w": "Round numbers (in sats or in fiat at that moment) look human-entered. Ask for a few extra random sats to blur it."}]</script>
+        <div class="qz-head"><p class="eyebrow">Test yourself</p><span class="qz-best"></span></div>
+        <div class="qz-play"><div class="qz-bar"><i></i></div><p class="qz-n"></p><h3 class="qz-q"></h3><div class="qz-opts"></div><p class="qz-why" hidden></p><button type="button" class="button small qz-next" hidden>Next question</button></div>
+        <div class="qz-done" hidden><p class="qz-score"></p><p class="qz-msg"></p><div class="cta-row"><button type="button" class="ghost small qz-again">Play again</button><a class="ghost small qz-x" href="#" target="_blank" rel="noopener">Post my score on X</a><a class="ghost small" href="/session-notes#passport">See my passport</a></div></div>
+      </section>
+      <script src="/assets/session-notes/quiz.js?v=20261112b" defer></script>
+      <h2>Resources shared</h2>
+      <h3>Reading</h3>
+      <ul>
+        <li><a href="https://github.com/bitcoin/bips/blob/master/bip-0352.mediawiki" target="_blank" rel="noopener">BIP 352: Silent Payments</a>, Josie Baker and Ruben Somsen: the spec. Builds the idea step by step, much like Razor's slides. You need a little Diffie-Hellman</li>
+        <li><a href="https://silentpayments.xyz" target="_blank" rel="noopener">silentpayments.xyz</a>: the best place to start: overview, wallet list, docs and the BIP, all well organised</li>
+        <li><a href="https://github.com/bitcoin/bips/blob/master/bip-0047.mediawiki" target="_blank" rel="noopener">BIP 47: Reusable payment codes</a>: an older reusable-address scheme (used by Samourai) that needs a notification transaction first</li>
+        <li><a href="https://github.com/bitcoin/bips/blob/master/bip-0351.mediawiki" target="_blank" rel="noopener">BIP 351: Private Payments</a>: another alternative mentioned on the call, which relies on OP_RETURN. Silent payments use no OP_RETURN</li>
+      </ul>
+      <h3>Wallets</h3>
+      <ul>
+        <li><a href="https://github.com/cygnet3/danawallet" target="_blank" rel="noopener">Dana wallet</a>: mobile wallet for accepting donations with silent payments, built by our guest. Experimental, uses BlindBit, looking for contributors</li>
+        <li><a href="https://cakewallet.com" target="_blank" rel="noopener">Cake Wallet</a>: sends and receives silent payments; used for the live demo and sees payments while they are still in the mempool</li>
+        <li><a href="https://sparrowwallet.com" target="_blank" rel="noopener">Sparrow Wallet</a>: desktop wallet that recently added sending and receiving silent payments, through a Frigate server</li>
+      </ul>
+      <h3>Tools</h3>
+      <ul>
+        <li><a href="https://github.com/setavenger/blindbit-oracle" target="_blank" rel="noopener">BlindBit Oracle</a>: a silent payments indexing server that only serves public data, so it learns very little about you. Can't see mempool payments yet</li>
+        <li><a href="https://github.com/sparrowwallet/frigate" target="_blank" rel="noopener">Frigate</a>, Craig Raw: Electrum server for silent payments, the backend behind Sparrow. Scans for you, so you trade some privacy for speed</li>
+        <li><a href="https://github.com/CypherCommons/shroud-indexer" target="_blank" rel="noopener">Shroud indexer</a>: the silent payments indexer behind the Shroud mobile wallet, shared in the chat</li>
+        <li><a href="https://mempool.space" target="_blank" rel="noopener">mempool.space</a>: we looked up the demo payment here: to an explorer it is just a v1_p2tr (Taproot) output</li>
+      </ul>
+      <h3>Code Orange</h3>
+      <ul>
+        <li><a href="https://github.com/code-orange-dev/curriculum/tree/main/privacy-track/labs/silent-payments" target="_blank" rel="noopener">Privacy Track: Silent Payments lab</a>: our hands-on lab for this topic</li>
+        <li><a href="https://codeorange.dev/privacy-track" target="_blank" rel="noopener">Privacy Track</a>: all 12 sessions, every 1st and 3rd Tuesday</li>
+        <li><a href="https://codeorange.dev/fellowships" target="_blank" rel="noopener">Developer fellowship</a>: paused for now, back in the pipeline. Build proof of work on these projects in the meantime</li>
+      </ul>
+      <p>Also on the call: why you might skip the Bitcoin t-shirt at the airport, why France has seen home invasions targeting crypto holders this year, and a tip for asking to be paid: add a few random sats so the amount is not round. Guest speaker Anmol (Shroud wallet) could not make it this time.</p>
+      <p><a href="/resources">Browse every resource from every session &rarr;</a></p>
+    </div>
+    <aside class="next-card nx" data-next data-match="privacy track">
+      <div class="nx-head"><p class="eyebrow">Come to the next one</p><div data-next-static><h3>Privacy Track: next session</h3><p>Tuesday 1 December, 07:00 UTC on Discord. Free for everyone. Before that: the Agentic Engineering workshop on AI and Bitcoin, Wednesday 18 November.</p></div>
+        <div data-next-live hidden><h3>Up next at Code Orange</h3><ol class="nx-list" data-next-list></ol></div></div>
+      <div class="nx-side">
+        <div class="cta-row"><a class="button small" href="https://calendar.google.com/calendar/r?cid=466de2be7431d78be2049f96f5fd31f9b06b5a9cd94f909ba3182b18442ed499%40group.calendar.google.com" target="_blank" rel="noopener">Add all sessions to my calendar</a><a class="ghost small" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord</a></div>
+        <form class="nx-form" action="https://assets.mailerlite.com/jsonp/2133495/forms/201289376620086972/subscribe" method="post"><label for="nx-email">Or get the week's sessions by email</label><div><input type="email" id="nx-email" name="fields[email]" placeholder="you@example.com" autocomplete="email" required><input type="hidden" name="ml-submit" value="1"><input type="hidden" name="anticsrf" value="true"><button class="ghost small" type="submit">Subscribe</button></div></form>
+        <p class="nx-msg" role="status" aria-live="polite" hidden></p>
+      </div>
+    </aside>
+    <script src="/assets/session-notes/next.js?v=20261112b" defer></script>
+    <div class="share-row"><strong>Share these notes:</strong><a href="https://x.com/intent/post?text=Silent%20Payments%3A%20one%20static%20Bitcoin%20address%2C%20a%20fresh%20Taproot%20output%20every%20time%2C%20nothing%20to%20link.%20Live%20demo%2C%20a%20from-scratch%20build%20of%20the%20protocol%2C%20and%204%20mini-games.%20Notes%20from%20the%20%40CodeOrangeDevs%20Privacy%20Track&amp;url=https%3A%2F%2Fcodeorange.dev%2Fsession-notes%2F2026-11-17-privacy-track-silent-payments" target="_blank" rel="noopener">Post on X</a><button type="button" data-copy="https://codeorange.dev/session-notes/2026-11-17-privacy-track-silent-payments">Copy link</button></div>
+    <div class="rp" aria-hidden="true"></div><script>(function(){var b=document.querySelector('.rp');if(!b)return;function u(){var h=document.documentElement,m=h.scrollHeight-h.clientHeight;b.style.width=(m>0?Math.min(100,h.scrollTop/m*100):0)+'%';}addEventListener('scroll',u,{passive:true});u();})();
+document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){navigator.clipboard&&navigator.clipboard.writeText(b.dataset.copy).then(function(){b.textContent='Link copied';});});});
+(function(){var v=document.getElementById('video');if(!v)return;function play(t){v.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+v.dataset.yt+'?autoplay=1&rel=0&start='+(t||0)+'" title="Session recording" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';}v.querySelector('button').addEventListener('click',function(){play(0);});document.querySelectorAll('.chapters a[data-t]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();play(a.dataset.t);v.scrollIntoView({behavior:'smooth',block:'center'});});});})();</script>
+    <script src="/assets/session-notes/passport.js?v=20261113a" data-slug="2026-11-17-privacy-track-silent-payments" data-total="11"></script>
+    <nav class="more-notes" aria-label="More session notes"><a class="older" href="/session-notes/2026-11-16-decoding-bitcoin-week-1"><small>&larr; Earlier session</small>Decoding Bitcoin: Week 1: how the cohort works</a></nav>
+    <p class="source-box">These notes are also on GitHub: <a href="https://github.com/code-orange-dev/session-notes/blob/main/2026/2026-11-17-privacy-track-silent-payments.md" target="_blank" rel="noopener">code-orange-dev/session-notes</a>. Free to share and reuse (CC0).</p>
+  </article>
+  <section class="section-inner final-cta">
+  <p class="eyebrow">Bitcoin Only</p>
+  <h2>Ready to become a Bitcoin builder?</h2>
+  <p class="lead" style="margin-left:auto;margin-right:auto">Join the next cohort, drop into a workshop, or come say hello in Discord. The community is free and open.</p>
+  <div class="cta-row" style="justify-content:center"><a class="button" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord</a><a class="ghost" href="/apply">Apply Now</a></div>
+</section>
+</main>
+<footer class="footer">
+  <div class="footer-media">
+    <video data-lazy-video data-src="/assets/co-footer-720.mp4" poster="/assets/co-footer-poster.webp" autoplay muted loop playsinline preload="none"></video>
+    <div class="footer-media-copy">
+      <p class="eyebrow">Scenes from the school</p>
+      <h2>Real workshops. Real devices. Real Bitcoin builders.</h2>
+    </div>
+  </div>
+  <div class="footer-grid">
+    <div>
+      <img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School" style="height:58px;width:auto;margin-bottom:18px">
+      <p style="color:var(--dim);max-width:420px;line-height:1.7">Code Orange Dev School trains Bitcoin developers, node runners, and technical community leaders through practical education and open-source contribution.</p>
+      <p><a href="mailto:hello@codeorange.dev">hello@codeorange.dev</a></p>
+      <div class="cta-row" style="gap:10px;justify-content:flex-start">
+        <a class="ghost small" href="https://x.com/CodeOrangeDevs" target="_blank" rel="noopener">X</a>
+        <a class="ghost small" href="https://www.instagram.com/codeorangedevs" target="_blank" rel="noopener">Instagram</a>
+        <a class="ghost small" href="https://njump.me/npub1gxqyeea3xspkd68mxlxsvvk3gdzdd555u504ynwpdj0ghg503mvq2gydt0" target="_blank" rel="noopener">Nostr</a>
+        <a class="ghost small" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a>
+      </div>
+    </div>
+    <div>
+      <div class="link-list">
+        <strong>School</strong>
+        <a href="/about">About</a>
+        <a href="/community">Community</a>
+        <a href="/fellowships">Fellowships</a>
+        <a href="/calendar">Calendar</a>
+        <a href="https://geyser.fund/project/codeorangedevschool" target="_blank" rel="noopener">Support on Geyser</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

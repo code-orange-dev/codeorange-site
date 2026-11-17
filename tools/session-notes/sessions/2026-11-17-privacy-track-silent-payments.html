@@ -1,0 +1,308 @@
+      <style>
+      .sx-card{margin:8px 0 36px;border:1px solid rgba(247,147,26,.35);border-radius:18px;background:radial-gradient(120% 90% at 0 0,rgba(247,147,26,.13),transparent 60%) #141414;padding:22px;position:relative}
+      .sx-eye{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 6px;font:700 12px/1.3 "Plus Jakarta Sans",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--orange)}
+      .sx-eye span:last-child{color:var(--dim);letter-spacing:.06em}
+      .sx-card h3{margin:0 0 8px;font-size:22px;line-height:1.25;color:var(--text)}
+      .sx-card>p{margin:0 0 14px;font-size:15.5px;line-height:1.55}
+      .sx-btn{all:unset;box-sizing:border-box;cursor:pointer;display:inline-block;padding:10px 18px;border-radius:99px;background:var(--orange);color:#0A0A0A;font:800 14px/1.2 "Inter",system-ui,sans-serif;text-align:center}
+      .sx-btn:hover{filter:brightness(1.1)}
+      .sx-btn.ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.2)}
+      .sx-btn[disabled]{opacity:.35;cursor:default;filter:none}
+      .sx-btn:focus-visible,.sx-seg button:focus-visible,.sx-pick:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+      .sx-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+      .sx-seg{display:inline-flex;flex-wrap:wrap;gap:4px;padding:4px;border-radius:14px;background:rgba(0,0,0,.4);border:1px solid var(--line);margin:0 0 14px}
+      .sx-seg button{all:unset;box-sizing:border-box;cursor:pointer;padding:8px 14px;border-radius:10px;color:var(--muted);font:700 13px/1.2 "Inter",system-ui,sans-serif}
+      .sx-seg button.on{background:var(--orange);color:#0A0A0A}
+      .sx-seg button.right{background:#2f6b3a;color:#fff}
+      .sx-seg button.wrong{background:#6b2f2f;color:#fff}
+      .sx-out{margin:14px 0 0;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.04);color:var(--muted);font-size:15px;line-height:1.5;min-height:22px}
+      .sx-out b{color:var(--orange)}
+      .sx-done{display:none;margin-left:8px;color:var(--orange)}
+      .sx-card.won .sx-done{display:inline}
+      .sx-badges{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:14px 0}
+      .prose a.sx-badge,.sx-badge{display:block;padding:12px 4px;border-radius:14px;border:1px dashed rgba(255,255,255,.18);text-align:center;text-decoration:none;color:var(--dim);font:700 11px/1.3 "Plus Jakarta Sans",monospace;letter-spacing:.03em;transition:all .3s}
+      .sx-badge i{display:block;font-style:normal;font-size:26px;line-height:1;margin-bottom:8px;filter:grayscale(1);opacity:.45;transition:all .3s}
+      .prose a.sx-badge.got,.sx-badge.got{border:1px solid var(--orange);background:rgba(247,147,26,.14);color:var(--text);box-shadow:0 0 24px rgba(247,147,26,.18)}
+      .sx-badge.got i{filter:none;opacity:1;transform:scale(1.12)}
+      .sx-bar{height:8px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+      .sx-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--orange),#FFB347);transition:width .6s ease}
+      .sx-toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,30px);z-index:60;padding:12px 20px;border-radius:99px;background:var(--orange);color:#0A0A0A;font:800 14px/1.2 "Inter",system-ui,sans-serif;box-shadow:0 12px 40px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:all .35s ease;white-space:nowrap;max-width:92vw;overflow:hidden;text-overflow:ellipsis}
+      .sx-toast.go{opacity:1;transform:translate(-50%,0)}
+      .sx-mono{font:500 13px/1.5 "JetBrains Mono",ui-monospace,monospace;word-break:break-all}
+      /* interactivity scale */
+      .sx-scale{position:relative;margin:18px 0 6px;padding-top:6px}
+      .sx-track{height:10px;border-radius:99px;background:linear-gradient(90deg,#2f6b3a,#c9a227,#b4492f)}
+      .sx-stops{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+      .sx-stops div{padding:14px;border-radius:12px;background:var(--card);border:1px solid rgba(255,255,255,.1)}
+      .sx-stops div.me{border-color:var(--orange);background:rgba(247,147,26,.1)}
+      .sx-stops b{display:block;color:var(--text);margin:0 0 4px}
+      .sx-stops span{color:var(--muted);font-size:14px;line-height:1.45}
+      .sx-ends{display:flex;justify-content:space-between;margin-top:6px;font:700 11px "Plus Jakarta Sans",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+      /* how it works flow */
+      .sx-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:10px;align-items:stretch;margin-top:10px}
+      .sx-flow>div{padding:14px;border-radius:12px;background:var(--card);border:1px solid rgba(255,255,255,.1);font-size:14px;line-height:1.45;color:var(--muted)}
+      .sx-flow>div b{display:block;color:var(--text);margin:0 0 4px;font-size:15px}
+      .sx-flow>div.key{border-color:var(--orange)}
+      .sx-flow>i{align-self:center;font-style:normal;color:var(--orange);font-size:22px}
+      .sx-math{margin:12px 0 0;padding:12px 14px;border-radius:12px;background:#0d0d0d;border:1px solid var(--line);font:500 13.5px/1.7 "JetBrains Mono",ui-monospace,monospace;color:var(--muted)}
+      .sx-math em{font-style:normal;color:var(--orange)}
+      /* game 1: donation box */
+      .sx-split{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+      .sx-pane{padding:14px;border-radius:12px;background:#0d0d0d;border:1px solid var(--line);min-height:150px}
+      .sx-pane h4{margin:0 0 8px;font:700 12px/1.3 "Plus Jakarta Sans",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+      .sx-addr{padding:8px 10px;border-radius:8px;background:rgba(247,147,26,.1);color:var(--orange);margin:0 0 10px}
+      .sx-txs{list-style:none;margin:0;padding:0;max-height:190px;overflow:auto}
+      .sx-txs li{display:flex;justify-content:space-between;gap:8px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.06);font:500 12.5px/1.4 "JetBrains Mono",ui-monospace,monospace;color:var(--muted);animation:sxin .4s ease}
+      .sx-txs li b{color:var(--text);font-weight:600;white-space:nowrap}
+      .sx-txs li.leak{color:#ff9b8a}
+      @keyframes sxin{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+      .sx-total{margin:8px 0 0;font:700 13px "Plus Jakarta Sans",monospace;color:var(--text)}
+      /* game 2: analyst */
+      .sx-tx{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin:4px 0 14px}
+      .sx-io{display:flex;flex-direction:column;gap:6px}
+      .sx-io span,.sx-pick{display:block;padding:10px 12px;border-radius:10px;background:var(--card);border:1px solid rgba(255,255,255,.12);font:600 13.5px/1.35 "JetBrains Mono",ui-monospace,monospace;color:var(--text)}
+      .sx-io small,.sx-pick small{display:block;color:var(--dim);font:600 11.5px/1.3 "Inter",system-ui,sans-serif;margin-top:2px}
+      .sx-pick{all:unset;box-sizing:border-box;cursor:pointer;display:block;padding:10px 12px;border-radius:10px;background:var(--card);border:1px solid rgba(255,255,255,.12);font:600 13.5px/1.35 "JetBrains Mono",ui-monospace,monospace;color:var(--text);transition:all .2s}
+      .sx-pick:hover{border-color:var(--orange)}
+      .sx-pick.right{border-color:#4caf50;background:rgba(76,175,80,.14)}
+      .sx-pick.wrong{border-color:#e05a47;background:rgba(224,90,71,.12)}
+      .sx-arrow{color:var(--orange);font-size:22px}
+      .sx-dots{display:flex;gap:6px;margin:0 0 10px}
+      .sx-dots i{width:28px;height:6px;border-radius:99px;background:rgba(255,255,255,.12)}
+      .sx-dots i.ok{background:var(--orange)}
+      /* game 3: builder */
+      .sx-steps{display:flex;gap:6px;margin:0 0 14px}
+      .sx-steps i{flex:1;height:6px;border-radius:99px;background:rgba(255,255,255,.12);transition:background .3s}
+      .sx-steps i.ok{background:var(--orange)}
+      .sx-scene{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 12px}
+      .sx-chain{padding:12px;border-radius:12px;background:#0d0d0d;border:1px solid var(--line)}
+      .sx-chain h4{margin:0 0 8px;font:700 11px/1.3 "Plus Jakarta Sans",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+      .sx-chip{display:inline-block;margin:2px 4px 2px 0;padding:4px 8px;border-radius:7px;background:rgba(255,255,255,.07);font:600 12.5px/1.3 "JetBrains Mono",ui-monospace,monospace;color:var(--text)}
+      .sx-chip.hot{background:rgba(224,90,71,.2);color:#ffb3a7}
+      .sx-chip.ok{background:rgba(76,175,80,.18);color:#b6e3b8}
+      .sx-chip.or{background:rgba(247,147,26,.18);color:var(--orange)}
+      .sx-q{margin:4px 0 10px;color:var(--text);font-weight:600}
+      /* game 4: scanner */
+      .sx-scans{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 12px}
+      .sx-meter{display:grid;grid-template-columns:150px 1fr;gap:6px 10px;align-items:center;font-size:14px;color:var(--muted)}
+      .sx-meter div{height:10px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+      .sx-meter div i{display:block;height:100%;background:var(--orange);transition:width .5s ease}
+      .sx-mission{margin:16px 0 8px;padding:12px 14px;border-radius:12px;border:1px dashed rgba(247,147,26,.45);color:var(--text);font-size:15px;line-height:1.5}
+      .sx-mission small{display:block;color:var(--orange);font:700 11px "Plus Jakarta Sans",monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+      @media (max-width:700px){.sx-badges{grid-template-columns:repeat(3,minmax(0,1fr))}.sx-split,.sx-scene,.sx-stops{grid-template-columns:1fr}.sx-flow{grid-template-columns:1fr}.sx-flow>i{transform:rotate(90deg);justify-self:center}.sx-scans{grid-template-columns:1fr 1fr}.sx-meter{grid-template-columns:1fr}.sx-tx{grid-template-columns:1fr}.sx-arrow{transform:rotate(90deg);justify-self:center}}
+      </style>
+
+      <div class="sx-card" id="sx-board">
+        <p class="sx-eye"><span>Mission board</span><span><span id="sx-xp">0</span> XP</span></p>
+        <h3>Six badges to go silent</h3>
+        <p>Four mini-games from the call, a try-it-yourself checklist and a final quiz. Each one lights up a badge. Progress stays on this device and adds XP to your <a href="/session-notes#passport">builder passport</a>.</p>
+        <div class="sx-badges">
+          <a class="sx-badge" href="#g-reuse" data-b="reuse"><i>&#128230;</i>Unlinked</a>
+          <a class="sx-badge" href="#g-analyst" data-b="analyst"><i>&#128269;</i>Analyst</a>
+          <a class="sx-badge" href="#g-build" data-b="build"><i>&#128295;</i>Builder</a>
+          <a class="sx-badge" href="#g-scan" data-b="scan"><i>&#128225;</i>Scanner</a>
+          <a class="sx-badge" href="#todo" data-b="todo"><i>&#9989;</i>Tried it</a>
+          <a class="sx-badge" href="#sx-quiz" data-b="quiz"><i>&#129323;</i>Silent</a>
+        </div>
+        <div class="sx-bar"><i id="sx-prog"></i></div>
+      </div>
+      <div class="sx-toast" id="sx-toast" role="status" aria-live="polite"></div>
+
+      <h2>Highlights</h2>
+      <p class="part"><b>1</b>One address, nothing to link</p>
+      <p><strong>The session opened with a real payment.</strong> keypleb tapped <em>Request</em> in the Shroud wallet and got an address starting with <code>sp1</code>. keypleb pasted it into Cake Wallet and sent 20,000 sats. Then we looked the transaction up on mempool.space, and there was nothing special to see: two inputs, two outputs, one of them a plain Taproot (<code>v1_p2tr</code>) output. No <code>sp</code> anywhere. That is the trick: you can publish one address forever, and every payment lands somewhere new.</p>
+
+      <p><strong>Why that matters.</strong> Our guest Sosthène, who builds the Dana wallet, pointed at donation pages that show a plain Bitcoin address. Razor did it live with a well-known privacy project&rsquo;s page: paste its address into mempool.space and you see every donation since 2020, more than 17 BTC in total, and where the coins went next. Address reuse doesn&rsquo;t only hurt the receiver. It hurts everyone who pays them, because now their coins are tied to a public address too.</p>
+      <div class="quote"><p>&ldquo;If you reuse addresses, you&rsquo;re done. No matter what you do after that, there&rsquo;s no way to have good privacy.&rdquo;</p><span>Sosthène, Dana wallet</span></div>
+
+      <div class="sx-card" id="g-reuse">
+        <p class="sx-eye"><span>Mini-game 1 &middot; Donation box</span><span class="sx-done">&#10003; badge earned</span></p>
+        <h3>Run a donation page, then play the spy</h3>
+        <p>Pick an address type, send a few donations, and watch what a stranger with a block explorer can see. Try both modes.</p>
+        <div class="sx-seg" id="sx-mode" role="group" aria-label="Address type"><button type="button" class="on" data-m="old">Normal address</button><button type="button" data-m="sp">Silent payment address</button></div>
+        <div class="sx-split">
+          <div class="sx-pane"><h4>Your donation page</h4><div class="sx-addr sx-mono" id="sx-paddr"></div><button type="button" class="sx-btn" id="sx-donate">Someone donates</button></div>
+          <div class="sx-pane"><h4>Spy pastes your address into an explorer</h4><ul class="sx-txs" id="sx-spy"></ul><p class="sx-total" id="sx-tot"></p></div>
+        </div>
+        <p class="sx-out" id="sx-reuseout">Send three donations in each mode.</p>
+      </div>
+
+      <p><strong>What silent payments don&rsquo;t fix.</strong> Sosthène was clear: they solve address reuse, the baseline, and nothing more. Collect many donations on separate outputs and then spend them together in one transaction, and you have just told chain analysis they all belong to the same person. Privacy is layered: silent payments, then coin control, PayJoin, CoinJoin, Lightning and ecash on top. And off-chain: cameras off, don&rsquo;t talk about your stack, maybe skip the Bitcoin t-shirt at the airport. In France this year, home invasions targeting crypto holders made it painfully real.</p>
+
+      <p class="part"><b>2</b>Spot the payment</p>
+      <p><strong>keypleb asked the right question:</strong> how would chain analysis tell this apart from a PayJoin, which also has two inputs and two outputs? The Taproot output is a hint, not proof. The bigger giveaway was the <strong>amount</strong>. The payment was exactly 20,000 sats, a number a human typed. The change was 3,026 sats. Analysts also convert every output to dollars or euros at the time of the transaction and look for round numbers there. Sosthène&rsquo;s tip: when you ask to be paid, add a few random sats.</p>
+
+      <div class="sx-card" id="g-analyst">
+        <p class="sx-eye"><span>Mini-game 2 &middot; Be the chain analyst</span><span class="sx-done">&#10003; badge earned</span></p>
+        <h3>Which output is the payment?</h3>
+        <p>Three transactions. Tap the output you think is the payment, or say you can&rsquo;t tell. Get all three right.</p>
+        <div class="sx-dots" id="sx-adots"><i></i><i></i><i></i></div>
+        <div id="sx-around"></div>
+        <p class="sx-out" id="sx-aout">Look at the amounts.</p>
+      </div>
+
+      <p class="part"><b>3</b>Scanning is the hard part</p>
+      <p><strong>Sending a silent payment is easy:</strong> no full node, just follow the protocol. <strong>Receiving is the work.</strong> The receiver&rsquo;s wallet has to check every transaction to see if one is for them, and different wallets do that differently. That is why some wallets see your payment while it is still in the mempool and others only after it is mined.</p>
+      <ul>
+        <li><strong>Full node.</strong> Scan the whole chain and the mempool yourself. Best privacy, most effort.</li>
+        <li><strong>Electrum-style server</strong> (Cake Wallet, and Frigate behind Sparrow). Fast, sees mempool payments, but the server learns which outputs are yours, so you trust it.</li>
+        <li><strong>BlindBit Oracle</strong> (Dana). Serves the same public data to everyone, so it learns little more than your IP and that you use silent payments. Today it can&rsquo;t see mempool payments: you wait for a block.</li>
+      </ul>
+      <p>Along the way Sosthène explained the <strong>gap limit</strong>: a normal wallet only checks so many unused addresses ahead. keypleb told the story of a client whose two wallets showed different balances from the same seed. Two days of troubleshooting later, raising the gap limit made the &ldquo;missing&rdquo; bitcoin appear. Silent payments don&rsquo;t have that problem, but they trade it for scanning.</p>
+
+      <div class="sx-card" id="g-scan">
+        <p class="sx-eye"><span>Mini-game 3 &middot; Pick your scanner</span><span class="sx-done">&#10003; badge earned</span></p>
+        <h3>Three people, three setups</h3>
+        <p>Tap a backend to see its trade-offs, then pick the right one for each person.</p>
+        <div class="sx-scans sx-seg" id="sx-scans" role="group" aria-label="Scanning backend" style="display:grid">
+          <button type="button" data-s="node">Your full node</button><button type="button" data-s="electrum">Electrum server</button><button type="button" data-s="blindbit">BlindBit</button><button type="button" data-s="frigate">Frigate</button>
+        </div>
+        <div class="sx-meter" id="sx-meter">
+          <span>Privacy from the server</span><div><i data-k="p"></i></div>
+          <span>Sees mempool payments</span><div><i data-k="m"></i></div>
+          <span>Easy on a phone</span><div><i data-k="e"></i></div>
+        </div>
+        <p class="sx-out" id="sx-sdesc">Tap a backend.</p>
+        <div class="sx-mission" id="sx-mission"></div>
+      </div>
+
+      <p class="part"><b>4</b>Razor builds it from scratch</p>
+      <p><strong>Razor started with history.</strong> Silent payments are BIP 352, by Ruben Somsen and Josie Baker. Before them came stealth addresses, BIP 47 reusable payment codes (Samourai), which need a notification transaction, and BIP 351, which uses OP_RETURN. Then his favourite slide, the interactivity scale:</p>
+
+      <div class="viz" role="figure" aria-label="The interactivity scale: silent payments, a fresh address per payer, PayJoin">
+        <p class="eyebrow">The interactivity scale</p>
+        <p class="viz-title">How much do sender and receiver have to talk before a payment?</p>
+        <div class="sx-scale"><div class="sx-track"></div>
+          <div class="sx-stops">
+            <div class="me"><b>Silent payments</b><span>Post one address. Everyone just pays it. No back and forth.</span></div>
+            <div><b>A fresh address per payer</b><span>An HD wallet or BTCPay Server makes a new address for each person you give it to.</span></div>
+            <div><b>PayJoin</b><span>New address, a PSBT sent back and forth, a relay and a mailbox directory.</span></div>
+          </div>
+          <div class="sx-ends"><span>Least interactive</span><span>Most interactive</span></div>
+        </div>
+      </div>
+
+      <p><strong>Then the deep dive:</strong> how would you invent silent payments yourself? Mini (the receiver) wants to be paid by Miki, without anyone else being able to tell. Razor walked through five versions, each fixing the last one&rsquo;s problem. Play through them:</p>
+
+      <div class="sx-card" id="g-build">
+        <p class="sx-eye"><span>Mini-game 4 &middot; Build it from scratch</span><span class="sx-done">&#10003; badge earned</span></p>
+        <h3>Five versions, five fixes</h3>
+        <div class="sx-steps" id="sx-bsteps"><i></i><i></i><i></i><i></i><i></i></div>
+        <div id="sx-bstage"></div>
+        <p class="sx-out" id="sx-bout"></p>
+      </div>
+
+      <p>Here is where that lands, in one picture:</p>
+      <div class="viz" role="figure" aria-label="How a silent payment works">
+        <p class="eyebrow">How a silent payment works</p>
+        <p class="viz-title">Shared secret from the sender&rsquo;s input key and the receiver&rsquo;s address. Only the receiver can redo it.</p>
+        <div class="sx-flow">
+          <div><b>Sender</b>Spends a coin as usual. Its input already reveals a public key <span class="sx-mono">B</span>, and only the sender knows <span class="sx-mono">b</span>.</div><i>&rarr;</i>
+          <div class="key"><b>Shared secret</b>Sender computes <span class="sx-mono">b&middot;A</span> from the <span class="sx-mono">sp1</span> address. Receiver computes <span class="sx-mono">a&middot;B</span>. Same number (Diffie-Hellman).</div><i>&rarr;</i>
+          <div><b>Fresh Taproot output</b>The secret tweaks the receiver&rsquo;s key into a brand new output. It looks like any other Taproot payment.</div>
+        </div>
+        <div class="sx-math">tweak <em>t</em> = hash( shared secret )<br>output key = <em>A</em> + <em>t</em>&middot;G &nbsp;&nbsp;&rarr;&nbsp; spend with <em>a</em> + <em>t</em><br>receiver scans: for every transaction, a&middot;(input keys) &rarr; does any output match?</div>
+      </div>
+      <p>The real BIP adds more: what happens with many inputs, and a counter so two payments from the same key still give different outputs. If you follow the five steps above, the BIP reads easily. Razor&rsquo;s tip: start at <a href="https://silentpayments.xyz" target="_blank" rel="noopener">silentpayments.xyz</a>.</p>
+
+      <p class="part"><b>5</b>Where you can help</p>
+      <p>Sosthène dropped the projects in the chat, and was blunt: they are built by very few people and could definitely use help. <strong>Dana</strong> (donations wallet), <strong>BlindBit Oracle</strong> (privacy-friendly scanning server), <strong>Frigate</strong> (silent payments Electrum server behind Sparrow) and <strong>Shroud</strong> with its indexer. Razor&rsquo;s way in: build and run the project, break the tests, do reviews. Want a recommendation to a grant giver later? Show proof of work first.</p>
+
+      <h2>Key takeaways</h2>
+      <ul>
+        <li><strong>Never reuse an address.</strong> It leaks your history and everyone else&rsquo;s. A silent payment address is the one you can safely post on a website.</li>
+        <li><strong>One layer, not the whole stack.</strong> Silent payments fix the baseline. Don&rsquo;t merge those coins carelessly, avoid round amounts, and add PayJoin and coin control.</li>
+        <li><strong>Scanning is the frontier.</strong> How a wallet finds its payments decides speed and privacy, and it is exactly where the projects need developers.</li>
+      </ul>
+
+      <h2 id="sx-quiz">Final level: the quiz</h2>
+      <p>Razor ran a live quiz on the call (one question tripped up everyone). Here are five. Get them all right and the <b>Silent</b> badge lights up.</p>
+
+      <script>
+      (function(){
+      var $=function(i){return document.getElementById(i)},SLUG='2026-11-17-privacy-track-silent-payments',KEY='co-badges-'+SLUG,S={b:{}};
+      try{var sv=JSON.parse(localStorage.getItem(KEY));if(sv&&sv.b)S=sv;}catch(e){}
+      function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+      var NAMES={reuse:'Unlinked',analyst:'Analyst',build:'Builder',scan:'Scanner',todo:'Tried it',quiz:'Silent'},GAMES={reuse:'g-reuse',analyst:'g-analyst',build:'g-build',scan:'g-scan'};
+      function board(){var n=0;document.querySelectorAll('.sx-badge').forEach(function(a){var g=!!S.b[a.dataset.b];a.classList.toggle('got',g);if(g)n++;});
+        $('sx-xp').textContent=n*100;$('sx-prog').style.width=(n/6*100)+'%';for(var k in GAMES)if(S.b[k])$(GAMES[k]).classList.add('won');}
+      var tt;function award(k){if(S.b[k])return;S.b[k]=1;save();board();var t=$('sx-toast');t.textContent='🏅 Badge unlocked: '+NAMES[k]+'  +100 XP';t.classList.add('go');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('go')},2800);}
+      board();
+      document.querySelectorAll('.sx-badge').forEach(function(a){a.addEventListener('click',function(e){var t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}});});
+      function rh(n){var c='023456789acdefghjklmnpqrstuvwxyz',s='';for(var i=0;i<n;i++)s+=c[Math.floor(Math.random()*c.length)];return s;}
+
+      /* 1. donation box */
+      var mode='old',SP='sp1qq'+rh(10)+'…'+rh(6),OLD='bc1q'+rh(10)+'…'+rh(5),cnt={old:0,sp:0},sent={old:[],sp:[]};
+      function drawReuse(){$('sx-paddr').textContent=mode=='old'?OLD:SP;var L=sent[mode],h='',tot=0;
+        if(mode=='old'){L.forEach(function(d){tot+=d.v;h+='<li class="leak"><span>'+OLD.slice(0,10)+'… &larr; '+d.from+'</span><b>'+d.v.toLocaleString('en')+' sats</b></li>';});
+          $('sx-spy').innerHTML=h||'<li><span>Search: '+OLD.slice(0,12)+'…</span><b>0 txs</b></li>';$('sx-tot').textContent=L.length?'Total received, visible to anyone: '+tot.toLocaleString('en')+' sats from '+L.length+' donors':'';}
+        else{$('sx-spy').innerHTML='<li><span>Search: '+SP.slice(0,12)+'…</span><b>not found</b></li>'+L.map(function(d){return '<li><span>somewhere in a block: bc1p'+d.a+'…</span><b>?</b></li>';}).join('');
+          $('sx-tot').textContent=L.length?'Each donation sits on its own Taproot output. Only your wallet can find them.':'';}}
+      $('sx-mode').querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){mode=b.dataset.m;$('sx-mode').querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b)});drawReuse();});});
+      var DON=['Alice','Bob','a journalist','a student','an activist','your aunt','a stranger'];
+      $('sx-donate').addEventListener('click',function(){var d={v:(Math.floor(Math.random()*40)+1)*1000+Math.floor(Math.random()*900),from:DON[Math.floor(Math.random()*DON.length)],a:rh(10)};sent[mode].unshift(d);cnt[mode]++;drawReuse();
+        var o=cnt.old,s=cnt.sp;$('sx-reuseout').innerHTML=(mode=='old'?'<b>Every donation is public</b>, with the total, and the spy can follow each coin onward. ':'<b>The spy finds nothing.</b> The sp1 address never appears on chain. ')+(o>=3&&s>=3?'That is the whole difference.':'Mode progress: normal '+Math.min(o,3)+'/3, silent '+Math.min(s,3)+'/3.');
+        if(o>=3&&s>=3)award('reuse');});
+      drawReuse();
+
+      /* 2. analyst */
+      var AR=[{ins:['18,105 sats','5,412 sats'],outs:[['20,000 sats','Taproot (bc1p…)'],['3,026 sats','bc1q…']],a:0,why:'<b>Right.</b> 20,000 is a number a human typed. 3,026 is what was left over. This is the demo payment from the call.',no:'Look again: which number looks typed by a person?'},
+        {ins:['241,377 sats'],outs:[['88,920 sats','≈ $87.31 at the time'],['152,315 sats','≈ $150.00 at the time']],a:1,why:'<b>Right.</b> Neither is round in sats, but 152,315 sats was exactly $150 that day. Analysts convert to fiat too.',no:'Neither is round in sats. Check the dollar value.'},
+        {ins:['61,880 sats','38,447 sats'],outs:[['48,213 sats','Taproot (bc1p…)'],['51,762 sats','Taproot (bc1p…)']],a:2,why:'<b>Right, you can&rsquo;t tell.</b> No round amounts, same output types. This is what a careful payment looks like: add a few random sats.',no:'Is either amount really round, in sats or in dollars? Both outputs are Taproot too.'}],ai=0,amiss=0;
+      function aRound(){var r=AR[ai];if(!r){return;}
+        $('sx-around').innerHTML='<div class="sx-tx"><div class="sx-io">'+r.ins.map(function(x){return '<span>'+x+'<small>input</small></span>';}).join('')+'</div><div class="sx-arrow">&rarr;</div><div class="sx-io">'+r.outs.map(function(o,i){return '<button type="button" class="sx-pick" data-i="'+i+'">'+o[0]+'<small>'+o[1]+'</small></button>';}).join('')+'</div></div><div class="sx-row"><button type="button" class="sx-btn ghost" data-i="2">Can&rsquo;t tell</button></div>';
+        $('sx-around').querySelectorAll('[data-i]').forEach(function(b){b.addEventListener('click',function(){var i=+b.dataset.i;
+          if(i===r.a){if(b.classList.contains('sx-pick'))b.classList.add('right');$('sx-adots').children[ai].classList.add('ok');$('sx-aout').innerHTML=r.why;ai++;
+            if(ai<AR.length)setTimeout(aRound,1700);else{$('sx-aout').innerHTML=r.why+' <b>Case closed'+(amiss?'':', no mistakes')+'.</b>';award('analyst');}}
+          else{amiss++;if(b.classList.contains('sx-pick'))b.classList.add('wrong');$('sx-aout').textContent=r.no;}});});}
+      aRound();
+
+      /* 3. scanner */
+      var SC={node:{p:100,m:100,e:15,d:'<b>Your own full node.</b> You download and scan everything yourself, mempool included. Nothing leaks, but it is heavy, and hard to do from a phone.'},
+        electrum:{p:25,m:95,e:95,d:'<b>Electrum-style server</b> (how Cake Wallet works). Fast and sees mempool payments, but the server learns which outputs are yours. You trust whoever runs it.'},
+        blindbit:{p:80,m:10,e:85,d:'<b>BlindBit Oracle</b> (Dana). Everyone gets the same public data and your phone does the matching. The server learns little beyond your IP. For now you only see a payment once it is in a block.'},
+        frigate:{p:35,m:90,e:90,d:'<b>Frigate</b> (Sparrow). An Electrum server that scans for silent payments on your behalf. Quick and easy, but you hand the server enough to find your payments.'}};
+      var MIS=[['You run a node at home and want zero leaks, plus seeing payments in the mempool.',['node']],['You only have a phone. Leak as little as possible; waiting for the next block is fine.',['blindbit']],['You only have a phone, want to see a payment the second it is sent, and you trust the server operator.',['electrum','frigate']]],mi=0;
+      function mis(){$('sx-mission').innerHTML=mi<MIS.length?'<small>Person '+(mi+1)+' of 3</small>'+MIS[mi][0]:'<small>All set</small>Three people, three right answers. There is no perfect backend yet, which is exactly why these projects need help.';}
+      $('sx-scans').querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){var s=SC[b.dataset.s];$('sx-scans').querySelectorAll('button').forEach(function(x){x.className=x===b?'on':''});
+        $('sx-meter').querySelectorAll('i').forEach(function(i){i.style.width=s[i.dataset.k]+'%'});
+        if(mi<MIS.length){if(MIS[mi][1].indexOf(b.dataset.s)>=0){b.className='right';$('sx-sdesc').innerHTML=s.d+' <b>Good pick.</b>';mi++;mis();if(mi===MIS.length)award('scan');}
+          else $('sx-sdesc').innerHTML=s.d+' Not the best fit for person '+(mi+1)+'.';}else $('sx-sdesc').innerHTML=s.d;});});
+      mis();
+
+      /* 4. builder */
+      var BS=[
+        {t:'Version 1: send the tweak privately',tx:['<span class="sx-chip">Mini &rarr; Miki: A</span>','<span class="sx-chip or">Miki &rarr; Mini: t (private message)</span>'],ch:['<span class="sx-chip">output: A + t&middot;G</span>'],
+         x:'Mini gives Miki her public key <b>A</b>. Miki picks a secret tweak <b>t</b>, messages it to Mini, and pays to <b>A + t&middot;G</b>. Only someone who knows <b>a + t</b> can spend it, and that is Mini.',
+         q:'It works. What is wrong with it?',o:['Anyone can spend it','Miki has to message Mini first, every time','It costs more fees'],a:1,ok:'Right: it is interactive. Silent payments must work with no messages at all.'},
+        {t:'Version 2: put the tweak on the chain',tx:['<span class="sx-chip">Mini &rarr; everyone: A</span>'],ch:['<span class="sx-chip">output: A + t&middot;G</span>','<span class="sx-chip hot">t (stored on chain)</span>'],
+         x:'No messages: use the blockchain as the channel. Miki writes <b>t</b> into the transaction itself. Mini reads it from the chain.',
+         q:'Pluto also knows Mini&rsquo;s address A. Can Pluto tell this payment went to Mini?',o:['No, t is random','Yes: Pluto reads t and computes A + t&middot;G himself'],a:1,ok:'Right. The chain is public, so the tweak is public. Pluto links the payment. We need a secret both can compute but nobody else can.'},
+        {t:'Version 3: Diffie-Hellman',tx:['<span class="sx-chip">Mini &rarr; everyone: A</span>'],ch:['<span class="sx-chip">output: A + hash(b&middot;A)&middot;G</span>','<span class="sx-chip or">B (Miki&rsquo;s key, on chain)</span>'],
+         x:'Miki makes his own key pair <b>b</b>, <b>B</b> and puts <b>B</b> on chain. Diffie-Hellman: <b>b&middot;A</b> = <b>a&middot;B</b>. Miki and Mini get the same secret; Pluto, with only A and B, can&rsquo;t.',
+         q:'Private now. What is still not great?',o:['Pluto can still compute the secret','The extra B makes the output odd-looking and costs extra bytes'],a:1,ok:'Right. A weird, bigger output is an outlier and costs fees. Can we get B for free?'},
+        {t:'Version 4: borrow B from the input',tx:['<span class="sx-chip ok">input: signed with b, reveals B</span>'],ch:['<span class="sx-chip ok">output: A + hash(b&middot;A)&middot;G</span>'],
+         x:'Miki has to spend a coin to pay anyway, and spending reveals his public key <b>B</b> in the input. So the key is already there. Nothing extra to store, and the output looks normal.',
+         q:'What does Mini have to do now to find her payments?',o:['Nothing, her wallet is notified','Take the input keys of every transaction and check if any output matches'],a:1,ok:'Right. That is scanning, the price of zero interaction.'},
+        {t:'Version 5: make it Taproot',tx:['<span class="sx-chip ok">input: reveals B</span>'],ch:['<span class="sx-chip ok">Taproot output (key path)</span>'],
+         x:'The output so far was an old-style pay-to-public-key. Taproot&rsquo;s key path holds a public key too, so put the tweaked key there. Now a silent payment looks like every other Taproot payment.',
+         q:'What does the real BIP 352 still have to handle?',o:['Nothing, this is the final design','Many inputs, and making every output unique even if B repeats'],a:1,ok:'Right. The BIP sums the input keys and adds a counter. But you just rebuilt the core idea.'}],bi=0;
+      function bStage(){var s=BS[bi];$('sx-bsteps').querySelectorAll('i').forEach(function(x,i){x.classList.toggle('ok',i<bi)});
+        $('sx-bstage').innerHTML='<p class="sx-q" style="color:var(--orange)">'+s.t+'</p><div class="sx-scene"><div class="sx-chain"><h4>Talk between them</h4>'+(s.tx.join('')||'none')+'</div><div class="sx-chain"><h4>What goes on chain</h4>'+s.ch.join('')+'</div></div><p>'+s.x+'</p><p class="sx-q">'+s.q+'</p><div class="sx-seg" id="sx-bopts">'+s.o.map(function(o,i){return '<button type="button" data-i="'+i+'">'+o+'</button>';}).join('')+'</div>';
+        $('sx-bout').textContent='Answer to unlock the next version.';
+        $('sx-bopts').querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){var i=+b.dataset.i;
+          if(i===s.a){b.className='right';$('sx-bout').innerHTML='<b>'+s.ok+'</b>';bi++;$('sx-bsteps').querySelectorAll('i').forEach(function(x,j){x.classList.toggle('ok',j<bi)});
+            if(bi<BS.length){var n=document.createElement('button');n.type='button';n.className='sx-btn';n.style.marginTop='10px';n.textContent='Next version →';n.onclick=bStage;$('sx-bout').appendChild(document.createElement('br'));$('sx-bout').appendChild(n);}
+            else{$('sx-bout').innerHTML+=' You rebuilt silent payments from scratch.';award('build');}}
+          else{b.className='wrong';$('sx-bout').textContent='Not quite. Read the step again.';}});});}
+      bStage();
+
+      /* 5. try-it checklist */
+      document.addEventListener('co-todo',function(e){if(e.detail&&e.detail.total&&e.detail.done===e.detail.total)award('todo');});
+      try{var td=JSON.parse(localStorage.getItem('co-todo-'+SLUG))||{},tn=0;for(var q in td)if(td[q])tn++;if(tn>=4)award('todo');}catch(e){}
+
+      /* 6. quiz badge: quiz.js stores the best score in co-quiz-<slug> */
+      function checkQuiz(){try{if((+localStorage.getItem('co-quiz-'+SLUG)||0)>=5)award('quiz');}catch(e){}}
+      checkQuiz();setInterval(checkQuiz,1500);
+      })();
+      </script>
