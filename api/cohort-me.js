@@ -16,6 +16,9 @@
 //   POST /api/cohort-me {action:"project", token, title, repo, demo, about, share}
 //   GET  /api/cohort-me?projects=1            public projects wall (only projects students chose to share)
 //   POST /api/cohort-me {action:"admin-followup", months}   (X-MB-Admin: key)
+//   POST /api/cohort-me {action:"admin-assign-email", items:[{key, names, question}], when, send}   (X-MB-Admin: key)
+//        match each owner (Discord name or sign-up name) to a sign-up; send:false previews, send:true emails
+//        each matched student their question(s). Each student+question is emailed once.
 
 const crypto = require("node:crypto");
 const mail = require("./_lib/mail.js");
@@ -132,6 +135,13 @@ function ensureTables() {
         about text,
         share boolean NOT NULL DEFAULT false,
         updated_at timestamptz NOT NULL DEFAULT now()
+      )`),
+      q(`CREATE TABLE IF NOT EXISTS mb_assign_sends (
+        cohort text NOT NULL,
+        student_id integer NOT NULL,
+        item text NOT NULL,
+        sent_at timestamptz NOT NULL DEFAULT now(),
+        PRIMARY KEY (cohort, student_id, item)
       )`),
       q(`CREATE TABLE IF NOT EXISTS mb_followup_sends (
         cohort text NOT NULL,
@@ -587,6 +597,50 @@ async function sendFollowups(months) {
   return { status: 200, data: { ok: true, sent, total: rows.length } };
 }
 
+// Email each student the discussion question(s) they were given (names come from cohort.js "assigned").
+const normName = (v) => String(v || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+const maskEmail = (e) => String(e || "").replace(/^(.).*(@.*)$/, "$1…$2");
+async function assignEmail(body) {
+  const items = (Array.isArray(body.items) ? body.items : []).slice(0, 40)
+    .map((it) => ({ key: clean(it.key, 12), question: clean(it.question, 600), names: (Array.isArray(it.names) ? it.names : []).slice(0, 4).map((n) => clean(n, 120)).filter(Boolean) }))
+    .filter((it) => /^w(10|[1-9])-q[1-9]$/.test(it.key) && it.question && it.names.length);
+  if (!items.length) return { status: 400, error: "No assigned questions to email." };
+  const when = clean(body.when, 80) || "next Monday";
+  const rows = await sql("SELECT id, name, discord, email, token FROM mb_students WHERE cohort = $1 AND NOT hidden ORDER BY id", [COHORT]);
+  const sent = new Set((await sql("SELECT student_id, item FROM mb_assign_sends WHERE cohort = $1", [COHORT])).map((r) => `${r.student_id}:${r.item}`));
+  const people = new Map(); // student id -> { student, items: [] }
+  const unmatched = [];
+  for (const it of items) {
+    for (const n of it.names) {
+      const keys = n.split("|").map(normName).filter(Boolean);
+      const hits = rows.filter((r) => keys.includes(normName(r.discord)) || keys.includes(normName(r.name)));
+      // Duplicate sign-ups: prefer the newest one with an email.
+      const st = hits.filter((r) => r.email).pop() || hits.pop();
+      if (!st) { unmatched.push({ name: n.split("|")[0], key: it.key }); continue; }
+      const partners = it.names.filter((x) => x !== n).map((x) => x.split("|")[0]);
+      const p = people.get(st.id) || { st, items: [] };
+      p.items.push({ ...it, partners, already: sent.has(`${st.id}:${it.key}`) });
+      people.set(st.id, p);
+    }
+  }
+  const preview = [...people.values()].map(({ st, items: its }) => ({ owner: its[0].names.find((n) => n.split("|").map(normName).some((k) => k === normName(st.discord) || k === normName(st.name)))?.split("|")[0] || st.name, signup: st.name, discord: st.discord || "", email: maskEmail(st.email), hasEmail: !!st.email, questions: its.map((i) => i.key.split("-")[1].toUpperCase() + (i.already ? " (sent)" : "")) }));
+  if (!body.send) return { status: 200, data: { ok: true, preview, unmatched, emailOn: mail.emailOn() } };
+  if (!mail.emailOn()) return { status: 503, error: "Email isn't switched on (RESEND_API_KEY)." };
+  let count = 0;
+  for (const { st, items: its } of people.values()) {
+    const todo = its.filter((i) => !i.already);
+    if (!st.email || !todo.length) continue;
+    try {
+      await mail.sendAssignment({ email: st.email, name: st.name, token: st.token, when, items: todo });
+      for (const i of todo) await sql("INSERT INTO mb_assign_sends (cohort, student_id, item) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING", [COHORT, st.id, i.key]);
+      count++;
+    } catch (err) {
+      console.error("cohort-me: assignment email to", st.id, err.message);
+    }
+  }
+  return { status: 200, data: { ok: true, sent: count, preview, unmatched } };
+}
+
 async function markAnswered(body) {
   const id = Number(body.id);
   if (!Number.isInteger(id)) return { status: 400, error: "Unknown question." };
@@ -641,6 +695,7 @@ module.exports = async function handler(req, res) {
         project: () => project(body),
         "admin-answered": () => (isAdmin(req) ? markAnswered(body) : { status: 401, error: "Wrong admin key." }),
         "admin-followup": () => (isAdmin(req) ? sendFollowups(Number(body.months)) : { status: 401, error: "Wrong admin key." }),
+        "admin-assign-email": () => (isAdmin(req) ? assignEmail(body) : { status: 401, error: "Wrong admin key." }),
       };
       const r = Object.hasOwn(actions, body.action) ? await actions[body.action]() : { status: 400, error: "Unknown action." };
       return res.status(r.status).json(r.error ? { error: r.error } : r.data);

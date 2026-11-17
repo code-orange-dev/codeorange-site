@@ -160,3 +160,12 @@ input[type=url] { width: 100%; min-height: 44px; padding: 10px 12px; border-radi
 .me-rec { margin: 14px 0; padding: 14px 16px; border-radius: 12px; border: 1px solid rgba(247,147,26,.35); background: rgba(247,147,26,.06); }
 .me-rec .me-label { margin-bottom: 10px; }
 .me-rec-links { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* Exercises: link to where you do each one, plus one clear call to action */
+.me-check li { flex-wrap: wrap; }
+.me-exlink { display: inline-flex; margin: 6px 0 0 34px; padding: 5px 12px; border-radius: 999px; border: 1px solid rgba(247,147,26,.5); color: var(--orange); text-decoration: none; font: 700 12px "Plus Jakarta Sans", monospace; }
+.me-exlink:hover { background: rgba(247,147,26,.1); }
+.me-practice { margin-top: 14px; }
+/* Your discussion question */
+.me-myq { margin: 14px 0; padding: 16px; border-radius: 12px; border: 1px solid rgba(247,147,26,.55); background: rgba(247,147,26,.08); }
+.me-myq-text { color: var(--text); font-size: 17px; line-height: 1.5; margin: 0 0 8px; }

@@ -24,6 +24,14 @@
   const $ = (sel, root = document) => root.querySelector(sel);
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
   const listJoin = (a) => (a.length > 1 ? `${a.slice(0, -1).join(", ")} and ${a[a.length - 1]}` : a.join(""));
+  // Exercises are plain text or { text, url, label } (a link to where you do it).
+  const exText = (e) => (typeof e === "string" ? e : e.text);
+  const exLink = (e) => (e && e.url ? `<a class="me-exlink" href="${esc(e.url)}" target="_blank" rel="noopener">Open ${esc(e.label || "it")} ↗</a>` : "");
+  // Questions you own that get discussed at week `wk`'s session (C.discussAt = { 1: 2 }: week 1's questions in week 2's session).
+  function questionsFor(wk, assigned) {
+    return Object.keys(assigned).filter((k) => /^w\d+-q\d+$/.test(k) && owns(assigned[k], state.me.id)).filter((k) => { const qw = Number(k.slice(1, k.indexOf("-"))); return ((C.discussAt || {})[qw] || qw) === wk; })
+      .map((k) => { const qw = Number(k.slice(1, k.indexOf("-"))), qi = Number(k.split("-q")[1]); return { key: k, week: qw, n: qi, text: C.weeks[qw - 1].questions[qi - 1], with: assigned[k].name.includes(" & ") ? assigned[k].name : "" }; });
+  }
   const lessonUrl = (slug) => `${C.courseUrl}/${slug}`;
 
   const store = {
@@ -81,9 +89,31 @@
 
   // Question owners and seminar roles, as on the main page (round-robin in sign-up order,
   // fixed once a week opens).
+  // Manual question owners (C.assigned in cohort.js), e.g. after a session: "w1-q1": ["andywong31"].
+  // A name can list aliases with "|" (Discord name|sign-up name). Matched to the roster by name,
+  // and to the signed-in student by their Discord name or name. Overrides the round-robin.
+  const norm = (s) => String(s || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+  const owns = (who, id) => !!who && id != null && (who.ids ? who.ids.includes(id) : who.id === id);
+  function manualOwner(names) {
+    const people = names.map((n) => {
+      const keys = n.split("|").map(norm).filter(Boolean);
+      const me = state.me && (keys.includes(norm(state.me.discord)) || keys.includes(norm(state.me.name))) ? state.me : null;
+      const s = state.students.find((x) => (me && x.id === me.id) || keys.includes(norm(x.name)));
+      return { id: s ? s.id : me ? me.id : null, name: n.split("|")[0].trim(), done: (s && s.done) || [] };
+    });
+    return { id: people[0].id, ids: people.map((p) => p.id).filter((x) => x != null), name: people.map((p) => p.name).join(" & "), done: [...new Set(people.flatMap((p) => p.done))], manual: true };
+  }
+  function applyManual(map) {
+    Object.entries(C.assigned || {}).forEach(([item, names]) => { if (Array.isArray(names) && names.length) map[item] = manualOwner(names); });
+    // Weeks with hand-picked owners skip the automatic seminar roles.
+    Object.keys(C.assigned || {}).forEach((item) => { const wk = item.split("-")[0]; (C.roles || []).forEach((_, ri) => { delete map[`${wk}-role${ri}`]; }); });
+    return map;
+  }
   function assignments() {
     const map = {};
     if (!state.rosterVisible) return map;
+    // Round-robin owners only when C.autoAssign is on; otherwise owners come from C.assigned (picked after each session).
+    if (C.autoAssign === false) return applyManual(map);
     const roles = C.roles || [];
     let k = 0, r = 0;
     C.weeks.forEach((w, wi) => {
@@ -93,7 +123,7 @@
       w.questions.forEach((_, qi) => { map[`w${wi + 1}-q${qi + 1}`] = pool.length ? pool[k % pool.length] : null; k++; });
       roles.slice(0, pool.length).forEach((_, ri) => { map[`w${wi + 1}-role${ri}`] = pool[r % pool.length]; r++; });
     });
-    return map;
+    return applyManual(map);
   }
 
   // ── Data ──
@@ -208,9 +238,9 @@
     }).join("");
   }
 
-  function tick(item, label) {
+  function tick(item, label, after = "") {
     const done = state.done.has(item);
-    return `<li class="${done ? "is-done" : ""}"><button type="button" class="me-tick" data-item="${item}" aria-pressed="${done}"><span class="me-box" aria-hidden="true">${done ? "✓" : ""}</span><span>${label}</span></button></li>`;
+    return `<li class="${done ? "is-done" : ""}"><button type="button" class="me-tick" data-item="${item}" aria-pressed="${done}"><span class="me-box" aria-hidden="true">${done ? "✓" : ""}</span><span>${label}</span></button>${after}</li>`;
   }
 
   // The one thing to do next, worked out from where the student is.
@@ -223,6 +253,8 @@
     // Session day: within 14h before a session until it ends, joining it is the one thing to do.
     const live = !finished && sessionDates.find((t) => now > t.getTime() - 14 * 36e5 && now < t.getTime() + 90 * 6e4);
     if (live) return [now >= live.getTime() ? "The session is on now. Join us!" : "Session today. See you there!", `${sessionLine(live)} · live on Discord, cameras off is fine.`, `<a class="button small" href="${C.discordEvent || C.discord}" target="_blank" rel="noopener">Join the Discord event</a>`];
+    const qs = currentWeek >= 0 ? questionsFor(wk, assignments()).filter((q) => !state.done.has(q.key)) : [];
+    if (qs.length) return [`Prepare your question for Monday: Q${qs[0].n}.`, esc(qs[0].text), go("#my-question", "See my question")];
     if (!p.why && !p.build) return ["Start by writing down why you joined.", "People who name a goal are far more likely to finish.", go("#goals", "Set my goals")];
     if (!p.skillsStart) return ["Rate your starting skills.", "Thirty seconds now, and in week 9 you'll see exactly how far you've come.", go("#skills", "Rate my skills")];
     if (finished) return p.skillsEnd ? null : ["Rate your skills one last time.", "See how far you've come since the start.", go("#skills", "Rate again")];
@@ -276,23 +308,24 @@
     const wk = wi + 1;
     const w = C.weeks[wi];
     const assigned = assignments();
-    const myQs = w.intro ? [] : w.questions.map((_, qi) => `w${wk}-q${qi + 1}`).filter((k) => assigned[k]?.id === state.me.id);
-    const roles = w.intro ? [] : (C.roles || []).filter((_, ri) => assigned[`w${wk}-role${ri}`]?.id === state.me.id);
+    const myQs = questionsFor(wk, assigned);
+    const roles = w.intro ? [] : (C.roles || []).filter((_, ri) => owns(assigned[`w${wk}-role${ri}`], state.me.id));
     const before = currentWeek < 0;
     const items = [
       tick(`w${wk}-r1`, `${w.intro ? "Optional, after the session: read the lesson" : "Do the lesson"}${w.lessons.length > 1 ? "s" : ""}: ${w.lessons.map((l) => `<a href="${lessonUrl(l.slug)}" target="_blank" rel="noopener">${esc(l.title)}</a>`).join(", ")}`),
-      ...myQs.map((k) => tick(k, `Answer your question Q${k.split("-q")[1]} on Discord: <em>${esc(w.questions[Number(k.split("-q")[1]) - 1])}</em>`)),
-      ...w.exercises.map((ex, ei) => tick(`w${wk}-e${ei + 1}`, `${w.intro ? "Optional exercise" : "Exercise"} ${ei + 1}: ${esc(ex)}`)),
+      ...w.exercises.map((ex, ei) => tick(`w${wk}-e${ei + 1}`, `${w.intro ? "Optional exercise" : "Exercise"} ${ei + 1}: ${esc(exText(ex))}`, exLink(ex))),
     ].join("");
     return `<div class="me-card me-week" id="week">
       <p class="me-label">${before ? "Coming up · week 1" : `This week · week ${wk} of ${C.weeks.length}`}</p>
       <h2>${esc(w.title)}</h2>
       <p class="me-when">${now > sessionDates[wi].getTime() + 90 * 6e4 ? "Session held" : "Next session"}: <strong>${esc(sessionLine(sessionDates[wi]))}</strong> on <a href="${C.discord}" target="_blank" rel="noopener">Discord</a></p>
       ${roles.length ? `<p class="me-role">On Monday you're the <strong>${roles.map((r) => esc(r.name)).join("</strong> and <strong>")}</strong>. ${esc(roles[0].job)}</p>` : ""}
-      ${w.intro ? `<p class="me-role"><strong>Intro week: no homework.</strong> ${esc(w.introNote || "")}</p>` : ""}
+      ${myQs.length ? `<div class="me-myq" id="my-question"><p class="me-label">Your question${myQs.length > 1 ? "s" : ""} for Monday</p>${myQs.map((q) => `<p class="me-myq-text">Q${q.n}${q.week !== wk ? ` (week ${q.week})` : ""}: ${esc(q.text)}</p>${q.with ? `<p class="me-small">Shared by ${esc(q.with)}: prepare it together.</p>` : ""}`).join("")}<p class="me-small">Be ready to explain it in a few minutes on Monday. Post your answer in the cohort channel on Discord before the session.</p><ul class="me-check">${myQs.map((q) => tick(q.key, `Q${q.n}: I've prepared my answer and posted it on Discord`)).join("")}</ul></div>` : ""}
+      ${w.intro ? `<p class="me-role"><strong>Intro week: no homework.</strong> ${esc(w.introNote || "")}</p>` : `<p class="me-role"><strong>Exercises are required for the certificate.</strong> Can't make Monday live? Post your work on Discord and it counts as attending.</p>`}
       ${lastHeld() >= 0 ? recordingBox(lastHeld()) : ""}
       <p class="me-open">Opening question: <em>${esc(w.opening)}</em></p>
       <ul class="me-check">${items}</ul>
+      ${w.practice ? `<a class="button small me-practice" href="${esc(w.practice)}" target="_blank" rel="noopener">Do this week's exercises on Decoding Bitcoin ↗</a>` : ""}
       <p class="me-jumps"><a class="me-jump" href="/decoding-bitcoin/curriculum#week-${wk}">Open week ${wk} in the weekly plan →</a> <a class="me-jump" href="/assets/mastering-bitcoin/sessions.ics?v=20261114b" download="decoding-bitcoin-sessions.ics">Add sessions to my calendar</a></p>
     </div>`;
   }

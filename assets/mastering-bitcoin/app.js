@@ -11,6 +11,9 @@
     String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
   const listJoin = (a) => (a.length > 1 ? `${a.slice(0, -1).join(", ")} and ${a[a.length - 1]}` : a.join(""));
   const pad = (n) => String(n).padStart(2, "0");
+  // Exercises are plain text or { text, url, label } (a link to the tool or page where you do it).
+  const exText = (e) => (typeof e === "string" ? e : e.text);
+  const exLink = (e, cls = "mb-exlink") => (e && e.url ? `<a class="${cls}" href="${esc(e.url)}" target="_blank" rel="noopener">Open ${esc(e.label || "it")} ↗</a>` : "");
   const lessonUrl = (slug) => `${C.courseUrl}/${slug}`;
 
   const store = {
@@ -71,9 +74,34 @@
   // Seminar roles rotate the same way, on their own counter, one person per role.
   const roles = C.roles || [];
   // Visitors who aren't signed in don't see who has which question.
+  // Manual question owners (C.assigned in cohort.js), e.g. after a session: "w1-q1": ["andywong31"].
+  // A name can list aliases with "|" (Discord name|sign-up name). Matched to the roster by name,
+  // and to the signed-in student by their Discord name or name. Overrides the round-robin.
+  const norm = (s) => String(s || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+  const owns = (who, id) => !!who && id != null && (who.ids ? who.ids.includes(id) : who.id === id);
+  const manualWeek = (wk) => Object.keys(C.assigned || {}).some((k) => k.startsWith(`w${wk}-q`));
+  // Which session a week's questions are discussed at: C.discussAt = { 1: 2 } means week 1's questions are discussed in week 2's session.
+  const discussLabel = (wk) => { const at = (C.discussAt || {})[wk] || wk; const d = sessionDates[at - 1]; return d ? `on Monday ${d.toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" })}` : "on Monday"; };
+  function manualOwner(names) {
+    const people = names.map((n) => {
+      const keys = n.split("|").map(norm).filter(Boolean);
+      const me = state.me && (keys.includes(norm(state.me.discord)) || keys.includes(norm(state.me.name))) ? state.me : null;
+      const s = state.students.find((x) => (me && x.id === me.id) || keys.includes(norm(x.name)));
+      return { id: s ? s.id : me ? me.id : null, name: n.split("|")[0].trim(), done: (s && s.done) || [] };
+    });
+    return { id: people[0].id, ids: people.map((p) => p.id).filter((x) => x != null), name: people.map((p) => p.name).join(" & "), done: [...new Set(people.flatMap((p) => p.done))], manual: true };
+  }
+  function applyManual(map) {
+    Object.entries(C.assigned || {}).forEach(([item, names]) => { if (Array.isArray(names) && names.length) map[item] = manualOwner(names); });
+    // Weeks with hand-picked owners skip the automatic seminar roles.
+    Object.keys(C.assigned || {}).forEach((item) => { const wk = item.split("-")[0]; (C.roles || []).forEach((_, ri) => { delete map[`${wk}-role${ri}`]; }); });
+    return map;
+  }
   function assignments() {
     const map = {};
     if (!state.rosterVisible) return map;
+    // Round-robin owners only when C.autoAssign is on; otherwise owners come from C.assigned (picked after each session).
+    if (C.autoAssign === false) return applyManual(map);
     const now = Date.now();
     let k = 0;
     let r = 0;
@@ -90,9 +118,9 @@
         r++;
       });
     });
-    return map;
+    return applyManual(map);
   }
-  const myRoles = (assigned, me, wk) => roles.filter((_, ri) => me && assigned[`w${wk}-role${ri}`]?.id === me.id);
+  const myRoles = (assigned, me, wk) => roles.filter((_, ri) => me && owns(assigned[`w${wk}-role${ri}`], me.id));
   const readCount = (wk) => state.students.filter((s) => s.done.includes(`w${wk}-r1`)).length;
 
   const isDone = (student, item) => !!student && student.done.includes(item);
@@ -122,7 +150,7 @@
         const date = sessionDates[wi];
         const read = readCount(wk);
         const total = state.rosterVisible ? state.students.length : 0;
-        const pending = state.rosterVisible ? "Assigned at sign-up" : "Sign up to get yours";
+        const pending = !state.rosterVisible ? "Sign up to get yours" : C.autoAssign === false ? "Assigned after Monday's session" : "Assigned at sign-up";
         const chapters = w.lessons
           .map((c) => `<a href="${lessonUrl(c.slug)}" target="_blank" rel="noopener">${esc(c.title)} ↗</a>`)
           .join("");
@@ -132,12 +160,12 @@
         const questions = w.questions
           .map((q, qi) => {
             const item = `w${wk}-q${qi + 1}`;
-            const who = w.intro ? null : assigned[item];
-            const mine = me && who && who.id === me.id;
+            const who = w.intro && !assigned[item]?.manual ? null : assigned[item];
+            const mine = me && owns(who, me.id);
             const done = isDone(who, item);
-            if (w.intro) return `<li><span class="mb-num">Q${qi + 1}</span><div><p>${esc(q)}</p></div></li>`;
+            if (!who && w.intro) return `<li><span class="mb-num">Q${qi + 1}</span><div><p>${esc(q)}</p></div></li>`;
             const whoLabel = who
-              ? `<span class="mb-who${mine ? " is-me" : ""}${done ? " is-done" : ""}">${done ? "✓ " : ""}${mine ? "You" : esc(who.name)}</span>`
+              ? `<span class="mb-who${mine ? " is-me" : ""}${done ? " is-done" : ""}">${done ? "✓ " : ""}${mine ? (who.name.includes(" & ") ? `${esc(who.name)} (you)` : "You") : esc(who.name)}</span>`
               : `<span class="mb-who is-empty">${pending}</span>`;
             return `<li class="${mine ? "is-mine" : ""}"><span class="mb-num">Q${qi + 1}</span><div><p>${esc(q)}</p><div class="mb-row">${whoLabel}${mine ? tickButton(item, done, `Mark question ${qi + 1} of week ${wk} done`) : ""}</div></div></li>`;
           })
@@ -146,14 +174,14 @@
           .map((e, ei) => {
             const item = `w${wk}-e${ei + 1}`;
             const count = state.students.filter((s) => s.done.includes(item)).length;
-            return `<li><span class="mb-num">E${ei + 1}</span><div><p>${esc(e)}</p><div class="mb-row">${total ? `<span class="mb-count">${count} of ${total} done</span>` : ""}${me ? tickButton(item, isDone(me, item), `Mark exercise ${ei + 1} of week ${wk} done`) : ""}</div></div></li>`;
+            return `<li><span class="mb-num">E${ei + 1}</span><div><p>${esc(exText(e))}</p><div class="mb-row">${exLink(e)}${total ? `<span class="mb-count">${count} of ${total} done</span>` : ""}${me ? tickButton(item, isDone(me, item), `Mark exercise ${ei + 1} of week ${wk} done`) : ""}</div></div></li>`;
           })
           .join("");
-        const myQs = me && !w.intro ? w.questions.filter((_, qi) => assigned[`w${wk}-q${qi + 1}`]?.id === me.id).length : 0;
+        const myQs = me ? w.questions.filter((_, qi) => owns(assigned[`w${wk}-q${qi + 1}`], me.id)).length : 0;
         const roleChips = roles
           .map((role, ri) => {
             const who = assigned[`w${wk}-role${ri}`];
-            const mine = me && who && who.id === me.id;
+            const mine = me && owns(who, me.id);
             return `<li class="${mine ? "is-mine" : ""}" title="${esc(role.job)}"><b>${esc(role.name)}</b><span>${who ? (mine ? "You" : esc(who.name)) : pending}</span></li>`;
           })
           .join("");
@@ -171,10 +199,10 @@
             ${w.intro ? `<div class="mb-intro"><strong>Intro week: no homework.</strong> ${esc(w.introNote || "")}</div>` : ""}
             <div class="mb-read"><span class="mb-count">${w.intro ? "Optional: read these after the session, any time this week" : total ? `${read} of ${total} have done the lessons` : "Do the lessons before Monday"}</span>${me ? tickButton(`w${wk}-r1`, isDone(me, `w${wk}-r1`), `I've done the week ${wk} lessons`).replace(/>Mark done</, ">I've done the lessons<").replace(/>Done</, ">Lessons done<") : ""}</div>
             <div class="mb-opening"><p class="mb-label">Opening question · everyone</p><p>${esc(w.opening)}</p></div>
-            ${w.intro ? "" : `<div class="mb-roles-wrap"><p class="mb-label">Seminar roles this week</p><ul class="mb-roles">${roleChips}</ul></div>`}
+            ${w.intro || C.autoAssign === false ? "" : `<div class="mb-roles-wrap"><p class="mb-label">Seminar roles this week</p><ul class="mb-roles">${roleChips}</ul></div>`}
             <div class="mb-cols">
-              <div><h3>Discussion questions</h3><p class="mb-hint">${w.intro ? "Nothing to prepare. We'll talk these through together in the session." : "Each question has one owner. Post your answer in the cohort channel on Discord before the session, then tick it done."}</p><ol class="mb-list">${questions}</ol></div>
-              <div><h3>Exercises</h3><p class="mb-hint">${w.intro ? "Optional. Try them during or after the session, and tick them off if you do." : "Everyone does these. Share what you got on Discord and tick each one off."}</p><ol class="mb-list">${exercises}</ol></div>
+              <div><h3>Discussion questions</h3><p class="mb-hint">${w.intro && !manualWeek(wk) ? "Nothing to prepare. We'll talk these through together in the session." : manualWeek(wk) ? `Each question has an owner. Be ready to explain yours in a few minutes ${discussLabel(wk)}, and post your answer in the cohort channel on Discord.` : "Each question has one owner. Post your answer in the cohort channel on Discord before the session, then tick it done."}</p><ol class="mb-list">${questions}</ol></div>
+              <div><h3>Exercises</h3><p class="mb-hint">${w.intro ? "Optional this week. Try them during or after the session, and tick them off if you do." : "<strong>Required for the certificate.</strong> Do them on Decoding Bitcoin, share what you got on Discord, then tick each one off. Can't make Monday live? Posting your work on Discord counts as attending."}</p>${w.practice ? `<a class="button small mb-practice" href="${esc(w.practice)}" target="_blank" rel="noopener">Do this week's exercises on Decoding Bitcoin ↗</a>` : ""}<ol class="mb-list">${exercises}</ol></div>
             </div>
             <a class="mb-checklink" href="/decoding-bitcoin/check#week-${wk}"><b>Weekly check</b> · 5 questions on this week, answers explained →</a>
           </div>
@@ -196,7 +224,7 @@
         if (!isUnlocked(wi)) return `<span class="is-locked" title="Week ${wk} unlocks after the session on ${fmtUnlock(wi)}"><i><b style="--p:0%"></b></i><span>W${pad(wk)}${dateTag}</span></span>`;
         let pct;
         if (me) {
-          const items = [`w${wk}-r1`, ...w.exercises.map((_, ei) => `w${wk}-e${ei + 1}`), ...w.questions.map((_, qi) => `w${wk}-q${qi + 1}`).filter((k) => assigned[k]?.id === me.id)];
+          const items = [`w${wk}-r1`, ...w.exercises.map((_, ei) => `w${wk}-e${ei + 1}`), ...w.questions.map((_, qi) => `w${wk}-q${qi + 1}`).filter((k) => owns(assigned[k], me.id))];
           pct = (items.filter((k) => me.done.includes(k)).length / items.length) * 100;
         } else {
           pct = state.rosterVisible && state.students.length ? (readCount(wk) / state.students.length) * 100 : 0;
@@ -238,7 +266,7 @@
       return;
     }
     const assigned = assignments();
-    const mine = Object.keys(assigned).filter((k) => k.includes("-q") && assigned[k]?.id === me.id);
+    const mine = Object.keys(assigned).filter((k) => k.includes("-q") && owns(assigned[k], me.id));
     const qDone = mine.filter((k) => me.done.includes(k)).length;
     const exTotal = C.weeks.reduce((n, w) => n + w.exercises.length, 0);
     const exDone = me.done.filter((k) => k.includes("-e")).length;
@@ -301,7 +329,7 @@
     }
     const rows = state.students
       .map((s, i) => {
-        const mine = Object.keys(assigned).filter((k) => k.includes("-q") && assigned[k]?.id === s.id);
+        const mine = Object.keys(assigned).filter((k) => k.includes("-q") && owns(assigned[k], s.id));
         const q = mine.filter((k) => s.done.includes(k)).length;
         const e = s.done.filter((k) => k.includes("-e")).length;
         const r = s.done.filter((k) => k.endsWith("-r1")).length;
@@ -459,7 +487,7 @@
         const wk = Number(item.slice(1).split("-")[0]);
         const w = C.weeks[wk - 1];
         const assigned = assignments();
-        const items = [`w${wk}-r1`, ...w.exercises.map((_, ei) => `w${wk}-e${ei + 1}`), ...w.questions.map((_, qi) => `w${wk}-q${qi + 1}`).filter((k) => assigned[k]?.id === me.id)];
+        const items = [`w${wk}-r1`, ...w.exercises.map((_, ei) => `w${wk}-e${ei + 1}`), ...w.questions.map((_, qi) => `w${wk}-q${qi + 1}`).filter((k) => owns(assigned[k], me.id))];
         if (items.every((k) => me.done.includes(k))) {
           confetti(document.querySelector(`.mb-tick[data-item="${item}"]`));
           toast(`Week ${wk} complete. Nice work!`);

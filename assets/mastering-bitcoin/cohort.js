@@ -19,6 +19,20 @@ window.MB_COHORT = {
     // 1: { video: "https://youtu.be/...", recap: "/session-notes/2026-11-16-decoding-bitcoin-week-1" },
     1: { video: "https://youtu.be/VIfltkAznTA", recap: "/session-notes/2026-11-16-decoding-bitcoin-week-1" },
   },
+  // Discussion question owners. Picked by hand after each session from who was on the call
+  // (Discord names; add "|Sign-up name" if it differs). Two names = a pair sharing a question.
+  autoAssign: false,
+  assigned: {
+    // Week 1 questions, given out after the 16 Nov call, discussed on Mon 23 Nov.
+    "w1-q1": ["andywong31"],
+    "w1-q2": ["ankitajana21"],
+    "w1-q3": ["Aroso Emmanuel"],
+    "w1-q4": ["Chaitika"],
+    "w1-q5": ["Matthew", "Maxima Freiman"],
+    "w1-q6": ["Ngineks", "rfxx666"],
+  },
+  // Week N's questions are discussed at week M's session, e.g. { 1: 2 }. Default: the same week.
+  discussAt: { 1: 2 },
   courseUrl: "https://bitcoindevs.xyz/decoding",
 
   // Socratic seminar roles, rotated through the roster each week (shown in this order).
@@ -58,10 +72,12 @@ window.MB_COHORT = {
         "Give one advantage and one disadvantage of UTXOs compared with an account model.",
         "Why do people say \"don't trust, verify\"? What can you verify yourself, and what do you usually take on trust?",
       ],
+      // Where the hands-on practice lives on Decoding Bitcoin (the source of truth for exercises).
+      practice: "https://bitcoindevs.xyz/decoding/hash-functions",
       exercises: [
-        "Introduce yourself in the cohort channel on Discord: your background, why you joined, and what you'd like to build.",
-        "Use the Hash Functions tool: hash your name, then change one letter. How much of the output changes?",
-        "Open a recent block on mempool.space, pick one transaction, and note its inputs, outputs and fee. Which output do you think is the change, and why?",
+        {"text": "Introduce yourself in the cohort channel on Discord: your background, why you joined, and what you'd like to build.", "url": "https://discord.gg/ZtvA79paWa", "label": "Discord"},
+        {"text": "Use the Hash Functions tool: hash your name, then change one letter. How much of the output changes?", "url": "https://bitcoindevs.xyz/decoding/hash-functions", "label": "Hash Functions tool"},
+        {"text": "Open a recent block on mempool.space, pick one transaction, and note its inputs, outputs and fee. Which output do you think is the change, and why?", "url": "https://mempool.space", "label": "mempool.space"},
       ],
     },
     {
@@ -85,10 +101,12 @@ window.MB_COHORT = {
         "Name the main parts of a transaction in order and say in one line what each one is for.",
         "What exactly does an input point to, and why is that enough to prove where the money came from?",
       ],
+      // Where the hands-on practice lives on Decoding Bitcoin (the source of truth for exercises).
+      practice: "https://bitcoindevs.xyz/decoding/transaction-decoder",
       exercises: [
-        "Watch a transaction you didn't create go from unconfirmed to 1 confirmation on mempool.space. How long did it take?",
-        "Use the Reorg Calculator: what's the chance an attacker with 10% of the hashrate reverses a payment after 1, 3 and 6 confirmations?",
-        "Paste a raw transaction into the Transaction Decoder and find its version, inputs, outputs and locktime. What does each input point to?",
+        {"text": "Watch a transaction you didn't create go from unconfirmed to 1 confirmation on mempool.space. How long did it take?", "url": "https://mempool.space", "label": "mempool.space"},
+        {"text": "Use the Reorg Calculator: what's the chance an attacker with 10% of the hashrate reverses a payment after 1, 3 and 6 confirmations?", "url": "https://bitcoindevs.xyz/decoding/reorg-calculator", "label": "Reorg Calculator"},
+        {"text": "Paste a raw transaction into the Transaction Decoder and find its version, inputs, outputs and locktime. What does each input point to?", "url": "https://bitcoindevs.xyz/decoding/transaction-decoder", "label": "Transaction Decoder"},
       ],
     },
     {
@@ -108,9 +126,11 @@ window.MB_COHORT = {
         "What are the segwit marker and flag bytes, and how does a parser know whether a transaction is segwit?",
         "How is a txid calculated, and why is a wtxid different?",
       ],
+      // Where the hands-on practice lives on Decoding Bitcoin (the source of truth for exercises).
+      practice: "https://bitcoindevs.xyz/decoding/transaction-decoder",
       exercises: [
-        "Paste a raw transaction into the Transaction Decoder and label every field by hand.",
-        "Take a txid and reverse its byte order. Check on mempool.space that you've found the same transaction.",
+        {"text": "Paste a raw transaction into the Transaction Decoder and label every field by hand.", "url": "https://bitcoindevs.xyz/decoding/transaction-decoder", "label": "Transaction Decoder"},
+        {"text": "Take a txid and reverse its byte order. Check on mempool.space that you've found the same transaction.", "url": "https://mempool.space", "label": "mempool.space"},
         "Find one legacy and one segwit transaction. Compare their sizes and weights, and explain the difference.",
       ],
     },
@@ -130,10 +150,12 @@ window.MB_COHORT = {
         "Explain RBF and CPFP. When would you use each to speed up a stuck payment?",
         "Fees were very high in some periods and very low in others. What drives the fee market?",
       ],
+      // Where the hands-on practice lives on Decoding Bitcoin (the source of truth for exercises).
+      practice: "https://bitcoindevs.xyz/decoding/transaction_exercises",
       exercises: [
-        "Work out the fee and the fee rate (sat/vB) of a real transaction from its inputs, outputs and vsize. Check your answer on mempool.space.",
+        {"text": "Work out the fee and the fee rate (sat/vB) of a real transaction from its inputs, outputs and vsize. Check your answer on mempool.space.", "url": "https://mempool.space", "label": "mempool.space"},
         "Estimate the vsize of a 1-input, 2-output P2WPKH transaction, then check it against a real one.",
-        "Look at mempool.space's fee estimates now and again at another time of day. What changed, and why might it have?",
+        {"text": "Look at mempool.space's fee estimates now and again at another time of day. What changed, and why might it have?", "url": "https://mempool.space", "label": "mempool.space"},
       ],
     },
     {
@@ -152,9 +174,11 @@ window.MB_COHORT = {
         "Where does the signature live in a legacy input versus a segwit input?",
         "How can a hardware wallet sign a transaction without ever showing the private key to your computer?",
       ],
+      // Where the hands-on practice lives on Decoding Bitcoin (the source of truth for exercises).
+      practice: "https://bitcoindevs.xyz/decoding/transaction_exercises",
       exercises: [
-        "Complete the Decoding Bitcoin transaction exercises on GitHub Classroom.",
-        "Pair up with someone on Discord and review each other's exercise solutions. Note one thing you'd do differently.",
+        {"text": "Complete the Decoding Bitcoin transaction exercises on GitHub Classroom.", "url": "https://bitcoindevs.xyz/decoding/transaction_exercises", "label": "Coding exercises"},
+        {"text": "Pair up with someone on Discord and review each other's exercise solutions. Note one thing you'd do differently.", "url": "https://discord.gg/ZtvA79paWa", "label": "Discord"},
         "Find a transaction that uses a sighash flag other than ALL (hint: search online for examples) and explain what it allowed.",
       ],
     },
@@ -175,9 +199,11 @@ window.MB_COHORT = {
         "Why is Script deliberately not Turing complete, and what does it gain from that?",
         "Some opcodes were disabled early in Bitcoin's history. Why would you remove features from a running system?",
       ],
+      // Where the hands-on practice lives on Decoding Bitcoin (the source of truth for exercises).
+      practice: "https://bitcoindevs.xyz/decoding/p2pkh",
       exercises: [
         "Find a P2PK output in an early block (block 9 or 170 are good starts) and decode its script.",
-        "Write out the full P2PKH stack execution for a real spend on paper, then post a photo or text version on Discord.",
+        {"text": "Write out the full P2PKH stack execution for a real spend on paper, then post a photo or text version on Discord.", "url": "https://discord.gg/ZtvA79paWa", "label": "Discord"},
         "Decode the output scripts of a recent transaction and identify each output type.",
       ],
     },
@@ -197,8 +223,10 @@ window.MB_COHORT = {
         "Compare 2-of-3 multisig with a single key plus a backup. Which risks does each protect against?",
         "BIP 16 was a soft fork. What does that mean, and how could old nodes still accept P2SH spends?",
       ],
+      // Where the hands-on practice lives on Decoding Bitcoin (the source of truth for exercises).
+      practice: "https://bitcoindevs.xyz/decoding/p2ms",
       exercises: [
-        "Do the P2MS exercises on Decoding Bitcoin, including the hard one.",
+        {"text": "Do the P2MS exercises on Decoding Bitcoin, including the hard one.", "url": "https://bitcoindevs.xyz/decoding/p2ms", "label": "P2MS exercises"},
         "Find a real P2SH multisig spend and pull out the redeem script. What is M and what is N?",
         "Draw a 2-of-3 setup for a small business: who holds each key, and where is it stored?",
       ],
@@ -216,8 +244,10 @@ window.MB_COHORT = {
         "What limits (stack size, script size, opcode count) did you add, and why does Bitcoin have them?",
         "Which test cases best convinced you that your stack is correct?",
       ],
+      // Where the hands-on practice lives on Decoding Bitcoin (the source of truth for exercises).
+      practice: "https://bitcoindevs.xyz/decoding/project",
       exercises: [
-        "Build the Bitcoin stack project. Push your code to GitHub and share the link on Discord.",
+        {"text": "Build the Bitcoin stack project. Push your code to GitHub and share the link on Discord.", "url": "https://bitcoindevs.xyz/decoding/project", "label": "Stack project"},
         "Run a P2PKH script (with dummy keys) through your stack and show each step.",
         "Review another group's project and leave them one helpful comment.",
       ],
@@ -240,10 +270,12 @@ window.MB_COHORT = {
         "Walk through a key-path spend: what is in the witness, and what does a node check?",
         "Why did Taproot addresses need bech32m instead of bech32?",
       ],
+      // Where the hands-on practice lives on Decoding Bitcoin (the source of truth for exercises).
+      practice: "https://bitcoindevs.xyz/decoding/key-path-taproot",
       exercises: [
-        "Find a P2TR key-path spend on mempool.space and compare its witness with a P2WPKH spend.",
+        {"text": "Find a P2TR key-path spend on mempool.space and compare its witness with a P2WPKH spend.", "url": "https://mempool.space", "label": "mempool.space"},
         "Decode a bc1p address: what witness version and program does it contain?",
-        "Explain the taproot tweak to someone in the cohort without using any maths. Post your explanation on Discord.",
+        {"text": "Explain the taproot tweak to someone in the cohort without using any maths. Post your explanation on Discord.", "url": "https://discord.gg/ZtvA79paWa", "label": "Discord"},
       ],
     },
     {
@@ -263,8 +295,10 @@ window.MB_COHORT = {
         "Design a script tree for an inheritance wallet. What goes in the key path, and what goes in each leaf?",
         "What's your next step after this cohort: a Code Orange program, a project to contribute to, or a review club?",
       ],
+      // Where the hands-on practice lives on Decoding Bitcoin (the source of truth for exercises).
+      practice: "https://bitcoindevs.xyz/decoding/build-spend-p2tr",
       exercises: [
-        "Complete the capstone: build and spend a P2TR output on regtest or signet.",
+        {"text": "Complete the capstone: build and spend a P2TR output on regtest or signet.", "url": "https://bitcoindevs.xyz/decoding/build-spend-p2tr", "label": "Capstone"},
         "Present your capstone (or one exercise you're proud of) in 3 minutes at the final session.",
         "Share your feedback on the cohort so the next one is even better.",
       ],

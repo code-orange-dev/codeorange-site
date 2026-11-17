@@ -105,6 +105,20 @@ function sendFollowup({ email, name, token, months }) {
   ]);
 }
 
+// Discussion question(s) for the next session (sent from api/cohort-me.js, organiser's button).
+function sendAssignment({ email, name, token, when, items }) {
+  const first = String(name || "").split(" ")[0] || "there";
+  const many = items.length > 1;
+  return send(email, many ? `Your Decoding Bitcoin questions for ${when}` : `Your Decoding Bitcoin question for ${when}: ${items[0].key.split("-")[1].toUpperCase()}`, [
+    `Hi ${esc(first)},`,
+    `Thanks for coming to Monday's session! Here's the question${many ? "s" : ""} you'll explain to the group on ${esc(when)}:`,
+    ...items.map((i) => `<div style="margin:14px 0;padding:14px 16px;border-left:4px solid #F7931A;background:#FFF7EC;border-radius:6px"><b>${esc(i.key.split("-")[1].toUpperCase())}.</b> ${esc(i.question)}${i.partners.length ? `<br><span style="color:#666;font-size:14px">You share this one with ${esc(i.partners.join(" and "))}: say hi on Discord and prepare it together.</span>` : ""}</div>`),
+    "<ul><li>Take a few minutes to really understand it. You'll have about 3 minutes to explain it in your own words, then we discuss it together.</li><li>Post your answer in the #decoding-bitcoin channel on Discord before the session.</li><li>Tick it off on your dashboard when you're ready.</li></ul>",
+    button(personalLink(token), "Open my dashboard"),
+    `Can't make it live? Post your answer on Discord and it counts as attending. See you on <a href="${DISCORD}">Discord</a>!`,
+  ]);
+}
+
 // ── MailerLite ──
 const ML = "https://connect.mailerlite.com/api";
 const mlFetch = async (path, init = {}) => {
@@ -151,4 +165,4 @@ async function syncMailerLite(students) {
   return added;
 }
 
-module.exports = { esc, sendTo: send, sendFollowup, dashboardLink, emailOn, mailerliteOn, sendWelcome, sendLink, addToMailerLite, syncMailerLite };
+module.exports = { esc, sendTo: send, sendFollowup, sendAssignment, dashboardLink, emailOn, mailerliteOn, sendWelcome, sendLink, addToMailerLite, syncMailerLite };
