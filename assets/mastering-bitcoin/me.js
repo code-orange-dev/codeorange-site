@@ -221,13 +221,22 @@
     return list.map(([icon, name, why, got]) => `<li class="${got ? "is-got" : ""}" title="${esc(why)}"><span aria-hidden="true">${icon}</span><b>${esc(name)}</b><small>${esc(why)}</small></li>`).join("");
   }
 
-  function certBox(s) {
-    const need = state.data.certificate || { lessons: 8, checkins: 6 };
-    const pct = Math.round(((Math.min(s.lessons, need.lessons) + Math.min(s.checkins, need.checkins)) / (need.lessons + need.checkins)) * 100);
-    const got = pct >= 100;
-    return `<div class="me-cert${got ? " is-got" : ""}"><div class="me-row"><b>${got ? "🎓 You've earned your certificate!" : "Certificate"}</b><span>${pct}%</span></div>
+  function certBox(s, compact) {
+    const need = { lessons: 8, checkins: 6, exercises: 22, ...(state.data.certificate || {}) };
+    // Required exercises are the ones in non-intro weeks.
+    const reqEx = [...state.done].filter((k) => { const m = /^w(\d+)-e\d+$/.exec(k); return m && C.weeks[m[1] - 1] && !C.weeks[m[1] - 1].intro; }).length;
+    const parts = [
+      ["Lessons", Math.min(s.lessons, need.lessons), need.lessons, "weeks"],
+      ["Exercises", Math.min(reqEx, need.exercises), need.exercises, "done"],
+      ["Sessions", Math.min(s.checkins, need.checkins), need.checkins, "check-ins"],
+    ];
+    const pct = Math.round((parts.reduce((a, [, h, n]) => a + h / n, 0) / parts.length) * 100);
+    const got = parts.every(([, h, n]) => h >= n);
+    const rows = parts.map(([label, h, n, unit]) => `<li class="${h >= n ? "is-got" : ""}"><b>${label}</b><span class="me-bar"><i style="width:${Math.round((h / n) * 100)}%"></i></span><small>${h}/${n} ${unit}</small></li>`).join("");
+    return `<div class="me-cert${got ? " is-got" : ""}${compact ? " me-card me-wide" : ""}" id="cert"><div class="me-row"><b>${got ? "🎓 You've earned your certificate!" : "Your certificate"}</b><span>${pct}%</span></div>
       <span class="me-bar"><i style="width:${pct}%"></i></span>
-      <small>${got ? "We'll send it after graduation. Add your GitHub username in your goals so it shows on it." : `Lessons for ${need.lessons} of 10 weeks (${Math.min(s.lessons, need.lessons)}/${need.lessons}) and ${need.checkins} check-ins (${Math.min(s.checkins, need.checkins)}/${need.checkins}). <a href="/certificates/sample">See a sample</a>`}</small></div>`;
+      <ul class="me-cert-parts">${rows}</ul>
+      <small>${got ? "We'll send it after graduation. Add your GitHub username in your goals so it shows on it." : `To earn it: lessons for ${need.lessons} of 10 weeks, ${need.exercises} of the 27 exercises (weeks 2–10) and ${need.checkins} session check-ins. Attending live or posting your work on Discord both count. <a href="/certificates/sample">See a sample</a>`}</small></div>`;
   }
 
   function weekStrip(s) {
@@ -314,7 +323,7 @@
     const before = currentWeek < 0;
     const items = [
       tick(`w${wk}-r1`, `${w.intro ? "Optional, after the session: read the lesson" : "Do the lesson"}${w.lessons.length > 1 ? "s" : ""}: ${w.lessons.map((l) => `<a href="${lessonUrl(l.slug)}" target="_blank" rel="noopener">${esc(l.title)}</a>`).join(", ")}`),
-      ...w.exercises.map((ex, ei) => tick(`w${wk}-e${ei + 1}`, `${w.intro ? "Optional exercise" : "Exercise"} ${ei + 1}: ${esc(exText(ex))}`, exLink(ex))),
+      ...w.exercises.map((ex, ei) => tick(`w${wk}-e${ei + 1}`, `${w.intro ? "Warm-up exercise" : "Exercise"} ${ei + 1}: ${esc(exText(ex))}`, exLink(ex))),
     ].join("");
     return `<div class="me-card me-week" id="week">
       <p class="me-label">${before ? "Coming up · week 1" : `This week · week ${wk} of ${C.weeks.length}`}</p>
@@ -385,7 +394,7 @@
         <span><strong>${s.checkins}</strong>check-ins</span>
       </div>
       <ol class="me-strip" aria-label="The 10 weeks">${weekStrip(s)}</ol>
-      ${certBox(s)}
+
       ${spark}
       <p class="me-label">Badges</p>
       <ul class="me-badges">${badges(s)}</ul>
@@ -575,7 +584,7 @@
         : `Week ${currentWeek + 1} of ${C.weeks.length}. ${s.streak >= 2 ? `${s.streak}-week streak, keep it going!` : "One step at a time."}`;
     const cards = currentWeek < 0
       ? [followupCard(), welcomeCard(), nextCardTop(s), goalsCard(), skillsCard(), checkCard(), thisWeekCard(), progressCard(s), buddyCard(), checkinCard(), askCard(), nextCard(), linkCard()]
-      : [followupCard(), welcomeCard(), nextCardTop(s), thisWeekCard(), checkinCard(), quizCard(),
+      : [followupCard(), welcomeCard(), nextCardTop(s), thisWeekCard(), certBox(s, true), checkinCard(), quizCard(),
         `<details class="me-more me-wide" id="more"><summary>More: progress, class, study buddy, goals, skills</summary><div class="me-more-grid">`,
         progressCard(s), classCard() || askCard(), buddyCard(), classCard() ? askCard() : "", projectCard(), checkCard(), goalsCard(), skillsCard(), nextCard(), linkCard(),
         `</div></details>`];

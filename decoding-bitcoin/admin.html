@@ -89,8 +89,11 @@ details.st dd { margin: 0; white-space: pre-wrap; }
     <p>Students can't be identified from these. Tick one off once it's been covered.</p>
     <div class="risk" id="questions"></div>
     <h2>Discussion question emails</h2>
-    <p>Who owns which question comes from <code>assigned</code> in cohort.js. Each owner is matched to a sign-up by Discord name or name. Nothing is sent until you press Send, and each person gets each question only once.</p>
+    <p>After each Monday, next week's question owners are added to <code>assigned</code> in cohort.js and show up here. Each owner is matched to a sign-up by Discord name or name. Nothing is sent until you press Send, and each person gets each question only once.</p>
     <div class="risk" id="assign"></div>
+    <h2>Friday reminder</h2>
+    <p>Best sent on Friday. Goes only to question owners who haven't ticked their question on their dashboard yet, once each. Nothing is sent until you press Send.</p>
+    <div class="risk" id="nudge"></div>
     <h2>Class pulse by week</h2>
     <div class="wrap"><table>
       <thead><tr><th>Week</th><th>Check-ins</th><th>Avg confidence</th><th>Avg hours</th><th>Came to the session</th><th>Quiz, first try</th><th>Asked for help</th><th>Did the lessons</th></tr></thead>
@@ -259,7 +262,7 @@ details.st dd { margin: 0; white-space: pre-wrap; }
       [dash.knowledge.before ? `${dash.knowledge.before.avg}%` : "–", `knowledge check at the start${dash.knowledge.before ? ` (${dash.knowledge.before.taken} took it)` : ""}`],
       [dash.knowledge.after ? `${dash.knowledge.after.avg}%` : "–", `at the end${dash.knowledge.gain != null ? `, +${dash.knowledge.gain} points on average (${dash.knowledge.both} took both)` : ""}`],
       [dash.projects, "shared a final project"],
-      [dash.certificate.onTrack, `earned a certificate (${dash.certificate.lessons} weeks + ${dash.certificate.checkins} check-ins)`],
+      [dash.certificate.onTrack, `earned a certificate (${dash.certificate.lessons} weeks of lessons + ${dash.certificate.exercises || 22} exercises + ${dash.certificate.checkins} check-ins)`],
     ].map(([n, l]) => `<div><strong>${n}</strong><span>${l}</span></div>`).join("");
     const risky = act.filter((s) => s.flags.length);
     $("#risk").innerHTML = risky.map((s) => {
@@ -300,10 +303,13 @@ details.st dd { margin: 0; white-space: pre-wrap; }
   // Discussion question emails: preview who matched, then send on request.
   function assignItems() {
     const C = window.MB_COHORT || {};
-    return Object.entries(C.assigned || {}).filter(([, n]) => Array.isArray(n) && n.length).map(([k, names]) => {
+    // Only the latest week that has owners: after each Monday, add next week's owners to cohort.js and this follows.
+    const all = Object.entries(C.assigned || {}).filter(([, n]) => Array.isArray(n) && n.length).map(([k, names]) => {
       const wk = Number(k.slice(1, k.indexOf("-"))), qi = Number(k.split("-q")[1]);
-      return { key: k, names, question: ((C.weeks || [])[wk - 1] || {}).questions?.[qi - 1] || "" };
+      return { wk, key: k, names, question: ((C.weeks || [])[wk - 1] || {}).questions?.[qi - 1] || "" };
     });
+    const latest = Math.max(0, ...all.map((i) => i.wk));
+    return all.filter((i) => i.wk === latest).map(({ wk, ...i }) => i);
   }
   function assignWhen() {
     const C = window.MB_COHORT || {};
@@ -314,8 +320,8 @@ details.st dd { margin: 0; white-space: pre-wrap; }
     const [y, m, d] = C.startDate.split("-").map(Number);
     return "Monday " + new Date(Date.UTC(y, m - 1, d + 7 * (at - 1))).toLocaleDateString("en-GB", { day: "numeric", month: "long", timeZone: "UTC" });
   }
-  async function assignCall(send) {
-    const res = await fetch("/api/cohort-me", { method: "POST", headers: { "Content-Type": "application/json", "X-MB-Admin": key }, body: JSON.stringify({ action: "admin-assign-email", items: assignItems(), when: assignWhen(), send }) });
+  async function assignCall(send, nudge) {
+    const res = await fetch("/api/cohort-me", { method: "POST", headers: { "Content-Type": "application/json", "X-MB-Admin": key }, body: JSON.stringify({ action: "admin-assign-email", items: assignItems(), when: assignWhen(), send, nudge: !!nudge }) });
     const out = await res.json().catch(() => ({}));
     if (!res.ok) throw new Error(out.error || "Couldn't load.");
     return out;
@@ -331,7 +337,30 @@ details.st dd { margin: 0; white-space: pre-wrap; }
         + `<p>Discussed on ${esc(assignWhen())}.${out.emailOn ? "" : " Email isn't switched on (RESEND_API_KEY)."}</p>`
         + (todo.length && out.emailOn ? `<button type="button" id="assign-send">Send ${todo.length} email${todo.length > 1 ? "s" : ""}</button>` : "<p>Nothing new to send.</p>");
     } catch (err) { box.innerHTML = `<p>${esc(err.message)}</p>`; }
+    loadNudge();
   }
+  // Friday nudge: owners of this week's questions who haven't ticked theirs on the dashboard.
+  async function loadNudge() {
+    const box = $("#nudge");
+    if (!box) return;
+    if (!assignItems().length) { box.innerHTML = ""; return; }
+    try {
+      const out = await assignCall(false, true);
+      const todo = out.preview.filter((p) => p.hasEmail && p.questions.some((q) => !q.includes("(sent)")));
+      box.innerHTML = (out.preview.length
+        ? out.preview.map((p) => `<div><b>${esc(p.owner)}</b> · ${p.hasEmail ? esc(p.email) : '<span class="flag">no email</span>'} · not ticked: ${p.questions.map((q) => `<span class="flag">${esc(q.replace(" (sent)", " (reminded)"))}</span>`).join(" ")}</div>`).join("")
+        : "<p>Everyone has ticked their question. No reminder needed.</p>")
+        + (todo.length && out.emailOn ? `<button type="button" id="nudge-send">Send ${todo.length} reminder${todo.length > 1 ? "s" : ""}</button>` : out.preview.length ? "<p>Reminders already sent.</p>" : "");
+    } catch (err) { box.innerHTML = `<p>${esc(err.message)}</p>`; }
+  }
+  document.addEventListener("click", async (ev) => {
+    const b = ev.target.closest("#nudge-send");
+    if (!b) return;
+    if (!confirm("Send a friendly reminder to everyone who hasn't ticked their question yet?")) return;
+    b.disabled = true;
+    try { const out = await assignCall(true, true); $("#note").textContent = `Sent ${out.sent} reminder${out.sent === 1 ? "" : "s"}.`; loadNudge(); }
+    catch (err) { $("#note").textContent = err.message; b.disabled = false; }
+  });
   document.addEventListener("click", async (ev) => {
     const b = ev.target.closest("#assign-send");
     if (!b) return;

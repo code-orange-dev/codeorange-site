@@ -169,3 +169,10 @@ input[type=url] { width: 100%; min-height: 44px; padding: 10px 12px; border-radi
 /* Your discussion question */
 .me-myq { margin: 14px 0; padding: 16px; border-radius: 12px; border: 1px solid rgba(247,147,26,.55); background: rgba(247,147,26,.08); }
 .me-myq-text { color: var(--text); font-size: 17px; line-height: 1.5; margin: 0 0 8px; }
+.me-cert.me-card { margin: 0; padding: 20px; }
+.me-cert-parts { list-style: none; margin: 4px 0 2px; padding: 0; display: grid; gap: 8px; }
+.me-cert .me-cert-parts li { display: grid !important; margin: 0; padding: 0; border: 0; background: none; grid-template-columns: 82px minmax(0,1fr) auto; gap: 10px; align-items: center; }
+.me-cert-parts b { font-size: 13px; }
+.me-cert-parts small { white-space: nowrap; }
+.me-cert-parts li.is-got b::after { content: " ✓"; color: var(--orange); }
+.me-cert .me-cert-parts .me-bar { height: 6px; margin: 0; width: auto; grid-column: auto; grid-row: auto; }

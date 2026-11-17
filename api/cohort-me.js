@@ -16,7 +16,7 @@
 //   POST /api/cohort-me {action:"project", token, title, repo, demo, about, share}
 //   GET  /api/cohort-me?projects=1            public projects wall (only projects students chose to share)
 //   POST /api/cohort-me {action:"admin-followup", months}   (X-MB-Admin: key)
-//   POST /api/cohort-me {action:"admin-assign-email", items:[{key, names, question}], when, send}   (X-MB-Admin: key)
+//   POST /api/cohort-me {action:"admin-assign-email", items:[{key, names, question}], when, send, nudge}   (X-MB-Admin: key; nudge = Friday reminder to owners who haven't ticked)
 //        match each owner (Discord name or sign-up name) to a sign-up; send:false previews, send:true emails
 //        each matched student their question(s). Each student+question is emailed once.
 
@@ -38,6 +38,7 @@ const FOLLOWUP_MONTHS = [3, 6, 12];
 // Certificate: lessons done for 8 of the 10 weeks and at least 6 weekly check-ins.
 const CERT_LESSONS = 8;
 const CERT_CHECKINS = 6;
+const CERT_EXERCISES = 22; // of the 27 exercises in weeks 2-10 (about 80%)
 const SKILLS = ["utxo", "structure", "fees", "signing", "script", "p2sh", "taproot", "build"];
 const ALERT_TO = process.env.MB_ALERT_EMAIL || "codeorangedevs@gmail.com";
 const TOKEN_RE = /^[A-Za-z0-9_-]{24}$/;
@@ -278,7 +279,7 @@ async function dashboard(token) {
       class: Number(cls.checkins) >= 3
         ? { week: Math.max(1, weekAt()), students: Number(cls.students), checkins: Number(cls.checkins), confidence: cls.confidence == null ? null : Number(cls.confidence), hours: cls.hours == null ? null : Number(cls.hours), read: Number(cls.read) }
         : { week: Math.max(1, weekAt()), students: Number(cls.students), checkins: Number(cls.checkins) },
-      certificate: { lessons: CERT_LESSONS, checkins: CERT_CHECKINS },
+      certificate: { lessons: CERT_LESSONS, checkins: CERT_CHECKINS, exercises: CERT_EXERCISES },
       asked: Number(asked.n),
       quizzes: quizMap(quizzes),
       project: project ? { title: project.title, repo: project.repo || "", demo: project.demo || "", about: project.about || "", share: bool(project.share) } : null,
@@ -563,7 +564,7 @@ async function overview(withEmails) {
       return { before: avg("pre"), after: avg("post"), gain: both.length ? Math.round((both.reduce((a, s) => a + s.quizzes.post.best / s.quizzes.post.total - s.quizzes.pre.first / s.quizzes.pre.total, 0) / both.length) * 100) : null, both: both.length };
     })(),
     projects: active.filter((s) => s.project).length,
-    certificate: { lessons: CERT_LESSONS, checkins: CERT_CHECKINS, onTrack: active.filter((s) => s.lessonsRead >= CERT_LESSONS && s.checkins.length >= CERT_CHECKINS).length },
+    certificate: { lessons: CERT_LESSONS, checkins: CERT_CHECKINS, exercises: CERT_EXERCISES, onTrack: active.filter((s) => s.lessonsRead >= CERT_LESSONS && s.checkins.length >= CERT_CHECKINS && s.exercises >= CERT_EXERCISES).length },
     questions: questions.map((x) => ({ id: Number(x.id), week: Number(x.week), text: x.text, answered: bool(x.answered), at: iso(x.created_at) })),
     followupsSent: Object.fromEntries(sends.map((r) => [r.months, { sent: Number(r.sent), at: iso(r.sent_at) }])),
     students: list,
@@ -607,7 +608,11 @@ async function assignEmail(body) {
   if (!items.length) return { status: 400, error: "No assigned questions to email." };
   const when = clean(body.when, 80) || "next Monday";
   const rows = await sql("SELECT id, name, discord, email, token FROM mb_students WHERE cohort = $1 AND NOT hidden ORDER BY id", [COHORT]);
+  // Nudge mode: only owners who haven't ticked the question, and each nudge goes once (logged as "<key>-nudge").
+  const nudge = !!body.nudge;
+  const tag = (k) => (nudge ? `${k}-nudge` : k);
   const sent = new Set((await sql("SELECT student_id, item FROM mb_assign_sends WHERE cohort = $1", [COHORT])).map((r) => `${r.student_id}:${r.item}`));
+  const ticked = nudge ? new Set((await sql("SELECT d.student_id, d.item FROM mb_done d JOIN mb_students s ON s.id = d.student_id WHERE s.cohort = $1", [COHORT])).map((r) => `${r.student_id}:${r.item}`)) : new Set();
   const people = new Map(); // student id -> { student, items: [] }
   const unmatched = [];
   for (const it of items) {
@@ -617,9 +622,10 @@ async function assignEmail(body) {
       // Duplicate sign-ups: prefer the newest one with an email.
       const st = hits.filter((r) => r.email).pop() || hits.pop();
       if (!st) { unmatched.push({ name: n.split("|")[0], key: it.key }); continue; }
+      if (nudge && ticked.has(`${st.id}:${it.key}`)) continue;
       const partners = it.names.filter((x) => x !== n).map((x) => x.split("|")[0]);
       const p = people.get(st.id) || { st, items: [] };
-      p.items.push({ ...it, partners, already: sent.has(`${st.id}:${it.key}`) });
+      p.items.push({ ...it, partners, already: sent.has(`${st.id}:${tag(it.key)}`) });
       people.set(st.id, p);
     }
   }
@@ -631,8 +637,8 @@ async function assignEmail(body) {
     const todo = its.filter((i) => !i.already);
     if (!st.email || !todo.length) continue;
     try {
-      await mail.sendAssignment({ email: st.email, name: st.name, token: st.token, when, items: todo });
-      for (const i of todo) await sql("INSERT INTO mb_assign_sends (cohort, student_id, item) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING", [COHORT, st.id, i.key]);
+      await (nudge ? mail.sendNudge : mail.sendAssignment)({ email: st.email, name: st.name, token: st.token, when, items: todo });
+      for (const i of todo) await sql("INSERT INTO mb_assign_sends (cohort, student_id, item) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING", [COHORT, st.id, tag(i.key)]);
       count++;
     } catch (err) {
       console.error("cohort-me: assignment email to", st.id, err.message);

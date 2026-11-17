@@ -119,6 +119,20 @@ function sendAssignment({ email, name, token, when, items }) {
   ]);
 }
 
+// Friday nudge: question owners who haven't ticked their question yet.
+function sendNudge({ email, name, token, when, items }) {
+  const first = String(name || "").split(" ")[0] || "there";
+  const many = items.length > 1;
+  return send(email, `Quick reminder: your question for ${when}`, [
+    `Hi ${esc(first)},`,
+    `A friendly nudge before ${esc(when)}. You're explaining ${many ? "these questions" : "this question"} to the group:`,
+    ...items.map((i) => `<div style="margin:14px 0;padding:14px 16px;border-left:4px solid #F7931A;background:#FFF7EC;border-radius:6px"><b>${esc(i.key.split("-")[1].toUpperCase())}.</b> ${esc(i.question)}${i.partners.length ? `<br><span style="color:#666;font-size:14px">Shared with ${esc(i.partners.join(" and "))}.</span>` : ""}</div>`),
+    "About 3 minutes in your own words is plenty. When you're ready, post your answer on Discord and tick it off on your dashboard.",
+    button(personalLink(token), "Open my dashboard"),
+    `Stuck? Ask in the #decoding-bitcoin channel on <a href="${DISCORD}">Discord</a>. Someone will help.`,
+  ]);
+}
+
 // ── MailerLite ──
 const ML = "https://connect.mailerlite.com/api";
 const mlFetch = async (path, init = {}) => {
@@ -165,4 +179,4 @@ async function syncMailerLite(students) {
   return added;
 }
 
-module.exports = { esc, sendTo: send, sendFollowup, sendAssignment, dashboardLink, emailOn, mailerliteOn, sendWelcome, sendLink, addToMailerLite, syncMailerLite };
+module.exports = { esc, sendTo: send, sendFollowup, sendAssignment, sendNudge, dashboardLink, emailOn, mailerliteOn, sendWelcome, sendLink, addToMailerLite, syncMailerLite };
