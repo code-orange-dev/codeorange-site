@@ -10,7 +10,7 @@
   "summary": "A live silent payment from Cake Wallet to Shroud, a guest who builds the Dana wallet on what silent payments fix (and what they don't), and Razor rebuilding the protocol from scratch: tweaked keys, Diffie-Hellman, Taproot. Plus where you can help.",
   "share_text": "Silent Payments: one static Bitcoin address, a fresh Taproot output every time, nothing to link. Live demo, a from-scratch build of the protocol, and 4 mini-games. Notes from the @CodeOrangeDevs Privacy Track",
   "minutes": 7,
-  "video_pending": true,
+  "video": "0zfOoj58_xA",
   "duration": "about 85 min",
   "tldr": [
     "A silent payment address starts with sp1 and can be posted anywhere. Every payment to it lands on a different, normal-looking Taproot output, so nobody can list your payments.",
@@ -19,19 +19,58 @@
     "The projects are run by very few people: Dana, BlindBit Oracle, Frigate and Shroud all welcome new contributors."
   ],
   "chapters": [
-    [0, "Welcome and the plan for today"],
-    [287, "Live demo: Cake Wallet to Shroud, then mempool.space"],
-    [540, "Why some wallets see a payment sooner: scanning"],
-    [707, "Address reuse, and what silent payments don't fix"],
-    [1233, "Spot the silent payment: Taproot outputs and round amounts"],
-    [1838, "Backends: Electrum servers vs BlindBit"],
-    [2512, "Gap limits, with a real wallet recovery story"],
-    [2757, "Razor's deep dive: history and the interactivity scale"],
-    [3136, "Sender vs receiver: why scanning is the hard part"],
-    [3252, "Building silent payments from scratch"],
-    [4206, "Quiz"],
-    [4752, "How to contribute: Dana, BlindBit, Frigate, Shroud"],
-    [4980, "Wrap-up and what's next"]
+    [
+      0,
+      "Welcome and the plan for today"
+    ],
+    [
+      287,
+      "Live demo: Cake Wallet to Shroud, then mempool.space"
+    ],
+    [
+      540,
+      "Why some wallets see a payment sooner: scanning"
+    ],
+    [
+      707,
+      "Address reuse, and what silent payments don't fix"
+    ],
+    [
+      1233,
+      "Spot the silent payment: Taproot outputs and round amounts"
+    ],
+    [
+      1838,
+      "Backends: Electrum servers vs BlindBit"
+    ],
+    [
+      2512,
+      "Gap limits, with a real wallet recovery story"
+    ],
+    [
+      2757,
+      "Razor's deep dive: history and the interactivity scale"
+    ],
+    [
+      3136,
+      "Sender vs receiver: why scanning is the hard part"
+    ],
+    [
+      3252,
+      "Building silent payments from scratch"
+    ],
+    [
+      4206,
+      "Quiz"
+    ],
+    [
+      4752,
+      "How to contribute: Dana, BlindBit, Frigate, Shroud"
+    ],
+    [
+      4980,
+      "Wrap-up and what's next"
+    ]
   ],
   "todo": {
     "title": "Try it before next time",
@@ -47,27 +86,158 @@
     "when": "Tuesday 1 December, 07:00 UTC on Discord. Free for everyone. Before that: the Agentic Engineering workshop on AI and Bitcoin, Wednesday 18 November."
   },
   "resources": [
-    {"group": "Reading", "topic": "Silent Payments", "title": "BIP 352: Silent Payments", "url": "https://github.com/bitcoin/bips/blob/master/bip-0352.mediawiki", "by": "Josie Baker and Ruben Somsen", "note": "the spec. Builds the idea step by step, much like Razor's slides. You need a little Diffie-Hellman"},
-    {"group": "Reading", "topic": "Silent Payments", "title": "silentpayments.xyz", "url": "https://silentpayments.xyz", "note": "the best place to start: overview, wallet list, docs and the BIP, all well organised"},
-    {"group": "Reading", "topic": "Silent Payments", "title": "BIP 47: Reusable payment codes", "url": "https://github.com/bitcoin/bips/blob/master/bip-0047.mediawiki", "note": "an older reusable-address scheme (used by Samourai) that needs a notification transaction first"},
-    {"group": "Reading", "topic": "Silent Payments", "title": "BIP 351: Private Payments", "url": "https://github.com/bitcoin/bips/blob/master/bip-0351.mediawiki", "note": "another alternative mentioned on the call, which relies on OP_RETURN. Silent payments use no OP_RETURN"},
-    {"group": "Wallets", "topic": "Wallets", "title": "Dana wallet", "url": "https://github.com/cygnet3/danawallet", "note": "mobile wallet for accepting donations with silent payments, built by our guest. Experimental, uses BlindBit, looking for contributors"},
-    {"group": "Wallets", "topic": "Wallets", "title": "Cake Wallet", "url": "https://cakewallet.com", "note": "sends and receives silent payments; used for the live demo and sees payments while they are still in the mempool"},
-    {"group": "Wallets", "topic": "Wallets", "title": "Sparrow Wallet", "url": "https://sparrowwallet.com", "note": "desktop wallet that recently added sending and receiving silent payments, through a Frigate server"},
-    {"group": "Tools", "topic": "Silent Payments", "title": "BlindBit Oracle", "url": "https://github.com/setavenger/blindbit-oracle", "note": "a silent payments indexing server that only serves public data, so it learns very little about you. Can't see mempool payments yet"},
-    {"group": "Tools", "topic": "Silent Payments", "title": "Frigate", "url": "https://github.com/sparrowwallet/frigate", "by": "Craig Raw", "note": "Electrum server for silent payments, the backend behind Sparrow. Scans for you, so you trade some privacy for speed"},
-    {"group": "Tools", "topic": "Silent Payments", "title": "Shroud indexer", "url": "https://github.com/CypherCommons/shroud-indexer", "note": "the silent payments indexer behind the Shroud mobile wallet, shared in the chat"},
-    {"group": "Tools", "topic": "Explorers", "title": "mempool.space", "url": "https://mempool.space", "note": "we looked up the demo payment here: to an explorer it is just a v1_p2tr (Taproot) output"},
-    {"group": "Code Orange", "topic": "Code Orange", "title": "Privacy Track: Silent Payments lab", "url": "https://github.com/code-orange-dev/curriculum/tree/main/privacy-track/labs/silent-payments", "note": "our hands-on lab for this topic"},
-    {"group": "Code Orange", "topic": "Code Orange", "title": "Privacy Track", "url": "https://codeorange.dev/privacy-track", "note": "all 12 sessions, every 1st and 3rd Tuesday"},
-    {"group": "Code Orange", "topic": "Code Orange", "title": "Developer fellowship", "url": "https://codeorange.dev/fellowships", "note": "paused for now, back in the pipeline. Build proof of work on these projects in the meantime"}
+    {
+      "group": "Reading",
+      "topic": "Silent Payments",
+      "title": "BIP 352: Silent Payments",
+      "url": "https://github.com/bitcoin/bips/blob/master/bip-0352.mediawiki",
+      "by": "Josie Baker and Ruben Somsen",
+      "note": "the spec. Builds the idea step by step, much like Razor's slides. You need a little Diffie-Hellman"
+    },
+    {
+      "group": "Reading",
+      "topic": "Silent Payments",
+      "title": "silentpayments.xyz",
+      "url": "https://silentpayments.xyz",
+      "note": "the best place to start: overview, wallet list, docs and the BIP, all well organised"
+    },
+    {
+      "group": "Reading",
+      "topic": "Silent Payments",
+      "title": "BIP 47: Reusable payment codes",
+      "url": "https://github.com/bitcoin/bips/blob/master/bip-0047.mediawiki",
+      "note": "an older reusable-address scheme (used by Samourai) that needs a notification transaction first"
+    },
+    {
+      "group": "Reading",
+      "topic": "Silent Payments",
+      "title": "BIP 351: Private Payments",
+      "url": "https://github.com/bitcoin/bips/blob/master/bip-0351.mediawiki",
+      "note": "another alternative mentioned on the call, which relies on OP_RETURN. Silent payments use no OP_RETURN"
+    },
+    {
+      "group": "Wallets",
+      "topic": "Wallets",
+      "title": "Dana wallet",
+      "url": "https://github.com/cygnet3/danawallet",
+      "note": "mobile wallet for accepting donations with silent payments, built by our guest. Experimental, uses BlindBit, looking for contributors"
+    },
+    {
+      "group": "Wallets",
+      "topic": "Wallets",
+      "title": "Cake Wallet",
+      "url": "https://cakewallet.com",
+      "note": "sends and receives silent payments; used for the live demo and sees payments while they are still in the mempool"
+    },
+    {
+      "group": "Wallets",
+      "topic": "Wallets",
+      "title": "Sparrow Wallet",
+      "url": "https://sparrowwallet.com",
+      "note": "desktop wallet that recently added sending and receiving silent payments, through a Frigate server"
+    },
+    {
+      "group": "Tools",
+      "topic": "Silent Payments",
+      "title": "BlindBit Oracle",
+      "url": "https://github.com/setavenger/blindbit-oracle",
+      "note": "a silent payments indexing server that only serves public data, so it learns very little about you. Can't see mempool payments yet"
+    },
+    {
+      "group": "Tools",
+      "topic": "Silent Payments",
+      "title": "Frigate",
+      "url": "https://github.com/sparrowwallet/frigate",
+      "by": "Craig Raw",
+      "note": "Electrum server for silent payments, the backend behind Sparrow. Scans for you, so you trade some privacy for speed"
+    },
+    {
+      "group": "Tools",
+      "topic": "Silent Payments",
+      "title": "Shroud indexer",
+      "url": "https://github.com/CypherCommons/shroud-indexer",
+      "note": "the silent payments indexer behind the Shroud mobile wallet, shared in the chat"
+    },
+    {
+      "group": "Tools",
+      "topic": "Explorers",
+      "title": "mempool.space",
+      "url": "https://mempool.space",
+      "note": "we looked up the demo payment here: to an explorer it is just a v1_p2tr (Taproot) output"
+    },
+    {
+      "group": "Code Orange",
+      "topic": "Code Orange",
+      "title": "Privacy Track: Silent Payments lab",
+      "url": "https://github.com/code-orange-dev/curriculum/tree/main/privacy-track/labs/silent-payments",
+      "note": "our hands-on lab for this topic"
+    },
+    {
+      "group": "Code Orange",
+      "topic": "Code Orange",
+      "title": "Privacy Track",
+      "url": "https://codeorange.dev/privacy-track",
+      "note": "all 12 sessions, every 1st and 3rd Tuesday"
+    },
+    {
+      "group": "Code Orange",
+      "topic": "Code Orange",
+      "title": "Developer fellowship",
+      "url": "https://codeorange.dev/fellowships",
+      "note": "paused for now, back in the pipeline. Build proof of work on these projects in the meantime"
+    }
   ],
   "ideas": "Also on the call: why you might skip the Bitcoin t-shirt at the airport, why France has seen home invasions targeting crypto holders this year, and a tip for asking to be paid: add a few random sats so the amount is not round. Guest speaker Anmol (Shroud wallet) could not make it this time.",
   "quiz": [
-    {"q": "In silent payments, does the sender have to notify the receiver before paying?", "o": ["Yes, with a notification transaction", "No, the receiver finds the payment by scanning", "Only for the first payment"], "a": 1, "w": "That is the whole point: almost no interaction. BIP 47 needed a notification transaction; silent payments don't."},
-    {"q": "Which leak do silent payments protect you from?", "o": ["The common input heuristic", "Change address detection", "Destination address reuse"], "a": 2, "w": "Silent payments stop address reuse. Breaking the common input heuristic is what PayJoin does."},
-    {"q": "What output type does a silent payment create?", "o": ["Pay to Taproot (P2TR)", "Pay to public key (P2PK)", "P2WPKH"], "a": 0, "w": "Taproot. Razor's slides used P2PK to explain the idea, but real silent payments always land on a Taproot output."},
-    {"q": "What is the biggest trade-off?", "o": ["Senders must run a full node", "The receiver has to do much more work to scan for payments", "Addresses can only be used once"], "a": 1, "w": "Senders need no node. Receivers must check every transaction, which is why scanning backends matter so much."},
-    {"q": "Your friend pays 20,000 sats and gets 3,026 sats change. What gives the payment away?", "o": ["The round amount", "The Taproot output", "The fee"], "a": 0, "w": "Round numbers (in sats or in fiat at that moment) look human-entered. Ask for a few extra random sats to blur it."}
+    {
+      "q": "In silent payments, does the sender have to notify the receiver before paying?",
+      "o": [
+        "Yes, with a notification transaction",
+        "No, the receiver finds the payment by scanning",
+        "Only for the first payment"
+      ],
+      "a": 1,
+      "w": "That is the whole point: almost no interaction. BIP 47 needed a notification transaction; silent payments don't."
+    },
+    {
+      "q": "Which leak do silent payments protect you from?",
+      "o": [
+        "The common input heuristic",
+        "Change address detection",
+        "Destination address reuse"
+      ],
+      "a": 2,
+      "w": "Silent payments stop address reuse. Breaking the common input heuristic is what PayJoin does."
+    },
+    {
+      "q": "What output type does a silent payment create?",
+      "o": [
+        "Pay to Taproot (P2TR)",
+        "Pay to public key (P2PK)",
+        "P2WPKH"
+      ],
+      "a": 0,
+      "w": "Taproot. Razor's slides used P2PK to explain the idea, but real silent payments always land on a Taproot output."
+    },
+    {
+      "q": "What is the biggest trade-off?",
+      "o": [
+        "Senders must run a full node",
+        "The receiver has to do much more work to scan for payments",
+        "Addresses can only be used once"
+      ],
+      "a": 1,
+      "w": "Senders need no node. Receivers must check every transaction, which is why scanning backends matter so much."
+    },
+    {
+      "q": "Your friend pays 20,000 sats and gets 3,026 sats change. What gives the payment away?",
+      "o": [
+        "The round amount",
+        "The Taproot output",
+        "The fee"
+      ],
+      "a": 0,
+      "w": "Round numbers (in sats or in fiat at that moment) look human-entered. Ask for a few extra random sats to blur it."
+    }
   ]
 }
