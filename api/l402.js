@@ -257,6 +257,22 @@ module.exports = async function handler(req, res) {
   const q = req.query || {};
   const auth = parseAuth(req);
 
+  if (q.probe === "lnurl") {
+    const out = {};
+    for (const addr of String(q.addr || "").split(",").filter(Boolean)) {
+      try {
+        const [u, d] = addr.split("@");
+        const r = await withTimeout(`https://${d}/.well-known/lnurlp/${u}`, { headers: { Accept: "application/json" } });
+        const meta = await r.json();
+        const r2 = await withTimeout(`${meta.callback}${meta.callback.includes("?") ? "&" : "?"}amount=10000`, { headers: { Accept: "application/json" } });
+        const inv = await r2.json();
+        let v = null;
+        if (inv.verify) { const r3 = await withTimeout(inv.verify, { headers: { Accept: "application/json" } }); v = await r3.json(); }
+        out[addr] = { minSendable: meta.minSendable, hasPr: !!inv.pr, verify: inv.verify || null, verifyRes: v, err: inv.reason || null };
+      } catch (e) { out[addr] = "ERR " + e.message; }
+    }
+    return send(res, 200, out);
+  }
   if (q.probe === "data") {
     const out = {};
     for (const [k, t] of Object.entries(TOOLS)) { try { out[k] = await t.run(); } catch (e) { out[k] = "ERR " + e.message; } }
