@@ -17,7 +17,7 @@ window.MB_COHORT = {
   // After each session, paste the YouTube link and the recap page here: they show on every student's dashboard.
   recordings: {
     // 1: { video: "https://youtu.be/...", recap: "/session-notes/2026-11-16-decoding-bitcoin-week-1" },
-    1: { recap: "/session-notes/2026-11-16-decoding-bitcoin-week-1" },
+    1: { video: "https://youtu.be/VIfltkAznTA", recap: "/session-notes/2026-11-16-decoding-bitcoin-week-1" },
   },
   courseUrl: "https://bitcoindevs.xyz/decoding",
 

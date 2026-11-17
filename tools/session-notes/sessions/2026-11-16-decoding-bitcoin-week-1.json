@@ -10,13 +10,24 @@
   "summary": "Day one of our 10-week Decoding Bitcoin cohort. How the weeks work, how to earn the certificate, a tour of your personal dashboard, a live quiz where one changed letter scrambled half a hash, and Razor on what the BOSS Challenge is really like.",
   "share_text": "Week 1 of Decoding Bitcoin: 10 Mondays, one question each, a hash that changes half its bits when you change one letter, and what comes after. Notes (and 4 mini-games) from @CodeOrangeDevs",
   "minutes": 7,
-  "video_pending": true,
+  "video": "VIfltkAznTA",
   "duration": "about 50 min",
   "journey": {
     "label": "Decoding Bitcoin",
     "unit": "Week",
     "current": 1,
-    "steps": ["Orientation and foundations", "How a transaction lives", "Inside a transaction, byte by byte", "Building a transaction and paying the fee", "Signing and the transaction exercises", "Script basics", "P2SH and multisig", "Project: build your own Bitcoin stack", "Taproot: keys and Schnorr", "Taproot scripts and graduation"],
+    "steps": [
+      "Orientation and foundations",
+      "How a transaction lives",
+      "Inside a transaction, byte by byte",
+      "Building a transaction and paying the fee",
+      "Signing and the transaction exercises",
+      "Script basics",
+      "P2SH and multisig",
+      "Project: build your own Bitcoin stack",
+      "Taproot: keys and Schnorr",
+      "Taproot scripts and graduation"
+    ],
     "link": "/decoding-bitcoin/curriculum",
     "link_text": "Weekly plan",
     "next": "How a transaction lives, Monday 23 November"
@@ -39,26 +50,86 @@
     "Decoding Bitcoin by The Bitcoin Dev Project is the source of truth for lessons and exercises. Your dashboard is a personal link with no login, so save it."
   ],
   "chapters": [
-    [0, "Welcome, cameras off, the 10-week plan"],
-    [90, "Exercises, weekly check-ins and the certificate"],
-    [150, "Attendance, study buddies and getting help"],
-    [240, "Q&A: can you join without coming live?"],
-    [329, "Tour of the cohort dashboard"],
-    [509, "Discussion questions: one each for next Monday"],
-    [629, "Screen share: the Decoding Bitcoin quiz"],
-    [749, "After Decoding Bitcoin: the BOSS Challenge"],
-    [800, "Razor on what BOSS is really like"],
-    [981, "Alex on BOSS: hours, workload, dropouts"],
-    [1190, "Back to the quiz: change one letter, change half the hash"],
-    [1310, "Where the exercises live and how questions get assigned"],
-    [1599, "How the weekly discussion works"],
-    [1670, "Plan: Decoding Bitcoin site for exercises, our dashboard for questions"],
-    [2043, "How to prepare for next Monday"],
-    [2343, "Why your dashboard has no login"],
-    [2563, "The Decoding Bitcoin site is the source of truth"],
-    [2623, "Remember why you are here"],
-    [2683, "Homework and wrap-up"],
-    [2891, "Tomorrow: Privacy Track on Silent Payments"]
+    [
+      0,
+      "Welcome, cameras off, the 10-week plan"
+    ],
+    [
+      90,
+      "Exercises, weekly check-ins and the certificate"
+    ],
+    [
+      150,
+      "Attendance, study buddies and getting help"
+    ],
+    [
+      240,
+      "Q&A: can you join without coming live?"
+    ],
+    [
+      329,
+      "Tour of the cohort dashboard"
+    ],
+    [
+      509,
+      "Discussion questions: one each for next Monday"
+    ],
+    [
+      629,
+      "Screen share: the Decoding Bitcoin quiz"
+    ],
+    [
+      749,
+      "After Decoding Bitcoin: the BOSS Challenge"
+    ],
+    [
+      800,
+      "Razor on what BOSS is really like"
+    ],
+    [
+      981,
+      "Alex on BOSS: hours, workload, dropouts"
+    ],
+    [
+      1190,
+      "Back to the quiz: change one letter, change half the hash"
+    ],
+    [
+      1310,
+      "Where the exercises live and how questions get assigned"
+    ],
+    [
+      1599,
+      "How the weekly discussion works"
+    ],
+    [
+      1670,
+      "Plan: Decoding Bitcoin site for exercises, our dashboard for questions"
+    ],
+    [
+      2043,
+      "How to prepare for next Monday"
+    ],
+    [
+      2343,
+      "Why your dashboard has no login"
+    ],
+    [
+      2563,
+      "The Decoding Bitcoin site is the source of truth"
+    ],
+    [
+      2623,
+      "Remember why you are here"
+    ],
+    [
+      2683,
+      "Homework and wrap-up"
+    ],
+    [
+      2891,
+      "Tomorrow: Privacy Track on Silent Payments"
+    ]
   ],
   "next": {
     "title": "Week 2: How a transaction lives",
@@ -153,25 +224,41 @@
   "quiz": [
     {
       "q": "You can't make it to the live call on Monday. Can you still earn the certificate?",
-      "o": ["No, attendance is the only thing that counts", "Yes, if you do the work and post your homework on Discord", "Only if you watch the recording twice"],
+      "o": [
+        "No, attendance is the only thing that counts",
+        "Yes, if you do the work and post your homework on Discord",
+        "Only if you watch the recording twice"
+      ],
       "a": 1,
       "w": "Asked on the call, answered yes: do the lessons and exercises on your own, post them on Discord and ask questions there."
     },
     {
       "q": "You hash a word with SHA-256, then change one letter and hash it again. How much of the output changes?",
-      "o": ["Only the last character or two", "About half of the 256 bits", "Nothing, hashes ignore small changes"],
+      "o": [
+        "Only the last character or two",
+        "About half of the 256 bits",
+        "Nothing, hashes ignore small changes"
+      ],
       "a": 1,
       "w": "The avalanche effect. One tiny change flips roughly half the bits, so a hash tells you nothing about how close two inputs are."
     },
     {
       "q": "How do you log in to your Decoding Bitcoin dashboard?",
-      "o": ["With your email and a password", "With a Nostr login", "You don't: you open your personal link, so save it"],
+      "o": [
+        "With your email and a password",
+        "With a Nostr login",
+        "You don't: you open your personal link, so save it"
+      ],
       "a": 2,
       "w": "No accounts, no passwords. A Nostr login was tried first but added friction, so your dashboard link is your key."
     },
     {
       "q": "Where do the lessons and exercises live?",
-      "o": ["On Decoding Bitcoin by The Bitcoin Dev Project", "In a private Code Orange course", "Only in the Mastering Bitcoin book"],
+      "o": [
+        "On Decoding Bitcoin by The Bitcoin Dev Project",
+        "In a private Code Orange course",
+        "Only in the Mastering Bitcoin book"
+      ],
       "a": 0,
       "w": "bitcoindevs.xyz/decoding is the source of truth. The Code Orange pages add the weekly plan, your questions and your dashboard."
     }
