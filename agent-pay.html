@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent pays over Lightning · Code Orange</title>
+<meta name="description" content="Live demo: an AI agent pays for API calls over Lightning using L402.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;600;800&family=JetBrains+Mono:wght@400;600&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0A0A0A;--card:#141414;--line:#262626;--txt:#EDEDED;--mut:#9A9A9A;--or:#F7931A;--or2:#FFB347;--ok:#3DDC84;--bad:#FF5A5A}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--txt);font-family:"Schibsted Grotesk",system-ui,sans-serif}
+a{color:var(--or)}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 16px 60px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:26px}
+.logo{font-weight:800;letter-spacing:-.02em;text-decoration:none;color:var(--txt);font-size:18px}
+.logo span{color:var(--or)}
+.pill{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:6px 12px;color:var(--mut)}
+.pill b{color:var(--or)}
+h1{font-size:clamp(30px,5vw,56px);line-height:1.02;margin:0 0 10px;font-weight:800;letter-spacing:-.03em}
+h1 em{font-family:"Instrument Serif",serif;font-weight:400;color:var(--or)}
+.lead{color:var(--mut);font-size:18px;max-width:760px;margin:0 0 26px;line-height:1.5}
+.flow{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:0 0 22px}
+.flow div{border:1px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;font-size:13px;color:var(--mut);background:var(--card);transition:.3s}
+.flow div b{display:block;font-size:20px;margin-bottom:2px}
+.flow div.on{border-color:var(--or);color:var(--txt);box-shadow:0 0 0 1px var(--or),0 0 24px rgba(247,147,26,.25)}
+.flow div.done{border-color:#4a3410;color:var(--or2)}
+.grid{display:grid;grid-template-columns:360px 1fr;gap:18px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+.card h2{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin:0 0 12px;font-weight:600}
+.tabs{display:grid;gap:8px;margin-bottom:14px}
+.tab{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer;background:#101010}
+.tab input{margin-top:4px;accent-color:var(--or)}
+.tab b{display:block;font-size:15px}
+.tab small{color:var(--mut);font-size:12.5px;line-height:1.35}
+.tab:has(input:checked){border-color:var(--or)}
+label.f{display:block;font-size:13px;color:var(--mut);margin:12px 0 6px}
+input[type=text],input[type=number],input[type=password],select{width:100%;background:#0d0d0d;border:1px solid var(--line);color:var(--txt);border-radius:10px;padding:10px 12px;font:inherit;font-size:14px}
+.row{display:flex;gap:10px}
+.row>*{flex:1}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:13px 20px;font:inherit;font-weight:800;font-size:16px;cursor:pointer;background:var(--or);color:#111;width:100%;margin-top:14px}
+.btn:hover{background:var(--or2)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line);font-weight:600;font-size:14px;padding:9px 14px;width:auto;margin:0}
+.meter{display:flex;justify-content:space-between;font-size:13px;color:var(--mut);margin-top:14px}
+.bar{height:8px;background:#222;border-radius:9px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;width:0;background:var(--or);transition:.4s}
+.check{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--mut);margin-top:12px}
+.check input{accent-color:var(--or)}
+.term{background:#050505;border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.term .bar2{display:flex;gap:6px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line);font-size:12px;color:var(--mut)}
+.term .bar2 i{width:10px;height:10px;border-radius:50%;background:#333}
+.term .bar2 i:first-child{background:var(--or)}
+.log{font-family:"JetBrains Mono",monospace;font-size:13px;line-height:1.6;padding:14px;height:420px;overflow:auto;white-space:pre-wrap;word-break:break-all}
+.log .t{color:#555}
+.log .req{color:#7cc4ff}
+.log .s402{color:var(--or);font-weight:600}
+.log .s200{color:var(--ok);font-weight:600}
+.log .pay{color:var(--or2)}
+.log .err{color:var(--bad)}
+.log .think{color:#c9a6ff}
+.log .dim{color:var(--mut)}
+.payq{display:none;gap:16px;align-items:center;border-top:1px solid var(--line);padding:16px;background:#0e0b06}
+.payq.show{display:flex}
+.payq .qr{background:#fff;border-radius:12px;padding:10px;width:220px;height:220px;flex:none}
+.payq .qr svg{width:100%;height:100%;display:block}
+.payq h3{margin:0 0 6px;font-size:20px}
+.payq p{margin:0 0 10px;color:var(--mut);font-size:14px}
+.payq .acts{display:flex;gap:8px;flex-wrap:wrap}
+.results{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:18px}
+.res{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;min-height:92px}
+.res small{display:block;color:var(--mut);font-size:12px;margin-bottom:6px}
+.res b{font-size:20px;display:block}
+.res span{font-size:12px;color:var(--mut)}
+.res.paid{border-color:#4a3410}
+.brief{margin-top:18px;display:none}
+.brief.show{display:block}
+.brief p{font-size:18px;line-height:1.55;margin:0}
+.receipt{font-size:13px;color:var(--mut);margin-top:10px}
+.try{margin-top:22px}
+.try code{display:block;background:#050505;border:1px solid var(--line);border-radius:12px;padding:12px;font-family:"JetBrains Mono",monospace;font-size:13px;overflow:auto;white-space:pre}
+.banner{display:none;margin:0 0 16px;border:1px solid #5a3a0c;background:#1b1206;border-radius:12px;padding:10px 14px;font-size:14px}
+.banner.show{display:block}
+.foot{margin-top:30px;color:var(--mut);font-size:13px}
+@media (max-width:900px){.grid{grid-template-columns:1fr}.results{grid-template-columns:repeat(2,1fr)}.flow{grid-template-columns:repeat(3,1fr)}.payq.show{flex-direction:column;align-items:flex-start}.log{height:340px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="logo" href="/">code <span>●</span>range</a>
+    <div class="pill">Live demo · <b>L402</b> over Lightning</div>
+  </div>
+
+  <h1>An AI agent that <em>pays its own way</em></h1>
+  <p class="lead">No API key, no account, no credit card. The agent asks an API for data, gets <b>402 Payment Required</b> with a Lightning invoice, pays a few sats, shows the proof, and gets the answer. Machine to machine.</p>
+
+  <div class="flow" id="flow">
+    <div data-s="1"><b>①</b>Request</div>
+    <div data-s="2"><b>②</b>402 + invoice</div>
+    <div data-s="3"><b>③</b>Pay ⚡</div>
+    <div data-s="4"><b>④</b>Proof</div>
+    <div data-s="5"><b>⑤</b>Retry with L402</div>
+    <div data-s="6"><b>⑥</b>Paid data</div>
+  </div>
+
+  <div class="banner" id="banner"></div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>1 · The agent's wallet</h2>
+      <div class="tabs">
+        <label class="tab"><input type="radio" name="mode" value="qr" checked><div><b>Fund it from your phone</b><small>Scan one QR with any Lightning wallet. That buys the agent a bundle of 5 calls (50 sats). Then it runs on its own.</small></div></label>
+        <label class="tab"><input type="radio" name="mode" value="nwc"><div><b>Give it its own wallet (NWC)</b><small>Paste a Nostr Wallet Connect link with a small budget. The agent pays every call by itself, 10 sats each.</small></div></label>
+        <label class="tab"><input type="radio" name="mode" value="webln"><div><b>Browser wallet (Alby)</b><small>Uses the Lightning wallet in this browser. The agent pays every call, 10 sats each.</small></div></label>
+      </div>
+      <div id="nwcBox" hidden>
+        <label class="f" for="nwc">NWC connection (stays in this browser, never sent to our server)</label>
+        <input type="password" id="nwc" placeholder="nostr+walletconnect://..." autocomplete="off">
+        <label class="check"><input type="checkbox" id="nwcRemember"> Remember on this device</label>
+      </div>
+      <div class="row">
+        <div><label class="f" for="budget">Spending cap (sats)</label><input type="number" id="budget" value="100" min="10" step="10"></div>
+        <div><label class="f" for="task">Task</label><select id="task"><option value="all">Bitcoin network briefing</option><option value="quick">Quick: price + fees</option></select></div>
+      </div>
+      <label class="check"><input type="checkbox" id="practice"> Practice mode (no real sats, for when the node is offline)</label>
+      <button class="btn" id="run">▶ Run the agent</button>
+      <div class="meter"><span>Spent <b id="spent">0</b> / <span id="cap">100</span> sats</span><span id="payments">0 payments</span></div>
+      <div class="bar"><i id="spentBar"></i></div>
+    </div>
+
+    <div>
+      <div class="term">
+        <div class="bar2"><i></i><i></i><i></i>&nbsp; agent@codeorange ~ l402</div>
+        <div class="log" id="log"><span class="dim">Pick a wallet and press “Run the agent”.</span>
+</div>
+        <div class="payq" id="payq">
+          <div class="qr" id="qr"></div>
+          <div>
+            <h3>⚡ Fund the agent: <span id="payAmt"></span> sats</h3>
+            <p>Scan with any Lightning wallet. The agent is waiting for the payment, then it carries on by itself.</p>
+            <div class="acts">
+              <a class="btn ghost" id="openWallet" href="#">Open in wallet</a>
+              <button class="btn ghost" id="copyInv" type="button">Copy invoice</button>
+              <button class="btn ghost" id="simPay" type="button" hidden>Simulate payment (practice)</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="results" id="results"></div>
+  <div class="card brief" id="brief"><h2>The agent's briefing</h2><p id="briefText"></p><div class="receipt" id="receipt"></div></div>
+
+  <div class="card try">
+    <h2>Try it yourself</h2>
+    <code>curl -i 'https://codeorange.dev/api/l402?tool=price'
+# → HTTP/1.1 402 Payment Required
+# → WWW-Authenticate: L402 macaroon="…", invoice="lnbc100n1…"
+# pay the invoice, keep the preimage, then:
+curl -H 'Authorization: L402 &lt;macaroon&gt;:&lt;preimage&gt;' 'https://codeorange.dev/api/l402?tool=price'</code>
+    <p class="foot">The same pattern powers Lightning Labs' <a href="https://github.com/lightninglabs/aperture" target="_blank" rel="noopener">Aperture</a> and <a href="https://www.npmjs.com/package/@lightninglabs/pi-402" target="_blank" rel="noopener">pi-402</a>, which let a coding agent pay for its own AI model calls. Data from mempool.space. Payments go to Code Orange's own BTCPay Server.</p>
+  </div>
+</div>
+
+<script src="/assets/agent-pay/qrcode.js?v=1"></script>
+<script>
+(function () {
+  var API = "/api/l402";
+  var PLAN = {
+    all: [
+      ["block", "Which block are we on?"],
+      ["fees", "What does it cost to send right now?"],
+      ["price", "What's a bitcoin worth?"],
+      ["mempool", "How busy is the network?"],
+      ["hashrate", "How secure is it?"]
+    ],
+    quick: [["price", "What's a bitcoin worth?"], ["fees", "What does it cost to send right now?"]]
+  };
+  var $ = function (id) { return document.getElementById(id); };
+  var log = $("log"), running = false, spent = 0, payments = 0, cred = null, cancelWait = null;
+  var albyLoaded = null, nwcClient = null;
+
+  function mode() { return document.querySelector("input[name=mode]:checked").value; }
+  document.querySelectorAll("input[name=mode]").forEach(function (r) {
+    r.addEventListener("change", function () { $("nwcBox").hidden = mode() !== "nwc"; });
+  });
+  try { var saved = localStorage.getItem("co-nwc"); if (saved) { $("nwc").value = saved; $("nwcRemember").checked = true; } } catch (e) {}
+  $("budget").addEventListener("input", function () { $("cap").textContent = $("budget").value; });
+
+  function ts() { var d = new Date(); return d.toTimeString().slice(0, 8); }
+  function line(cls, text) {
+    var s = document.createElement("span");
+    s.innerHTML = '<span class="t">' + ts() + '</span> ';
+    var b = document.createElement("span"); b.className = cls; b.textContent = text;
+    s.appendChild(b); s.appendChild(document.createTextNode("\n"));
+    log.appendChild(s); log.scrollTop = log.scrollHeight;
+  }
+  function short(s, n) { n = n || 18; return s && s.length > n * 2 ? s.slice(0, n) + "…" + s.slice(-8) : s; }
+  function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+  function step(n) {
+    document.querySelectorAll("#flow div").forEach(function (d) {
+      var s = +d.getAttribute("data-s");
+      d.className = s === n ? "on" : (s < n ? "done" : "");
+    });
+  }
+  function banner(t) { $("banner").textContent = t; $("banner").classList.toggle("show", !!t); }
+  function addSpend(sats) {
+    spent += sats; payments += 1;
+    $("spent").textContent = spent; $("payments").textContent = payments + " payment" + (payments === 1 ? "" : "s");
+    $("spentBar").style.width = Math.min(100, spent / (+$("budget").value || 1) * 100) + "%";
+  }
+
+  // ---------- wallets ----------
+  function loadAlby() {
+    if (window.AlbySdk) return Promise.resolve();
+    if (albyLoaded) return albyLoaded;
+    albyLoaded = new Promise(function (ok, bad) {
+      var s = document.createElement("script"); s.src = "/assets/agent-pay/alby-sdk.umd.js?v=1";
+      s.onload = ok; s.onerror = function () { bad(new Error("Could not load the NWC library")); };
+      document.head.appendChild(s);
+    });
+    return albyLoaded;
+  }
+  async function payAuto(invoice) {
+    if (mode() === "webln") {
+      if (!window.webln) throw new Error("No browser wallet found. Install Alby, or pick another wallet.");
+      await window.webln.enable();
+      var r = await window.webln.sendPayment(invoice);
+      return r && r.preimage;
+    }
+    if (!nwcClient) {
+      var url = $("nwc").value.trim();
+      if (!/^nostr\+walletconnect:/i.test(url)) throw new Error("Paste an NWC link first (nostr+walletconnect://…)");
+      try { if ($("nwcRemember").checked) localStorage.setItem("co-nwc", url); else localStorage.removeItem("co-nwc"); } catch (e) {}
+      await loadAlby();
+      nwcClient = new window.AlbySdk.NWCClient({ nostrWalletConnectUrl: url });
+    }
+    var res = await nwcClient.payInvoice({ invoice: invoice });
+    return res && res.preimage;
+  }
+
+  function showQR(invoice, sats, demo) {
+    var q = qrcode(0, "L"); q.addData(("lightning:" + invoice).toUpperCase(), "Alphanumeric"); q.make();
+    $("qr").innerHTML = q.createSvgTag({ cellSize: 4, margin: 2, scalable: true });
+    $("payAmt").textContent = sats;
+    $("openWallet").href = "lightning:" + invoice;
+    $("copyInv").onclick = function () { navigator.clipboard && navigator.clipboard.writeText(invoice); $("copyInv").textContent = "Copied"; };
+    $("simPay").hidden = !demo;
+    $("payq").classList.add("show");
+    $("payq").scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+  function showPractice(sats) {
+    $("qr").innerHTML = '<div style="height:100%;display:flex;align-items:center;justify-content:center;color:#111;font:600 14px sans-serif;text-align:center">Practice mode<br>no real invoice</div>';
+    $("payAmt").textContent = sats;
+    $("openWallet").removeAttribute("href");
+    $("simPay").hidden = false;
+    $("payq").classList.add("show");
+  }
+  function hideQR() { $("payq").classList.remove("show"); }
+
+  async function api(tool, calls, token, preimage) {
+    var h = {};
+    if (token) h.Authorization = "L402 " + token + (preimage ? ":" + preimage : "");
+    var qs = "?tool=" + tool + "&calls=" + calls + ($("practice").checked ? "&practice=1" : "");
+    var r = await fetch(API + qs, { headers: h, cache: "no-store" });
+    var j = {}; try { j = await r.json(); } catch (e) {}
+    return { status: r.status, body: j, www: r.headers.get("WWW-Authenticate") };
+  }
+
+  async function waitForQR(token, demo) {
+    return new Promise(function (resolve, reject) {
+      var stop = false, start = Date.now();
+      cancelWait = function () { stop = true; reject(new Error("Stopped")); };
+      $("simPay").onclick = async function () {
+        var r = await fetch(API + "?simulate=1", { method: "POST", headers: { Authorization: "L402 " + token } });
+        var j = await r.json();
+        if (j.paid) { stop = true; resolve({ token: j.token, simulated: true }); }
+      };
+      if (demo) return;
+      (async function poll() {
+        while (!stop) {
+          await sleep(2000);
+          if (stop) return;
+          if (Date.now() - start > 15 * 60 * 1000) { stop = true; return reject(new Error("Invoice expired")); }
+          try {
+            var r = await fetch(API + "?check=1", { headers: { Authorization: "L402 " + token }, cache: "no-store" });
+            var j = await r.json();
+            if (j.paid) { stop = true; return resolve({ token: j.token }); }
+          } catch (e) {}
+        }
+      })();
+    });
+  }
+
+  // ---------- one paid call: request → 402 → pay → retry ----------
+  async function paidCall(tool) {
+    var m = mode();
+    var bundle = m === "qr" ? PLAN[$("task").value].length : 1;
+    step(1);
+    line("req", "→ GET " + API + "?tool=" + tool + (cred ? "   Authorization: L402 " + short(cred, 10) : ""));
+    var r = await api(tool, bundle, cred);
+    await sleep(350);
+    if (r.status === 200) return r;
+    if (r.status !== 402) throw new Error((r.body && r.body.error) || ("HTTP " + r.status));
+
+    step(2);
+    var c = r.body, sats = c.price.sats;
+    line("s402", "← 402 Payment Required · " + sats + " sats for " + c.price.calls + " call" + (c.price.calls > 1 ? "s" : ""));
+    if (c.invoice) line("pay", "  invoice  " + short(c.invoice, 24));
+    line("dim", "  macaroon " + short(c.macaroon, 14));
+    if (c.demo) banner("Practice mode: no real sats move.");
+    await sleep(500);
+
+    var cap = +$("budget").value || 0;
+    if (spent + sats > cap) { line("err", "  agent: " + sats + " sats would go over my " + cap + " sat cap. Stopping."); throw new Error("Budget reached"); }
+    line("think", "  agent: " + sats + " sats is within my budget (" + (cap - spent) + " left). Paying.");
+    await sleep(400);
+
+    step(3);
+    var preimage = null, token = c.macaroon;
+    if (m === "qr" || c.demo) {
+      if (c.demo && m !== "qr") {
+        line("pay", "⚡ paying (practice)…");
+        var sr = await fetch(API + "?simulate=1", { method: "POST", headers: { Authorization: "L402 " + token } });
+        token = (await sr.json()).token; await sleep(600);
+      } else {
+        line("pay", "⚡ waiting for you to fund the agent: scan the QR…");
+        if (c.invoice) showQR(c.invoice, sats, c.demo); else showPractice(sats);
+        var w = await waitForQR(token, c.demo);
+        hideQR(); token = w.token;
+        line("s200", "✓ payment received" + (w.simulated ? " (practice)" : " · seller confirmed on its Lightning node"));
+      }
+    } else {
+      line("pay", "⚡ paying " + sats + " sats from my wallet…");
+      var t0 = Date.now();
+      preimage = await payAuto(c.invoice);
+      line("s200", "✓ paid in " + ((Date.now() - t0) / 1000).toFixed(1) + "s");
+    }
+    addSpend(sats);
+
+    step(4);
+    if (preimage) line("dim", "  proof: preimage " + short(preimage, 12) + "  (sha256 = the invoice's payment hash)");
+    else line("dim", "  proof: credential now marked paid");
+    await sleep(400);
+
+    step(5);
+    cred = token;
+    line("req", "→ GET " + API + "?tool=" + tool + "   Authorization: L402 " + short(token, 10) + (preimage ? ":" + preimage.slice(0, 8) + "…" : ""));
+    var r2 = await api(tool, bundle, token, preimage);
+    if (r2.status !== 200) throw new Error((r2.body && r2.body.error) || ("HTTP " + r2.status));
+    return r2;
+  }
+
+  var FMT = {
+    block: function (d) { return ["#" + d.height.toLocaleString(), d.txCount.toLocaleString() + " txs · " + d.minutesAgo + " min ago" + (d.pool ? " · " + d.pool : "")]; },
+    fees: function (d) { return [d.fastestFee + " sat/vB", "fast · " + d.halfHourFee + " in 30 min · " + d.economyFee + " economy"]; },
+    price: function (d) { return ["$" + Math.round(d.USD).toLocaleString(), d.satsPerDollar.toLocaleString() + " sats per dollar"]; },
+    mempool: function (d) { return [d.txCount.toLocaleString() + " txs", d.vMB + " vMB waiting"]; },
+    hashrate: function (d) { return [d.exahash.toLocaleString() + " EH/s", "difficulty " + d.difficultyT + " T"]; }
+  };
+  var LABEL = { block: "Latest block", fees: "Fee to send", price: "BTC price", mempool: "Mempool", hashrate: "Hashrate" };
+
+  function briefing(got) {
+    var p = [];
+    if (got.block) p.push("Bitcoin is at block " + got.block.height.toLocaleString() + ", found " + got.block.minutesAgo + " minutes ago" + (got.block.pool ? " by " + got.block.pool : "") + ".");
+    if (got.price) p.push("One bitcoin is about $" + Math.round(got.price.USD).toLocaleString() + ", so a dollar buys " + got.price.satsPerDollar.toLocaleString() + " sats.");
+    if (got.fees) p.push("A fast transaction costs " + got.fees.fastestFee + " sat/vB right now, or " + got.fees.economyFee + " if you can wait.");
+    if (got.mempool) p.push(got.mempool.txCount.toLocaleString() + " transactions are waiting in the mempool.");
+    if (got.hashrate) p.push("Miners are putting in about " + got.hashrate.exahash.toLocaleString() + " EH/s of work to secure it.");
+    return p.join(" ");
+  }
+
+  $("run").addEventListener("click", async function () {
+    if (running) { if (cancelWait) cancelWait(); return; }
+    running = true; cred = null; spent = 0; payments = 0; addSpend(0); payments = 0; $("payments").textContent = "0 payments";
+    banner(""); log.innerHTML = ""; $("results").innerHTML = ""; $("brief").classList.remove("show");
+    $("run").textContent = "■ Stop";
+    var plan = PLAN[$("task").value], got = {}, t0 = Date.now();
+    plan.forEach(function (p) { var d = document.createElement("div"); d.className = "res"; d.id = "res-" + p[0]; d.innerHTML = "<small>" + LABEL[p[0]] + "</small><b>…</b><span>not bought yet</span>"; $("results").appendChild(d); });
+    line("think", "agent: task = write a live Bitcoin network briefing. I need " + plan.length + " paid data calls.");
+    line("think", "agent: wallet = " + { qr: "funded by a human, one bundle", nwc: "my own NWC wallet", webln: "browser wallet" }[mode()] + ". Cap " + $("budget").value + " sats.");
+    try {
+      for (var i = 0; i < plan.length; i++) {
+        var tool = plan[i][0];
+        line("think", "\nagent: " + plan[i][1]);
+        var r = await paidCall(tool);
+        step(6);
+        var b = r.body; got[tool] = b.data; cred = b.macaroon;
+        line("s200", "← 200 OK  " + JSON.stringify(b.data));
+        line("dim", "  calls left on this credential: " + b.paid.callsLeft);
+        var f = FMT[tool](b.data), el = $("res-" + tool);
+        el.classList.add("paid"); el.innerHTML = "<small>" + LABEL[tool] + " ⚡</small><b>" + f[0] + "</b><span>" + f[1] + "</span>";
+        await sleep(500);
+      }
+      $("briefText").textContent = briefing(got);
+      $("receipt").textContent = "Paid " + spent + " sats in " + payments + " Lightning payment" + (payments === 1 ? "" : "s") + " · " + plan.length + " API calls · " + ((Date.now() - t0) / 1000).toFixed(0) + "s · no API key, no account.";
+      $("brief").classList.add("show");
+      line("s200", "\n✓ done. " + plan.length + " calls, " + spent + " sats.");
+    } catch (e) {
+      hideQR();
+      line("err", "✗ " + (e && e.message ? e.message : e));
+      if (/fetch|network|load/i.test(String(e && e.message))) line("dim", "  tip: tick “Practice mode” to run without the Lightning node.");
+    }
+    step(0); running = false; cancelWait = null; $("run").textContent = "▶ Run the agent again";
+  });
+})();
+</script>
+</body>
+</html>
