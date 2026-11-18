@@ -282,6 +282,19 @@ module.exports = async function handler(req, res) {
   const q = req.query || {};
   const auth = parseAuth(req);
 
+  if (q.probe === "ln") {
+    const out = {};
+    try {
+      const [u, d] = String(q.addr || LN_ADDRESS).split("@");
+      const r = await withTimeout(`https://${d}/.well-known/lnurlp/${u}`, { headers: { Accept: "application/json" } });
+      out.meta = { status: r.status, body: (await r.text()).slice(0, 600) };
+      const meta = JSON.parse(out.meta.body);
+      const r2 = await withTimeout(`${meta.callback}${meta.callback.includes("?") ? "&" : "?"}amount=10000`, { headers: { Accept: "application/json" } });
+      out.cb = { status: r2.status, body: (await r2.text()).slice(0, 300) };
+    } catch (e) { out.err = String(e.message || e); }
+    return send(res, 200, out);
+  }
+
   // Payment status, for the page while it waits for a QR payment.
   if (q.check) {
     const p = auth && verify(auth.token);
