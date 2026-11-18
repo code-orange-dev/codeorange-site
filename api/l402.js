@@ -3,7 +3,7 @@
 // Flow (the L402 pattern):
 //   1. GET /api/l402?tool=fees              -> 402 Payment Required
 //      WWW-Authenticate: L402 macaroon="<credential>", invoice="<bolt11>"
-//      The invoice comes from Code Orange's BTCPay Server (Lightning).
+//      The invoice comes from Code Orange's Blink Lightning address (LNURL-pay, LUD-21 verify).
 //   2. The buyer (the agent) pays the invoice and keeps the preimage.
 //   3. GET /api/l402?tool=fees  with  Authorization: L402 <credential>:<preimage>
 //      -> 200 with the data, plus X-L402-Token: the same credential with one call used.
@@ -22,7 +22,7 @@ const crypto = require("node:crypto");
 const BTCPAY = (process.env.BTCPAY_URL || "https://pay.codeorange.app").replace(/\/+$/, "");
 const STORE_ID = process.env.BTCPAY_STORE_ID || "6JFFeBchc5GpbuN7C5xZPADhmJjQ4EeoVEeh7A8hHiNw";
 // Optional: receive into a Lightning Address (LNURL-pay with LUD-21 "verify"), no node needed.
-const LN_ADDRESS = process.env.LN_ADDRESS || "";
+const LN_ADDRESS = process.env.LN_ADDRESS || "keypleb@blink.sv";
 const SECRET = process.env.L402_SECRET || "code-orange-l402-workshop-demo-2026";
 const SATS_PER_CALL = 10;
 const MAX_CALLS = 5;
@@ -281,44 +281,6 @@ module.exports = async function handler(req, res) {
 
   const q = req.query || {};
   const auth = parseAuth(req);
-
-  if (q.probe === "lnurl") {
-    const out = {};
-    for (const addr of String(q.addr || "").split(",").filter(Boolean)) {
-      try {
-        const [u, d] = addr.split("@");
-        const r = await withTimeout(`https://${d}/.well-known/lnurlp/${u}`, { headers: { Accept: "application/json" } });
-        const meta = await r.json();
-        const r2 = await withTimeout(`${meta.callback}${meta.callback.includes("?") ? "&" : "?"}amount=10000`, { headers: { Accept: "application/json" } });
-        const inv = await r2.json();
-        let v = null;
-        if (inv.verify) { const r3 = await withTimeout(inv.verify, { headers: { Accept: "application/json" } }); v = await r3.json(); }
-        out[addr] = { minSendable: meta.minSendable, hasPr: !!inv.pr, verify: inv.verify || null, verifyRes: v, err: inv.reason || null };
-      } catch (e) { out[addr] = "ERR " + e.message; }
-    }
-    return send(res, 200, out);
-  }
-  if (q.probe === "data") {
-    const out = {};
-    for (const [k, t] of Object.entries(TOOLS)) { try { out[k] = await t.run(); } catch (e) { out[k] = "ERR " + e.message; } }
-    return send(res, 200, out);
-  }
-  if (q.probe === "btcpay") {
-    const out = {};
-    try {
-      const form = new URLSearchParams({ storeId: STORE_ID, price: "10", currency: "SATS", checkoutDesc: "Agent demo probe", jsonResponse: "true" });
-      const r = await withTimeout(`${BTCPAY}/api/v1/invoices`, { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded", Accept: "application/json" }, body: form.toString(), redirect: "manual" });
-      out.create = { status: r.status, location: r.headers.get("location"), body: (await r.text()).slice(0, 400) };
-      const m = (out.create.body + " " + (out.create.location || "")).match(/(?:"invoiceId"\s*:\s*"|\/i\/)([A-Za-z0-9]{10,})/i);
-      if (m) {
-        for (const pm of ["BTC-LN", "BTC_LightningLike", ""]) {
-          const t = await checkoutStatus(m[1], pm).catch((e) => "ERR " + e.message);
-          out["status_" + (pm || "default")] = String(t).slice(0, 700);
-        }
-      }
-    } catch (e) { out.error = String(e.message || e); }
-    return send(res, 200, out);
-  }
 
   // Payment status, for the page while it waits for a QR payment.
   if (q.check) {
