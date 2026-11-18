@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Builders - Code Orange Dev School</title>
+<meta name="description" content="Code Orange community members and the pull requests they have merged into Bitcoin open-source projects. Every PR links to GitHub.">
+<link rel="canonical" href="https://codeorange.dev/builders">
+<meta name="theme-color" content="#F7931A">
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content="Code Orange Dev School">
+<meta property="og:url" content="https://codeorange.dev/builders">
+<meta property="og:title" content="Builders - Code Orange Dev School">
+<meta property="og:description" content="Pull requests merged into Bitcoin open source by Code Orange community members.">
+<meta property="og:image" content="https://codeorange.dev/assets/og-codeorange-2026.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon-co.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; background: #0A0A0A; }
+  body { -webkit-font-smoothing: antialiased; font-family: 'Inter', system-ui, sans-serif; color: #F5F5F5; }
+  ::selection { background: rgba(247,147,26,0.35); }
+  a { color: #F7931A; transition: color 120ms; }
+  a:focus-visible, button:focus-visible { outline: 2px solid #F7931A; outline-offset: 2px; border-radius: 4px; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 32px; }
+  .mono { font-family: 'Plus Jakarta Sans', monospace; }
+  .eyebrow { font-family: 'Plus Jakarta Sans', monospace; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #F7931A; }
+  .card { background: #0F0F0F; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 24px; }
+  .nav-link { color: #B8B8B8; text-decoration: none; }
+  .nav-link:hover { color: #F7931A; }
+  .btn { display: inline-block; color: #F5F5F5; text-decoration: none; font: 600 14px 'Inter', sans-serif; padding: 10px 16px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: transparent; cursor: pointer; }
+  .btn:hover { border-color: #F7931A; color: #F7931A; }
+  .btn-solid { background: #F7931A; color: #0A0A0A; border-color: #F7931A; }
+  .btn-solid:hover { background: #FFB347; color: #0A0A0A; }
+  .profile { display: flex; gap: 22px; align-items: center; flex-wrap: wrap; }
+  .profile img { width: 96px; height: 96px; border-radius: 50%; border: 2px solid #F7931A; background: #141414; }
+  h1 { font-weight: 500; font-size: clamp(34px, 5vw, 54px); line-height: 1.05; letter-spacing: -0.02em; margin: 0; }
+  .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 28px 0; }
+  .stat { background: #141414; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 18px; }
+  .stat b { display: block; font-size: 34px; font-weight: 500; color: #F7931A; line-height: 1; }
+  .stat span { display: block; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #858585; margin-top: 6px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 26px; }
+  .chip { font-size: 13px; padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.14); color: #D6D6D6; }
+  .chip.key { border-color: rgba(247,147,26,0.6); color: #F7931A; }
+  .month { margin: 0 0 18px; }
+  .month h3 { font-size: 13px; color: #858585; font-weight: 600; margin: 0 0 8px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .pr { display: flex; gap: 12px; align-items: baseline; padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 14px; text-decoration: none; }
+  .pr .id { color: #F7931A; min-width: 150px; }
+  .pr .what { color: #B8B8B8; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+  .person { display: flex; gap: 12px; align-items: center; text-decoration: none; background: #0F0F0F; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px; }
+  .person:hover { border-color: rgba(247,147,26,0.5); }
+  .person img { width: 48px; height: 48px; border-radius: 50%; background: #141414; }
+  .person b { display: block; color: #F5F5F5; }
+  .person small { color: #858585; font-size: 12px; }
+  .note { font-size: 13px; color: #858585; }
+  @media (max-width: 760px) {
+    .wrap { padding: 0 16px; }
+    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .pr { flex-direction: column; gap: 2px; }
+    .pr .id { min-width: 0; }
+    .nav-links { display: none !important; }
+  }
+</style>
+<link rel="stylesheet" href="/assets/theme.css?v=20261117b">
+<script src="/assets/site-menu.js?v=20261117a" defer></script>
+</head>
+<body>
+<header style="position: sticky; top: 0; z-index: 50; background: rgba(10,10,10,0.72); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.08);">
+  <div class="wrap" style="height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 20px;">
+    <a href="/" style="display: flex; align-items: center;"><img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School" style="height: 40px; width: auto; display: block;"></a>
+    <nav class="nav-links" style="display: flex; gap: 26px; font-size: 14px; font-weight: 500;">
+      <a href="/builders" class="nav-link">All builders</a>
+      <a href="/dashboard" class="nav-link">PR dashboard</a>
+      <a href="/community" class="nav-link">Community</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" style="padding-top: 48px; padding-bottom: 72px;">
+  <div id="view"><p class="note">Loading…</p></div>
+</main>
+
+<footer style="border-top: 1px solid rgba(255,255,255,0.08); padding: 28px 16px; text-align: center; font-size: 13px; color: #858585;">
+  The work belongs to its authors. We build the community, they build Bitcoin. ·
+  <a href="https://github.com/code-orange-dev/PR-tracking-dashboard" target="_blank" rel="noopener" style="text-decoration: none;">Data source ↗</a>
+</footer>
+
+<script src="/assets/pr-data.js?v=20261118a"></script>
+<script>
+(function () {
+  var view = document.getElementById('view');
+  var esc = function (s) { var d = document.createElement('div'); d.textContent = s == null ? '' : String(s); return d.innerHTML; };
+  var handle = decodeURIComponent((location.pathname.match(/^\/builders\/([^\/?#]+)/) || [])[1] || '');
+
+  function setMeta(title, desc, url) {
+    document.title = title;
+    var set = function (sel, attr, v) { var el = document.querySelector(sel); if (el) el.setAttribute(attr, v); };
+    set('meta[name="description"]', 'content', desc);
+    set('meta[property="og:title"]', 'content', title);
+    set('meta[property="og:description"]', 'content', desc);
+    set('meta[property="og:url"]', 'content', url);
+    set('link[rel="canonical"]', 'href', url);
+  }
+
+  function list(d) {
+    var people = d.contributors.filter(function (c) { return c.merged > 0; });
+    view.innerHTML =
+      '<p class="eyebrow">Builders</p>' +
+      '<h1>' + people.length + ' builders. <span style="color:#F7931A;">' + d.stats.merged + ' merged PRs.</span></h1>' +
+      '<p style="color:#B8B8B8; font-size:17px; line-height:1.6; max-width:640px; margin:18px 0 30px;">Code Orange community members with pull requests merged into Bitcoin open-source projects. Pick anyone to see their work. Counted ' + esc(d.updated) + '.</p>' +
+      '<div class="grid">' + people.map(function (c) {
+        return '<a class="person" href="/builders/' + encodeURIComponent(c.github) + '"><img src="https://github.com/' + encodeURIComponent(c.github) + '.png?size=96" alt="" width="48" height="48" loading="lazy">' +
+          '<span><b>' + esc(c.name) + '</b><small>' + c.merged + ' merged · ' + esc(c.projects.slice(0, 2).join(', ')) + (c.projects.length > 2 ? '…' : '') + '</small></span></a>';
+      }).join('') + '</div>';
+    setMeta('Builders - Code Orange Dev School', people.length + ' Code Orange builders with ' + d.stats.merged + ' pull requests merged into Bitcoin open source.', 'https://codeorange.dev/builders');
+  }
+
+  function profile(d, c) {
+    var mine = d.merged.filter(function (p) { return p.github === c.github; });
+    var open = d.open.filter(function (p) { return p.github === c.github; });
+    var fresh = mine.filter(function (p) { return p.fresh; }).length;
+    var months = [];
+    mine.forEach(function (p) { if (months.indexOf(p.date) < 0) months.push(p.date); });
+    var keyProjects = {};
+    mine.forEach(function (p) { if (p.key) keyProjects[p.project] = 1; });
+    var url = 'https://codeorange.dev/builders/' + encodeURIComponent(c.github);
+    var summary = c.name + ' has ' + c.merged + ' pull request' + (c.merged === 1 ? '' : 's') + ' merged into Bitcoin open source: ' + c.projects.join(', ') + '.';
+    var pr = function (p) {
+      return '<a class="pr" href="' + p.url + '" target="_blank" rel="noopener"><span class="id mono">' + esc(p.repo) + '#' + p.number + (p.pre ? '*' : '') + '</span>' +
+        '<span class="what">' + esc(p.project) + (p.note ? ' · ' + esc(p.note) : '') + (p.fresh ? ' <span class="mono" style="color:#F7931A; font-size:11px;">NEW</span>' : '') + '</span></a>';
+    };
+    view.innerHTML =
+      '<p class="eyebrow"><a href="/builders" style="text-decoration:none;">Builders</a> / ' + esc(c.name) + '</p>' +
+      '<div class="profile" style="margin-top:14px;"><img src="https://github.com/' + encodeURIComponent(c.github) + '.png?size=192" alt="" width="96" height="96">' +
+      '<div><h1>' + esc(c.name) + '</h1><p style="margin:8px 0 0; color:#B8B8B8;"><a href="https://github.com/' + encodeURIComponent(c.github) + '" target="_blank" rel="noopener" style="text-decoration:none;">@' + esc(c.github) + ' ↗</a></p></div></div>' +
+      '<div class="stats">' +
+        '<div class="stat"><b>' + c.merged + '</b><span>Merged PRs</span></div>' +
+        '<div class="stat"><b>' + c.projects.length + '</b><span>Projects</span></div>' +
+        '<div class="stat"><b>' + c.open + '</b><span>In review now</span></div>' +
+        '<div class="stat"><b>' + (fresh ? '+' + fresh : esc(c.latest.split(' ')[0] || '-')) + '</b><span>' + (fresh ? 'New this month' : 'Latest merge') + '</span></div>' +
+      '</div>' +
+      '<div class="chips">' + c.projects.map(function (n) { return '<span class="chip' + (keyProjects[n] ? ' key' : '') + '">' + esc(n) + '</span>'; }).join('') + '</div>' +
+      '<div style="display:flex; gap:10px; flex-wrap:wrap; margin:0 0 30px;">' +
+        '<button class="btn btn-solid" type="button" id="share">Copy link to share</button>' +
+        '<a class="btn" href="https://x.com/intent/post?text=' + encodeURIComponent(summary + '\n' + url) + '" target="_blank" rel="noopener">Post on X</a>' +
+      '</div>' +
+      '<div class="card"><h2 style="font-size:20px; margin:0 0 16px;">Merged pull requests</h2>' +
+        months.map(function (m) {
+          return '<div class="month"><h3>' + esc(m) + '</h3>' + mine.filter(function (p) { return p.date === m; }).map(pr).join('') + '</div>';
+        }).join('') +
+        (c.note ? '<p class="note">* ' + esc(c.note) + '</p>' : (mine.some(function (p) { return p.pre; }) ? '<p class="note">* merged before joining Code Orange, listed as history.</p>' : '')) +
+      '</div>' +
+      (open.length ? '<div class="card" style="margin-top:16px;"><h2 style="font-size:20px; margin:0 0 16px;">In review now</h2>' + open.map(pr).join('') + '</div>' : '') +
+      '<p class="note" style="margin-top:22px;">This is ' + esc(c.name) + '\'s own work. Listing it records that they are part of the Code Orange community; it doesn\'t claim Code Orange wrote or directed it. Counted ' + esc(d.updated) + '.</p>';
+    document.getElementById('share').addEventListener('click', function () {
+      var b = this;
+      var done = function () { b.textContent = 'Link copied'; setTimeout(function () { b.textContent = 'Copy link to share'; }, 1800); };
+      if (navigator.share) navigator.share({ title: c.name + ' - Code Orange builder', text: summary, url: url }).catch(function () {});
+      else if (navigator.clipboard) navigator.clipboard.writeText(url).then(done);
+    });
+    setMeta(c.name + ' - Code Orange builder', summary, url);
+  }
+
+  coPR.load().then(function (d) {
+    if (!handle) return list(d);
+    var c = d.contributors.filter(function (x) { return x.github.toLowerCase() === handle.toLowerCase() && x.merged + x.open > 0; })[0];
+    if (!c) {
+      view.innerHTML = '<h1>Builder not found</h1><p style="color:#B8B8B8;">No one with that GitHub name is on the PR dashboard yet. <a href="/builders">See all builders</a>.</p>';
+      return;
+    }
+    profile(d, c);
+  }).catch(function () {
+    view.innerHTML = '<p class="note">The builder data couldn\'t load right now. <a href="/dashboard">Open the PR dashboard</a> or try again in a minute.</p>';
+  });
+})();
+</script>
+</body>
+</html>

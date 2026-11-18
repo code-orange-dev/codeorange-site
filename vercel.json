@@ -104,6 +104,10 @@
     {
       "source": "/fellowships/f/:handle",
       "destination": "/fellowships/fellow"
+    },
+    {
+      "source": "/builders/:handle",
+      "destination": "/builders"
     }
   ]
 }
