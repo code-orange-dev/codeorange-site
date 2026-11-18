@@ -5,7 +5,7 @@
 
 const BUILDERS = ["pzafonte", "va-an", "dayvvo", "muhahahmad68", "psychemist", "RazorBest", "Arowolokehinde", "0xlaga", "alexgrad42", "alexxie16", "mwihoti", "Micah-Shallom"];
 
-const OWNERS = new Set(["aaron-recompile", "bitcoin", "bitcoin-core", "bitcoindevkit", "bitcoinppl", "bitcointranscripts", "btrustteam", "cashubtc", "danielabrozzoni", "fedibtc", "fedimint", "getalby", "getfloresta", "jharveyb", "joinmarket-org", "joinmarket-webui", "kdmukai", "kernel-node", "libreriadesatoshi", "lightningdevkit", "lightning", "lightningnetwork", "mostrop2p", "opentollgate", "payjoin", "peer-observer", "rust-bitcoin", "saving-satoshi", "sedited", "yancyribbens"]);
+const OWNERS = new Set(["aaron-recompile", "bitcoin", "bitcoin-core", "bitcoindevkit", "bitcoinppl", "bitcointranscripts", "btrustteam", "cashubtc", "danielabrozzoni", "fedibtc", "fedimint", "getalby", "getfloresta", "jharveyb", "joinmarket-org", "joinmarket-webui", "kdmukai", "kernel-node", "libreriadesatoshi", "lightningdevkit", "lightning", "lightningnetwork", "mostrop2p", "opentollgate", "2140-dev", "utreexo", "payjoin", "peer-observer", "rust-bitcoin", "saving-satoshi", "sedited", "yancyribbens"]);
 
 module.exports = async function handler(req, res) {
   if (req.method !== "GET" && req.method !== "HEAD") {
