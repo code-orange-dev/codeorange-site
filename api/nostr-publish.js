@@ -26,7 +26,9 @@ module.exports = async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
   let event;
   try {
-    const raw = req.method === "POST" ? (typeof req.body === "string" ? req.body : JSON.stringify(req.body)) : Buffer.from(String((req.query || {}).e || ""), "base64url").toString("utf8");
+    const i = (req.query || {}).i;
+    if (i !== undefined) event = require("./_lib/meme-bot-events.json")[parseInt(i, 10)];
+    const raw = event ? JSON.stringify(event) : req.method === "POST" ? (typeof req.body === "string" ? req.body : JSON.stringify(req.body)) : Buffer.from(String((req.query || {}).e || ""), "base64url").toString("utf8");
     event = JSON.parse(raw);
   } catch {
     return res.status(400).json({ error: "Bad event" });
