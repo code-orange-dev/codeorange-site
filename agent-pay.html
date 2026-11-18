@@ -87,6 +87,37 @@ input[type=text],input[type=number],input[type=password],select{width:100%;backg
 .banner.show{display:block}
 .foot{margin-top:30px;color:var(--mut);font-size:13px}
 @media (max-width:900px){.grid{grid-template-columns:1fr}.results{grid-template-columns:repeat(2,1fr)}.flow{grid-template-columns:repeat(3,1fr)}.payq.show{flex-direction:column;align-items:flex-start}.log{height:340px}}
+.how{margin:0 0 18px}
+.how-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.how-head h2{margin:0}
+.how-ctl{display:flex;gap:8px}
+.diag{width:100%;height:auto;display:block;margin:10px 0 4px}
+.diag .zone{fill:#666;font:600 13px "Schibsted Grotesk",sans-serif;letter-spacing:.14em}
+.diag .node rect{fill:#101010;stroke:#2c2c2c;stroke-width:2;transition:.3s}
+.diag .node.on rect{stroke:#F7931A;fill:#1a1206;filter:drop-shadow(0 0 14px rgba(247,147,26,.35))}
+.diag .ni{font-size:28px;text-anchor:middle}
+.diag .nt{fill:#EDEDED;font:800 18px "Schibsted Grotesk",sans-serif;text-anchor:middle}
+.diag .ns{fill:#8a8a8a;font:400 12.5px "JetBrains Mono",monospace;text-anchor:middle}
+.diag .node.dim{opacity:.45}
+.diag .edge{stroke:#2e2e2e;stroke-width:3;fill:none;marker-end:url(#mG)}
+.diag .edge.on{stroke:#F7931A;stroke-width:4;stroke-dasharray:12 9;animation:codash .7s linear infinite;marker-end:url(#mO)}
+@keyframes codash{to{stroke-dashoffset:-21}}
+.diag .elab{fill:#FFB347;font:600 15px "JetBrains Mono",monospace}
+.diag .ticket rect{fill:#0e0b06;stroke:#F7931A;stroke-width:2;stroke-dasharray:6 5}
+.diag .ticket{transition:opacity .4s}
+.diag .tt{fill:#EDEDED;font:800 15px "Schibsted Grotesk",sans-serif;text-anchor:middle}
+.diag .ts{fill:#FF5A5A;font:600 15px "JetBrains Mono",monospace;text-anchor:middle}
+.diag .ts.ok{fill:#3DDC84}
+.diag .ts2{fill:#9A9A9A;font:400 13px "JetBrains Mono",monospace;text-anchor:middle}
+.how-cap{display:flex;gap:16px;align-items:flex-start;border-top:1px solid var(--line);padding-top:14px}
+.how-num{font-size:44px;line-height:1;color:var(--or);flex:none}
+.how-cap h3{margin:2px 0 6px;font-size:24px}
+.how-cap p{margin:0 0 8px;color:#cfcfcf;font-size:17px;line-height:1.5}
+.how-cap .say{color:var(--mut);font-size:15px}
+.how-cap .say b{color:var(--or)}
+.how-dots{display:flex;gap:6px;margin-top:6px}
+.how-dots button{width:34px;height:6px;border-radius:6px;border:0;background:#2a2a2a;cursor:pointer;padding:0}
+.how-dots button.on{background:var(--or)}
 </style>
 </head>
 <body>
@@ -107,6 +138,60 @@ input[type=text],input[type=number],input[type=password],select{width:100%;backg
     <div data-s="5"><b>⑤</b>Retry with L402</div>
     <div data-s="6"><b>⑥</b>Paid data</div>
   </div>
+
+  <section class="card how" id="how" aria-label="How it works">
+    <div class="how-head">
+      <h2>How it works · step <span id="hStepN">1</span> of 6</h2>
+      <div class="how-ctl">
+        <button class="btn ghost" id="hPrev" type="button" aria-label="Previous step">◀</button>
+        <button class="btn ghost" id="hPlay" type="button">▶ Play</button>
+        <button class="btn ghost" id="hNext" type="button" aria-label="Next step">▶▶</button>
+      </div>
+    </div>
+    <svg class="diag" viewBox="0 108 1000 356" role="img" aria-labelledby="hTitle">
+      <defs>
+        <marker id="mG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#3a3a3a"/></marker>
+        <marker id="mO" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#F7931A"/></marker>
+      </defs>
+      <!-- zones -->
+      <text x="40" y="132" class="zone">THE BUYER</text>
+      <text x="400" y="132" class="zone">THE SELLER</text>
+      <text x="760" y="132" class="zone">THE DATA</text>
+      <!-- edges -->
+      <path id="eReq" class="edge" d="M240 175 H398"/>
+      <path id="eBack" class="edge" d="M400 235 H242"/>
+      <path id="eFetch" class="edge" d="M600 175 H758"/>
+      <path id="eFetchBack" class="edge" d="M760 235 H602"/>
+      <path id="eInv" class="edge" d="M470 260 V338"/>
+      <path id="ePaid" class="edge" d="M530 340 V262"/>
+      <path id="ePay" class="edge" d="M240 400 H398"/>
+      <!-- edge labels -->
+      <text id="lReq" class="elab" x="319" y="163" text-anchor="middle"></text>
+      <text id="lBack" class="elab" x="321" y="257" text-anchor="middle"></text>
+      <text id="lFetch" class="elab" x="679" y="163" text-anchor="middle"></text>
+      <text id="lFetchBack" class="elab" x="681" y="257" text-anchor="middle"></text>
+      <text id="lInv" class="elab" x="462" y="304" text-anchor="end"></text>
+      <text id="lPaid" class="elab" x="540" y="304"></text>
+      <text id="lPay" class="elab" x="319" y="388" text-anchor="middle"></text>
+      <!-- nodes -->
+      <g id="nAgent" class="node"><rect x="40" y="150" width="200" height="110" rx="18"/><text x="140" y="196" class="ni">🤖</text><text x="140" y="226" class="nt">The agent</text><text x="140" y="246" class="ns">program on this page</text></g>
+      <g id="nSeller" class="node"><rect x="400" y="150" width="200" height="110" rx="18"/><text x="500" y="196" class="ni">🏪</text><text x="500" y="226" class="nt">Seller API</text><text x="500" y="246" class="ns">codeorange.dev/api/l402</text></g>
+      <g id="nData" class="node"><rect x="760" y="150" width="200" height="110" rx="18"/><text x="860" y="196" class="ni">📊</text><text x="860" y="226" class="nt">mempool.space</text><text x="860" y="246" class="ns">live Bitcoin data</text></g>
+      <g id="nPhone" class="node"><rect x="40" y="345" width="200" height="110" rx="18"/><text x="140" y="391" class="ni">📱</text><text x="140" y="421" class="nt">Your phone</text><text x="140" y="441" class="ns">Wallet of Satoshi</text></g>
+      <g id="nWallet" class="node"><rect x="400" y="345" width="200" height="110" rx="18"/><text x="500" y="391" class="ni">⚡</text><text x="500" y="421" class="nt">Seller's wallet</text><text x="500" y="441" class="ns">Minibits (ecash)</text></g>
+      <!-- ticket -->
+      <g id="ticket" class="ticket" opacity="0"><rect x="760" y="350" width="200" height="96" rx="14"/><text x="860" y="380" class="tt">🎟️ Ticket (macaroon)</text><text id="tState" x="860" y="406" class="ts">locked</text><text id="tCalls" x="860" y="428" class="ts2">5 calls</text></g>
+    </svg>
+    <div class="how-cap">
+      <div class="how-num" id="hNum">①</div>
+      <div>
+        <h3 id="hTitle">The agent asks for data</h3>
+        <p id="hText"></p>
+        <p class="say"><b>Say it like this:</b> <span id="hSay"></span></p>
+      </div>
+    </div>
+    <div class="how-dots" id="hDots"></div>
+  </section>
 
   <div class="banner" id="banner"></div>
 
@@ -168,6 +253,71 @@ curl -H 'Authorization: L402 &lt;macaroon&gt;:&lt;preimage&gt;' 'https://codeora
   </div>
 </div>
 
+
+<script>
+(function () {
+  var STEPS = [
+    { t: "The agent asks for data", nodes: ["nAgent", "nSeller"], edges: { eReq: "GET /price" },
+      x: "The agent needs the bitcoin price for its report. It just asks the seller's API. No account, no sign-up, no API key.",
+      s: "The robot walks into a shop and asks for something." },
+    { t: "“402: pay me first”", nodes: ["nSeller", "nWallet", "nAgent"], edges: { eInv: "make invoice", eBack: "402 · 50 sats" }, ticket: "locked",
+      x: "The seller asks its wallet (Minibits) for a Lightning invoice of 50 sats. It replies with HTTP code 402 Payment Required, the invoice, and a ticket that only unlocks once that invoice is paid.",
+      s: "The shop says: here is the bill, and here is your ticket. It works once you pay." },
+    { t: "Pay over Lightning", nodes: ["nPhone", "nWallet"], edges: { ePay: "⚡ 50 sats" }, ticket: "locked",
+      x: "You scan the QR with Wallet of Satoshi. The 50 sats travel over the Lightning Network straight into the seller's wallet in about a second, for a tiny fee.",
+      s: "We pay the bill with bitcoin, instantly, from any wallet." },
+    { t: "Proof of payment", nodes: ["nWallet", "nSeller"], edges: { ePaid: "paid ✓" }, ticket: "paid",
+      x: "The seller's wallet confirms the invoice is paid. The ticket is now unlocked and is good for 5 calls (10 sats each).",
+      s: "The cashier sees the money arrive, so the ticket is now valid." },
+    { t: "Ask again, with the ticket", nodes: ["nAgent", "nSeller"], edges: { eReq: "GET /price + 🎟️" }, ticket: "paid",
+      x: "The agent repeats its question and shows the ticket in the request header (Authorization: L402 …). The seller checks the ticket's signature. Nobody needs to know who the agent is.",
+      s: "The robot shows its ticket at the counter. No name, no card, just proof it paid." },
+    { t: "Get the data", nodes: ["nSeller", "nData", "nAgent"], edges: { eFetch: "fetch", eFetchBack: "price", eBack: "200 OK · $" }, ticket: "used",
+      x: "The seller fetches the live price from mempool.space and sends it back: 200 OK. One call is used, 4 are left. The next 4 questions go straight through. When they run out, the agent gets a new 402 and pays again.",
+      s: "The robot gets its answer. It paid a few sats for exactly what it used." }
+  ];
+  var NUM = ["①","②","③","④","⑤","⑥"], cur = 0, timer = null, used = 0;
+  var $ = function (id) { return document.getElementById(id); };
+  var allEdges = ["eReq","eBack","eFetch","eFetchBack","eInv","ePaid","ePay"];
+  var allNodes = ["nAgent","nSeller","nData","nPhone","nWallet"];
+  var dots = $("hDots");
+  STEPS.forEach(function (_, i) { var b = document.createElement("button"); b.type = "button"; b.setAttribute("aria-label", "Step " + (i + 1)); b.onclick = function () { stop(); show(i); }; dots.appendChild(b); });
+  function show(i, callsLeft) {
+    cur = (i + STEPS.length) % STEPS.length;
+    var st = STEPS[cur];
+    allEdges.forEach(function (e) {
+      var on = Object.prototype.hasOwnProperty.call(st.edges, e);
+      $(e).classList.toggle("on", on);
+      $("l" + e.slice(1)).textContent = on ? st.edges[e] : "";
+    });
+    allNodes.forEach(function (n) { var on = st.nodes.indexOf(n) >= 0; $(n).classList.toggle("on", on); $(n).classList.toggle("dim", !on); });
+    var tk = $("ticket"), ts = $("tState");
+    tk.setAttribute("opacity", st.ticket ? 1 : 0);
+    ts.textContent = st.ticket === "locked" ? "🔒 locked" : "🔓 paid";
+    ts.classList.toggle("ok", st.ticket && st.ticket !== "locked");
+    $("tCalls").textContent = st.ticket === "used" ? ((callsLeft != null ? callsLeft : 4) + " calls left") : "5 calls · 50 sats";
+    $("hStepN").textContent = cur + 1; $("hNum").textContent = NUM[cur];
+    $("hTitle").textContent = st.t; $("hText").textContent = st.x; $("hSay").textContent = st.s;
+    dots.querySelectorAll("button").forEach(function (b, j) { b.classList.toggle("on", j === cur); });
+  }
+  function stop() { if (timer) { clearInterval(timer); timer = null; $("hPlay").textContent = "▶ Play"; } }
+  $("hPrev").onclick = function () { stop(); show(cur - 1); };
+  $("hNext").onclick = function () { stop(); show(cur + 1); };
+  $("hPlay").onclick = function () {
+    if (timer) return stop();
+    $("hPlay").textContent = "❚❚ Pause";
+    timer = setInterval(function () { show(cur + 1); }, 5000);
+  };
+  document.addEventListener("keydown", function (e) {
+    if (/INPUT|SELECT|TEXTAREA/.test((e.target || {}).tagName)) return;
+    if (e.key === "ArrowRight") { stop(); show(cur + 1); }
+    if (e.key === "ArrowLeft") { stop(); show(cur - 1); }
+  });
+  // live sync: the running agent drives the diagram
+  window.coDiagram = function (n, callsLeft) { if (n >= 1 && n <= 6) { stop(); show(n - 1, callsLeft); } };
+  show(0);
+})();
+</script>
 <script src="/assets/agent-pay/qrcode.js?v=1"></script>
 <script>
 (function () {
@@ -203,7 +353,8 @@ curl -H 'Authorization: L402 &lt;macaroon&gt;:&lt;preimage&gt;' 'https://codeora
   }
   function short(s, n) { n = n || 18; return s && s.length > n * 2 ? s.slice(0, n) + "…" + s.slice(-8) : s; }
   function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
-  function step(n) {
+  function step(n, left) {
+    if (window.coDiagram) window.coDiagram(n, left);
     document.querySelectorAll("#flow div").forEach(function (d) {
       var s = +d.getAttribute("data-s");
       d.className = s === n ? "on" : (s < n ? "done" : "");
@@ -390,7 +541,7 @@ curl -H 'Authorization: L402 &lt;macaroon&gt;:&lt;preimage&gt;' 'https://codeora
         var tool = plan[i][0];
         line("think", "\nagent: " + plan[i][1]);
         var r = await paidCall(tool);
-        step(6);
+        step(6, r.body && r.body.paid ? r.body.paid.callsLeft : null);
         var b = r.body; got[tool] = b.data; cred = b.macaroon;
         line("s200", "← 200 OK  " + JSON.stringify(b.data));
         line("dim", "  calls left on this credential: " + b.paid.callsLeft);
