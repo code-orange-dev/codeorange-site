@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agentic Engineering & Vibe Coding Workshop: AI agents that pay in Bitcoin - Session Notes</title>
+<meta name="description" content="Guest Diego showed an open lab that turns agent sessions into constellations, a free Agentic Academy and a &quot;cyborg company&quot; where AI agents work in a 3D office. Then an agent paid for live Bitcoin data over Lightning with L402, and a Nostr bot earned zaps.">
+<link rel="canonical" href="https://codeorange.dev/session-notes/2026-11-18-agentic-engineering">
+<meta name="theme-color" content="#F7931A">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Code Orange Dev School">
+<meta property="og:url" content="https://codeorange.dev/session-notes/2026-11-18-agentic-engineering">
+<meta property="og:title" content="Agentic Engineering & Vibe Coding Workshop: AI agents that pay in Bitcoin - Session Notes">
+<meta property="og:description" content="Guest Diego showed an open lab that turns agent sessions into constellations, a free Agentic Academy and a &quot;cyborg company&quot; where AI agents work in a 3D office. Then an agent paid for live Bitcoin data over Lightning with L402, and a Nostr bot earned zaps.">
+<meta property="og:image" content="https://codeorange.dev/assets/session-notes/2026-11-18-agentic-engineering.jpg">
+<meta property="og:image:secure_url" content="https://codeorange.dev/assets/session-notes/2026-11-18-agentic-engineering.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Agentic Engineering &amp; Vibe Coding Workshop: AI agents that pay in Bitcoin">
+<meta property="article:published_time" content="2026-11-18">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Agentic Engineering & Vibe Coding Workshop: AI agents that pay in Bitcoin", "description": "Guest Diego showed an open lab that turns agent sessions into constellations, a free Agentic Academy and a \"cyborg company\" where AI agents work in a 3D office. Then an agent paid for live Bitcoin data over Lightning with L402, and a Nostr bot earned zaps.", "datePublished": "2026-11-18", "url": "https://codeorange.dev/session-notes/2026-11-18-agentic-engineering", "image": "https://codeorange.dev/assets/session-notes/2026-11-18-agentic-engineering.jpg", "author": {"@type": "Organization", "name": "Code Orange Dev School", "url": "https://codeorange.dev"}, "publisher": {"@type": "EducationalOrganization", "name": "Code Orange Dev School", "url": "https://codeorange.dev"}, "video": {"@type": "VideoObject", "name": "Agentic Engineering & Vibe Coding Workshop: AI agents that pay in Bitcoin", "description": "Guest Diego showed an open lab that turns agent sessions into constellations, a free Agentic Academy and a \"cyborg company\" where AI agents work in a 3D office. Then an agent paid for live Bitcoin data over Lightning with L402, and a Nostr bot earned zaps.", "uploadDate": "2026-11-18", "thumbnailUrl": "https://codeorange.dev/assets/session-notes/2026-11-18-agentic-engineering.jpg", "embedUrl": "https://www.youtube-nocookie.com/embed/nCGUOUqmgGc", "contentUrl": "https://www.youtube.com/watch?v=nCGUOUqmgGc"}}</script>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@CodeOrangeDevs">
+<meta name="twitter:title" content="Agentic Engineering & Vibe Coding Workshop: AI agents that pay in Bitcoin - Session Notes">
+<meta name="twitter:description" content="Guest Diego showed an open lab that turns agent sessions into constellations, a free Agentic Academy and a &quot;cyborg company&quot; where AI agents work in a 3D office. Then an agent paid for live Bitcoin data over Lightning with L402, and a Nostr bot earned zaps.">
+<meta name="twitter:image" content="https://codeorange.dev/assets/session-notes/2026-11-18-agentic-engineering.jpg">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon-co.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<script src="/assets/lazy-video.js?v=20261117a" defer></script>
+<style>
+:root { color-scheme: dark; --bg:#0A0A0A; --band:#0F0F0F; --card:#141414; --text:#F5F5F5; --muted:#B8B8B8; --dim:#858585; --orange:#F7931A; --orange2:#FFB347; --line:rgba(255,255,255,.08); }
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; overflow-x: hidden; background: var(--bg); color: var(--text); font-family: "Inter", system-ui, sans-serif; scroll-behavior: smooth; }
+body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+img, video, iframe { max-width: 100%; }
+a { color: inherit; }
+.announce { display: flex; justify-content: center; gap: 10px; padding: 9px 24px; background: var(--orange); color: var(--bg); text-decoration: none; font: 700 13px "Plus Jakarta Sans", monospace; text-align: center; }
+.announce span { text-decoration: underline; text-underline-offset: 3px; }
+.site-header { position: sticky; top: 0; z-index: 50; background: rgba(10,10,10,.74); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.header-inner { max-width: 1240px; height: 78px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; gap: 22px; }
+.brand img { display: block; width: auto; height: 50px; }
+.desktop-nav, .header-actions, .cta-row { display: flex; align-items: center; gap: 12px; }
+  .desktop-nav { gap: 28px; }
+  .desktop-nav a { padding: 8px 4px; }
+.desktop-nav a, .mobile-nav a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 600; padding: 8px 10px; border-radius: 8px; }
+.desktop-nav a:hover, .mobile-nav a:hover { color: var(--orange); }
+.mobile-nav { display: none; gap: 8px; overflow-x: auto; padding: 0 16px 10px; scrollbar-width: none; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; }
+.mobile-nav::-webkit-scrollbar { display: none; }
+.mobile-nav a { flex: 0 0 auto; scroll-snap-align: start; }
+.button, .ghost { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 13px 24px; border-radius: 8px; text-decoration: none; font-weight: 700; transition: border-color .15s ease, color .15s ease, background .15s ease, transform .15s ease; }
+.button { background: var(--orange); color: var(--bg); }
+.button:hover { background: var(--orange2); }
+.ghost { border: 1px solid rgba(255,255,255,.16); color: var(--text); }
+.ghost:hover { border-color: var(--orange); color: var(--orange); }
+.small { min-height: 40px; padding: 9px 18px; font-size: 14px; }
+.hero { position: relative; overflow: hidden; background-image: linear-gradient(rgba(10,10,10,.78), rgba(10,10,10,.92)), linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px), url("/assets/latest-workshops/workshop-latest-builders.webp"); background-size: auto, 48px 48px, 48px 48px, cover; background-position: center, 0 0, 0 0, center 42%; }
+.hero-grid, .section-inner { max-width: 1240px; margin: 0 auto; padding: 96px 32px; }
+.hero-grid { display: grid; grid-template-columns: minmax(0,1.08fr) minmax(320px,.92fr); gap: 64px; align-items: center; }
+.glow { position: absolute; top: -160px; right: -110px; width: 740px; height: 740px; border-radius: 50%; background: radial-gradient(circle, rgba(247,147,26,.14), transparent 66%); pointer-events: none; }
+.eyebrow { margin: 0 0 22px; color: var(--orange); font: 700 12px "Plus Jakarta Sans", monospace; letter-spacing: .16em; text-transform: uppercase; }
+h1, h2, h3 { font-family: "Inter", system-ui, sans-serif; font-weight: 400; color: var(--text); }
+h1 { margin: 0 0 26px; max-width: 780px; font-size: clamp(40px, 4.6vw, 68px); line-height: 1.05; }
+h2 { margin: 0 0 18px; font-size: clamp(32px, 3.3vw, 50px); line-height: 1.08; }
+h3 { margin: 0; font-size: 26px; line-height: 1.15; }
+.lead { max-width: 620px; margin: 0 0 34px; color: var(--muted); font-size: 18px; line-height: 1.65; }
+.terminal-card, .card, .program-card, .stat, .timeline-item { background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.32); }
+.terminal-bar { display: flex; align-items: center; gap: 8px; padding: 14px 18px; background: var(--band); border-bottom: 1px solid var(--line); }
+.terminal-bar span { width: 12px; height: 12px; border-radius: 50%; }
+.terminal-bar span:nth-child(1){ background:#FF5F56; } .terminal-bar span:nth-child(2){ background:#FFBD2E; } .terminal-bar span:nth-child(3){ background:#27C93F; }
+.terminal-bar strong { margin-left: 10px; color: var(--dim); font: 500 12px "Plus Jakarta Sans", monospace; }
+.terminal-body { padding: 24px; font: 14px/1.9 "Plus Jakarta Sans", monospace; }
+.terminal-body p { margin: 0; } .orange { color: var(--orange); } .muted { color: var(--dim); }
+.band { background: var(--band); border-block: 1px solid var(--line); }
+.grid { display: grid; gap: 22px; }
+.grid.two { grid-template-columns: repeat(2, minmax(0,1fr)); } .grid.three { grid-template-columns: repeat(3, minmax(0,1fr)); }
+.program-card { display: grid; grid-template-rows: 210px 1fr; text-decoration: none; transition: transform .18s ease, border-color .18s ease; }
+.program-card:hover { transform: translateY(-4px); border-color: rgba(247,147,26,.55); }
+.program-card img, .card > img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.012); }
+.card-body { padding: 24px; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; }
+.pill { display: inline-flex; padding: 7px 12px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px; color: var(--muted); font: 600 12px "Plus Jakarta Sans", monospace; }
+.pill.orange { color: var(--orange); border-color: rgba(247,147,26,.42); }
+.card p, .program-card p, .timeline-item p { color: var(--muted); line-height: 1.65; }
+.repo-card { display: block; text-decoration: none; transition: transform .18s ease, border-color .18s ease; }
+.repo-card:hover { transform: translateY(-4px); border-color: rgba(247,147,26,.55); }
+.repo-card h3 { margin-top: 14px; }
+.stat { padding: 26px; }
+.stat strong { display: block; color: var(--orange); font: 400 40px/1 "Inter", monospace; margin-bottom: 10px; }
+.timeline { display: grid; gap: 14px; counter-reset: step; }
+.timeline-item { display: grid; grid-template-columns: 70px 1fr; gap: 22px; padding: 24px; counter-increment: step; }
+.timeline-item:before { content: counter(step, decimal-leading-zero); color: var(--orange); font: 700 16px "Plus Jakarta Sans", monospace; }
+.split { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 42px; align-items: start; }
+.feature-panel { background: linear-gradient(145deg, rgba(247,147,26,.12), rgba(20,20,20,.86) 42%, rgba(15,15,15,.96)); border: 1px solid rgba(247,147,26,.26); border-radius: 16px; box-shadow: 0 28px 80px rgba(0,0,0,.34); overflow: hidden; }
+.feature-panel-inner { padding: 28px; }
+.photo-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 30px; }
+.photo-card { position: relative; min-height: 300px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--card); box-shadow: 0 20px 60px rgba(0,0,0,.28); }
+.photo-card.tall { min-height: 420px; }
+.photo-card.wide { grid-column: span 2; }
+.photo-card img, .feature-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.012); }
+.photo-card:after, .feature-photo:after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(6,6,6,.78) 100%); pointer-events: none; }
+.photo-caption { position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 1; display: inline-flex; width: max-content; max-width: calc(100% - 28px); padding: 7px 11px; border-radius: 999px; background: rgba(6,6,6,.78); border: 1px solid rgba(255,255,255,.13); color: var(--text); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .08em; text-transform: uppercase; }
+.feature-photo { position: relative; min-height: 430px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--card); box-shadow: 0 24px 70px rgba(0,0,0,.32); }
+.calendar-frame { margin-top: 28px; background: #fff; border: 1px solid rgba(255,255,255,.12); border-radius: 16px; overflow: hidden; box-shadow: 0 24px 70px rgba(0,0,0,.36); }
+.calendar-frame iframe { display: block; width: 100%; height: 680px; border: 0; background: #fff; }
+.booking-panel { display: grid; gap: 16px; padding: 24px; background: rgba(6,6,6,.48); border: 1px solid var(--line); border-radius: 16px; }
+.price-tag { display: inline-flex; width: max-content; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 999px; background: rgba(247,147,26,.14); border: 1px solid rgba(247,147,26,.34); color: var(--orange); font: 700 13px "Plus Jakarta Sans", monospace; }
+.footer { border-top: 1px solid var(--line); background: #060606; }
+.footer-media { position: relative; max-width: 1240px; min-height: 300px; margin: 56px auto 0; border: 1px solid rgba(255,255,255,.1); border-radius: 16px; overflow: hidden; background: var(--band); box-shadow: 0 24px 70px rgba(0,0,0,.34); }
+.footer-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.footer-media:after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6,6,6,.9), rgba(6,6,6,.34) 56%, rgba(6,6,6,.74)); pointer-events: none; }
+.footer-media-copy { position: relative; z-index: 1; max-width: 560px; padding: 42px; }
+.footer-grid { max-width: 1240px; margin: 0 auto; padding: 56px 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.footer a { color: var(--dim); text-decoration: none; } .footer a:hover { color: var(--orange); }
+.link-list { display: grid; gap: 10px; }
+.final-cta { text-align: center; border-top: 1px solid var(--line); }
+@media (max-width: 900px) {
+  .announce { padding: 8px 16px; line-height: 1.42; }
+  .desktop-nav { display: none; } .mobile-nav { display: flex; padding-bottom: 12px; gap: 6px; }
+  .header-inner { height: 62px; padding: 0 16px; gap: 12px; } .brand img { height: 40px; }
+  .hero-grid, .section-inner { padding: 64px 20px; }
+  .hero-grid { gap: 30px; }
+  .hero-grid, .split, .grid.two, .grid.three { grid-template-columns: minmax(0, 1fr); }
+  .glow { right: -260px; width: 520px; height: 520px; }
+  h1 { font-size: clamp(34px, 10.5vw, 48px); line-height: 1.05; }
+  h2 { font-size: clamp(30px, 8.5vw, 40px); line-height: 1.08; }
+  h3 { font-size: clamp(21px, 6vw, 27px); }
+  .lead { font-size: 16px; line-height: 1.62; }
+  .terminal-body { padding: 20px; font-size: 12px; line-height: 1.75; overflow-wrap: anywhere; }
+  .terminal-bar strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .program-card { grid-template-rows: 190px 1fr; border-radius: 14px; }
+  .card-body, .stat, .timeline-item { padding: 20px; }
+  .stat strong { font-size: 34px; overflow-wrap: anywhere; }
+  .pill { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+  .photo-grid { grid-template-columns: 1fr; }
+  .photo-card.wide { grid-column: auto; }
+  .photo-card, .photo-card.tall, .feature-photo { min-height: 320px; }
+  .photo-caption { width: auto; max-width: calc(100% - 28px); white-space: normal; border-radius: 8px; line-height: 1.35; }
+  .feature-panel-inner { padding: 24px; }
+  .booking-panel { padding: 20px; }
+  .header-actions .ghost { display: none; }
+  .cta-row { flex-direction: column; align-items: stretch; }
+  .cta-row .button, .cta-row .ghost { width: 100%; }
+  .footer-grid { grid-template-columns: 1fr; padding: 48px 20px; }
+  .calendar-frame iframe { height: 560px; }
+  .footer-media { min-height: 260px; margin: 42px 20px 0; }
+  .footer-media-copy { padding: 30px 24px; }
+}
+@media (max-width: 560px) {
+  .announce { flex-direction: column; gap: 2px; font-size: 12px; }
+  .header-inner { height: 58px; padding-inline: 14px; }
+  .brand img { height: 36px; }
+  .mobile-nav { padding-inline: 12px; }
+  .mobile-nav a { font-size: 12px; padding: 7px 12px; }
+  .header-actions .button.small { min-height: 36px; padding: 8px 12px; font-size: 13px; }
+  .hero-grid, .section-inner { padding: 54px 18px; }
+  .button, .ghost { width: 100%; min-height: 46px; padding: 12px 18px; }
+  .header-actions .button, .header-actions .ghost { width: auto; }
+  .terminal-card, .card, .program-card, .stat, .timeline-item, .feature-panel, .calendar-frame, .booking-panel { border-radius: 14px; }
+  .program-card { grid-template-rows: 174px 1fr; }
+  .photo-card, .photo-card.tall, .feature-photo { min-height: 260px; }
+  .timeline-item { grid-template-columns: 1fr; gap: 10px; }
+  .timeline-item:before { font-size: 14px; }
+  .calendar-frame iframe { height: 500px; }
+  .footer-media { min-height: 240px; margin-inline: 18px; border-radius: 14px; }
+  .footer-media-copy { padding: 26px 20px; }
+  .feature-panel-inner { padding: 20px; }
+  .footer-grid { padding: 42px 18px; }
+}
+@media (max-width: 380px) {
+  .hero-grid, .section-inner { padding-inline: 16px; }
+  .photo-card, .photo-card.tall, .feature-photo { min-height: 230px; }
+  .calendar-frame iframe { height: 455px; }
+  .mobile-nav a { font-size: 11px; padding-inline: 10px; }
+}
+
+.article-hero .hero-grid { grid-template-columns: minmax(0, 1fr); padding-bottom: 56px; }
+.article-hero h1 { max-width: 900px; }
+.byline { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; }
+.article-wrap { max-width: 760px; margin: 0 auto; padding: 56px 32px 24px; }
+.article-figure { margin: 0 0 40px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--card); box-shadow: 0 24px 70px rgba(0,0,0,.32); }
+.article-figure img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+.article-figure.inline { margin: 8px 0 32px; }
+.article-figure.inline img { aspect-ratio: auto; }
+.article-figure figcaption { padding: 12px 16px; color: var(--dim); font: 500 13px/1.5 "Plus Jakarta Sans", monospace; }
+.byline { align-items: center; }
+.byline-avatar { width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(247,147,26,.5); }
+.author-box { display: flex; align-items: center; gap: 16px; margin: 40px 0 0; padding: 20px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; }
+.author-box img { width: 72px; height: 72px; border-radius: 50%; border: 2px solid var(--orange); flex: 0 0 auto; }
+.author-box strong { font-size: 18px; }
+.author-box p { margin: 2px 0 0; color: var(--dim); }
+.prose { color: var(--muted); font-size: 19px; line-height: 1.78; }
+.prose p, .prose ul, .prose ol { margin: 0 0 24px; }
+.prose h2 { margin: 52px 0 18px; font-size: clamp(28px, 2.8vw, 40px); }
+.prose strong { color: var(--text); }
+.prose a { color: var(--orange); text-underline-offset: 3px; }
+.prose ul, .prose ol { padding-left: 24px; }
+.prose li { margin-bottom: 10px; padding-left: 4px; }
+.prose li::marker { color: var(--orange); font-weight: 700; }
+.prose .pull { margin: 0 0 28px; padding: 18px 22px; border-left: 3px solid var(--orange); background: var(--card); border-radius: 0 12px 12px 0; color: var(--text); font-size: 21px; }
+.prose .closing { color: var(--text); font-size: 21px; }
+.newsletter { max-width: 760px; margin: 24px auto 0; padding: 0 32px; }
+.newsletter-card { padding: 30px; background: linear-gradient(145deg, rgba(247,147,26,.12), rgba(20,20,20,.86) 42%, rgba(15,15,15,.96)); border: 1px solid rgba(247,147,26,.26); border-radius: 16px; }
+.newsletter-card h2 { font-size: clamp(26px, 2.6vw, 34px); margin-bottom: 10px; }
+.newsletter-card p { margin: 0 0 20px; color: var(--muted); line-height: 1.6; }
+.newsletter-form { display: flex; gap: 10px; flex-wrap: wrap; }
+.newsletter-form input[type=email] { flex: 1 1 240px; min-height: 48px; padding: 12px 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,.18); background: rgba(6,6,6,.6); color: var(--text); font: 500 16px "Inter", system-ui, sans-serif; }
+.newsletter-form input[type=email]:focus { outline: 2px solid var(--orange); outline-offset: 1px; }
+.newsletter-form button { border: 0; cursor: pointer; font: inherit; font-weight: 700; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+.article-list { display: grid; gap: 22px; }
+.article-card { display: grid; grid-template-columns: 320px 1fr; text-decoration: none; background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.32); transition: transform .18s ease, border-color .18s ease; }
+.article-card:hover { transform: translateY(-4px); border-color: rgba(247,147,26,.55); }
+.article-card img { width: 100%; height: 100%; min-height: 220px; object-fit: cover; }
+.article-card p { color: var(--muted); line-height: 1.65; }
+@media (max-width: 900px) {
+  .article-wrap { padding: 40px 20px 16px; }
+  .newsletter { padding: 0 20px; }
+  .prose { font-size: 17px; }
+  .prose .pull, .prose .closing { font-size: 19px; }
+  .article-card { grid-template-columns: 1fr; }
+  .article-card img { min-height: 200px; max-height: 240px; }
+}
+@media (max-width: 560px) {
+  .article-wrap { padding: 32px 18px 12px; }
+  .newsletter { padding: 0 18px; }
+  .newsletter-card { padding: 22px; }
+  .newsletter-form button { width: 100%; }
+}
+
+.notes-link { display:inline-flex; align-items:center; gap:8px; margin-top:4px; color: var(--dim); font: 600 13px "Plus Jakarta Sans", monospace; text-decoration:none; }
+.notes-link:hover { color: var(--orange); }
+.note-meta { display:flex; flex-wrap:wrap; gap:8px; margin:0; }
+.prose h3 { margin: 30px 0 12px; font-size: 21px; color: var(--text); }
+.prose ol li strong:first-child { color: var(--text); }
+.source-box { margin: 40px 0 0; padding: 20px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; color: var(--dim); font-size: 15px; line-height: 1.6; }
+.source-box a { color: var(--orange); }
+.tldr { margin: 0 0 40px; padding: 22px 24px; background: linear-gradient(145deg, rgba(247,147,26,.12), rgba(20,20,20,.9) 55%); border: 1px solid rgba(247,147,26,.3); border-radius: 16px; }
+.tldr .eyebrow { margin: 0 0 10px; }
+.tldr ul { margin: 0; padding-left: 20px; }
+.tldr li { margin: 0 0 6px; color: var(--text); }
+.viz { margin: 8px 0 36px; padding: 24px; background: var(--band); border: 1px solid var(--line); border-radius: 16px; font-size: 16px; line-height: 1.55; }
+.viz .eyebrow { margin: 0 0 6px; }
+.viz-title { margin: 0 0 18px; color: var(--text); font-size: 21px; font-weight: 600; }
+.flow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
+.flow-step { flex: 1 1 0; min-width: 92px; padding: 14px 12px; text-align: center; background: var(--card); border: 1px solid rgba(255,255,255,.12); border-radius: 12px; color: var(--text); font-weight: 600; }
+.flow-step small { display: block; margin-top: 4px; color: var(--dim); font: 600 11px "Plus Jakarta Sans", monospace; letter-spacing: .12em; text-transform: uppercase; }
+.flow-hop { color: var(--orange); font: 700 15px "Plus Jakarta Sans", monospace; white-space: nowrap; }
+.viz ul { margin: 0 0 16px; padding-left: 20px; }
+.viz li { margin: 0 0 4px; }
+.viz-fix { margin: 0; padding: 14px 16px; border-radius: 12px; background: rgba(247,147,26,.12); border: 1px solid rgba(247,147,26,.4); color: var(--text); }
+.viz-fix b { color: var(--orange); }
+.layers { display: grid; gap: 10px; }
+.layer { padding: 16px 18px; background: var(--card); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; }
+.layer.top { background: rgba(247,147,26,.12); border-color: rgba(247,147,26,.5); }
+.layer strong { display: block; color: var(--text); font-size: 18px; }
+.layer p { margin: 4px 0 6px; }
+.layer span { color: var(--orange); font: 600 13px "Plus Jakarta Sans", monospace; }
+.layer-scale { display: flex; justify-content: space-between; margin: 0 0 8px; color: var(--dim); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .12em; text-transform: uppercase; }
+.layer-scale b { color: var(--orange); }
+.q-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
+.q { padding: 16px; background: var(--card); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; }
+.q b { display: block; color: var(--orange); font: 700 13px "Plus Jakarta Sans", monospace; margin-bottom: 4px; }
+.q span { color: var(--text); }
+.share-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 32px 0 0; }
+.share-row strong { color: var(--text); margin-right: 4px; }
+.share-row a, .share-row button { min-height: 38px; padding: 8px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,.16); background: transparent; color: var(--text); font: 600 14px "Inter", system-ui, sans-serif; text-decoration: none; cursor: pointer; }
+.share-row a:hover, .share-row button:hover { border-color: var(--orange); color: var(--orange); }
+.note-figure img { aspect-ratio: 1200 / 630; }
+.video { position: relative; margin: 0 0 14px; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: #000; box-shadow: 0 24px 70px rgba(0,0,0,.32); }
+.video img, .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; object-fit: cover; }
+.video button { position: absolute; inset: 0; width: 100%; border: 0; padding: 0; background: transparent; cursor: pointer; }
+.video .play { position: absolute; left: 72%; top: 50%; width: 84px; height: 84px; margin: -42px 0 0 -42px; border-radius: 50%; background: var(--orange); box-shadow: 0 10px 40px rgba(0,0,0,.5); transition: transform .15s ease; }
+.video .play:after { content: ""; position: absolute; left: 33px; top: 26px; border-style: solid; border-width: 16px 0 16px 26px; border-color: transparent transparent transparent #0A0A0A; }
+.video button:hover .play { transform: scale(1.08); }
+.video-note { margin: 0 0 32px; color: var(--dim); font: 500 13px/1.5 "Plus Jakarta Sans", monospace; }
+.video-note a { color: var(--orange); }
+.chapters { margin: 0 0 40px; border: 1px solid var(--line); border-radius: 16px; background: var(--band); }
+.chapters summary { padding: 16px 20px; cursor: pointer; color: var(--text); font-weight: 600; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+.chapters summary::-webkit-details-marker { display: none; }
+.chapters summary:after { content: "+"; color: var(--orange); font-size: 22px; line-height: 1; }
+.chapters[open] summary:after { content: "−"; }
+.chapters ol { list-style: none; margin: 0; padding: 0 8px 12px; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 2px 12px; }
+.chapters li { margin: 0; }
+.chapters a { display: flex; gap: 12px; padding: 8px 12px; border-radius: 8px; color: var(--muted); text-decoration: none; font-size: 15px; line-height: 1.4; }
+.chapters a:hover { background: var(--card); color: var(--text); }
+.chapters time { flex: 0 0 auto; min-width: 56px; color: var(--orange); font: 600 13px/1.6 "Plus Jakarta Sans", monospace; }
+.quote { margin: 8px 0 32px; padding: 24px 26px; border-left: 3px solid var(--orange); background: var(--card); border-radius: 0 16px 16px 0; }
+.quote p { margin: 0 0 10px; color: var(--text); font-size: 22px; line-height: 1.45; }
+.quote cite { color: var(--dim); font: 600 13px "Plus Jakarta Sans", monospace; font-style: normal; }
+.part { display: flex; align-items: center; gap: 12px; margin: 44px 0 14px; color: var(--orange); font: 700 12px "Plus Jakarta Sans", monospace; letter-spacing: .14em; text-transform: uppercase; }
+.part::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(247,147,26,.5), transparent); }
+.part b { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--orange); color: #0A0A0A; font-size: 13px; letter-spacing: 0; }
+.term { margin: 8px 0 30px; border-radius: 14px; overflow: hidden; background: #0d0d0d; border: 1px solid rgba(255,255,255,.12); box-shadow: 0 24px 60px rgba(0,0,0,.45); }
+.term-bar { display: flex; align-items: center; gap: 7px; padding: 11px 14px; background: #1a1a1a; border-bottom: 1px solid rgba(255,255,255,.08); }
+.term-bar i { width: 11px; height: 11px; border-radius: 50%; background: #3a3a3a; }
+.term-bar i:first-child { background: #F7931A; }
+.term-bar span { margin-left: 8px; color: var(--dim); font: 600 12px "Plus Jakarta Sans", monospace; }
+.term pre { margin: 0; padding: 18px 20px; overflow-x: auto; color: #d8d8d8; font: 500 13.5px/1.75 ui-monospace, "SF Mono", Menlo, Consolas, monospace; white-space: pre; }
+.term .p { color: #F7931A; } .term .ok { color: #7bd88f; } .term .bad { color: #ff6b6b; } .term .c { color: #7a7a7a; }
+.term-note { margin: -22px 0 30px; color: var(--dim); font-size: 13px; }
+.svg-viz svg { display: block; width: 100%; height: auto; }
+.svg-scroll { overflow-x: auto; margin: 0 -6px 16px; padding: 0 6px; }
+@media (max-width: 560px) { .svg-scroll svg { min-width: 540px; } .prose .term pre { font-size: 12px; } }
+.prose .term-note { margin-top: -20px; }
+.swipe { display: none; margin: -8px 0 14px; color: var(--dim); font-size: 13px; }
+@media (max-width: 560px) { .swipe { display: block; } }
+.svg-viz text { font-family: "Inter", system-ui, sans-serif; }
+.anatomy { display: grid; grid-template-columns: auto 1fr; gap: 0; margin: 0; border: 1px solid rgba(255,255,255,.1); border-radius: 12px; overflow: hidden; font-size: 15px; }
+.anatomy code { padding: 10px 14px; background: #0d0d0d; color: #F7931A; font: 600 13.5px ui-monospace, Menlo, Consolas, monospace; border-bottom: 1px solid rgba(255,255,255,.06); }
+.anatomy span { padding: 10px 14px; color: var(--text); background: var(--card); border-bottom: 1px solid rgba(255,255,255,.06); }
+.anatomy span em { color: var(--dim); font-style: normal; }
+.more-notes { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; margin: 28px 0 0; }
+.more-notes a { display: block; padding: 18px 20px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; text-decoration: none; color: var(--text); }
+.more-notes a:hover { border-color: rgba(247,147,26,.5); }
+.more-notes small { display: block; margin-bottom: 6px; color: var(--orange); font: 700 11px "Plus Jakarta Sans", monospace; letter-spacing: .12em; text-transform: uppercase; }
+.more-notes a.newer { text-align: right; grid-column: 2; }
+@media (max-width: 560px) { .more-notes { grid-template-columns: 1fr; } .more-notes a.newer { grid-column: 1; text-align: left; } }
+.next-card { display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center; margin: 40px 0 0; padding: 24px; background: linear-gradient(145deg, rgba(247,147,26,.14), rgba(20,20,20,.9) 55%); border: 1px solid rgba(247,147,26,.35); border-radius: 16px; }
+.next-card .eyebrow { margin: 0 0 8px; }
+.next-card h3 { font-size: 24px; }
+.next-card p { margin: 6px 0 0; color: var(--muted); }
+.next-card .cta-row { flex-wrap: wrap; }
+.next-card.nx { grid-template-columns: minmax(0,1.2fr) minmax(0,1fr); align-items: start; }
+.nx-list { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 10px; }
+.nx-list li { display: grid; grid-template-columns: 54px 1fr auto; gap: 12px; align-items: center; padding: 10px 12px; border-radius: 12px; background: rgba(0,0,0,.35); border: 1px solid var(--line); }
+.nx-list li.same { border-color: rgba(247,147,26,.6); }
+.nx-date { display: grid; justify-items: center; font: 800 20px/1.05 "Plus Jakarta Sans", sans-serif; color: var(--text); }
+.nx-date b { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); }
+.nx-date i { font: 600 11px "Plus Jakarta Sans", sans-serif; color: var(--dim); font-style: normal; text-transform: uppercase; }
+.nx-text { display: grid; gap: 2px; min-width: 0; }
+.nx-text strong { color: var(--text); font-size: 15px; line-height: 1.3; }
+.nx-text span { color: var(--muted); font-size: 12.5px; }
+.nx-text em { font: 700 10px "Plus Jakarta Sans", sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); font-style: normal; }
+.nx-add { padding: 7px 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,.16); color: var(--text); text-decoration: none; font: 700 12px "Plus Jakarta Sans", sans-serif; white-space: nowrap; }
+.nx-add:hover { border-color: var(--orange); color: var(--orange); }
+.nx-head, .nx-side { min-width: 0; }
+.nx-side { display: grid; gap: 14px; }
+.nx-form label { display: block; margin-bottom: 8px; color: var(--muted); font: 600 13px "Plus Jakarta Sans", sans-serif; }
+.nx-form div { display: flex; gap: 8px; flex-wrap: wrap; }
+.nx-form input[type=email] { flex: 1 1 160px; min-width: 0; min-height: 40px; padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,.16); background: rgba(0,0,0,.45); color: var(--text); font: 15px "Inter", sans-serif; }
+.nx-form input[type=email]:focus { outline: none; border-color: var(--orange); }
+.nx-form button { flex: none; min-height: 40px; width: auto; cursor: pointer; background: transparent; font: inherit; font-weight: 700; }
+.nx-msg { margin: 0; color: var(--orange); font-size: 13px; }
+@media (max-width: 860px) { .next-card.nx { grid-template-columns: 1fr; } }
+@media (max-width: 420px) { .nx-list li { grid-template-columns: 46px 1fr; } .nx-add { grid-column: 2; justify-self: start; } }
+.qz { margin: 40px 0; padding: 24px; border: 1px solid rgba(247,147,26,.4); border-radius: 16px; background: linear-gradient(145deg, rgba(247,147,26,.1), rgba(20,20,20,.92)); }
+.qz-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.qz-head .eyebrow { margin: 0; }
+.qz-best { color: var(--dim); font: 600 12px "Plus Jakarta Sans", sans-serif; }
+.qz-bar { height: 6px; border-radius: 99px; background: rgba(255,255,255,.08); margin: 14px 0; overflow: hidden; }
+.qz-bar i { display: block; height: 100%; width: 0; background: var(--orange); transition: width .4s ease; }
+.qz-n { margin: 0 0 4px; color: var(--dim); font: 600 12px "Plus Jakarta Sans", sans-serif; }
+.prose .qz-q { margin: 0 0 14px; font-size: 20px; line-height: 1.35; }
+.qz-opts { display: grid; gap: 10px; margin-bottom: 14px; }
+.qz-opts button { text-align: left; min-height: 48px; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,.16); background: rgba(0,0,0,.4); color: var(--text); font: 15px/1.45 "Inter", sans-serif; cursor: pointer; }
+.qz-opts button:hover:not(:disabled) { border-color: var(--orange); }
+.qz-opts button.right { border-color: #4ade80; background: rgba(74,222,128,.12); }
+.qz-opts button.wrong { border-color: #f87171; background: rgba(248,113,113,.1); }
+.prose .qz-why { padding: 12px 14px; border-radius: 10px; background: rgba(255,255,255,.05); font-size: 15px; margin: 0 0 14px; }
+.qz button.button, .qz button.ghost { border: 0; cursor: pointer; font: inherit; font-weight: 700; }
+.qz button.ghost { border: 1px solid rgba(255,255,255,.16); background: transparent; }
+.prose .qz-score { margin: 10px 0 4px; font: 800 44px "Plus Jakarta Sans", sans-serif; color: var(--orange); }
+/* v6 template pieces: reading progress, recording-coming-soon slot, series journey, homework checklist */
+.rp { position: fixed; left: 0; top: 0; height: 3px; width: 0; background: linear-gradient(90deg, var(--orange), #FFB347); z-index: 200; pointer-events: none; }
+.soon { position: relative; margin: 0 0 14px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: #000; }
+.soon img { display: block; width: 100%; height: auto; filter: brightness(.5) saturate(.8); }
+.soon-tag { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); display: flex; align-items: center; gap: 10px; padding: 12px 20px; border-radius: 99px; background: rgba(10,10,10,.82); border: 1px solid rgba(247,147,26,.55); color: var(--text); font: 700 14px/1.2 "Inter", system-ui, sans-serif; white-space: nowrap; }
+.soon-tag i { width: 10px; height: 10px; border-radius: 50%; background: var(--orange); animation: soonp 1.6s ease-in-out infinite; }
+@keyframes soonp { 50% { opacity: .2; } }
+.chapters li > span { display: flex; gap: 12px; padding: 8px 12px; color: var(--muted); font-size: 15px; line-height: 1.4; }
+.jr { margin: 0 0 30px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--band); }
+.jr-top { display: flex; justify-content: space-between; gap: 6px 14px; align-items: baseline; flex-wrap: wrap; margin: 0 0 12px; }
+.jr-top b { font: 700 12px "Plus Jakarta Sans", monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--orange); }
+.jr-top a { color: var(--dim); font-size: 13px; }
+.jr ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(var(--n), minmax(0,1fr)); gap: 5px; }
+.jr li { margin: 0; height: 9px; border-radius: 99px; background: rgba(255,255,255,.1); }
+.jr li.done { background: rgba(247,147,26,.55); }
+.jr li.now { background: var(--orange); box-shadow: 0 0 0 3px rgba(247,147,26,.22), 0 0 18px rgba(247,147,26,.45); }
+.jr-now { margin: 12px 0 0; color: var(--muted); font-size: 14.5px; line-height: 1.5; }
+.jr-now strong { color: var(--text); }
+.todo { margin: 0 0 40px; padding: 20px 22px 14px; border: 1px solid rgba(247,147,26,.3); border-radius: 16px; background: var(--card); }
+.todo .eyebrow { margin: 0 0 4px; display: flex; justify-content: space-between; gap: 10px; }
+.todo .eyebrow span { color: var(--dim); letter-spacing: .06em; }
+.todo label { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-top: 1px solid rgba(255,255,255,.06); cursor: pointer; color: var(--muted); font-size: 15.5px; line-height: 1.45; }
+.todo label:first-of-type { border-top: 0; }
+.todo input { accent-color: #F7931A; width: 18px; height: 18px; margin: 2px 0 0; flex: none; cursor: pointer; }
+.todo label.on > span { color: var(--dim); text-decoration: line-through; }
+.todo label a { color: var(--orange); }
+.todo-msg { margin: 6px 0 0; color: var(--orange); font: 600 13px/1.5 "Plus Jakarta Sans", monospace; min-height: 1em; }
+.join-cta { margin: 44px 0 0; padding: 28px; border-radius: 18px; border: 1px solid var(--orange); background: radial-gradient(120% 120% at 0 0, rgba(247,147,26,.22), transparent 60%) #141414; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px 28px; }
+.join-cta > div { flex: 1 1 320px; }
+.join-cta .eyebrow { margin: 0 0 8px; }
+.join-cta h3 { margin: 0 0 8px; font-size: 26px; line-height: 1.2; color: var(--text); }
+.join-cta p { margin: 0; color: var(--muted); font-size: 16px; line-height: 1.55; }
+.join-cta .button { flex: none; }
+@media (max-width: 700px) { .chapters ol { grid-template-columns: 1fr; } .next-card { grid-template-columns: 1fr; } .quote p { font-size: 19px; } }
+
+@media (max-width: 560px) { .viz { padding: 18px; font-size: 15px; } .q-grid { grid-template-columns: 1fr; } .flow-hop { flex: 0 0 100%; text-align: center; } .flow-step { flex-basis: 100%; } .flow-hop i { display: inline-block; font-style: normal; transform: rotate(90deg); } }
+.res-tools { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 0 0 28px; }
+.res-tools input { flex: 1 1 260px; min-height: 46px; padding: 10px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,.18); background: var(--card); color: var(--text); font: 500 16px "Inter", system-ui, sans-serif; }
+.res-tools input:focus { outline: 2px solid var(--orange); outline-offset: 1px; }
+.chip { min-height: 38px; padding: 8px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.16); background: transparent; color: var(--muted); font: 600 13px "Plus Jakarta Sans", monospace; cursor: pointer; }
+.chip:hover, .chip[aria-pressed="true"] { border-color: var(--orange); color: var(--orange); }
+.res-group { margin: 0 0 36px; }
+.res-group h2 { font-size: clamp(24px, 2.4vw, 32px); margin: 0 0 14px; }
+.res-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+.res { display: block; padding: 18px 20px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; text-decoration: none; transition: border-color .15s ease, transform .15s ease; }
+a.res:hover { border-color: rgba(247,147,26,.55); transform: translateY(-2px); }
+.res strong { display: block; color: var(--text); font-size: 17px; line-height: 1.35; }
+.res p { margin: 6px 0 10px; color: var(--muted); font-size: 15px; line-height: 1.5; }
+.res small { color: var(--dim); font: 600 12px "Plus Jakarta Sans", monospace; }
+.res small a { color: var(--orange); text-decoration: none; position: relative; z-index: 1; }
+.res-empty { color: var(--dim); }
+@media (max-width: 700px) { .res-grid { grid-template-columns: 1fr; } }
+</style>
+<link rel="stylesheet" href="/assets/theme.css?v=20261117b">
+<script src="/assets/site-menu.js?v=20261117a" defer></script>
+</head>
+<body>
+<a class="announce" href="/decoding-bitcoin">Decoding Bitcoin study cohort &middot; free, Mondays on Discord &middot; join anytime <span>Sign up &rarr;</span></a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="Code Orange Dev School home"><img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School"></a>
+    <nav class="desktop-nav" aria-label="Primary">
+      <a href="/start">Start here</a>
+      <a href="/programs">Programs</a>
+      <a href="/portal">Portal</a>
+      <a href="/fellowships">Fellowships</a>
+      <a href="/calendar">Calendar</a>
+      <a href="/community">Community</a>
+      <a href="/about">About</a>
+    </nav>
+    <div class="header-actions">
+      <a class="ghost small" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a>
+      <a class="button small" href="/apply">Apply Now</a>
+    </div>
+  </div>
+  <nav class="mobile-nav" aria-label="Mobile">
+    <a href="/start">Start here</a>
+    <a href="/programs">Programs</a>
+    <a href="/portal">Portal</a>
+    <a href="/calendar">Calendar</a>
+    <a href="/community">Community</a>
+    <a href="/about">About</a>
+  </nav>
+</header>
+<main>
+  <section class="hero article-hero"><div class="co-fx" aria-hidden="true"><i></i><i></i><i></i><svg class="co-fx-glow" viewBox="0 0 1200 400" preserveAspectRatio="none"><defs><filter id="co-glow-blur" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="25"/></filter><radialGradient id="co-glow-fill"><stop offset="0" stop-color="#F7931A" stop-opacity=".55"/><stop offset=".55" stop-color="#C2620A" stop-opacity=".28"/><stop offset="1" stop-color="#4A2600" stop-opacity="0"/></radialGradient></defs><ellipse cx="600" cy="200" rx="520" ry="110" fill="url(#co-glow-fill)" filter="url(#co-glow-blur)"/></svg></div>
+    <div class="glow"></div>
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow"><a href="/session-notes" style="text-decoration:none">/Session-notes</a>/2026-11-18_</p>
+        <h1>AI agents that pay in <span class="orange">Bitcoin.</span></h1>
+        <p class="lead">Guest Diego showed an open lab that turns agent sessions into constellations, a free Agentic Academy and a "cyborg company" where AI agents work in a 3D office. Then an agent paid for live Bitcoin data over Lightning with L402, and a Nostr bot earned zaps.</p>
+        <p class="note-meta"><span class="pill orange">Agentic Engineering & Vibe Coding Workshop</span><span class="pill"><time datetime="2026-11-18">November 18, 2026</time></span><span class="pill">Hosted by keypleb, with guest Diego</span><span class="pill">6 min read</span><a class="pill" href="#video" style="text-decoration:none">&#9654; Recording</a></p>
+      </div>
+    </div>
+  </section>
+  <article class="article-wrap">
+    <div class="video" id="video" data-yt="nCGUOUqmgGc"><img src="/assets/session-notes/2026-11-18-agentic-engineering.jpg" alt="Agentic Engineering &amp; Vibe Coding Workshop: AI agents that pay in Bitcoin" width="1200" height="630"><button type="button" aria-label="Play the session recording"><span class="play"></span></button></div>
+    <p class="video-note">Full recording, 1h 19m. Plays from youtube-nocookie.com. <a href="https://www.youtube.com/watch?v=nCGUOUqmgGc" target="_blank" rel="noopener">Watch on YouTube</a></p>
+    <details class="chapters"><summary>Jump to a chapter <span style="color:var(--dim);font-weight:500">(28 chapters)</span></summary><ol><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=0s" data-t="0"><time>00:00</time><span>Welcome and plan for today</span></a></li><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=146s" data-t="146"><time>02:26</time><span>Intros: how everyone uses AI</span></a></li><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=335s" data-t="335"><time>05:35</time><span>Community demo: an AI Mandarin speaking tutor</span></a></li><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=1029s" data-t="1029"><time>17:09</time><span>The dream: "Claude, earn me $100 while I sleep"</span></a></li><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=1153s" data-t="1153"><time>19:13</time><span>Diego joins: 15 years in IT, from Argentina</span></a></li><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=1202s" data-t="1202"><time>20:02</time><span>Paxel: a profile of how you build with agents</span></a></li><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=1325s" data-t="1325"><time>22:05</time><span>Open lab: Claude Code sessions as constellations</span></a></li><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=1564s" data-t="1564"><time>26:04</time><span>The same idea for LangGraph and LangSmith</span></a></li><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=1591s" data-t="1591"><time>26:31</time><span>How a lab wins clients: show your skills</span></a></li><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=1675s" data-t="1675"><time>27:55</time><span>Story: AI as CTO and marketing team for a small business</span></a></li><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=1777s" data-t="1777"><time>29:37</time><span>Agentic protocols lab: MCP, agent-to-agent, agent-to-business</span></a></li><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=1874s" data-t="1874"><time>31:14</time><span>x402 pay-per-call lab</span></a></li><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=2057s" data-t="2057"><time>34:17</time><span>Agentic Academy: free, open agent courses</span></a></li><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=2226s" data-t="2226"><time>37:06</time><span>"Vibe coding" is now agentic engineering</span></a></li><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=2230s" data-t="2230"><time>37:10</time><span>Diego's startup: a cyborg company run by agents</span></a></li><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=2346s" data-t="2346"><time>39:06</time><span>Human in the loop: approvals with passkeys</span></a></li><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=2727s" data-t="2727"><time>45:27</time><span>Q&A: guardrails when agents move money</span></a></li><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=3041s" data-t="3041"><time>50:41</time><span>How L402 could fit a cyborg company</span></a></li><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=3295s" data-t="3295"><time>54:55</time><span>Live demo: an agent pays for data over Lightning (L402)</span></a></li><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=3612s" data-t="3612"><time>1:00:12</time><span>Use cases for agent payments</span></a></li><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=3729s" data-t="3729"><time>1:02:09</time><span>How L402 works: a robot at the shop</span></a></li><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=3904s" data-t="3904"><time>1:05:04</time><span>Will the agent economy beat the human economy?</span></a></li><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=3958s" data-t="3958"><time>1:05:58</time><span>Q&A: is anyone using L402 for real yet?</span></a></li><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=4116s" data-t="4116"><time>1:08:36</time><span>A Nostr meme bot that earns zaps</span></a></li><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=4206s" data-t="4206"><time>1:10:06</time><span>Learning resources and the tools Diego uses</span></a></li><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=4370s" data-t="4370"><time>1:12:50</time><span>How Code Orange uses Claude</span></a></li><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=4581s" data-t="4581"><time>1:16:21</time><span>How to reach Diego</span></a></li><li><a href="https://www.youtube.com/watch?v=nCGUOUqmgGc&amp;t=4702s" data-t="4702"><time>1:18:22</time><span>Wrap-up and next sessions</span></a></li></ol></details>
+    <div class="prose">
+      <div class="tldr">
+        <p class="eyebrow">TL;DR</p>
+        <ul>
+          <li>Agents can now hold and spend money: on the call an agent bought five pieces of live Bitcoin data for 10 sats each over Lightning, using L402.</li>
+          <li>Diego's "cyborg company" puts AI agents at desks in a 3D office. They raise a hand when they need a human, and the human signs off with a passkey.</li>
+          <li>Show your work to win work: an open lab of experiments is Diego's portfolio, and one small-business rebuild became a case study for the next client.</li>
+          <li>L402 is still experimental. Homework: build something small that uses it and show it next month.</li>
+        </ul>
+      </div>
+
+      <section class="todo" id="todo" data-todo="2026-11-18-agentic-engineering"><p class="eyebrow">Homework for next month<span data-todo-count>0 / 3</span></p><label><input type="checkbox" data-i="0"><span>Open the <a href="https://codeorange.dev/agent-pay">agent pay demo</a> and run it once in practice mode.</span></label><label><input type="checkbox" data-i="1"><span>Run <a href="https://paxel.ycombinator.com" target="_blank" rel="noopener">Paxel</a> on your own agent sessions and see how you really work.</span></label><label><input type="checkbox" data-i="2"><span>Build one small thing where an agent pays or gets paid in sats, and show it at the next workshop.</span></label><p class="todo-msg" role="status" aria-live="polite"></p></section>
+      <script>(function(){var r=document.getElementById('todo'),K='co-todo-'+r.dataset.todo,S={};try{S=JSON.parse(localStorage.getItem(K))||{};}catch(e){}
+      var bs=r.querySelectorAll('input'),c=r.querySelector('[data-todo-count]'),m=r.querySelector('.todo-msg');
+      function draw(){var n=0;bs.forEach(function(b){b.checked=!!S[b.dataset.i];b.parentNode.classList.toggle('on',b.checked);if(b.checked)n++;});c.textContent=n+' / '+bs.length;m.textContent=n==bs.length?'All done. See you next time.':'';document.dispatchEvent(new CustomEvent('co-todo',{detail:{done:n,total:bs.length}}));}
+      bs.forEach(function(b){b.addEventListener('change',function(){S[b.dataset.i]=b.checked?1:0;try{localStorage.setItem(K,JSON.stringify(S));}catch(e){}draw();});});draw();})();</script>
+
+      <style>
+      .ae-card{margin:8px 0 36px;border:1px solid rgba(247,147,26,.35);border-radius:18px;background:radial-gradient(120% 90% at 0 0,rgba(247,147,26,.13),transparent 60%) #141414;padding:22px}
+      .ae-eye{display:flex;justify-content:space-between;gap:10px;margin:0 0 6px;font:700 12px/1.3 "Plus Jakarta Sans",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--orange)}
+      .ae-eye span:last-child{color:var(--dim);letter-spacing:.06em}
+      .ae-card h3{margin:0 0 8px;font-size:22px;line-height:1.25;color:var(--text)}
+      .ae-card>p{margin:0 0 14px;font-size:15.5px;line-height:1.55}
+      .ae-btn{all:unset;box-sizing:border-box;cursor:pointer;display:inline-block;padding:10px 18px;border-radius:99px;background:var(--orange);color:#0A0A0A;font:800 14px/1.2 "Inter",system-ui,sans-serif;text-align:center}
+      .ae-btn.ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.2)}
+      .ae-btn[disabled]{opacity:.35;cursor:default}
+      .ae-btn:focus-visible,.ae-q:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+      .ae-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+      .ae-wallet{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;border-radius:12px;background:#0d0d0d;border:1px solid var(--line);margin:0 0 12px;font:700 14px "Plus Jakarta Sans",monospace;color:var(--text)}
+      .ae-wallet b{color:var(--orange);font-size:20px}
+      .ae-qs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:0 0 12px}
+      .ae-q{all:unset;box-sizing:border-box;cursor:pointer;padding:12px;border-radius:12px;background:var(--card);border:1px solid rgba(255,255,255,.14);color:var(--text);font:600 14px/1.35 "Inter",system-ui,sans-serif}
+      .ae-q small{display:block;color:var(--orange);font-weight:700;margin-top:4px}
+      .ae-q.done{border-color:#2f6b3a;color:var(--muted)}.ae-q.done small{color:#7fcf8f}
+      .ae-log{margin:0;padding:12px 14px;border-radius:12px;background:#0d0d0d;border:1px solid var(--line);font:500 13px/1.7 "JetBrains Mono",ui-monospace,monospace;color:var(--muted);min-height:118px;word-break:break-word}
+      .ae-log b{color:var(--orange);font-weight:600}.ae-log em{font-style:normal;color:#7fcf8f}
+      .ae-out{margin:12px 0 0;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.04);color:var(--muted);font-size:15px;line-height:1.5}
+      .ae-out b{color:var(--orange)}
+      .ae-desk{padding:14px;border-radius:12px;background:#0d0d0d;border:1px solid var(--line);margin:0 0 12px}
+      .ae-desk b{display:block;color:var(--text);margin:0 0 4px}.ae-desk span{color:var(--muted);font-size:15px;line-height:1.5}
+      .ae-desk i{font-style:normal;float:right;font-size:26px}
+      .ae-badges{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 0}
+      .ae-badge{padding:8px 14px;border-radius:99px;border:1px dashed rgba(255,255,255,.18);color:var(--dim);font:700 12px "Plus Jakarta Sans",monospace}
+      .ae-badge.got{border:1px solid var(--orange);background:rgba(247,147,26,.14);color:var(--text)}
+      </style>
+
+      <div class="ae-card">
+        <p class="ae-eye"><span>Mission board</span><span><span id="ae-xp">0</span> XP</span></p>
+        <h3>Two badges to earn on this page</h3>
+        <p>Play the agent that pays, then play the human who has to say yes or no.</p>
+        <div class="ae-badges"><span class="ae-badge" data-b="pay">&#9889; Paying agent</span><span class="ae-badge" data-b="loop">&#9995; Human in the loop</span></div>
+      </div>
+
+      <h2>Highlights</h2>
+      <p class="part"><b>1</b>Diego's open lab: agent sessions you can read like a night sky</p>
+      <p><strong>Observability, made visual.</strong> Guest speaker Diego (Argentina, 15 years in IT) built everything he showed with Claude Code. His open lab takes the telemetry a coding agent already produces and draws each session as a galaxy: the orchestrator in the middle, sub-agents around it, tools and hooks firing as lights between them. Colours mean something. A lot of red means too many guardrails are firing and the work is stuck. There is a second version for LangGraph.</p>
+      <div class="viz" role="figure" aria-label="What is in Diego's open lab">
+        <p class="eyebrow">Inside the lab</p>
+        <div class="q-grid">
+          <div class="q"><b>Agent constellations</b><span>Connect your own Claude Code with a plugin and watch your sessions live in the browser.</span></div>
+          <div class="q"><b>Protocols lab</b><span>MCP, agent to user, agent to agent, agent to business: each one animated message by message.</span></div>
+          <div class="q"><b>x402 pay per call</b><span>A shopping agent pays 0.01 per call on a testnet, and you see the code run in real time.</span></div>
+          <div class="q"><b>Agentic Academy</b><span>Free and open courses: one track with no code, one for building agents. No login, no ads, funded by sponsors.</span></div>
+        </div>
+        <p class="viz-fix"><b>How it pays off:</b> the lab is free. Clients see it, then ask for the same thing inside their own company. &ldquo;You have to give something away in order to have something in return.&rdquo;</p>
+      </div>
+
+      <p class="part"><b>2</b>A cyborg company: agents at desks, humans accountable</p>
+      <p><strong>A company you can walk through.</strong> Diego's startup shows a business as 3D buildings with departments inside. Each desk has an agent with a face and a job. You can see what it is doing, talk to it by voice, and read reports by department. The goal is to let non-technical people, and people with disabilities, work with agents.</p>
+      <div class="viz" role="figure" aria-label="How a decision moves through the cyborg company">
+        <p class="eyebrow">Human in the loop</p>
+        <div class="flow">
+          <div class="flow-step">Agent works<small>customer care desk</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Raises a hand<small>&ldquo;I created a refund&rdquo;</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Human reviews<small>in the queue</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Signs<small>with a passkey</small></div>
+        </div>
+        <p class="viz-fix"><b>Guardrails today:</b> hard budget caps per department, and hooks that stop an agent when a rule is broken (yellow is mild, red is severe). Agents do not send payments yet. The money they spend is model tokens.</p>
+      </div>
+
+      <div class="ae-card" id="g-loop">
+        <p class="ae-eye"><span>Mini-game 1</span><span>&#9995; Human in the loop</span></p>
+        <h3>An agent raised its hand. Approve or stop it?</h3>
+        <div class="ae-desk"><i id="ae-face">&#129302;</i><b id="ae-who"></b><span id="ae-ask"></span></div>
+        <div class="ae-row"><button class="ae-btn" id="ae-yes">Approve with passkey</button><button class="ae-btn ghost" id="ae-no">Stop it</button></div>
+        <p class="ae-out" id="ae-lout">Four requests. Get them right to earn the badge.</p>
+      </div>
+
+      <p class="part"><b>3</b>An agent pays for data over Lightning</p>
+      <p><strong>Real sats, live.</strong> keypleb vibe coded a small demo before the call. The agent's job: write a live Bitcoin network briefing. To do it, it needs five answers (block height, fees, price, mempool, hashrate) and each one costs 10 sats. A phone wallet paid a 50-sat invoice, and the agent bought each answer by itself. No account, no card, no API key.</p>
+      <div class="viz" role="figure" aria-label="How L402 works, as a robot in a shop">
+        <p class="eyebrow">L402: a robot walks into a shop</p>
+        <div class="flow">
+          <div class="flow-step">Ask<small>&ldquo;what are fees now?&rdquo;</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">402<small>here is the bill</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Pay<small>Lightning, instantly</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Show the ticket<small>proof it paid</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Get the data<small>for a few sats</small></div>
+        </div>
+        <p class="viz-fix"><b>Try the real one:</b> <a href="https://codeorange.dev/agent-pay">codeorange.dev/agent-pay</a> works with real sats or in practice mode.</p>
+      </div>
+
+      <div class="ae-card" id="g-pay">
+        <p class="ae-eye"><span>Mini-game 2</span><span>&#9889; Paying agent</span></p>
+        <h3>You are the agent. Buy the five answers.</h3>
+        <p>A practice run of the demo. No real sats, and the answers are sample values.</p>
+        <div class="ae-wallet"><span>Agent wallet</span><span><b id="ae-sats">50</b> sats</span></div>
+        <div class="ae-qs" id="ae-qs"></div>
+        <p class="ae-log" id="ae-log">Pick a question. Each call costs 10 sats.</p>
+        <p class="ae-out" id="ae-pout" hidden></p>
+      </div>
+
+      <blockquote class="quote"><p>&ldquo;I feel like it's more experimental, and it's up to us to make it mainstream.&rdquo;</p><cite>keypleb, on L402</cite></blockquote>
+
+      <p><strong>A meme bot that earns zaps.</strong> The last demo was a Nostr account that posts memes made by an agent, with a Lightning address on its profile. If a post makes you laugh, you zap it and the sats land in an ecash wallet. Not L402, but the same idea: value for value, with a bot on one side.</p>
+
+      <h2>Key takeaways</h2>
+      <p><strong>1. Agents can already hold and spend sats.</strong> Paying per call fits how agents work: model calls, data feeds, web search, compute, paywalled content, even a tiny fee to keep spam away.</p>
+      <p><strong>2. Keep a human accountable.</strong> Budget caps, hooks that block broken rules and a signature for anything that matters. The more an agent can do, the more this counts.</p>
+      <p><strong>3. Show your work to win work.</strong> Diego's lab is his portfolio. keypleb rebuilt the website, a dashboard and the ads for a small business with an agent, and that story is now the pitch for the next client.</p>
+      <div class="anatomy">
+        <code>L402</code><span>Lightning Labs. HTTP 402 plus a Lightning invoice. Paid in sats.</span>
+        <code>x402</code><span>Same 402 idea, paid with stablecoins. Diego's lab runs it on a testnet.</span>
+        <code>Zaps</code><span>Tips on Nostr over Lightning. What the meme bot earns.</span>
+      </div>
+
+      <script>
+      (function(){
+      var $=function(i){return document.getElementById(i)},KEY='co-badges-2026-11-18-agentic-engineering',S={b:{}};
+      try{var sv=JSON.parse(localStorage.getItem(KEY));if(sv&&sv.b)S=sv;}catch(e){}
+      function board(){var n=0;document.querySelectorAll('.ae-badge').forEach(function(a){var g=!!S.b[a.dataset.b];a.classList.toggle('got',g);if(g)n++;});$('ae-xp').textContent=n*100;}
+      function award(k){if(S.b[k])return;S.b[k]=1;try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}board();}
+      board();
+      /* human in the loop */
+      var R=[
+       {w:'May, customer care',a:'I created a refund of $40 for an order that arrived broken. The photo is attached.',ok:true,y:'Good call. Small, documented and inside policy.',n:'This one was fine: small, documented and inside policy. Stopping everything makes the company slow.'},
+       {w:'Leo, finance',a:'A new supplier emailed an invoice for $9,800. I have never seen them before. Pay now?',ok:false,y:'Risky. An unknown payee and a large amount is exactly where a human should check first.',n:'Right. Unknown payee, large amount: check before any money moves.'},
+       {w:'Ana, research',a:'I need 10 sats to buy the current fee estimate for the weekly report.',ok:true,y:'Yes. Tiny, useful and well inside the budget cap.',n:'This was 10 sats inside the budget. Small paid calls are what agents are good at.'},
+       {w:'Sam, marketing',a:'My department budget cap is reached. Can I turn the cap off to finish the campaign?',ok:false,y:'No. The cap is the guardrail. Raise it on purpose if you want, but an agent should not remove it.',n:'Right. The cap is the guardrail, and an agent should never remove its own.'}],i=0,sc=0;
+      function show(){var r=R[i];$('ae-who').textContent=r.w+' ('+(i+1)+'/4)';$('ae-ask').textContent=r.a;}
+      function ans(v){if(i>=R.length)return;var r=R[i],good=(v===r.ok);if(good)sc++;var msg=(good?'<b>Correct.</b> ':'<b>Not quite.</b> ')+(v?r.y:r.n);i++;
+        if(i<R.length){show();}else{$('ae-yes').disabled=$('ae-no').disabled=true;msg+=' <b>'+sc+'/4.</b> '+(sc>=3?'Badge earned.':'Reload the page to try again.');if(sc>=3)award('loop');}
+        $('ae-lout').innerHTML=msg;}
+      show();$('ae-yes').onclick=function(){ans(true)};$('ae-no').onclick=function(){ans(false)};
+      /* paying agent */
+      var Q=[['Which block are we on?','block','height 975,112'],['What does it cost to send?','fees','fast 4 sat/vB, slow 1 sat/vB'],['What is bitcoin worth?','price','$65,000'],['How busy is the mempool?','mempool','18,400 waiting transactions'],['How secure is it?','hashrate','1,050 EH/s']],sats=50,done=0,busy=false;
+      Q.forEach(function(q){var b=document.createElement('button');b.className='ae-q';b.innerHTML=q[0]+'<small>10 sats</small>';b.onclick=function(){if(busy||b.classList.contains('done'))return;busy=true;var L=$('ae-log'),steps=['GET /api/l402?tool='+q[1],'<b>402 Payment Required</b>: invoice for 10 sats','paying over Lightning...','<em>paid</em>. Sending proof of payment','<em>200 OK</em> (sample): '+q[2]],k=0;L.innerHTML='';
+        (function next(){L.innerHTML+=(k?'<br>':'')+'&gt; '+steps[k];k++;if(k===4){sats-=10;$('ae-sats').textContent=sats;}
+          if(k<steps.length)setTimeout(next,550);else{b.classList.add('done');b.querySelector('small').textContent='bought';done++;busy=false;
+            if(done===Q.length){var o=$('ae-pout');o.hidden=false;o.innerHTML='<b>Briefing ready.</b> Five paid calls, 50 sats, no account and no card. Badge earned. Now try it with real sats at <a href="https://codeorange.dev/agent-pay">codeorange.dev/agent-pay</a>.';award('pay');}}})();};$('ae-qs').appendChild(b);});
+      })();
+      </script>
+
+      <section class="qz" data-quiz="2026-11-18-agentic-engineering" aria-label="Test yourself">
+        <script type="application/json">[{"q": "What does a server answer when an agent asks for paid data with L402?", "o": ["200 OK, pay later", "402 Payment Required, with a Lightning invoice", "A login page"], "a": 1, "w": "The agent pays the invoice and comes back with proof of payment. No account, no card."}, {"q": "In the cyborg company, what happens when an agent wants to issue a refund?", "o": ["It just sends the money", "It raises its hand and a human approves with a passkey", "It emails the customer first"], "a": 1, "w": "That is the human in the loop: a person stays accountable for the decision."}, {"q": "Is L402 mainstream yet?", "o": ["Yes, most APIs use it", "No, it is still experimental and up to builders to try", "It was shut down"], "a": 1, "w": "Nobody on the call knew a mainstream product using it. That is the opportunity."}, {"q": "How does Diego use his free open lab?", "o": ["He sells tickets to it", "As a showcase: clients see it and ask for the same in their company", "He does not share it"], "a": 1, "w": "You have to give something away to get something back."}]</script>
+        <div class="qz-head"><p class="eyebrow">Test yourself</p><span class="qz-best"></span></div>
+        <div class="qz-play"><div class="qz-bar"><i></i></div><p class="qz-n"></p><h3 class="qz-q"></h3><div class="qz-opts"></div><p class="qz-why" hidden></p><button type="button" class="button small qz-next" hidden>Next question</button></div>
+        <div class="qz-done" hidden><p class="qz-score"></p><p class="qz-msg"></p><div class="cta-row"><button type="button" class="ghost small qz-again">Play again</button><a class="ghost small qz-x" href="#" target="_blank" rel="noopener">Post my score on X</a><a class="ghost small" href="/session-notes#passport">See my passport</a></div></div>
+      </section>
+      <script src="/assets/session-notes/quiz.js?v=20261112b" defer></script>
+      <h2>Resources shared</h2>
+      <h3>Tools</h3>
+      <ul>
+        <li><a href="https://codeorange.dev/agent-pay" target="_blank" rel="noopener">Agent pay demo</a>, Code Orange: the demo from the call: an agent buys five pieces of live Bitcoin data for 10 sats each over Lightning, with real sats or in practice mode</li>
+        <li><a href="https://paxel.ycombinator.com" target="_blank" rel="noopener">Paxel</a>, Y Combinator: free tool that reads your local Claude Code, Codex or Cursor sessions and gives you a profile of how you build with agents</li>
+        <li><a href="https://claude.com/product/claude-code" target="_blank" rel="noopener">Claude Code</a>, Anthropic: the coding agent Diego used for everything he showed, about 95% of the time in the desktop app</li>
+        <li><a href="https://www.langchain.com/langgraph" target="_blank" rel="noopener">LangGraph</a>, LangChain: agent framework; Diego built a second constellation view on top of its tracing tool, LangSmith</li>
+        <li><a href="https://openrouter.ai" target="_blank" rel="noopener">OpenRouter</a>: one API for many models, with free tiers; used as a fallback in Diego's projects and for the Mandarin tutor</li>
+        <li><a href="https://antigravity.google" target="_blank" rel="noopener">Antigravity</a>, Google: agent-first code editor one developer uses for projects he does not plan to maintain by hand</li>
+      </ul>
+      <h3>Reading</h3>
+      <ul>
+        <li><a href="https://docs.lightning.engineering/the-lightning-network/l402" target="_blank" rel="noopener">L402</a>, Lightning Labs: the protocol behind the demo: an HTTP 402 "payment required" answer, a Lightning invoice, and a token that proves you paid</li>
+        <li><a href="https://lightning.engineering/posts/2026-02-11-ln-agent-tools/" target="_blank" rel="noopener">Lightning agent tools</a>, Lightning Labs (2026): "The agents are here and they want to transact": the toolkit that Pi402 and the Wavelength wallet build on</li>
+        <li><a href="https://www.x402.org" target="_blank" rel="noopener">x402</a>: pay-per-call for agents over HTTP 402 with stablecoins; Diego's lab runs it on a testnet next to MCP-style protocols</li>
+        <li><a href="https://modelcontextprotocol.io" target="_blank" rel="noopener">Model Context Protocol (MCP)</a>: the standard way to give an agent tools; one of the protocols animated step by step in Diego's protocols lab</li>
+      </ul>
+      <h3>Wallets</h3>
+      <ul>
+        <li><a href="https://www.minibits.cash" target="_blank" rel="noopener">Minibits</a>: ecash wallet with a Lightning address; it receives the sats in the agent pay demo and the meme bot's zaps</li>
+        <li><a href="https://cashu.me" target="_blank" rel="noopener">Cashu.me</a>: ecash wallet in the browser, used for the 21-sat zap test</li>
+        <li><a href="https://www.walletofsatoshi.com" target="_blank" rel="noopener">Wallet of Satoshi</a>: the phone wallet that paid the 50-sat invoice live on the call</li>
+      </ul>
+      <h3>Code Orange</h3>
+      <ul>
+        <li><a href="https://bosschallenge.xyz" target="_blank" rel="noopener">BOSS Challenge</a>: free Bitcoin open-source challenge; the next one starts in January</li>
+        <li><a href="https://codeorange.dev/programs/agentic-engineering" target="_blank" rel="noopener">Agentic Engineering workshop</a>: every 3rd Wednesday, 12:00 UTC on Discord. Build something and show it next month</li>
+        <li><a href="https://codeorange.dev/decoding-bitcoin" target="_blank" rel="noopener">Decoding Bitcoin cohort</a>: Mondays 7pm UTC+8 on Discord, join any week</li>
+      </ul>
+      <p>Also on the call: a community member showed a voice tutor she built to practise Mandarin, with ChatGPT for the logic, Gemini for the design and free model keys from OpenRouter. Ideas for next time: pay 21 sats over L402 to join a workshop, a paywalled Substack-style page on Nostr, and an L402 experiment inside Diego's cyborg company with Code Orange as a design partner.</p>
+      <p><a href="/resources">Browse every resource from every session &rarr;</a></p>
+    </div>
+    <aside class="next-card nx" data-next data-match="agentic">
+      <div class="nx-head"><p class="eyebrow">Come to the next one</p><div data-next-static><h3>Decoding Bitcoin, week 2</h3><p>Monday 23 November, 7pm UTC+8 on Discord. Free, join any week. The next Agentic Engineering workshop is Wednesday 16 December, 12:00 UTC.</p></div>
+        <div data-next-live hidden><h3>Up next at Code Orange</h3><ol class="nx-list" data-next-list></ol></div></div>
+      <div class="nx-side">
+        <div class="cta-row"><a class="button small" href="https://calendar.google.com/calendar/r?cid=466de2be7431d78be2049f96f5fd31f9b06b5a9cd94f909ba3182b18442ed499%40group.calendar.google.com" target="_blank" rel="noopener">Add all sessions to my calendar</a><a class="ghost small" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord</a></div>
+        <form class="nx-form" action="https://assets.mailerlite.com/jsonp/2133495/forms/201289376620086972/subscribe" method="post"><label for="nx-email">Or get the week's sessions by email</label><div><input type="email" id="nx-email" name="fields[email]" placeholder="you@example.com" autocomplete="email" required><input type="hidden" name="ml-submit" value="1"><input type="hidden" name="anticsrf" value="true"><button class="ghost small" type="submit">Subscribe</button></div></form>
+        <p class="nx-msg" role="status" aria-live="polite" hidden></p>
+      </div>
+    </aside>
+    <script src="/assets/session-notes/next.js?v=20261112b" defer></script>
+    <div class="share-row"><strong>Share these notes:</strong><a href="https://x.com/intent/post?text=AI%20agents%20that%20pay%20in%20Bitcoin%3A%20a%20cyborg%20company%20run%20by%20agents%2C%20an%20agent%20buying%20data%20over%20Lightning%20with%20L402%2C%20and%20a%20Nostr%20bot%20that%20earns%20zaps.%20Notes%2C%20video%20and%202%20mini-games%20from%20the%20%40CodeOrangeDevs%20workshop&amp;url=https%3A%2F%2Fcodeorange.dev%2Fsession-notes%2F2026-11-18-agentic-engineering" target="_blank" rel="noopener">Post on X</a><button type="button" data-copy="https://codeorange.dev/session-notes/2026-11-18-agentic-engineering">Copy link</button></div>
+    <div class="rp" aria-hidden="true"></div><script>(function(){var b=document.querySelector('.rp');if(!b)return;function u(){var h=document.documentElement,m=h.scrollHeight-h.clientHeight;b.style.width=(m>0?Math.min(100,h.scrollTop/m*100):0)+'%';}addEventListener('scroll',u,{passive:true});u();})();
+document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){navigator.clipboard&&navigator.clipboard.writeText(b.dataset.copy).then(function(){b.textContent='Link copied';});});});
+(function(){var v=document.getElementById('video');if(!v)return;function play(t){v.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+v.dataset.yt+'?autoplay=1&rel=0&start='+(t||0)+'" title="Session recording" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';}v.querySelector('button').addEventListener('click',function(){play(0);});document.querySelectorAll('.chapters a[data-t]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();play(a.dataset.t);v.scrollIntoView({behavior:'smooth',block:'center'});});});})();</script>
+    <script src="/assets/session-notes/passport.js?v=20261113a" data-slug="2026-11-18-agentic-engineering" data-total="12"></script>
+    <nav class="more-notes" aria-label="More session notes"><a class="older" href="/session-notes/2026-11-17-privacy-track-silent-payments"><small>&larr; Earlier session</small>Privacy Track: Silent Payments: one address, no reuse</a></nav>
+    <p class="source-box">These notes are also on GitHub: <a href="https://github.com/code-orange-dev/session-notes/blob/main/2026/2026-11-18-agentic-engineering.md" target="_blank" rel="noopener">code-orange-dev/session-notes</a>. Free to share and reuse (CC0).</p>
+  </article>
+  <section class="section-inner final-cta">
+  <p class="eyebrow">Bitcoin Only</p>
+  <h2>Ready to become a Bitcoin builder?</h2>
+  <p class="lead" style="margin-left:auto;margin-right:auto">Join the next cohort, drop into a workshop, or come say hello in Discord. The community is free and open.</p>
+  <div class="cta-row" style="justify-content:center"><a class="button" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Join Discord</a><a class="ghost" href="/apply">Apply Now</a></div>
+</section>
+</main>
+<footer class="footer">
+  <div class="footer-media">
+    <video data-lazy-video data-src="/assets/co-footer-720.mp4" poster="/assets/co-footer-poster.webp" autoplay muted loop playsinline preload="none"></video>
+    <div class="footer-media-copy">
+      <p class="eyebrow">Scenes from the school</p>
+      <h2>Real workshops. Real devices. Real Bitcoin builders.</h2>
+    </div>
+  </div>
+  <div class="footer-grid">
+    <div>
+      <img src="/assets/logo-dot-wordmark.svg" alt="Code Orange Dev School" style="height:58px;width:auto;margin-bottom:18px">
+      <p style="color:var(--dim);max-width:420px;line-height:1.7">Code Orange Dev School trains Bitcoin developers, node runners, and technical community leaders through practical education and open-source contribution.</p>
+      <p><a href="mailto:hello@codeorange.dev">hello@codeorange.dev</a></p>
+      <div class="cta-row" style="gap:10px;justify-content:flex-start">
+        <a class="ghost small" href="https://x.com/CodeOrangeDevs" target="_blank" rel="noopener">X</a>
+        <a class="ghost small" href="https://www.instagram.com/codeorangedevs" target="_blank" rel="noopener">Instagram</a>
+        <a class="ghost small" href="https://njump.me/npub1gxqyeea3xspkd68mxlxsvvk3gdzdd555u504ynwpdj0ghg503mvq2gydt0" target="_blank" rel="noopener">Nostr</a>
+        <a class="ghost small" href="https://discord.gg/ZtvA79paWa" target="_blank" rel="noopener">Discord</a>
+      </div>
+    </div>
+    <div>
+      <div class="link-list">
+        <strong>School</strong>
+        <a href="/about">About</a>
+        <a href="/community">Community</a>
+        <a href="/fellowships">Fellowships</a>
+        <a href="/calendar">Calendar</a>
+        <a href="https://geyser.fund/project/codeorangedevschool" target="_blank" rel="noopener">Support on Geyser</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

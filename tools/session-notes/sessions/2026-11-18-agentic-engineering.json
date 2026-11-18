@@ -1,0 +1,311 @@
+{
+  "game": true,
+  "slug": "2026-11-18-agentic-engineering",
+  "date": "2026-11-18",
+  "series": "Agentic Engineering & Vibe Coding Workshop",
+  "title": "AI agents that pay in Bitcoin",
+  "image_title": "AI agents that|pay in Bitcoin",
+  "host": "keypleb, with guest Diego",
+  "tag": "AI agents",
+  "summary": "Guest Diego showed an open lab that turns agent sessions into constellations, a free Agentic Academy and a \"cyborg company\" where AI agents work in a 3D office. Then an agent paid for live Bitcoin data over Lightning with L402, and a Nostr bot earned zaps.",
+  "share_text": "AI agents that pay in Bitcoin: a cyborg company run by agents, an agent buying data over Lightning with L402, and a Nostr bot that earns zaps. Notes, video and 2 mini-games from the @CodeOrangeDevs workshop",
+  "minutes": 6,
+  "video": "nCGUOUqmgGc",
+  "duration": "1h 19m",
+  "tldr": [
+    "Agents can now hold and spend money: on the call an agent bought five pieces of live Bitcoin data for 10 sats each over Lightning, using L402.",
+    "Diego's \"cyborg company\" puts AI agents at desks in a 3D office. They raise a hand when they need a human, and the human signs off with a passkey.",
+    "Show your work to win work: an open lab of experiments is Diego's portfolio, and one small-business rebuild became a case study for the next client.",
+    "L402 is still experimental. Homework: build something small that uses it and show it next month."
+  ],
+  "chapters": [
+    [
+      0,
+      "Welcome and plan for today"
+    ],
+    [
+      146,
+      "Intros: how everyone uses AI"
+    ],
+    [
+      335,
+      "Community demo: an AI Mandarin speaking tutor"
+    ],
+    [
+      1029,
+      "The dream: \"Claude, earn me $100 while I sleep\""
+    ],
+    [
+      1153,
+      "Diego joins: 15 years in IT, from Argentina"
+    ],
+    [
+      1202,
+      "Paxel: a profile of how you build with agents"
+    ],
+    [
+      1325,
+      "Open lab: Claude Code sessions as constellations"
+    ],
+    [
+      1564,
+      "The same idea for LangGraph and LangSmith"
+    ],
+    [
+      1591,
+      "How a lab wins clients: show your skills"
+    ],
+    [
+      1675,
+      "Story: AI as CTO and marketing team for a small business"
+    ],
+    [
+      1777,
+      "Agentic protocols lab: MCP, agent-to-agent, agent-to-business"
+    ],
+    [
+      1874,
+      "x402 pay-per-call lab"
+    ],
+    [
+      2057,
+      "Agentic Academy: free, open agent courses"
+    ],
+    [
+      2226,
+      "\"Vibe coding\" is now agentic engineering"
+    ],
+    [
+      2230,
+      "Diego's startup: a cyborg company run by agents"
+    ],
+    [
+      2346,
+      "Human in the loop: approvals with passkeys"
+    ],
+    [
+      2727,
+      "Q&A: guardrails when agents move money"
+    ],
+    [
+      3041,
+      "How L402 could fit a cyborg company"
+    ],
+    [
+      3295,
+      "Live demo: an agent pays for data over Lightning (L402)"
+    ],
+    [
+      3612,
+      "Use cases for agent payments"
+    ],
+    [
+      3729,
+      "How L402 works: a robot at the shop"
+    ],
+    [
+      3904,
+      "Will the agent economy beat the human economy?"
+    ],
+    [
+      3958,
+      "Q&A: is anyone using L402 for real yet?"
+    ],
+    [
+      4116,
+      "A Nostr meme bot that earns zaps"
+    ],
+    [
+      4206,
+      "Learning resources and the tools Diego uses"
+    ],
+    [
+      4370,
+      "How Code Orange uses Claude"
+    ],
+    [
+      4581,
+      "How to reach Diego"
+    ],
+    [
+      4702,
+      "Wrap-up and next sessions"
+    ]
+  ],
+  "todo": {
+    "title": "Homework for next month",
+    "items": [
+      "Open the <a href=\"https://codeorange.dev/agent-pay\">agent pay demo</a> and run it once in practice mode.",
+      "Run <a href=\"https://paxel.ycombinator.com\" target=\"_blank\" rel=\"noopener\">Paxel</a> on your own agent sessions and see how you really work.",
+      "Build one small thing where an agent pays or gets paid in sats, and show it at the next workshop."
+    ]
+  },
+  "next": {
+    "title": "Decoding Bitcoin, week 2",
+    "when": "Monday 23 November, 7pm UTC+8 on Discord. Free, join any week. The next Agentic Engineering workshop is Wednesday 16 December, 12:00 UTC."
+  },
+  "resources": [
+    {
+      "group": "Tools",
+      "topic": "Lightning",
+      "title": "Agent pay demo",
+      "url": "https://codeorange.dev/agent-pay",
+      "by": "Code Orange",
+      "note": "the demo from the call: an agent buys five pieces of live Bitcoin data for 10 sats each over Lightning, with real sats or in practice mode"
+    },
+    {
+      "group": "Reading",
+      "topic": "Lightning",
+      "title": "L402",
+      "url": "https://docs.lightning.engineering/the-lightning-network/l402",
+      "by": "Lightning Labs",
+      "note": "the protocol behind the demo: an HTTP 402 \"payment required\" answer, a Lightning invoice, and a token that proves you paid"
+    },
+    {
+      "group": "Reading",
+      "topic": "Lightning",
+      "title": "Lightning agent tools",
+      "url": "https://lightning.engineering/posts/2026-02-11-ln-agent-tools/",
+      "by": "Lightning Labs (2026)",
+      "note": "\"The agents are here and they want to transact\": the toolkit that Pi402 and the Wavelength wallet build on"
+    },
+    {
+      "group": "Reading",
+      "topic": "AI agents",
+      "title": "x402",
+      "url": "https://www.x402.org",
+      "note": "pay-per-call for agents over HTTP 402 with stablecoins; Diego's lab runs it on a testnet next to MCP-style protocols"
+    },
+    {
+      "group": "Reading",
+      "topic": "AI agents",
+      "title": "Model Context Protocol (MCP)",
+      "url": "https://modelcontextprotocol.io",
+      "note": "the standard way to give an agent tools; one of the protocols animated step by step in Diego's protocols lab"
+    },
+    {
+      "group": "Tools",
+      "topic": "AI agents",
+      "title": "Paxel",
+      "url": "https://paxel.ycombinator.com",
+      "by": "Y Combinator",
+      "note": "free tool that reads your local Claude Code, Codex or Cursor sessions and gives you a profile of how you build with agents"
+    },
+    {
+      "group": "Tools",
+      "topic": "AI agents",
+      "title": "Claude Code",
+      "url": "https://claude.com/product/claude-code",
+      "by": "Anthropic",
+      "note": "the coding agent Diego used for everything he showed, about 95% of the time in the desktop app"
+    },
+    {
+      "group": "Tools",
+      "topic": "AI agents",
+      "title": "LangGraph",
+      "url": "https://www.langchain.com/langgraph",
+      "by": "LangChain",
+      "note": "agent framework; Diego built a second constellation view on top of its tracing tool, LangSmith"
+    },
+    {
+      "group": "Tools",
+      "topic": "AI agents",
+      "title": "OpenRouter",
+      "url": "https://openrouter.ai",
+      "note": "one API for many models, with free tiers; used as a fallback in Diego's projects and for the Mandarin tutor"
+    },
+    {
+      "group": "Tools",
+      "topic": "AI agents",
+      "title": "Antigravity",
+      "url": "https://antigravity.google",
+      "by": "Google",
+      "note": "agent-first code editor one developer uses for projects he does not plan to maintain by hand"
+    },
+    {
+      "group": "Wallets",
+      "topic": "Ecash",
+      "title": "Minibits",
+      "url": "https://www.minibits.cash",
+      "note": "ecash wallet with a Lightning address; it receives the sats in the agent pay demo and the meme bot's zaps"
+    },
+    {
+      "group": "Wallets",
+      "topic": "Ecash",
+      "title": "Cashu.me",
+      "url": "https://cashu.me",
+      "note": "ecash wallet in the browser, used for the 21-sat zap test"
+    },
+    {
+      "group": "Wallets",
+      "topic": "Lightning",
+      "title": "Wallet of Satoshi",
+      "url": "https://www.walletofsatoshi.com",
+      "note": "the phone wallet that paid the 50-sat invoice live on the call"
+    },
+    {
+      "group": "Code Orange",
+      "topic": "Learning paths",
+      "title": "BOSS Challenge",
+      "url": "https://bosschallenge.xyz",
+      "note": "free Bitcoin open-source challenge; the next one starts in January"
+    },
+    {
+      "group": "Code Orange",
+      "topic": "Code Orange",
+      "title": "Agentic Engineering workshop",
+      "url": "https://codeorange.dev/programs/agentic-engineering",
+      "note": "every 3rd Wednesday, 12:00 UTC on Discord. Build something and show it next month"
+    },
+    {
+      "group": "Code Orange",
+      "topic": "Code Orange",
+      "title": "Decoding Bitcoin cohort",
+      "url": "https://codeorange.dev/decoding-bitcoin",
+      "note": "Mondays 7pm UTC+8 on Discord, join any week"
+    }
+  ],
+  "ideas": "Also on the call: a community member showed a voice tutor she built to practise Mandarin, with ChatGPT for the logic, Gemini for the design and free model keys from OpenRouter. Ideas for next time: pay 21 sats over L402 to join a workshop, a paywalled Substack-style page on Nostr, and an L402 experiment inside Diego's cyborg company with Code Orange as a design partner.",
+  "quiz": [
+    {
+      "q": "What does a server answer when an agent asks for paid data with L402?",
+      "o": [
+        "200 OK, pay later",
+        "402 Payment Required, with a Lightning invoice",
+        "A login page"
+      ],
+      "a": 1,
+      "w": "The agent pays the invoice and comes back with proof of payment. No account, no card."
+    },
+    {
+      "q": "In the cyborg company, what happens when an agent wants to issue a refund?",
+      "o": [
+        "It just sends the money",
+        "It raises its hand and a human approves with a passkey",
+        "It emails the customer first"
+      ],
+      "a": 1,
+      "w": "That is the human in the loop: a person stays accountable for the decision."
+    },
+    {
+      "q": "Is L402 mainstream yet?",
+      "o": [
+        "Yes, most APIs use it",
+        "No, it is still experimental and up to builders to try",
+        "It was shut down"
+      ],
+      "a": 1,
+      "w": "Nobody on the call knew a mainstream product using it. That is the opportunity."
+    },
+    {
+      "q": "How does Diego use his free open lab?",
+      "o": [
+        "He sells tickets to it",
+        "As a showcase: clients see it and ask for the same in their company",
+        "He does not share it"
+      ],
+      "a": 1,
+      "w": "You have to give something away to get something back."
+    }
+  ]
+}

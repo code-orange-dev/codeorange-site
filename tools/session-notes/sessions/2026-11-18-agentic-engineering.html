@@ -1,0 +1,135 @@
+      <style>
+      .ae-card{margin:8px 0 36px;border:1px solid rgba(247,147,26,.35);border-radius:18px;background:radial-gradient(120% 90% at 0 0,rgba(247,147,26,.13),transparent 60%) #141414;padding:22px}
+      .ae-eye{display:flex;justify-content:space-between;gap:10px;margin:0 0 6px;font:700 12px/1.3 "Plus Jakarta Sans",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--orange)}
+      .ae-eye span:last-child{color:var(--dim);letter-spacing:.06em}
+      .ae-card h3{margin:0 0 8px;font-size:22px;line-height:1.25;color:var(--text)}
+      .ae-card>p{margin:0 0 14px;font-size:15.5px;line-height:1.55}
+      .ae-btn{all:unset;box-sizing:border-box;cursor:pointer;display:inline-block;padding:10px 18px;border-radius:99px;background:var(--orange);color:#0A0A0A;font:800 14px/1.2 "Inter",system-ui,sans-serif;text-align:center}
+      .ae-btn.ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.2)}
+      .ae-btn[disabled]{opacity:.35;cursor:default}
+      .ae-btn:focus-visible,.ae-q:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+      .ae-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+      .ae-wallet{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;border-radius:12px;background:#0d0d0d;border:1px solid var(--line);margin:0 0 12px;font:700 14px "Plus Jakarta Sans",monospace;color:var(--text)}
+      .ae-wallet b{color:var(--orange);font-size:20px}
+      .ae-qs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:0 0 12px}
+      .ae-q{all:unset;box-sizing:border-box;cursor:pointer;padding:12px;border-radius:12px;background:var(--card);border:1px solid rgba(255,255,255,.14);color:var(--text);font:600 14px/1.35 "Inter",system-ui,sans-serif}
+      .ae-q small{display:block;color:var(--orange);font-weight:700;margin-top:4px}
+      .ae-q.done{border-color:#2f6b3a;color:var(--muted)}.ae-q.done small{color:#7fcf8f}
+      .ae-log{margin:0;padding:12px 14px;border-radius:12px;background:#0d0d0d;border:1px solid var(--line);font:500 13px/1.7 "JetBrains Mono",ui-monospace,monospace;color:var(--muted);min-height:118px;word-break:break-word}
+      .ae-log b{color:var(--orange);font-weight:600}.ae-log em{font-style:normal;color:#7fcf8f}
+      .ae-out{margin:12px 0 0;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.04);color:var(--muted);font-size:15px;line-height:1.5}
+      .ae-out b{color:var(--orange)}
+      .ae-desk{padding:14px;border-radius:12px;background:#0d0d0d;border:1px solid var(--line);margin:0 0 12px}
+      .ae-desk b{display:block;color:var(--text);margin:0 0 4px}.ae-desk span{color:var(--muted);font-size:15px;line-height:1.5}
+      .ae-desk i{font-style:normal;float:right;font-size:26px}
+      .ae-badges{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 0}
+      .ae-badge{padding:8px 14px;border-radius:99px;border:1px dashed rgba(255,255,255,.18);color:var(--dim);font:700 12px "Plus Jakarta Sans",monospace}
+      .ae-badge.got{border:1px solid var(--orange);background:rgba(247,147,26,.14);color:var(--text)}
+      </style>
+
+      <div class="ae-card">
+        <p class="ae-eye"><span>Mission board</span><span><span id="ae-xp">0</span> XP</span></p>
+        <h3>Two badges to earn on this page</h3>
+        <p>Play the agent that pays, then play the human who has to say yes or no.</p>
+        <div class="ae-badges"><span class="ae-badge" data-b="pay">&#9889; Paying agent</span><span class="ae-badge" data-b="loop">&#9995; Human in the loop</span></div>
+      </div>
+
+      <h2>Highlights</h2>
+      <p class="part"><b>1</b>Diego's open lab: agent sessions you can read like a night sky</p>
+      <p><strong>Observability, made visual.</strong> Guest speaker Diego (Argentina, 15 years in IT) built everything he showed with Claude Code. His open lab takes the telemetry a coding agent already produces and draws each session as a galaxy: the orchestrator in the middle, sub-agents around it, tools and hooks firing as lights between them. Colours mean something. A lot of red means too many guardrails are firing and the work is stuck. There is a second version for LangGraph.</p>
+      <div class="viz" role="figure" aria-label="What is in Diego's open lab">
+        <p class="eyebrow">Inside the lab</p>
+        <div class="q-grid">
+          <div class="q"><b>Agent constellations</b><span>Connect your own Claude Code with a plugin and watch your sessions live in the browser.</span></div>
+          <div class="q"><b>Protocols lab</b><span>MCP, agent to user, agent to agent, agent to business: each one animated message by message.</span></div>
+          <div class="q"><b>x402 pay per call</b><span>A shopping agent pays 0.01 per call on a testnet, and you see the code run in real time.</span></div>
+          <div class="q"><b>Agentic Academy</b><span>Free and open courses: one track with no code, one for building agents. No login, no ads, funded by sponsors.</span></div>
+        </div>
+        <p class="viz-fix"><b>How it pays off:</b> the lab is free. Clients see it, then ask for the same thing inside their own company. &ldquo;You have to give something away in order to have something in return.&rdquo;</p>
+      </div>
+
+      <p class="part"><b>2</b>A cyborg company: agents at desks, humans accountable</p>
+      <p><strong>A company you can walk through.</strong> Diego's startup shows a business as 3D buildings with departments inside. Each desk has an agent with a face and a job. You can see what it is doing, talk to it by voice, and read reports by department. The goal is to let non-technical people, and people with disabilities, work with agents.</p>
+      <div class="viz" role="figure" aria-label="How a decision moves through the cyborg company">
+        <p class="eyebrow">Human in the loop</p>
+        <div class="flow">
+          <div class="flow-step">Agent works<small>customer care desk</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Raises a hand<small>&ldquo;I created a refund&rdquo;</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Human reviews<small>in the queue</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Signs<small>with a passkey</small></div>
+        </div>
+        <p class="viz-fix"><b>Guardrails today:</b> hard budget caps per department, and hooks that stop an agent when a rule is broken (yellow is mild, red is severe). Agents do not send payments yet. The money they spend is model tokens.</p>
+      </div>
+
+      <div class="ae-card" id="g-loop">
+        <p class="ae-eye"><span>Mini-game 1</span><span>&#9995; Human in the loop</span></p>
+        <h3>An agent raised its hand. Approve or stop it?</h3>
+        <div class="ae-desk"><i id="ae-face">&#129302;</i><b id="ae-who"></b><span id="ae-ask"></span></div>
+        <div class="ae-row"><button class="ae-btn" id="ae-yes">Approve with passkey</button><button class="ae-btn ghost" id="ae-no">Stop it</button></div>
+        <p class="ae-out" id="ae-lout">Four requests. Get them right to earn the badge.</p>
+      </div>
+
+      <p class="part"><b>3</b>An agent pays for data over Lightning</p>
+      <p><strong>Real sats, live.</strong> keypleb vibe coded a small demo before the call. The agent's job: write a live Bitcoin network briefing. To do it, it needs five answers (block height, fees, price, mempool, hashrate) and each one costs 10 sats. A phone wallet paid a 50-sat invoice, and the agent bought each answer by itself. No account, no card, no API key.</p>
+      <div class="viz" role="figure" aria-label="How L402 works, as a robot in a shop">
+        <p class="eyebrow">L402: a robot walks into a shop</p>
+        <div class="flow">
+          <div class="flow-step">Ask<small>&ldquo;what are fees now?&rdquo;</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">402<small>here is the bill</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Pay<small>Lightning, instantly</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Show the ticket<small>proof it paid</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Get the data<small>for a few sats</small></div>
+        </div>
+        <p class="viz-fix"><b>Try the real one:</b> <a href="https://codeorange.dev/agent-pay">codeorange.dev/agent-pay</a> works with real sats or in practice mode.</p>
+      </div>
+
+      <div class="ae-card" id="g-pay">
+        <p class="ae-eye"><span>Mini-game 2</span><span>&#9889; Paying agent</span></p>
+        <h3>You are the agent. Buy the five answers.</h3>
+        <p>A practice run of the demo. No real sats, and the answers are sample values.</p>
+        <div class="ae-wallet"><span>Agent wallet</span><span><b id="ae-sats">50</b> sats</span></div>
+        <div class="ae-qs" id="ae-qs"></div>
+        <p class="ae-log" id="ae-log">Pick a question. Each call costs 10 sats.</p>
+        <p class="ae-out" id="ae-pout" hidden></p>
+      </div>
+
+      <blockquote class="quote"><p>&ldquo;I feel like it's more experimental, and it's up to us to make it mainstream.&rdquo;</p><cite>keypleb, on L402</cite></blockquote>
+
+      <p><strong>A meme bot that earns zaps.</strong> The last demo was a Nostr account that posts memes made by an agent, with a Lightning address on its profile. If a post makes you laugh, you zap it and the sats land in an ecash wallet. Not L402, but the same idea: value for value, with a bot on one side.</p>
+
+      <h2>Key takeaways</h2>
+      <p><strong>1. Agents can already hold and spend sats.</strong> Paying per call fits how agents work: model calls, data feeds, web search, compute, paywalled content, even a tiny fee to keep spam away.</p>
+      <p><strong>2. Keep a human accountable.</strong> Budget caps, hooks that block broken rules and a signature for anything that matters. The more an agent can do, the more this counts.</p>
+      <p><strong>3. Show your work to win work.</strong> Diego's lab is his portfolio. keypleb rebuilt the website, a dashboard and the ads for a small business with an agent, and that story is now the pitch for the next client.</p>
+      <div class="anatomy">
+        <code>L402</code><span>Lightning Labs. HTTP 402 plus a Lightning invoice. Paid in sats.</span>
+        <code>x402</code><span>Same 402 idea, paid with stablecoins. Diego's lab runs it on a testnet.</span>
+        <code>Zaps</code><span>Tips on Nostr over Lightning. What the meme bot earns.</span>
+      </div>
+
+      <script>
+      (function(){
+      var $=function(i){return document.getElementById(i)},KEY='co-badges-2026-11-18-agentic-engineering',S={b:{}};
+      try{var sv=JSON.parse(localStorage.getItem(KEY));if(sv&&sv.b)S=sv;}catch(e){}
+      function board(){var n=0;document.querySelectorAll('.ae-badge').forEach(function(a){var g=!!S.b[a.dataset.b];a.classList.toggle('got',g);if(g)n++;});$('ae-xp').textContent=n*100;}
+      function award(k){if(S.b[k])return;S.b[k]=1;try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}board();}
+      board();
+      /* human in the loop */
+      var R=[
+       {w:'May, customer care',a:'I created a refund of $40 for an order that arrived broken. The photo is attached.',ok:true,y:'Good call. Small, documented and inside policy.',n:'This one was fine: small, documented and inside policy. Stopping everything makes the company slow.'},
+       {w:'Leo, finance',a:'A new supplier emailed an invoice for $9,800. I have never seen them before. Pay now?',ok:false,y:'Risky. An unknown payee and a large amount is exactly where a human should check first.',n:'Right. Unknown payee, large amount: check before any money moves.'},
+       {w:'Ana, research',a:'I need 10 sats to buy the current fee estimate for the weekly report.',ok:true,y:'Yes. Tiny, useful and well inside the budget cap.',n:'This was 10 sats inside the budget. Small paid calls are what agents are good at.'},
+       {w:'Sam, marketing',a:'My department budget cap is reached. Can I turn the cap off to finish the campaign?',ok:false,y:'No. The cap is the guardrail. Raise it on purpose if you want, but an agent should not remove it.',n:'Right. The cap is the guardrail, and an agent should never remove its own.'}],i=0,sc=0;
+      function show(){var r=R[i];$('ae-who').textContent=r.w+' ('+(i+1)+'/4)';$('ae-ask').textContent=r.a;}
+      function ans(v){if(i>=R.length)return;var r=R[i],good=(v===r.ok);if(good)sc++;var msg=(good?'<b>Correct.</b> ':'<b>Not quite.</b> ')+(v?r.y:r.n);i++;
+        if(i<R.length){show();}else{$('ae-yes').disabled=$('ae-no').disabled=true;msg+=' <b>'+sc+'/4.</b> '+(sc>=3?'Badge earned.':'Reload the page to try again.');if(sc>=3)award('loop');}
+        $('ae-lout').innerHTML=msg;}
+      show();$('ae-yes').onclick=function(){ans(true)};$('ae-no').onclick=function(){ans(false)};
+      /* paying agent */
+      var Q=[['Which block are we on?','block','height 975,112'],['What does it cost to send?','fees','fast 4 sat/vB, slow 1 sat/vB'],['What is bitcoin worth?','price','$65,000'],['How busy is the mempool?','mempool','18,400 waiting transactions'],['How secure is it?','hashrate','1,050 EH/s']],sats=50,done=0,busy=false;
+      Q.forEach(function(q){var b=document.createElement('button');b.className='ae-q';b.innerHTML=q[0]+'<small>10 sats</small>';b.onclick=function(){if(busy||b.classList.contains('done'))return;busy=true;var L=$('ae-log'),steps=['GET /api/l402?tool='+q[1],'<b>402 Payment Required</b>: invoice for 10 sats','paying over Lightning...','<em>paid</em>. Sending proof of payment','<em>200 OK</em> (sample): '+q[2]],k=0;L.innerHTML='';
+        (function next(){L.innerHTML+=(k?'<br>':'')+'&gt; '+steps[k];k++;if(k===4){sats-=10;$('ae-sats').textContent=sats;}
+          if(k<steps.length)setTimeout(next,550);else{b.classList.add('done');b.querySelector('small').textContent='bought';done++;busy=false;
+            if(done===Q.length){var o=$('ae-pout');o.hidden=false;o.innerHTML='<b>Briefing ready.</b> Five paid calls, 50 sats, no account and no card. Badge earned. Now try it with real sats at <a href="https://codeorange.dev/agent-pay">codeorange.dev/agent-pay</a>.';award('pay');}}})();};$('ae-qs').appendChild(b);});
+      })();
+      </script>
