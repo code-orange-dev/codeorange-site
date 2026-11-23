@@ -1,0 +1,342 @@
+      <style>
+      .db-card{margin:8px 0 36px;border:1px solid rgba(247,147,26,.35);border-radius:18px;background:radial-gradient(120% 90% at 0 0,rgba(247,147,26,.13),transparent 60%) #141414;padding:22px;position:relative}
+      .db-eye{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 6px;font:700 12px/1.3 "Plus Jakarta Sans",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--orange)}
+      .db-eye span:last-child{color:var(--dim);letter-spacing:.06em}
+      .db-card h3{margin:0 0 8px;font-size:22px;line-height:1.25;color:var(--text)}
+      .db-card>p{margin:0 0 14px;font-size:15.5px;line-height:1.55}
+      .db-btn{all:unset;box-sizing:border-box;cursor:pointer;display:inline-block;padding:10px 18px;border-radius:99px;background:var(--orange);color:#0A0A0A;font:800 14px/1.2 "Inter",system-ui,sans-serif;text-align:center}
+      .db-btn:hover{filter:brightness(1.1)}
+      .db-btn.ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.2)}
+      .db-btn.sm{padding:7px 12px;font-size:12.5px}
+      .db-btn[disabled]{opacity:.35;cursor:default;filter:none}
+      .db-btn:focus-visible,.db-seg button:focus-visible,.db-era:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+      .db-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+      .db-seg{display:inline-flex;flex-wrap:wrap;gap:4px;padding:4px;border-radius:14px;background:rgba(0,0,0,.4);border:1px solid var(--line);margin:0 0 14px}
+      .db-seg button{all:unset;box-sizing:border-box;cursor:pointer;padding:8px 14px;border-radius:10px;color:var(--muted);font:700 13px/1.2 "Inter",system-ui,sans-serif}
+      .db-seg button.on{background:var(--orange);color:#0A0A0A}
+      .db-seg button.right{background:#2f6b3a;color:#fff}
+      .db-out{margin:14px 0 0;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.04);color:var(--muted);font-size:15px;line-height:1.5;min-height:22px}
+      .db-out b{color:var(--orange)}
+      .db-done{display:none;margin-left:8px;color:var(--orange)}
+      .db-card.won .db-done{display:inline}
+      .db-badges{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:14px 0}
+      .prose a.db-badge,.db-badge{display:block;padding:12px 4px;border-radius:14px;border:1px dashed rgba(255,255,255,.18);text-align:center;text-decoration:none;color:var(--dim);font:700 11px/1.3 "Plus Jakarta Sans",monospace;letter-spacing:.03em;transition:all .3s}
+      .db-badge i{display:block;font-style:normal;font-size:26px;line-height:1;margin-bottom:8px;filter:grayscale(1);opacity:.45;transition:all .3s}
+      .prose a.db-badge.got,.db-badge.got{border:1px solid var(--orange);background:rgba(247,147,26,.14);color:var(--text);box-shadow:0 0 24px rgba(247,147,26,.18)}
+      .db-badge.got i{filter:none;opacity:1;transform:scale(1.12)}
+      .db-bar{height:8px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+      .db-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--orange),#FFB347);transition:width .6s ease}
+      .db-toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,30px);z-index:60;padding:12px 20px;border-radius:99px;background:var(--orange);color:#0A0A0A;font:800 14px/1.2 "Inter",system-ui,sans-serif;box-shadow:0 12px 40px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:all .35s ease;white-space:nowrap;max-width:92vw;overflow:hidden;text-overflow:ellipsis}
+      .db-toast.go{opacity:1;transform:translate(-50%,0)}
+      /* roadmap */
+      .db-road{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:6px;margin:6px 0 10px}
+      .db-wk{position:relative;padding:10px 4px 8px;border-radius:10px;background:var(--card);border:1px solid rgba(255,255,255,.1);text-align:center;color:var(--dim);font:700 12px/1.2 "Plus Jakarta Sans",monospace}
+      .db-wk.now{border-color:var(--orange);background:rgba(247,147,26,.16);color:var(--text);box-shadow:0 0 22px rgba(247,147,26,.25)}
+      .db-wk.grad{background:linear-gradient(160deg,rgba(247,147,26,.35),rgba(20,20,20,.9))}
+      .db-phase{display:grid;grid-template-columns:5fr 2fr 1fr 2fr;gap:6px}
+      .db-phase span{padding:8px 6px;border-radius:8px;text-align:center;font:600 12.5px/1.3 "Inter",system-ui,sans-serif;color:var(--text);background:rgba(247,147,26,.1);border-top:2px solid var(--orange)}
+      .db-phase span:nth-child(2){background:rgba(255,179,71,.1);border-color:#FFB347}
+      .db-phase span:nth-child(3){background:rgba(255,255,255,.06);border-color:#bbb}
+      .db-phase span:nth-child(4){background:rgba(247,147,26,.18)}
+      .db-loop{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+      .db-loop div{padding:16px;border-radius:12px;background:var(--card);border:1px solid rgba(255,255,255,.1)}
+      .db-loop b{display:block;margin:0 0 4px;color:var(--orange);font:700 12px/1.3 "Plus Jakarta Sans",monospace;letter-spacing:.1em;text-transform:uppercase}
+      .db-loop strong{display:block;color:var(--text);margin:0 0 4px}
+      .db-loop span{color:var(--muted);font-size:14.5px;line-height:1.45}
+      /* avalanche */
+      .db-in{display:grid;grid-template-columns:auto 1fr;gap:8px 10px;align-items:center;margin:0 0 12px}
+      .db-in label{font:700 12px "Plus Jakarta Sans",monospace;color:var(--dim);letter-spacing:.08em}
+      .db-in input{width:100%;box-sizing:border-box;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.16);background:#0d0d0d;color:var(--text);font:600 15px "JetBrains Mono",ui-monospace,monospace}
+      .db-in input:focus{outline:none;border-color:var(--orange)}
+      .db-hex{font:500 12px/1.5 "JetBrains Mono",ui-monospace,monospace;color:var(--dim);word-break:break-all;margin:2px 0}
+      .db-hex em{font-style:normal;color:var(--orange)}
+      .db-grid{display:grid;grid-template-columns:repeat(32,minmax(0,1fr));gap:2px;margin:12px 0 6px}
+      .db-grid i{display:block;aspect-ratio:1;border-radius:2px;background:rgba(255,255,255,.08);transition:background .25s}
+      .db-grid i.f{background:var(--orange)}
+      .db-meter{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:6px 0 0}
+      .db-meter strong{font:800 34px/1 "Inter",system-ui,sans-serif;color:var(--orange)}
+      .db-meter span{color:var(--muted);font-size:14.5px}
+      /* history */
+      .db-eras{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+      .db-era{all:unset;box-sizing:border-box;cursor:pointer;display:block;padding:14px 12px;border-radius:12px;background:var(--card);border:1px solid rgba(255,255,255,.12);color:var(--text);font:700 15px/1.3 "Inter",system-ui,sans-serif;text-align:center;transition:all .25s}
+      .db-era:hover{border-color:rgba(247,147,26,.6)}
+      .db-era small{display:block;margin-top:6px;color:var(--dim);font:600 11px/1.4 "Plus Jakarta Sans",monospace}
+      .db-era.placed{border-color:var(--orange);background:rgba(247,147,26,.12);cursor:default}
+      .db-era.placed small{color:var(--orange)}
+      .db-era.bad{animation:dbshake .35s}
+      @keyframes dbshake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+      .db-line{list-style:none;margin:14px 0 0;padding:0 0 0 18px;border-left:2px solid rgba(247,147,26,.4)}
+      .db-line li{position:relative;margin:0 0 12px;color:var(--muted);font-size:15px;line-height:1.5}
+      .db-line li:before{content:"";position:absolute;left:-25px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--orange)}
+      .db-line li b{color:var(--text)}
+      /* path */
+      .db-range{width:100%;accent-color:#F7931A;margin:6px 0 4px}
+      .db-hours{display:flex;justify-content:space-between;color:var(--dim);font:600 12px "Plus Jakarta Sans",monospace}
+      .db-lane{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0 0}
+      .db-lane div{padding:14px;border-radius:12px;background:var(--card);border:1px solid rgba(255,255,255,.1);opacity:.45;transition:all .3s}
+      .db-lane div.on{opacity:1;border-color:var(--orange);background:rgba(247,147,26,.12);box-shadow:0 0 22px rgba(247,147,26,.15)}
+      .db-lane b{display:block;color:var(--text);font-size:15px;margin:0 0 4px}
+      .db-lane span{color:var(--muted);font-size:13.5px;line-height:1.4}
+      .db-bars{display:grid;gap:10px;margin:4px 0 0}
+      .db-bars div{display:grid;grid-template-columns:150px 1fr;gap:10px;align-items:center;font-size:14px;color:var(--muted)}
+      .db-bars i{display:block;height:22px;border-radius:6px;background:var(--orange);position:relative}
+      .db-bars i em{position:absolute;left:8px;top:2px;font:700 12px/18px "Plus Jakarta Sans",monospace;color:#0A0A0A;font-style:normal;white-space:nowrap}
+      .db-bars i.lo em{left:calc(100% + 8px);color:var(--text)}
+      /* spinner */
+      .db-wheel{position:relative;min-height:96px;padding:18px;border-radius:14px;background:#0d0d0d;border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;gap:14px}
+      .db-wheel b{flex:none;display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--orange);color:#0A0A0A;font:800 18px "Inter",sans-serif}
+      .db-wheel span{color:var(--text);font-size:16px;line-height:1.45}
+      .db-wheel.spin b{animation:dbspin .5s linear infinite}
+      @keyframes dbspin{to{transform:rotate(360deg)}}
+      .db-ta{width:100%;box-sizing:border-box;min-height:96px;margin:12px 0 0;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:#0d0d0d;color:var(--text);font:500 15px/1.5 "Inter",system-ui,sans-serif;resize:vertical}
+      .db-ta:focus{outline:none;border-color:var(--orange)}
+      .db-small{color:var(--dim);font-size:13px;margin:6px 0 0}
+      @media (max-width:700px){.db-badges{grid-template-columns:repeat(3,minmax(0,1fr))}.db-eras{grid-template-columns:repeat(2,minmax(0,1fr))}.db-lane,.db-loop{grid-template-columns:1fr}.db-road{grid-template-columns:repeat(5,minmax(0,1fr))}.db-phase{grid-template-columns:1fr 1fr}.db-bars div{grid-template-columns:1fr}.db-grid{grid-template-columns:repeat(16,minmax(0,1fr))}}
+      </style>
+      <style>
+      .db-node{display:grid;grid-template-columns:repeat(25,minmax(0,1fr));gap:3px;margin:12px 0 6px}
+      .db-node i{display:block;aspect-ratio:1;border-radius:50%;background:#2f6b3a}
+      .db-node i.x{background:#c0392b}
+      .db-node.more:after{content:attr(data-more);grid-column:1/-1;color:var(--dim);font:600 12px "Plus Jakarta Sans",monospace}
+      .db-vs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0 0}
+      .db-vs div{padding:12px;border-radius:12px;background:var(--card);border:1px solid rgba(255,255,255,.1);font-size:14.5px;color:var(--muted)}
+      .db-vs b{display:block;color:var(--text);font-size:22px;margin:0 0 2px}
+      .db-notes{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+      .db-note{all:unset;box-sizing:border-box;cursor:pointer;min-width:92px;padding:14px 12px;border-radius:10px;background:linear-gradient(135deg,#1f3d27,#16281b);border:1px solid rgba(120,200,140,.35);color:#d9f2df;font:800 16px/1.2 "JetBrains Mono",ui-monospace,monospace;text-align:center;transition:all .2s}
+      .db-note small{display:block;margin-top:4px;font:600 10px "Plus Jakarta Sans",monospace;color:rgba(217,242,223,.6);letter-spacing:.08em}
+      .db-note.sel{border-color:var(--orange);background:linear-gradient(135deg,rgba(247,147,26,.35),rgba(247,147,26,.12));color:#fff;transform:translateY(-3px)}
+      .db-note.new{animation:dbpop .6s}
+      @keyframes dbpop{0%{transform:scale(.6);opacity:0}100%{transform:scale(1);opacity:1}}
+      .db-task{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;border-radius:12px;background:rgba(247,147,26,.1);border:1px solid rgba(247,147,26,.3);color:var(--text);font-size:15px}
+      .db-task b{color:var(--orange);font-size:18px}
+      .db-tx{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin:10px 0 0;font:600 13px/1.4 "JetBrains Mono",ui-monospace,monospace;color:var(--muted)}
+      .db-tx div{padding:10px;border-radius:10px;background:#0d0d0d;border:1px solid rgba(255,255,255,.1)}
+      .db-tx i{font-style:normal;color:var(--orange);font-size:20px}
+      .db-big{font:800 30px/1.15 "Inter",system-ui,sans-serif;color:var(--orange);margin:8px 0 4px}
+      .db-price{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:8px 0 0;color:var(--muted);font-size:15px}
+      .db-price input{width:140px;padding:9px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.16);background:#0d0d0d;color:var(--text);font:600 15px "JetBrains Mono",ui-monospace,monospace}
+      @media (max-width:700px){.db-node{grid-template-columns:repeat(20,minmax(0,1fr))}.db-vs,.db-tx{grid-template-columns:1fr}.db-tx i{text-align:center;transform:rotate(90deg)}}
+      </style>
+
+      <div class="db-card" id="db-board">
+        <p class="db-eye"><span>Mission board</span><span><span id="db-xp">0</span> XP</span></p>
+        <h3>Week 2: six badges to collect</h3>
+        <p>Four mini-games built from the six answers on the call, your homework checklist and a final quiz. Each one lights up a badge. Progress stays on this device and adds XP to your <a href="/session-notes#passport">builder passport</a>.</p>
+        <div class="db-badges">
+          <a class="db-badge" href="#g-vote" data-b="vote"><i>&#128499;</i>Sybil proof</a>
+          <a class="db-badge" href="#g-history" data-b="history"><i>&#127829;</i>Historian</a>
+          <a class="db-badge" href="#g-collide" data-b="collide"><i>&#127756;</i>Unbreakable</a>
+          <a class="db-badge" href="#g-utxo" data-b="utxo"><i>&#128181;</i>Change maker</a>
+          <a class="db-badge" href="#todo" data-b="todo"><i>&#9989;</i>On track</a>
+          <a class="db-badge" href="#db-quiz" data-b="quiz"><i>&#128273;</i>Decoder</a>
+        </div>
+        <div class="db-bar"><i id="db-prog"></i></div>
+      </div>
+      <div class="db-toast" id="db-toast" role="status" aria-live="polite"></div>
+
+      <h2>Highlights</h2>
+      <p><strong>This was the first discussion round.</strong> Last Monday everyone got one of six questions. This Monday they explained them to the group, one by one, with the hosts and Razor filling gaps. It stayed informal, like a hangout, and it worked: every question got an answer and most got a debate.</p>
+      <div class="viz" role="figure" aria-label="The six questions discussed">
+        <p class="eyebrow">Six questions, six explainers</p>
+        <div class="q-grid">
+          <div class="q"><b>Q1</b><span>What did Bitcoin solve that DigiCash, b-money and Bit Gold could not?</span></div>
+          <div class="q"><b>Q2</b><span>One moment from Bitcoin history and why it matters today.</span></div>
+          <div class="q"><b>Q3</b><span>What is a hash function? Three properties Bitcoin relies on.</span></div>
+          <div class="q"><b>Q4</b><span>The UTXO model in your own words. Why no stored balance?</span></div>
+          <div class="q"><b>Q5</b><span>One advantage and one disadvantage of UTXOs vs accounts.</span></div>
+          <div class="q"><b>Q6</b><span>Why &ldquo;don&rsquo;t trust, verify&rdquo;?</span></div>
+        </div>
+      </div>
+
+      <p class="part"><b>1</b>Why the earlier attempts failed</p>
+      <p><strong>Bitcoin was not the first try at internet money.</strong> The answer to question 1: earlier attempts each solved one piece, but none removed the trusted middleman. DigiCash had strong privacy but ran on one company&rsquo;s server, so when the company went bankrupt the money died with it. (It worked a lot like Cashu ecash today: deposit money, get digital tokens from an issuer.) b-money and Bit Gold described proof of work and digital scarcity, but stayed on paper.</p>
+      <p><strong>The missing piece was agreement.</strong> Alex put it clearly: if Alice has one coin and sends it to Bob and to Carol at the same time, the network has to agree which payment counts. b-money asked nodes to vote, and the majority wins. The problem: an attacker can spin up a thousand nodes and outvote everyone. Bitcoin&rsquo;s vote is proof of work. Fake nodes are free; fake work is not.</p>
+      <div class="quote"><p>&ldquo;All the pieces had been tried before. Satoshi just combined them all together.&rdquo;</p><span>Alex, on standing on the shoulders of giants</span></div>
+
+      <div class="db-card" id="g-vote">
+        <p class="db-eye"><span>Mini-game 1 &middot; Sybil proof</span><span class="db-done">&#10003; badge earned</span></p>
+        <h3>Try to double spend with fake nodes</h3>
+        <p>25 honest nodes say Alice paid Bob. You want them to accept that Alice paid Carol instead. Add fake nodes, then switch the rules.</p>
+        <div class="db-seg" id="db-mode"><button type="button" data-m="vote" class="on">b-money: majority vote</button><button type="button" data-m="work">Bitcoin: most work wins</button></div>
+        <label class="db-small" for="db-fake">Fake nodes you run: <b id="db-fakev">0</b></label>
+        <input type="range" class="db-range" id="db-fake" min="0" max="1000" step="10" value="0">
+        <label class="db-small" for="db-hash">Your share of all mining power: <b id="db-hashv">10</b>%</label>
+        <input type="range" class="db-range" id="db-hash" min="1" max="60" value="10">
+        <div class="db-node" id="db-nodes" aria-hidden="true"></div>
+        <div class="db-vs"><div><b id="db-hon">25</b>honest nodes (green)</div><div><b id="db-att">0</b>your fake nodes (red)</div></div>
+        <p class="db-out" id="db-voteout">Start with b-money&rsquo;s rules. Drag the fake nodes slider.</p>
+      </div>
+
+      <p class="part"><b>2</b>History you can check yourself</p>
+      <p><strong>Question 2 picked a moment from Bitcoin history.</strong> The answer: Satoshi mined the Genesis block, then sent 10 BTC to Hal Finney, the first proof that digital money could move between two people with no one in the middle. Anyone can still verify it with their own node. Then came Pizza Day: 10,000 BTC for two pizzas. keypleb pulled up the transaction on mempool.space: lots of small UTXOs, probably from mining, gathered into one 10,000 BTC output plus a tiny fee.</p>
+      <p><strong>And then Satoshi left.</strong> The last known email, to Mike Hearn: &ldquo;I&rsquo;ve moved on to other things. It&rsquo;s in good hands with Gavin and everyone.&rdquo; Not a goodbye, just a technical reply. Was it because Gavin was about to present Bitcoin to the CIA? Nobody knows. Alex added the twist: Gavin, Satoshi&rsquo;s chosen successor, later sided with big blocks in the block size war and lost his leadership role. Even the founder&rsquo;s pick doesn&rsquo;t control Bitcoin. The same fights come back (Knots vs Core is the latest), which is why it pays to understand the history.</p>
+      <div class="quote"><p>&ldquo;In 20 years we&rsquo;ll look at the mempool and say: this coffee I paid for in Chiang Mai is now worth a car.&rdquo;</p><span>keypleb, on Pizza Day</span></div>
+
+      <div class="db-card" id="g-history">
+        <p class="db-eye"><span>Mini-game 2 &middot; Historian</span><span class="db-done">&#10003; badge earned</span></p>
+        <h3>Put the moments in order</h3>
+        <p>Four moments from the call. Tap them from oldest to newest.</p>
+        <div class="db-eras" id="db-eras"></div>
+        <ol class="db-line" id="db-line" aria-live="polite"></ol>
+        <p class="db-out" id="db-histout">Which came first?</p>
+        <div class="db-price"><label for="db-btc">Price of 1 BTC today, in USD:</label><input id="db-btc" type="number" min="0" step="1000" value="90000"></div>
+        <p class="db-big" id="db-pizza"></p>
+        <p class="db-small">That is what the two pizzas cost in today&rsquo;s money. Type the current price to update it.</p>
+      </div>
+
+      <p class="part"><b>3</b>Paint you can&rsquo;t unmix</p>
+      <p><strong>Question 3: what is a hash function?</strong> It takes any input, a word, a transaction, a whole block header, and squeezes it into a fixed-size fingerprint. Change one character and the output changes completely. The three properties Bitcoin relies on:</p>
+      <div class="viz" role="figure" aria-label="Three properties of a hash function and where Bitcoin uses them">
+        <p class="eyebrow">Three properties, and where they show up</p>
+        <div class="db-loop">
+          <div><b>Deterministic</b><strong>Same in, same out</strong><span>Every node recomputes transaction IDs and block hashes and gets the same answer. No trust needed.</span></div>
+          <div><b>One-way</b><strong>No way back</strong><span>You can&rsquo;t work out the input from the output. That is what makes mining a lottery and hides Lightning secrets.</span></div>
+          <div><b>Collision resistant</b><strong>No twins</strong><span>Nobody can find two inputs with the same hash, so every transaction ID is unique.</span></div>
+        </div>
+      </div>
+      <p><strong>keypleb&rsquo;s aha moment for one-way:</strong> buy a can of white paint, pour in some black, mix. You get grey, and you can never unmix it. Razor then showed the Hash Functions tool on Decoding Bitcoin: type any input, get a 64-character output, change one character and every character changes.</p>
+      <p><strong>Collisions are not just theory.</strong> In 2013 Peter Todd locked bitcoins in scripts that anyone could claim by finding a hash collision. The SHA-1 bounty was claimed in 2017, after Google published the first SHA-1 collision. The SHA-256 bounty is still there. So how likely is a collision? SHA-256 gives 256 bits; thanks to the birthday trick, finding any two matching inputs takes about 2<sup>128</sup> tries. Alex&rsquo;s comparison: it is as hopeless as generating someone else&rsquo;s seed phrase.</p>
+      <p><strong>Then why do some wallets use 24 words?</strong> A 12-word seed already has 128 bits of entropy: imagine finding one grain of sand on a 5 km beach (and the real beach is far, far bigger). 24 words gives 256 bits. In practice 12 is enough; 24 is for the extra careful.</p>
+
+      <div class="db-card" id="g-collide">
+        <p class="db-eye"><span>Mini-game 3 &middot; Unbreakable</span><span class="db-done">&#10003; badge earned</span></p>
+        <h3>How long would it take to break?</h3>
+        <p>Pick an attacker and a target. Try three combinations to earn the badge.</p>
+        <div class="db-seg" id="db-who"><button type="button" data-r="1e9" class="on">Your gaming PC</button><button type="button" data-r="1e21">Every Bitcoin miner on Earth</button></div>
+        <div class="db-seg" id="db-what"><button type="button" data-b="128" class="on">Find a SHA-256 collision</button><button type="button" data-b="128.1">Guess a 12-word seed</button><button type="button" data-b="256">Guess a 24-word seed</button></div>
+        <p class="db-big" id="db-years"></p>
+        <p class="db-out" id="db-collout"></p>
+        <p class="db-small">Rough numbers: a fast PC does about a billion hashes a second, the whole Bitcoin network roughly 10<sup>21</sup>. The universe is about 13.8 billion years old.</p>
+      </div>
+
+      <p class="part"><b>4</b>UTXOs are notes in your wallet</p>
+      <p><strong>Question 4 got the clearest metaphor of the night.</strong> Bitcoin doesn&rsquo;t track how much money you have. It tracks the notes you hold. To know your balance, you open your wallet and count. Want to pay 0.3 BTC with a 0.5 BTC note? You can&rsquo;t cut it in half. You hand over the whole note, the transaction creates two new ones, 0.3 for them and 0.2 back to you as change, and the old note is spent forever.</p>
+      <div class="viz" role="figure" aria-label="One UTXO in, two UTXOs out">
+        <p class="eyebrow">One note in, two notes out</p>
+        <div class="flow">
+          <div class="flow-step">0.5 BTC<small>Your UTXO</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Transaction<small>Spends it whole</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">0.3 BTC<small>To them</small></div>
+          <div class="flow-step">0.2 BTC<small>Change to you</small></div>
+        </div>
+        <p style="margin:0;color:var(--muted);font-size:15px">In a real transaction a small fee comes off the change. The chain stores notes and who can spend them. Your wallet does the adding up.</p>
+      </div>
+
+      <div class="db-card" id="g-utxo">
+        <p class="db-eye"><span>Mini-game 4 &middot; Change maker</span><span class="db-done">&#10003; badge earned</span></p>
+        <h3>Pay with notes, not a balance</h3>
+        <p>Tap the UTXOs you want to spend, then press Pay. Whatever is left over comes back as a new change note. Fees are left out to keep it simple.</p>
+        <div class="db-task" id="db-task"></div>
+        <div class="db-notes" id="db-wallet"></div>
+        <div class="db-row"><button type="button" class="db-btn" id="db-pay">Pay</button><span class="db-small" id="db-selv">Selected: 0 BTC</span></div>
+        <div class="db-tx" id="db-tx" hidden></div>
+        <p class="db-out" id="db-utxoout">Your wallet shows a balance, but there is no balance on chain. Just these notes.</p>
+      </div>
+
+      <p><strong>Question 5: UTXOs vs accounts.</strong> One downside: you can end up with lots of tiny UTXOs (dust), while an account just shows one number. Upsides: UTXOs are independent, so they can be checked in parallel, while Ethereum-style accounts must process each account&rsquo;s transactions in strict order. And privacy: with a fresh address for every payment, a leak exposes one UTXO, not your whole history in one account.</p>
+      <p><strong>Then the best debate of the night:</strong> could Bitcoin have worked with accounts? Some said no: UTXOs keep the system closed and sound, nothing enters or leaves except by the rules. Others said yes, with less privacy. Razor&rsquo;s take: even with accounts, people would create a billion accounts with one coin each, which is &ldquo;basically a UTXO model with extra steps.&rdquo; Open homework: if you find a good answer, post it in the chat.</p>
+
+      <p class="part"><b>5</b>Don&rsquo;t trust, verify</p>
+      <p><strong>Question 6 closed the night.</strong> A bank asks you to trust it. Bitcoin runs on maths and open code that anyone can check, and nobody can quietly edit. Most Bitcoin losses come from people losing their own keys, not from Bitcoin being hacked. And yes, quantum computers came up: Bitcoin will need to keep improving as that threat grows.</p>
+
+      <p class="part"><b>6</b>The deep end: BOSS and Saving Satoshi</p>
+      <p><strong>Alex and Razor have both been through the BOSS Challenge.</strong> It runs on challenges at your own pace: Bitcoin Core, building a transaction, Taproot, Lightning and HTLCs, some cryptography. Finish it and they match you with projects, mentors or grant givers. The next round starts in January and the wait list is open.</p>
+      <div class="quote"><p>&ldquo;It&rsquo;s not really a course. It&rsquo;s more like a recruitment pipeline. But you&rsquo;re still going to learn a lot.&rdquo;</p><span>Razor, BOSS Challenge alumni</span></div>
+      <p><strong>To even start BOSS, you need to pass Saving Satoshi</strong>, Chaincode&rsquo;s story-driven coding challenge. Dropout is high and that&rsquo;s fine: you still learn, meet maintainers and get a feel for the community. Decoding Bitcoin stays the gentle, beginner-friendly start, no coding needed for the questions.</p>
+      <div class="viz" role="figure" aria-label="The Code Orange pipeline">
+        <p class="eyebrow">From hanging out to a Bitcoin job</p>
+        <div class="flow">
+          <div class="flow-step">Meetups + workshops<small>Show up</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Study cohorts<small>Decoding Bitcoin</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Proof of work<small>Code Review Club, BOSS</small></div><span class="flow-hop"><i>&rarr;</i></span>
+          <div class="flow-step">Fellowship or grant<small>Full time</small></div>
+        </div>
+      </div>
+      <p><strong>A fellowship update from the call.</strong> Our first developer fellow, who contributes to Floresta, the lightweight Utreexo node, shared month one: two PRs merged, one of them a security-critical fix that guards the JSON-RPC login. Several people on the call said they want to apply for a fellowship one day. This call is where that proof of work starts.</p>
+
+      <h2>Key takeaways</h2>
+      <ul>
+        <li><strong>Bitcoin&rsquo;s trick is agreement without a referee.</strong> Votes can be faked with free nodes. Proof of work can&rsquo;t.</li>
+        <li><strong>Notes, not balances.</strong> Spend whole UTXOs, get change back. Your wallet does the counting.</li>
+        <li><strong>Explaining is learning.</strong> Six people taught six questions, and the best moments were the follow-up questions nobody had prepared for.</li>
+      </ul>
+
+      <h2 id="db-quiz">Final level: the quiz</h2>
+      <p>Four questions from the call. Get all four right and the <b>Decoder</b> badge lights up on the mission board.</p>
+
+      <script>
+      (function(){
+      var $=function(i){return document.getElementById(i)},SLUG='2026-11-23-decoding-bitcoin-week-2',KEY='co-badges-'+SLUG,S={b:{}};
+      try{var sv=JSON.parse(localStorage.getItem(KEY));if(sv&&sv.b)S=sv;}catch(e){}
+      function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+      var NAMES={vote:'Sybil proof',history:'Historian',collide:'Unbreakable',utxo:'Change maker',todo:'On track',quiz:'Decoder'},GAMES={vote:'g-vote',history:'g-history',collide:'g-collide',utxo:'g-utxo'};
+      function board(){var n=0;document.querySelectorAll('.db-badge').forEach(function(a){var g=!!S.b[a.dataset.b];a.classList.toggle('got',g);if(g)n++;});
+        $('db-xp').textContent=n*100;$('db-prog').style.width=(n/6*100)+'%';
+        for(var k in GAMES)if(S.b[k])$(GAMES[k]).classList.add('won');}
+      var tt;function award(k){if(S.b[k])return;S.b[k]=1;save();board();var t=$('db-toast');t.textContent='🏅 Badge unlocked: '+NAMES[k]+'  +100 XP';t.classList.add('go');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('go')},2800);}
+      board();
+      document.querySelectorAll('.db-badge').forEach(function(a){a.addEventListener('click',function(e){var t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}});});
+      function seg(id,cb){var w=$(id);w.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){w.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b)});cb(b);});});}
+
+      /* 1. vote vs work */
+      var mode='vote',wonVote=false,lostWork=false;
+      function vote(){var f=+$('db-fake').value,h=+$('db-hash').value;$('db-fakev').textContent=f;$('db-hashv').textContent=h;$('db-att').textContent=f;
+        var shown=Math.min(f,175),dots='';for(var i=0;i<25;i++)dots+='<i></i>';for(i=0;i<shown;i++)dots+='<i class="x"></i>';
+        var n=$('db-nodes');n.innerHTML=dots;n.classList.toggle('more',f>shown);n.dataset.more=f>shown?'+ '+(f-shown)+' more fake nodes':'';
+        var out=$('db-voteout');
+        if(mode==='vote'){if(f>25){wonVote=true;out.innerHTML='<b>You win.</b> '+f+' fake votes beat 25 honest ones, and running a node costs almost nothing. This is why b-money&rsquo;s voting never worked. Now switch to Bitcoin&rsquo;s rules.';}
+          else out.innerHTML=f?'Your '+f+' fake nodes are still outvoted. Keep going.':'Majority vote: whichever story most nodes tell wins. Drag the fake nodes slider.';}
+        else{if(h>50)out.innerHTML='<b>With over half of all mining power you could outpace the honest chain.</b> That is the famous 51% attack, and it costs a fortune in machines and electricity. Fake nodes did nothing for you.';
+          else{out.innerHTML='<b>You lose.</b> Nodes follow the chain with the most proof of work, not the most voices. Your '+f+' fake nodes count for nothing; your '+h+'% of the mining power falls behind.'+(f>=300?'':' Try it with lots of fake nodes too.');if(f>=300)lostWork=true;}}
+        if(wonVote&&lostWork)award('vote');}
+      seg('db-mode',function(b){mode=b.dataset.m;vote();});$('db-fake').addEventListener('input',vote);$('db-hash').addEventListener('input',vote);vote();
+
+      /* 2. history */
+      var ERA=[['Genesis block','3 Jan 2009','<b>3 January 2009: the Genesis block.</b> Satoshi mines block 0, with a newspaper headline about bank bailouts in it.'],
+               ['10 BTC to Hal','12 Jan 2009','<b>12 January 2009: 10 BTC to Hal Finney.</b> The first Bitcoin transaction between two people, no middleman. Anyone can still verify it.'],
+               ['Pizza Day','22 May 2010','<b>22 May 2010: Pizza Day.</b> Laszlo Hanyecz pays 10,000 BTC for two pizzas, the first known purchase of real goods with Bitcoin.'],
+               ['Last email','Apr 2011','<b>April 2011: Satoshi&rsquo;s last email.</b> &ldquo;I&rsquo;ve moved on to other things. It&rsquo;s in good hands with Gavin and everyone.&rdquo;']];
+      var order=[2,3,0,1],placed=0,miss=0;
+      function eras(){$('db-eras').innerHTML=order.map(function(i){var e=ERA[i],p=i<placed;return '<button type="button" class="db-era'+(p?' placed':'')+'" data-i="'+i+'"'+(p?' disabled':'')+'>'+e[0]+'<small>'+(p?e[1]:'?')+'</small></button>';}).join('');
+        $('db-eras').querySelectorAll('.db-era').forEach(function(b){b.addEventListener('click',function(){var i=+b.dataset.i;if(i<placed)return;
+          if(i===placed){$('db-line').insertAdjacentHTML('beforeend','<li>'+ERA[i][2]+'</li>');placed++;eras();
+            $('db-histout').innerHTML=placed<4?'Right. What came next?':'<b>Timeline complete'+(miss?'':' with no mistakes')+'.</b> All of it is still on chain or in the public record. Don&rsquo;t trust, verify.';
+            if(placed===4)award('history');}
+          else{miss++;b.classList.remove('bad');void b.offsetWidth;b.classList.add('bad');$('db-histout').textContent='Not yet. Something else came before '+ERA[i][0]+'.';}});});}
+      eras();
+      function pizza(){var p=+$('db-btc').value||0;$('db-pizza').textContent='$'+Math.round(p*10000).toLocaleString('en-US')+' for two pizzas';}
+      $('db-btc').addEventListener('input',pizza);pizza();
+
+      /* 3. collisions */
+      var rate=1e9,bitsN=128,tried={};
+      function fmt(y){if(y<1)return'less than a year';var e=Math.floor(Math.log10(y));if(e<6)return Math.round(y).toLocaleString('en-US')+' years';if(e<9)return(y/1e6).toFixed(1)+' million years';if(e<12)return(y/1e9).toFixed(1)+' billion years';return'10<sup>'+e+'</sup> years';}
+      function coll(){var y=Math.pow(2,Math.floor(bitsN))/rate/3.156e7,u=y/13.8e9;$('db-years').innerHTML=fmt(y);
+        $('db-collout').innerHTML=u<2?'<b>Even with every miner on Earth, that is roughly the age of the universe.</b> And miners can&rsquo;t even point their machines at it: they only do Bitcoin&rsquo;s double SHA-256.':'That is about '+(u>=1e6?'10<sup>'+Math.floor(Math.log10(u))+'</sup>':Math.round(u).toLocaleString('en-US'))+' times the age of the universe. '+(bitsN>200?'24 words is overkill, but some people like overkill.':'Your coins are safe.');
+        tried[rate+'-'+bitsN]=1;if(Object.keys(tried).length>=3)award('collide');}
+      seg('db-who',function(b){rate=+b.dataset.r;coll();});seg('db-what',function(b){bitsN=+b.dataset.b;coll();});coll();
+
+      /* 4. utxo */
+      var W=[50,20,5,1],TASKS=[30,22],ti=0,sel={},uid=0,wallet=W.map(function(v){return{id:uid++,v:v};});
+      function btc(c){return(c/100).toFixed(2).replace(/0$/,'')+' BTC';}
+      function draw(newId){$('db-task').innerHTML=ti<TASKS.length?'<span>Payment '+(ti+1)+' of 2: pay the coffee shop</span><b>'+btc(TASKS[ti])+'</b>':'<span>All paid. Your wallet now holds new change notes.</span><b>&#10003;</b>';
+        $('db-wallet').innerHTML=wallet.map(function(u){return '<button type="button" class="db-note'+(sel[u.id]?' sel':'')+(u.id===newId?' new':'')+'" data-id="'+u.id+'">'+btc(u.v)+'<small>'+(u.ch?'CHANGE':'UTXO')+'</small></button>';}).join('');
+        var s=0;for(var k in sel)if(sel[k])s+=wallet.filter(function(u){return u.id==k})[0].v;$('db-selv').textContent='Selected: '+btc(s);$('db-pay').disabled=ti>=TASKS.length;
+        $('db-wallet').querySelectorAll('.db-note').forEach(function(b){b.addEventListener('click',function(){sel[b.dataset.id]=!sel[b.dataset.id];draw();});});}
+      $('db-pay').addEventListener('click',function(){var ins=wallet.filter(function(u){return sel[u.id]}),s=ins.reduce(function(a,u){return a+u.v},0),t=TASKS[ti];
+        if(!ins.length){$('db-utxoout').textContent='Tap one or more notes first.';return;}
+        if(s<t){$('db-utxoout').innerHTML='Not enough: '+btc(s)+' selected, '+btc(t)+' needed. Add another note.';return;}
+        wallet=wallet.filter(function(u){return !sel[u.id]});var ch=s-t,nid=null;if(ch>0){nid=uid++;wallet.push({id:nid,v:ch,ch:1});}sel={};
+        $('db-tx').hidden=false;$('db-tx').innerHTML='<div>IN: '+ins.map(function(u){return btc(u.v)}).join(' + ')+'</div><i>&rarr;</i><div>OUT: '+btc(t)+' to the shop'+(ch?'<br>OUT: '+btc(ch)+' change to you':'')+'</div>';
+        $('db-utxoout').innerHTML=(ins.length>1?'<b>You combined '+ins.length+' notes</b>, just like the Pizza Day transaction. ':'')+(ch?'The old note'+(ins.length>1?'s are':' is')+' gone for good and a fresh '+btc(ch)+' change note landed in your wallet.':'Exact amount, no change needed.');
+        ti++;draw(nid);if(ti>=TASKS.length)award('utxo');});
+      draw();
+
+      /* 5. homework checklist */
+      document.addEventListener('co-todo',function(e){if(e.detail&&e.detail.total&&e.detail.done===e.detail.total)award('todo');});
+      try{var td=JSON.parse(localStorage.getItem('co-todo-'+SLUG))||{},tn=0;for(var q in td)if(td[q])tn++;if(tn>=6)award('todo');}catch(e){}
+
+      /* 6. quiz */
+      function checkQuiz(){try{if((+localStorage.getItem('co-quiz-'+SLUG)||0)>=4)award('quiz');}catch(e){}}
+      checkQuiz();setInterval(checkQuiz,1500);
+      })();
+      </script>

@@ -1,0 +1,337 @@
+{
+  "game": true,
+  "slug": "2026-11-23-decoding-bitcoin-week-2",
+  "date": "2026-11-23",
+  "series": "Decoding Bitcoin",
+  "title": "Week 2: from DigiCash to UTXOs",
+  "image_title": "Week 2: from DigiCash|to UTXOs",
+  "host": "keypleb and Alex",
+  "tag": "Bitcoin basics",
+  "summary": "The first discussion round of our Decoding Bitcoin cohort. Six people explained the six week 1 questions: why earlier digital cash failed, the Genesis block and Pizza Day, hash functions, UTXOs as notes in a wallet, and don't trust, verify. Plus Razor and Alex on the BOSS Challenge.",
+  "share_text": "Decoding Bitcoin week 2: why b-money's voting breaks with fake nodes, 10,000 BTC for two pizzas, paint you can't unmix, and UTXOs as notes in your wallet. Notes and 4 mini-games from @CodeOrangeDevs",
+  "minutes": 8,
+  "video_pending": true,
+  "duration": "about 90 min",
+  "journey": {
+    "label": "Decoding Bitcoin",
+    "unit": "Week",
+    "current": 2,
+    "steps": [
+      "Orientation and foundations",
+      "How a transaction lives",
+      "Inside a transaction, byte by byte",
+      "Building a transaction and paying the fee",
+      "Signing and the transaction exercises",
+      "Script basics",
+      "P2SH and multisig",
+      "Project: build your own Bitcoin stack",
+      "Taproot: keys and Schnorr",
+      "Taproot scripts and graduation"
+    ],
+    "link": "/decoding-bitcoin/curriculum",
+    "link_text": "Weekly plan",
+    "next": "Week 2 questions discussed Monday 30 November"
+  },
+  "todo": {
+    "title": "Before next Monday",
+    "items": [
+      "Watch Discord and your email for your week 2 discussion question, then prepare to explain it in your own words. <a href=\"/decoding-bitcoin/me\">Open my dashboard</a>",
+      "Read the week 2 lessons on Decoding Bitcoin: <a href=\"https://bitcoindevs.xyz/decoding/roadmap\" target=\"_blank\" rel=\"noopener\">Transactions roadmap</a>, <a href=\"https://bitcoindevs.xyz/decoding/transaction-lifecycle\" target=\"_blank\" rel=\"noopener\">Transaction Lifecycle</a> and <a href=\"https://bitcoindevs.xyz/decoding/transaction-structure\" target=\"_blank\" rel=\"noopener\">Transaction Structure</a>.",
+      "Watch a transaction you didn't create go from unconfirmed to 1 confirmation on <a href=\"https://mempool.space\" target=\"_blank\" rel=\"noopener\">mempool.space</a>.",
+      "Try the <a href=\"https://bitcoindevs.xyz/decoding/reorg-calculator\" target=\"_blank\" rel=\"noopener\">Reorg Calculator</a> and the <a href=\"https://bitcoindevs.xyz/decoding/transaction-decoder\" target=\"_blank\" rel=\"noopener\">Transaction Decoder</a>. The exercises count for the certificate from this week.",
+      "Do the <a href=\"/decoding-bitcoin/check\">weekly check</a>: five questions, two minutes.",
+      "Want the deep end? Try <a href=\"https://savingsatoshi.com\" target=\"_blank\" rel=\"noopener\">Saving Satoshi</a>, the entry test for the BOSS Challenge."
+    ]
+  },
+  "tldr": [
+    "Bitcoin was not the first try at digital cash. DigiCash needed one company, b-money and Bit Gold stayed on paper. Satoshi combined proof of work with \"follow the chain with the most work\", so fake nodes can't outvote the honest ones.",
+    "History you can check yourself: the Genesis block, 10 BTC to Hal Finney, 10,000 BTC for two pizzas, and Satoshi's last email: \"I've moved on to other things.\"",
+    "A hash is paint you can't unmix: same input, same output, no way back, and no two inputs with the same result. UTXOs are notes in your wallet: you hand over a whole note and get change back.",
+    "Want the deep end? The BOSS Challenge is a recruitment pipeline for Bitcoin developers, and Saving Satoshi is the way in. Decoding Bitcoin stays beginner friendly."
+  ],
+  "chapters": [
+    [
+      0,
+      "Welcome, Razor as a guest, the plan for 90 minutes"
+    ],
+    [
+      192,
+      "Intros: why people are here"
+    ],
+    [
+      350,
+      "Alex on the BOSS Challenge"
+    ],
+    [
+      553,
+      "Razor: BOSS is a recruitment pipeline, not a course"
+    ],
+    [
+      811,
+      "Saving Satoshi: the entry test for BOSS"
+    ],
+    [
+      1198,
+      "Our first developer fellow on month one"
+    ],
+    [
+      1322,
+      "The Code Orange pipeline: meetups to fellowship"
+    ],
+    [
+      1513,
+      "Q1: what Bitcoin solved that DigiCash, b-money and Bit Gold could not"
+    ],
+    [
+      1920,
+      "On screen: what each predecessor got right"
+    ],
+    [
+      2032,
+      "Why voting fails: b-money and a thousand fake nodes"
+    ],
+    [
+      2239,
+      "Q2: the Genesis block and 10 BTC to Hal Finney"
+    ],
+    [
+      2420,
+      "The Pizza Day transaction on mempool.space"
+    ],
+    [
+      2466,
+      "Satoshi's last email: \"I've moved on to other things\""
+    ],
+    [
+      2627,
+      "Gavin, the block size war and why leadership must stay decentralised"
+    ],
+    [
+      2766,
+      "Q3: hash functions and three properties Bitcoin relies on"
+    ],
+    [
+      3101,
+      "Paint you can't unmix: one-way hashing"
+    ],
+    [
+      3219,
+      "Live demo: the Hash Functions tool"
+    ],
+    [
+      3313,
+      "How likely is a hash collision?"
+    ],
+    [
+      3485,
+      "12 or 24 seed words?"
+    ],
+    [
+      3712,
+      "Q4: UTXOs as notes in your wallet"
+    ],
+    [
+      3996,
+      "Q5: UTXOs vs accounts, one plus, one minus"
+    ],
+    [
+      4357,
+      "Could Bitcoin have worked with accounts?"
+    ],
+    [
+      4996,
+      "Q6: don't trust, verify"
+    ],
+    [
+      5170,
+      "Homework and wrap-up"
+    ]
+  ],
+  "next": {
+    "title": "Week 3: How a transaction lives",
+    "when": "Monday 30 November, 7pm UTC+8 on Discord, discussing the week 2 questions. Before that: Bitcoin Reading Club on the whitepaper, Wednesday 25 November, and the Privacy Track on Tuesday 1 December."
+  },
+  "resources": [
+    {
+      "group": "The course",
+      "topic": "Bitcoin basics",
+      "title": "Week 1 lesson: Bitcoin History",
+      "url": "https://bitcoindevs.xyz/decoding/bitcoin-history",
+      "by": "The Bitcoin Dev Project",
+      "note": "DigiCash, b-money, Bit Gold and the moments discussed for questions 1 and 2"
+    },
+    {
+      "group": "The course",
+      "topic": "Bitcoin basics",
+      "title": "Tool: Hash Functions",
+      "url": "https://bitcoindevs.xyz/decoding/hash-functions",
+      "by": "The Bitcoin Dev Project",
+      "note": "the tool Razor demoed: change one character of the input and the whole output changes"
+    },
+    {
+      "group": "The course",
+      "topic": "Bitcoin basics",
+      "title": "Week 1 lesson: UTXO vs Account Models",
+      "url": "https://bitcoindevs.xyz/decoding/utxo",
+      "by": "The Bitcoin Dev Project",
+      "note": "background for questions 4 and 5"
+    },
+    {
+      "group": "The course",
+      "topic": "Bitcoin basics",
+      "title": "Week 2 lesson: Transaction Lifecycle",
+      "url": "https://bitcoindevs.xyz/decoding/transaction-lifecycle",
+      "by": "The Bitcoin Dev Project",
+      "note": "homework for next Monday: from wallet to mempool to block"
+    },
+    {
+      "group": "Reading",
+      "topic": "Cypherpunk history",
+      "title": "Bitcoin: A Peer-to-Peer Electronic Cash System",
+      "url": "https://bitcoin.org/bitcoin.pdf",
+      "by": "Satoshi Nakamoto, 2008",
+      "note": "the introduction names the problem the predecessors could not solve: trust in a central party. Read it with the Bitcoin Reading Club"
+    },
+    {
+      "group": "Reading",
+      "topic": "Cypherpunk history",
+      "title": "b-money",
+      "url": "http://www.weidai.com/bmoney.txt",
+      "by": "Wei Dai, 1998",
+      "note": "money kept by every participant, with proof-of-work creation but no answer to fake-node votes"
+    },
+    {
+      "group": "Reading",
+      "topic": "Cypherpunk history",
+      "title": "Bit Gold",
+      "url": "https://unenumerated.blogspot.com/2005/12/bit-gold.html",
+      "by": "Nick Szabo, 2005",
+      "note": "chained proof-of-work puzzles as scarce digital gold. Never launched"
+    },
+    {
+      "group": "Reading",
+      "topic": "History",
+      "title": "Satoshi's emails",
+      "url": "https://satoshi.nakamotoinstitute.org/emails/",
+      "by": "Satoshi Nakamoto Institute",
+      "note": "where to find the last email to Mike Hearn in April 2011: \"I've moved on to other things\""
+    },
+    {
+      "group": "Reading",
+      "topic": "Security",
+      "title": "SHA-1 collision bounty",
+      "url": "https://bitcointalk.org/index.php?topic=293382.0",
+      "by": "Peter Todd, 2013",
+      "note": "bitcoins locked in scripts anyone could claim with a hash collision. The SHA-1 one was claimed in 2017; the SHA-256 one is still there"
+    },
+    {
+      "group": "Reading",
+      "topic": "Security",
+      "title": "SHAttered",
+      "url": "https://shattered.io",
+      "by": "Google and CWI, 2017",
+      "note": "the first practical SHA-1 collision. Bitcoin uses SHA-256, which still stands"
+    },
+    {
+      "group": "Tools",
+      "topic": "Explorers",
+      "title": "The Genesis block on mempool.space",
+      "url": "https://mempool.space/block/000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
+      "note": "block 0, mined 3 January 2009"
+    },
+    {
+      "group": "Tools",
+      "topic": "Explorers",
+      "title": "The Pizza Day transaction",
+      "url": "https://mempool.space/tx/a1075db55d416d3ca199f55b6084e2115b9345e16c5cf302fc80e9d5fbf5d48d",
+      "note": "22 May 2010: 10,000 BTC for two pizzas. Look at the inputs: many small UTXOs gathered into one payment"
+    },
+    {
+      "group": "What comes next",
+      "topic": "Learning paths",
+      "title": "Saving Satoshi",
+      "url": "https://savingsatoshi.com",
+      "by": "Chaincode Labs",
+      "note": "story-driven coding challenges. You need to pass it to start the BOSS Challenge"
+    },
+    {
+      "group": "What comes next",
+      "topic": "Learning paths",
+      "title": "BOSS Challenge (Bitcoin Open Source Software)",
+      "url": "https://bosschallenge.xyz",
+      "by": "Chaincode Labs",
+      "note": "Bitcoin Core, building transactions, Taproot and Lightning challenges, then matching with projects, mentors and grants. Next round starts in January; the wait list is open"
+    },
+    {
+      "group": "What comes next",
+      "topic": "Bitcoin Core",
+      "title": "Floresta",
+      "url": "https://github.com/vinteumorg/Floresta",
+      "note": "the lightweight Utreexo node our first developer fellow contributes to"
+    },
+    {
+      "group": "Code Orange",
+      "topic": "Code Orange",
+      "title": "Developer fellowship",
+      "url": "/fellowships",
+      "note": "the next step after study cohorts and proof of work"
+    },
+    {
+      "group": "Code Orange",
+      "topic": "Code Orange",
+      "title": "Weekly plan",
+      "url": "/decoding-bitcoin/curriculum",
+      "note": "all 10 weeks: lessons, discussion questions and exercises"
+    },
+    {
+      "group": "Code Orange",
+      "topic": "Code Orange",
+      "title": "Privacy Track",
+      "url": "/privacy-track",
+      "note": "next session with Razor on Tuesday 1 December"
+    }
+  ],
+  "ideas": "Also on the call: Alex and Andy had just come back from the three-day Bitcoin Educator Academy in Chiang Mai (public speaking for Bitcoin educators), and the day before the call a hangout at the Bitcoin Learning Center tried bitchat, White Noise, Fedi federations and a multi-vendor multisig. An open question to research: did Satoshi pick UTXOs by design, or could Bitcoin have worked with accounts? One person flagged that later weeks in the weekly plan are still locked; keypleb is making every week visible.",
+  "quiz": [
+    {
+      "q": "Why could b-money's \"majority vote\" not stop a double spend?",
+      "o": [
+        "Votes were too slow to count",
+        "An attacker can spin up a thousand fake nodes and outvote everyone",
+        "It had no way to send money at all"
+      ],
+      "a": 1,
+      "w": "Votes are cheap to fake. Bitcoin's vote is proof of work: to rewrite history you need real energy, not more nodes."
+    },
+    {
+      "q": "You pay 0.3 BTC from a single 0.5 BTC UTXO. What happens?",
+      "o": [
+        "0.3 BTC is cut off the old UTXO, which stays in your wallet",
+        "The whole 0.5 is spent, and two new outputs appear: 0.3 to them, about 0.2 back to you as change",
+        "Your account balance goes down by 0.3"
+      ],
+      "a": 1,
+      "w": "Like paying with a banknote. The old UTXO is spent for good and change comes back as a new one (minus a small fee)."
+    },
+    {
+      "q": "Which property means you can't work out the input from a hash?",
+      "o": [
+        "Deterministic",
+        "One-way (preimage resistance)",
+        "Fixed size"
+      ],
+      "a": 1,
+      "w": "Like mixing black into white paint: you get grey and can never unmix it."
+    },
+    {
+      "q": "Where is your Bitcoin balance stored?",
+      "o": [
+        "In a balance field on the blockchain",
+        "Nowhere: your wallet adds up the UTXOs your keys can spend",
+        "At the exchange you bought it from"
+      ],
+      "a": 1,
+      "w": "The chain only records which coins exist and who can spend them. The total is your wallet doing the sum."
+    }
+  ]
+}
