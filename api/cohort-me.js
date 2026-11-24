@@ -594,7 +594,7 @@ async function overview(withEmails) {
       return { before: avg("pre"), after: avg("post"), gain: both.length ? Math.round((both.reduce((a, s) => a + s.quizzes.post.best / s.quizzes.post.total - s.quizzes.pre.first / s.quizzes.pre.total, 0) / both.length) * 100) : null, both: both.length };
     })(),
     projects: active.filter((s) => s.project).length,
-    certificate: { lessons: CERT_LESSONS, checkins: CERT_CHECKINS, exercises: CERT_EXERCISES, onTrack: active.filter((s) => s.lessonsRead >= CERT_LESSONS && s.checkins.length >= CERT_CHECKINS && s.exercises >= CERT_EXERCISES).length },
+    certificate: { lessons: CERT_LESSONS, checkins: CERT_CHECKINS, exercises: CERT_EXERCISES, onTrack: active.filter((s) => s.lessonsRead >= CERT_LESSONS && s.exercises >= CERT_EXERCISES).length },
     questions: questions.map((x) => ({ id: Number(x.id), week: Number(x.week), text: x.text, answered: bool(x.answered), at: iso(x.created_at) })),
     followupsSent: Object.fromEntries(sends.map((r) => [r.months, { sent: Number(r.sent), at: iso(r.sent_at) }])),
     students: list,

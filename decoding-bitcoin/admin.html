@@ -263,7 +263,7 @@ details.st dd { margin: 0; white-space: pre-wrap; }
       [dash.knowledge.before ? `${dash.knowledge.before.avg}%` : "–", `knowledge check at the start${dash.knowledge.before ? ` (${dash.knowledge.before.taken} took it)` : ""}`],
       [dash.knowledge.after ? `${dash.knowledge.after.avg}%` : "–", `at the end${dash.knowledge.gain != null ? `, +${dash.knowledge.gain} points on average (${dash.knowledge.both} took both)` : ""}`],
       [dash.projects, "shared a final project"],
-      [dash.certificate.onTrack, `earned a certificate (${dash.certificate.lessons} weeks of lessons + ${dash.certificate.exercises || 22} exercises + ${dash.certificate.checkins} check-ins)`],
+      [dash.certificate.onTrack, `earned a certificate (${dash.certificate.lessons} weeks of lessons + ${dash.certificate.exercises || 22} exercises)`],
     ].map(([n, l]) => `<div><strong>${n}</strong><span>${l}</span></div>`).join("");
     const risky = act.filter((s) => s.flags.length);
     $("#risk").innerHTML = risky.map((s) => {

@@ -184,3 +184,12 @@ input[type=url] { width: 100%; min-height: 44px; padding: 10px 12px; border-radi
 @media (max-width: 700px) { .me-brag { grid-template-columns: minmax(0,1fr); } }
 .me-buddy-steps { margin: 10px 0 12px; padding-left: 20px; color: var(--muted); line-height: 1.6; }
 .me-buddy-steps b { color: var(--text); }
+
+/* Monday's questions with everyone's names */
+.me-allq { list-style: none; margin: 14px 0 10px; padding: 0; display: grid; gap: 8px; }
+.me-allq li { display: grid; grid-template-columns: 38px minmax(0,1fr); gap: 10px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: rgba(6,6,6,.45); }
+.me-allq li.is-mine { border-color: rgba(247,147,26,.55); background: rgba(247,147,26,.08); }
+.me-allq b { color: var(--orange); font: 700 13px "Plus Jakarta Sans", monospace; padding-top: 2px; }
+.me-allq span { color: var(--text); font-size: 15px; line-height: 1.5; }
+.me-allq small { display: block; margin-top: 4px; color: var(--muted); font-size: 13.5px; overflow-wrap: anywhere; }
+.me-allq li.is-mine small { color: var(--orange); }

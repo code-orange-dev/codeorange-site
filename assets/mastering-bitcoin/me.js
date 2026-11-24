@@ -209,9 +209,7 @@
       ["🧡", "Joined", "Signed up for the cohort", true],
       ["🎯", "Goals set", "Wrote down why you joined", !!(p.why || p.build)],
       ["🗺️", "Mapped", "Rated your starting skills", !!p.skillsStart],
-      ["📝", "First check-in", "Did your first weekly check-in", s.checkins >= 1],
       ["🔥", "On a roll", "3 weeks in a row", s.streak >= 3],
-      ["🙋", "Brave ask", "Asked for help (the best habit there is)", d.checkins.some((c) => c.help)],
       ["🛠️", "Hands on", "Finished 10 exercises", s.exDone >= 10],
       ["⛰️", "Halfway", "Lessons done for 5 weeks", s.lessons >= 5],
       ["🧠", "Quiz whiz", "Got every question right in a weekly quiz", Object.entries(d.quizzes || {}).some(([k, x]) => k.startsWith("w") && x.best === x.total)],
@@ -228,7 +226,6 @@
     const parts = [
       ["Lessons", Math.min(s.lessons, need.lessons), need.lessons, "weeks"],
       ["Exercises", Math.min(reqEx, need.exercises), need.exercises, "done"],
-      ["Sessions", Math.min(s.checkins, need.checkins), need.checkins, "check-ins"],
     ];
     const pct = Math.round((parts.reduce((a, [, h, n]) => a + h / n, 0) / parts.length) * 100);
     const got = parts.every(([, h, n]) => h >= n);
@@ -236,7 +233,7 @@
     return `<div class="me-cert${got ? " is-got" : ""}${compact ? " me-card me-wide" : ""}" id="cert"><div class="me-row"><b>${got ? "🎓 You've earned your certificate!" : "Your certificate"}</b><span>${pct}%</span></div>
       <span class="me-bar"><i style="width:${pct}%"></i></span>
       <ul class="me-cert-parts">${rows}</ul>
-      <small>${got ? "We'll send it after graduation. Add your GitHub username in your goals so it shows on it." : `To earn it: lessons for ${need.lessons} of 10 weeks, ${need.exercises} of the 27 exercises (weeks 2–10) and ${need.checkins} session check-ins. Attending live or posting your work on Discord both count. <a href="/certificates/sample">See a sample</a>`}</small></div>`;
+      <small>${got ? "We'll send it after graduation. Add your GitHub username in your goals so it shows on it." : `To earn it: lessons for ${need.lessons} of 10 weeks and ${need.exercises} of the 27 exercises (weeks 2–10). Missed a Monday? Post your work on Discord and it counts. <a href="/certificates/sample">See a sample</a>`}</small></div>`;
   }
 
   // "I finished week N": a shareable image for X / Nostr (drawn by share-card.js), linking back to sign-up.
@@ -315,11 +312,9 @@
     if (!d.quizzes?.pre && !finished && currentWeek < 2) return ["Take the 2-minute knowledge check.", "10 quick questions, not graded. You'll take it again at the end to see what you've learned.", go("#check", "Start the check")];
     if (currentWeek >= C.weeks.length - 2 && d.quizzes?.pre && !d.quizzes?.post) return ["Take the knowledge check again.", "Same 10 questions as at the start. See how far you've come.", go("#check", "Take it again")];
     if (currentWeek < 0) return ["You're all set for week 1.", `Lessons go up the week before. First session: ${sessionLine(sessionDates[0])}.`, go(`/assets/mastering-bitcoin/sessions.ics?v=20261114b`, "Add the sessions to my calendar")];
-    if (C.weeks[currentWeek].intro && !d.checkins.some((c) => c.week === wk)) return ["Week 1 is the intro week: no homework.", "Just come to Monday's session. Homework starts in week 2.", go("#week", "See week 1")];
+    if (C.weeks[currentWeek].intro && !state.done.has(`w${wk}-r1`)) return ["Week 1 is the intro week: no homework.", "Just come to Monday's session. Homework starts in week 2.", go("#week", "See week 1")];
     if (!state.done.has(`w${wk}-r1`)) return [`Do this week's lessons before Monday.`, esc(C.weeks[currentWeek].lessons.map((l) => l.title).join(", ")), go("#week", "See this week")];
-    if (!d.checkins.some((c) => c.week === wk)) return ["Do your 2-minute check-in.", "It's how we spot who's stuck and what to cover on Monday.", go("#checkin", "Check in")];
     if (currentWeek >= C.weeks.length - 2 && !p.skillsEnd) return ["Rate your skills again.", "See how far you've come since the start.", go("#skills", "Rate again")];
-    if (d.buddy && d.buddy.lastWeek < wk) return [`Nudge your buddy ${esc(d.buddy.name)}.`, "They haven't checked in this week yet. A quick hello on Discord helps.", `<a class="button small" href="${C.discord}" target="_blank" rel="noopener">Open Discord</a>`];
     return ["You're on top of this week. 🙌", s.streak >= 2 ? `${s.streak}-week streak. See you Monday!` : "See you Monday!", ""];
   }
   function nextCardTop(s) {
@@ -385,6 +380,21 @@
     </div>`;
   }
 
+  // Everyone's questions for the next session, with who owns each one (Discord names from cohort.js).
+  function allQuestionsCard() {
+    if (finished || currentWeek < 0) return "";
+    const wk = currentWeek + 1;
+    const keys = Object.keys(C.assigned || {}).filter((k) => { const m = /^w(\d+)-q(\d+)$/.exec(k); return m && (((C.discussAt || {})[m[1]] || Number(m[1])) === wk); });
+    if (!keys.length) return "";
+    const mine = new Set(questionsFor(wk, assignments()).map((q) => q.key));
+    const rows = keys.map((k) => {
+      const [, qw, qi] = /^w(\d+)-q(\d+)$/.exec(k);
+      const names = C.assigned[k].map((n) => esc(n.split("|")[0].trim())).join(", ");
+      return `<li class="${mine.has(k) ? "is-mine" : ""}"><b>Q${qi}</b><span>${esc(C.weeks[qw - 1].questions[qi - 1])}<small>${names}${mine.has(k) ? " · that's you" : ""}</small></span></li>`;
+    }).join("");
+    return `<div class="me-card me-wide" id="questions"><p class="me-label">Monday's questions · who has which</p><h2>${esc(dayLabel(plus8(sessionDates[currentWeek])))}</h2><ol class="me-allq">${rows}</ol><p class="me-small">Each group explains its question in about 3 minutes, then we all discuss it. Not on the list? Come anyway and join the discussion.</p></div>`;
+  }
+
   function checkinCard() {
     if (currentWeek < 0) {
       return `<div class="me-card"><p class="me-label">Weekly check-in</p><h2>Two minutes, once a week</h2><p>From week 1 you'll answer four quick questions here after each session: how confident you feel, how long you spent, what clicked and where you got stuck. Only you and the organisers see your answers.</p><p class="me-small">Opens ${esc(dayLabel(plus8(new Date(weekOpens(0) + 7 * 864e5))))}.</p></div>`;
@@ -436,7 +446,6 @@
         <span><strong>${s.streak}</strong>week streak</span>
         <span><strong>${s.lessons}/${C.weeks.length}</strong>weeks of lessons</span>
         <span><strong>${s.exDone}/${s.exTotal}</strong>exercises</span>
-        <span><strong>${s.checkins}</strong>check-ins</span>
       </div>
       <ol class="me-strip" aria-label="The 10 weeks">${weekStrip(s)}</ol>
 
@@ -488,13 +497,12 @@
     let body;
     if (d.buddy) {
       const handle = d.buddy.discord ? `@${d.buddy.discord}` : d.buddy.name;
-      const status = d.buddy.lastWeek >= wk ? `checked in for week ${wk} ✓` : d.buddy.lastWeek ? `last checked in for week ${d.buddy.lastWeek}` : "hasn't checked in yet";
       body = `<h2>${esc(d.buddy.name)}</h2>
-        <p>Discord: <strong>${esc(d.buddy.discord || "ask in the cohort channel")}</strong> · ${esc(status)}</p>
+        <p>Discord: <strong>${esc(d.buddy.discord || "ask in the cohort channel")}</strong></p>
         <ol class="me-buddy-steps"><li><b>Say hi</b> on Discord this week.</li><li><b>15 minutes before Monday:</b> compare answers, unstick each other.</li><li><b>Nudge</b> each other to tick off the week.</li></ol>
-        <ul class="me-check">${tick(`w${wk}-b1`, `We checked in this week (week ${wk})`)}</ul>
+        <ul class="me-check">${tick(`w${wk}-b1`, `We talked this week (week ${wk})`)}</ul>
         <div class="me-brag-btns"><button class="button small" type="button" data-buddy-hi="${esc(handle)}">Copy a hello message</button><a class="ghost small" href="${C.discord}" target="_blank" rel="noopener">Open Discord</a></div>
-        <p class="me-small">A quick weekly check-in keeps you both going. Only your names and Discord usernames are shared with each other.</p>`;
+        <p class="me-small">A quick weekly chat keeps you both going. Only your names and Discord usernames are shared with each other.</p>`;
     } else if (Date.now() < from.getTime()) {
       body = `<h2>Coming ${esc(dayLabel(plus8(from)))}</h2><p>A week before the first session we'll pair you with another student. You'll keep each other going for the 10 weeks.</p>`;
     } else {
@@ -631,10 +639,10 @@
         ? `We start ${dayLabel(plus8(sessionDates[0]))}. Set your goals and rate your skills so you can see how far you come.`
         : `Week ${currentWeek + 1} of ${C.weeks.length}. ${s.streak >= 2 ? `${s.streak}-week streak, keep it going!` : "One step at a time."}`;
     const cards = currentWeek < 0
-      ? [followupCard(), welcomeCard(), nextCardTop(s), goalsCard(), skillsCard(), checkCard(), thisWeekCard(), progressCard(s), buddyCard(), checkinCard(), askCard(), nextCard(), linkCard()]
-      : [followupCard(), welcomeCard(), nextCardTop(s), thisWeekCard(), buddyCard(), shareCard(), certBox(s, true), checkinCard(), quizCard(),
-        `<details class="me-more me-wide" id="more"><summary>More: progress, class, goals, skills</summary><div class="me-more-grid">`,
-        progressCard(s), classCard() || askCard(), classCard() ? askCard() : "", projectCard(), checkCard(), goalsCard(), skillsCard(), nextCard(), linkCard(),
+      ? [followupCard(), welcomeCard(), nextCardTop(s), goalsCard(), skillsCard(), checkCard(), thisWeekCard(), progressCard(s), buddyCard(), askCard(), nextCard(), linkCard()]
+      : [followupCard(), welcomeCard(), nextCardTop(s), thisWeekCard(), allQuestionsCard(), buddyCard(), shareCard(), certBox(s, true), quizCard(),
+        `<details class="me-more me-wide" id="more"><summary>More: progress, goals, skills</summary><div class="me-more-grid">`,
+        progressCard(s), askCard(), projectCard(), checkCard(), goalsCard(), skillsCard(), nextCard(), linkCard(),
         `</div></details>`];
     $("#me-app").innerHTML = cards.join("");
     // Links like #goals may point inside the collapsed "More" section: open it first.
