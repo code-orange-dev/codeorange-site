@@ -5,7 +5,8 @@
   "outputDirectory": ".",
   "git": {
     "deploymentEnabled": {
-      "claude/**": false
+      "claude/**": false,
+      "claude/project-thread-nb9876": true
     }
   },
   "redirects": [
