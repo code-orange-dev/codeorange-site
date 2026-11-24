@@ -7,6 +7,14 @@
     <language>en</language>
     <atom:link href="https://codeorange.dev/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>What Is a Bitcoin Educator? Teaching Verification, Not Hype</title>
+      <link>https://codeorange.dev/articles/what-is-a-bitcoin-educator</link>
+      <guid isPermaLink="true">https://codeorange.dev/articles/what-is-a-bitcoin-educator</guid>
+      <description>A Bitcoin educator is not a price commentator. Learn what real Bitcoin education looks like: verifying software, understanding transactions, recovery drills and running a node.</description>
+      <dc:creator>Andy</dc:creator>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>What Is Ark? The Bitcoin Ark Protocol Explained Simply</title>
       <link>https://codeorange.dev/articles/bitcoin-ark-protocol</link>
       <guid isPermaLink="true">https://codeorange.dev/articles/bitcoin-ark-protocol</guid>
