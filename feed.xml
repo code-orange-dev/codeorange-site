@@ -7,6 +7,14 @@
     <language>en</language>
     <atom:link href="https://codeorange.dev/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>Can You Trace a Lightning Payment? What Our Privacy Workshops Found</title>
+      <link>https://codeorange.dev/articles/trace-a-lightning-payment</link>
+      <guid isPermaLink="true">https://codeorange.dev/articles/trace-a-lightning-payment</guid>
+      <description>We passed sats between Lightning wallets at our privacy workshops and tried to follow the money. Here is what other people can see, what wallet companies can see, and where ecash fits in.</description>
+      <dc:creator>Andy</dc:creator>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>What Is a Bitcoin Educator? Teaching Verification, Not Hype</title>
       <link>https://codeorange.dev/articles/what-is-a-bitcoin-educator</link>
       <guid isPermaLink="true">https://codeorange.dev/articles/what-is-a-bitcoin-educator</guid>
