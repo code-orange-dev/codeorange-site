@@ -31,9 +31,16 @@ window.MB_COHORT = {
     "w1-q4": ["Chaitika"],
     "w1-q5": ["Matthew", "Maxima Freiman"],
     "w1-q6": ["Ngineks", "rfxx666"],
+    // Week 2 questions, given out after the 23 Nov call (week 1 + week 2 attendees), discussed on Mon 30 Nov.
+    "w2-q1": ["andywong31", "ankitajana21", "Hao"],
+    "w2-q2": ["Aroso Emmanuel", "Chaitika", "Harithaa"],
+    "w2-q3": ["Matthew", "Maxima Freiman", "Mwihoti"],
+    "w2-q4": ["Ngineks", "rfxx666", "Prycee"],
+    "w2-q5": ["stonepillar", "fittbold", "Alex Xie"],
+    "w2-q6": ["phumpp11", "Razor"],
   },
   // Week N's questions are discussed at week M's session, e.g. { 1: 2 }. Default: the same week.
-  discussAt: { 1: 2 },
+  discussAt: { 1: 2, 2: 3 },
   courseUrl: "https://bitcoindevs.xyz/decoding",
 
   // Socratic seminar roles, rotated through the roster each week (shown in this order).
