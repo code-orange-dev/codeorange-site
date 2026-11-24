@@ -68,7 +68,7 @@
   const currentWeek = (() => {
     if (now < sessionDates[0] - 7 * 864e5) return -1;
     let w = 0;
-    while (w < sessionDates.length - 1 && now > sessionDates[w].getTime() + 864e5) w++;
+    while (w < sessionDates.length - 1 && now > sessionDates[w].getTime() + 2 * 36e5) w++;
     return w;
   })();
   const finished = now > sessionDates[sessionDates.length - 1].getTime() + 864e5;

@@ -207,7 +207,7 @@ const parseJson = (v) => {
 function weekAt(t = Date.now()) {
   if (t < PAIR_FROM) return 0;
   let w = 1;
-  while (w < WEEKS && t > FIRST_SESSION + (w - 1) * 7 * 864e5 + 864e5) w++;
+  while (w < WEEKS && t > FIRST_SESSION + (w - 1) * 7 * 864e5 + 2 * 36e5) w++;
   return w;
 }
 

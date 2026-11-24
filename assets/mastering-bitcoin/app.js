@@ -47,8 +47,8 @@
     const now = Date.now();
     if (now < sessionDates[0] - 7 * 864e5) return -1;
     let w = 0;
-    // A week stays "current" until a day after its session.
-    while (w < sessionDates.length - 1 && now > sessionDates[w].getTime() + 864e5) w++;
+    // A week stays "current" until its session is over (2h after the start).
+    while (w < sessionDates.length - 1 && now > sessionDates[w].getTime() + 2 * 36e5) w++;
     return w;
   })();
   if (currentWeek >= 0) state.open.add(currentWeek); else state.open.add(0);
