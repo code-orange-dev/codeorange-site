@@ -10,7 +10,6 @@
   "summary": "The first discussion round of our Decoding Bitcoin cohort. Six people explained the six week 1 questions: why earlier digital cash failed, the Genesis block and Pizza Day, hash functions, UTXOs as notes in a wallet, and don't trust, verify. Plus Razor and Alex on the BOSS Challenge.",
   "share_text": "Decoding Bitcoin week 2: why b-money's voting breaks with fake nodes, 10,000 BTC for two pizzas, paint you can't unmix, and UTXOs as notes in your wallet. Notes and 4 mini-games from @CodeOrangeDevs",
   "minutes": 8,
-  "video_pending": true,
   "duration": "about 90 min",
   "journey": {
     "label": "Decoding Bitcoin",
@@ -52,7 +51,7 @@
   "chapters": [
     [
       0,
-      "Welcome, Razor as a guest, the plan for 90 minutes"
+      "Welcome and the plan for tonight"
     ],
     [
       192,
@@ -83,10 +82,6 @@
       "Q1: what Bitcoin solved that DigiCash, b-money and Bit Gold could not"
     ],
     [
-      1920,
-      "On screen: what each predecessor got right"
-    ],
-    [
       2032,
       "Why voting fails: b-money and a thousand fake nodes"
     ],
@@ -104,11 +99,11 @@
     ],
     [
       2627,
-      "Gavin, the block size war and why leadership must stay decentralised"
+      "Gavin and the block size war"
     ],
     [
       2766,
-      "Q3: hash functions and three properties Bitcoin relies on"
+      "Q3: hash functions, three properties Bitcoin relies on"
     ],
     [
       3101,
@@ -132,7 +127,7 @@
     ],
     [
       3996,
-      "Q5: UTXOs vs accounts, one plus, one minus"
+      "Q5: UTXOs vs accounts"
     ],
     [
       4357,
@@ -333,5 +328,6 @@
       "a": 1,
       "w": "The chain only records which coins exist and who can spend them. The total is your wallet doing the sum."
     }
-  ]
+  ],
+  "video": "W9FdrPt1aAY"
 }

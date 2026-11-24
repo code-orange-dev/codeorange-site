@@ -18,6 +18,7 @@ window.MB_COHORT = {
   recordings: {
     // 1: { video: "https://youtu.be/...", recap: "/session-notes/2026-11-16-decoding-bitcoin-week-1" },
     1: { video: "https://youtu.be/VIfltkAznTA", recap: "/session-notes/2026-11-16-decoding-bitcoin-week-1" },
+    2: { video: "https://youtu.be/W9FdrPt1aAY", recap: "/session-notes/2026-11-23-decoding-bitcoin-week-2" },
   },
   // Discussion question owners. Picked by hand after each session from who was on the call
   // (Discord names; add "|Sign-up name" if it differs). Two names = a pair sharing a question.
