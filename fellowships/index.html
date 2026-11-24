@@ -257,7 +257,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 <section class="section-inner" id="meet-our-fellow">
   <style>
   .mof{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.32)}
-  .mof>img{width:100%;height:340px;object-fit:cover;object-position:50% 45%;display:block}
+  .mof>img{width:100%;height:100%;min-height:340px;max-height:520px;object-fit:cover;object-position:50% 45%;display:block}
   .mof-body{padding:28px;display:flex;flex-direction:column;justify-content:center;gap:16px;min-width:0}
   .mof-body p{margin:0;line-height:1.65}
   .mof-body .mof-muted{color:var(--muted)}
@@ -267,18 +267,38 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
   .mof-tally b{display:block;font:800 36px/1 "Inter",sans-serif;font-variant-numeric:tabular-nums}
   .mof-tally div:first-child b{color:var(--orange)}
   .mof-tally span{font:600 11px "Plus Jakarta Sans",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .mof-who{display:flex;flex-direction:column;gap:4px}
+  .mof-who strong{font:800 24px/1.1 "Inter",sans-serif}
+  .mof-who span{color:var(--muted);font-size:14px}
+  .mof-links{display:flex;flex-wrap:wrap;gap:8px}
+  .mof-links a{display:inline-flex;align-items:center;padding:7px 13px;border:1px solid rgba(255,255,255,.16);border-radius:999px;color:var(--text);text-decoration:none;font:600 13px "Plus Jakarta Sans",sans-serif}
+  .mof-links a:hover{border-color:var(--orange);color:var(--orange)}
+  .mof-proof{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+  .mof-proof li{display:flex;gap:10px;align-items:baseline;line-height:1.5}
+  .mof-proof li::before{content:"\2713";color:var(--orange);font-weight:800}
+  .mof-proof a{color:var(--text);text-underline-offset:3px}
+  .mof-proof a:hover{color:var(--orange)}
+  .mof-proof small{color:var(--muted);font-size:13px;white-space:nowrap}
+  .mof-about{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:16px;color:var(--muted);font-size:14px}
   @media(max-width:760px){.mof{grid-template-columns:minmax(0,1fr)}.mof>img{height:230px}.mof-body{padding:20px}.mof-tally b{font-size:30px}}
   </style>
   <div class="split"><div><p class="eyebrow">Meet our fellow</p><h2>stonepillar, building on Floresta.</h2></div><p class="lead">Floresta is a lightweight Bitcoin node written in Rust. He started this work as a volunteer. The fellowship gave him the time to finish it.</p></div>
   <div class="mof">
     <img src="/assets/uploaded-workshops/node-laptop-session.jpg" alt="A laptop running a Bitcoin node at a Code Orange workshop" loading="lazy">
     <div class="mof-body">
+      <div class="mof-who"><strong>stonepillar</strong><span>Developer fellow &middot; Floresta &middot; November 2026 to January 2027</span></div>
+      <div class="mof-links"><a href="https://github.com/Micah-Shallom" target="_blank" rel="noopener">GitHub</a><a href="https://x.com/micah_shallom01" target="_blank" rel="noopener">X</a><a href="/fellowships/f/Micah-Shallom">Proof of work page</a></div>
       <p>In his first month, Floresta's control interface got a login, the same way Bitcoin Core has one. And the node now keeps a log file by default.</p>
       <div class="mof-tally"><div><b>2</b><span>PRs merged</span></div><div><b>3</b><span>fixes in review</span></div><div><b>4</b><span>code reviews</span></div></div>
-      <p class="mof-muted" style="font-size:14px">November 2026, month 1.</p>
+      <ul class="mof-proof">
+        <li><span><a href="https://github.com/getfloresta/Floresta/pull/1105" target="_blank" rel="noopener">Login for the node's control interface</a> <small>merged 17 Nov</small></span></li>
+        <li><span><a href="https://github.com/getfloresta/Floresta/pull/1404" target="_blank" rel="noopener">Log file by default</a> <small>merged 13 Nov</small></span></li>
+      </ul>
+      <p class="mof-muted" style="font-size:14px">Reviewed and merged by Floresta's maintainers. Month 1, November 2026.</p>
       <div class="cta-row" style="gap:10px;justify-content:flex-start"><a class="button" href="https://github.com/getfloresta/Floresta/pull/1105" target="_blank" rel="noopener">See the merged code</a><a class="ghost" href="/fellowships/apply">Apply now</a></div>
     </div>
   </div>
+  <div class="mof-about"><span>About Floresta, the project he builds on:</span><span class="mof-links"><a href="https://github.com/getfloresta/Floresta" target="_blank" rel="noopener">Floresta on GitHub</a><a href="https://x.com/getfloresta" target="_blank" rel="noopener">@getfloresta on X</a></span></div>
 </section>
 <section class="band"><div class="section-inner">
   <div class="split"><div><p class="eyebrow">The Process</p><h2>How it works.</h2></div><p class="lead">Developers apply on the website with their proof of work and a 6-month plan. Educators send a proposal to hello@codeorange.dev. Every application is read by a human.</p></div>
