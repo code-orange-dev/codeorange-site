@@ -274,11 +274,11 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
     </div>
   </section>
   <article class="article-wrap">
-    <p class="draft-note"><strong>Draft for review.</strong> This page is not linked anywhere and is hidden from search engines. Please don't share the link. Orange notes mark things we'd like checked. Tell us anything that is wrong or oversold.</p>
+    <p class="draft-note"><strong>Draft for review.</strong> This page is not linked anywhere and is hidden from search engines. Please don't share the link. stonepillar has fact-checked it. Tell us anything that is wrong or oversold.</p>
     <figure class="article-figure"><img src="/assets/articles/fellowship-floresta-hero.jpg" alt="The unglamorous work that makes a Bitcoin node safe to run" width="1500" height="600" style="aspect-ratio:5/2"></figure>
     <div class="tally">
       <div><b>2</b><span>PRs merged</span></div>
-      <div><b>3</b><span>fixes in review</span></div>
+      <div><b>3</b><span>more in review</span></div>
       <div><b>4</b><span>code reviews</span></div>
     </div>
     <div class="prose">
@@ -304,35 +304,34 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
         <li><strong>Several users</strong>, with passwords stored only as salted hashes, never as plain text.</li>
         <li><strong>A short delay after every wrong password</strong>, so nobody can sit there guessing.</li>
       </ul>
-      <p>Ten commits, with tests and documentation, reviewed and approved by Floresta's maintainers. It closes a feature request that had been open on the project for a long time.</p>
+      <p>Ten commits, with tests and documentation, reviewed over many rounds by Floresta's maintainers and reviewers. It closes a feature request that had been open on the project for a long time.</p>
       <p class="prlink"><a href="https://github.com/getfloresta/Floresta/pull/1105" target="_blank" rel="noopener">github.com/getfloresta/Floresta/pull/1105</a></p>
 
       <h3>2. The node keeps a diary <small>merged 13 Nov</small></h3>
       <p>When something breaks, the first question is always "what do the logs say?" Floresta now writes a <code>debug.log</code> by default, like Bitcoin Core, and accepts Core's own flag names so people coming from bitcoind feel at home.</p>
       <p class="prlink"><a href="https://github.com/getfloresta/Floresta/pull/1404" target="_blank" rel="noopener">github.com/getfloresta/Floresta/pull/1404</a></p>
 
-      <h3>3. Three fixes he found on the way <small>in review</small></h3>
+      <h3>3. Two bugs he caught on the way <small>in review</small></h3>
       <ul>
         <li>A login cookie saved with an extra line break would lock you out.</li>
         <li>A node killed in the middle of syncing could wake up confused about where it had stopped.</li>
-        <li>The new log file would grow forever, so it now trims itself on startup.</li>
       </ul>
-      <p>None of these were on his to-do list. He noticed them while doing the work, and fixed them.</p>
+      <p>Neither was on his to-do list. He noticed them while doing the work, and fixed them.</p>
+      <p>He also sent a follow-up to the log file work: left alone the file would grow forever, so it now trims itself on startup.</p>
 
       <h3>4. Reviewing other people's code</h3>
       <p>Open source runs on review. He reviewed four pull requests from other Floresta contributors this month.</p>
-      <p class="check"><strong>To check:</strong> the four reviews were #1301, #1443, #1458 and #1374. And is it right that #1105 and #1404 were on Floresta's Q4 roadmap?</p>
 
       <h2>What the fellowship changed</h2>
-      <p>The login work wasn't new in November. stonepillar had opened that pull request months ago, as a volunteer, in his spare time.</p>
-      <p class="check"><strong>To check:</strong> when was #1105 opened? We guessed around June.</p>
-      <p>What changed is time. The fellowship let him focus, work through every round of review with a Floresta maintainer as his mentor, and get it over the line.</p>
+      <p>The login work wasn't new in November. stonepillar opened that pull request on 1 June, as a volunteer, in his spare time.</p>
+      <p>What changed is time. The fellowship let him focus, work through every round of review with Floresta's maintainers and reviewers, and get it over the line.</p>
+      <p>This month Floresta also added him to its GitHub organization as a member. Open source projects do that for people whose work they have come to rely on.</p>
       <blockquote>A short quote from his mentor, a Floresta maintainer, goes here.</blockquote>
       <p>That is the whole idea behind Code Orange. Find talented developers. Train them. Give them a community to belong to. And support them financially, so that good work doesn't stay half-finished because rent was due.</p>
 
       <h2>Next</h2>
       <ul>
-        <li>Get the three open fixes reviewed and merged.</li>
+        <li>Get the three open pull requests reviewed and merged.</li>
         <li>Keep working on how the node handles its first sync.</li>
         <li>Present his work live at our Code Review Club.</li>
       </ul>
