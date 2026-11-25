@@ -257,7 +257,7 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
 <section class="section-inner" id="meet-our-fellow">
   <style>
   .mof{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.32)}
-  .mof>img{width:100%;height:100%;min-height:340px;max-height:520px;object-fit:cover;object-position:50% 45%;display:block}
+  .mof>img{width:100%;height:100%;min-height:340px;object-fit:cover;object-position:50% 45%;display:block}
   .mof-body{padding:28px;display:flex;flex-direction:column;justify-content:center;gap:16px;min-width:0}
   .mof-body p{margin:0;line-height:1.65}
   .mof-body .mof-muted{color:var(--muted)}
@@ -279,6 +279,8 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
   .mof-proof a{color:var(--text);text-underline-offset:3px}
   .mof-proof a:hover{color:var(--orange)}
   .mof-proof small{color:var(--muted);font-size:13px;white-space:nowrap}
+  .mof-quote{border-left:3px solid var(--orange);padding:4px 0 4px 14px;font-style:italic}
+  .mof-quote span{display:block;margin-top:6px;font-style:normal;font-size:13px;color:var(--muted)}
   .mof-about{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:16px;color:var(--muted);font-size:14px}
   @media(max-width:760px){.mof{grid-template-columns:minmax(0,1fr)}.mof>img{height:230px}.mof-body{padding:20px}.mof-tally b{font-size:30px}}
   </style>
@@ -293,8 +295,10 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
       <ul class="mof-proof">
         <li><span><a href="https://github.com/getfloresta/Floresta/pull/1105" target="_blank" rel="noopener">Login for the node's control interface</a> <small>merged 17 Nov</small></span></li>
         <li><span><a href="https://github.com/getfloresta/Floresta/pull/1404" target="_blank" rel="noopener">Log file by default</a> <small>merged 13 Nov</small></span></li>
+        <li><span>Shipped in Floresta v0.10.0 <small>Nov 2026</small></span></li>
         <li><span>Added to the <a href="https://github.com/getfloresta" target="_blank" rel="noopener">Floresta GitHub organization</a> as a member <small>Nov 2026</small></span></li>
       </ul>
+      <p class="mof-quote">"He is becoming increasingly familiar with the codebase and more confident in participating in review discussions, not just on his own PRs. I'm looking forward to more contributions from him."<span>Chris G., Floresta maintainer and stonepillar's mentor</span></p>
       <p class="mof-muted" style="font-size:14px">Reviewed by Floresta's maintainers and reviewers. Month 1, November 2026.</p>
       <div class="cta-row" style="gap:10px;justify-content:flex-start"><a class="button" href="https://github.com/getfloresta/Floresta/pull/1105" target="_blank" rel="noopener">See the merged code</a><a class="ghost" href="/fellowships/apply">Apply now</a></div>
     </div>
