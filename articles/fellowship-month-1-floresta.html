@@ -3,11 +3,34 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Draft: a fellow's first month on Floresta</title>
-<meta name="robots" content="noindex, nofollow">
+<title>The Unglamorous Work That Makes a Bitcoin Node Safe to Run</title>
+<meta name="description" content="In his first month, our developer fellow stonepillar got two pull requests merged into Floresta: a login for the node&#x27;s control interface and a log file by default.">
+<link rel="canonical" href="https://codeorange.dev/articles/fellowship-month-1-floresta">
+<link rel="alternate" type="application/rss+xml" title="Code Orange Dev School Articles" href="https://codeorange.dev/feed.xml">
 <meta name="theme-color" content="#F7931A">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Code Orange Dev School">
+<meta property="og:url" content="https://codeorange.dev/articles/fellowship-month-1-floresta">
+<meta property="og:title" content="The Unglamorous Work That Makes a Bitcoin Node Safe to Run">
+<meta property="og:description" content="In his first month, our developer fellow stonepillar got two pull requests merged into Floresta: a login for the node&#x27;s control interface and a log file by default.">
+<meta property="og:image" content="https://codeorange.dev/assets/articles/fellowship-floresta-og.jpg">
+<meta property="og:image:secure_url" content="https://codeorange.dev/assets/articles/fellowship-floresta-og.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="675">
+<meta property="og:image:alt" content="Developer fellowship month 1: 2 pull requests merged, 3 in review, 4 code reviews">
+<meta property="article:published_time" content="2026-11-25">
+<meta property="article:modified_time" content="2026-11-25">
+<meta property="article:author" content="Andy">
+<meta name="author" content="Andy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@CodeOrangeDevs">
+<meta name="twitter:title" content="The Unglamorous Work That Makes a Bitcoin Node Safe to Run">
+<meta name="twitter:description" content="In his first month, our developer fellow stonepillar got two pull requests merged into Floresta: a login for the node&#x27;s control interface and a log file by default.">
+<meta name="twitter:image" content="https://codeorange.dev/assets/articles/fellowship-floresta-og.jpg">
 <link rel="icon" type="image/svg+xml" href="/assets/favicon-co.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "headline": "The Unglamorous Work That Makes a Bitcoin Node Safe to Run", "description": "In his first month, our developer fellow stonepillar got two pull requests merged into Floresta: a login for the node's control interface and a log file by default.", "image": ["https://codeorange.dev/assets/articles/fellowship-floresta-og.jpg"], "datePublished": "2026-11-25", "dateModified": "2026-11-25", "author": {"@type": "Person", "name": "Andy", "image": "https://codeorange.dev/assets/articles/andy.jpg"}, "publisher": {"@type": "EducationalOrganization", "name": "Code Orange Dev School", "url": "https://codeorange.dev", "logo": {"@type": "ImageObject", "url": "https://codeorange.dev/assets/logo-dot-wordmark.svg"}, "email": "hello@codeorange.dev", "sameAs": ["https://github.com/code-orange-dev", "https://x.com/CodeOrangeDevs", "https://www.instagram.com/codeorangedevs", "https://njump.me/npub1gxqyeea3xspkd68mxlxsvvk3gdzdd555u504ynwpdj0ghg503mvq2gydt0"]}, "mainEntityOfPage": "https://codeorange.dev/articles/fellowship-month-1-floresta", "keywords": "bitcoin developer fellowship, floresta, utreexo, bitcoin node, rpc authentication, open source bitcoin"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://codeorange.dev/"}, {"@type": "ListItem", "position": 2, "name": "Articles", "item": "https://codeorange.dev/articles"}, {"@type": "ListItem", "position": 3, "name": "A fellow's first month on Floresta", "item": "https://codeorange.dev/articles/fellowship-month-1-floresta"}]}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
@@ -269,12 +292,11 @@ h3 { margin: 0; font-size: 26px; line-height: 1.15; }
         <p class="eyebrow">Developer fellowship &middot; month 1 &middot; Floresta</p>
         <h1>The unglamorous work that makes <span class="orange">a Bitcoin node safe to run.</span></h1>
         <p class="lead">One month, one fellow, and a lock on Floresta's front door.</p>
-        <p class="byline"><img class="byline-avatar" src="/assets/articles/andy.webp" alt="" width="34" height="34"><span class="pill orange">By Andy</span><span class="pill">Draft, not published</span><span class="pill">4 min read</span></p>
+        <p class="byline"><img class="byline-avatar" src="/assets/articles/andy.webp" alt="" width="34" height="34"><span class="pill orange">By Andy</span><span class="pill"><time datetime="2026-11-25">November 25, 2026</time></span><span class="pill">4 min read</span></p>
       </div>
     </div>
   </section>
   <article class="article-wrap">
-    <p class="draft-note"><strong>Draft for review.</strong> This page is not linked anywhere and is hidden from search engines. Please don't share the link. stonepillar and his mentor have fact-checked it. Tell us anything that is wrong or oversold.</p>
     <figure class="article-figure"><img src="/assets/articles/fellowship-floresta-hero.jpg" alt="The unglamorous work that makes a Bitcoin node safe to run" width="1500" height="600" style="aspect-ratio:5/2"></figure>
     <div class="tally">
       <div><b>2</b><span>PRs merged</span></div>
