@@ -10,6 +10,11 @@
   },
   "redirects": [
     {
+      "source": "/drafts/fellowship-month-1-floresta",
+      "destination": "/articles/fellowship-month-1-floresta",
+      "permanent": true
+    },
+    {
       "source": "/progress/september-2026-q7k3x9",
       "destination": "/progress/september-2026",
       "permanent": true
