@@ -430,6 +430,34 @@ h2{color:#fff;font-size:clamp(24px,3.2vw,36px);line-height:1.15;letter-spacing:-
 .slide b{display:block;font-weight:900;font-size:clamp(30px,6vw,72px);line-height:1.05;letter-spacing:-.03em;color:#fff;text-wrap:balance}
 .slide span{display:block;margin-top:14px;font-weight:600;font-size:clamp(15px,2vw,22px);color:#e9e9e9}
 footer .px{font-weight:800}
+
+/* header + polish 2026-11-25 */
+.hx header{max-width:1040px;justify-content:space-between;gap:16px;padding:8px 10px 8px 20px;border-radius:999px;background:rgba(14,14,14,.62);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.hx .logo{width:auto;height:auto;background:none;box-shadow:none;border-radius:0;display:flex;align-items:center}
+.hx .logo img{width:auto;height:30px;display:block}
+.hx nav.pill{flex:0 1 auto;max-width:none;height:auto;background:none;box-shadow:none;padding:0;gap:clamp(14px,2.4vw,30px);justify-content:center}
+.hx nav.pill a{color:#fff;opacity:.72;font-weight:600;font-size:15px;padding:8px 2px}
+.hx nav.pill a:hover,.hx nav.pill a.active{opacity:1}
+.hx nav.pill a.active::after{left:2px;right:2px;bottom:2px;width:auto;height:2px;margin:0;background:#F7931A;border-radius:2px;box-shadow:none}
+.hx .signin{height:42px;background:#fff;color:#000;font-weight:700;box-shadow:none}
+.hx .signin:hover{background:#F7931A;color:#000}
+.hx .sheet{background:rgba(18,18,18,.97);border:1px solid rgba(255,255,255,.12)}
+.hx .sheet a{color:#fff;font-weight:600}
+.hx .sheet a.active::after{display:none}
+.hx .sheet a.active{color:#F7931A}
+.hx .sheet a.dark{background:#fff;color:#000}
+@media (max-width:760px){.hx header{padding:6px 6px 6px 16px}.hx .logo{width:auto;height:auto}.hx .logo img{height:26px}.hx .burger{width:42px;height:42px;background:rgba(255,255,255,.12)}}
+.hx .stats{gap:14px}
+.hx .st4{background:rgba(14,14,14,.55);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:18px 12px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);text-align:center}
+.hx .st4 .val{font-weight:900;font-size:clamp(30px,4.4vw,48px);color:#fff;display:block;line-height:1.05}
+.hx .st4 .lab{color:#d6d6d6;font-weight:600;font-size:13px;display:block;margin-top:6px}
+.hx h1 span:nth-child(2){display:inline-block;padding-bottom:.08em;border-bottom:.09em solid #F7931A}
+.wrap .panel{transition:transform .25s,border-color .25s}
+.wrap .panel h2{position:relative;padding-left:16px}
+.wrap .panel h2::before{content:"";position:absolute;left:0;top:.18em;bottom:.18em;width:5px;border-radius:3px;background:#F7931A}
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
 </style>
 </head>
 <body>
@@ -437,7 +465,7 @@ footer .px{font-weight:800}
   <div class="bg"><video class="bg-video" autoplay muted loop playsinline poster="/assets/co-hero-first.jpg"><source src="/assets/co-hero-720.webm" type="video/webm"><source src="/assets/co-hero-720.mp4" type="video/mp4"></video></div>
   <div class="page">
     <header>
-      <a class="logo" href="#top" aria-label="Code Orange, top of page"><img src="/assets/favicon-co.svg" alt="" width="52" height="52"></a>
+      <a class="logo" href="#top" aria-label="Code Orange, top of page"><img src="/assets/logo-dot-wordmark.svg" alt="Code Orange" width="148" height="36"></a>
       <nav class="pill" aria-label="Sections">
         <a href="#top" class="active">Home</a><a href="#replay-h">Replay</a><a href="#wall-h">Proof</a><a href="#party-h">Fellows</a><a href="#run-h">Play</a>
       </nav>
@@ -455,10 +483,10 @@ footer .px{font-weight:800}
       <a class="cta anim" href="#lvl" style="--d:.4s">▶ Press Start</a>
     </main>
     <section class="stats" aria-label="Headline numbers">
-      <div class="st4 anim" style="--d:.5s"><span class="ic">&lt;</span><span class="val" data-to="10" data-suf="">10</span><span class="lab">Sessions in October</span></div>
-      <div class="st4 anim" style="--d:.58s"><span class="ic">@</span><span class="val" data-to="100" data-suf="+">100+</span><span class="lab">Seats filled</span></div>
-      <div class="st4 anim" style="--d:.66s"><span class="ic">*</span><span class="val" data-to="5" data-suf="">5</span><span class="lab">Fellows</span></div>
-      <div class="st4 anim" style="--d:.74s"><span class="ic">#</span><span class="val" data-to="2" data-suf="">2</span><span class="lab">New programs live</span></div>
+      <div class="st4 anim" style="--d:.5s"><span class="val" data-to="10" data-suf="">10</span><span class="lab">Sessions in October</span></div>
+      <div class="st4 anim" style="--d:.58s"><span class="val" data-to="100" data-suf="+">100+</span><span class="lab">Seats filled</span></div>
+      <div class="st4 anim" style="--d:.66s"><span class="val" data-to="5" data-suf="">5</span><span class="lab">Fellows</span></div>
+      <div class="st4 anim" style="--d:.74s"><span class="val" data-to="2" data-suf="">2</span><span class="lab">New programs live</span></div>
     </section>
   </div>
 </div>
@@ -1089,5 +1117,6 @@ footer .px{font-weight:800}
   document.addEventListener('visibilitychange',()=>{if(document.hidden&&st==='run'){st='idle';reset();draw();$('runBtn').textContent='▶ START'}});
 })();
 </script>
+<script>(function(){var els=document.querySelectorAll('.wrap .panel,.wrap .slide');if(!('IntersectionObserver' in window))return;var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});els.forEach(function(el){if(el.getBoundingClientRect().top>innerHeight){el.classList.add('rv');io.observe(el)}})})();</script>
 </body>
 </html>
