@@ -1,0 +1,1055 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<title>Code Orange Quest Log · October 2026</title>
+<meta name="description" content="Code Orange Dev School, October 2026: 10 sessions, 100+ seats filled, Privacy Track and Code Review Club live. Every number linked to proof.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Code Orange · Month 2 cleared">
+<meta property="og:description" content="10 sessions, 100+ seats filled, 5 fellows. Privacy Track and Code Review Club went live. Every number linked to proof.">
+<meta property="og:image" content="https://codeorange.dev/progress/s10/share.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://codeorange.dev/progress/s10/share.jpg">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600&family=Doto:wght@700;900&display=swap">
+<style>
+/* Layout: an arcade "save file" for Month 1 — HUD on top, then world map (pipeline), party, quest log, achievements, bonus stage, next level. Single deliberate dark look. */
+:root{
+  --void:#0b0907;          /* screen black, warm */
+  --panel:#16110c;         /* panel fill */
+  --panel-2:#1f1811;       /* raised */
+  --line:#3a2c1e;          /* pixel borders */
+  --ink:#f3e9dc;           /* main text */
+  --dim:#a8957f;           /* secondary text */
+  --orange:#f7931a;        /* bitcoin orange */
+  --gold:#ffcf5a;          /* xp / loot */
+  --mint:#6fe3a1;          /* cleared */
+  --sky:#7cc4ff;           /* in progress */
+  --rust:#e0694a;          /* locked / challenge */
+  --f-pixel:"Press Start 2P", ui-monospace, monospace;
+  --f-body:"Chakra Petch", system-ui, sans-serif;
+  --f-data:"JetBrains Mono", ui-monospace, monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--void);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;
+  background-image:radial-gradient(circle at 50% -10%, rgba(247,147,26,.16), transparent 55%),
+  repeating-linear-gradient(0deg, rgba(255,255,255,.018) 0 1px, transparent 1px 3px);}
+.wrap{max-width:1120px;margin:0 auto;padding-block:28px 64px;
+  padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px));
+  display:grid;gap:28px}
+a{color:var(--gold)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.px{font-family:var(--f-pixel);letter-spacing:.02em}
+.label{font-family:var(--f-pixel);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.panel{background:var(--panel);border:3px solid var(--line);box-shadow:0 0 0 3px var(--void), 0 0 0 6px var(--line);padding:20px;min-width:0}
+h2{font-family:var(--f-pixel);font-size:13px;line-height:1.6;color:var(--orange);margin:0 0 4px;text-wrap:balance}
+.sub{color:var(--dim);margin:0 0 16px;font-size:14px}
+.num{font-variant-numeric:tabular-nums}
+
+/* title screen */
+.title{display:grid;grid-template-columns:1.3fr 1fr;gap:24px;align-items:center}
+.title h1{font-family:var(--f-pixel);font-size:clamp(20px,3.6vw,34px);line-height:1.35;margin:10px 0 14px;color:var(--ink);text-wrap:balance}
+.title h1 span{color:var(--orange)}
+.title p{color:var(--dim);margin:0;max-width:56ch}
+.save{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.chip{font-family:var(--f-data);font-size:12px;border:2px solid var(--line);padding:4px 8px;color:var(--ink);background:var(--panel-2)}
+.chip b{color:var(--gold);font-weight:600}
+.lvl{display:grid;gap:12px}
+.lvl .big{font-family:var(--f-pixel);font-size:40px;color:var(--gold);line-height:1}
+.xp{height:22px;border:3px solid var(--line);background:#000;position:relative}
+.xp i{position:absolute;inset:0 auto 0 0;background:repeating-linear-gradient(90deg,var(--orange) 0 10px,#ffb347 10px 12px);width:0;transition:width 1.4s steps(18)}
+.xp.ready i{width:var(--w)}
+.xpmeta{display:flex;justify-content:space-between;font-family:var(--f-data);font-size:12px;color:var(--dim)}
+
+/* HUD stats */
+.hud{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.stat{background:var(--panel-2);border:2px solid var(--line);padding:14px;display:grid;gap:6px;min-width:0}
+.stat .v{font-family:var(--f-pixel);font-size:22px;color:var(--ink)}
+.stat .v small{font-size:11px;color:var(--gold)}
+.stat .k{font-size:13px;color:var(--dim);line-height:1.35}
+
+/* world map */
+.map{position:relative}
+.map canvas{width:100%;height:150px;display:block;image-rendering:pixelated;border:2px solid var(--line);background:#0f0b07}
+.stages{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:14px}
+.stage{border:2px solid var(--line);padding:12px;background:var(--panel-2);display:grid;gap:6px;align-content:start;min-width:0}
+.stage .st{font-family:var(--f-pixel);font-size:8px;padding:4px 6px;justify-self:start;color:#0b0907}
+.st.clear{background:var(--mint)} .st.open{background:var(--sky)} .st.lock{background:var(--rust)}
+.stage h3{margin:0;font-size:16px;font-weight:700}
+.stage p{margin:0;color:var(--dim);font-size:13px}
+
+/* party */
+.party{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.hero{border:2px solid var(--line);background:var(--panel-2);padding:16px;display:grid;gap:10px;align-content:start;min-width:0}
+.hero header{display:flex;gap:12px;align-items:center}
+.sprite{width:56px;height:56px;flex:none;image-rendering:pixelated;border:2px solid var(--line);background:#000}
+.hero h3{margin:0;font-family:var(--f-pixel);font-size:12px;line-height:1.5}
+.hero .cls{color:var(--gold);font-size:13px;font-weight:600}
+.bars{display:grid;gap:6px}
+.bar{display:grid;grid-template-columns:72px 1fr;gap:8px;align-items:center;font-family:var(--f-data);font-size:11px;color:var(--dim)}
+.bar span{height:10px;background:#000;border:1px solid var(--line);position:relative}
+.bar span i{position:absolute;inset:0 auto 0 0;background:var(--orange)}
+.hero ul{margin:0;padding-left:18px;font-size:13px;color:var(--ink);display:grid;gap:4px}
+.hero ul li::marker{content:"▸ ";color:var(--orange)}
+
+/* quest log */
+.quests{display:grid;gap:8px}
+.q{display:grid;grid-template-columns:62px minmax(0,1.6fr) minmax(0,1fr) 150px;gap:12px;align-items:center;border:2px solid var(--line);background:var(--panel-2);padding:10px 12px}
+.q .d{font-family:var(--f-pixel);font-size:10px;color:var(--gold)}
+.q .t{font-weight:700}
+.q .t small{display:block;font-weight:400;color:var(--dim);font-size:13px}
+.q .w{font-size:13px;color:var(--dim)}
+.q .w a{font-size:12px}
+.pty{display:flex;gap:3px;flex-wrap:wrap;align-items:center}
+.pty i{width:9px;height:12px;background:var(--orange);display:inline-block;clip-path:polygon(25% 0,75% 0,75% 35%,100% 35%,100% 100%,0 100%,0 35%,25% 35%)}
+.pty i.irl{background:var(--mint)}
+.pty em{font-style:normal;font-family:var(--f-data);font-size:12px;color:var(--ink);margin-left:6px}
+.pty em.na{color:var(--dim)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--dim);margin-top:10px}
+.legend span{display:flex;gap:6px;align-items:center}
+
+/* achievements */
+.ach{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.badge{border:2px solid var(--line);background:var(--panel-2);padding:12px;display:grid;grid-template-columns:40px 1fr;gap:10px;align-items:start;min-width:0}
+.badge canvas{width:40px;height:40px;image-rendering:pixelated}
+.badge b{display:block;font-size:14px;line-height:1.3}
+.badge p{margin:2px 0 0;font-size:12px;color:var(--dim)}
+.badge a{font-size:12px}
+
+/* boss tracker + loot */
+.two{display:grid;grid-template-columns:1.2fr 1fr;gap:28px}
+.boss{display:grid;gap:12px}
+.boss .row{display:grid;gap:6px}
+.boss .row div:first-child{display:flex;justify-content:space-between;gap:10px;font-size:14px}
+.boss .row div:first-child span{font-family:var(--f-data);font-size:12px;color:var(--dim);white-space:nowrap}
+.hp{height:14px;border:2px solid var(--line);background:#000;position:relative}
+.hp i{position:absolute;inset:0 auto 0 0}
+.loot{display:grid;gap:10px}
+.loot .it{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:baseline;font-size:14px}
+.loot .it b{font-family:var(--f-pixel);font-size:12px;color:var(--gold);white-space:nowrap}
+.reach{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+
+/* next level */
+.next{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.next div{border:2px dashed var(--line);padding:12px;font-size:14px}
+.next div b{display:block;font-family:var(--f-pixel);font-size:9px;color:var(--sky);margin-bottom:6px;letter-spacing:.06em}
+
+footer{color:var(--dim);font-size:12px;text-align:center;display:grid;gap:6px}
+footer .px{font-size:9px;color:var(--orange)}
+.blink{animation:blink 1.1s steps(2) infinite}
+@keyframes blink{50%{opacity:.25}}
+
+@media (max-width:900px){
+  .title,.two{grid-template-columns:1fr}
+  .hud{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stages{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .party{grid-template-columns:1fr}
+  .ach{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .next{grid-template-columns:1fr}
+  .q{grid-template-columns:54px minmax(0,1fr);}
+  .q .w,.q .pty{grid-column:2}
+}
+@media (max-width:480px){
+  .ach,.stages{grid-template-columns:1fr}
+  .stat .v{font-size:18px}
+}
+/*v2*/
+/* ===== video hero ===== */
+.hx{--bg:#000;--text:#fff;--muted:#8e8e8e;--nav-text:#2e2e2e;--pill-dark:#28282a;--sign-in-text:#c8c8c8;--nav-shadow:0 4px 14px rgba(0,0,0,.16);
+  --trust-bg:#28282a;--trust-border:rgba(255,255,255,.4);--trust-text:#c4c2c3;--font-sans:"Inter","Segoe UI",system-ui,sans-serif;--font-display:"Doto","Geist Pixel Circle",monospace;
+  position:relative;height:100vh;height:100dvh;min-height:560px;overflow:hidden;background:#000;color:#fff;font-family:var(--font-sans);-webkit-font-smoothing:antialiased}
+.hx .bg{position:absolute;inset:0;background:#000;overflow:hidden}
+.hx .bg-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;z-index:0;opacity:.55}
+.hx .bg::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,.15),rgba(0,0,0,.7) 75%),linear-gradient(180deg,rgba(0,0,0,.35),transparent 30%,transparent 70%,rgba(11,9,7,1))}
+.hx .page{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;height:100%;
+  padding:clamp(16px,2.4vh,28px) max(clamp(14px,3vw,32px),env(safe-area-inset-right,0px)) clamp(16px,2.4vh,28px) max(clamp(14px,3vw,32px),env(safe-area-inset-left,0px))}
+.hx header{position:relative;z-index:33;display:flex;align-items:center;justify-content:center;gap:clamp(18px,2.8vw,28px);width:100%;max-width:720px;flex-shrink:0;animation:hxDown .7s cubic-bezier(.22,1,.36,1) both}
+.hx .logo{width:clamp(40px,4.4vw,46px);height:clamp(40px,4.4vw,46px);border-radius:50%;background:#fff;box-shadow:var(--nav-shadow);display:grid;place-items:center;flex:none;transition:transform .25s}
+.hx .logo:hover{transform:scale(1.04)}
+.hx .logo img{width:72%;height:72%;object-fit:contain}
+.hx nav.pill{flex:1;max-width:430px;height:clamp(44px,5.2vw,48px);background:#fff;border-radius:999px;box-shadow:var(--nav-shadow);padding:4px 8px;display:flex;align-items:center;justify-content:space-around}
+.hx nav.pill a{position:relative;color:var(--nav-text);text-decoration:none;font-weight:500;font-size:clamp(13px,1.4vw,15px);letter-spacing:-.01em;opacity:.5;padding:8px 6px;transition:opacity .2s}
+.hx nav.pill a:hover{opacity:.75}
+.hx nav.pill a.active{opacity:1}
+.hx nav.pill a.active::after,.hx .sheet a.active::after{content:"";position:absolute;left:50%;bottom:5px;width:3px;height:3px;margin-left:-1.5px;background:#000;border-radius:50%;box-shadow:-5px 0 0 #000,5px 0 0 #000}
+.hx .signin{height:clamp(44px,5.2vw,48px);display:inline-flex;align-items:center;padding:0 22px;border-radius:999px;background:var(--pill-dark);color:var(--sign-in-text);text-decoration:none;font-weight:500;font-size:clamp(13px,1.4vw,15px);box-shadow:var(--nav-shadow);transition:all .2s;white-space:nowrap}
+.hx .signin:hover{background:#323234;color:#fff;transform:translateY(-1px)}
+.hx .burger{display:none}
+.hx .hero-c{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;max-width:900px;width:100%}
+.hx .trust{--trust-size:clamp(36px,4.5vw,42px);display:inline-flex;align-items:center;margin-bottom:clamp(16px,2.5vh,26px)}
+.hx .av{width:var(--trust-size);height:var(--trust-size);border-radius:50%;background:var(--trust-bg);border:1px solid var(--trust-border);padding:5px;position:relative;transition:transform .35s}
+.hx .av i{width:100%;height:100%;border-radius:50%;background:#fff;color:#111;display:grid;place-items:center;font-size:calc(var(--trust-size)*.34)}
+.hx .av+.av{margin-left:calc(var(--trust-size)*-.42)}
+.hx .av.a1{z-index:1}.hx .av.a2{z-index:2}.hx .av.a3{z-index:4}
+.hx .trust:hover .a1{transform:translateY(-2px)}.hx .trust:hover .a2{transform:translateY(-4px)}.hx .trust:hover .a3{transform:translateY(-2px)}
+.hx .tpill{height:var(--trust-size);display:inline-flex;align-items:center;background:var(--trust-bg);border:1px solid var(--trust-border);border-radius:999px;margin-left:calc(var(--trust-size)*-.42);padding:0 16px 0 calc(var(--trust-size)*.58);color:var(--trust-text);font-weight:500;font-size:clamp(12px,1.4vw,13.5px);z-index:3;white-space:nowrap}
+.hx h1{font-family:var(--font-display);font-weight:900;color:#fff;font-size:clamp(28px,6.6vw,84px);letter-spacing:-.04em;line-height:1.08;margin:0;white-space:nowrap;overflow:hidden}
+.hx h1 span{display:block;opacity:0;transform:translateY(14px);animation:hxFade .85s cubic-bezier(.22,1,.36,1) forwards}
+.hx h1 span:nth-child(1){animation-delay:.12s}.hx h1 span:nth-child(2){animation-delay:.3s;color:#F7931A}
+.hx .subh{max-width:min(520px,92%);font-size:clamp(calc(13.5px + 2pt),calc(1.55vw + 2pt),calc(16.5px + 2pt));color:#d0d0d0;opacity:.8;line-height:1.55;font-weight:400;margin:clamp(14px,2.2vh,22px) 0 clamp(18px,3vh,30px)}
+.hx .cta{display:inline-block;background:#fff;color:#000;text-decoration:none;font-weight:600;font-size:clamp(13.5px,1.5vw,14.5px);padding:clamp(11px,1.6vh,13px) clamp(22px,3vw,28px);border-radius:999px;
+  box-shadow:0 0 0 1px rgba(255,255,255,.15),0 0 22px rgba(255,255,255,.32),0 0 44px rgba(255,255,255,.12);transition:transform .25s,box-shadow .25s}
+.hx .cta:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 0 0 1px rgba(255,255,255,.25),0 0 30px rgba(255,255,255,.45),0 0 60px rgba(247,147,26,.3)}
+.hx .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;width:100%;max-width:920px;flex-shrink:0}
+.hx .st4{display:grid;justify-items:center;gap:4px;text-align:center}
+.hx .st4 .ic{font-family:var(--font-display);font-weight:900;font-size:clamp(22px,3vw,33px);color:#F7931A;line-height:1}
+.hx .st4 .val{font-size:clamp(18px,2.2vw,26px);letter-spacing:-.025em;font-variant-numeric:tabular-nums;font-weight:500}
+.hx .st4 .lab{color:var(--muted);font-size:clamp(11px,1.2vw,12.5px)}
+.hx .anim{opacity:0;transform:translateY(22px) scale(.98);filter:blur(6px);animation:hxReveal .85s cubic-bezier(.22,1,.36,1) forwards;animation-delay:var(--d,0s)}
+.hx .cta.anim{animation-name:hxPulse}
+.hx .scrollhint{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);font-family:var(--f-data);font-size:10px;color:#8e8e8e;z-index:1}
+@keyframes hxDown{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:none}}
+@keyframes hxFade{to{opacity:1;transform:none}}
+@keyframes hxReveal{to{opacity:1;transform:none;filter:none}}
+@keyframes hxPulse{0%{opacity:0;transform:translateY(22px) scale(.98);filter:blur(6px)}70%{opacity:1;transform:none;filter:none}85%{transform:scale(1.04)}100%{opacity:1;transform:none;filter:none}}
+/* mobile menu */
+.hx .ovl{position:fixed;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:30;animation:hxOv .28s ease both}
+.hx .sheet{position:fixed;top:88px;left:16px;right:16px;max-width:420px;margin:0 auto;background:#fff;border-radius:28px;padding:22px 18px 20px;box-shadow:0 20px 60px rgba(0,0,0,.45);z-index:31;display:grid;gap:4px;animation:hxMenu .38s cubic-bezier(.22,1,.36,1) both}
+.hx .sheet a{position:relative;color:#2e2e2e;text-decoration:none;font-weight:500;font-size:17px;padding:12px 10px;text-align:center;opacity:0;animation:hxLink .4s cubic-bezier(.22,1,.36,1) forwards}
+.hx .sheet a.active::after{bottom:8px}
+.hx .sheet a.dark{background:#28282a;color:#fff;border-radius:999px;margin-top:8px}
+.hx .ovl[hidden],.hx .sheet[hidden]{display:none}
+@keyframes hxOv{from{opacity:0}}
+@keyframes hxMenu{from{opacity:0;transform:translateY(-10px) scale(.97)}}
+@keyframes hxLink{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (max-width:720px){
+  .hx nav.pill,.hx .signin.desk{display:none}
+  .hx header{justify-content:space-between}
+  .hx .logo{width:48px;height:48px}
+  .hx .burger{display:grid;place-content:center;gap:5px;width:48px;height:48px;border-radius:50%;background:#28282a;border:0;cursor:pointer;position:relative;z-index:32}
+  .hx .burger span{display:block;width:18px;height:1.5px;background:#fff;transition:transform .3s,opacity .3s}
+  .hx .burger[aria-expanded="true"]{background:#fff}
+  .hx .burger[aria-expanded="true"] span{background:#000}
+  .hx .burger[aria-expanded="true"] span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+  .hx .burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+  .hx .burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+  .hx h1{font-size:clamp(30px,9.2vw,64px);letter-spacing:-.06em;line-height:1.05}
+  .hx .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 10px}
+}
+@media (max-width:420px){.hx .trust{--trust-size:34px}.hx .tpill{font-size:12px}.hx h1{letter-spacing:-.07em;line-height:1.04}}
+@media (max-height:700px){.hx .subh{margin:10px 0 16px}.hx .trust{margin-bottom:12px}}
+/* flip cards */
+.flip{perspective:1400px;min-width:0}
+.flip-in{display:grid;transition:transform .7s cubic-bezier(.22,1,.36,1);transform-style:preserve-3d;height:100%}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.flip-in>.hero{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.flip-in>.back{transform:rotateY(180deg)}
+.fbtn{all:unset;cursor:pointer;font-family:var(--f-pixel);font-size:8px;color:var(--gold);border:2px solid var(--line);padding:6px 8px;justify-self:start;margin-top:auto}
+.fbtn:focus-visible{outline:2px solid var(--gold)}
+.back h4{margin:0;font-family:var(--f-pixel);font-size:10px;color:var(--orange)}
+.back ol{margin:0;padding-left:20px;display:grid;gap:6px;font-size:13px}
+.back ol li span{color:var(--dim);font-size:12px}
+.live{font-family:var(--f-data);font-size:10px;color:var(--mint)}
+/* high scores */
+.hs{display:grid;gap:6px;font-family:var(--f-data);font-size:13px}
+.hs .r{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 10px;border:2px solid var(--line);background:var(--panel-2)}
+.hs .r:nth-child(1){border-color:var(--gold)}.hs .r:nth-child(2){border-color:#c9c9c9}.hs .r:nth-child(3){border-color:#c47f3c}
+.hs .rk{font-family:var(--f-pixel);font-size:10px;color:var(--gold)}
+.hs .bar2{height:8px;background:#000;border:1px solid var(--line);margin-top:4px}
+.hs .bar2 i{display:block;height:100%;background:var(--orange)}
+.hs .sc{font-family:var(--f-pixel);font-size:11px;color:var(--ink)}
+@media (prefers-reduced-motion:reduce){.hx *,.hx .anim,.hx h1 span{animation:none!important;opacity:1!important;transform:none!important;filter:none!important}.flip-in{transition:none}}
+
+/* level select */
+.levels{display:flex;gap:10px;flex-wrap:wrap}
+.lv{font-family:var(--f-pixel);font-size:10px;padding:10px 12px;border:2px solid var(--line);background:var(--panel-2);color:var(--dim)}
+.lv.on{border-color:var(--orange);color:var(--ink);box-shadow:0 0 0 2px var(--void),0 0 0 4px var(--orange)}
+.lv.on b{color:var(--mint)}
+/* replay */
+.replay{display:grid;grid-template-columns:1.1fr 1fr;gap:20px;align-items:start}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.cal .dw{font-family:var(--f-data);font-size:10px;color:var(--dim);text-align:center}
+.cal .c{aspect-ratio:1;border:2px solid var(--line);background:#0f0b07;display:grid;place-items:center;font-family:var(--f-data);font-size:11px;color:#5b4834;position:relative;cursor:default}
+.cal .c.past{color:var(--dim)}
+.cal .c.ev{border-color:#5b4834}
+.cal .c.ev.past{background:var(--orange);color:#0b0907;border-color:var(--orange);cursor:pointer;font-weight:600}
+.cal .c.ev.irl.past{background:var(--mint);border-color:var(--mint)}
+.cal .c.now{outline:2px solid var(--gold);outline-offset:2px}
+.ctrl{display:flex;gap:12px;align-items:center;margin-top:14px}
+.ctrl input{flex:1;accent-color:var(--orange)}
+.btn{font-family:var(--f-pixel);font-size:10px;padding:10px 12px;background:var(--orange);color:#0b0907;border:0;cursor:pointer;box-shadow:3px 3px 0 #7a4a0d}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #7a4a0d}
+.screen{border:2px solid var(--line);background:#000;display:grid;gap:0}
+.screen .img{aspect-ratio:16/10;background:#0f0b07 center/cover no-repeat;border-bottom:2px solid var(--line);display:grid;place-items:center;font-family:var(--f-pixel);font-size:10px;color:#5b4834}
+.screen .cap{padding:12px;display:grid;gap:4px;min-height:84px}
+.screen .cap b{font-size:15px}
+.screen .cap span{font-size:13px;color:var(--dim)}
+.counters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.counters div{border:2px solid var(--line);padding:10px;background:var(--panel-2)}
+.counters b{display:block;font-family:var(--f-pixel);font-size:18px;color:var(--gold)}
+.counters span{font-size:12px;color:var(--dim)}
+/* proof wall */
+.wall{columns:4 200px;column-gap:10px}
+.wall button{all:unset;display:block;break-inside:avoid;margin:0 0 10px;border:2px solid var(--line);background:#000;cursor:pointer;position:relative;width:100%}
+.wall button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.wall img{display:block;width:100%;height:auto;filter:saturate(.95)}
+.wall button:hover img{filter:none}
+.wall .tag{position:absolute;left:6px;top:6px;font-family:var(--f-pixel);font-size:8px;background:rgba(11,9,7,.85);color:var(--gold);padding:5px 6px}
+#lb{position:fixed;inset:0;z-index:40;background:rgba(5,4,3,.94);display:none;place-items:center;padding:16px}
+#lb.open{display:grid}
+#lb figure{margin:0;max-width:min(960px,100%);display:grid;gap:10px}
+#lb img{max-width:100%;max-height:74vh;margin:0 auto;border:3px solid var(--line)}
+#lb figcaption{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;font-size:14px}
+#lb .x{position:absolute;top:12px;right:max(16px,env(safe-area-inset-right,0px))}
+/* video */
+.vid{aspect-ratio:16/9;border:2px solid var(--line);background:#000 center/cover no-repeat;display:grid;place-items:center;cursor:pointer;position:relative}
+.vid .play{font-family:var(--f-pixel);font-size:12px;background:var(--orange);color:#0b0907;padding:14px 16px;box-shadow:4px 4px 0 #7a4a0d}
+.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+@media (max-width:900px){.replay{grid-template-columns:1fr}}
+
+
+@media (prefers-reduced-motion:reduce){.xp i{transition:none}.blink{animation:none}}
+/* ===== v5: interactive layer ===== */
+.hx nav.pill{max-width:480px}
+.map canvas{cursor:pointer}
+.maphint{font-family:var(--f-data);font-size:12px;color:var(--gold);margin:8px 0 0}
+.stage{cursor:pointer;transition:border-color .2s,transform .2s,box-shadow .2s}
+.stage:hover{transform:translateY(-2px)}
+.stage:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.stage.sel{border-color:var(--orange);box-shadow:0 0 0 2px var(--void),0 0 0 4px var(--orange)}
+.lv{cursor:pointer;user-select:none}
+.lv:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.lv.shake{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.ach.armed .badge{opacity:0;transform:translateY(10px) scale(.92)}
+.ach.go .badge{opacity:1;transform:none;transition:opacity .45s,transform .45s cubic-bezier(.22,1,.36,1);transition-delay:calc(var(--i,0)*110ms)}
+.runbox{border:3px solid var(--line);background:#000}
+#run{display:block;width:100%;height:auto;image-rendering:pixelated;cursor:pointer;touch-action:manipulation}
+#run:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.runbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.runtip{flex:1 1 260px;font-size:14px;color:var(--dim);min-height:42px}
+.runtip b{color:var(--gold)}
+.xhud{position:fixed;right:max(12px,env(safe-area-inset-right,0px));bottom:max(12px,env(safe-area-inset-bottom,0px));z-index:35;display:flex;gap:8px}
+.xbtn{font-family:var(--f-pixel);font-size:10px;padding:10px 12px;background:var(--panel);color:var(--gold);border:3px solid var(--line);box-shadow:0 0 0 2px var(--void);cursor:pointer}
+.xbtn.pulse{animation:xpulse .5s 4}
+@keyframes xpulse{50%{border-color:var(--gold);transform:translateY(-3px)}}
+.xpanel{position:fixed;right:max(12px,env(safe-area-inset-right,0px));bottom:calc(max(12px,env(safe-area-inset-bottom,0px)) + 54px);z-index:35;width:min(320px,calc(100vw - 24px));max-height:calc(100vh - 100px);overflow:auto;background:var(--panel);border:3px solid var(--line);box-shadow:0 0 0 3px var(--void),0 10px 30px rgba(0,0,0,.6);padding:14px;display:grid;gap:10px}
+.xpanel[hidden]{display:none}
+.xbar{height:12px;border:2px solid var(--line);background:#000}
+.xbar i{display:block;height:100%;width:0;background:var(--mint);transition:width .5s steps(8)}
+.xpanel ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.xpanel li{display:grid;grid-template-columns:18px 1fr;gap:8px;font-size:13px}
+.xpanel li i{font-style:normal;color:var(--dim)}
+.xpanel li b{display:block;font-size:13px}
+.xpanel li span{color:var(--dim);font-size:12px}
+.xpanel li.ok i,.xpanel li.ok b{color:var(--mint)}
+.toast{position:fixed;left:50%;top:max(14px,env(safe-area-inset-top,0px));transform:translate(-50%,-180%);z-index:45;background:var(--panel);border:3px solid var(--gold);box-shadow:0 0 0 3px var(--void);padding:10px 14px;display:grid;gap:4px;width:max-content;max-width:calc(100vw - 32px);transition:transform .35s cubic-bezier(.22,1,.36,1);pointer-events:none}
+.toast.show{transform:translate(-50%,0)}
+.toast .label{color:var(--gold)}
+.toast b{font-size:15px}
+.win{position:fixed;inset:0;z-index:44;background:rgba(5,4,3,.86);display:grid;place-items:center;padding:16px}
+.win[hidden]{display:none}
+.winbox{max-width:460px;text-align:center;display:grid;gap:12px;justify-items:center}
+.winbox h2{font-size:20px;color:var(--gold);margin:0}
+.winbox p{margin:0}
+.winbox .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+#confetti{position:fixed;inset:0;width:100%;height:100%;z-index:46;pointer-events:none}
+@media (prefers-reduced-motion:reduce){.ach.armed .badge{opacity:1;transform:none}.toast{transition:none}.lv.shake,.xbtn.pulse{animation:none}}
+.lootp .loot{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px 28px}
+.qph{all:unset;cursor:pointer;font-family:var(--f-pixel);font-size:8px;color:var(--gold);border:2px solid var(--line);padding:5px 6px;margin-left:8px;vertical-align:middle}
+.qph:hover{border-color:var(--gold)}
+.qph:focus-visible{outline:2px solid var(--gold)}
+.hx .av i{font-style:normal;font-weight:700;font-family:var(--font-sans);font-size:calc(var(--trust-size)*.42);line-height:1}
+.xhud{transition:opacity .3s,transform .3s}
+.xhud.hid{opacity:0;pointer-events:none;transform:translateY(12px)}
+.octsc{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+.octsc .big{font-family:var(--f-pixel);font-size:32px;color:var(--mint)}
+.octsc .big small{font-size:14px;color:var(--dim)}
+.octsc span:last-child{color:var(--dim);font-size:14px}
+.objs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:10px}
+.obj{display:grid;grid-template-columns:30px 1fr;gap:10px;border:2px solid var(--line);background:var(--panel-2);padding:12px}
+.obj>i{font-style:normal;font-family:var(--f-pixel);font-size:14px;width:26px;height:26px;display:grid;place-items:center;color:#0b0907}
+.obj.ok>i{background:var(--mint)}.obj.mid>i{background:var(--sky)}.obj.no>i{background:var(--rust)}
+.obj b{display:block;font-size:15px}
+.obj span{font-size:13px;color:var(--dim)}
+.ohud{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,130px),1fr));gap:8px;margin-bottom:14px}
+.ohud div{border:2px solid var(--line);background:var(--panel-2);padding:10px 12px;display:grid;gap:2px}
+.ohud b{font-family:var(--f-pixel);font-size:22px;color:var(--gold)}
+.ohud span{font-size:12px;color:var(--dim)}
+.ostrip{display:flex;gap:8px;overflow-x:auto;margin-top:16px;padding-bottom:6px;scroll-snap-type:x mandatory}
+.ostrip a{flex:0 0 min(70%,260px);scroll-snap-align:start;border:2px solid var(--line);display:block}
+.ostrip a:hover{border-color:var(--gold)}
+.ostrip img{display:block;width:100%;aspect-ratio:1200/630;object-fit:cover}
+.bonus{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px}
+.quotes{display:grid;gap:8px;margin-top:16px}
+.quotes blockquote{margin:0;border-left:4px solid var(--gold);background:var(--panel-2);padding:10px 12px;font-size:14px}
+.quotes blockquote a{display:block;font-size:12px;margin-top:4px;color:var(--dim)}
+.vault{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:16px}
+.vault .label{margin-right:4px}
+.vault a{font-family:var(--f-data);font-size:12px;text-decoration:none;border:2px solid var(--line);padding:6px 9px;color:var(--ink);background:var(--panel-2)}
+.vault a:hover{border-color:var(--orange);color:var(--gold)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.tips{display:grid;gap:10px}
+.tips div{border-left:4px solid var(--orange);background:var(--panel-2);padding:10px 12px;font-size:14px;color:var(--dim)}
+.tips b{display:block;color:var(--ink);font-size:15px;margin-bottom:2px}
+.gbar{display:flex;height:26px;border:3px solid var(--line);background:#000;overflow:hidden}
+.gbar i{display:block;height:100%;width:0;background:var(--c);transition:width 1s steps(10)}
+.gbar.go i{width:calc(var(--w)*1%)}
+.gl{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:8px}
+.gl li{display:grid;grid-template-columns:12px 64px 1fr;gap:10px;align-items:baseline;font-size:14px}
+.gl li i{width:12px;height:12px;display:block;align-self:center}
+.gl li b{font-family:var(--f-pixel);font-size:11px;color:var(--gold)}
+.gl li span{color:var(--ink)}
+.cont{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border-color:var(--orange)}
+.cont .btn{text-decoration:none;font-size:11px;padding:14px 16px}
+@media (max-width:900px){.duo{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.gbar i{transition:none}}
+</style>
+</head>
+<body>
+<div class="hx" id="top">
+  <div class="bg"><video class="bg-video" autoplay muted loop playsinline poster="/assets/co-hero-first.jpg"><source src="/assets/co-hero-720.webm" type="video/webm"><source src="/assets/co-hero-720.mp4" type="video/mp4"></video></div>
+  <div class="page">
+    <header>
+      <a class="logo" href="#top" aria-label="Code Orange, top of page"><img src="/assets/favicon-co.svg" alt="" width="52" height="52"></a>
+      <nav class="pill" aria-label="Sections">
+        <a href="#top" class="active">Home</a><a href="#replay-h">Replay</a><a href="#wall-h">Proof</a><a href="#party-h">Fellows</a><a href="#run-h">Play</a>
+      </nav>
+      <a class="signin desk" href="#vid-h">Watch a session</a>
+      <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="sheet"><span></span><span></span><span></span></button>
+    </header>
+    <div class="ovl" hidden></div>
+    <nav class="sheet" id="sheet" hidden aria-label="Menu">
+      <a href="#top" class="active" style="animation-delay:.05s">Home</a><a href="#replay-h" style="animation-delay:.1s">Replay</a><a href="#wall-h" style="animation-delay:.15s">Proof</a><a href="#party-h" style="animation-delay:.2s">Fellows</a><a href="#run-h" style="animation-delay:.22s">Play</a><a href="#cont-h" style="animation-delay:.24s">Contact</a><a href="#vid-h" class="dark" style="animation-delay:.27s">Watch a session</a>
+    </nav>
+    <main class="hero-c">
+      <div class="trust anim" style="--d:.05s"><span class="av a1"><i>₿</i></span><span class="av a2"><i>⚡</i></span><span class="av a3"><i>#</i></span><span class="tpill">Every number linked to public proof</span></div>
+      <h1><span>Code Orange</span><span>Month 2 Cleared</span></h1>
+      <p class="subh anim" style="--d:.28s">Our progress as a game. Every session, fellow and proof. Press start and hit 100%.</p>
+      <a class="cta anim" href="#lvl" style="--d:.4s">▶ Press Start</a>
+    </main>
+    <section class="stats" aria-label="Headline numbers">
+      <div class="st4 anim" style="--d:.5s"><span class="ic">&lt;</span><span class="val" data-to="10" data-suf="">10</span><span class="lab">Sessions in October</span></div>
+      <div class="st4 anim" style="--d:.58s"><span class="ic">@</span><span class="val" data-to="100" data-suf="+">100+</span><span class="lab">Seats filled</span></div>
+      <div class="st4 anim" style="--d:.66s"><span class="ic">*</span><span class="val" data-to="5" data-suf="">5</span><span class="lab">Fellows</span></div>
+      <div class="st4 anim" style="--d:.74s"><span class="ic">#</span><span class="val" data-to="2" data-suf="">2</span><span class="lab">New programs live</span></div>
+    </section>
+  </div>
+</div>
+<div class="wrap">
+
+  <section class="panel title" aria-label="Save file">
+    <div>
+      <div class="label">Progress report · save file 02 · October 2026</div>
+      <h1>Code Orange<br><span>Month 2 cleared</span></h1>
+      <p>Two levels in: 19 sessions, 5 fellows, 2 new programs. Every number links to proof.</p>
+      <div class="save">
+        <span class="chip">World <b>Bali · Cebu · Discord</b></span>
+        <span class="chip">Start <b>1 Sep 2026</b></span>
+      </div>
+    </div>
+    <div class="lvl">
+      <div class="label">Level 2 · sessions run</div>
+      <div class="big num">10<span style="font-size:16px;color:var(--dim)"> / 7 planned</span></div>
+      <div class="xp" id="xp" style="--w:100%"><i></i></div>
+      <div class="xpmeta"><span>Plan beaten by 3 sessions</span><span>XP 100%</span></div>
+      <div class="label blink" style="color:var(--gold)">▶ Level 3 in play: November</div>
+    </div>
+  </section>
+
+
+  <nav class="levels" id="lvl" aria-label="Months">
+    <a class="lv" href="/progress/september-2026" style="color:inherit;text-decoration:none">LVL 1 · SEP <b>✓ CLEARED</b></a>
+    <span class="lv on">LVL 2 · OCT <b>✓ CLEARED</b></span>
+    <span class="lv">LVL 3 · NOV · IN PLAY</span>
+    <span class="lv">FINAL · MONTH 12</span>
+  </nav>
+
+  <section aria-label="Stats" class="hud">
+    <div class="stat"><span class="label">Sessions run</span><span class="v num">10</span><span class="k">Plan: 7+. 8 online, 2 in Bali</span></div>
+    <div class="stat"><span class="label">Seats filled</span><span class="v num">100<small>+</small></span><span class="k">Counted from recordings and photos</span></div>
+    <div class="stat"><span class="label">Different people</span><span class="v num">~30</span><span class="k">Joined at least one online call</span></div>
+    <div class="stat"><span class="label">Biggest call</span><span class="v num">18</span><span class="k">Privacy Track 2, 20 Oct</span></div>
+    <div class="stat"><span class="label">Fellows</span><span class="v num">5</span><span class="k">3 educator + 2 developer</span></div>
+    <div class="stat"><span class="label">Recaps + recordings</span><span class="v num">7</span><span class="k">TL;DR, links and a quiz each</span></div>
+    <div class="stat"><span class="label">Newsletter</span><span class="v num">92</span><span class="k">Subscribers, 45.7% opens</span></div>
+    <div class="stat"><span class="label">X posts</span><span class="v num">113</span><span class="k">311 likes, 95 reposts</span></div>
+  </section>
+
+
+  <section class="panel" aria-labelledby="replay-h">
+    <h2 id="replay-h">Replay October</h2>
+    <p class="sub">Press play or drag. Orange = online, green = in person. Tap a day.</p>
+    <div class="replay">
+      <div>
+        <div class="cal" id="cal"></div>
+        <div class="ctrl"><button class="btn" id="playBtn" type="button">▶ PLAY</button><input type="range" id="day" min="1" max="31" value="31" aria-label="Day of October"></div>
+        <div class="counters">
+          <div><b id="cS">10</b><span>sessions</span></div>
+          <div><b id="cP">104+</b><span>people counted</span></div>
+          <div><b id="cC">2</b><span>places: Discord, Bali</span></div>
+        </div>
+      </div>
+      <div class="screen"><div class="img" id="scrImg"></div><div class="cap"><b id="scrT"></b><span id="scrS"></span><a id="scrA" href="#" target="_blank" rel="noopener">see the post ↗</a></div></div>
+    </div>
+  </section>
+
+  <section class="panel map" aria-labelledby="map-h">
+    <h2 id="map-h">World map: the developer pipeline</h2>
+    <p class="sub">Five stages from first workshop to full-time Bitcoin dev.</p>
+    <canvas id="world" width="560" height="75" aria-label="Pixel map of the five pipeline stages with a runner walking from workshops toward full-time development"></canvas>
+    <p class="maphint">▸ Tap a stage to walk there.</p>
+    <div class="stages">
+      <div class="stage"><span class="st clear">Cleared</span><h3>Workshops</h3><p>10 sessions online and in Bali.</p></div>
+      <div class="stage"><span class="st open">Unlocked</span><h3>Study cohorts</h3><p>Reading Club live. Decoding Bitcoin sign-ups open.</p></div>
+      <div class="stage"><span class="st open">Unlocked</span><h3>Code review</h3><p>Privacy Track and Code Review Club went live in October.</p></div>
+      <div class="stage"><span class="st open">Unlocked</span><h3>Fellowships</h3><p>3 educator + 2 developer fellows.</p></div>
+      <div class="stage"><span class="st lock">Locked</span><h3>Full-time dev</h3><p>Next: mentors confirmed.</p></div>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="party-h">
+    <h2 id="party-h">The party: Cohort 1 fellows</h2>
+    <p class="sub">Each runs a program, so we don't depend on one teacher.</p>
+    <div class="party">
+      <div class="flip"><div class="flip-in">
+      <article class="hero front">
+        <header><canvas class="sprite" width="14" height="14" data-sprite="mage"></canvas>
+          <div><h3>Razor</h3><div class="cls">Privacy Mage</div></div></header>
+        <div class="bars">
+          <div class="bar">Privacy<span><i style="width:95%"></i></span></div>
+          <div class="bar">Build<span><i style="width:85%"></i></span></div>
+          <div class="bar">Teach<span><i style="width:75%"></i></span></div>
+        </div>
+        <ul>
+          <li>Led both Privacy Track sessions on Payjoin (13 and 18 people)</li>
+          <li>Co-hosts Code Review Club; reviewed a real pull request live</li>
+          <li>Ran the Sovereign Bitcoiner workshop on threat models</li>
+        </ul>
+        <button class="fbtn" type="button" aria-label="Flip Razor's card">↻ FLIP CARD</button>
+      </article>
+      <article class="hero back" aria-label="Razor, card back">
+        <h4>Razor · Quest log</h4>
+        <ol><li><a href="https://x.com/CodeOrangeDevs/status/2107454947487023440">Privacy Track 1, 6 Oct</a> <span>Payjoin vs chain analysis</span></li><li><a href="https://x.com/CodeOrangeDevs/status/2108187967038865479">Code Review Club, 8 Oct</a> <span>live PR review</span></li><li><a href="https://codeorange.dev/session-notes/2026-10-14-sovereign-bitcoiner-workshop">Sovereign Bitcoiner, 14 Oct</a> <span>why privacy matters</span></li><li><a href="https://x.com/CodeOrangeDevs/status/2112473731109101908">Privacy Track 2, 20 Oct</a> <span>Payjoin v2 tested live</span></li></ol>
+        <button class="fbtn" type="button" aria-label="Flip Razor's card back">↻ FLIP BACK</button>
+      </article>
+      </div></div>
+      <div class="flip"><div class="flip-in">
+      <article class="hero front">
+        <header><canvas class="sprite" width="14" height="14" data-sprite="sage"></canvas>
+          <div><h3>Alex</h3><div class="cls">Lorekeeper</div></div></header>
+        <div class="bars">
+          <div class="bar">Community<span><i style="width:90%"></i></span></div>
+          <div class="bar">Review<span><i style="width:70%"></i></span></div>
+          <div class="bar">Teach<span><i style="width:80%"></i></span></div>
+        </div>
+        <ul>
+          <li>Co-hosts Code Review Club: Nostr, ecash and code review</li>
+          <li>Hosts the Reading Club and built an <a href="https://bitcoin-whitepaper-annotated.vercel.app">annotated whitepaper</a> for it</li>
+          <li>Leveled up to developer fellow (Payjoin). Hosts Decoding Bitcoin next</li>
+        </ul>
+        <button class="fbtn" type="button" aria-label="Flip Alex's card">↻ FLIP CARD</button>
+      </article>
+      <article class="hero back" aria-label="Alex, card back">
+        <h4>Alex · Quest log</h4>
+        <ol><li><a href="https://x.com/CodeOrangeDevs/status/2108187967038865479">Code Review Club, 8 Oct</a> <span>14 on the call</span></li><li><a href="https://x.com/CodeOrangeDevs/status/2115635773504675975">Reading Club, 28 Oct</a> <span>the whitepaper abstract</span></li><li>Developer fellow <span>Payjoin</span></li></ol>
+        <button class="fbtn" type="button" aria-label="Flip Alex's card back">↻ FLIP BACK</button>
+      </article>
+      </div></div>
+      <div class="flip"><div class="flip-in">
+      <article class="hero front">
+        <header><canvas class="sprite" width="14" height="14" data-sprite="ranger"></canvas>
+          <div><h3>Andy</h3><div class="cls">Custody Ranger</div></div></header>
+        <div class="bars">
+          <div class="bar">Custody<span><i style="width:95%"></i></span></div>
+          <div class="bar">Explore<span><i style="width:85%"></i></span></div>
+          <div class="bar">Teach<span><i style="width:80%"></i></span></div>
+        </div>
+        <ul>
+          <li>Built a 2-of-3 multisig live with three hardware wallet brands</li>
+          <li>Set up in Sparrow, recovered in Nunchuk</li>
+          <li>Built <a href="https://selfcustody.academy">selfcustody.academy</a> with AI and demoed it</li>
+          <li><a href="https://x.com/andywong311">@andywong311</a></li>
+        </ul>
+        <button class="fbtn" type="button" aria-label="Flip Andy's card">↻ FLIP CARD</button>
+      </article>
+      <article class="hero back" aria-label="Andy, card back">
+        <h4>Andy · Quest log</h4>
+        <ol><li><a href="https://x.com/CodeOrangeDevs/status/2111032079073059228">Self-Custody Workshop, 16 Oct</a> <span>multi-vendor multisig</span></li><li><a href="https://x.com/CodeOrangeDevs/status/2113122304029048968">Agentic Engineering, 21 Oct</a> <span>showed his project</span></li><li><a href="https://x.com/andywong311">@andywong311</a></li></ol>
+        <button class="fbtn" type="button" aria-label="Flip Andy's card back">↻ FLIP BACK</button>
+      </article>
+      </div></div>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="quest-h">
+    <h2 id="quest-h">Quest log: October sessions</h2>
+    <p class="sub">Online: people in the voice channel at the busiest moment of the recording. Bali: people in our photos plus the photographer.</p>
+    <div class="quests" id="quests"></div>
+    <div class="legend"><span><i class="pty"><i></i></i> Online, 1 person</span><span><i class="pty"><i class="irl"></i></i> In person, 1 person</span></div>
+  </section>
+
+
+  <section class="panel" aria-labelledby="wall-h">
+    <h2 id="wall-h">Proof wall</h2>
+    <p class="sub">From our public posts. Tap a picture to open it and its post.</p>
+    <div class="wall" id="wall"></div>
+  </section>
+
+  <section class="panel" aria-labelledby="vid-h">
+    <h2 id="vid-h">Watch a session</h2>
+    <p class="sub">Privacy Track 2, 20 Oct. Payjoin v2 tested live.</p>
+    <div class="vid" id="vid" role="button" tabindex="0" aria-label="Play the Privacy Track video" style="background-image:url(https://i.ytimg.com/vi/g5TAfT07ghE/hqdefault.jpg)"><span class="play">▶ PLAY VIDEO</span></div>
+  </section>
+
+  <section class="panel" aria-labelledby="ach-h">
+    <h2 id="ach-h">Achievements unlocked</h2>
+    <p class="sub">New in October.</p>
+    <div class="ach" id="ach"></div>
+  </section>
+
+  <section class="panel" aria-labelledby="run-h">
+    <h2 id="run-h">Bonus stage: Privacy Run</h2>
+    <p class="sub">Jump the privacy leaks, grab the sats. Tap or press space. Each hit shows the fix we teach.</p>
+    <div class="runbox"><canvas id="run" width="640" height="200" tabindex="0" aria-label="Privacy Run mini-game. Press space or tap to jump." aria-describedby="runTip"></canvas></div>
+    <div class="runbar"><button class="btn" id="runBtn" type="button">▶ START</button><span class="chip">BEST <b id="runBest">0</b></span><span class="runtip" id="runTip" aria-live="polite">Score 15 to unlock a quest.</span></div>
+  </section>
+
+    <section class="panel lootp" aria-labelledby="loot-h">
+      <h2 id="loot-h">Loot and reach</h2>
+      <p class="sub">Built, and noticed.</p>
+      <div class="loot">
+        <div class="it"><b>91</b><span>website updates on <a href="https://github.com/code-orange-dev/codeorange-site/commits/main">codeorange.dev</a>: new design, Start here, events calendar, learning pages</span></div>
+        <div class="it"><b>7</b><span>public <a href="https://codeorange.dev/session-notes">session recaps</a> with recordings, plus a <a href="https://codeorange.dev/resources">resource library</a></span></div>
+        <div class="it"><b>12</b><span>session cards and labs on the rebuilt <a href="https://codeorange.dev/privacy-track">Privacy Track page</a></span></div>
+        <div class="it"><b>CC0</b><span><a href="https://x.com/CodeOrangeDevs/status/2105479242628968840">Bitcoin Basics slides</a> open-sourced: 5 sessions any meetup can reuse</span></div>
+        <div class="it"><b>3</b><span>Bitcoin sites <a href="https://x.com/CodeOrangeDevs/status/2113122307485143341">built with AI</a> by community members and demoed live</span></div>
+      </div>
+      <div class="reach">
+        <span class="chip">🇹🇭 Invited to the <a href="https://x.com/CodeOrangeDevs/status/2109439538741629018">Bitcoin Learning Centre, Chiang Mai</a></span>
+        <span class="chip">🛠 Maxima built <a href="https://x.com/CodeOrangeDevs/status/2116425140519264638">bitscriptum.xyz</a>, a developer learning tool</span>
+      </div>
+    </section>
+
+  <section class="panel" aria-labelledby="oct-h">
+    <h2 id="oct-h">Level 2 objectives</h2>
+    <p class="sub">The Privacy Track went live. Final count for October.</p>
+    <div class="octsc"><span class="big num">7<small> / 8</small></span><span>objectives cleared · 1 carried to November</span></div>
+    <div class="ohud">
+      <div><b class="num">10</b><span>sessions</span></div>
+      <div><b class="num">18</b><span>at Privacy Track 2</span></div>
+      <div><b class="num">7</b><span>public recaps</span></div>
+      <div><b class="num">2</b><span>developer fellows</span></div>
+    </div>
+    <div class="objs">
+      <div class="obj ok"><i>✓</i><div><b>Privacy Track goes live</b><span><a href="https://codeorange.dev/session-notes/2026-10-06-privacy-track">6 Oct</a>: Payjoin vs chain analysis, 13 people. <a href="https://codeorange.dev/session-notes/2026-10-20-privacy-track">20 Oct</a>: 18 people tested Payjoin v2 live in Cake Wallet and Bull Bitcoin. Payjoin first, by community request.</span></div></div>
+      <div class="obj ok"><i>✓</i><div><b>Code Review Club launches</b><span><a href="https://codeorange.dev/session-notes/2026-10-08-code-review-club">8 Oct</a>: Nostr, ecash and a live PR review, 14 people. Hosts Razor and Alex.</span></div></div>
+      <div class="obj ok"><i>✓</i><div><b>7+ sessions in the month</b><span>10 run. Also <a href="https://x.com/CodeOrangeDevs/status/2108471126498349264">Silent Payments</a>, <a href="https://codeorange.dev/session-notes/2026-10-14-sovereign-bitcoiner-workshop">Sovereign Bitcoiner</a>, a <a href="https://codeorange.dev/session-notes/2026-10-16-self-custody-workshop">2-of-3 multisig built live</a>, <a href="https://codeorange.dev/session-notes/2026-10-21-agentic-engineering">Agentic Engineering</a>, a <a href="https://x.com/CodeOrangeDevs/status/2113596617001762988">mining workshop</a>, an <a href="https://x.com/CodeOrangeDevs/status/2115044011216085323">AI meetup</a> and the <a href="https://codeorange.dev/session-notes/2026-10-28-bitcoin-reading-club">Reading Club</a>.</span></div></div>
+      <div class="obj ok"><i>✓</i><div><b>Every online session gets a public recap</b><span>7 <a href="https://codeorange.dev/session-notes">recaps</a> with recordings, plus a <a href="https://codeorange.dev/resources">resource library</a>.</span></div></div>
+      <div class="obj ok"><i>✓</i><div><b>First developer fellow</b><span>Alex, from educator to Payjoin dev.</span></div></div>
+      <div class="obj ok"><i>✓</i><div><b>Second developer fellow</b><span>Floresta, from 1 Nov. Picked under our <a href="https://codeorange.dev/fellowships/guidelines">guidelines</a>.</span></div></div>
+      <div class="obj ok"><i>✓</i><div><b>Decoding Bitcoin sign-ups open</b><span>10 weeks, <a href="https://codeorange.dev/decoding-bitcoin">started 16 Nov</a>.</span></div></div>
+      <div class="obj mid"><i>◐</i><div><b>Mentors for developer fellows</b><span>Named by each fellow. Awaiting confirmation.</span></div></div>
+    </div>
+    <div class="bonus"><span class="label">Bonus loot</span>
+      <span class="chip">⚡ Silent Payment sent and received <a href="https://x.com/CodeOrangeDevs/status/2108471130294263979">on-chain</a></span>
+      <span class="chip">📜 <a href="https://x.com/CodeOrangeDevs/status/2110941892963893357">Fellowship guidelines published</a></span>
+      <span class="chip">⛏ Mined with a <a href="https://x.com/CodeOrangeDevs/status/2113596617001762988">BitAxe, NerdAxe and Antminer</a></span>
+    </div>
+    <div class="quotes"><span class="label">Party chat · what people said</span>
+      <blockquote>"I really enjoyed the session. Learned new things like how to do private transactions." <a href="https://x.com/i/status/2112498545911828614">Privacy Track, 20 Oct</a></blockquote>
+      <blockquote>"Thanks for the insightful session on multisig and self custody." <a href="https://x.com/i/status/2111038204287840508">Self-Custody Workshop</a></blockquote>
+      <blockquote>"Can I lose my btc if the Directory and OHTTP relay are controlled by an attacker?" <a href="https://x.com/i/status/2112602848789774460">A participant's own Privacy Track notes</a></blockquote>
+    </div>
+    <div class="vault"><span class="label">October recordings</span>
+      <a href="https://www.youtube.com/watch?v=lsgyE7OxpsM">▶ Privacy Track: Payjoin</a><a href="https://www.youtube.com/watch?v=wQPdlsrxidY">▶ Code Review Club</a><a href="https://www.youtube.com/watch?v=NENhVbqtGTs">▶ Sovereign Bitcoiner</a><a href="https://www.youtube.com/watch?v=mKleeG4x-Ug">▶ Multisig, live</a><a href="https://www.youtube.com/watch?v=g5TAfT07ghE">▶ Payjoin v2, live</a><a href="https://www.youtube.com/watch?v=dQVF4HuU-_I">▶ Agentic Engineering</a><a href="https://www.youtube.com/watch?v=CWejngosDew">▶ Reading Club</a>
+    </div>
+  </section>
+
+  <div class="duo">
+  <section class="panel" aria-labelledby="learn-h">
+    <h2 id="learn-h">What we learned</h2>
+    <p class="sub">Respawn notes: what slipped, and the fix.</p>
+    <div class="tips">
+      <div><b>Payjoin before Silent Payments</b>The community asked for it, so we changed the order.</div>
+      <div><b>Live tests break, and that teaches</b>Payjoin v2 failed in places. It became a to-do list for contributors.</div>
+      <div><b>Nobody came to Cebu in October</b>The 2 Oct meetup was held but empty. A new city takes time, so we keep showing up monthly.</div>
+      <div><b>AI topics bring newcomers</b>5 at the Bali mining workshop, 14 at the AI meetup four days later.</div>
+      <div><b>Mentors are still the bottleneck</b>Asking in person at November conferences.</div>
+      <div><b>Counting got better</b>We now count from recordings, not just screenshots. One post said 9 when 13 were on the call.</div>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="gold-h">
+    <h2 id="gold-h">Where the gold goes</h2>
+    <p class="sub">Budget lines from our 12-month plan. Almost all of it pays people to teach and build.</p>
+    <ul class="gl">
+      <li><i style="background:#f7931a"></i><b>Lead</b><span>Program lead: living expenses, full time</span></li>
+      <li><i style="background:#7cc4ff"></i><b>TA</b><span>Privacy Track teaching assistant (Razor)</span></li>
+      <li><i style="background:#6fe3a1"></i><b>×4</b><span>Educator fellows, 6 months each (3 active)</span></li>
+      <li><i style="background:#ffcf5a"></i><b>×4</b><span>Developer fellows, 6 months each (2 picked)</span></li>
+      <li><i style="background:#e0694a"></i><b>Local</b><span>Community leaders who host meetups</span></li>
+      <li><i style="background:#c79bff"></i><b>Guests</b><span>Guest instructors and mentors</span></li>
+    </ul>
+    <p class="sub" style="margin:12px 0 0">Paid in bitcoin. Exact figures are in our written report.</p>
+  </section>
+  </div>
+
+  <section class="panel" aria-labelledby="next-h">
+    <h2 id="next-h">Next level: November</h2>
+    <p class="sub">Next save file.</p>
+    <div class="next">
+      <div><b>Decoding Bitcoin, 16 Nov</b>10-week cohort feeding the track. Started with 19 sign-ups.</div>
+      <div><b>Floresta fellow starts</b>First monthly report due in December.</div>
+      <div><b>Mentors confirmed</b>A mentor for every developer fellow.</div>
+    </div>
+  </section>
+
+  <section class="panel cont" aria-labelledby="cont-h">
+    <div><h2 id="cont-h">Continue? Join the party</h2>
+    <p class="sub" style="margin:0">Mentor, guest-teach, or ask us anything.</p></div>
+    <a class="btn" href="mailto:hello@codeorange.dev?subject=Code%20Orange%20progress">✉ TALK TO US</a>
+  </section>
+
+  <footer>
+    <span class="px">Game saved · Code Orange Dev School</span><span>Psst: there is a secret somewhere on this page.</span>
+    <span>Sources: our posts on X, session recordings, GitHub, YouTube and MailerLite. A full written report is available on request: <a href="mailto:hello@codeorange.dev">hello@codeorange.dev</a></span>
+  </footer>
+</div>
+
+<div class="xhud"><button class="xbtn" id="xBtn" type="button" aria-expanded="false" aria-controls="xPanel" aria-label="Explorer quests">★ <span id="xN">0</span>/7</button><button class="xbtn" id="sndBtn" type="button" aria-pressed="false" aria-label="Sound effects">♪ OFF</button></div>
+<div class="xpanel" id="xPanel" hidden><div class="label">Explorer quests · find them all</div><div class="xbar"><i id="xBar"></i></div><ul id="xList"></ul><button class="fbtn" id="xReset" type="button">↺ RESET SAVE</button></div>
+<div class="toast" id="toast" role="status" aria-live="polite"><span class="label" id="toastL"></span><b id="toastT"></b></div>
+<div class="win" id="win" hidden role="dialog" aria-modal="true" aria-labelledby="winH"><div class="winbox panel"><div class="label">Save file 02 · October 2026</div><h2 id="winH">100% complete</h2><p>You explored level 2: 10 sessions, 100+ seats, 5 fellows.</p><p class="sub">Level 3 (November) is in play.</p><div class="row"><button class="btn" id="winX" type="button">CONTINUE ▶</button></div></div></div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+<div id="lb" role="dialog" aria-modal="true" aria-label="Photo"><button class="btn x" id="lbX" type="button">✕ CLOSE</button><figure><img id="lbI" alt=""><figcaption><span id="lbC"></span><a id="lbA" href="#" target="_blank" rel="noopener">open the post on X ↗</a></figcaption></figure></div>
+<script>
+(function(){
+  const U="https://x.com/CodeOrangeDevs/status/";
+
+
+  // hero: count-up, menu
+  document.getElementById('xp').classList.add('ready');
+  const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ease=t=>1-Math.pow(1-t,3);
+  function countUp(el,to,i){const suf=el.dataset.suf||'';const dec=(String(to).split('.')[1]||'').length;
+    if(RM){el.textContent=to.toFixed(dec)+suf;return}
+    const dur=1500+i*80,st=performance.now()+480+i*90;
+    (function f(now){const t=Math.min(1,Math.max(0,(now-st)/dur));el.textContent=(to*ease(t)).toFixed(dec)+suf;if(t<1)requestAnimationFrame(f)})(performance.now())}
+  const vals=[...document.querySelectorAll('.hx .val')];
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){vals.forEach((v,i)=>countUp(v,+v.dataset.to,i));io.disconnect()}})},{threshold:.25});
+  io.observe(document.querySelector('.hx .stats'));
+  const burger=document.querySelector('.hx .burger'),sheet=document.getElementById('sheet'),ovl=document.querySelector('.hx .ovl');
+  function menu(open){burger.setAttribute('aria-expanded',open);burger.setAttribute('aria-label',open?'Close menu':'Open menu');sheet.hidden=!open;ovl.hidden=!open;document.body.classList.toggle('menu-open',open)}
+  burger.addEventListener('click',()=>menu(burger.getAttribute('aria-expanded')!=='true'));
+  ovl.addEventListener('click',()=>menu(false));sheet.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>menu(false)));
+  addEventListener('keydown',e=>{if(e.key==='Escape'&&!sheet.hidden)menu(false)});
+  addEventListener('resize',()=>{if(innerWidth>720&&!sheet.hidden)menu(false)});
+
+  // flip cards
+  document.querySelectorAll('.flip').forEach(f=>f.querySelectorAll('.fbtn').forEach(b=>b.addEventListener('click',()=>{f.classList.toggle('on');
+    const fr=f.querySelector('.front'),bk=f.querySelector('.back');const on=f.classList.contains('on');fr.inert=on;bk.inert=!on;(on?bk:fr).querySelector('.fbtn').focus()})));
+  document.querySelectorAll('.flip .back').forEach(b=>b.inert=true);
+
+  // sessions by day: [day, title, sub, irl, people, img, tweet]
+  const EV=[
+    [6,"Privacy Track 1 · Razor","Payjoin vs chain analysis. 13 people on the call.",0,13,"pt1-b","2107454947487023440"],
+    [8,"Code Review Club 1 · Razor + Alex","Nostr, ecash and a live PR review. 14 people.",0,14,"crc","2108187967038865479"],
+    [10,"Silent Payments · Maxima","Sending each other Silent Payments. Not counted.",0,0,"sp","2108471126498349264"],
+    [14,"Sovereign Bitcoiner · Razor","Threat models and a live Lightning privacy test. 12 people.",0,12,"sovereign","2110541349393240379"],
+    [16,"Self-Custody · Andy","2-of-3 multisig with three hardware wallet brands. 8 people.",0,8,"custody-b","2111032079073059228"],
+    [20,"Privacy Track 2 · Razor","Payjoin v2 tested live. 18 people.",0,18,"pt2-a","2112473731109101908"],
+    [21,"Agentic Engineering · Andy + Mwihoti","Bitcoin projects built with AI, shown live. 9 people.",0,9,"agentic","2113122304029048968"],
+    [23,"Bitcoin Mining Workshop, Bali","BitAxe, NerdAxe and an Antminer S9j. 5+ in the room.",1,5,"mining-a","2113596617001762988"],
+    [27,"Bitcoin + AI meetup, Bali","Alby agent skills, AI on a home server. About 14 in the room.",1,14,"ai-a","2115044011216085323"],
+    [28,"Reading Club · Alex","The whitepaper abstract, line by line. 11 people.",0,11,"reading","2115635773504675975"]
+  ];
+  const cal=document.getElementById('cal');
+  ['M','T','W','T','F','S','S'].forEach(d=>{const e=document.createElement('div');e.className='dw';e.textContent=d;cal.appendChild(e)});
+  // 1 Oct 2026 is a Thursday
+  for(let k=0;k<3;k++)cal.appendChild(document.createElement('div'));
+  const cells={};
+  for(let d=1;d<=31;d++){const c=document.createElement('div');c.className='c';c.textContent=d;const ev=EV.find(e=>e[0]===d);
+    if(ev){c.classList.add('ev');if(ev[3])c.classList.add('irl');c.title=ev[1];c.addEventListener('click',()=>{if(+day.value>=d)show(ev)})}
+    cal.appendChild(c);cells[d]=c}
+  const day=document.getElementById('day');
+  const sImg=document.getElementById('scrImg'),sT=document.getElementById('scrT'),sS=document.getElementById('scrS'),sA=document.getElementById('scrA');
+  function show(ev){sImg.style.backgroundImage=`url(s10/${ev[5]}.jpg)`;sImg.textContent='';sT.textContent=`${ev[0]} Oct · ${ev[1]}`;sS.textContent=ev[2];sA.href=U+ev[6];sA.style.display=''}
+  function render(n){
+    let S=0,P=0,places=new Set(),last=null;
+    for(let d=1;d<=31;d++){cells[d].classList.toggle('past',d<=n);cells[d].classList.toggle('now',d===n)}
+    EV.forEach(e=>{if(e[0]<=n){S++;P+=e[4];places.add(e[3]?'Bali':'Discord');last=e}});
+    document.getElementById('cS').textContent=S;document.getElementById('cP').textContent=P+(n>=23?'+':'');document.getElementById('cC').textContent=places.size;
+    if(last)show(last);else{sImg.style.backgroundImage='';sImg.textContent='NO SESSIONS YET';sT.textContent=n+' Oct';sS.textContent='The month is just starting.';sA.style.display='none'}
+  }
+  day.addEventListener('input',()=>{stop();render(+day.value)});
+  let timer=null;const pb=document.getElementById('playBtn');
+  function stop(){clearInterval(timer);timer=null;pb.textContent='▶ PLAY'}
+  pb.addEventListener('click',()=>{if(timer){stop();return}let n=+day.value>=31?0:+day.value;pb.textContent='❚❚ PAUSE';
+    timer=setInterval(()=>{n++;day.value=n;render(n);if(n>=31)stop()},matchMedia('(prefers-reduced-motion: reduce)').matches?60:260)});
+  render(31);
+
+  // proof wall: [img, tag, caption, tweet]
+  const PW=[
+    ["ai-a","27 OCT","Bitcoin + AI meetup in Bali: about 14 in the room","2115044011216085323"],
+    ["pt2-a","20 OCT","Privacy Track 2: 18 people learning Payjoin v2","2112473731109101908"],
+    ["mining-a","23 OCT","Bitcoin Mining Workshop in Bali","2113596617001762988"],
+    ["crc","8 OCT","Code Review Club 1: a live pull request review, 14 on the call","2108187967038865479"],
+    ["custody-b","16 OCT","2-of-3 multisig signed live in Nunchuk","2111032079073059228"],
+    ["ai-b","27 OCT","Digital nomads learning Bitcoin + AI","2115044011216085323"],
+    ["pt1-b","6 OCT","Privacy Track 1: Payjoin explained by Razor","2108189188478964032"],
+    ["mining-b","23 OCT","NerdAxe and an Antminer S9j on the table","2113596617001762988"],
+    ["pt2-b","20 OCT","Payjoin vs Coinjoin, from Razor's slides","2112473731109101908"],
+    ["sp","9 OCT","A Silent Payment address in Sparrow","2108471130294263979"],
+    ["custody-a","16 OCT","Self-Custody Workshop: hardware wallet on camera","2111032079073059228"],
+    ["ai-c","27 OCT","Omarchy and agents with Alby payment skills","2115044011216085323"],
+    ["pt1-a","6 OCT","A real transaction inspected on mempool.space","2108189188478964032"],
+    ["mining-c","23 OCT","BitAxe, NerdAxe and friends","2113596617001762988"],
+    ["pt2-c","20 OCT","A two-input, two-output Payjoin-style transaction","2112473731109101908"],
+    ["sovereign","14 OCT","Sovereign Bitcoiner: why privacy matters","2110541349393240379"],
+    ["agentic","21 OCT","Agentic Engineering: Bitcoin sites built with AI","2113122304029048968"],
+    ["reading","28 OCT","Reading Club: the Bitcoin whitepaper","2115635773504675975"]
+  ];
+  const wall=document.getElementById('wall');
+  PW.forEach(([im,tag,cap,tw])=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-label',cap);
+    b.innerHTML=`<img src="s10/${im}.jpg" alt="${cap}" loading="lazy" decoding="async"><span class="tag">${tag}</span>`;
+    b.addEventListener('click',()=>openLB(im,tag+' · '+cap,tw));wall.appendChild(b)});
+  const lb=document.getElementById('lb'),lbI=document.getElementById('lbI');let lastFocus=null;
+  window.__coLB=(im,cap,tw)=>openLB(im,cap,tw);
+  function openLB(im,cap,tw){lastFocus=document.activeElement;lbI.src=`s10/${im}.jpg`;lbI.alt=cap;document.getElementById('lbC').textContent=cap;document.getElementById('lbA').href=U+tw;lb.classList.add('open');document.getElementById('lbX').focus()}
+  function closeLB(){lb.classList.remove('open');if(lastFocus)lastFocus.focus()}
+  document.getElementById('lbX').addEventListener('click',closeLB);lb.addEventListener('click',e=>{if(e.target===lb)closeLB()});
+  addEventListener('keydown',e=>{if(e.key==='Escape'&&lb.classList.contains('open'))closeLB()});
+
+  // video facade
+  const vid=document.getElementById('vid');
+  function playVid(){if(vid.querySelector('iframe'))return;vid.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/g5TAfT07ghE?autoplay=1&rel=0" title="Privacy Track: Payjoin v2" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>'}
+  vid.addEventListener('click',playVid);vid.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();playVid()}});
+})();
+</script>
+<script>
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // XP bar fill
+  requestAnimationFrame(()=>document.getElementById('xp').classList.add('ready'));
+
+  // Quest log
+  const Q=[
+    ["6 OCT","Privacy Track 1 · Razor","Payjoin vs chain analysis","Discord",13,false,"https://x.com/CodeOrangeDevs/status/2107454947487023440"],
+    ["8 OCT","Code Review Club 1 · Razor + Alex","Nostr, ecash, live PR review","Discord",14,false,"https://x.com/CodeOrangeDevs/status/2108187967038865479"],
+    ["10 OCT","Silent Payments · Maxima","Sending each other Silent Payments","Discord",null,false,"https://x.com/CodeOrangeDevs/status/2108471126498349264"],
+    ["14 OCT","Sovereign Bitcoiner · Razor","Threat models, live Lightning privacy test","Discord",12,false,"https://x.com/CodeOrangeDevs/status/2110541349393240379"],
+    ["16 OCT","Self-Custody · Andy","2-of-3 multisig, three hardware wallet brands","Discord",8,false,"https://x.com/CodeOrangeDevs/status/2111032079073059228"],
+    ["20 OCT","Privacy Track 2 · Razor","Payjoin v2 tested live","Discord",18,false,"https://x.com/CodeOrangeDevs/status/2112473731109101908"],
+    ["21 OCT","Agentic Engineering · Andy + Mwihoti","Bitcoin projects built with AI","Discord",9,false,"https://x.com/CodeOrangeDevs/status/2113122304029048968"],
+    ["23 OCT","Bitcoin Mining Workshop","BitAxe, NerdAxe, Antminer S9j","Bitcoin House Bali",5,true,"https://x.com/CodeOrangeDevs/status/2113596617001762988"],
+    ["27 OCT","Bitcoin + AI meetup","Alby agent skills, AI on a home server","Bitcoin House Bali",14,true,"https://x.com/CodeOrangeDevs/status/2115044011216085323"],
+    ["28 OCT","Reading Club · Alex","The whitepaper abstract","Discord",11,false,"https://x.com/CodeOrangeDevs/status/2115635773504675975"]
+  ];
+  const qEl=document.getElementById('quests');
+  const QI=['pt1-b','crc','sp','sovereign','custody-b','pt2-a','agentic','mining-a','ai-a','reading'];
+  Q.forEach(([d,t,s,w,n,irl,url],qi)=>{
+    const row=document.createElement('div');row.className='q';
+    let ppl='';
+    if(n){for(let i=0;i<n;i++)ppl+=`<i class="${irl?'irl':''}"></i>`;ppl+=`<em>${n}${irl?'+':''}</em>`}
+    else ppl='<em class="na">not counted</em>';
+    row.innerHTML=`<div class="d">${d}</div><div class="t">${t}<small>${s}</small></div><div class="w">${w}<br><a href="${url}">${n?'recap':'announce'} ↗</a><button class="qph" type="button" aria-label="Photo from ${t}">▣ PHOTO</button></div><div class="pty" aria-label="${n?n+' people':'not counted'}">${ppl}</div>`;
+    row.querySelector('.qph').addEventListener('click',()=>{if(window.__coLB)window.__coLB(QI[qi],d+' · '+t,url.split('/status/')[1]);if(window.__coDone)window.__coDone('photo')});
+    qEl.appendChild(row);
+  });
+
+  // Achievements with tiny pixel icons
+  const A=[
+    ["shield","Privacy Track live","2 sessions on Payjoin, 13 and 18 people","https://codeorange.dev/privacy-track"],
+    ["eye","Code Review Club live","A real pull request reviewed live on 8 Oct","https://x.com/CodeOrangeDevs/status/2108187967038865479"],
+    ["key","Multisig built live","2-of-3 with three hardware wallet brands","https://x.com/CodeOrangeDevs/status/2111032079073059228"],
+    ["bolt","Silent Payment on-chain","Sent and received before the workshop","https://x.com/CodeOrangeDevs/status/2108471130294263979"],
+    ["scroll","Guidelines published","How developer fellows are picked and supported","https://codeorange.dev/fellowships/guidelines"],
+    ["flask","Recap for every call","TL;DR, every link shared and a quiz","https://codeorange.dev/session-notes"],
+    ["flag","Cohort sign-ups open","Decoding Bitcoin, 10 weeks from 16 Nov","https://codeorange.dev/decoding-bitcoin"],
+    ["broom","Slides open-sourced","Bitcoin Basics, 5 sessions, free to reuse","https://x.com/CodeOrangeDevs/status/2105479242628968840"]
+  ];
+  const ICON={ // 8x8 pixel masks
+    key:["00111000","01000100","01000100","00111000","00010000","00011000","00010000","00011000"],
+    flask:["00111100","00011000","00011000","00100100","01000010","01111110","11111111","01111110"],
+    flag:["01000000","01111100","01111110","01111100","01000000","01000000","01000000","11100000"],
+    shield:["01111110","11111111","11011011","11011011","11111111","01111110","00111100","00011000"],
+    eye:["00000000","00111100","01100110","11011011","11011011","01100110","00111100","00000000"],
+    bolt:["00001100","00011000","00110000","01111110","00001100","00011000","00110000","01100000"],
+    scroll:["01111110","10000001","01111110","01000010","01011010","01000010","01111110","10000001"],
+    broom:["00000011","00000110","00001100","00011000","01111000","11111100","11111100","01111000"]
+  };
+  function drawIcon(c,name,col){const x=c.getContext('2d');c.width=8;c.height=8;ICON[name].forEach((r,y)=>[...r].forEach((b,i)=>{if(b==='1'){x.fillStyle=col;x.fillRect(i,y,1,1)}}))}
+  const aEl=document.getElementById('ach');
+  A.forEach(([ic,b,p,u],i)=>{
+    const d=document.createElement('div');d.className='badge';
+    const c=document.createElement('canvas');drawIcon(c,ic,i%2?'#ffcf5a':'#f7931a');
+    d.appendChild(c);
+    const t=document.createElement('div');t.innerHTML=`<b>${b}</b><p>${p}</p><a href="${u}">proof ↗</a>`;
+    d.appendChild(t);aEl.appendChild(d);
+  });
+
+  // Hero sprites (14x14)
+  const S={
+    mage:{pal:{h:'#7cc4ff',s:'#f1c9a0',r:'#3b5bdb',o:'#f7931a',k:'#0b0907'},px:[
+      "......hh......",".....hhhh.....","....hhhhhh....","...hhhhhhhh...","....ssssss....","....skssks....","....ssssss....",
+      "...rrrrrrrr...","..rrrorrorrr..","..rr.rrrr.rr..","....rrrrrr....","....rr..rr....","....rr..rr....","...kkk..kkk..."]},
+    sage:{pal:{h:'#2a1d12',s:'#f1c9a0',r:'#6fe3a1',o:'#ffcf5a',k:'#0b0907',b:'#a8957f'},px:[
+      "..............","....hhhhhh....","...hhhhhhhh...","...hssssssh...","...skssssks...","....ssssss....",".....ssss.....",
+      "...rrrrrrrr...","..rrrrrrrrrr..","..ss.oooo.ss..","....oooooo....","....rr..rr....","....rr..rr....","...kkk..kkk..."]},
+    ranger:{pal:{h:'#f7931a',s:'#f1c9a0',r:'#8a5a2b',o:'#ffcf5a',k:'#0b0907',g:'#6fe3a1'},px:[
+      "..............","....hhhhhh....","..hhhhhhhhhh..","....ssssss....","....skssks....","....ssssss....",".....ssss.....",
+      "...gggggggg...","..gggoggoggg..","..ss.gggg.ss..","....rrrrrr....","....rr..rr....","....rr..rr....","...kkk..kkk..."]}
+  };
+  document.querySelectorAll('canvas[data-sprite]').forEach(c=>{
+    const s=S[c.dataset.sprite],x=c.getContext('2d');
+    s.px.forEach((r,y)=>[...r].forEach((ch,i)=>{if(ch!=='.'){x.fillStyle=s.pal[ch];x.fillRect(i,y,1,1)}}));
+  });
+
+  // World map canvas: path with 5 stages and a walking runner
+  const W=document.getElementById('world'),g=W.getContext('2d');
+  const nodes=[[50,40],[160,24],[275,46],[390,26],[505,42]];
+  const state=['#6fe3a1','#7cc4ff','#7cc4ff','#7cc4ff','#e0694a'];
+  const labels=['WORKSHOPS','COHORTS','REVIEW','FELLOWS','FULL-TIME'];
+  function pathPt(t){ // t in [0,4]
+    const i=Math.min(3,Math.floor(t)),f=t-i,a=nodes[i],b=nodes[i+1];
+    return [a[0]+(b[0]-a[0])*f, a[1]+(b[1]-a[1])*f];
+  }
+  function draw(t){
+    g.fillStyle='#0f0b07';g.fillRect(0,0,560,75);
+    // stars
+    g.fillStyle='#3a2c1e';for(let i=0;i<60;i++){g.fillRect((i*97)%560,(i*37)%75,1,1)}
+    // dotted path
+    for(let s=0;s<=4;s+=0.02){const[x,y]=pathPt(s);g.fillStyle=s<=3.05?'#f7931a':'#3a2c1e';if(Math.round(s*50)%2===0)g.fillRect(Math.round(x),Math.round(y),2,2)}
+    // nodes
+    nodes.forEach(([x,y],i)=>{g.fillStyle='#0b0907';g.fillRect(x-7,y-7,14,14);g.fillStyle=state[i];g.fillRect(x-5,y-5,10,10);
+      g.fillStyle='#a8957f';g.font='6px "Press Start 2P", monospace';g.textAlign='center';g.fillText(labels[i],x,y+(y<35?20:-11))});
+    // runner
+    const[x,y]=pathPt(t);const step=Math.floor(t*12)%2;
+    g.fillStyle='#ffcf5a';g.fillRect(x-2,y-12,5,4);           // head
+    g.fillStyle='#f7931a';g.fillRect(x-3,y-8,7,5);            // body
+    g.fillStyle='#f3e9dc';g.fillRect(x-3+step*2,y-3,2,3);g.fillRect(x+2-step*2,y-3,2,3); // legs
+  }
+  let t=0,target=null;const stEls=[...document.querySelectorAll('.stage')];
+  function go(i){target=i;stEls.forEach((s,j)=>s.classList.toggle('sel',j===i));if(window.__coDone)window.__coDone('map');if(window.__coBeep)window.__coBeep(440+i*110,.08);if(reduce){t=i;draw(t)}}
+  W.addEventListener('click',e=>{const r=W.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*560;let bi=0,bd=1e9;nodes.forEach(([nx],i)=>{const d=Math.abs(nx-x);if(d<bd){bd=d;bi=i}});go(bi)});
+  stEls.forEach((s,i)=>{s.tabIndex=0;s.setAttribute('role','button');s.addEventListener('click',()=>go(i));s.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go(i)}})});
+  if(reduce){draw(3)}else{(function loop(){if(target===null){t+=0.006;if(t>3.2)t=0}else{const d=target-t;t+=Math.sign(d)*Math.min(Math.abs(d),0.025)}draw(t);requestAnimationFrame(loop)})()}
+})();
+</script>
+
+<script>
+(function(){
+  const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $=id=>document.getElementById(id);
+  // save file (per viewer, optional)
+  let save={};try{save=JSON.parse(localStorage.getItem('co-s10-save')||'{}')||{}}catch(e){save={}}
+  save.q=save.q||{};
+  const persist=()=>{try{localStorage.setItem('co-s10-save',JSON.stringify(save))}catch(e){}};
+
+  // 8-bit sound, off until the visitor turns it on
+  let snd=!!save.snd,ac=null;
+  function beep(f,d,type,v){if(!snd)return;try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain(),t=ac.currentTime;o.type=type||'square';o.frequency.value=f||660;g.gain.setValueAtTime(v||.04,t);g.gain.exponentialRampToValueAtTime(.0001,t+(d||.08));o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+(d||.08))}catch(e){}}
+  const jingle=()=>[523,659,784,1047].forEach((f,i)=>setTimeout(()=>beep(f,.12),i*90));
+  window.__coBeep=beep;
+  const sb=$('sndBtn');
+  function drawSnd(){sb.textContent=snd?'♪ ON':'♪ OFF';sb.setAttribute('aria-pressed',snd)}
+  sb.addEventListener('click',()=>{snd=!snd;save.snd=snd;persist();drawSnd();beep(880,.1)});drawSnd();
+
+  // toast
+  let tT=null;
+  function toast(l,t){$('toastL').textContent=l;$('toastT').textContent=t;const el=$('toast');el.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>el.classList.remove('show'),2600)}
+
+  // explorer quests
+  const QS=[["replay","Replay October","Press PLAY or drag through the month"],["map","Walk the map","Tap a stage on the world map"],["flip","Meet the party","Flip a fellow's card"],["photo","Inspect the proof","Open a photo on the proof wall"],["video","Watch a session","Play the workshop video"],["bonus","Privacy Run","Score 15 or more in the bonus stage"],["secret","Find the secret","Hint: ↑ ↑ ↓ ↓ ← → ← → B A, or tap the logo 5 times"]];
+  function renderQ(){const n=QS.filter(q=>save.q[q[0]]).length;$('xN').textContent=n;$('xBar').style.width=Math.round(n/QS.length*100)+'%';
+    $('xList').innerHTML=QS.map(q=>`<li class="${save.q[q[0]]?'ok':''}"><i>${save.q[q[0]]?'✓':'·'}</i><div><b>${q[1]}</b><span>${q[2]}</span></div></li>`).join('')}
+  function done(id){if(save.q[id])return;save.q[id]=1;persist();renderQ();const q=QS.find(x=>x[0]===id);toast('★ QUEST COMPLETE',q[1]);jingle();
+    const b=$('xBtn');b.classList.remove('pulse');void b.offsetWidth;b.classList.add('pulse');
+    if(QS.every(x=>save.q[x[0]]))setTimeout(win,1400)}
+  window.__coDone=done;renderQ();
+  const xb=$('xBtn'),xp=$('xPanel'),xh=document.querySelector('.xhud');
+  const hudVis=()=>{const hide=scrollY<innerHeight*.6&&xp.hidden;xh.classList.toggle('hid',hide)};addEventListener('scroll',hudVis,{passive:true});hudVis();
+  xb.addEventListener('click',()=>{const o=xp.hidden;xp.hidden=!o;xb.setAttribute('aria-expanded',o);beep(o?740:520)});
+  $('xReset').addEventListener('click',()=>{save.q={};save.best=0;persist();renderQ();best=0;$('runBest').textContent=0;toast('SAVE RESET','Start exploring again')});
+  addEventListener('keydown',e=>{if(e.key==='Escape'){if(!xp.hidden){xp.hidden=true;xb.setAttribute('aria-expanded',false)}if(!$('win').hidden)$('win').hidden=true}});
+
+  // hooks into the existing sections
+  $('playBtn').addEventListener('click',()=>done('replay'));
+  $('day').addEventListener('input',()=>done('replay'));
+  document.querySelectorAll('.fbtn').forEach(b=>{if(b.closest('.flip'))b.addEventListener('click',()=>{done('flip');beep(600,.06)})});
+  $('wall').addEventListener('click',e=>{if(e.target.closest('button'))done('photo')});
+  const vid=$('vid');vid.addEventListener('click',()=>done('video'));vid.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')done('video')});
+
+  // level select
+  const LV=[["LEVEL 1 · SEPTEMBER","Cleared. Tap to open that save file."],["LEVEL 2 · OCTOBER","Cleared. You are here."],["LEVEL 3 · NOVEMBER","In play. Decoding Bitcoin cohort started 16 Nov"],["FINAL LEVEL · MONTH 12","40+ developers trained, 8 fellows graduated, a new country"]];
+  document.querySelectorAll('.lv').forEach((el,i)=>{el.tabIndex=0;el.setAttribute('role','button');
+    const go=()=>{toast(LV[i][0],LV[i][1]);if(i>=2){el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake');beep(160,.18,'sawtooth')}else beep(660+i*120)};
+    el.addEventListener('click',go);el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}})});
+
+  const gb=document.querySelector('.gbar');if(gb){if(RM||!('IntersectionObserver' in window))gb.classList.add('go');else{const gio=new IntersectionObserver(es=>{if(es[0].isIntersecting){gb.classList.add('go');gio.disconnect()}},{threshold:.4});gio.observe(gb)}}
+  // achievements pop in
+  const ach=$('ach');ach.querySelectorAll('.badge').forEach((b,i)=>b.style.setProperty('--i',i));
+  if(!RM&&'IntersectionObserver' in window){ach.classList.add('armed');const io=new IntersectionObserver(es=>{if(es[0].isIntersecting){ach.classList.add('go');ach.querySelectorAll('.badge').forEach((b,i)=>setTimeout(()=>beep(700+i*60,.05),i*110));io.disconnect()}},{threshold:.3});io.observe(ach)}
+
+  // secret: Konami code or 5 taps on the logo
+  const K=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];let ki=0;
+  addEventListener('keydown',e=>{const k=e.key.length===1?e.key.toLowerCase():e.key;ki=(k===K[ki])?ki+1:(k===K[0]?1:0);if(ki===K.length){ki=0;secret()}});
+  let taps=0,tapT=null;document.querySelector('.hx .logo').addEventListener('click',()=>{taps++;clearTimeout(tapT);tapT=setTimeout(()=>taps=0,2500);if(taps>=5){taps=0;secret()}});
+  function secret(){toast('SECRET LEVEL FOUND','Mentors wanted: Silent Payments, payjoin, BDK, Floresta');confetti();done('secret')}
+
+  // confetti
+  function confetti(){if(RM)return;const c=$('confetti'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+    const cols=['#f7931a','#ffcf5a','#6fe3a1','#7cc4ff','#f3e9dc'];const P=Array.from({length:140},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*.5,v:2+Math.random()*3,s:4+Math.floor(Math.random()*4),c:cols[Math.floor(Math.random()*5)],w:Math.random()*6}));
+    const t0=performance.now();(function f(now){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.y+=p.v;p.x+=Math.sin((now/300)+p.w)*1.2;x.fillStyle=p.c;x.fillRect(Math.round(p.x),Math.round(p.y),p.s,p.s)});if(now-t0<3200)requestAnimationFrame(f);else x.clearRect(0,0,c.width,c.height)})(t0)}
+  function win(){$('win').hidden=false;$('winX').focus();confetti();[523,659,784,1047,1319].forEach((f,i)=>setTimeout(()=>beep(f,.16),i*120))}
+  $('winX').addEventListener('click',()=>$('win').hidden=true);
+
+  // ===== Bonus stage: Privacy Run =====
+  const cv=$('run'),g=cv.getContext('2d'),GW=640,GH=200,GY=164,PX=84;
+  const OB=[["KYC","Caught by KYC.","Buy peer-to-peer instead, like the RoboSats trade from our September session."],
+    ["REUSE","Address reuse linked your coins.","Silent Payments (BIP352) give every payment a fresh address. It opens Privacy Track Season One."],
+    ["SPY","A server watched your wallet lookups.","Compact block filters (BIP158) let a wallet sync without telling anyone what it owns."],
+    ["LINK","Chain analysis linked your inputs.","Payjoin breaks the common-input heuristic. We tested it live at the Privacy Track."]];
+  let st='idle',p,obs,coins,dist,sats,last,spawn,cspawn,raf,best=+save.best||0,hit=null;
+  $('runBest').textContent=best;
+  const score=()=>sats+Math.floor(dist/300);
+  function reset(){p={y:GY,vy:0};obs=[];coins=[];dist=0;sats=0;spawn=50;cspawn=30;hit=null}
+  function start(){reset();st='run';last=performance.now();$('runBtn').textContent='▲ JUMP';$('runTip').textContent='Jump the leaks. Grab the sats.';cancelAnimationFrame(raf);raf=requestAnimationFrame(loop);try{cv.focus({preventScroll:true})}catch(e){}}
+  function jump(){if(st!=='run'){start();return}if(p.y>=GY-.5){p.vy=-9.6;beep(880,.05)}}
+  function over(o){st='over';hit=o.k;const s=score();if(s>best){best=s;save.best=best;persist();$('runBest').textContent=best}
+    beep(140,.35,'sawtooth',.05);$('runBtn').textContent='↻ RETRY';
+    $('runTip').innerHTML=`<b>${OB[hit][1]}</b> ${OB[hit][2]}`;if(s>=15)done('bonus');draw()}
+  function loop(now){if(st!=='run')return;const dt=Math.min(2.5,(now-last)/16.67);last=now;const vx=Math.min(9.5,4.2+dist/1600);
+    p.vy+=.58*dt;p.y+=p.vy*dt;if(p.y>GY){p.y=GY;p.vy=0}
+    dist+=vx*dt;spawn-=dt;cspawn-=dt;
+    if(spawn<=0){const k=Math.floor(Math.random()*OB.length);obs.push({x:GW+10,k,w:OB[k][0].length*8+14,h:k%2?22:18});spawn=55+Math.random()*65-Math.min(25,dist/500)}
+    if(cspawn<=0){coins.push({x:GW+10,y:GY-24-Math.random()*62});cspawn=38+Math.random()*50}
+    obs.forEach(o=>o.x-=vx*dt);coins.forEach(c=>c.x-=vx*dt);obs=obs.filter(o=>o.x>-80);
+    const top=p.y-18;
+    coins=coins.filter(c=>{if(c.x>PX-8&&c.x<PX+24&&c.y>top-8&&c.y<p.y+6){sats++;beep(1320,.04);return false}return c.x>-20});
+    for(const o of obs){if(o.x<PX+14&&o.x+o.w>PX+4&&p.y>GY-o.h+2){over(o);return}}
+    draw();raf=requestAnimationFrame(loop)}
+  function txt(s,x,y,size,col,al){g.font=`${size}px "Press Start 2P", monospace`;g.fillStyle=col;g.textAlign=al||'left';g.fillText(s,x,y)}
+  function draw(){
+    g.fillStyle='#0b0907';g.fillRect(0,0,GW,GH);
+    g.fillStyle='#3a2c1e';for(let i=0;i<70;i++){const sx=((i*97)-(dist*.2))%GW;g.fillRect((sx+GW)%GW,(i*37)%(GY-30),2,2)}
+    // city skyline
+    g.fillStyle='#16110c';for(let i=0;i<12;i++){const bx=((i*71)-(dist*.45))%(GW+80);const x=(bx+GW+80)%(GW+80)-40;const bh=30+(i*29)%50;g.fillRect(x,GY-bh,46,bh)}
+    g.fillStyle='#3a2c1e';g.fillRect(0,GY+1,GW,2);
+    for(let i=0;i<GW;i+=16){g.fillRect((i-(dist%16)),GY+8,8,2)}
+    coins.forEach(c=>{g.fillStyle='#ffcf5a';g.fillRect(c.x-5,c.y-5,10,10);g.fillStyle='#7a4a0d';g.fillRect(c.x-1,c.y-3,2,6)});
+    obs.forEach(o=>{g.fillStyle='#e0694a';g.fillRect(o.x,GY-o.h,o.w,o.h);g.fillStyle='#0b0907';g.fillRect(o.x+2,GY-o.h+2,o.w-4,o.h-4);txt(OB[o.k][0],o.x+o.w/2,GY-o.h/2+4,8,'#e0694a','center')});
+    // player: a bitcoin with legs
+    const y=Math.round(p?p.y:GY),leg=(st==='run'&&p.y>=GY-.5)?Math.floor(dist/12)%2:0;
+    g.fillStyle='#f7931a';g.fillRect(PX,y-20,18,16);g.fillRect(PX+2,y-22,14,2);g.fillRect(PX+2,y-4,14,2);
+    txt('₿',PX+9,y-7,10,'#0b0907','center');
+    g.fillStyle='#f3e9dc';g.fillRect(PX+3+leg*3,y-2,3,2);g.fillRect(PX+12-leg*3,y-2,3,2);
+    txt('SATS '+(p?sats:0),12,20,9,'#ffcf5a');txt('SCORE '+(p?score():0),GW-12,20,9,'#f3e9dc','right');
+    if(st==='idle'){g.fillStyle='rgba(11,9,7,.72)';g.fillRect(0,0,GW,GH);txt('PRIVACY RUN',GW/2,80,18,'#f7931a','center');txt('TAP OR PRESS SPACE TO START',GW/2,116,9,'#f3e9dc','center')}
+    if(st==='over'){g.fillStyle='rgba(11,9,7,.72)';g.fillRect(0,0,GW,GH);txt('LEAKED BY '+OB[hit][0],GW/2,72,14,'#e0694a','center');txt('SCORE '+score()+'   BEST '+best,GW/2,104,10,'#ffcf5a','center');txt('TAP TO TRY AGAIN',GW/2,134,9,'#f3e9dc','center')}
+  }
+  reset();
+  (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(draw);draw();
+  cv.addEventListener('pointerdown',e=>{e.preventDefault();jump()});
+  $('runBtn').addEventListener('click',jump);
+  addEventListener('keydown',e=>{if((e.key===' '||e.key==='ArrowUp')&&(document.activeElement===cv||st==='run')){if(e.target.closest&&e.target.closest('input,button:not(#runBtn)'))return;e.preventDefault();jump()}});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden&&st==='run'){st='idle';reset();draw();$('runBtn').textContent='▶ START'}});
+})();
+</script>
+</body>
+</html>
