@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Copy for X: fellowship month 1</title>
+<style>
+body{margin:0;background:#0b0b0b;color:#eee;font:17px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif}
+.wrap{max-width:680px;margin:0 auto;padding:20px 16px 80px}
+.bar{position:sticky;top:0;background:#0b0b0b;padding:12px 0;border-bottom:1px solid #2a2a2a;z-index:2}
+button{font:inherit;font-weight:700;font-size:19px;width:100%;padding:16px;border:0;border-radius:12px;background:#F7931A;color:#000;cursor:pointer}
+button.small{background:#222;color:#fff;font-size:16px;padding:12px;margin-top:8px;border:1px solid #444}
+.note{color:#aaa;font-size:15px;margin:12px 0}
+.title{background:#161616;border:1px solid #2a2a2a;border-radius:12px;padding:14px;margin:16px 0;font-weight:700;font-size:19px}
+#art{background:#fff;color:#111;border-radius:12px;padding:8px 18px;margin-top:16px}
+#art h1{font-size:24px;line-height:1.25;margin:28px 0 8px}#art h2{font-size:19px;margin:22px 0 6px}
+#art blockquote{border-left:4px solid #F7931A;margin:16px 0;padding:4px 14px;font-style:italic}
+#art a{color:#b35f00;word-break:break-word}
+</style></head><body><div class="wrap">
+<div class="bar"><button id="copy" type="button">Copy article for X</button><div id="msg" class="note" role="status"></div></div>
+<p class="note">1. Tap the orange button. 2. In X, open your article, tap in the body and paste. Headings, bullets, the quote and links come with it.</p>
+<div class="title" id="ttl">The Unglamorous Work That Makes a Bitcoin Node Safe to Run</div>
+<button id="copyt" class="small" type="button">Copy title only</button>
+<div id="art">
+<p>One month, one fellow, and a lock on Floresta's front door.</p>
+<p>stonepillar, our developer fellow, got two pull requests merged into Floresta in November. Floresta's control interface now requires a login, the same way Bitcoin Core's does. And the node now keeps a log file by default. Three more pull requests are in review.</p>
+<h1>Why a small node is a big deal</h1>
+<p>Bitcoin makes one promise that nothing else does: you don't have to trust anyone. You can check every rule yourself.</p>
+<p>But checking means running a node, and a normal node wants hundreds of gigabytes of disk and days of syncing. So most people don't. They trust someone else's node, and the promise quietly turns back into "trust me".</p>
+<p>Floresta is one of the projects trying to fix that. It's a Bitcoin node written in Rust, built on Utreexo, an idea from Tadge Dryja that squeezes the list of all unspent coins from gigabytes down to a few kilobytes. The result is a node light enough for an old laptop, a tiny home server, or to live inside a wallet app.</p>
+<p>More people verifying for themselves means a Bitcoin that is harder to capture. That is what decentralization actually looks like: software that ordinary people can run.</p>
+<h1>From "it works" to "you can rely on it"</h1>
+<p>Clever ideas get the attention. But before people can depend on a node, somebody has to do the unglamorous part: logins, logs, and what happens when the power goes out.</p>
+<p>That's what stonepillar worked on this month.</p>
+<h2>1. A lock on the front door (merged 17 Nov)</h2>
+<p>Every node has a control interface called RPC. Wallets and tools use it to ask the node questions and give it commands.</p>
+<p>Until now, Floresta's RPC had no login. By default it only listened on your own machine, so it wasn't open to the internet. But any program on that computer could talk to it, and so could anyone on your network if you exposed the port, which is easy to do with Docker or a home server.</p>
+<p>Now it works the way Bitcoin Core does:</p>
+<ul>
+<li>A secret cookie file, created fresh on every start. This is the default, with nothing to set up.</li>
+<li>A username and password, if you'd rather have one.</li>
+<li>Several users, with passwords stored only as salted hashes, never as plain text.</li>
+<li>A short delay after every wrong password, so nobody can sit there guessing.</li>
+</ul>
+<p>Ten commits, with tests and documentation, reviewed over many rounds by Floresta's maintainers and reviewers. It closes a feature request that had been open on the project for a long time.</p>
+<p><a href="https://github.com/getfloresta/Floresta/pull/1105">https://github.com/getfloresta/Floresta/pull/1105</a></p>
+<h2>2. The node keeps a diary (merged 13 Nov)</h2>
+<p>When something breaks, the first question is always "what do the logs say?" Floresta now writes a debug.log by default, like Bitcoin Core, and accepts Core's own flag names so people coming from bitcoind feel at home.</p>
+<p><a href="https://github.com/getfloresta/Floresta/pull/1404">https://github.com/getfloresta/Floresta/pull/1404</a></p>
+<p>Both pieces were on Floresta's roadmap for this quarter, and both shipped in Floresta v0.10.0, released this week.</p>
+<h2>3. Two bugs he caught on the way (in review)</h2>
+<ul>
+<li>A login cookie saved with an extra line break would lock you out.</li>
+<li>A node killed in the middle of syncing could wake up confused about where it had stopped.</li>
+</ul>
+<p>Neither was on his to-do list. He noticed them while doing the work, and fixed them.</p>
+<p>He also sent a follow-up to the log file work: left alone the file would grow forever, so it now trims itself on startup.</p>
+<h2>4. Reviewing other people's code</h2>
+<p>Open source runs on review. He reviewed four pull requests from other Floresta contributors this month.</p>
+<h1>What the fellowship changed</h1>
+<p>The login work wasn't new in November. stonepillar opened that pull request on 1 June, as a volunteer, in his spare time.</p>
+<p>What changed is time. The fellowship let him focus, work through every round of review with Floresta's maintainers and reviewers, and get it over the line.</p>
+<p>This month Floresta also added him to its GitHub organization as a member. Open source projects do that for people whose work they have come to rely on.</p>
+<blockquote>"stonepillar is doing a good job. He is becoming increasingly familiar with the codebase and more confident in participating in review discussions, not just on his own PRs. I'm looking forward to more contributions from him."</blockquote>
+<p>Chris G. (@csgui), Floresta maintainer and stonepillar's mentor</p>
+<p>That is the whole idea behind Code Orange. Find talented developers. Train them. Give them a community to belong to. And support them financially, so that good work doesn't stay half-finished because rent was due.</p>
+<h1>Next</h1>
+<ul>
+<li>Get the three open pull requests reviewed and merged.</li>
+<li>Keep working on how the node handles its first sync.</li>
+<li>Present his work live at our Code Review Club.</li>
+</ul>
+<p>Developers: want to do this yourself? <a href="https://codeorange.dev/fellowships">https://codeorange.dev/fellowships</a></p>
+<p>Maintainers: have a project that could use a focused contributor? Mentor a fellow. hello@codeorange.dev</p>
+</div>
+<p class="note">If the button does nothing: press and hold inside the white box, choose Select All, then Copy.</p>
+</div><script>
+var art=document.getElementById('art'),msg=document.getElementById('msg');
+function say(t){msg.textContent=t}
+function sel(){var r=document.createRange();r.selectNodeContents(art);var s=getSelection();s.removeAllRanges();s.addRange(r);return s}
+document.getElementById('copy').onclick=function(){
+  var h=art.innerHTML,t=art.innerText;
+  function fb(){var s=sel(),ok=false;try{ok=document.execCommand('copy')}catch(e){}
+    if(ok){s.removeAllRanges();say('Copied. Now paste it into X.')}else say('The text is selected. Tap Copy on it, then paste into X.')}
+  if(navigator.clipboard&&window.ClipboardItem){
+    navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([h],{type:'text/html'}),'text/plain':new Blob([t],{type:'text/plain'})})])
+      .then(function(){say('Copied. Now paste it into X.')},fb)
+  }else fb()};
+document.getElementById('copyt').onclick=function(){var t=document.getElementById('ttl').textContent;
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){say('Title copied.')},function(){say('Press and hold the title to copy it.')})};
+</script></body></html>
