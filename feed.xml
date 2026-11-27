@@ -7,6 +7,22 @@
     <language>en</language>
     <atom:link href="https://codeorange.dev/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>What Is a Seed Phrase? How to Back Up Your Bitcoin Safely</title>
+      <link>https://codeorange.dev/articles/what-is-a-seed-phrase</link>
+      <guid isPermaLink="true">https://codeorange.dev/articles/what-is-a-seed-phrase</guid>
+      <description>What is a seed phrase? A plain-English guide to the 12 or 24 words that control your bitcoin: how they work, how to back them up safely, and the mistakes that cost people their coins.</description>
+      <dc:creator>Andy</dc:creator>
+      <pubDate>Fri, 27 Nov 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>How Does a Bitcoin Transaction Work? A Step-by-Step Guide</title>
+      <link>https://codeorange.dev/articles/how-does-a-bitcoin-transaction-work</link>
+      <guid isPermaLink="true">https://codeorange.dev/articles/how-does-a-bitcoin-transaction-work</guid>
+      <description>How does a bitcoin transaction work? A plain-English, step-by-step guide: inputs and outputs, change, fees, signatures, the mempool, mining and confirmations.</description>
+      <dc:creator>Andy</dc:creator>
+      <pubDate>Fri, 27 Nov 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>The Unglamorous Work That Makes a Bitcoin Node Safe to Run</title>
       <link>https://codeorange.dev/articles/fellowship-month-1-floresta</link>
       <guid isPermaLink="true">https://codeorange.dev/articles/fellowship-month-1-floresta</guid>
