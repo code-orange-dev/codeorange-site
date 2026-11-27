@@ -316,10 +316,10 @@ function ipHash(req) {
   return crypto.createHash("sha256").update(`fw:${ip}`).digest("base64url").slice(0, 22);
 }
 
-async function alert(subject, lines) {
+async function alert(subject, lines, replyTo) {
   if (!mail.emailOn()) return;
   try {
-    await mail.sendTo(ALERT_TO, subject, lines);
+    await mail.sendTo(ALERT_TO, subject, lines, replyTo);
   } catch (err) {
     console.error("fellowship: alert failed", err.message);
   }
@@ -437,6 +437,8 @@ async function apply(body, req) {
   const readyCount = Object.values(readyOut).filter(Boolean).length;
   await alert(`New fellowship application: ${a.name} (${a.project})`, [
     `<p><strong>${mail.esc(a.name)}</strong> applied for the developer fellowship. Ready check: ${readyCount}/${Object.keys(readyOut).length}.</p>`,
+    box("Applicant's email (just hit Reply)", a.email),
+    box("Discord", a.discord),
     box("GitHub", `https://github.com/${a.github}`),
     box("Project", `${a.project} ${a.project_url}`),
     box("Proof of work", a.proof),
@@ -445,7 +447,7 @@ async function apply(body, req) {
     box("Mentor", a.mentor),
     box("Hours / region", `${a.hours} · ${a.region}`),
     `<p><a href="${SITE}/fellowships/admin" style="color:#d97706">Open the organiser page</a> (application #${id})</p>`,
-  ]);
+  ], a.email);
   if (mail.emailOn()) {
     try {
       await sendCopy({ ...a, ready: readyOut });
