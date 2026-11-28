@@ -120,12 +120,14 @@ window.MB_COHORT = {
     {
       title: "Inside a transaction, byte by byte",
       lessons: [
-        { title: "Technical Foundation", slug: "technical-foundation" },
+        { title: "Compact Size", slug: "compact-size" },
         { title: "Transaction Structure (second read: every field)", slug: "transaction-structure" },
+        { title: "Version", slug: "version" },
+        { title: "Marker and Flag", slug: "marker-flag" },
       ],
       extra: [{ title: "Tool: Transaction Decoder", slug: "transaction-decoder" }],
       opening: "A transaction is just bytes. What do those bytes have to say for everyone to agree it's valid?",
-      summary: "A whole week on transaction structure. Learn the byte-level basics (hex, little-endian, compact size), then take a raw transaction apart field by field, including segwit's marker, flag and witness.",
+      summary: "A whole week on transaction structure. Learn the byte-level basics (little-endian, compact size), then take a raw transaction apart field by field, including segwit's marker, flag and witness.",
       questions: [
         "What is little-endian, and where does it trip people up when reading a txid?",
         "What is a compact size (varint) and why does Bitcoin use one instead of fixed-size counts?",

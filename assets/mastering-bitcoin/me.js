@@ -291,7 +291,7 @@
 
   function tick(item, label, after = "") {
     const done = state.done.has(item);
-    return `<li class="${done ? "is-done" : ""}"><button type="button" class="me-tick" data-item="${item}" aria-pressed="${done}"><span class="me-box" aria-hidden="true">${done ? "✓" : ""}</span><span>${label}</span></button>${after}</li>`;
+    return `<li class="${done ? "is-done" : ""}"><div class="me-tick" role="checkbox" tabindex="0" data-item="${item}" aria-checked="${done}"><span class="me-box" aria-hidden="true">${done ? "✓" : ""}</span><span>${label}</span></div>${after}</li>`;
   }
 
   // The one thing to do next, worked out from where the student is.
@@ -676,7 +676,12 @@
 
   function bind() {
     const app = $("#me-app");
-    app.querySelectorAll(".me-tick").forEach((b) => b.addEventListener("click", async () => {
+    // A link inside a to-do opens the link only; it must not tick the box.
+    app.querySelectorAll(".me-tick").forEach((b) => b.addEventListener("keydown", (e) => {
+      if (e.target === b && (e.key === " " || e.key === "Enter")) { e.preventDefault(); b.click(); }
+    }));
+    app.querySelectorAll(".me-tick").forEach((b) => b.addEventListener("click", async (e) => {
+      if (e.target.closest("a")) return;
       const item = b.dataset.item;
       const done = !state.done.has(item);
       done ? state.done.add(item) : state.done.delete(item);
